@@ -1,0 +1,36 @@
+---
+title: "Ben Stanley"
+image: profile.jpg
+page-layout: full
+about:
+  id: hero-heading
+  template: trestles
+  #image-shape: rectangle
+  image-width: 70%
+  links:
+    - text: "{{< fa brands whatsapp >}}"
+      href: "tel:+48798814801"
+    - text: "{{< iconify bi envelope size=1.1em title='E-mail' >}}"
+      href: mailto:bstanley@swps.edu.pl
+    - text: "{{< iconify fa6-brands bluesky size=1.1em title='Bluesky' >}}"
+      href: https://bsky.app/profile/benstanley.pl
+    - text: "{{< ai orcid >}}"
+      href: https://orcid.org/my-orcid?orcid=0000-0001-6932-1046
+    - text: "{{< ai google-scholar >}}"
+      href: https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en
+    - text: "{{< ai clarivate >}}"
+      href: https://www.webofscience.com/wos/author/record/J-7051-2013
+    - text: "{{< iconify bi github size=1.1em title='GitHub' >}}"
+      href: https://github.com/BDStanley
+    - text: "{{< ai dataverse >}}"
+      href: https://dataverse.harvard.edu/dataverse/bdstanley
+    - text: "{{< ai zotero >}}"
+      href: https://www.zotero.org/benstanleypl/library
+---
+
+::: {#hero-heading}
+
+I am Associate Professor in the Centre for the Study of Democracy at the SWPS University of Social Sciences and Humanities. A political scientist and sociologist, I received a PhD in Government from the University of Essex and have previously worked at the Institute for Public Affairs in Bratislava, the Cardinal Stefan Wyszyński University in Warsaw, and the University of Sussex in Brighton, United Kingdom. I am currently conducting research into the politics of populism, illiberalism and authoritarianism in Central and Eastern Europe, and completing a monograph (co-authored with Stanley Bill) on the eight years of “Good Change” under the PiS government in Poland.
+
+:::
+

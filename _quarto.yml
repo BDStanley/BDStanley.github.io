@@ -1,0 +1,37 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Ben Stanley"
+
+  page-footer:
+    left: ""
+    right: ""
+
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+        
+      - href: publications.qmd
+        text: Publications
+
+      - href: research projects.qmd
+        text: Research projects
+        
+      - href: media.qmd
+        text: Media
+      
+      - href: https://bdstanley.github.io/markdown-cv/
+        text: CV
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
