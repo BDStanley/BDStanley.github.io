@@ -1,0 +1,246 @@
+/*-- scss:defaults --*/
+
+$theme: "ath" !default;
+
+//
+// Color system
+//
+
+$white:    #ffffff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #373a3c !default;
+$gray-900: #212529 !default;
+$black:    #000000 !default;
+
+$blue:    #2780e3 !default;
+$indigo:  #6610f2 !default;
+$purple:  #170C3A !default;
+$pink:    #A52C60 !default;
+$light-red: #FF3632 !default;
+$red:     #8B0000 !default;
+$orange:  #EE6A24 !default;
+$light-orange:  #FB9E07 !default;
+$yellow:  #F6D645 !default;
+$green:   #118230 !default;
+$teal:    #20c997 !default;
+$cyan:    #3093CF !default;
+
+$primary:   $pink !default;
+$secondary: $gray-700 !default;
+$success:   $green !default;
+$info:      $cyan !default;
+$warning:   $orange !default;
+$danger:    $red !default;
+$light:     $gray-400 !default;
+$dark:      $black !default;
+
+// $min-contrast-ratio: 2.6 !default;
+
+// Fonts
+
+
+$font-family-sans-serif: "Libre Franklin" !default;
+
+$headings-font-family: "Jost" !default;
+$headings-font-weight: 600 !default;
+
+$navbar-font-family: "Jost" !default;
+$toc-font-family: "Jost" !default;
+$footer-font-family: "Jost" !default;
+$code-font-family: "Jost" !default;
+$body-font-family: "Jost" !default;
+
+
+// $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
+// $font-size-sm: $font-size-base * .875 !default;
+
+
+// Body
+$body-color: $gray-900 !default;
+
+// Links
+$link-color: $red !default;
+$link-decoration: none !default;
+$link-hover-color: $gray-700 !default;
+//$link-hover-decoration: underline !default;
+
+// Inline code
+$code-bg: $gray-200 !default;
+$code-color: $gray-900 !default;
+
+// Code copy
+$btn-code-copy-color-active: $orange !default;
+
+// TOC
+$toc-color: $red;
+$toc-font-size: 1em;
+
+// Navbar
+$navbar-bg: $red !default;
+$navbar-fg: $white !default;
+//$navbar-hl: $orange !default;
+$link-hover-decoration: underline !default;
+
+.nav-link {
+  // normal link styles
+  
+  &.active {
+    font-weight: bold;
+  }
+}
+
+// Footer
+$footer-bg: $gray-900 !default;
+$footer-fg: $gray-300 !default;
+
+/*-- scss:rules --*/
+
+$web-font-path: "https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" !default;
+
+@if $web-font-path {
+    @import url($web-font-path);
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+
+.home {
+    .quarto-title-banner {
+        margin-bottom: 0;
+    }
+}
+
+#title-block-header {
+    &.home {
+        margin-block-end: 0.5rem;
+    }
+}
+
+.home {
+    .quarto-title-banner {
+        margin-bottom: 0;
+    }
+
+    #title-block-header {
+        margin-block-end: 0;
+    }
+}
+
+// Shrink blocks of code
+pre.text, pre.sourceCode, .cell-output pre {
+    font-size: 0.775em;
+}
+
+.navbar {
+    font-family: $navbar-font-family;
+}
+
+// Put all the icons in a single row in the hamburger menu
+.navbar-nav.navbar-nav-scroll.ms-auto {
+    flex-direction: row;
+}
+
+#TOC {
+    font-family: $toc-font-family;
+    padding-bottom: 0.1em;
+    font-weight: 300;
+
+    .active {
+        font-weight: 400;
+    }
+
+    #toc-title {
+        font-weight: 600;
+    }
+}
+
+.sidebar nav[role="doc-toc"]>ul li a {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+
+.nav-footer {
+    align-items: flex-start;  // Align all flex items to the top
+    flex-wrap: wrap;
+    border: 0 !important;
+    min-height: 3em;
+    font-family: $footer-font-family;
+
+    a {
+        color: $light-orange;
+    }
+
+    .faux-block {
+        display: block;
+        padding-bottom: 0.4em;
+    }
+
+    .fingerprint {
+        font-family: $font-family-monospace;
+        font-size: 0.8em;
+    }
+
+    // In the default Quarto template, .nav-footer-center has position: absolute 
+    // turned on, which makes the div not be a flex item
+    // This changes that so that it *is* a flex item
+    .nav-footer-center {
+        text-align: center;
+        position: inherit;
+        margin-top: 0;
+
+        @media (max-width: map-get($grid-breakpoints, md)) {
+            margin-top: 0.5em;
+            margin-bottom: 1.5em;
+        }
+    }
+
+    // When the screen is medium or smaller, make each footer chunk be 100% width 
+    // and centered; otherwise make them be 33% width and left/right/centerd
+    .nav-footer-left,
+    .nav-footer-right,
+    .nav-footer-center {
+        text-align: center;
+        width: 100%;
+        min-height: 2em;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .nav-footer-left {
+            text-align: left;
+        }
+
+        .nav-footer-right {
+            text-align: right;
+        }
+
+        .nav-footer-left,
+        .nav-footer-right,
+        .nav-footer-center {
+            flex: 1 1 33%;
+        }
+    }
+}
+
+#title-block-header {
+    .quarto-title-banner {
+        font-family: $headings-font-family;
+        
+        .description {
+            font-size: 1.1em;
+            margin-top: 1em !important;
+        }
+    }
+}

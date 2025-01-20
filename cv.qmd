@@ -1,60 +1,46 @@
 ---
 editor: visual
 ---
+
 # Ben Stanley
 
-Associate Professor of Political Science\    
+Associate Professor of Political Science \
 SWPS University\
 ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
 
-
-**Gender:** Male &nbsp; **Date of birth:** 17/05/1979 &nbsp; **Nationality:** British, Irish &nbsp; **Residence:** Poland\
-**Phone:** (+48)798814801  &nbsp; **Email:** <a href="mailto:bstanley@swps.edu.pl" style="color:black;">bstanley\@swps.edu.pl</a>  &nbsp; **Website:** <a href="https://www.ben-stanley.com" style="color:black;">ben-stanley.com</a>\
-**ORCID:** <a href="https://orcid.org/0000-0001-6932-1046" style="color:black;">0000-0001-6932-1046</a> 
-
+**Gender:** Male         **Date of birth:** 17/05/1979        **Nationality:** British, Irish         **Residence:** Poland\
+**Phone:** (+48)798814801          **Email:** <a href="mailto:bstanley@swps.edu.pl" style="color:black;">bstanley\@swps.edu.pl</a>           **Website:** <a href="https://www.ben-stanley.com" style="color:black;">ben-stanley.com</a>\
+**ORCID:** <a href="https://orcid.org/0000-0001-6932-1046" style="color:black;">0000-0001-6932-1046</a>
 
 ## Employment
 
-`2018-present`
-**Associate Professor**, *Centre for the Study of Democracy, SWPS University*, Warsaw, Poland.
+`2018-present` **Associate Professor**, *Centre for the Study of Democracy, SWPS University*, Warsaw, Poland.
 
-`2015-2018`
-**Assistant Professor**, *Centre for the Study of Democracy, SWPS University*, Warsaw, Poland.
+`2015-2018` **Assistant Professor**, *Centre for the Study of Democracy, SWPS University*, Warsaw, Poland.
 
-`2013-2015`
-**Marie Curie Intra-European Research Fellow**, *School of Law, Politics and Sociology, University of Sussex*, Brighton, United Kingdom.
+`2013-2015` **Marie Curie Intra-European Research Fellow**, *School of Law, Politics and Sociology, University of Sussex*, Brighton, United Kingdom.
 
-`2013-2015`
-**Assistant Professor**, *Faculty of History and Social Sciences, Cardinal Stefan Wyszyński University*, Warsaw, Poland.
+`2013-2015` **Assistant Professor**, *Faculty of History and Social Sciences, Cardinal Stefan Wyszyński University*, Warsaw, Poland.
 
-`2011`
-**Guest Researcher**, *Centre for Baltic and East European Studies, Södertörn University*, Stockholm, Sweden.
+`2011` **Guest Researcher**, *Centre for Baltic and East European Studies, Södertörn University*, Stockholm, Sweden.
 
-`2010`
-**Marie Curie Post-Doctoral Fellow**, *Institute for Public Affairs*, Bratislava, Slovakia.
+`2010` **Marie Curie Post-Doctoral Fellow**, *Institute for Public Affairs*, Bratislava, Slovakia.
 
-`2008`
-**Graduate Teaching Assistant**, *Department of Government, The University of Essex*, Colchester, United Kingdom.
+`2008` **Graduate Teaching Assistant**, *Department of Government, The University of Essex*, Colchester, United Kingdom.
 
 ## Education
 
-`2018`
-**Habilitation, Social Sciences**, *Polish Academy of Sciences*, Warsaw, Poland. Cycle of papers: *Populism as a normal feature of post-communist politics*.
+`2018` **Habilitation, Social Sciences**, *Polish Academy of Sciences*, Warsaw, Poland. Cycle of papers: *Populism as a normal feature of post-communist politics*.
 
-`2010`
-**Ph.D, Government**, *The University of Essex*, Essex, United Kingdom. Dissertation: *Populism in the Polish party system: party appeals and voter mobilisation*.
+`2010` **Ph.D, Government**, *The University of Essex*, Essex, United Kingdom. Dissertation: *Populism in the Polish party system: party appeals and voter mobilisation*.
 
-`2005`
-**M.A., European Politics (distinction)**, *The University of Essex*, Essex, United Kingdom. Thesis: *The controversial concept of populism*.
+`2005` **M.A., European Politics (distinction)**, *The University of Essex*, Essex, United Kingdom. Thesis: *The controversial concept of populism*.
 
-`2001`
-**M.A., International Studies (distinction)**, *The University of Durham*, Durham, United Kingdom.
+`2001` **M.A., International Studies (distinction)**, *The University of Durham*, Durham, United Kingdom.
 
-`2000`
-**B.A., English Literature (First Class with distinction)**, *The University of Warwick*, Warwick, United Kingdom.
-
+`2000` **B.A., English Literature (First Class with distinction)**, *The University of Warwick*, Warwick, United Kingdom.
 
 ## Publications
 
@@ -140,7 +126,6 @@ Stanley, B. (2016). Robert Rohrschneider and Stephen Whitefield, The Strain of R
 
 Stanley, B. (2024). Partisan Bias or Indifference? Panel Survey, Wave 3. *Harvard Dataverse*. <https://doi.org/10.7910/DVN/TUUHGV>
 
-
 ## Research projects
 
 ### Current projects
@@ -171,18 +156,18 @@ Stanley, B. (2024). Partisan Bias or Indifference? Panel Survey, Wave 3. *Harvar
 
 "Central European Diasporas in Western Europe 15 years after the EU’s Eastern Enlargement: Political and Social Dynamics.” Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the project *DIASPOlitic*, SWPS University, Warsaw, 6--7 November 2019.
 
-"Internalising the Insurgency: Understanding the Interaction of Radical Antiestablishment and Mainstream Parties." Panel organised for the *ECPR General Conference*, Wrocław, 4--7 September 2019. 
+"Internalising the Insurgency: Understanding the Interaction of Radical Antiestablishment and Mainstream Parties." Panel organised for the *ECPR General Conference*, Wrocław, 4--7 September 2019.
 
 `2015`
 
-"Structures of political competition in post-communist democracies: if not cleavages, then what?” Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015. 
+"Structures of political competition in post-communist democracies: if not cleavages, then what?” Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
 
 `2014`
 
 “Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe.” Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
 
-
 ### Presentations
+
 `2024`
 
 Liberal democracy after the Good Change: the challenges of post-PiS reform in Poland. *ViPET seminar*, University of Vienna, 11 December 2024.
@@ -195,11 +180,11 @@ Liberal-democratic hypocrisy? Stability and change in Polish citizens’ attitud
 
 `2023`
 
-Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. *Grassroots Unrest in Europe and the Erosion of Liberal Democracy*, Illiberalism Studies Program, George Washington University*, Washington, DC, 3 November 2023.
+Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. *Grassroots Unrest in Europe and the Erosion of Liberal Democracy*, Illiberalism Studies Program, George Washington University\*, Washington, DC, 3 November 2023.
 
-Polish Elections: What's Left of the Liberal Order? *Norwegian Institute of International Affairs (NUPI)*, Oslo,  29 September 2023.
+Polish Elections: What's Left of the Liberal Order? *Norwegian Institute of International Affairs (NUPI)*, Oslo, 29 September 2023.
 
-Do Central European Diasporas Matter for Homeland Election Results? *Peace Research Institute (PRIO)*, Oslo,  28 September 2023.
+Do Central European Diasporas Matter for Homeland Election Results? *Peace Research Institute (PRIO)*, Oslo, 28 September 2023.
 
 You Are What You Eat: Edible Extremism and Cultural Polarisation in the Netherlands and Poland. *ECPR General Conference*, Prague, 4--8 September 2023.
 
@@ -209,7 +194,7 @@ Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. 
 
 Squeezed from both sides: the dilemma of Poland’s social-democratic left. *European Forum on the Future of Political Parties: Between regeneration and decline – social democratic parties in Europe*, Rome, 15--16 September 2022.
 
-Would democratic backsliders be elected to office if only CEE migrants voted? *19th IMISCOE International Conference*, Oslo, 29 June--1 July 2022. 
+Would democratic backsliders be elected to office if only CEE migrants voted? *19th IMISCOE International Conference*, Oslo, 29 June--1 July 2022.
 
 `2021`
 
@@ -328,6 +313,7 @@ Populist Anti-liberal Ideology in the Polish Party System, 2001--2007. *Populism
 ## Teaching
 
 ### Current academic year
+
 Social Research Methodology (language of instruction: English)
 
 Introduction to Political Psychology (English)
@@ -346,8 +332,8 @@ European Integration (Polish)
 
 Student portfolio and thesis supervision (English)
 
-
 ### Previous seminars
+
 Challenges and Values in Public Life: Polarisation (Polish)
 
 Central and Eastern Europe During the Transition Period: Political, Economic and Social Changes of the Post-Communist Period
@@ -382,8 +368,8 @@ Regional Policy and the Structural Funds
 
 The Polish Party System
 
-
 ### Previous lectures
+
 Politics of Eastern Europe in Transition
 
 Democracy in Europe
@@ -400,27 +386,26 @@ Political Systems
 
 Recent Polish Political History
 
-Public Opinion 
+Public Opinion
 
 ## Research training and skills
-`2014`
-"Spatial Econometrics" and "Bayesian Analysis in the Social Sciences", *Essex Summer School in Social Science Data Analysis* 4--15 August 2014.
 
-`2010`
-"Data analysis in R." *Essex Summer School in Social Science Data Analysis*, 26 July--6 August 2010.
+`2014` "Spatial Econometrics" and "Bayesian Analysis in the Social Sciences", *Essex Summer School in Social Science Data Analysis* 4--15 August 2014.
+
+`2010` "Data analysis in R." *Essex Summer School in Social Science Data Analysis*, 26 July--6 August 2010.
 
 "Workshop in Experimental Methods." *ELECDEM*, Brussels 28 June--2 July 2010.
 
 "Workshop in Electoral Survey Design." *ELECDEM*, Central European University, Budapest, 30 April--4 May 2010.
 
-`2009`
-Euromanifesto coder training, *Mannheim Centre for European Social Research*, University of Mannheim, 8--10 May 2009.
+`2009` Euromanifesto coder training, *Mannheim Centre for European Social Research*, University of Mannheim, 8--10 May 2009.
 
-`2008`
-"Comparative research methods." *Essex Summer School in Social Science Data Analysis*, 7--18 July 2008.
+`2008` "Comparative research methods." *Essex Summer School in Social Science Data Analysis*, 7--18 July 2008.
 
 ## Other professional activities
+
 ### Thesis examination
+
 Doctoral thesis, Paulina Lenik, "A pendulum swung back? Comparative analysis of populism in Central and Eastern Europe.", *University College London*, 2022.
 
 Doctoral thesis, Justyna Lisińska, "How do populist supporters engage online?", *University of Southampton*, 2021.
@@ -428,20 +413,22 @@ Doctoral thesis, Justyna Lisińska, "How do populist supporters engage online?",
 Doctoral thesis, Agnieszka Sztajdel, "The Post-Truth Narrative in Post-Smolensk Poland", *European University Institute*, 2019.
 
 ### Reviewing
+
 Peer reviewer for *American Journal of Political Science*, *Comparative Political Studies*, *Cambridge Review of International Affairs*, *East European Politics*, *East European Politics and Societies*, *Europe-Asia Studies*, *European Journal of Political Research*, *German Politics*, *Government and Opposition*, *Journal of Elections, Public Opinion and Parties*, *Journal of Legislative Studies*, *Party Politics*, *Political Research Quarterly*, *Political Studies*, *Politics*, *Politics and Religion*, *Problems of Post-Communism*, *Representation*.
 
 External reviewer of grant bid under *SASPRO Slovak Academy of Sciences Programme*, 2015
 
 ### Other
+
 *East European Politics* Best Article Prize (shared with Mikołaj Cześnik), 2022.
 
 Rector's Award for Scientific Achievements 2020/2021, SWPS University, 2021.
 
-Member of the selection committee for the *ECPR Joint Sessions of Workshops*, 2019. 
+Member of the selection committee for the *ECPR Joint Sessions of Workshops*, 2019.
 
 Member of the questionnaire committee for the Polish National Election Study 2015 post-electoral survey, *SWPS University*, 2015.
 
-Member of the editorial advisory board: *Czech Journal of Political Science*, 2013--present; *Journal of Elections, Public Opinion and Parties*, 2016--present; *Populism*, 2017--present. 
+Member of the editorial advisory board: *Czech Journal of Political Science*, 2013--present; *Journal of Elections, Public Opinion and Parties*, 2016--present; *Populism*, 2017--present.
 
 Member of the questionnaire committee for the CSES Slovakia 2010 post-electoral survey, *Institute of Sociology, Slovak Academy of Sciences*, 2010.
 
