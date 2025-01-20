@@ -7,4 +7,10 @@ editor: visual
 
 ![](images/trends_pres_R2.png)
 
-![](images/trends_blend.png)
+![](images/latest_parl.png)
+
+![](images/trends_parl.png)
+
+![](images/seats_parl.png)
+
+![](images/PiSKO_seats.png)
