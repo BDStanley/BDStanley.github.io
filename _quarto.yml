@@ -24,13 +24,13 @@ website:
       - href: media.qmd
         text: Media
       
-      - href: cv.qmd
-        text: CV
-      
       - href: Pooling the Poles.qmd
         text: Pooling the Poles
         
     right:
+      - href: cv.qmd
+        text: CV
+    
       - text: "{{< fa brands whatsapp >}}"
         href: "tel:+48798814801"
         
