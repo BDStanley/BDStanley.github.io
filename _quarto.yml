@@ -24,7 +24,7 @@ website:
       - href: media.qmd
         text: Media
       
-      - href: https://bdstanley.github.io/markdown-cv/
+      - href: cv.qmd
         text: CV
 
 format:
