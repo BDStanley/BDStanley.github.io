@@ -1,0 +1,85 @@
+---
+editor: visual
+---
+
+### Journal articles
+
+Claassen, C., Ackermann, K., Bertsou, E., Borba, L., Carlin, R. E., Cavari, A., Dahlum, S., Gherghina, S., Hawkins, D., Lelkes, Y., Magalhães, P. C., Mattes, R., Meijers, M. J., Neundorf, A., Oross, D., Öztürk, A., Sarsfield, R., Self, D., Stanley, B., … Zechmeister, E. J. (2024). Conceptualizing and Measuring Support for Democracy: A New Approach. *Comparative Political Studies*. <https://doi.org/10.1177/00104140241259458>
+
+Markowski, R., Żerkowska-Balas, M., & Stanley, B. (2024). Participation in Polish Local Elections: Sheer Rational Choice or Social Embeddedness Fate? East European Politics and Societies, 38(1), 123–147. <https://doi.org/10.1177/08883254231177416>
+
+Szulecki, K., Kotnarowski, M., & Ben Stanley. (2023). Emigrant external voting in Central-Eastern Europe after EU enlargement. *Electoral Studies*, *81*, 102552. <https://doi.org/10.1016/j.electstud.2022.102552>
+
+Pirro, P. L. A., & Stanley, B. (2021). Forging, Bending, and Breaking: Enacting the “Illiberal Playbook” in Hungary and Poland. *Perspectives on Politics*, *20*(1), 86–101. <https://doi.org/10.1017/s1537592721001924>
+
+Stanley, B., & Cześnik, M. (2021). Uninformed or informed populists? The relationship between political knowledge, socio-economic status and populist attitudes in Poland. *East European Politics*, *38*(1), 43–60. <https://doi.org/10.1080/21599165.2021.1876676>
+
+Stanley, B., Markowski, R., & Cześnik, M. (2021). Marginalization, not mainstreaming: Explaining the failure of fringe parties in Poland. *Party Politics*, *21*(1), 46–57. <https://doi.org/10.1177/1354068819863616>
+
+Bill, S., & Stanley, B. (2020). Whose Poland is it to be? PiS and the struggle between monism and pluralism. *East European Politics*, *36*(3), 378–394. <https://doi.org/10.1080/21599165.2020.1787161>
+
+Markowski, R., & Stanley, B. (2020). Poczucie politycznego sprawstwa: O determinantach i korelatach zjawiska. *Studia Polityczne*, *47*(3), 11–34. <https://doi.org/10.35757/STP.2019.47.3.01>
+
+Stanley, B. (2019). A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections. *East European Politics and Societies*, *33*, 17–43. <https://doi.org/10.1177/0888325418783056>
+
+Stanley, B. (2019). Backsliding Away? The Quality of Democracy in Central and Eastern Europe. *Journal of Contemporary European Research*, *15*(4), 343–353. <https://doi.org/10.30950/jcer.v15i4.1122>
+
+Markowski, R., & Stanley, B. (2016). Rozłamy socjopolityczne w Polsce: Iluzja czy rzeczywistość? *Studia Socjologiczne*, *4*(223), 17–40.
+
+Stanley, B. (2016). Confrontation by default and confrontation by design: Strategic and institutional responses to Poland’s populist coalition government. *Democratization*, *23*(2), 263–282. <https://doi.org/10.1080/13510347.2015.1058782>
+
+Kwiatkowska, A., Cześnik, M., Żerkowska-Balas, M., & Stanley, B. (2016). Ideologiczna treść wymiaru lewica-prawica w Polsce w latach 1997-2015. *Studia Socjologiczne*, *4*(223), 97–129.
+
+Stanley, B., & Czesnik, M. (2016). Poland’s Palikot Movement. *Party Politics*, *22*(6), 705–718. <https://doi.org/10.1177/1354068814560911>
+
+Stanley, B. (2014). The Dynamics of Party-System Supply and Demand in Poland, 1997–2007. Cleavage Change or Shapeless Shifting? *Europe-Asia Studies*, *66*(8), 1295–1322. <https://doi.org/10.1080/09668136.2014.939522>
+
+Stanley, B. (2011). Populism, nationalism, or national populism? An analysis of Slovak voting behaviour at the 2010 parliamentary election. *Communist and Post-Communist Studies*, *44*(4), 257–270. <https://doi.org/10.1016/j.postcomstud.2011.10.005>
+
+Stanley, B. (2008). The thin ideology of populism. *Journal of Political Ideologies*, *13*(1), 95–110. <https://doi.org/10.1080/13569310701822289>
+
+### Monographs
+
+Bill, S. & Stanley, B. (2025, forthcoming). *Good Change: The Rise and Fall of Poland's Illiberal Revolution*. Stanford University Press.
+
+Szulecki, K., Bivand Erdal, M., & Stanley, B. (2022). *External Voting: The Patterns and Drivers of Central European Migrants’ Homeland Electoral Participation*. Palgrave Macmillan Cham. <https://doi.org/10.1007/978-3-031-19246-3>
+
+### Book chapters
+
+Stanley, B. (2022). Poland: When Populists Must Manage Crisis Instead of Performing It. In Nils Ringe & Lucio Rennó (Eds.), *Populists and the Pandemic: How Populists Around the World Responded to COVID-19* (pp. 105–116). Routledge.
+
+Stanley, B. (2020). A Comparison of Two Polish Party Leaders: Jarosław Kaczyński and Donald Tusk. In S. Gherghina (Ed.), *Party Leaders in Eastern Europe* (pp. 171–195).
+
+Stanley, B. (2019). Working in the gaps left behind: Radical right movements in a consolidating party system. In M. Caiani & O. Cisar (Eds.), *Radical Right ‘Movement Parties’ in Europe* (pp. 168–183). Routledge.
+
+Stanley, B., & Cześnik, M. (2019). Populism in Poland. In D. Stockemer (Ed.), *Populism Around the World* (pp. 67–87). Springer.
+
+Stanley, B. (2017). Populism in Central and Eastern Europe. In C. R. Kaltwasser, P. Taggart, P. O. Espejo, & P. Ostiguy (Eds.), *The Oxford Handbook of Populism* (pp. 140–160). Oxford University Press.
+
+Stanley, B. (2016). Defenders of the Cross. In N. Marzouki, D. McDonnell, & O. Roy (Eds.), *Saving the People: How Populists Hijack Religion* (pp. 109–128). Hurst Publishers.
+
+Stanley, B. (2016). The Politics of the Past in the Present: Poland’s electoral geography. In P. Cowley & R. Ford (Eds.), *More Sex, Lies and the Ballot Box* (pp. 233–236). Biteback Publishing.
+
+Stanley, B. (2015). The Polish Self-Defence party: From agrarian protest to the politics of populism, 1991-2007. In D. Strijker, G. Voerman, & I. Terluin (Eds.), *Rural protest groups and populist political parties* (pp. 191–216). Wageningen Academic Publishers.
+
+Stanley, B. (2015). The Post-Populist Non-Crisis in Poland. In H. Kriesi & T. S. Pappas (Eds.), *Populism in the Shadow of the Great Recession* (pp. 251–269). ECPR Press.
+
+Stanley, B. (2014). Poland 20 Years Later: The Long Arm of Transition. In R. Tiersky & E. Jones (Eds.), *Europe Today: A Twenty-First Century Introduction* (5th ed., pp. 257–291). Rowman & Littlefield Ltd.
+
+Stanley, B. (2013). Poland. In S. Berglund, J. Ekman, K. Deegan-Krause, & T. Knutsen (Eds.), *The Handbook of Political Change in Eastern Europe* (pp. 167–215). Edward Elgar Publishing Limited.
+
+Stanley, B. (2013). Populism. In G. Claeys (Ed.), *Encyclopedia of Modern Political Thought* (p. 642). SAGE Publications, Ltd.
+
+Stanley, B. (2011). Poland 20 Years Later: The Long Arm of Transition. In R. Tiersky & E. Jones (Eds.), *Europe Today: A Twenty-First Century Introduction* (4th ed., pp. 243–273). Rowman & Littlefield Ltd.
+
+### Essays, interviews and reviews
+
+Cichocki, M. A., & Stanley, B. (2019). Brexit i rewolucja populizmu w Europie. *Sprawy Międzynarodowe*, *72*(2), 9–16. <https://doi.org/10.35757/sm.2019.72.2.01>
+
+Stanley, B. (2018). Religion, Politics and Values in Poland: Continuity and Change Since 1989. Edited by Sabrina P. Ramet and Irena Borowik. New York, NY: Palgrave Macmillan. 341 pp. \$129.00 Cloth. *Politics and Religion*, *11*(2), 444–448. <https://doi.org/10.1017/s1755048317000712>
+
+Stanley, B. (2016). Robert Rohrschneider and Stephen Whitefield, The Strain of Representation: How Parties Represent Diverse Voters in Western and Eastern Europe, reviewed by Ben Stanley. *Party Politics*, *22*(1), 137–138. <https://doi.org/10.1177/1354068815615270>
+
+### Datasets
+
+Stanley, B. (2024). Partisan Bias or Indifference? Panel Survey, Wave 3. *Harvard Dataverse*. <https://doi.org/10.7910/DVN/TUUHGV>
