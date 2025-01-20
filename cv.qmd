@@ -10,13 +10,9 @@ ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
 
-<center>
-
-**Gender:** Male         **Date of birth:** 17/05/1979        **Nationality:** British, Irish         **Residence:** Poland\
+<center>**Gender:** Male         **Date of birth:** 17/05/1979        **Nationality:** British, Irish         **Residence:** Poland\
 **Phone:** <a href="tel:+48798814801">(+48)798814801</a>          **Email:** <a href="mailto:bstanley@swps.edu.pl">bstanley\@swps.edu.pl</a>           **Website:** <a href="https://www.ben-stanley.com">ben-stanley.com</a>\
-**ORCID:** <a href="https://orcid.org/0000-0001-6932-1046">0000-0001-6932-1046</a>
-
-</center>
+**ORCID:** <a href="https://orcid.org/0000-0001-6932-1046">0000-0001-6932-1046</a></center>
 
 ## Employment
 
@@ -34,7 +30,7 @@ Poland\
 
 `2008` **Graduate Teaching Assistant**, *Department of Government, The University of Essex*, Colchester, United Kingdom.
 
-## Education
+## Qualifications
 
 `2018` **Habilitation, Social Sciences**, *Polish Academy of Sciences*, Warsaw, Poland. Cycle of papers: *Populism as a normal feature of post-communist politics*.
 
@@ -58,21 +54,17 @@ Poland\
 
 ### Organisation
 
-`2019`
-"Central European Diasporas in Western Europe 15 years after the EU’s Eastern Enlargement: Political and Social Dynamics.” Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the project *DIASPOlitic*, SWPS University, Warsaw, 6--7 November 2019.
+`2019` "Central European Diasporas in Western Europe 15 years after the EU’s Eastern Enlargement: Political and Social Dynamics.” Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the project *DIASPOlitic*, SWPS University, Warsaw, 6--7 November 2019.
 
 "Internalising the Insurgency: Understanding the Interaction of Radical Antiestablishment and Mainstream Parties." Panel organised for the *ECPR General Conference*, Wrocław, 4--7 September 2019.
 
-`2015`
-"Structures of political competition in post-communist democracies: if not cleavages, then what?” Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
+`2015` "Structures of political competition in post-communist democracies: if not cleavages, then what?” Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
 
-`2014`
-“Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe.” Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
+`2014` “Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe.” Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
 
 ### Participation
 
-`2024`
-Liberal democracy after the Good Change: the challenges of post-PiS reform in Poland. *ViPET seminar*, University of Vienna, 11 December 2024.
+`2024` Liberal democracy after the Good Change: the challenges of post-PiS reform in Poland. *ViPET seminar*, University of Vienna, 11 December 2024.
 
 Liberal-democratic hypocrisy? Stability and change in Polish citizens’ attitudes towards liberal democracy. *ECPR General Conference*, Lisbon, 15 August 2024.
 
@@ -80,8 +72,7 @@ Liberal-democratic hypocrisy? Stability and change in Polish citizens’ attitud
 
 Liberal-democratic hypocrisy? Stability and change in Polish citizens’ attitudes towards liberal democracy. *Workshop on Political Behaviour in Central and Eastern Europe*, European University Institute, Florence, 27 June 2024.
 
-`2023`
-Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. *Grassroots Unrest in Europe and the Erosion of Liberal Democracy*, Illiberalism Studies Program, George Washington University\*, Washington, DC, 3 November 2023.
+`2023` Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. *Grassroots Unrest in Europe and the Erosion of Liberal Democracy*, Illiberalism Studies Program, George Washington University\*, Washington, DC, 3 November 2023.
 
 Polish Elections: What's Left of the Liberal Order? *Norwegian Institute of International Affairs (NUPI)*, Oslo, 29 September 2023.
 
@@ -91,23 +82,19 @@ You Are What You Eat: Edible Extremism and Cultural Polarisation in the Netherla
 
 Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland. *APSA Annual Meeting*, Los Angeles, August 31--3 September 2023.
 
-`2022`
-Squeezed from both sides: the dilemma of Poland’s social-democratic left. *European Forum on the Future of Political Parties: Between regeneration and decline – social democratic parties in Europe*, Rome, 15--16 September 2022.
+`2022` Squeezed from both sides: the dilemma of Poland’s social-democratic left. *European Forum on the Future of Political Parties: Between regeneration and decline – social democratic parties in Europe*, Rome, 15--16 September 2022.
 
 Would democratic backsliders be elected to office if only CEE migrants voted? *19th IMISCOE International Conference*, Oslo, 29 June--1 July 2022.
 
-`2021`
-When Populists Must Manage Crisis Instead of Performing It: COVID-19 in Poland. *VIII. Congress of The Czech Political Science Association*, Masaryk University, Brno, 9--10 September 2021.
+`2021` When Populists Must Manage Crisis Instead of Performing It: COVID-19 in Poland. *VIII. Congress of The Czech Political Science Association*, Masaryk University, Brno, 9--10 September 2021.
 
 External voting, diaspora party systems & (il)liberal remittances: A comparative analysis of Central European post-accession elections. *ECPR General Conference*, virtual event, 30 August--3 September 2021.
 
-`2020`
-Populism and the Pandemic: Crisis, Technocracy and Democracy in Poland. *Populism and the Pandemic Virtual Lecture Series*, Jean Monnet EU Center for Comparative Populism, University of Wisconsin-Madison, 13 October 2020.
+`2020` Populism and the Pandemic: Crisis, Technocracy and Democracy in Poland. *Populism and the Pandemic Virtual Lecture Series*, Jean Monnet EU Center for Comparative Populism, University of Wisconsin-Madison, 13 October 2020.
 
 If Migrants Chose Governments: A Comparative Analysis of Central Eastern European Diaspora Votes, *ECPR General Conference*, virtual event, 24--28 August 2020.
 
-`2019`
-Democratic Backsliding in Central and Eastern Europe: Transition to Illiberal Democracy? *TRASC: Europe--What’s Next? Transformational Leadership and Confidence Building for Young Professionals*, Georgian Institute for Strategic Studies (GISS), Tbilisi, 3--5 October 2019.
+`2019` Democratic Backsliding in Central and Eastern Europe: Transition to Illiberal Democracy? *TRASC: Europe--What’s Next? Transformational Leadership and Confidence Building for Young Professionals*, Georgian Institute for Strategic Studies (GISS), Tbilisi, 3--5 October 2019.
 
 Inconsequential Radicalism: Explaining the Non-Impact of Poland’s Eurosceptic Turn on Public Attitudes to the EU; Illiberal Remittances? Studying the Political Dynamics and Voting Patterns of CEE Migrants in Western Europe. *ECPR General Conference*, Wrocław, 4--7 September 2019.
 
@@ -117,8 +104,7 @@ Inconsequential Radicalism: Explaining the Non-Impact of Poland’s Eurosceptic 
 
 Conspiracy theory mentality and its socio-demographic and ideological correlates. *Workshop on "The Anatomy of Disbelief"*, Jagiellonian University, Kraków, 18 February 2019.
 
-`2018`
-Populism in spite of the people? Confronting myths about Poland’s anti-liberal turn. *Conference on "Democracy, Illiberal Democracy or Neoauthoritarianism"*, Cardinal Stefan Wyszyński University, Warsaw, 28 November 2018.
+`2018` Populism in spite of the people? Confronting myths about Poland’s anti-liberal turn. *Conference on "Democracy, Illiberal Democracy or Neoauthoritarianism"*, Cardinal Stefan Wyszyński University, Warsaw, 28 November 2018.
 
 The Growth of Populism in CEE? Invited lecture for the *Commission of Democracy workshop, Danish Youth Council*, Copenhagen, 26 November 2018.
 
@@ -130,8 +116,7 @@ Brexit: Explaining Britain’s decision to leave the European Union. Invited lec
 
 Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist Attitudes and Vote Choice in Central and Eastern Europe. Invited lecture at the *Seminar in Politics and Society, Collegio Carlo Alberto*, Turin, 8 February 2018.
 
-`2017`
-Populist voting, or just voting for populists? A comparative analysis of attitudes and voting behaviour in Central and Eastern Europe. Invited lecture at the Advanced Research Seminar, *Centre for Baltic and East European Studies, Södertörn University*, Stockholm, 13 November 2017.
+`2017` Populist voting, or just voting for populists? A comparative analysis of attitudes and voting behaviour in Central and Eastern Europe. Invited lecture at the Advanced Research Seminar, *Centre for Baltic and East European Studies, Södertörn University*, Stockholm, 13 November 2017.
 
 Populism in Central and Eastern Europe. Invited lecture for the *Research Group in Populist Political Communication, Adam Mickiewicz University*, Poznań, 6--7 November 2017.
 
@@ -145,18 +130,15 @@ Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist
 
 Post-communist Populist Voting. 75th Annual MPSA Conference, Chicago, 6--9 April 2017.
 
-`2016`
-A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections. *Contemporary Political Parties Amid the Crisis of Democracy*, Turzno, 19–-20 October 2016.
+`2016` A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections. *Contemporary Political Parties Amid the Crisis of Democracy*, Turzno, 19–-20 October 2016.
 
 Solidarism, Liberalism and Populism: voting behaviour in the 2015 Polish Parliamentary Elections. *ECPR General Conference*, Prague, 7--10 September 2016.
 
 A new populist divide? Correspondences of supply and demand in the 2015 Polish parliamentary elections. *2nd Prague Populism Conference*, Prague, 23-24 May 2016.
 
-`2015`
-The winner-loser divide in Central and Eastern Europe: a new set of political potentials? *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
+`2015` The winner-loser divide in Central and Eastern Europe: a new set of political potentials? *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
 
-`2014`
-Eating the starters: The mainstreaming of populism in post-communist Poland. *ECPR General Conference*, Glasgow, 3--6 September 2014.
+`2014` Eating the starters: The mainstreaming of populism in post-communist Poland. *ECPR General Conference*, Glasgow, 3--6 September 2014.
 
 Integration for the Winners, Demarcation for the Losers? Poland A and Poland B as a Cleavage. *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
 
@@ -164,11 +146,9 @@ Populism in Central and Eastern Europe. *Populism in Europe and the Americas: a 
 
 The Dog That Already Barked: Post-Populism Crisis in Poland. *Populism in the Shadow of the Great Recession*, European University Institute, Florence, 21-22 March 2014.
 
-`2013`
-Understanding the Palikot Movement. Invited seminar presentation at the *UCL School of Slavonic and East European Studies*, London, 4 February 2013.
+`2013` Understanding the Palikot Movement. Invited seminar presentation at the *UCL School of Slavonic and East European Studies*, London, 4 February 2013.
 
-`2012`
-From periphery to power: the emergence of Polish populism. *Studying Europe’s Populisms by Regional Country Clusters*, European University Institute, Florence, 7 December 2012.
+`2012` From periphery to power: the emergence of Polish populism. *Studying Europe’s Populisms by Regional Country Clusters*, European University Institute, Florence, 7 December 2012.
 
 The Thin Ideology of Populism. *Populist Political Parties in East Central Europe*, Masaryk University, Brno, 4 December 2012.
 
@@ -178,8 +158,7 @@ Down With the Pseudo-Elite! Populism as a Strategy for Elite Replacement in Post
 
 The Polish Self-Defence party: from agrarian protest to the politics of populism, 1990--2007. *Rural Protest Groups and Populist Political Parties: Exploring Objectives, Activities and Relationships*, University of Groningen, 24--25 May 2012.
 
-`2011`
-Cleavage change or shapeless shifting? The dynamics of party-system supply and demand in Poland, 1997-2007. *Old Theory, New Cases, The Study of Party Politics in Central and Eastern Europe*, Södertörn University, Stockholm, 15--16 September 2011.
+`2011` Cleavage change or shapeless shifting? The dynamics of party-system supply and demand in Poland, 1997-2007. *Old Theory, New Cases, The Study of Party Politics in Central and Eastern Europe*, Södertörn University, Stockholm, 15--16 September 2011.
 
 Cleavage change or shapeless shifting? The dynamics of party-system supply and demand in Poland, 1997--2007. *ECPR General Conference*, Reykjavik, 25--27 August 2011.
 
@@ -189,8 +168,7 @@ Populism, Nationalism, or National Populism? An Analysis of Slovak Voting Behavi
 
 Change of government and the locus of politics--power shifts in post-communist Poland. *Change of government and the Locus of Politics: Power Shifts in the Baltic Sea Region*, Södertörn University, Stockholm, 13--14 January 2011.
 
-`2010`
-The Polish presidential elections, June--July 2010: background and implications. *Free Elections 20 Years After: The Splendor and Misery of the Central European Dream*, Institute for Public Affairs and International Visegrad Fund, Bratislava, 8 July 2010.
+`2010` The Polish presidential elections, June--July 2010: background and implications. *Free Elections 20 Years After: The Splendor and Misery of the Central European Dream*, Institute for Public Affairs and International Visegrad Fund, Bratislava, 8 July 2010.
 
 Populism and its programmatic correlates in the Polish party system: a comprehensive classification. *ECPR Joint Sessions of Workshops*, Münster, 23--27 March 2010.
 
