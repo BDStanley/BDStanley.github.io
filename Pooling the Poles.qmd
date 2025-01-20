@@ -1,0 +1,14 @@
+---
+title: "Pooling the Poles"
+editor: visual
+---
+
+```{r, echo=F, results='asis'}
+cat("Pooled polls of intended voting at parliamentary elections in Poland, ", gsub(" 0", " ", format(Sys.time(), '%A %d %B')),".", sep="")
+```
+
+![](images/trends_pres_R1.png)
+
+![](images/trends_pres_R2.png)
+
+![](images/trends_blend.png)

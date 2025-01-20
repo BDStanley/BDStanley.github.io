@@ -26,6 +26,9 @@ website:
       
       - href: cv.qmd
         text: CV
+      
+      - href: Pooling the Poles.qmd
+        text: Pooling the Poles
         
     right:
       - text: "{{< fa brands whatsapp >}}"
