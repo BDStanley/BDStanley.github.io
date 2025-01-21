@@ -38,7 +38,7 @@ website:
         href: mailto:bstanley@swps.edu.pl
         
       - text: "{{< iconify fa6-brands bluesky size=1.1em title='Bluesky' >}}"
-        href: https://bsky.app/profile/benstanley.pl
+        href: https://bsky.app/profile/benstanley.eu
         
       - text: "{{< ai orcid >}}"
         href: https://orcid.org/my-orcid?orcid=0000-0001-6932-1046

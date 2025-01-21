@@ -5,7 +5,7 @@ about:
   id: hero-heading
   template: trestles
   #image-shape: rectangle
-  image-width: 70%
+  image-width: 50%
 ---
 
 ::: {#hero-heading}
