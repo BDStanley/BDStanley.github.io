@@ -96,8 +96,10 @@ $link-hover-decoration: underline !default;
 }
 
 // Footer
-$footer-bg: $gray-900 !default;
-$footer-fg: $gray-300 !default;
+$footer-bg: $red !default;
+$footer-fg: $white !default;
+$footer-hl: $white !default;
+
 
 /*-- scss:rules --*/
 
@@ -180,7 +182,7 @@ pre.text, pre.sourceCode, .cell-output pre {
     font-family: $footer-font-family;
 
     a {
-        color: $light-orange;
+        color: $white;
     }
 
     .faux-block {

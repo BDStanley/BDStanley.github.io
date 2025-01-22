@@ -4,7 +4,6 @@ page-layout: full
 about:
   id: hero-heading
   template: trestles
-  #image-shape: rectangle
   image-width: 50%
 ---
 
