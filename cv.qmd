@@ -11,8 +11,11 @@ ul. Chodakowska 19/31\
 Poland\
 
 <center>**Gender:** Male         **Date of birth:** 17.05.1979        **Nationality:** British, Irish         **Residence:** Poland\
+
 **Phone:** <a href="tel:+48798814801">(+48)798814801</a>          **Email:** <a href="mailto:bstanley@swps.edu.pl">bstanley\@swps.edu.pl</a>           **Website:** <a href="https://www.benstanley.eu">benstanley.eu</a>\
+
 **ORCID:** <a href="https://orcid.org/0000-0001-6932-1046">0000-0001-6932-1046</a></center>
+
 
 ## Employment
 
