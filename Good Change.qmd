@@ -29,7 +29,7 @@ International Affairs
 :::
 
 ::: {.column width="50%"}
-![](Good%20Change.png){fig-align="center"}
+![](Good%20Change.png){fig-align="left"}
 
 **Advance praise**
 
