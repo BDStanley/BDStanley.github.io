@@ -3,11 +3,11 @@ title: "Publications"
 editor: visual
 ---
 
-Total citations as of January 2025:
+Total citations as of February 2025:
 
--   [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013): 942 (h-index = 8)
+-   [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013): 953 (h-index = 8)
 
--   [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en): 3,048 (h-index = 16, i10-index = 17)
+-   [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en): 3,091 (h-index = 16, i10-index = 17)
 
 -   [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley): 42 citations across 34 policy documents.
 
