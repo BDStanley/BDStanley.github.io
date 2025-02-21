@@ -246,3 +246,16 @@ pre.text, pre.sourceCode, .cell-output pre {
         }
     }
 }
+
+.columns {
+  .column {
+    &:first-child {
+      border-right: 1px solid #ccc;
+      padding-right: 1rem;
+    }
+    
+    &:last-child {
+      padding-left: 1rem;
+    }
+  }
+}
