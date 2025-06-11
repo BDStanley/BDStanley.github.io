@@ -3,8 +3,6 @@ title: "Pooling the Poles"
 editor: visual 
 ---
 
-![](images/trends_pres_R2.png)
-
 ![](images/latest_parl.png)
 
 ![](images/trends_parl.png)
