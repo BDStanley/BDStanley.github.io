@@ -8,5 +8,3 @@ editor: visual
 ![](images/trends_parl.png)
 
 ![](images/seats_parl.png)
-
-![](images/PiSKO_seats.png)
