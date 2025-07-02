@@ -50,7 +50,7 @@ Poland\
 
 ## Publications
 
-{{< include list-of-publications.qmd >}}
+{{< include list-of-publications_cv.qmd >}}
 
 ## Research projects
 
@@ -69,8 +69,9 @@ Poland\
 `2014` “Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe.” Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
 
 ### Participation
+`2025` Pocketbook or Rosary Isn't Dead...It's Not Even Past! *PIASA Annual Meeting 2025*, Columbia University, 6th June 2025.
 
-`2025` Democratic Hypocrisy in Practice: A panel study of revealed preferences for liberal democracy in Poland. *Interdisciplinary Seminar in Empirical Social Science*, University of Warsaw, 22nd January 2025.
+Democratic Hypocrisy in Practice: A panel study of revealed preferences for liberal democracy in Poland. *Interdisciplinary Seminar in Empirical Social Science*, University of Warsaw, 22nd January 2025.
 
 `2024` Liberal democracy after the Good Change: the challenges of post-PiS reform in Poland. *ViPET seminar*, University of Vienna, 11 December 2024.
 

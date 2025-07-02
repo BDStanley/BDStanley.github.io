@@ -2,22 +2,22 @@
 editor: visual
 ---
 
-## Journal articles
+### Journal articles
 
 {{< include journal_articles.html >}}
 
-## Monographs
+### Monographs
 
 {{< include books.html >}}
 
-## Book chapters
+### Book chapters
 
 {{< include book_chapters.html >}}
 
-## Essays, interviews and reviews
+### Essays, interviews and reviews
 
 {{< include essays_interviews_reviews.html >}}
 
-## Datasets
+### Datasets
 
 {{< include datasets.html >}}

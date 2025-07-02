@@ -1,0 +1,136 @@
+---
+title: "Publications"
+format: 
+  html:
+    toc: true
+bibliography: mypublications.bib
+csl: https://www.zotero.org/styles/apsa
+---
+
+```{r setup}
+#| include: false
+#| message: false
+#| warning: false
+
+library(RefManageR)
+library(dplyr)
+
+BibOptions(
+  check.entries = FALSE,
+  style = "text",
+  bib.style = "authoryear",
+  max.names = 99
+)
+
+bib <- ReadBib("mypublications.bib")
+
+get_articles_by_content <- function(bib) {
+  articles <- list()
+  for (i in 1:length(bib)) {
+    entry <- bib[[i]]
+    if (!is.null(entry$journal) && !is.na(entry$journal) && entry$journal != "" &&
+        !is.null(entry$author) && any(grepl("Stanley", entry$author, ignore.case = TRUE)) &&
+        any(grepl("\\b(Ben|B\\.)\\s+Stanley|Stanley.*\\b(Ben|B\\.)", entry$author, ignore.case = TRUE))) {
+      articles <- c(articles, bib[i])
+    }
+  }
+  if (length(articles) > 0) {
+    class(articles) <- "BibEntry"
+  }
+  return(articles)
+}
+
+get_books_by_content <- function(bib) {
+  books <- list()
+  for (i in 1:length(bib)) {
+    entry <- bib[[i]]
+    if (!is.null(entry$publisher) && !is.na(entry$publisher) && entry$publisher != "" &&
+        (is.null(entry$journal) || is.na(entry$journal) || entry$journal == "") &&
+        (is.null(entry$booktitle) || is.na(entry$booktitle) || entry$booktitle == "") &&
+        !is.null(entry$author) && any(grepl("Stanley", entry$author, ignore.case = TRUE)) &&
+        any(grepl("\\b(Ben|B\\.)\\s+Stanley|Stanley.*\\b(Ben|B\\.)", entry$author, ignore.case = TRUE))) {
+      books <- c(books, bib[i])
+    }
+  }
+  if (length(books) > 0) {
+    class(books) <- "BibEntry"
+  }
+  return(books)
+}
+
+get_chapters_by_content <- function(bib) {
+  chapters <- list()
+  for (i in 1:length(bib)) {
+    entry <- bib[[i]]
+    if (!is.null(entry$booktitle) && !is.na(entry$booktitle) && entry$booktitle != "" &&
+        !is.null(entry$author) && any(grepl("Stanley", entry$author, ignore.case = TRUE)) &&
+        any(grepl("\\b(Ben|B\\.)\\s+Stanley|Stanley.*\\b(Ben|B\\.)", entry$author, ignore.case = TRUE))) {
+      chapters <- c(chapters, bib[i])
+    }
+  }
+  if (length(chapters) > 0) {
+    class(chapters) <- "BibEntry"
+  }
+  return(chapters)
+}
+
+print_bib_section <- function(bib_subset) {
+  if (length(bib_subset) == 0) {
+    cat("*No publications in this category.*\n\n")
+    return()
+  }
+  
+  years <- sapply(bib_subset, function(x) {
+    if (!is.null(x$year) && !is.na(x$year)) {
+      return(as.numeric(x$year))
+    } else {
+      return(0)
+    }
+  })
+  
+  sorted_indices <- order(years, decreasing = TRUE)
+  bib_subset <- bib_subset[sorted_indices]
+  
+  for (i in 1:length(bib_subset)) {
+    entry <- capture.output(print(bib_subset[i], .opts = list(style = "text")))
+    clean <- paste(entry, collapse = " ")
+    clean <- gsub("^\\[1\\]\\s*", "", clean)
+    clean <- gsub("\\s+", " ", clean)
+    clean <- trimws(clean)
+    
+    # Remove "In:" from journal articles specifically
+    if (!is.null(bib_subset[[i]]$journal) && !is.na(bib_subset[[i]]$journal)) {
+      clean <- gsub("\\bIn:\\s*", "", clean)
+    }
+    
+    cat(paste0(i, ". ", clean), "\n\n")
+  }
+}
+```
+
+## Journal articles
+
+```{r}
+#| echo: false
+#| results: asis
+articles <- get_articles_by_content(bib)
+print_bib_section(articles)
+```
+
+## Books
+
+```{r}
+#| echo: false
+#| results: asis
+books <- get_books_by_content(bib)
+print_bib_section(books)
+```
+
+## Book chapters
+
+```{r}
+#| echo: false
+#| results: asis
+chapters <- get_chapters_by_content(bib)
+print_bib_section(chapters)
+```
