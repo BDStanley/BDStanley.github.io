@@ -11,8 +11,7 @@ Total citations as of February 2025:
 
 -   [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley): 42 citations across 34 policy documents.
 
-```{=html}
-<div style="height: 20px;"></div>
-
+::: {style="height: 20px;"}
+:::
 
 {{< include list-of-publications.qmd >}}

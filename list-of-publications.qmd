@@ -1,23 +1,44 @@
 ---
 editor: visual
+format:
+  html:
+    css: styles.css
 ---
+
+<style>
+/* Force consistent spacing for all content */
+p {
+  margin-bottom: 1rem !important;
+}
+
+/* Ensure headings have consistent spacing */
+h2, h3 {
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Make sure all text blocks have the same spacing */
+div, section {
+  margin-bottom: 1rem;
+}
+</style>
 
 ## Journal articles
 
-{{< include journal_articles.html >}}
+{{< include journal_articles.qmd >}}
 
 ## Monographs
 
-{{< include books.html >}}
+{{< include books.qmd >}}
 
 ## Book chapters
 
-{{< include book_chapters.html >}}
+{{< include book_chapters.qmd >}}
 
 ## Essays, interviews and reviews
 
-{{< include essays_interviews_reviews.html >}}
+{{< include essays_interviews_reviews.qmd >}}
 
 ## Datasets
 
-{{< include datasets.html >}}
+{{< include datasets.qmd >}}

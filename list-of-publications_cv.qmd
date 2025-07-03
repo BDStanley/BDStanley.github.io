@@ -4,20 +4,20 @@ editor: visual
 
 ### Journal articles
 
-{{< include journal_articles.html >}}
+{{< include journal_articles.qmd >}}
 
 ### Monographs
 
-{{< include books.html >}}
+{{< include books.qmd >}}
 
 ### Book chapters
 
-{{< include book_chapters.html >}}
+{{< include book_chapters.qmd >}}
 
 ### Essays, interviews and reviews
 
-{{< include essays_interviews_reviews.html >}}
+{{< include essays_interviews_reviews.qmd >}}
 
 ### Datasets
 
-{{< include datasets.html >}}
+{{< include datasets.qmd >}}

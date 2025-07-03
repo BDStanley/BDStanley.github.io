@@ -3,25 +3,7 @@ title: "Media"
 editor: visual
 ---
 
-### Kultura Liberalna
-
--   [Państwo w okresie przejściowym](https://kulturaliberalna.pl/2024/10/15/panstwo-w-okresie-przejsciowym/) (15.10.2024)
-
--   [Demokracja walcząca -- szansa czy zagrożenie?](https://kulturaliberalna.pl/2024/08/14/stanley-wielka-brytania-ma-problem-z-imigracja-ale-to-nie-tlumaczy-zamieszek/) (24.09.2024)
-
--   [Wielka Brytania ma problem z imigracją, ale to nie tłumaczy zamieszek](https://kulturaliberalna.pl/2024/08/14/stanley-wielka-brytania-ma-problem-z-imigracja-ale-to-nie-tlumaczy-zamieszek/) (14.08.2024)
-
--   [Czym grozi demokracja hipokrytów?](https://kulturaliberalna.pl/2024/06/04/czym-grozi-demokracja-hipokrytow/) (04.06.2024)
-
--   [Technokracja to zaprzeczenie demokracji przedstawicielskiej](https://kulturaliberalna.pl/2024/04/29/stanley-technokracja-to-zaprzeczenie-demokracji-przedstawicielskiej/) (29.04.2024)
-
--   [Temat aborcji przesądził o wyborach. Koalicja rządząca nie może zamieść go pod dywan](https://kulturaliberalna.pl/2024/04/05/stanley-temat-aborcji-przesadzil-o-wyborach-koalicja-rzadzaca-nie-moze-zamiesc-go-pod-dywan/) (05.04.2024)
-
--   [Nie ufamy wyborcom PiS-u tak samo, jak nie ufamy PiS-owi. To problem dla naszej demokracji](https://kulturaliberalna.pl/2024/03/19/nie-ufamy-wyborcom-pis-u-tak-samo-jak-nie-ufamy-pis-owi-to-problem-dla-naszej-demokracji/) (19.03.2024)
-
--   [Czy Polacy popierają demokrację liberalną?](https://kulturaliberalna.pl/2024/02/19/stanley-czy-polacy-popieraja-demokracje-liberalna/) (19.02.2024)
-
--   [Populizm pozostanie polityką dla ludzi sfrustrowanych](https://kulturaliberalna.pl/2024/01/30/populizm-pozostanie-polityka-dla-ludzi-sfrustrowanych/) (30.01.2024)
+{{< include kultura_liberalna_articles.qmd >}}
 
 ### Polityka.pl
 
