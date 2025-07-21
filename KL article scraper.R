@@ -1,5 +1,5 @@
 # R Web Scraper for Ben Stanley Articles on kulturaliberalna.pl
-# Returns results as HTML list
+# Returns results as QMD format
 
 # Load required libraries
 library(rvest)
@@ -7,14 +7,13 @@ library(httr)
 library(dplyr)
 library(stringr)
 library(xml2)
-library(htmltools)
 
-# Main scraper function
+# Simple, direct scraper function for Ben Stanley articles
 scrape_ben_stanley_articles <- function() {
   
   # Base configuration
   base_url <- "https://kulturaliberalna.pl"
-  author_name <- "Ben Stanley"
+  author_url <- "https://kulturaliberalna.pl/autor/ben-stanley"
   
   # User agent to appear more like a browser
   user_agent <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -27,189 +26,118 @@ scrape_ben_stanley_articles <- function() {
     stringsAsFactors = FALSE
   )
   
-  cat("Starting search for Ben Stanley articles...\n")
+  cat("Scraping Ben Stanley author page directly...\n")
   
-  # Try different search approaches
-  search_patterns <- c(
-    paste0(base_url, "/szukaj?q=", URLencode("Ben Stanley")),
-    paste0(base_url, "/autor/ben-stanley"),
-    paste0(base_url, "/tag/ben-stanley"),
-    paste0(base_url, "/search/", URLencode("Ben Stanley"))
-  )
-  
-  for (search_url in search_patterns) {
-    cat("Trying URL:", search_url, "\n")
+  tryCatch({
+    # Make request with proper headers
+    response <- GET(author_url, 
+                    add_headers(`User-Agent` = user_agent),
+                    timeout(30))
     
-    tryCatch({
-      # Make request with proper headers
-      response <- GET(search_url, 
-                      add_headers(`User-Agent` = user_agent),
-                      timeout(30))
+    if (status_code(response) == 200) {
+      page <- read_html(response)
       
-      if (status_code(response) == 200) {
-        page <- read_html(response)
-        new_articles <- extract_articles_from_page(page, base_url)
+      # Get all links from the author page
+      all_links <- html_nodes(page, "a")
+      
+      for (link in all_links) {
+        href <- html_attr(link, "href")
+        title <- html_text(link, trim = TRUE)
         
-        if (nrow(new_articles) > 0) {
-          articles <- bind_rows(articles, new_articles)
-          cat("Found", nrow(new_articles), "articles from this page\n")
+        # Skip empty or very short titles
+        if (is.na(href) || is.na(title) || nchar(title) < 10) next
+        
+        # Convert relative URLs to absolute
+        url <- ifelse(startsWith(href, "http"), href, paste0(base_url, href))
+        
+        # Check if this looks like an article URL
+        if (is_article_url(url)) {
+          # Extract date from URL
+          date <- extract_date_from_url(url)
+          
+          # Add to results (since we're on Ben Stanley's author page, we assume all articles are his)
+          articles <- bind_rows(articles, data.frame(
+            title = title,
+            date = date,
+            url = url,
+            stringsAsFactors = FALSE
+          ))
+          
+          cat("Found article:", title, "\n")
         }
-      } else {
-        cat("HTTP status:", status_code(response), "\n")
       }
       
-      # Be respectful - wait between requests
-      Sys.sleep(2)
-      
-    }, error = function(e) {
-      cat("Error with URL", search_url, ":", e$message, "\n")
-    })
-  }
+    } else {
+      cat("Failed to load author page, status:", status_code(response), "\n")
+    }
+    
+  }, error = function(e) {
+    cat("Error:", e$message, "\n")
+  })
   
-  # Remove duplicates based on URL
+  # Remove duplicates based on URL and clean up
   articles <- articles %>%
     distinct(url, .keep_all = TRUE) %>%
     filter(!is.na(title), !is.na(url), title != "", url != "")
   
-  # Enhance article details if we found some
-  if (nrow(articles) > 0) {
-    cat("Enhancing article details...\n")
-    articles <- enhance_article_details(articles, user_agent)
-  }
-  
+  cat("Found", nrow(articles), "total articles\n")
   return(articles)
 }
 
-# Function to extract articles from a page
-extract_articles_from_page <- function(page, base_url) {
-  articles <- data.frame(
-    title = character(),
-    date = character(),
-    url = character(),
-    stringsAsFactors = FALSE
+# Simplified article URL validation - more restrictive
+is_article_url <- function(url) {
+  # Must be from kulturaliberalna.pl domain
+  if (!str_detect(url, "kulturaliberalna\\.pl")) {
+    return(FALSE)
+  }
+  
+  # Exclude non-article pages - be more strict
+  exclude_patterns <- c(
+    "/wp-content/", "/wp-admin/", "\\.(jpg|jpeg|png|gif|pdf|doc|docx)$",
+    "/feed/", "/comments/", "/trackback/", "#comment", "/autor/", "/tag/",
+    "/category/", "/kategoria/", "/kontakt", "/o-nas", "/regulamin", 
+    "/polityka", "/reklama", "/newsletter", "/donacje", "/wsparcie",
+    "facebook\\.com", "twitter\\.com", "instagram\\.com", "youtube\\.com",
+    "kulturaliberalna\\.pl/$", # homepage
+    "kulturaliberalna\\.pl$"   # homepage without slash
   )
   
-  # Multiple selectors to try for articles
-  article_selectors <- c(
-    "article",
-    ".article-item",
-    ".post-item", 
-    ".entry",
-    "div[class*='article']",
-    "div[class*='post']",
-    ".content-item",
-    ".story"
+  for (pattern in exclude_patterns) {
+    if (str_detect(tolower(url), pattern)) {
+      return(FALSE)
+    }
+  }
+  
+  # Only include URLs that clearly look like articles
+  # Must contain a year (articles are dated) OR specific article keywords
+  include_patterns <- c(
+    "/\\d{4}/\\d{2}/\\d{2}/", # YYYY/MM/DD format
+    "/\\d{4}/\\d{2}/",        # YYYY/MM format
+    "/artykul/", 
+    "/tekst/", 
+    "/post/", 
+    "/publikacja/", 
+    "/wywiad/", 
+    "/komentarz/",
+    "/opinia/",
+    "/raport/"
   )
   
-  for (selector in article_selectors) {
-    article_nodes <- html_nodes(page, selector)
-    
-    if (length(article_nodes) > 0) {
-      cat("Using selector:", selector, "- found", length(article_nodes), "nodes\n")
-      
-      for (node in article_nodes) {
-        article_info <- extract_single_article(node, base_url)
-        if (!is.null(article_info) && is_ben_stanley_article(article_info, node)) {
-          articles <- bind_rows(articles, article_info)
-        }
-      }
-      break # Use first working selector
+  for (pattern in include_patterns) {
+    if (str_detect(url, pattern)) {
+      return(TRUE)
     }
   }
   
-  # Fallback: extract from all links
-  if (nrow(articles) == 0) {
-    articles <- extract_from_links(page, base_url)
-  }
-  
-  return(articles)
-}
-
-# Extract information from a single article node
-extract_single_article <- function(node, base_url) {
-  tryCatch({
-    # Extract title
-    title_selectors <- c("h1", "h2", "h3", ".title", ".headline", "a")
-    title <- NULL
-    
-    for (sel in title_selectors) {
-      title_node <- html_node(node, sel)
-      if (!is.null(title_node)) {
-        title <- html_text(title_node, trim = TRUE)
-        if (!is.na(title) && nchar(title) > 5) break
-      }
-    }
-    
-    # Extract URL
-    link_node <- html_node(node, "a")
-    url <- NULL
-    if (!is.null(link_node)) {
-      href <- html_attr(link_node, "href")
-      if (!is.na(href)) {
-        url <- ifelse(startsWith(href, "http"), href, paste0(base_url, href))
-      }
-    }
-    
-    # Only proceed if we have valid title and URL, and URL is a valid article
-    if (!is.null(title) && !is.null(url) && !is.na(title) && !is.na(url) && is_article_url(url)) {
-      
-      # Extract date - first try from URL, then from page elements
-      date <- extract_date_from_url(url)
-      
-      # If no date in URL, try page elements
-      if (date == "Date not found") {
-        date_selectors <- c("time", ".date", ".published", "[datetime]", ".meta-date")
-        
-        for (sel in date_selectors) {
-          date_node <- html_node(node, sel)
-          if (!is.null(date_node)) {
-            # Try datetime attribute first
-            datetime_attr <- html_attr(date_node, "datetime")
-            if (!is.na(datetime_attr)) {
-              date <- datetime_attr
-              break
-            }
-            # Try text content
-            date_text <- html_text(date_node, trim = TRUE)
-            if (!is.na(date_text) && nchar(date_text) > 0) {
-              date <- date_text
-              break
-            }
-          }
-        }
-      }
-      
-      return(data.frame(
-        title = title,
-        date = date,
-        url = url,
-        stringsAsFactors = FALSE
-      ))
-    }
-    
-  }, error = function(e) {
-    return(NULL)
-  })
-  
-  return(NULL)
-}
-
-# Check if article is actually by Ben Stanley (strict author verification)
-is_ben_stanley_article <- function(article_info, node) {
-  # Only check for explicit author mentions in author fields
-  author_selectors <- c(".author", ".byline", ".meta-author", "[rel='author']", ".author-name", ".post-author")
-  
-  for (sel in author_selectors) {
-    author_node <- html_node(node, sel)
-    if (!is.null(author_node)) {
-      author_text <- html_text(author_node, trim = TRUE)
-      if (!is.na(author_text) && str_detect(tolower(author_text), "ben stanley")) {
-        return(TRUE)
-      }
+  # Additional check: if URL contains a year (2000-2025) and is reasonably long, likely an article
+  if (str_detect(url, "/\\d{4}/") && nchar(url) > 60) {
+    year_match <- str_extract(url, "\\d{4}")
+    if (!is.na(year_match) && as.numeric(year_match) >= 2015 && as.numeric(year_match) <= 2025) {
+      return(TRUE)
     }
   }
   
-  # Do NOT rely on title or URL mentions - only explicit author attribution
+  # Default to FALSE - be conservative
   return(FALSE)
 }
 
@@ -239,55 +167,12 @@ extract_date_from_url <- function(url) {
   return("Date not found")
 }
 
-# Check if URL is a valid kulturaliberalna.pl article (strict filtering)
-is_article_url <- function(url) {
-  # Must be from kulturaliberalna.pl domain
-  if (!str_detect(url, "kulturaliberalna\\.pl")) {
-    return(FALSE)
-  }
-  
-  # Exclude non-article pages
-  exclude_patterns <- c(
-    "/tag/", "/category/", "/autor/", "/search", "/kontakt", "/o-nas",
-    "facebook\\.com", "twitter\\.com", "instagram\\.com", "youtube\\.com",
-    "/wp-content/", "/wp-admin/", "\\.(jpg|jpeg|png|gif|pdf|doc|docx)$",
-    "/feed/", "/comments/", "/trackback/", "#comment"
-  )
-  
-  for (pattern in exclude_patterns) {
-    if (str_detect(tolower(url), pattern)) {
-      return(FALSE)
-    }
-  }
-  
-  # Include only article-like URLs
-  include_patterns <- c(
-    "/artykul/", "/tekst/", "/\\d{4}/\\d{2}/\\d{2}/", "/\\d{4}/\\d{2}/",
-    "/post/", "/publikacja/", "/wywiad/", "/komentarz/"
-  )
-  
-  for (pattern in include_patterns) {
-    if (str_detect(url, pattern)) {
-      return(TRUE)
-    }
-  }
-  
-  # Default to FALSE for safety - only include clearly identified articles
-  return(FALSE)
-}
-
-# Enhance article details by visiting individual pages (with strict author verification)
+# Enhance article details by visiting individual pages
 enhance_article_details <- function(articles, user_agent) {
-  # Check all articles for proper author verification
-  verified_articles <- data.frame(
-    title = character(),
-    date = character(),
-    url = character(),
-    stringsAsFactors = FALSE
-  )
+  enhanced_articles <- articles
   
   for (i in 1:nrow(articles)) {
-    cat("Verifying article", i, "of", nrow(articles), "\n")
+    cat("Enhancing article", i, "of", nrow(articles), "\n")
     
     tryCatch({
       response <- GET(articles$url[i], 
@@ -297,77 +182,58 @@ enhance_article_details <- function(articles, user_agent) {
       if (status_code(response) == 200) {
         page <- read_html(response)
         
-        # Strict author verification
-        author_found <- FALSE
-        author_selectors <- c(
-          ".author", ".byline", ".meta-author", "[rel='author']", 
-          ".author-name", ".post-author", ".article-author",
-          "[property='article:author']", ".entry-author"
-        )
-        
-        for (sel in author_selectors) {
-          author_nodes <- html_nodes(page, sel)
-          for (author_node in author_nodes) {
-            author_text <- html_text(author_node, trim = TRUE)
-            if (!is.na(author_text) && str_detect(tolower(author_text), "ben stanley")) {
-              author_found <- TRUE
-              break
-            }
-          }
-          if (author_found) break
-        }
-        
-        # Only include if Ben Stanley is confirmed as author
-        if (author_found) {
-          # Try to get better date if not already extracted from URL
-          current_date <- articles$date[i]
-          if (current_date == "Date not found") {
-            current_date <- extract_date_from_url(articles$url[i])
-          }
+        # Try to get better date if not already found
+        current_date <- articles$date[i]
+        if (current_date == "Date not found") {
+          # Try to extract date from page elements
+          date_selectors <- c(
+            "time[datetime]", ".date", ".published", 
+            "[property='article:published_time']", ".meta-date",
+            ".entry-date", ".post-date"
+          )
           
-          # If still no date, try page elements
-          if (current_date == "Date not found") {
-            date_selectors <- c("time[datetime]", ".date", ".published", "[property='article:published_time']")
-            
-            for (sel in date_selectors) {
-              date_node <- html_node(page, sel)
-              if (!is.null(date_node)) {
-                datetime_attr <- html_attr(date_node, "datetime")
-                if (!is.na(datetime_attr)) {
-                  current_date <- datetime_attr
-                  break
-                }
-                date_text <- html_text(date_node, trim = TRUE)
-                if (!is.na(date_text) && nchar(date_text) > 0) {
-                  current_date <- date_text
-                  break
-                }
+          for (sel in date_selectors) {
+            date_node <- html_node(page, sel)
+            if (!is.null(date_node)) {
+              datetime_attr <- html_attr(date_node, "datetime")
+              if (!is.na(datetime_attr)) {
+                enhanced_articles$date[i] <- datetime_attr
+                break
+              }
+              date_text <- html_text(date_node, trim = TRUE)
+              if (!is.na(date_text) && nchar(date_text) > 0) {
+                enhanced_articles$date[i] <- date_text
+                break
               }
             }
           }
+        }
+        
+        # Try to get better title if current title is very short
+        if (nchar(articles$title[i]) < 20) {
+          title_selectors <- c("h1", "h2", ".title", ".headline", "[property='og:title']")
           
-          # Add to verified articles
-          verified_articles <- bind_rows(verified_articles, data.frame(
-            title = articles$title[i],
-            date = current_date,
-            url = articles$url[i],
-            stringsAsFactors = FALSE
-          ))
-          
-          cat("✓ Verified: Ben Stanley is author\n")
-        } else {
-          cat("✗ Skipped: Ben Stanley not found as author\n")
+          for (sel in title_selectors) {
+            title_node <- html_node(page, sel)
+            if (!is.null(title_node)) {
+              title_text <- html_text(title_node, trim = TRUE)
+              if (!is.na(title_text) && nchar(title_text) > nchar(articles$title[i])) {
+                enhanced_articles$title[i] <- title_text
+                break
+              }
+            }
+          }
         }
       }
       
-      Sys.sleep(2) # Be respectful
+      Sys.sleep(1) # Be respectful
       
     }, error = function(e) {
-      cat("Error verifying article", i, ":", e$message, "\n")
+      cat("Error enhancing article", i, ":", e$message, "\n")
     })
   }
   
-  return(verified_articles)
+  return(enhanced_articles)
 }
 
 # Create QMD output
@@ -452,22 +318,12 @@ main <- function() {
   cat("Ben Stanley Article Scraper for kulturaliberalna.pl\n")
   cat(rep("=", 50), "\n")
   
-  # Scrape articles
+  # Scrape articles using simple method
   articles <- scrape_ben_stanley_articles()
   
   # Display summary
   cat("\nScraping completed!\n")
   cat("Found", nrow(articles), "articles by Ben Stanley\n\n")
-  
-  if (nrow(articles) > 0) {
-    # Print summary to console
-    cat("Articles found:\n")
-    for (i in 1:nrow(articles)) {
-      cat(sprintf("%d. %s\n", i, articles$title[i]))
-      cat(sprintf("   Date: %s\n", articles$date[i]))
-      cat(sprintf("   URL: %s\n\n", articles$url[i]))
-    }
-  }
   
   # Create and save QMD output
   qmd_output <- create_qmd_output(articles)
