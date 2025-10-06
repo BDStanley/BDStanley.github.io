@@ -10,20 +10,21 @@ ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
 
-<div style="display: flex; justify-content: space-between; margin-top: 20px;">
-<div style="flex: 1;">
+::::: {style="display: flex; justify-content: space-between; margin-top: 20px;"}
+::: {style="flex: 1;"}
 **Gender:** Male\
 **Date of birth:** 17.05.1979\
 **Nationality:** British, Irish\
 **Residence:** Poland
-</div>
-<div style="flex: 1;">
+:::
+
+::: {style="flex: 1;"}
 **Phone:** <a href="tel:+48798814801">(+48)798814801</a>\
 **Email:** <a href="mailto:bstanley@swps.edu.pl">bstanley\@swps.edu.pl</a>\
 **Website:** <a href="https://www.benstanley.eu">benstanley.eu</a>\
 **ORCID:** <a href="https://orcid.org/0000-0001-6932-1046">0000-0001-6932-1046</a>
-</div>
-</div>
+:::
+:::::
 
 ## Employment
 
@@ -65,17 +66,23 @@ Poland\
 
 ### Organisation
 
-`2019` "Central European Diasporas in Western Europe 15 years after the EU’s Eastern Enlargement: Political and Social Dynamics.” Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the project *DIASPOlitic*, SWPS University, Warsaw, 6--7 November 2019.
+`2019` Central European Diasporas in Western Europe 15 years after the EU’s Eastern Enlargement: Political and Social Dynamics. Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the project *DIASPOlitic*, SWPS University, Warsaw, 6--7 November 2019.
 
-"Internalising the Insurgency: Understanding the Interaction of Radical Antiestablishment and Mainstream Parties." Panel organised for the *ECPR General Conference*, Wrocław, 4--7 September 2019.
+"Internalising the Insurgency: Understanding the Interaction of Radical Antiestablishment and Mainstream Parties. Panel organised for the *ECPR General Conference*, Wrocław, 4--7 September 2019.
 
-`2015` "Structures of political competition in post-communist democracies: if not cleavages, then what?” Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
+`2015` Structures of political competition in post-communist democracies: if not cleavages, then what? Workshop co-organised with Radosław Markowski for the *ECPR Joint Sessions of Workshops*, Warsaw, 29 March--2 April 2015.
 
-`2014` “Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe.” Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
+`2014` Crisis, Corruption and Cleavages: Continuities and Change in Party Politics in Central and Eastern Europe. Panel organised for the *APSA Annual Meeting*, Washington, D.C., 28--31 August 2014.
 
 ### Participation
 
-`2025` Pocketbook or Rosary Isn't Dead...It's Not Even Past! *PIASA Annual Meeting 2025*, Columbia University, 6th June 2025.
+`2025` Author Meets Critics: Good Change: The Rise and Fall of Democratic Illiberalism. *APSA Annual Meeting*, Vancouver, 12 September 2025.
+
+Measuring a Moving Target? Populist Attitudes When Populists are In and Out of Power. *ECPR General Conference*, Thessaloniki, 28 August 2025.
+
+Trading Democracy Off: Exploring Populist, Illiberal and Authoritarian Challenges to Liberal Democracy. *IPSA World Congress*, Seoul, 14th July 2025.
+
+Pocketbook or Rosary Isn't Dead...It's Not Even Past! *PIASA Annual Meeting 2025*, Columbia University, 6th June 2025.
 
 Democratic Hypocrisy in Practice: A panel study of revealed preferences for liberal democracy in Poland. *Interdisciplinary Seminar in Empirical Social Science*, University of Warsaw, 22nd January 2025.
 
