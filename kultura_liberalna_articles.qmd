@@ -4,6 +4,8 @@ editor: visual
 
 ### Kultura Liberalna
 
+-   [„Migrant Schrödingera” żyje z zasiłków i zabiera pracę](https://kulturaliberalna.pl/2025/10/21/migrant-schrodingera-zyje-z-zasilkow-i-zabiera-prace/) (21.10.2025)
+
 -   [Czy to prawda, że Polska jest podzielona?](https://kulturaliberalna.pl/2025/08/11/stanley-czy-to-prawda-ze-polska-jest-podzielona/) (11.08.2025)
 
 -   [Raport z życia towarzyskiego: PiS wygrywa tam, gdzie nasi znajomi są tacy sami](https://kulturaliberalna.pl/2025/07/21/stanley-raport-z-zycia-towarzyskiego-pis-wygrywa-tam-gdzie-nasi-znajomi-sa-tacy-sami/) (21.07.2025)
@@ -31,5 +33,3 @@ editor: visual
 -   [Technokracja to zaprzeczenie demokracji przedstawicielskiej](https://kulturaliberalna.pl/2024/04/29/stanley-technokracja-to-zaprzeczenie-demokracji-przedstawicielskiej/) (29.04.2024)
 
 -   [Temat aborcji przesądził o wyborach. Koalicja rządząca nie może zamieść go pod dywan](https://kulturaliberalna.pl/2024/04/05/stanley-temat-aborcji-przesadzil-o-wyborach-koalicja-rzadzaca-nie-moze-zamiesc-go-pod-dywan/) (05.04.2024)
-
--   [Nie ufamy wyborcom PiS-u tak samo, jak nie ufamy PiS-owi. To problem dla naszej demokracji](https://kulturaliberalna.pl/2024/03/19/nie-ufamy-wyborcom-pis-u-tak-samo-jak-nie-ufamy-pis-owi-to-problem-dla-naszej-demokracji/) (19.03.2024)
