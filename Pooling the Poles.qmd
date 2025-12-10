@@ -10,3 +10,7 @@ editor: visual
 ![](images/seats_parl.png)
 
 ![](images/house_effects.png)
+
+![](images/scenario1_KO_plus_seats.png)
+
+![](images/scenario2_Lewica_plus_seats.png)
