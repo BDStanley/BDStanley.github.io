@@ -4,4 +4,4 @@ title: "Teaching"
 
 ## Unia Europejska i jej instytucje
 
-- [Week 1: Introduction to the EU](Unia Europejska i jej instytucje 1 slides.html)
+- [Week 1: Introduction to the EU](Teaching/Unia Europejska i jej instytucje 1 slides.html)
