@@ -29,8 +29,8 @@ website:
       - href: Pooling the Poles.qmd
         text: Pooling the Poles
       
-      - text: "Teaching"
-        href: Teaching.qmd
+      - text: Teaching
+        href: teaching.qmd
         
     right:
       - href: cv.qmd
