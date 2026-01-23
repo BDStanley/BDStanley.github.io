@@ -30,7 +30,7 @@ website:
         text: Pooling the Poles
       
       - text: "Teaching"
-        href: Teaching/index.qmd
+        href: Teaching.qmd
         
     right:
       - href: cv.qmd
