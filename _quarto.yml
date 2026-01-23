@@ -29,8 +29,8 @@ website:
       - href: Pooling the Poles.qmd
         text: Pooling the Poles
       
-      - href: Good Change.qmd
-        text: Good Change
+      - text: "Teaching"
+        href: teaching/index.qmd
         
     right:
       - href: cv.qmd
@@ -68,7 +68,7 @@ format:
     theme:
       - bds.scss
     css: styles.css
-    toc: true
+    toc: true # Your custom theme
 
 
 
