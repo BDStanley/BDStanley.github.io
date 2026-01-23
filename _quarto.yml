@@ -22,6 +22,9 @@ website:
 
       - href: research projects.qmd
         text: Research projects
+      
+      - href: Pooling the Poles.qmd
+        text: Pooling the Poles
         
       - href: media.qmd
         text: Media
