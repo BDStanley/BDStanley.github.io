@@ -1,0 +1,358 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 12 slides"
+subtitle: "Procesy polityczne w Unii Europejskiej"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Plan wykładu
+
+1.  **Zakres aktywności politycznej UE** - od współzależności do integracji
+
+2.  **Zakres kompetencji UE** - podział kompetencji
+
+3.  **Charakter aktywności politycznej** - regulacja vs. redystrybucja
+
+4.  **Cztery ramy procesów politycznych** - metody zarządzania
+
+5.  **Charakterystyka procesów** - kultura kompromisu i inkrementalizm
+
+# Zakres aktywności politycznej UE
+
+------------------------------------------------------------------------
+
+## Współzależność jako motor integracji
+
+-   Tradycyjne granice państwowe tracą na znaczeniu
+
+-   **Kluczowe czynniki współzależności:**
+
+    -   Integracja gospodarcza - decyzje jednego państwa wpływają na sąsiadów
+    -   Globalne wyzwania (klimat, migracje, cyberbezpieczeństwo)
+    -   Rozwój technologiczny - procesy transgraniczne
+
+-   **"Łączenie suwerenności"** - wspólne wykonywanie kompetencji
+
+------------------------------------------------------------------------
+
+## Rola traktatów w definiowaniu kompetencji
+
+-   Traktaty = fundament prawny, ale rzeczywistość jest bardziej złożona
+
+-   **Przykłady:**
+
+    -   WPR i polityka konkurencji - "rdzeń" projektu od początku
+    -   Polityka transportowa - przewidziana w 1957, ale słabo rozwinięta
+    -   Polityka środowiskowa - rozwijała się bez formalnej podstawy do 1986
+
+**Wniosek:** Dynamika polityczna często wyprzedza formalne ramy prawne.
+
+------------------------------------------------------------------------
+
+## Kluczowe determinanty rozwoju polityki
+
+1.  **Przywództwo instytucjonalne** - szczególnie Komisji Europejskiej
+
+2.  **Percepcja państw członkowskich** - wspólne korzyści vs. gra o sumie zerowej
+
+3.  **Zdolność instytucjonalna** - przekładanie deklaracji na działania
+
+**Wymóg jednomyślności** = długotrwałe negocjacje i stopniowe kompromisy
+
+------------------------------------------------------------------------
+
+## Od rynku do szerszej integracji
+
+**Fundament:** Swobodny przepływ towarów, osób, usług, kapitału
+
+**Polityki uzupełniające:**
+
+-   Polityka konkurencji, taryfa zewnętrzna
+-   Polityka regionalna, społeczna, ochrony konsumentów
+-   W strefie euro - polityka monetarna, koordynacja fiskalna
+
+**Ekspansja w obszary tradycyjnie państwowe:**
+
+-   Polityka zagraniczna i bezpieczeństwa
+-   Zdrowie publiczne, edukacja, kultura
+
+# Zakres kompetencji UE
+
+------------------------------------------------------------------------
+
+## Zasada przypisanych kompetencji
+
+-   UE działa **wyłącznie w granicach kompetencji przyznanych** w traktatach
+
+-   UE nie jest państwem federalnym z nieodłączną suwerennością
+
+-   **Traktat z Lizbony** - klarowny podział na trzy kategorie:
+
+    1.  Kompetencje wyłączne
+    2.  Kompetencje dzielone
+    3.  Kompetencje wspierające
+
+------------------------------------------------------------------------
+
+## Kompetencje wyłączne - serce integracji
+
+-   **Unia celna** - swobodny przepływ towarów, jednolite traktowanie importu
+
+-   **Polityka konkurencji** - uczciwe warunki działania
+
+-   **Polityka monetarna** (strefa euro) - EBC kształtuje stopy procentowe
+
+-   **Wspólna polityka handlowa** - UE jako jeden podmiot w negocjacjach
+
+-   **Ochrona morskich zasobów biologicznych**
+
+------------------------------------------------------------------------
+
+## Kompetencje dzielone - obszar współdziałania
+
+-   Najszersza kategoria
+
+-   UE i państwa mogą działać **równolegle**
+
+-   Państwa wykonują kompetencje tam, gdzie UE nie działa
+
+**Przykłady:**
+
+-   Rynek wewnętrzny, polityka społeczna
+-   Spójność gospodarcza i terytorialna
+-   Ochrona środowiska
+-   PWBiS (azyl, imigracja, współpraca policyjna i sądowa)
+
+------------------------------------------------------------------------
+
+## Kompetencje wspierające - zachowanie różnorodności
+
+-   UE **uzupełnia** polityki krajowe, **bez harmonizacji**
+
+-   **Obszary:** Kultura, edukacja, zdrowie publiczne, turystyka
+
+-   Wymiana doświadczeń, programy transgraniczne, wspólne standardy
+
+-   Filozofia: Niektóre obszary są tak zakorzenione w tradycjach narodowych, że ujednolicenie zagroziłoby różnorodności.
+
+# Charakter aktywności politycznej UE
+
+------------------------------------------------------------------------
+
+## Typologie polityki publicznej
+
+**Trzy typy:**
+
+1.  **Polityka regulacyjna** - dominuje w UE (standardy, normy, warunki)
+
+2.  **Polityka redystrybucyjna** - bardzo ograniczona (budżet ~1% PKB UE)
+
+3.  **Polityka dystrybucyjna** - programy badawcze, edukacyjne, infrastrukturalne
+
+------------------------------------------------------------------------
+
+## Dominacja polityki regulacyjnej
+
+-   Jednolity rynek wymaga **wspólnych standardów**
+
+-   Nie wystarczy zniesienie barier - potrzebne pozytywne regulacje
+
+-   Dziesiątki tysięcy aktów prawnych (bezpieczeństwo produktów, regulacje sektorowe)
+
+-   Regulacyjny dorobek UE = wzorzec dla innych ugrupowań integracyjnych
+
+------------------------------------------------------------------------
+
+## Ograniczenia redystrybucyjne UE
+
+-   Budżet UE: ~1% PKB vs. budżety krajowe: 40-50% PKB
+
+-   **Główne instrumenty:**
+
+    -   Polityka spójności (fundusze strukturalne, Fundusz Spójności)
+    -   Wspólna Polityka Rolna
+
+-   Skala nieporównywalna z krajowymi systemami społecznymi
+
+-   Opór polityczny przed "europejskim państwem opiekuńczym"
+
+------------------------------------------------------------------------
+
+## Wyzwania koordynacji i spójności
+
+-   **Fragmentacja** - różne procedury, źródła finansowania, konfiguracje instytucji
+
+-   **Zasada pomocniczości** - trudna do aplikacji w praktyce
+
+-   **Heterogeniczność UE** - różnice w rozwoju, tradycjach, preferencjach
+
+-   Konsekwencja: polityka "najmniejszego wspólnego mianownika"
+
+# Cztery ramy procesów politycznych
+
+------------------------------------------------------------------------
+
+## 1. Metoda wspólnotowa - klasyczny model
+
+-   **Monopol inicjatywny Komisji** - "interes europejski"
+
+-   **Rada UE** jako ostateczny decydent (głosowanie większością kwalifikowaną)
+
+-   **Współdecyzyjne uprawnienia PE** - demokratyczna legitymacja
+
+-   **TSUE** jako ostateczny arbiter
+
+**Charakterystyka:** Równowaga instytucjonalna, kultura konsensusu
+
+------------------------------------------------------------------------
+
+## 2. Intensywna współpraca międzyrządowa
+
+-   **Brak monopolu inicjatywnego Komisji** - impulsy od państw
+
+-   **Słaba rola PE** - legitymacja od parlamentów krajowych
+
+-   **Koncentracja na koordynacji**, nie na stanowieniu prawa
+
+-   **Wymóg jednomyślności** w kluczowych decyzjach
+
+**Obszary:** Polityka zagraniczna, obrona, niektóre aspekty WSiSW
+
+------------------------------------------------------------------------
+
+## 3. Otwarta metoda koordynacji - miękkie zarządzanie
+
+-   Ustalanie **ogólnych celów** przez Radę (jednomyślnie)
+
+-   **Dobrowolny charakter** - zachowanie autonomii krajowej
+
+-   Opracowywanie **planów działania** przez państwa
+
+-   **Regularne sprawozdawanie** - presja rówieśnicza
+
+-   Komisja w roli **wspierającej**
+
+**Obszary:** Zatrudnienie, polityka społeczna, edukacja
+
+------------------------------------------------------------------------
+
+## 4. Scentralizowany proces - techokratyczne zarządzanie
+
+-   **"Depolityzacja"** - decyzje na podstawie ekspertyzy technicznej
+
+-   **Szerokie uprawnienia Komisji** (polityka konkurencji) - blokowanie fuzji, grzywny
+
+-   **Wyłączne kompetencje EBC** (strefa euro) - stopy procentowe, nadzór bankowy
+
+-   **Ograniczone uprawnienia** innych instytucji
+
+**Uzasadnienie:** Wiarygodność zobowiązań, unikanie polityzacji
+
+# Charakterystyka procesów politycznych
+
+------------------------------------------------------------------------
+
+## Zmienność ról instytucjonalnych
+
+-   Rola instytucji **zmienia się** w zależności od obszaru i typu decyzji
+
+-   **Procesy legislacyjne:** Równowaga Komisja-Rada-PE
+
+-   **Działalność pozalegislacyjna:** Dominuje relacja Komisja-Rada
+
+-   Elastyczność pozwala na adaptację do różnorodnych wyzwań
+
+------------------------------------------------------------------------
+
+## Kultura kompromisu jako fundament
+
+-   Skuteczne kształtowanie polityki zależy od **gotowości do kompromisu**
+
+-   **Pakiety negocjacyjne:** Łączenie różnych kwestii w kompleksowe porozumienia
+
+-   Każde państwo otrzymuje kompensacje w priorytetowych obszarach
+
+-   **Rada Europejska** - kluczowa rola w łączeniu kwestii
+
+------------------------------------------------------------------------
+
+## Współpraca międzyinstytucjonalna
+
+-   **Formalna:** Trilogi, wspólne spotkania
+
+-   **Nieformalna:** Codzienne interakcje, sieci zawodowe
+
+-   **Instytucjonalizacja:** Porozumienia międzyinstytucjonalne, wspólne deklaracje
+
+-   Budowanie zaufania wymaga czasu, ale ułatwia procesy polityczne
+
+------------------------------------------------------------------------
+
+## Inkrementalizm jako dominująca logika
+
+**Dlaczego radykalne zmiany są trudne?**
+
+-   **Ograniczenia konstytucyjne** - kompatybilność z traktatami
+
+-   **Ograniczenia polityczne** - każda grupa może wetować
+
+-   **Interesy nabyte** - opór wobec zmian
+
+-   **Heterogeniczność UE** - mały zbiór możliwych porozumień
+
+**Konsekwencja:** Preferencja dla stopniowych dostosowań
+
+------------------------------------------------------------------------
+
+## Manewrowanie taktyczne
+
+-   **Budowanie koalicji** - sojusze między państwami o podobnych interesach
+
+-   **Względy czasowe** - kiedy forsować, kiedy czekać?
+
+-   **Zarządzanie reputacją** - konstruktywny partner vs. obrońca interesów
+
+-   Prezydencje, cykle wyborcze, warunki gospodarcze = wpływ na timing
+
+------------------------------------------------------------------------
+
+## Różne prędkości procesów
+
+-   **Procedury awaryjne** - dla kryzysów (uproszczone podejmowanie decyzji)
+
+-   **Ustalone obszary polityki** - sprawniejsze dzięki doświadczeniu (WPR, konkurencja, handel)
+
+-   **Nowsze obszary** - trudności wzrostu (polityka cyfrowa, klimatyczna, migracyjna)
+
+-   **Wrażliwość polityczna** - przepisy techniczne vs. kwestie suwerenności
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   System polityczny UE o **niezwykłej złożoności** - ewolucja przez dziesięciolecia
+
+-   Łączy **współpracę międzynarodową** z **zarządzaniem ponadnarodowym**
+
+-   Sukces zależy od: adaptacyjności, gotowości do kompromisu, myślenia strategicznego
+
+-   System nagradza **cierpliwość i długoterminowe zaangażowanie**
+
+-   Karze **jednostronne działania i krótkoterminowy oportunizm**
+
+-   UE = najbardziej zaawansowany eksperyment w pokojowej integracji w historii ludzkości

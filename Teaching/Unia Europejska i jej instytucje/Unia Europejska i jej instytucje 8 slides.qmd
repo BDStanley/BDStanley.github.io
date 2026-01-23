@@ -1,0 +1,334 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 8 slides"
+subtitle: "Parlament Europejski - struktura i kompetencje"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Parlament Europejski - charakterystyka
+
+-   **Jedyna instytucja UE wybierana bezpośrednio** przez obywateli państw członkowskich.
+
+-   Ewolucja od ciała konsultacyjnego do pełnoprawnego uczestnika procesu legislacyjnego.
+
+-   Kluczowy element demokratycznej legitymizacji UE.
+
+-   Centralne forum debaty o przyszłości integracji europejskiej.
+
+# Historia i ewolucja
+
+------------------------------------------------------------------------
+
+## Geneza Parlamentu Europejskiego
+
+-   **1952:** Wspólne Zgromadzenie EWWiS - delegaci parlamentów krajowych, ograniczone uprawnienia
+
+-   **1958:** Przekształcenie w jedno Zgromadzenie Parlamentarne dla trzech Wspólnot
+
+-   **1979:** Pierwsze wybory bezpośrednie (Akt z 1976 r.)
+
+-   **1986:** Oficjalne przyjęcie nazwy "Parlament Europejski" (JAE)
+
+------------------------------------------------------------------------
+
+## Wzmacnianie pozycji PE
+
+-   **Traktat z Maastricht (1992):** Procedura współdecyzji
+
+-   **Traktat Amsterdamski (1997):** Rozszerzenie zakresu współdecyzji
+
+-   **Traktat Nicejski (2001):** Dalsze rozszerzenie
+
+-   **Traktat Lizboński (2009):** Zwykła procedura ustawodawcza - PE równorzędny z Radą UE
+
+# Struktura i organizacja
+
+------------------------------------------------------------------------
+
+## Siedziba i miejsca pracy
+
+-   **Strasburg** - oficjalna siedziba, główne sesje plenarne (12 tygodni w roku)
+
+-   **Bruksela** - komisje parlamentarne, dodatkowe sesje plenarne
+
+-   **Luksemburg** - Sekretariat Generalny i administracja
+
+**Krytyka:** Koszty logistyczne i środowiskowe "wędrówki" między miastami.
+
+------------------------------------------------------------------------
+
+## Skład i podział mandatów
+
+-   **705 posłów** z 27 państw członkowskich
+
+-   **Degresywna proporcjonalność:**
+
+    -   Minimum 6 mandatów (Malta, Cypr, Luksemburg)
+    -   Maximum 96 mandatów (Niemcy)
+    -   Polska: 53 mandaty
+
+-   Mandat według miejsca wyboru, nie obywatelstwa
+
+-   Wybory co 5 lat, system proporcjonalny
+
+------------------------------------------------------------------------
+
+## Grupy polityczne - zasada organizacji
+
+-   Posłowie zorganizowani **według afiliacji politycznej**, nie narodowej.
+
+-   Fundamentalna zasada odzwierciedlająca ponadnarodowy charakter PE.
+
+-   Wymóg utworzenia grupy: min. 23 posłów z min. 7 państw.
+
+-   Posłowie nienależący do żadnej grupy = "niezrzeszeni"
+
+-   W sali plenarnej - podział według grup politycznych.
+
+------------------------------------------------------------------------
+
+## Główne grupy polityczne
+
+-   **EPP** (Europejska Partia Ludowa) - chrześcijańscy demokraci, centroprawica
+
+-   **S&D** (Postępowy Sojusz Socjalistów i Demokratów) - socjaldemokraci
+
+-   **Renew Europe** - liberałowie
+
+-   **Zieloni/Wolny Sojusz Europejski**
+
+-   **ECR** (Europejscy Konserwatyści i Reformatorzy)
+
+-   Frakcje eurosceptyczne i narodowo-konserwatywne
+
+------------------------------------------------------------------------
+
+## Struktura organizacyjna
+
+-   **Przewodniczący PE** - kadencja 2,5 roku (połowa kadencji parlamentarnej)
+
+-   **14 wiceprzewodniczących**
+
+-   **Prezydium** (przewodniczący + wiceprzewodniczący + 5 kwestorów) - sprawy administracyjne
+
+-   **Konferencja Przewodniczących** (przewodniczący PE + przewodniczący grup) - planowanie prac
+
+------------------------------------------------------------------------
+
+## System komisji parlamentarnych
+
+-   **20 stałych komisji tematycznych:**
+
+    -   ECON (Gospodarcza i Monetarna)
+    -   ENVI (Środowisko, Zdrowie, Bezpieczeństwo Żywności)
+    -   LIBE (Wolności Obywatelskie, Sprawiedliwość, Sprawy Wewnętrzne)
+    -   ... i inne
+
+-   Możliwość powoływania komisji specjalnych i śledczych
+
+-   Delegacje międzyparlamentarne - kontakty z parlamentami państw trzecich
+
+# Funkcje i kompetencje
+
+------------------------------------------------------------------------
+
+## Funkcje PE (art. 14 TUE)
+
+1.  **Funkcja prawodawcza** - wspólnie z Radą
+
+2.  **Funkcja budżetowa** - wspólnie z Radą
+
+3.  **Funkcja kontroli politycznej**
+
+4.  **Funkcja konsultacyjna**
+
+5.  **Wybór przewodniczącego Komisji**
+
+------------------------------------------------------------------------
+
+## Funkcje prawodawcze
+
+-   **Współlegislator** - dzieli funkcję z Radą UE.
+
+-   **Zwykła procedura ustawodawcza** - równorzędna pozycja PE i Rady.
+
+-   PE może:
+
+    -   Wprowadzać poprawki
+    -   Zatwierdzać ostateczny tekst
+    -   Odrzucić projekt w całości
+
+-   **Brak bezpośredniej inicjatywy ustawodawczej** - może wnioskować do Komisji o przedłożenie propozycji.
+
+------------------------------------------------------------------------
+
+## Zwykła procedura ustawodawcza
+
+1.  Inicjatywa Komisji Europejskiej
+
+2.  Pierwsze czytanie: PE i Rada
+
+3.  Jeśli rozbieżności - **trilog** (negocjacje PE, Rady, Komisji)
+
+4.  Drugie czytanie (jeśli potrzebne)
+
+5.  **Komitet pojednawczy** (ostatnia instancja)
+
+6.  Trzecie czytanie
+
+**W praktyce:** Większość aktów przyjmowana w pierwszym lub wczesnym drugim czytaniu.
+
+------------------------------------------------------------------------
+
+## Funkcje budżetowe
+
+-   PE + Rada = **władza budżetowa** UE.
+
+-   Uczestnictwo w corocznym procesie budżetowym.
+
+-   **Absolutorium** z wykonania budżetu - kontrola prawidłowości zarządzania.
+
+-   Zgoda PE niezbędna dla **wieloletnich ram finansowych**.
+
+------------------------------------------------------------------------
+
+## Funkcje kontrolne
+
+-   **Wotum nieufności** wobec Komisji (2/3 oddanych głosów + większość ogólnej liczby posłów)
+
+-   **Pytania parlamentarne** do Komisji, Rady, EBC
+
+-   **Komisje śledcze** - badanie naruszeń prawa UE
+
+-   **Prawo petycji** dla obywateli UE
+
+-   **Skarga do TSUE** za naruszenie traktatów
+
+------------------------------------------------------------------------
+
+## Funkcje kreacyjne
+
+-   **Wybór przewodniczącego Komisji** - na wniosek Rady Europejskiej
+
+-   **System Spitzenkandidaten** - wiodący kandydat zwycięskiej partii (2014: Juncker)
+
+-   **Zatwierdzenie składu Komisji** - przesłuchania kandydatów na komisarzy
+
+-   **Powołanie Europejskiego Rzecznika Praw Obywatelskich**
+
+-   Konsultacje w sprawie członków Trybunału Obrachunkowego i Zarządu EBC
+
+------------------------------------------------------------------------
+
+## Funkcje międzynarodowe
+
+-   **Zgoda PE wymagana dla:**
+
+    -   Większości umów międzynarodowych
+    -   Umów handlowych
+    -   Umów stowarzyszeniowych
+    -   Umów akcesyjnych
+    -   Umowy o wystąpieniu (Brexit)
+
+-   Delegacje do współpracy z parlamentami państw trzecich
+
+-   Rezolucje dotyczące praw człowieka i polityki zagranicznej
+
+# PE a parlamenty krajowe
+
+------------------------------------------------------------------------
+
+## Wzmocnienie roli parlamentów krajowych
+
+-   **Traktat Lizboński** uznał wkład parlamentów krajowych w funkcjonowanie UE.
+
+-   **System wczesnego ostrzegania** - kontrola zasady pomocniczości.
+
+-   **Procedura żółtej kartki:** 1/3 parlamentów → Komisja musi ponownie przeanalizować wniosek.
+
+-   **Procedura pomarańczowej kartki:** większość parlamentów → możliwość odrzucenia przez PE i Radę.
+
+------------------------------------------------------------------------
+
+## Współpraca międzyparlamentarna
+
+-   Parlamenty krajowe - implementacja dyrektyw UE
+
+-   **COSAC** - Konferencja Komisji ds. Unijnych Parlamentów UE
+
+-   Konferencje przewodniczących parlamentów
+
+-   Wspólne spotkania komisji PE i komisji parlamentów krajowych
+
+# Wyzwania i perspektywy
+
+------------------------------------------------------------------------
+
+## Główne wyzwania
+
+-   **Niska frekwencja wyborcza** - dystans obywateli wobec instytucji UE
+
+-   **Złożoność procedur** - trudność zrozumienia procesów decyzyjnych
+
+-   **Wielojęzyczność** - 24 języki oficjalne, koszty tłumaczeń
+
+-   **Polaryzacja polityczna** - wzrost ugrupowań eurosceptycznych
+
+-   **Wielosiedzbowość** - koszty "wędrówki" Strasburg-Bruksela-Luksemburg
+
+------------------------------------------------------------------------
+
+## Perspektywy reform
+
+-   Dążenie do uzyskania **prawa inicjatywy ustawodawczej**
+
+-   **Jednolita procedura wyborcza** dla całej UE
+
+-   **Ponadnarodowe listy kandydatów**
+
+-   Formalne umocowanie systemu **Spitzenkandidaten**
+
+-   Jednolity dzień wyborów, harmonizacja progów wyborczych
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Znaczenie PE w systemie demokratycznym UE
+
+-   Przeciwdziałanie **deficytowi demokratycznemu**
+
+-   Bezpośrednia reprezentacja obywateli
+
+-   Forum artykułowania interesów różnych grup społecznych
+
+-   Promowanie wartości europejskich (demokracja, prawa człowieka, praworządność)
+
+-   Funkcja edukacyjna i informacyjna
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   **705 posłów** z 27 państw, reprezentujących 440 mln obywateli.
+
+-   Ewolucja od zgromadzenia doradczego do pełnoprawnego współlegislatora.
+
+-   Kompetencje: prawodawcze, budżetowe, kontrolne, kreacyjne, międzynarodowe.
+
+-   Organizacja według grup politycznych - ponadnarodowy charakter.
+
+-   Silna legitymacja demokratyczna - fundament projektu europejskiego.

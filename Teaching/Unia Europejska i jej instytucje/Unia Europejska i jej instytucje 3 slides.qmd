@@ -1,0 +1,533 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 3 slides"
+subtitle: "Pogłębienie integracji europejskiej"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+## Czym jest pogłębianie integracji?
+
+-   Zwiększanie intensywności i zakresu integracji pomiędzy państwami członkowskimi.
+
+-   Proces realizuje się w trzech wymiarach:
+
+    -   Ewolucja traktatów stanowiących fundament prawny
+    -   Transformacja procesów politycznych
+    -   Rozszerzanie zakresu wspólnych polityk
+
+-   Dzisiejszy wykład koncentruje się na dwóch pierwszych aspektach.
+
+# Ponadnarodowość vs międzyrządowość
+
+------------------------------------------------------------------------
+
+## Dwie wizje integracji
+
+**Wizja ponadnarodowa:**
+
+-   Brak granic wewnętrznych
+-   Silne instytucje europejskie w centrum
+-   Decyzje w imieniu wszystkich Europejczyków
+
+**Wizja międzyrządowa:**
+
+-   Wyraźne granice państw
+-   Przedstawiciele krajów przy stole obrad
+-   Obrona interesów narodowych
+
+**Napięcie między tymi wizjami** kształtuje UE od początku
+
+------------------------------------------------------------------------
+
+## Podejście ponadnarodowe
+
+-   **Przekazanie suwerenności** instytucjom ponadnarodowym
+
+-   **Pierwszeństwo prawa UE** przed prawem krajowym (Costa vs ENEL, 1964)
+
+-   **Niezależność instytucji** od rządów państw członkowskich
+
+-   **Obywatele UE** jako bezpośrednie podmioty prawa unijnego
+
+-   **Głosowanie większościowe** zamiast jednomyślności
+
+------------------------------------------------------------------------
+
+## Wizja Jean Monneta
+
+> "Ludzie akceptują zmiany tylko w obliczu konieczności, a konieczność dostrzegają tylko w obliczu kryzysu"
+
+**Metoda "małych kroków":**
+
+1.  Wspólny rynek węgla i stali
+2.  Wspólny rynek towarów i usług
+3.  Wspólna waluta
+
+Każdy krok pozornie techniczny, ale prowadzący do **głębszej integracji**
+
+------------------------------------------------------------------------
+
+## Podejście międzyrządowe
+
+-   **Państwa = główne podmioty** procesu decyzyjnego
+
+-   Instytucje UE jako **platforma współpracy**, nie autonomiczna władza
+
+-   **Ochrona suwerenności** - narody jako źródło legitymacji
+
+-   **Prawo weta** każdego państwa
+
+------------------------------------------------------------------------
+
+## Kryzys pustego krzesła (1965)
+
+-   De Gaulle wycofał francuskich przedstawicieli z Rady
+
+-   **7 miesięcy paraliżu** Wspólnoty
+
+-   **Kompromis luksemburski** - de facto jednomyślność w kluczowych kwestiach
+
+> "Państwa są jedynymi bytami, które mają prawo nakazywać i prawo być słuchanymi" - Charles de Gaulle
+
+**"Europa ojczyzn"** vs zjednoczona federacja
+
+------------------------------------------------------------------------
+
+## UE jako model hybrydowy
+
+-   **Różne obszary** = różne nasilenie cech ponadnarodowych/międzyrządowych
+
+-   **Dynamiczna równowaga** między instytucjami
+
+-   **Kryzysy** prowadzą do przesunięć w równowadze
+
+-   Ani federacja, ani typowa organizacja międzynarodowa
+
+# Ewolucja traktatów
+
+------------------------------------------------------------------------
+
+## Rozwój traktatowy
+
+-   Fundamenty: Traktat Paryski (1951) i Traktaty Rzymskie (1957).
+
+-   Między 1957 a połową lat 80. rozwój był relatywnie powolny.
+
+-   Od drugiej połowy lat 80. - przyspieszenie reform cyklicznie co kilka lat.
+
+-   **Pięć przełomowych traktatów:**
+
+    -   Jednolity Akt Europejski (1986)
+    -   Traktat z Maastricht (1992)
+    -   Traktat Amsterdamski (1997)
+    -   Traktat Nicejski (2001)
+    -   Traktat Lizboński (2007)
+
+------------------------------------------------------------------------
+
+## Jednolity Akt Europejski (1986)
+
+-   Podpisany w lutym 1986, wszedł w życie w 1987 roku.
+
+-   **Najważniejsze osiągnięcia:**
+
+    -   Zobowiązanie do sfinalizowania rynku wewnętrznego do 1992 roku
+    -   Nowe obszary współpracy: ochrona środowiska, badania i rozwój
+    -   Upowszechnienie głosowania większościowego w Radzie
+    -   Wzmocnienie pozycji Parlamentu Europejskiego
+    -   Fundamenty współpracy w polityce zagranicznej
+
+------------------------------------------------------------------------
+
+## Traktat z Maastricht (1992) - kontekst
+
+**Czynniki wewnętrzne:**
+
+-   Potrzeba unii walutowej dla pełnej realizacji jednolitego rynku
+-   Wymiar społeczny integracji
+-   Współpraca w bezpieczeństwie wewnętrznym (likwidacja granic)
+-   Problem "deficytu demokratycznego"
+
+**Czynniki zewnętrzne:**
+
+-   Upadek komunizmu (1989-90)
+-   Zjednoczenie Niemiec (1990)
+-   Rozpad ZSRR (1991)
+-   Zakończenie zimnej wojny
+
+------------------------------------------------------------------------
+
+## Traktat z Maastricht - trzy filary UE
+
+1.  **Wspólnoty Europejskie** - instytucje ponadnarodowe, prawa obywatelskie
+
+2.  **Wspólna Polityka Zagraniczna i Bezpieczeństwa** - współpraca w stosunkach międzynarodowych i obronności
+
+3.  **Wymiar Sprawiedliwości i Sprawy Wewnętrzne** - migracja, przestępczość transgraniczna, wymiar sprawiedliwości
+
+------------------------------------------------------------------------
+
+## Traktat z Maastricht - reformy instytucjonalne
+
+-   Wzmocnienie pozycji Parlamentu Europejskiego.
+
+-   PE uzyskał prawo konsultacji i zatwierdzania składu Komisji.
+
+-   Trybunał Sprawiedliwości otrzymał nowe instrumenty egzekwowania prawa, w tym możliwość nakładania kar finansowych.
+
+------------------------------------------------------------------------
+
+## Traktat Amsterdamski (1997)
+
+**Kontekst:**
+
+-   Niezadowolenie z poziomu integracji po Maastricht
+-   Podziały co do kierunku reform
+-   Sceptycyzm Wielkiej Brytanii
+
+**Najważniejsze reformy:**
+
+-   Wzmocnienie roli Parlamentu i rozszerzenie głosowania większościowego
+-   Włączenie dorobku Schengen do ram prawnych UE
+-   Podstawy dla operacji humanitarnych, ratunkowych i pokojowych
+
+------------------------------------------------------------------------
+
+## Traktat Nicejski (2001)
+
+**Cel:** Reforma instytucjonalna przed rozszerzeniem o kraje EŚW.
+
+**Kluczowe zmiany:**
+
+-   Nowy system ważenia głosów w Radzie
+-   Mechanizm wzmocnionej współpracy
+-   Rozszerzenie kompetencji UE (przestępczość zorganizowana, wykluczenie społeczne)
+-   Karta Praw Podstawowych
+
+------------------------------------------------------------------------
+
+## Traktat Konstytucyjny - nieudana próba
+
+-   Konwent Europejski miał odpowiedzieć na pytanie o funkcjonowanie UE po rozszerzeniu do ponad 20 państw.
+
+-   **Cztery kluczowe cele:**
+
+    -   Podział kompetencji między UE a państwami
+    -   Uproszczenie mechanizmów decyzyjnych
+    -   Wzmocnienie legitymizacji demokratycznej
+    -   Konsolidacja dorobku traktatowego
+
+-   Podpisany w 2004, odrzucony w referendach we Francji i Holandii (2005).
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński (2007) - kontekst
+
+-   Po fiasku Traktatu Konstytucyjnego - potrzeba reform bez ambicji konstytucyjnych.
+
+-   Podpisany w grudniu 2007.
+
+-   Ratyfikacja wstrzymana przez negatywne referendum w Irlandii.
+
+-   Wszedł w życie w grudniu 2009 po powtórnym głosowaniu w Irlandii.
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński - kategoryzacja kompetencji
+
+**Po raz pierwszy precyzyjny podział kompetencji:**
+
+-   **Kompetencje wyłączne UE** - np. unia celna, polityka monetarna
+
+-   **Kompetencje dzielone** - państwa stanowią przepisy pod warunkiem braku regulacji UE (np. rolnictwo, transport, energia)
+
+-   **Kompetencje wspierające** - UE uzupełnia działania państw (np. kultura, oświata, turystyka)
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński - osobowość prawna i PE
+
+**Osobowość prawna UE:**
+
+-   Umożliwia zawieranie umów międzynarodowych
+-   Umożliwia przystępowanie do organizacji międzynarodowych
+
+**Wzmocnienie Parlamentu Europejskiego:**
+
+-   Kompetencje ustawodawcze w 40 nowych obszarach (łącznie 73)
+-   Pełna równorzędność z Radą w procedurze budżetowej
+-   Prawo wyboru przewodniczącego Komisji
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński - zmiany instytucjonalne
+
+**Rada Europejska:**
+
+-   Formalnie uznana za instytucję UE
+-   Stałe przewodnictwo (kadencja 30 miesięcy, odnawialna)
+
+**Wysoki Przedstawiciel ds. Zagranicznych:**
+
+-   Połączenie funkcji dotychczasowego Wysokiego Przedstawiciela i komisarza ds. stosunków zewnętrznych
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński - głosowanie większościowe
+
+**Zasada podwójnej większości:**
+
+-   55% państw członkowskich (min. 15 z 27)
+-   Reprezentujących 65% populacji UE
+
+**Gdy Rada nie działa na wniosek Komisji/Wysokiego Przedstawiciela:**
+
+-   Próg: 72% państw członkowskich
+-   Blokada: sprzeciw co najmniej 4 krajów
+
+------------------------------------------------------------------------
+
+## Traktat Lizboński - nowe kompetencje
+
+-   Polityka środowiskowa - walka ze zmianami klimatycznymi
+
+-   Polityka energetyczna - solidarność i bezpieczeństwo dostaw
+
+-   **Nowe obszary:**
+
+    -   Własność intelektualna
+    -   Sport
+    -   Eksploracja kosmosu
+    -   Turystyka
+    -   Ochrona ludności
+    -   Współpraca administracyjna
+
+# Wzorce integracji traktatowej
+
+------------------------------------------------------------------------
+
+## Cykliczny rytm reform
+
+-   Po JAE ukształtował się cykliczny rytm reform traktatowych.
+
+-   Każda reforma generowała potrzebę kolejnych zmian.
+
+-   Państwa niezadowolone z rezultatów dążyły do modyfikacji.
+
+-   Wiele traktatów zawierało klauzule przewidujące przyszłe rewizje.
+
+------------------------------------------------------------------------
+
+## "Gospodarka wyprzedza politykę"
+
+-   Przełomowe osiągnięcia wynikały z porozumień o integracji ekonomicznej.
+
+-   Integracja ekonomiczna wymuszała pogłębienie współpracy politycznej.
+
+-   **Przykład:** Rozszerzanie głosowania większościowego wynikało z przekonania, że efektywne zarządzanie wspólnym rynkiem jest niemożliwe przy prawie weta.
+
+------------------------------------------------------------------------
+
+## Elastyczność i wzmocniona współpraca
+
+-   Część państw inicjowała współpracę wykraczającą poza ramy traktatowe.
+
+-   Oddolne inicjatywy stopniowo inkorporowano do oficjalnych dokumentów.
+
+-   Wprowadzono mechanizmy umożliwiające zróżnicowane tempo integracji.
+
+-   Traktat Lizboński sformalizował możliwość stałej współpracy strukturalnej w polityce obronnej.
+
+------------------------------------------------------------------------
+
+## Inkrementalizm
+
+**Typowa sekwencja trzech faz:**
+
+1.  Rządy dostrzegają korzyści ze współdziałania → nieformalne inicjatywy międzyrządowe
+
+2.  Obszar uzyskuje umocowanie traktatowe, ale pozostaje domeną jednomyślnych decyzji
+
+3.  Gdy koordynacja międzyrządowa jest niewystarczająca → mechanizmy ponadnarodowe i głosowanie większościowe
+
+------------------------------------------------------------------------
+
+## Rosnąca złożoność traktatów
+
+-   Wraz z pogłębianiem integracji traktaty stawały się coraz obszerniejsze.
+
+-   Po Traktacie Nicejskim: 38 różnych kombinacji procesów legislacyjnych.
+
+-   Złożoność traktatów uniemożliwiała ich zrozumienie przez przeciętnego obywatela.
+
+------------------------------------------------------------------------
+
+## Elitarny charakter integracji
+
+-   Obywatele nie mają bezpośredniego wpływu na wybór władz UE ani możliwości inicjowania reform.
+
+-   Integracja kształtowana głównie przez elity polityczne i eksperckie.
+
+-   **Deficyt demokratyczny** - trudności z ratyfikacją traktatów w referendach.
+
+-   Obywatele manifestowali sprzeciw wobec kierunku lub tempa zmian.
+
+# Transformacja procesów politycznych
+
+------------------------------------------------------------------------
+
+## Pierwotny podział ról
+
+**Traktaty założycielskie ustanowiły klarowny podział:**
+
+-   **Komisja** - inicjuje proces legislacyjny
+-   **Parlament** - pełni funkcję doradczą
+-   **Rada** - podejmuje ostateczne decyzje
+-   **Trybunał Sprawiedliwości** - interpretuje prawo
+
+Model funkcjonował przez wiele lat, ale od połowy lat 80. uległ istotnym modyfikacjom.
+
+------------------------------------------------------------------------
+
+## Zacieranie granic kompetencji
+
+-   **Rada** zaczęła wpływać na kształtowanie agendy politycznej (domena Komisji).
+
+-   **Trybunał Sprawiedliwości** poprzez orzecznictwo stał się kreatorem procesów integracyjnych.
+
+-   **Parlament Europejski** - z organu doradczego przekształcił się w pełnoprawnego współustawodawcę.
+
+------------------------------------------------------------------------
+
+## Nowi aktorzy w procesie decyzyjnym
+
+-   **Rada Europejska** (szefowie państw i rządów) przejęła strategiczną kontrolę nad kierunkiem integracji.
+
+-   **Organizacje lobbingowe** (krajowe i międzynarodowe) reprezentujące interesy różnych grup.
+
+-   Procesy stały się bardziej pluralistyczne i wielopoziomowe.
+
+------------------------------------------------------------------------
+
+## Charakterystyka współczesnych procesów politycznych
+
+-   **Pluralistyczne i wielopoziomowe** - szerokie spektrum uczestników
+
+-   **Bardziej demokratyczne** - głosowanie większościowe, kontrola PE
+
+-   **Bardziej efektywne** - szybsze podejmowanie decyzji
+
+-   **Coraz bardziej ponadnarodowe** - odchodzenie od modelu międzyrządowego
+
+# Instytucje UE - dwa wymiary
+
+------------------------------------------------------------------------
+
+## Komisja Europejska
+
+**Elementy ponadnarodowe:**
+
+-   Monopol na inicjatywę ustawodawczą
+-   Niezależność od państw (przysięga komisarzy)
+-   Rola "strażnika traktatów"
+
+**Elementy międzyrządowe:**
+
+-   Każde państwo deleguje komisarza
+-   Przewodniczący wybierany przez Radę Europejską
+
+------------------------------------------------------------------------
+
+## Parlament Europejski
+
+**Elementy ponadnarodowe:**
+
+-   Organizacja według **grup politycznych**, nie delegacji narodowych
+-   **Bezpośrednie wybory** (od 1979) - jedyne na świecie
+-   Rosnące uprawnienia legislacyjne (współdecyzja)
+
+**Elementy międzyrządowe:**
+
+-   Alokacja miejsc według klucza narodowego
+-   Ograniczona rola w polityce zagranicznej
+
+------------------------------------------------------------------------
+
+## Rada UE i Rada Europejska
+
+**Elementy międzyrządowe:**
+
+-   Reprezentacja rządów, instrukcje krajowe
+-   Ważenie głosów faworyzujące większe państwa
+-   Rotacyjna prezydencja
+-   Konsensus w Radzie Europejskiej
+
+**Elementy ponadnarodowe:**
+
+-   Rozszerzanie zakresu QMV
+-   COREPER - "brukselska perspektywa"
+
+# Związki między poszerzaniem a pogłębianiem
+
+------------------------------------------------------------------------
+
+## Wzajemna stymulacja procesów
+
+-   Poszerzanie i pogłębianie - procesy ściśle powiązane i wzajemnie się stymulujące.
+
+-   Każde znaczące rozszerzenie wywierało wpływ na reformy instytucjonalne.
+
+-   JAE, Traktat z Maastricht, Traktat Lizboński - odpowiedzi na wyzwania rozszerzenia.
+
+-   Perspektywa członkostwa - potężny bodziec reformatorski dla kandydatów.
+
+------------------------------------------------------------------------
+
+## Rozszerzenie o kraje EŚW
+
+-   Konieczność dostosowania struktur do 27 państw przyspieszyła reformy.
+
+-   Opracowanie nowych modeli integracji (wzmocniona współpraca).
+
+-   Kryteria kopenhaskie - mechanizm transformacyjny dla krajów postkomunistycznych.
+
+-   Nowe priorytety: relacje ze wschodnimi sąsiadami, bezpieczeństwo energetyczne.
+
+------------------------------------------------------------------------
+
+## Rozszerzenie jako instrument polityki zagranicznej
+
+-   Jedno z najskuteczniejszych narzędzi polityki zagranicznej UE.
+
+-   Promowanie stabilności, demokracji i prosperity w sąsiedztwie.
+
+-   Perspektywa członkostwa - motywacja do reform nieosiągalnych bez "kotwicy" integracji europejskiej.
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   **Dwa podejścia** - ponadnarodowe i międzyrządowe - kształtują UE od początku
+
+-   Pogłębianie integracji - wielowymiarowy proces obejmujący reformy traktatowe i ewolucję mechanizmów politycznych
+
+-   Kolejne traktaty poszerzały kompetencje instytucji i zakres głosowania większościowego
+
+-   Integracja przebiegała stopniowo ("gospodarka wyprzedza politykę")
+
+-   **UE jako hybryda** - łączy elementy obu podejść w różnych proporcjach
+
+-   Poszerzanie i pogłębianie - uzupełniające się wymiary jednoczenia Europy

@@ -1,0 +1,326 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 6 slides"
+subtitle: "Rada Unii Europejskiej - struktura i kompetencje"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Rada Unii Europejskiej - charakterystyka
+
+-   Główny organ międzyrządowy w systemie legislacyjnym i decyzyjnym UE.
+
+-   Reprezentuje interesy państw członkowskich.
+
+-   Siedziba: Bruksela (niektóre posiedzenia w Luksemburgu).
+
+-   **Nie mylić z:**
+
+    -   Radą Europejską (szefowie państw i rządów)
+    -   Radą Europy (odrębna organizacja międzynarodowa)
+
+------------------------------------------------------------------------
+
+## Ewolucja historyczna
+
+-   **1952:** Specjalna Rada Ministrów (EWWiS)
+-   **1957:** Rada Ministrów (EWG, Euratom)
+-   **1967:** Rada Wspólnot Europejskich (po Traktacie fuzyjnym)
+-   **1993:** Rada Unii Europejskiej (obecna nazwa)
+
+Ewolucja nazewnictwa odzwierciedla przejście od sektorowej współpracy do kompleksowej unii politycznej.
+
+# Skład i status członków
+
+------------------------------------------------------------------------
+
+## Skład Rady
+
+-   **Jeden przedstawiciel szczebla ministerialnego** z każdego państwa członkowskiego.
+
+-   Przedstawiciel musi być upoważniony do zaciągania zobowiązań w imieniu rządu.
+
+-   **Rada nie jest organem kadencyjnym** - brak procedury unijnej powoływania/odwoływania.
+
+-   Każde państwo samodzielnie ustala sposób reprezentacji.
+
+-   W federacjach (np. Niemcy, Belgia) - możliwość reprezentacji przez ministrów regionalnych.
+
+------------------------------------------------------------------------
+
+## Dziesięć składów tematycznych Rady
+
+1.  Rada do Spraw Ogólnych
+2.  Rada do Spraw Zagranicznych
+3.  Rada ds. Gospodarczych i Finansowych (ECOFIN)
+4.  Rada ds. Wymiaru Sprawiedliwości i Spraw Wewnętrznych
+5.  Rada ds. Zatrudnienia, Polityki Społecznej, Zdrowia i Ochrony Konsumentów
+6.  Rada ds. Konkurencyjności
+7.  Rada ds. Transportu, Telekomunikacji i Energii
+8.  Rada ds. Rolnictwa i Rybołówstwa
+9.  Rada ds. Środowiska
+10. Rada ds. Edukacji, Młodzieży, Kultury i Sportu
+
+------------------------------------------------------------------------
+
+## Rada do Spraw Ogólnych
+
+**Funkcja koordynacyjna:**
+
+-   Przygotowanie posiedzeń Rady Europejskiej
+-   Koordynacja prac różnych konfiguracji Rady
+-   Nadzór nad wieloletnim programowaniem UE
+-   Sprawy instytucjonalne i administracyjne
+-   Kwestie horyzontalne (dotyczące kilku obszarów)
+
+W skład wchodzą ministrowie ds. europejskich lub spraw zagranicznych.
+
+------------------------------------------------------------------------
+
+## Rada do Spraw Zagranicznych
+
+**Obszary odpowiedzialności:**
+
+-   Wspólna Polityka Zagraniczna i Bezpieczeństwa (WPZiB)
+-   Wspólna Polityka Bezpieczeństwa i Obrony (WPBiO)
+-   Handel zagraniczny
+-   Współpraca rozwojowa
+-   Pomoc humanitarna
+
+**Wyróżnik:** Kierowana przez Wysokiego Przedstawiciela ds. Zagranicznych (nie przez rotacyjną prezydencję).
+
+# Prezydencja Rady
+
+------------------------------------------------------------------------
+
+## System prezydencji
+
+-   Prezydencja sprawowana rotacyjnie przez państwa członkowskie.
+
+-   **System "trio"** (od Traktatu z Lizbony):
+
+    -   3 kolejne państwa współpracują przez 18 miesięcy
+    -   Każde państwo przewodniczy przez 6 miesięcy
+    -   Wspólny program trio
+
+-   Przykład 2022-2023: Francja, Czechy, Szwecja.
+
+------------------------------------------------------------------------
+
+## Zadania prezydencji
+
+-   Kierowanie pracami legislacyjnymi Rady
+-   Zapewnienie ciągłości agendy UE
+-   Przewodniczenie posiedzeniom Rady i jej organów
+-   Reprezentowanie Rady wobec innych instytucji UE
+-   Pośredniczenie w negocjacjach między państwami
+-   Organizowanie spotkań formalnych i nieformalnych
+
+------------------------------------------------------------------------
+
+## Przykład: Polska prezydencja (lipiec-grudzień 2011)
+
+**Trzy główne priorytety:**
+
+1.  **Integracja europejska jako źródło wzrostu** - jednolity rynek, negocjacje budżetowe WRF 2014-2020
+
+2.  **Europa korzystająca na otwartości** - akcesja Chorwacji, Partnerstwo Wschodnie
+
+3.  **Bezpieczna Europa** - zarządzanie gospodarcze, polityka energetyczna
+
+**Główne wydarzenia:** Szczyt Partnerstwa Wschodniego, Europejski Kongres Kultury.
+
+# Struktura wewnętrzna
+
+------------------------------------------------------------------------
+
+## Sekretariat Generalny
+
+-   Wsparcie logistyczne i merytoryczne dla Rady
+
+-   Przygotowanie dokumentów, tłumaczeń, protokołów
+
+-   Zapewnienie ciągłości prac (niezależnie od zmieniających się prezydencji)
+
+-   Porady prawne i proceduralne
+
+------------------------------------------------------------------------
+
+## COREPER - Komitet Stałych Przedstawicieli
+
+**Skład:** Stali przedstawiciele (ambasadorzy) przy UE i ich zastępcy.
+
+**Dwa komitety:**
+
+-   **COREPER I** (zastępcy) - sprawy techniczne i społeczno-gospodarcze
+
+-   **COREPER II** (ambasadorzy) - sprawy polityczne, gospodarcze, instytucjonalne
+
+**Rola:** Filtr i forum negocjacyjne przed posiedzeniami Rady.
+
+------------------------------------------------------------------------
+
+## Punkty A i B
+
+-   **Punkt A:** Projekt uzgodniony w COREPER - przyjmowany bez dyskusji
+
+-   **Punkt B:** Brak konsensusu w COREPER - wymaga debaty i głosowania w Radzie
+
+------------------------------------------------------------------------
+
+## Hierarchia przygotowywania decyzji
+
+1.  **Grupy robocze i komitety** (poziom techniczny) - ponad 150 grup ekspertów
+
+2.  **COREPER** (poziom ambasadorów)
+
+3.  **Rada** (poziom ministrów)
+
+Ta struktura zapewnia uwzględnienie ekspertyzy technicznej i uwarunkowań politycznych.
+
+# Głosowanie w Radzie
+
+------------------------------------------------------------------------
+
+## Trzy metody głosowania
+
+1.  **Zwykła większość** - kwestie proceduralne (14 z 27 głosów)
+
+2.  **Większość kwalifikowana** - ~80% legislacji (standard)
+
+3.  **Jednomyślność** - szczególnie wrażliwe obszary
+
+------------------------------------------------------------------------
+
+## Większość kwalifikowana - podwójna większość
+
+**System wprowadzony przez Traktat z Lizbony:**
+
+-   Co najmniej **55% członków Rady** (15 z 27 państw)
+-   Reprezentujących **co najmniej 65% ludności UE**
+
+**Mniejszość blokująca:** Co najmniej 4 państwa reprezentujące ponad 35% ludności.
+
+System równoważy równość państw z demokratyczną legitymizacją.
+
+------------------------------------------------------------------------
+
+## Jednomyślność - obszary stosowania
+
+-   Sprawy podatkowe
+-   Zabezpieczenie społeczne
+-   Wspólna polityka zagraniczna i bezpieczeństwa
+-   Akcesja nowych państw członkowskich
+-   Zmiana traktatów
+-   Zwalczanie dyskryminacji
+
+**Każde państwo ma prawo weta** - prowadzi do długich negocjacji.
+
+------------------------------------------------------------------------
+
+## Procedura głosowania
+
+-   Głosowanie z inicjatywy przewodniczącego.
+
+-   Obowiązek rozpoczęcia głosowania na wniosek członka Rady lub Komisji (jeśli większość tak postanowi).
+
+-   Możliwość pełnomocnictwa tylko od jednego innego członka.
+
+-   **Wyniki głosowań są publikowane** - przejrzystość procesu.
+
+# Funkcje Rady
+
+------------------------------------------------------------------------
+
+## Funkcje prawodawcze
+
+-   Do 1993 r. - wyłączne uprawnienie do wydawania wiążących aktów prawnych.
+
+-   **Obecnie:** Dzieli uprawnienia z Parlamentem Europejskim (zwykła procedura ustawodawcza).
+
+-   Pośrednie prawo inicjatywy - może żądać od Komisji przedłożenia propozycji.
+
+-   Prawo modyfikowania niektórych przepisów prawa pierwotnego.
+
+------------------------------------------------------------------------
+
+## Funkcje kreacyjne
+
+**Tworzenie organów UE:**
+
+-   Powołanie Sądu (dawniej Sąd Pierwszej Instancji)
+-   Prawo powoływania sądów wyspecjalizowanych
+-   Tworzenie agencji i urzędów UE (z PE)
+
+**Mianowanie członków:**
+
+-   Trybunału Obrachunkowego
+-   Komitetu Ekonomiczno-Społecznego
+-   Komitetu Regionów
+
+------------------------------------------------------------------------
+
+## Funkcje kontrolne
+
+**Art. 7 TUE:**
+
+-   Stwierdzenie ryzyka naruszenia wartości UE przez państwo
+-   Zawieszenie praw wynikających z traktatu (w tym prawa głosu)
+
+**Polityka gospodarcza:**
+
+-   Sankcje za nadmierny deficyt budżetowy
+-   Żądanie nieoprocentowanego depozytu
+-   Nałożenie grzywny
+
+------------------------------------------------------------------------
+
+## Funkcje międzynarodowe
+
+-   Zawieranie umów międzynarodowych w imieniu UE
+
+-   Decyzje o wszczęciu negocjacji i mandacie negocjacyjnym
+
+-   Podpisywanie umów
+
+-   Uczestnictwo w procedurze rewizji traktatów
+
+# Rola w systemie instytucjonalnym
+
+------------------------------------------------------------------------
+
+## Trójkąt instytucjonalny
+
+**Trzy instytucje - trzy interesy:**
+
+-   **Komisja** - interes ogólnoeuropejski
+-   **Parlament** - obywatele UE
+-   **Rada** - państwa członkowskie
+
+Rada zapewnia uwzględnienie perspektyw rządów krajowych w procesie decyzyjnym.
+
+------------------------------------------------------------------------
+
+## Ewolucja roli Rady
+
+-   Od czysto międzyrządowego podejmowania decyzji...
+
+-   ...do zrównoważonego systemu dzielenia władzy z PE.
+
+-   Głosowanie większością kwalifikowaną zachęca do kompromisów.
+
+-   Rada pozostaje kluczowym forum negocjacji między państwami.
+
+-   Zdolność do znajdowania wspólnego stanowiska - fundament funkcjonowania UE.

@@ -1,0 +1,347 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 9 slides"
+subtitle: "System sądowy Unii Europejskiej"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## System sądowy UE - ewolucja
+
+-   Początkowo tylko **Trybunał Sprawiedliwości** (1952)
+
+-   **1989:** Utworzenie Sądu Pierwszej Instancji (JAE 1986)
+
+-   **2001:** Traktat z Nicei - możliwość tworzenia izb sądowych
+
+-   **2009:** Traktat z Lizbony - uporządkowanie struktury
+
+------------------------------------------------------------------------
+
+## Trybunał Sprawiedliwości Unii Europejskiej (TSUE)
+
+Wspólna nazwa dla całej struktury obejmującej:
+
+1.  **Trybunał Sprawiedliwości** (dawny ETS)
+
+2.  **Sąd** (dawny Sąd Pierwszej Instancji)
+
+3.  **Sądy wyspecjalizowane** (możliwość tworzenia)
+
+**Misja (art. 19 TUE):** Zapewnienie poszanowania prawa w wykładni i stosowaniu traktatów.
+
+# Trybunał Sprawiedliwości
+
+------------------------------------------------------------------------
+
+## Główne kategorie kompetencji
+
+1.  **Rozpatrywanie skarg:**
+
+    -   Państwa członkowskie vs. inne państwa lub instytucje
+    -   Instytucje vs. państwa lub inne instytucje
+    -   Osoby fizyczne i prawne (w określonych przypadkach)
+
+2.  **Orzeczenia prejudycjalne** ("kamień węgielny" systemu)
+
+3.  **Inne kompetencje** - opinie o umowach międzynarodowych, spory instytucjonalne
+
+------------------------------------------------------------------------
+
+## Wyłączne kompetencje Trybunału
+
+1.  Skargi przeciwko państwom za naruszenia prawa UE
+
+2.  Spory dotyczące krajowych banków centralnych i ESBC
+
+3.  **Orzeczenia prejudycjalne** na wniosek sądów krajowych
+
+4.  Opiniowanie projektów umów międzynarodowych
+
+5.  Skargi instytucji na nieważność aktów innych instytucji
+
+6.  Spory między państwami członkowskimi
+
+------------------------------------------------------------------------
+
+## Skład Trybunału Sprawiedliwości
+
+-   **27 sędziów** - jeden z każdego państwa członkowskiego
+
+-   **11 rzeczników generalnych:**
+
+    -   5 stałych (największe państwa)
+    -   6 rotacyjnych
+
+-   Kadencja: **6 lat**, częściowa wymiana co 3 lata
+
+-   Mianowanie: za wspólnym porozumieniem rządów, po ocenie przez specjalny komitet
+
+------------------------------------------------------------------------
+
+## Rzecznicy generalni - szczególna funkcja
+
+-   Brak dokładnego odpowiednika w większości systemów krajowych
+
+-   **Zadanie:** Przedstawianie publicznych, uzasadnionych wniosków w sprawach
+
+-   Działają z **bezstronnością i niezależnością**
+
+-   Propozycja rozstrzygnięcia - **nie wiążąca**, ale często wpływa na wyrok
+
+------------------------------------------------------------------------
+
+## Struktura wewnętrzna
+
+-   **Prezes** - wybierany przez sędziów na 3 lata
+
+-   **Wiceprezes** - wspiera prezesa
+
+-   **Pierwszy rzecznik generalny** - koordynacja pracy rzeczników (1 rok)
+
+-   **Sekretarz** - kadencja 6 lat, prowadzenie rejestru
+
+------------------------------------------------------------------------
+
+## Składy orzekające
+
+-   **Izby** 3 lub 5 sędziów - większość spraw
+
+-   **Wielka izba** (15 sędziów) - sprawy o szczególnym znaczeniu
+
+-   **Pełny skład** - wyjątkowe przypadki
+
+Wielka izba: na żądanie państwa lub instytucji UE będących stroną.
+
+# Sąd UE
+
+------------------------------------------------------------------------
+
+## Sąd - geneza i cel
+
+-   Utworzony jako odpowiedź na rosnącą liczbę spraw
+
+-   Wprowadzenie **dwuinstancyjnego modelu** orzekania
+
+-   Do 2009 r.: Sąd Pierwszej Instancji
+
+-   Od 2019 r.: **54 sędziów** (po 2 z każdego państwa) - reforma dla zwiększenia efektywności
+
+------------------------------------------------------------------------
+
+## Różnice względem Trybunału
+
+-   **Brak stałych rzeczników generalnych** (możliwość wyznaczenia sędziego)
+
+-   Podobne kryteria wyboru sędziów
+
+-   Kadencja 6 lat, wymiana co 3 lata
+
+-   Wspierany administracyjnie przez służby Trybunału
+
+------------------------------------------------------------------------
+
+## Kompetencje Sądu - pierwsza instancja
+
+1.  Skargi osób fizycznych i prawnych na akty instytucji UE
+
+2.  Spory między UE a jej pracownikami
+
+3.  Skargi państw na akty instytucji (z wyjątkami)
+
+4.  Sprawy z dziedziny **własności intelektualnej**
+
+5.  Skargi odszkodowawcze przeciwko UE i EBC
+
+6.  Sprawy dotyczące klauzul arbitrażowych w umowach UE
+
+------------------------------------------------------------------------
+
+## Procedura odwoławcza
+
+-   Od orzeczeń Sądu przysługuje **odwołanie do Trybunału**
+
+-   **Ograniczone do kwestii prawnych:**
+
+    -   Brak właściwości Sądu
+    -   Naruszenie procedury
+    -   Naruszenie prawa UE
+
+-   Trybunał może: uchylić i wydać własne rozstrzygnięcie lub skierować do ponownego rozpoznania
+
+------------------------------------------------------------------------
+
+## Sądy wyspecjalizowane
+
+-   Możliwość wprowadzona przez Traktat z Nicei
+
+-   Jedyny utworzony: **Sąd do spraw Służby Publicznej** (2005-2016)
+
+-   Rozwiązany w 2016 r. - kompetencje przekazane Sądowi
+
+-   Traktaty wciąż przewidują możliwość tworzenia nowych
+
+# Postępowanie przed TSUE
+
+------------------------------------------------------------------------
+
+## Struktura postępowania
+
+**Dwie główne części:**
+
+1.  **Część pisemna** - wymiana pism procesowych
+
+2.  **Część ustna** - rozprawa jawna
+
+**Przydzielenie:**
+
+-   Sędzia sprawozdawca - przygotowanie sprawozdania i projektu wyroku
+-   Rzecznik generalny - opinia z propozycją rozstrzygnięcia
+
+------------------------------------------------------------------------
+
+## Postępowanie prejudycjalne
+
+1.  Sąd krajowy zawiesza postępowanie i kieruje pytania do Trybunału
+
+2.  Tłumaczenie wniosku na wszystkie języki urzędowe UE
+
+3.  Doręczenie stronom, państwom członkowskim, instytucjom
+
+4.  **2 miesiące** na przedłożenie uwag pisemnych
+
+5.  Rozprawa, opinia rzecznika generalnego, narada, wyrok
+
+------------------------------------------------------------------------
+
+## Inne postępowania - etapy
+
+1.  **Skarga** do sekretariatu
+
+2.  **Odpowiedź** pozwanego (1 miesiąc)
+
+3.  **Replika** skarżącego (1 miesiąc)
+
+4.  **Duplika** pozwanego (1 miesiąc)
+
+5.  **Rozprawa jawna** - pytania sędziów i rzecznika
+
+6.  **Opinia rzecznika generalnego**
+
+7.  **Narada sędziów** i wyrok
+
+------------------------------------------------------------------------
+
+## Reprezentacja przed TSUE
+
+-   **Państwa i instytucje UE:** Pełnomocnicy + doradcy, adwokaci, radcowie
+
+-   **Osoby fizyczne i prawne:** Obowiązkowo profesjonalni pełnomocnicy
+
+**Wyrok:**
+
+-   Zapada większością głosów
+-   **Brak zdań odrębnych** w treści orzeczenia
+-   Publikacja we wszystkich językach urzędowych
+
+# Znaczenie orzecznictwa TSUE
+
+------------------------------------------------------------------------
+
+## Kluczowe orzeczenia - rynek wewnętrzny
+
+**Cassis de Dijon (1979):**
+
+-   Produkt legalnie wprowadzony w jednym państwie = dopuszczony w pozostałych
+-   **Zasada wzajemnego uznawania** - fundament jednolitego rynku
+
+**Bosman (1995):**
+
+-   Przepisy ograniczające transfery zawodników naruszają swobodę przepływu pracowników
+-   Rewolucja na rynku transferowym w sporcie
+
+------------------------------------------------------------------------
+
+## Kluczowe orzeczenia - prawa obywateli
+
+**Brown (1998):**
+
+-   Zwolnienie kobiety w ciąży z powodu nieobecności związanej z chorobą = dyskryminacja
+-   Wzmocnienie ochrony praw kobiet w ciąży
+
+**Zhu i Chen:**
+
+-   Małoletni obywatel UE ma prawo pobytu w innym państwie
+-   Matka (obywatelka państwa trzeciego) również musi mieć prawo pobytu
+-   Rozszerzenie interpretacji obywatelstwa UE
+
+------------------------------------------------------------------------
+
+## Kluczowe orzeczenia - inne obszary
+
+**Transmisje sportowe (2011):**
+
+-   Państwa mogą wymagać bezpłatnej transmisji mistrzostw świata/Europy
+-   Prawo społeczeństwa do informacji
+
+**Prawa pasażerów:**
+
+-   Odwołany/opóźniony lot = prawo do odszkodowania
+-   Chyba że nadzwyczajne okoliczności poza kontrolą przewoźnika
+
+# Rola TSUE w integracji
+
+------------------------------------------------------------------------
+
+## Znaczenie systemowe
+
+-   **Strażnik prawa unijnego** - gwarant jednolitego stosowania
+
+-   Aktywne **kształtowanie prawa UE** poprzez judykaturę
+
+-   Rozwój fundamentalnych zasad:
+
+    -   Zasada pierwszeństwa prawa UE
+    -   Zasada bezpośredniego skutku
+
+-   Ochrona **praw podstawowych** (Karta Praw Podstawowych)
+
+------------------------------------------------------------------------
+
+## Równowaga instytucjonalna
+
+-   Kontrola legalności działań instytucji UE
+
+-   Gwarancja funkcjonowania w granicach kompetencji traktatowych
+
+-   Rozstrzyganie sporów między instytucjami i państwami
+
+-   Bezpośredni wpływ na życie obywateli i funkcjonowanie jednolitego rynku
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   **TSUE** - szczególne miejsce w architekturze instytucjonalnej UE.
+
+-   Trójstopniowa struktura: Trybunał Sprawiedliwości, Sąd, sądy wyspecjalizowane.
+
+-   **Orzeczenia prejudycjalne** - "kamień węgielny" zapewniający jednolitość prawa.
+
+-   Orzecznictwo nie tylko rozstrzyga spory, ale **kształtuje prawo UE**.
+
+-   Istotny element procesu integracji europejskiej.

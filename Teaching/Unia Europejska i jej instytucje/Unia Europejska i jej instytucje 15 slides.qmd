@@ -1,0 +1,300 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 15 slides"
+subtitle: "UE jako system polityczny - podsumowanie"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Plan wykładu
+
+1.  **Przegląd struktury UE** - kluczowe instytucje i ich relacje
+
+2.  **UE jako system polityczny** - definicja i kryteria
+
+3.  **Ramy teoretyczne** - międzyrządowość vs ponadnarodowość
+
+4.  **Proces kształtowania polityki** - zwykła procedura ustawodawcza
+
+5.  **Egzamin** - szczegóły organizacyjne
+
+# Przegląd struktury UE
+
+------------------------------------------------------------------------
+
+## System instytucji UE
+
+-   **Obywatele UE** → wybory do PE, wpływ na rządy krajowe
+
+-   **Rada Europejska** - kierunek polityczny, nominacje
+
+-   **Parlament Europejski + Rada UE** - funkcje ustawodawcze i budżetowe
+
+-   **Komisja Europejska** - inicjatywa, wdrażanie, egzekwowanie
+
+-   **TSUE** - interpretacja prawa, rozstrzyganie sporów
+
+-   **EBC** - polityka pieniężna strefy euro
+
+-   **ETO** - kontrola budżetu
+
+------------------------------------------------------------------------
+
+## Ewolucja integracji
+
+**Faza I (lata 50.-60.):**
+
+-   EWWiS, EWG - unia celna, WPR
+
+**Spowolnienie (lata 70.-80.):**
+
+-   "Euroskleroza", kryzys pustego krzesła
+
+**Ożywienie (od 1986):**
+
+-   JAE - jednolity rynek do 1992
+-   Maastricht - UE, polityka społeczna, środowiskowa, WSiSW, WPZiB
+
+# UE jako system polityczny
+
+------------------------------------------------------------------------
+
+## Definicja systemu politycznego (Almond, Easton)
+
+1.  **Stabilne instytucje** i zasady regulujące ich relacje
+
+2.  **Partycypacja** obywateli i grup interesu
+
+3.  **Wpływ decyzji** na dystrybucję zasobów i wartości
+
+4.  **Ciągła interakcja** (sprzężenie zwrotne) między outputs i inputs
+
+------------------------------------------------------------------------
+
+## Kryterium 1: Instytucje
+
+-   Rozbudowana architektura instytucjonalna (PE, RE, Rada, KE, TSUE, EBC, ETO)
+
+-   Szczegółowe uregulowanie kompetencji i procedur w traktatach
+
+-   **Stopień stabilności i formalizacji** wyższy niż w jakiejkolwiek innej organizacji międzynarodowej
+
+✓ **Kryterium spełnione**
+
+------------------------------------------------------------------------
+
+## Kryterium 2: Partycypacja obywateli
+
+-   Rosnące zaangażowanie grup interesu (korporacje, NGO, związki zawodowe)
+
+-   Europartie w Parlamencie Europejskim
+
+-   Wybory bezpośrednie do PE, petycje, Europejska Inicjatywa Obywatelska
+
+-   **Bruksela** - jedno z największych centrów lobbingu na świecie
+
+✓ **Kryterium spełnione**
+
+------------------------------------------------------------------------
+
+## Kryterium 3: Wpływ decyzji
+
+-   Szeroki zakres polityk - od rynku wewnętrznego po politykę pieniężną
+
+-   ~150 aktów prawnych rocznie
+
+-   **Zasada nadrzędności** prawa UE nad prawem krajowym
+
+-   Realne konsekwencje dla obywateli i przedsiębiorstw
+
+✓ **Kryterium spełnione**
+
+------------------------------------------------------------------------
+
+## Kryterium 4: Ciągła interakcja
+
+**Intensywne interakcje na wielu poziomach:**
+
+-   Wewnątrz i między instytucjami UE
+-   Między rządami a Brukselą
+-   W ramach administracji krajowych
+-   Między lobbystami a decydentami
+
+**Działalność codzienna** (nie epizodyczna jak w innych organizacjach)
+
+✓ **Kryterium spełnione**
+
+# Ramy teoretyczne
+
+------------------------------------------------------------------------
+
+## Podejście międzyrządowe
+
+**Główne założenia:**
+
+-   Polityka UE zdominowana przez rządy państw członkowskich
+
+-   Rządy mają jasno zdefiniowane preferencje narodowe
+
+-   Dysponują zasobami i informacjami
+
+**Delegowanie uprawnień:**
+
+-   Komisja - rozwiązywanie problemów koordynacji
+-   PE - legitymacja demokratyczna
+-   TSUE - egzekwowanie prawa
+
+Instytucje ponadnarodowe = **agenci** w rękach państw (pryncypałów)
+
+------------------------------------------------------------------------
+
+## Podejście ponadnarodowe
+
+**Główna teza:** Rządy nie otrzymują wszystkiego, czego chcą
+
+**Trzy powody:**
+
+1.  Instytucje ponadnarodowe mają **własne interesy, preferencje i zasoby**
+
+2.  **Reguły gry** (np. QMV zamiast jednomyślności) kształtują wyniki
+
+3.  **Wielowymiarowość** - stanowiska różnią się w zależności od kwestii
+
+------------------------------------------------------------------------
+
+## Ponadnarodowość - konsekwencje
+
+-   Wyniki polityki mogą **różnić się od intencji** rządów
+
+-   Przykład: JAE miał liberalizować rynek, ale doprowadził do rozszerzenia regulacji środowiskowych i społecznych
+
+-   **Spillover** - integracja w jednym obszarze stwarza presję na integrację w obszarach powiązanych
+
+# W kierunku równowagi konstytucyjnej
+
+------------------------------------------------------------------------
+
+## Podział kompetencji
+
+**Poziom UE:**
+
+-   Regulacja jednolitego rynku
+-   Polityka handlowa, konkurencji
+-   Koordynacja makroekonomiczna
+
+**Poziom krajowy:**
+
+-   Systemy podatkowe
+-   Główne wydatki publiczne (edukacja, zdrowie, zabezpieczenie społeczne)
+
+------------------------------------------------------------------------
+
+## Metoda wspólnotowa vs międzyrządowa
+
+**Mechanizmy ponadnarodowe:**
+
+-   Inicjatywa Komisji
+-   Głosowanie większością kwalifikowaną (QMV)
+-   Kontrola PE i TSUE
+
+**Mechanizmy międzyrządowe:**
+
+-   Jednomyślność w strategicznych obszarach
+-   Koordynacja polityk (Semestr Europejski)
+-   Ochrona fundamentalnych interesów narodowych
+
+**UE = hybryda** łącząca oba podejścia
+
+# Proces kształtowania polityki
+
+------------------------------------------------------------------------
+
+## Zwykła procedura ustawodawcza
+
+**Uczestnicy:**
+
+-   Parlament Europejski (obywatele)
+-   Rada UE (rządy państw)
+-   Komisja Europejska (interes ogólny UE)
+
+**PE i Rada = współprawodawcy** na równych zasadach
+
+------------------------------------------------------------------------
+
+## Etapy procedury
+
+1.  **Wniosek Komisji** - inicjatywa ustawodawcza
+
+2.  **I czytanie w PE** - stanowisko z poprawkami
+
+3.  **I czytanie w Radzie** - akceptacja lub własne stanowisko
+
+4.  **II czytanie w PE** - zatwierdzenie, odrzucenie lub poprawki
+
+5.  **II czytanie w Radzie** - zatwierdzenie lub zwołanie komitetu
+
+6.  **Postępowanie pojednawcze** - wspólny projekt
+
+7.  **III czytanie** - ostateczne zatwierdzenie
+
+------------------------------------------------------------------------
+
+## Rodzaje aktów prawnych
+
+-   **Rozporządzenia** - wiążące, bezpośrednio stosowane w całości
+
+-   **Dyrektywy** - wiążący cel, swoboda w implementacji
+
+-   **Decyzje** - wiążące dla konkretnych adresatów
+
+-   **Zalecenia** - niewiążące propozycje działania
+
+-   **Opinie** - niewiążące oświadczenia
+
+# Egzamin
+
+------------------------------------------------------------------------
+
+## Struktura egzaminu
+
+-   **25 pytań** łącznie
+
+-   **20 pytań wielokrotnego wyboru** (4 opcje, 1 poprawna)
+
+-   **5 pytań otwartych** (odpowiedzi 1-2 zdania)
+
+-   Każda odpowiedź = **2 punkty**
+
+-   Maximum: **50 punktów** (50% oceny końcowej)
+
+-   Próg zaliczenia: **25 punktów**
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   UE **spełnia kryteria** definicji systemu politycznego
+
+-   **Ewolucja** od EWWiS do złożonego systemu wielopoziomowego
+
+-   **Napięcie** między podejściem ponadnarodowym a międzyrządowym
+
+-   **Równowaga konstytucyjna** - stabilny podział kompetencji
+
+-   **Zwykła procedura ustawodawcza** - PE i Rada jako współprawodawcy
+
+-   System **hybrydowy** łączący elementy obu podejść

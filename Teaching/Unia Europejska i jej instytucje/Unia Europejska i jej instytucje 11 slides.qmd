@@ -1,0 +1,283 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 11 slides"
+subtitle: "Rola państw członkowskich w UE"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Plan wykładu
+
+1.  **Korzyści i koszty członkostwa** - dlaczego państwa dobrowolnie ograniczają suwerenność?
+
+2.  **Różnorodność podejść krajowych** - od entuzjazmu do sceptycyzmu
+
+3.  **Mechanizmy wpływu** - jak państwa oddziałują na politykę UE?
+
+4.  **Hierarchia wpływów** - które państwa rzeczywiście kształtują UE?
+
+# Korzyści i koszty członkostwa
+
+------------------------------------------------------------------------
+
+## Paradoks dobrowolnej utraty suwerenności
+
+**Koszty członkostwa:**
+
+-   Przekazanie kompetencji decyzyjnych na poziom supranarodowy
+-   Uczestnictwo w politykach niezgodnych z bezpośrednimi interesami
+-   Solidarność finansowa, polityka migracyjna, regulacje środowiskowe
+
+**Pytanie:** Dlaczego mimo to kolejne państwa ubiegają się o członkostwo?
+
+------------------------------------------------------------------------
+
+## Wielowymiarowe korzyści integracji
+
+-   **Jednolity rynek** - ponad 450 mln konsumentów, swobodny przepływ
+
+-   **Bezpieczeństwo** - stabilność polityczna i gospodarcza, ochrona przed zagrożeniami
+
+-   **Fundusze UE** - inwestycje w infrastrukturę, edukację, badania (Polska: >200 mld EUR od 2004)
+
+-   **"Powrót do Europy"** - gwarancja nieodwracalności demokratycznych przemian (EŚW)
+
+------------------------------------------------------------------------
+
+## Mechanizmy równoważenia władzy
+
+-   **Nadreprezentacja małych państw:**
+
+    -   Każde państwo = 1 komisarz
+    -   Równa reprezentacja w RE i TSUE
+
+-   **Jednomyślność** w kluczowych obszarach (weto każdego państwa)
+
+-   **Rotacyjna prezydencja** - możliwość wyznaczania agendy
+
+-   **Kultura konsensusu i kompromisu**
+
+# Różnorodność podejść krajowych
+
+------------------------------------------------------------------------
+
+## Państwa założycielskie - fundamenty integracji
+
+-   **Benelux i Włochy** - konsekwentne poparcie dla pogłębiania integracji
+
+-   **Niemcy:**
+
+    -   Integracja jako szansa na rehabilitację międzynarodową
+    -   Niechęć do roli hegemona
+
+-   **Francja:**
+
+    -   Wizjonerzy (Monnet, Schuman) vs. gaullizm
+    -   Poparcie dla integracji "na swoich warunkach"
+
+------------------------------------------------------------------------
+
+## Pierwsza fala rozszerzenia (1973)
+
+**Wielka Brytania:**
+
+-   "Trudny partner" - pragmatyzm, międzyrządowość
+-   Sceptycyzm wobec pogłębiania integracji politycznej
+-   Rebate Thatcher → ostatecznie Brexit
+
+**Dania:** Ostrożność, opt-outy (waluta, WSiSW)
+
+**Irlandia:** Entuzjazm dzięki transferom finansowym
+
+------------------------------------------------------------------------
+
+## Rozszerzenie południowe (1981, 1986)
+
+-   **Grecja, Hiszpania, Portugalia** - wyjście spod dyktatur
+
+-   Integracja = konsolidacja demokracji + perspektywy gospodarcze
+
+-   Hiszpania i Portugalia - zwolennicy integracji
+
+-   **Grecja** - kryzys zadłużenia 2010-2015 (solidarność vs. dyscyplina)
+
+------------------------------------------------------------------------
+
+## Rozszerzenie EFTA (1995) i nordycki pragmatyzm
+
+-   **Austria, Finlandia, Szwecja** - wysoki rozwój, silne instytucje
+
+-   Szwecja pozostała poza strefą euro
+
+-   **Wkład nordycki:**
+
+    -   Polityka środowiskowa
+    -   Transparentność instytucji
+    -   Zrównoważony rozwój
+
+------------------------------------------------------------------------
+
+## Wielkie rozszerzenie na Wschód (2004, 2007)
+
+-   Największe wyzwanie w historii integracji
+
+-   "Powrót do Europy" po dziesięcioleciach komunizmu
+
+-   Brak jednolitego "bloku wschodniego"
+
+-   **Współczesne napięcia:**
+
+    -   Węgry i Polska - kwestionowanie praworządności
+    -   Procedury naruszeniowe, art. 7 TUE
+
+# Mechanizmy wpływu państw
+
+------------------------------------------------------------------------
+
+## Rządy jako główni aktorzy
+
+-   **Komisarze** - teoretycznie interes europejski, nie narodowy
+
+-   **Rada Ministrów** - bezpośrednie negocjacje i głosowania
+
+-   **Współpraca państw:**
+
+    -   Grupa Wyszehradzka
+    -   Kraje nordyckie
+    -   Benelux
+
+------------------------------------------------------------------------
+
+## Ograniczona rola parlamentów krajowych
+
+-   Długotrwała marginalizacja parlamentów narodowych
+
+-   **Traktat Lizboński:** Mechanizm "żółtej kartki" (zasada pomocniczości)
+
+-   W praktyce - rzadko wykorzystywany (wysokie progi, ograniczone zasoby)
+
+-   **Problem deficytu demokratycznego:**
+
+    -   Parlamenty utraciły kontrolę
+    -   PE nie zastąpił w pełni tej funkcji
+
+------------------------------------------------------------------------
+
+## Sądy krajowe i supremacja prawa UE
+
+-   Zasada supremacji prawa UE - zazwyczaj stosowana bez konfliktów
+
+-   **Ostatnie napięcia:**
+
+    -   Reformy sądownictwa w Polsce i na Węgrzech
+    -   TK w Polsce zakwestionował supremację w określonych obszarach
+    -   Kryzys konstytucyjny, procedury naruszeniowe
+
+------------------------------------------------------------------------
+
+## Regiony i władze lokalne
+
+-   Decentralizacja → regiony jako aktorzy w systemie europejskim
+
+-   **Komitet Regionów** - funkcje doradcze
+
+-   **Biura regionalne w Brukseli** - lobbing, pozyskiwanie funduszy
+
+-   **Multilevel governance** - cecha współczesnego systemu europejskiego
+
+------------------------------------------------------------------------
+
+## Obywatele i demokracja europejska
+
+**Wybory do PE:**
+
+-   Bezpośredni kanał uczestnictwa
+-   Problem niskiej frekwencji (2019: 50,6%)
+
+**Referenda europejskie:**
+
+-   Konstytucja Europejska (Francja, Holandia 2005)
+-   Traktat z Lizbony (Irlandia 2008)
+-   Brexit (UK 2016)
+
+**Wybory krajowe** - często większy wpływ na politykę UE
+
+# Hierarchia wpływów w UE
+
+------------------------------------------------------------------------
+
+## Dominacja wielkich państw
+
+-   Więcej głosów w Radzie i PE
+-   Większe delegacje w instytucjach
+-   Większe zasoby administracyjne i eksperckie
+-   Szerszy zakres interesów politycznych
+
+**Niemcy:**
+
+-   Największa gospodarka, główny płatnik budżetu
+-   "Leadership przez przykład" - unikanie otwartego narzucania woli
+
+------------------------------------------------------------------------
+
+## Siła małych państw
+
+-   System instytucjonalny UE faworyzuje **konsensus i kompromis**
+
+-   Małe państwa mogą wywierać **nieproporcjonalny wpływ:**
+
+    -   Irlandia - blokada Traktatu z Lizbony
+    -   Malta - weto w polityce migracyjnej
+    -   Cypr - blokada rozszerzenia o Turcję
+
+-   **Specjalizacja tematyczna:**
+
+    -   Luksemburg - sektor finansowy
+    -   Estonia - cyberbezpieczeństwo
+    -   Dania - polityka środowiskowa
+
+------------------------------------------------------------------------
+
+## Koalicje i sojusze - zmienne geometrie
+
+**Kwestie fiskalne:**
+
+-   "Oszczędni" (Niemcy, Holandia, Austria, kraje nordyckie) vs. południe
+
+**Praworządność:**
+
+-   Izolacja Węgier i Polski (wzajemne blokowanie art. 7)
+
+**Migracja:**
+
+-   Grupa Wyszehradzka - opór wobec kwot relokacji
+
+**Wniosek:** Żadne państwo nie dominuje trwale, ale każde może realizować część priorytetów.
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   Rola państw członkowskich pozostaje **fundamentalna** mimo postępującej integracji.
+
+-   Różnorodność doświadczeń, tradycji i interesów kształtuje polityki europejskie.
+
+-   Sukces integracji = **pogodzenie różnorodności** z potrzebą wspólnego działania.
+
+-   **Brexit** pokazał, że integracja nie jest nieodwracalna.
+
+-   Odporność projektu europejskiego na kryzysy świadczy o głębokich fundamentach i skali korzyści.

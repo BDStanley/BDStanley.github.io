@@ -1,0 +1,318 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 4 slides"
+subtitle: "Zasady działania Unii Europejskiej"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Trzy kategorie zasad działania UE
+
+1.  **Zasady związane z kompetencjami UE**
+
+2.  **Zasady związane z funkcjonowaniem UE**
+
+3.  **Zasady związane z prawami i praworządnością**
+
+------------------------------------------------------------------------
+
+## Uwagi wstępne
+
+-   Zasady działania UE są ściśle powiązane z jej charakterem prawnym.
+
+-   Część zasad została wyraźnie wskazana w traktatach (prawo pierwotne).
+
+-   Inne zostały wyinterpretowane przez Trybunał Sprawiedliwości UE.
+
+-   **Art. 1 TUE:** Państwa członkowskie ustanowiły Unię i przyznały jej określone kompetencje.
+
+-   **Kluczowe:** To państwa są źródłem władzy UE, nie odwrotnie.
+
+------------------------------------------------------------------------
+
+## UE nie jest państwem
+
+-   UE nie ma kompetencji do samodzielnego decydowania o swoich uprawnieniach.
+
+-   Nie może przyznawać sobie nowych kompetencji.
+
+-   Posiada wyłącznie uprawnienia powierzone przez państwa założycielskie i rozszerzone w kolejnych traktatach.
+
+-   **Zasada przyznania:** Kompetencje nieprzekazane UE należą do państw członkowskich.
+
+# Zasady związane z kompetencjami UE
+
+------------------------------------------------------------------------
+
+## Zasada przyznania kompetencji
+
+-   Fundament konstytucyjnej struktury UE.
+
+-   UE działa wyłącznie w granicach swoich kompetencji.
+
+-   Prymat prawa UE skuteczny tylko w zakresie przyznanych kompetencji.
+
+-   **Konsekwencja:** Każdy akt prawny UE musi mieć właściwą podstawę prawną.
+
+------------------------------------------------------------------------
+
+## Podstawa prawna aktów UE
+
+-   Każdy akt prawny musi wywodzić się z odpowiedniej normy kompetencyjnej.
+
+-   **Wertykalny podział kompetencji:** Między UE a państwami członkowskimi.
+
+-   **Horyzontalny podział kompetencji:** Między instytucjami UE.
+
+------------------------------------------------------------------------
+
+## Rodzaje kompetencji
+
+**Kompetencje wyraźne:**
+
+-   Jednoznacznie wskazane w traktatach
+
+**Kompetencje domniemane:**
+
+-   Wyinterpretowane z funkcji lub celów organizacji
+-   Trybunał uznał, że UE posiada kompetencje niezbędne do realizacji celów traktatowych
+-   Dotyczy szczególnie kompetencji zewnętrznych i Komisji
+
+------------------------------------------------------------------------
+
+## Trzy typy kompetencji
+
+1.  **Kompetencje wyłączne** - tylko na poziomie UE (np. unia celna, polityka handlowa, polityka monetarna strefy euro)
+
+2.  **Kompetencje dzielone** - państwa mogą działać, gdy UE nie wykonała swoich kompetencji (np. rynek wewnętrzny, polityka społeczna, ochrona środowiska)
+
+3.  **Kompetencje wspierające** - UE jedynie wspiera działania państw (np. kultura, turystyka, edukacja)
+
+------------------------------------------------------------------------
+
+## Prymat prawa UE a podział kompetencji
+
+-   W razie konfliktu między prawem krajowym a prawem UE - przeważa prawo UE.
+
+-   Jeśli prawo UE wyczerpująco reguluje daną dziedzinę - regulacja krajowa jest niedopuszczalna.
+
+-   Obowiązek zachowania standardu ochrony praw podstawowych z Karty Praw Podstawowych.
+
+------------------------------------------------------------------------
+
+## Rozszerzanie kompetencji UE
+
+**Formalne metody:**
+
+-   Zmiana traktatów założycielskich
+
+**Nieformalne metody:**
+
+-   Rozszerzająca interpretacja traktatów
+-   Stosowanie kompetencji dorozumianych
+-   Kompetencje ogólne lub dodatkowe
+
+To skłoniło państwa do wprowadzania mechanizmów zabezpieczających.
+
+------------------------------------------------------------------------
+
+## Zasada pomocniczości (subsydiarności)
+
+-   Podstawowy mechanizm ograniczający kompetencje UE.
+
+-   Dotyczy kompetencji innych niż wyłączne.
+
+-   **Dwa pytania:**
+
+    -   Czy cele nie mogą być osiągnięte przez państwa członkowskie?
+    -   Czy lepsze osiągnięcie możliwe jest na poziomie UE?
+
+------------------------------------------------------------------------
+
+## Kontrola zasady pomocniczości
+
+**Traktat z Lizbony wzmocnił kontrolę przez parlamenty narodowe:**
+
+-   **Żółta kartka** - co najmniej 1/3 parlamentów (1/4 w niektórych obszarach) wnioskuje o ponowne rozpatrzenie
+
+-   **Pomarańczowa kartka** - ponad połowa parlamentów wnioskuje o ponowne rozpatrzenie
+
+------------------------------------------------------------------------
+
+## Zasada proporcjonalności
+
+**Art. 5 ust. 4 TUE:** "Zakres i forma działania Unii nie wykraczają poza to, co jest konieczne do osiągnięcia celów Traktatów."
+
+**Szerszy zakres niż zasada pomocniczości:**
+
+-   Stosuje się do wszystkich sfer kompetencji (w tym wyłącznych)
+-   Dotyczy konkretnych środków, nie rozgraniczenia kompetencji
+-   Służy do oceny środków unijnych i krajowych
+
+------------------------------------------------------------------------
+
+## Zasada poszanowania tożsamości narodowej
+
+**Art. 4 ust. 2 TUE:** UE szanuje tożsamość narodową państw członkowskich.
+
+**Tożsamość narodowa oznacza:**
+
+-   Tożsamość kulturową (kultura, język, religia)
+-   Tożsamość państwową (konstytucyjną)
+-   Zachowanie podstawowych funkcji państwa
+
+**Podkreśla:** UE nie jest i nie zmierza do zostania państwem federalnym.
+
+------------------------------------------------------------------------
+
+## Przykłady zastosowania zasady tożsamości
+
+-   **Sprawa litewska:** Ochrona języka państwowego może uzasadniać ograniczenia swobód unijnych (zapis nazwisk bez polskich znaków diakrytycznych).
+
+-   **Małżeństwa osób tej samej płci:** Uznanie do celów prawa UE nie oznacza obowiązku wprowadzenia tej instytucji do prawa krajowego.
+
+# Zasady związane z funkcjonowaniem UE
+
+------------------------------------------------------------------------
+
+## Zasada lojalnej współpracy
+
+-   Unia i państwa członkowskie wzajemnie się szanują i wspierają.
+
+-   **Obowiązki państw członkowskich:**
+
+    -   Podejmowanie środków dla wykonania zobowiązań traktatowych
+    -   Ułatwianie wypełniania zadań przez UE
+    -   Powstrzymywanie się od działań zagrażających celom UE
+
+------------------------------------------------------------------------
+
+## Obowiązki wynikające z lojalnej współpracy
+
+Trybunał Sprawiedliwości wywiódł z tej zasady:
+
+-   Obowiązek przestrzegania prymatu prawa UE
+-   Zakaz stanowienia prawa sprzecznego z UE
+-   Obowiązek eliminacji przepisów sprzecznych z prawem UE
+-   Odpowiedzialność państwa za naruszenie prawa UE
+-   Obowiązek wykładni prawa krajowego zgodnie z prawem UE
+
+------------------------------------------------------------------------
+
+## Zasada efektywności
+
+-   Koncentruje się na osiąganiu konkretnych rezultatów.
+
+-   Nakazuje nadawanie normom prawnym treści umożliwiającej optymalne osiągnięcie celów.
+
+------------------------------------------------------------------------
+
+## Zasada elastyczności - wzmocniona współpraca
+
+-   Wprowadzona Traktatem z Amsterdamu.
+
+-   Pozwala na działania w określonej dziedzinie przez niektóre państwa.
+
+-   Wykorzystuje instytucje UE i ramy traktatowe.
+
+-   Akty prawne wiążą tylko uczestniczące państwa.
+
+-   Umożliwia integrację w różnym tempie.
+
+------------------------------------------------------------------------
+
+## Zasada równowagi instytucjonalnej
+
+Zastępuje klasyczny trójpodział władzy:
+
+-   Każda instytucja działa na podstawie upoważnienia traktatowego
+-   Żadna instytucja nie może zastępować innych
+-   Wszystkie muszą przestrzegać procedur
+-   Każda instytucja ustala własny regulamin
+
+**Trybunał:** Obowiązek współpracy instytucji dla realizacji celów traktatowych.
+
+# Zasady związane z prawami i praworządnością
+
+------------------------------------------------------------------------
+
+## Podstawowe wartości UE (art. 2 TUE)
+
+"Unia opiera się na wartościach poszanowania godności osoby ludzkiej, wolności, demokracji, równości, państwa prawnego, jak również poszanowania praw człowieka, w tym praw osób należących do mniejszości."
+
+**Konsekwencje prawne:** Procedura z art. 7 TUE przy poważnym naruszeniu.
+
+------------------------------------------------------------------------
+
+## Zasada poszanowania godności osoby ludzkiej
+
+-   Wyraźnie wskazana w Traktacie z Lizbony.
+
+-   **Karta Praw Podstawowych (art. 1):** "Godność człowieka jest nienaruszalna. Musi być szanowana i chroniona."
+
+-   Źródło wszelkich wolności i praw człowieka.
+
+------------------------------------------------------------------------
+
+## Zasada poszanowania wolności
+
+**Realizacja w prawie UE:**
+
+-   Jako przedmiot ochrony (swobody rynku wewnętrznego: przepływ towarów, osób, usług, kapitału)
+-   Jako prawo podmiotowe (np. prawo przedsiębiorczości)
+
+**Uwaga:** Wolność nie jest wartością absolutną - może podlegać ograniczeniom dla ważnego interesu publicznego.
+
+------------------------------------------------------------------------
+
+## Zasada demokracji
+
+-   Istota: udział obywateli w sprawowaniu władzy.
+
+-   **Deficyt demokratyczny** (historyczna krytyka):
+
+    -   Dominacja władzy wykonawczej
+    -   Biurokratyzacja
+    -   Słaba odpowiedzialność instytucji
+    -   Brak przejrzystości
+    -   Niewystarczająca rola PE
+
+-   Krytyka ta stała się motorem reform demokratycznych.
+
+------------------------------------------------------------------------
+
+## Demokracja przedstawicielska w UE
+
+**Dwa kanały reprezentacji:**
+
+1.  **Bezpośredni:** Obywatele reprezentowani w Parlamencie Europejskim
+
+2.  **Pośredni:** Państwa reprezentowane przez demokratycznie legitymizowane rządy, odpowiadające przed parlamentami narodowymi lub obywatelami
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   System zasad UE jest złożony - wynika ze specyfiki UE jako organizacji *sui generis*.
+
+-   **Trzy aspekty regulowane przez zasady:**
+
+    -   Zakres i sposób wykonywania kompetencji
+    -   Relacje między instytucjami oraz między UE a państwami
+    -   Podstawowe wartości integracji europejskiej
+
+-   Zrozumienie tych zasad jest kluczowe dla analizy funkcjonowania UE.

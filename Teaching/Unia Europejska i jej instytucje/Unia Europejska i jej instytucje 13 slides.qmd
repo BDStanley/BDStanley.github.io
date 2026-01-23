@@ -1,0 +1,383 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 13 slides"
+subtitle: "Polityka wewnętrzna UE"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Plan wykładu
+
+1.  **Rynek wewnętrzny** - filary, zasady i problemy ukończenia
+
+2.  **Polityka makroekonomiczna** - Unia Gospodarcza i Walutowa
+
+3.  **Polityki funkcjonalne** - WBiS, badania i innowacje, środowisko
+
+4.  **Polityki sektorowe** - rybołówstwo, przemysł stoczniowy
+
+5.  **Polityka solidarności** - spójność, rolnictwo, polityka społeczna
+
+# Rynek wewnętrzny
+
+------------------------------------------------------------------------
+
+## Cztery filary rynku wewnętrznego
+
+1.  **Wspólna taryfa celna** - jednolite cła wobec państw trzecich
+
+2.  **Cztery swobody** - przepływ towarów, osób, usług, kapitału
+
+3.  **Jednolitość prawa i wzajemne uznawanie** - harmonizacja lub uznanie norm krajowych
+
+4.  **Polityka konkurencji** - zakaz praktyk antykonkurencyjnych i pomocy państwa
+
+**Fundament:** Jednolity Akt Europejski (1986), pełne wdrożenie do 1992 r.
+
+------------------------------------------------------------------------
+
+## Cztery swobody - szczegóły
+
+-   **Towary** - zniesienie ceł, barier ilościowych i pozataryfowych
+
+-   **Osoby** - prawo osiedlania, pracy, nauki w każdym państwie UE (Schengen)
+
+-   **Usługi** - usuwanie barier dla świadczenia usług transgranicznych (Dyrektywa Usługowa 2006)
+
+-   **Kapitał** - swoboda inwestycji, pożyczek, transakcji finansowych
+
+------------------------------------------------------------------------
+
+## Harmonizacja i wzajemne uznawanie
+
+**Harmonizacja:**
+
+-   Ujednolicanie norm krajowych (bezpieczeństwo, zdrowie, środowisko)
+-   Od pełnej do minimalnej, europejskie organizacje normalizacyjne (CEN, CENELEC)
+
+**Wzajemne uznawanie:**
+
+-   Produkt legalny w jednym państwie = dopuszczony w pozostałych
+-   Wyjątki tylko ze względu na zdrowie/bezpieczeństwo publiczne
+-   **Cassis de Dijon (1979)** - kluczowe orzeczenie TSUE
+
+------------------------------------------------------------------------
+
+## Polityka konkurencji
+
+-   **Zakaz karteli** - porozumień ograniczających konkurencję (ustalanie cen, podział rynków)
+
+-   **Zakaz nadużywania pozycji dominującej** - nieuczciwe ceny, dyskryminacja partnerów
+
+-   **Kontrola pomocy państwa** - subsydia dozwolone tylko w określonych przypadkach, notyfikacja KE
+
+-   **Egzekwowanie:** Komisja Europejska - dochodzenia, kary, kontrola fuzji
+
+------------------------------------------------------------------------
+
+## Problemy z ukończeniem rynku wewnętrznego
+
+-   **Nieformalne praktyki** - faworyzowanie firm krajowych w zamówieniach publicznych
+
+-   **Słabe stosowanie przepisów** - opóźniona implementacja, fragmentacja
+
+-   **Opór sektorów strategicznych** - energetyka, transport, media
+
+-   **Różnice w polityce społecznej** - dumping socjalny
+
+-   **Spory o bariery** - różnice podatkowe, standardy regulacyjne
+
+-   **Nierównomierne wdrażanie** między państwami członkowskimi
+
+# Unia Gospodarcza i Walutowa
+
+------------------------------------------------------------------------
+
+## Plan Delorsa - trzy etapy
+
+**Etap I (od 1990):**
+
+-   Pełna swoboda przepływu kapitału
+-   Zwiększenie funduszy strukturalnych
+-   Konwergencja gospodarcza, wielostronny nadzór
+
+**Etap II (od 1994):**
+
+-   Europejski Instytut Walutowy (Frankfurt)
+-   Niezależność banków centralnych
+-   Kryteria konwergencji (Maastricht)
+
+------------------------------------------------------------------------
+
+## Trzeci etap - wprowadzenie euro
+
+-   **1999:** Euro w obrocie bezgotówkowym, kursy nieodwołalnie ustalone
+
+-   **2002:** Banknoty i monety euro w obiegu
+
+-   **Opt-out:** Dania, Wielka Brytania; Szwecja celowo poza strefą
+
+-   **Rozszerzenia:** Słowenia (2007), Cypr/Malta (2008), Słowacja (2009), Estonia (2011), Łotwa (2014), Litwa (2015), Chorwacja (2023)
+
+------------------------------------------------------------------------
+
+## Cechy UGW
+
+1.  **Jedna waluta** - eliminacja kosztów wymiany i ryzyka kursowego
+
+2.  **Wspólna polityka pieniężna** - EBC, stabilność cen
+
+3.  **Koordynacja polityk fiskalnych** - Pakt Stabilności i Wzrostu (3% PKB deficyt, 60% dług)
+
+4.  **Europejski Mechanizm Stabilności** - pomoc w sytuacjach kryzysowych
+
+5.  **Unia Bankowa** - SSM (nadzór) + SRM (restrukturyzacja)
+
+# Polityki funkcjonalne
+
+------------------------------------------------------------------------
+
+## Najważniejsze polityki funkcjonalne
+
+-   **Wolność, bezpieczeństwo, sprawiedliwość** - granice, azyl, przestępczość
+
+-   **Spójność** - zmniejszanie dysproporcji regionalnych
+
+-   **Społeczna** - zatrudnienie, warunki pracy
+
+-   **Energetyczna** - bezpieczeństwo dostaw, zrównoważona energia
+
+-   **Badania i innowacje** - Horyzont Europa
+
+-   **Ochrona środowiska** - Europejski Zielony Ład
+
+------------------------------------------------------------------------
+
+## Polityka wolności, bezpieczeństwa i sprawiedliwości
+
+**Wyzwania:**
+
+-   Swobodny przepływ osób → mniejsza kontrola granic wewnętrznych
+-   Przestępczość transgraniczna
+
+**Instrumenty:**
+
+-   **Agencje:** Europol, Frontex
+-   **Systemy informacyjne:** SIS, VIS, Eurodac
+-   **Europejski Nakaz Aresztowania (ENA)**
+-   Wspólna polityka azylowa i wizowa (CEAS)
+-   Harmonizacja definicji przestępstw terrorystycznych
+
+------------------------------------------------------------------------
+
+## Polityka badań i innowacji
+
+-   **Problem:** Europa w tyle za USA i Japonią w zaawansowanych technologiach
+
+-   **Dwa kanały działania:**
+
+    1.  **Bezpośrednie finansowanie** - Horyzont Europa (2021-2027)
+    2.  **Ramy współpracy** - Europejska Przestrzeń Badawcza (ERA)
+
+-   Mobilność naukowców, infrastruktura badawcza, partnerstwa publiczno-prywatne
+
+------------------------------------------------------------------------
+
+## Polityka ochrony środowiska
+
+-   **Początki:** Jednolity Akt Europejski (1987)
+
+**Trzy cele strategiczne:**
+
+1.  Ochrona kapitału naturalnego (Natura 2000, jakość wód i powietrza)
+
+2.  Gospodarka niskoemisyjna (neutralność klimatyczna do 2050, gospodarka o obiegu zamkniętym)
+
+3.  Ochrona zdrowia obywateli (substancje chemiczne, adaptacja do zmian klimatu)
+
+**Europejski Zielony Ład** - flagowa inicjatywa transformacji
+
+# Polityki sektorowe
+
+------------------------------------------------------------------------
+
+## Źródła polityk sektorowych
+
+-   **Historyczne zapisy traktatowe** - węgiel/stal, rolnictwo, energia atomowa, transport
+
+-   **Problemy strukturalne** - trudności adaptacji do zmian rynkowych (stocznie, tekstylia)
+
+-   **Lobbing polityczny** - skuteczne działanie grup interesu
+
+------------------------------------------------------------------------
+
+## Wspólna Polityka Rybołówstwa
+
+**Cel:** Zrównoważone rybołówstwo i akwakultura
+
+**Instrumenty:**
+
+-   Całkowite dopuszczalne połowy (TAC), kwoty dla państw
+-   Maksymalny podtrzymywalny połów (MSY)
+-   Zakaz odrzutów - obowiązek wyładunku
+-   Regionalizacja zarządzania
+
+**Wyzwania:** Przełowienie, nadmierna zdolność połowowa floty
+
+------------------------------------------------------------------------
+
+## Przemysł stoczniowy
+
+**Problem:** Nadmierne zdolności, konkurencja z Azji
+
+**Trzy cele polityki UE:**
+
+1.  **Racjonalizacja** - redukcja mocy produkcyjnych
+
+2.  **Specjalizacja** - statki zaawansowane technologicznie (wycieczkowce, offshore, jachty)
+
+3.  **Restrukturyzacja** - przekwalifikowanie pracowników, dywersyfikacja regionów
+
+**Ewolucja:** Od subsydiów do wspierania B+R i innowacji
+
+# Polityka solidarności
+
+------------------------------------------------------------------------
+
+## Cele polityki solidarności
+
+-   **Korekta nierównowagi** na jednolitym rynku
+
+-   **Wspieranie słabszych regionów** - inwestycje, miejsca pracy, jakość życia
+
+-   **Pomoc w restrukturyzacji** branż dotkniętych konkurencją międzynarodową
+
+**Uzasadnienie:** Sprawiedliwość społeczna + efektywność ekonomiczna
+
+------------------------------------------------------------------------
+
+## Fundusze polityki spójności (EFSI)
+
+1.  **EFRR** (Europejski Fundusz Rozwoju Regionalnego)
+    -   Innowacje, agenda cyfrowa, MŚP, gospodarka niskoemisyjna
+
+2.  **EFS+** (Europejski Fundusz Społeczny Plus)
+    -   Kształcenie, zatrudnienie, włączenie społeczne
+
+3.  **Fundusz Spójności**
+    -   Dla państw z DNB < 90% średniej UE
+    -   Infrastruktura środowiskowa i transportowa (TEN-T)
+
+------------------------------------------------------------------------
+
+## Kwalifikowalność regionów (2021-2027)
+
+**Trzy kategorie (PKB/mieszkańca vs. średnia UE):**
+
+-   **Słabiej rozwinięte** (< 75%) - najwyższe wsparcie
+
+-   **W okresie przejściowym** (75-100%) - utrwalenie osiągnięć
+
+-   **Lepiej rozwinięte** (> 100%) - innowacje, transformacja cyfrowa
+
+**Koncentracja:** Regiony wschodniej i południowej Europy
+
+------------------------------------------------------------------------
+
+## Wspólna Polityka Rolna - znaczenie
+
+-   **Rolnictwo:** ~1% PKB, ~5% zatrudnienia, ale nieproporcjonalny wpływ polityczny
+
+-   **Budżet:** ~31-33% wydatków UE (2021-2027)
+
+-   **Częste posiedzenia** Rady ds. Rolnictwa
+
+-   **Kontrowersyjność:** Rozbieżne interesy państw, poziom dopłat, standardy środowiskowe
+
+------------------------------------------------------------------------
+
+## Ewolucja WPR
+
+**Do lat 90.:**
+
+-   System wsparcia cen gwarantowanych
+-   Skutek: Nadprodukcja ("góry masła", "jeziora wina")
+
+**Od lat 90.:**
+
+-   Przejście na płatności bezpośrednie
+-   Decoupling - oddzielenie od produkcji
+-   Cross-compliance - warunkowość środowiskowa
+
+------------------------------------------------------------------------
+
+## Finansowanie WPR
+
+**Europejski Fundusz Rolniczy Gwarancji (EFRG):**
+
+-   I filar - płatności bezpośrednie, interwencje rynkowe
+
+**Europejski Fundusz Rolny na rzecz Rozwoju Obszarów Wiejskich (EFRROW):**
+
+-   II filar - modernizacja, młodzi rolnicy, rolnictwo ekologiczne
+
+**Pomoc krajowa** - dozwolona pod warunkiem zgodności z zasadami pomocy państwa
+
+------------------------------------------------------------------------
+
+## Polityka społeczna - ograniczony zakres
+
+**Przyczyny ograniczenia:**
+
+1.  **Koszty i administracja** - budżet UE (~1% DNB) niewystarczający
+2.  **Różnice modeli** - liberalny, korporacyjny, socjaldemokratyczny, południowoeuropejski
+
+**Główny nurt** (emerytury, opieka zdrowotna, zasiłki) → kompetencja państw
+
+------------------------------------------------------------------------
+
+## Polityka społeczna UE - zakres działań
+
+-   **Bezpieczeństwo i higiena pracy**
+
+-   **Ochrona grup wrażliwych** (ciężarne, młodzież)
+
+-   **Urlopy rodzicielskie i czas pracy**
+
+-   **Równe traktowanie** kobiet i mężczyzn
+
+-   **Walka z dyskryminacją**
+
+-   **Informowanie i konsultowanie pracowników**
+
+**Charakter:** Regulacyjny i koordynujący, nie redystrybucyjny
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   **Rynek wewnętrzny** - fundament integracji, cztery swobody, wciąż niedokończony
+
+-   **UGW** - wspólna waluta, polityka pieniężna EBC, koordynacja fiskalna
+
+-   **Polityki funkcjonalne** - WBiS, B+R, środowisko, energia
+
+-   **Polityki sektorowe** - historyczne (rolnictwo) i adaptacyjne (stocznie)
+
+-   **Polityka solidarności** - spójność regionalna, EFSI
+
+-   **Polityka społeczna** - ograniczona, subsydiarna rola UE

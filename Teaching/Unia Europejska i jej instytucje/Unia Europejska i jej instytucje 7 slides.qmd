@@ -1,0 +1,303 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 7 slides"
+subtitle: "Rada Europejska - struktura i kompetencje"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Trzy podobne nazwy - trzy różne instytucje
+
+1.  **Rada Europejska** - szefowie państw/rządów, przewodniczący RE, przewodniczący KE
+
+2.  **Rada Unii Europejskiej** - ministrowie rządów państw UE (skład zmienny)
+
+3.  **Rada Europy** - odrębna organizacja międzynarodowa (Strasburg)
+
+**Uwaga:** W traktatach "Rada" = Rada UE, "Rada Europejska" = pełna nazwa.
+
+------------------------------------------------------------------------
+
+## Geneza i rozwój historyczny
+
+-   **Lata 60.** - pierwsze nieformalne "szczyty europejskie"
+-   **1974** - formalne nadanie nazwy "Rada Europejska" (Giscard d'Estaing, Schmidt)
+-   **1986** - JAE nadał podstawę traktatową
+-   **1992** - Traktat z Maastricht rozszerzył rolę (WPZiB)
+-   **2009** - Traktat z Lizbony: oficjalna instytucja UE, stałe stanowisko przewodniczącego
+
+Pierwsze formalne posiedzenie: 10-11 marca 1975, Dublin.
+
+# Skład Rady Europejskiej
+
+------------------------------------------------------------------------
+
+## Członkowie Rady Europejskiej (art. 15 TUE)
+
+1.  **Szefowie państw lub rządów** - w zależności od systemu konstytucyjnego (prezydent lub premier)
+
+2.  **Przewodniczący Rady Europejskiej** - kadencja 2,5 roku, odnawialna jednokrotnie
+
+3.  **Przewodniczący Komisji Europejskiej**
+
+**Dodatkowo uczestniczy:** Wysoki Przedstawiciel ds. Zagranicznych (bez prawa głosu).
+
+------------------------------------------------------------------------
+
+## Przewodniczący Rady Europejskiej
+
+**Dotychczasowi przewodniczący:**
+
+-   Herman Van Rompuy (Belgia) - 2009-2014
+-   Donald Tusk (Polska) - 2014-2019
+-   Charles Michel (Belgia) - od 2019
+
+**Wymóg:** Nie może pełnić jednocześnie krajowej funkcji publicznej.
+
+------------------------------------------------------------------------
+
+## Kompetencje przewodniczącego
+
+1.  Przewodniczenie posiedzeniom i prowadzenie prac RE
+
+2.  Zapewnienie przygotowania i ciągłości prac
+
+3.  Wspieranie osiągania konsensusu (mediator)
+
+4.  Reprezentowanie UE w sprawach WPZiB
+
+5.  Przedstawianie PE sprawozdań z posiedzeń
+
+6.  Zwoływanie konwentu przy zmianie traktatów
+
+# Organizacja pracy
+
+------------------------------------------------------------------------
+
+## Posiedzenia Rady Europejskiej
+
+-   **Minimum 2 razy w półroczu** (zazwyczaj marzec, czerwiec, październik, grudzień)
+
+-   Dodatkowe, nadzwyczajne posiedzenia w sytuacjach kryzysowych
+
+-   **Przygotowanie:** Projekt porządku obrad min. 4 tygodnie wcześniej
+
+-   Rada do Spraw Ogólnych przygotowuje i zapewnia kontynuację prac
+
+-   **Czas trwania:** Max 2 dni (często do późnych godzin nocnych)
+
+-   **Miejsce:** Budynek "Europa" w Brukseli (od 2017)
+
+------------------------------------------------------------------------
+
+## Podejmowanie decyzji
+
+-   **Zasada konsensusu** - dążenie do rozwiązań akceptowalnych dla wszystkich
+
+-   W niektórych przypadkach głosowanie:
+
+    -   Jednomyślność
+    -   Większość kwalifikowana
+    -   Zwykła większość
+
+-   Wymagana obecność 2/3 członków dla głosowania
+
+-   Możliwość pełnomocnictwa dla nieobecnych
+
+-   **Konkluzje** - polityczne zobowiązanie i wytyczne (nie mają charakteru prawnie wiążącego)
+
+# Funkcje i kompetencje
+
+------------------------------------------------------------------------
+
+## Ogólna rola polityczna (art. 15 TUE)
+
+-   Nadawanie UE **"impulsów niezbędnych do jej rozwoju"**
+
+-   Określanie **ogólnych kierunków i priorytetów politycznych**
+
+-   **Rada Europejska NIE pełni funkcji prawodawczej**
+
+**Przykłady strategicznych decyzji:**
+
+-   Jednolity rynek wewnętrzny
+-   Wprowadzenie euro
+-   Rozszerzenie UE
+-   Reforma instytucjonalna
+-   Reagowanie na kryzysy
+
+------------------------------------------------------------------------
+
+## Kompetencje szczegółowe (1/2)
+
+**Wartości UE (art. 7 TUE):**
+
+-   Stwierdzenie poważnego naruszenia wartości UE przez państwo
+
+**WPZiB:**
+
+-   Mianowanie Wysokiego Przedstawiciela
+-   Określanie strategicznych interesów i celów
+-   Ogólne wytyczne polityki zagranicznej i bezpieczeństwa
+-   Decyzja o wspólnej obronie UE
+
+------------------------------------------------------------------------
+
+## Kompetencje szczegółowe (2/2)
+
+**Zmiany traktatów:**
+
+-   Decyzja o zwołaniu konwentu
+
+**Swobodny przepływ osób:**
+
+-   Instancja odwoławcza gdy państwo powołuje się na interesy krajowe
+
+**PWBiS:**
+
+-   Strategiczne wytyczne planowania prawodawczego i operacyjnego
+
+**Polityka gospodarcza:**
+
+-   Ogólne kierunki polityk gospodarczych
+-   Roczna analiza zatrudnienia
+
+------------------------------------------------------------------------
+
+## Funkcje kreacyjne - mianowanie stanowisk
+
+1.  **Przewodniczący Rady Europejskiej** (2,5 roku)
+
+2.  **Kandydat na przewodniczącego Komisji** (większość kwalifikowana)
+
+3.  **Komisja jako całość** (po zatwierdzeniu przez PE)
+
+4.  **Władze EBC** (prezes, wiceprezes, zarząd)
+
+5.  **Liczba komisarzy** (jednomyślnie)
+
+# Program strategiczny UE
+
+------------------------------------------------------------------------
+
+## Strategiczny program 2019-2024 - priorytety
+
+1.  **Ochrona obywateli i swobód** - granice, migracja, azyl, bezpieczeństwo
+
+2.  **Silna baza gospodarcza** - UGW, unia bankowa, cyfryzacja
+
+3.  **Neutralna klimatycznie Europa** - Zielony Ład, energia, filary socjalny
+
+4.  **Promocja interesów na świecie** - NATO, partnerstwa, handel
+
+------------------------------------------------------------------------
+
+## Mechanizmy ewaluacji programu
+
+-   Regularne przeglądy na posiedzeniach RE
+
+-   Tematyczne debaty
+
+-   Półroczne sprawozdania przewodniczącego RE dla PE
+
+-   Roczne sprawozdania Komisji
+
+-   Przeglądy ministerialne w Radzie UE
+
+------------------------------------------------------------------------
+
+## Wyzwania w realizacji programu
+
+**Nieprzewidziane kryzysy:**
+
+-   **Pandemia COVID-19** (2020) - Next Generation EU (750 mld EUR)
+-   **Agresja Rosji na Ukrainę** (2022) - pakiety sankcji, wsparcie dla Ukrainy
+-   **Kryzys energetyczny** (2021-2022)
+
+Kryzysy wymusiły przeorientowanie priorytetów i dodatkowe działania.
+
+------------------------------------------------------------------------
+
+## Ocena realizacji - sukcesy
+
+-   Koordynacja odpowiedzi na COVID-19 i plan odbudowy
+
+-   Pakiet "Fit for 55" (Europejski Zielony Ład)
+
+-   Next Generation EU - wzmocnienie odporności gospodarczej
+
+-   Jednolita odpowiedź na rosyjską agresję
+
+-   Akty DSA i DMA (transformacja cyfrowa)
+
+------------------------------------------------------------------------
+
+## Ocena realizacji - wyzwania
+
+-   Brak postępów w reformie systemu azylowego
+
+-   Niekompletna unia bankowa
+
+-   Ograniczone postępy w zwiększaniu roli euro
+
+-   Trudności w utrzymaniu jednolitego stanowiska
+
+-   Wolniejsze tempo redukcji emisji w niektórych sektorach
+
+# Rola w systemie instytucjonalnym
+
+------------------------------------------------------------------------
+
+## Pozycja Rady Europejskiej w UE
+
+1.  **Określa ogólne kierunki polityczne** - realizowane przez KE, PE, Radę UE
+
+2.  **"Ostatnia instancja"** - rozstrzyga kwestie nierozwiązane na niższym szczeblu
+
+3.  **Zarządzanie kryzysowe** - szybkie decyzje polityczne
+
+4.  **Reprezentacja na najwyższym szczeblu** - szczyty z USA, Chinami, G7, G20
+
+5.  **Legitymizacja działań UE** - poparcie szefów państw/rządów
+
+------------------------------------------------------------------------
+
+## Tendencje i wyzwania
+
+-   **"Prezydencjalizacja" UE** - koncentracja władzy w rękach przywódców
+
+-   Wzrost znaczenia RE kosztem instytucji ponadnarodowych
+
+-   Pytania o równowagę międzyinstytucjonalną
+
+-   Wyzwania demokratycznej legitymacji
+
+-   Napięcie między skutecznością a przejrzystością
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   Rada Europejska - forum najwyższych przywódców, kluczowa rola w kształtowaniu kierunku integracji.
+
+-   Brak formalnych kompetencji prawodawczych, ale decyzje polityczne wyznaczają cele i priorytety.
+
+-   Od nieformalnych "szczytów" do regularnie obradującej instytucji z własnym przewodniczącym.
+
+-   Instytucja głęboko międzyrządowa (konsensus), ale współpracuje z instytucjami ponadnarodowymi.
+
+-   W obliczu kryzysów - dalsze wzmocnienie roli RE jako centrum koordynacji politycznej.

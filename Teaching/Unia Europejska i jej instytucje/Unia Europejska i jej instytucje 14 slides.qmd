@@ -1,0 +1,336 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 14 slides"
+subtitle: "Polityka zewnętrzna UE"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Plan wykładu
+
+1.  **Handel zewnętrzny** - UE w globalnym systemie handlu
+
+2.  **Polityka zagraniczna i obronna** - zasoby i ograniczenia
+
+3.  **Polityka rozwoju** - pomoc rozwojowa i humanitarna
+
+4.  **Zewnętrzny wymiar polityki wewnętrznej**
+
+5.  **Problem spójności** - wyzwania koordynacji
+
+# Handel zewnętrzny
+
+------------------------------------------------------------------------
+
+## UE w światowym systemie handlu
+
+-   **Jednolity front** - państwa członkowskie mówią jednym głosem
+
+-   **Wspólna Taryfa Celna (WTC)** - jednolite cła na import z krajów trzecich
+
+-   **Wspólna Polityka Handlowa (WPH)** - wyłączna kompetencja UE
+
+**Wspólne działania obejmują:**
+
+-   Ustalanie taryf zewnętrznych
+-   Negocjowanie umów handlowych
+-   Działania ochronne (antydumping, antysubsydyjne)
+
+------------------------------------------------------------------------
+
+## Poziomy negocjacji handlowych
+
+-   **Bilateralne** - z pojedynczymi państwami (Kanada, Japonia, Korea Płd.)
+
+-   **Z ugrupowaniami regionalnymi** - EFTA/EOG, Mercosur
+
+-   **Multilateralne** - w ramach WTO
+
+**Pozycja UE:**
+
+-   Jedna z największych gospodarek świata (~22% światowego PKB)
+-   ~1/5 światowego eksportu i importu
+-   Największy jednolity rynek - silna pozycja przetargowa
+
+------------------------------------------------------------------------
+
+## Priorytety polityki handlowej
+
+**Deklarowane cele:**
+
+-   Obniżenie ceł międzynarodowych
+-   Usunięcie barier pozataryfowych
+-   Liberalizacja nowych sektorów (usługi, zamówienia publiczne)
+
+**W praktyce:**
+
+-   Ochrona wrażliwych sektorów (rolnictwo, motoryzacja, tekstylia)
+-   Włączanie klauzul pozahandlowych (prawa pracownicze, środowisko, prawa człowieka)
+-   "Handel oparty na wartościach"
+
+------------------------------------------------------------------------
+
+## Rodzaje umów handlowych UE
+
+-   **Umowy o wolnym handlu (FTA)** - preferencyjny dostęp z krajami rozwiniętymi i wschodzącymi
+
+-   **Umowy o partnerstwie gospodarczym (EPA)** - dla krajów AKP, asymetryczne, z komponentem rozwojowym
+
+-   **Układy o stowarzyszeniu (AA)** - szerokie porozumienia polityczne i handlowe
+
+-   **Umowy o unii celnej** - Turcja, Andora, San Marino
+
+------------------------------------------------------------------------
+
+## Układy o stowarzyszeniu - kategorie
+
+1.  **Kraje kandydujące** - Bałkany Zachodnie, Turcja (perspektywa członkostwa)
+
+2.  **Państwa śródziemnomorskie** - Maroko, Egipt, Izrael (Europejska Polityka Sąsiedztwa)
+
+3.  **Członkowie EOG** - Norwegia, Islandia, Liechtenstein (uczestnictwo w rynku wewnętrznym)
+
+------------------------------------------------------------------------
+
+## Studium przypadku: UE-Japonia
+
+**Umowa EPA (2019):**
+
+-   Zniesienie ~99% ceł
+-   Otwarcie rynków usług i zamówień publicznych
+-   Ochrona ponad 200 europejskich oznaczeń geograficznych
+-   Zobowiązania klimatyczne (Porozumienie Paryskie)
+
+**Korzyści:**
+
+-   ~1 mld EUR rocznie oszczędności na cłach
+-   Tworzenie nowych miejsc pracy
+-   Ochrona renomy europejskich produktów
+
+------------------------------------------------------------------------
+
+## Procedura zawierania umów handlowych
+
+**Etap 1: Inicjatywa i mandat**
+
+-   Komisja rekomenduje → Rada udziela mandatu
+
+**Etap 2: Negocjacje**
+
+-   Komisja (DG TRADE) negocjuje, konsultuje z Radą i PE
+
+**Etap 3: Ratyfikacja**
+
+-   Zgoda Parlamentu Europejskiego (od Traktatu z Lizbony)
+-   Zatwierdzenie przez Radę
+-   Umowy mieszane → ratyfikacja przez wszystkie państwa członkowskie
+
+# Polityka zagraniczna i obronna
+
+------------------------------------------------------------------------
+
+## Zasoby UE w polityce zagranicznej
+
+-   **Państwa średniej wielkości** z rozwiniętą dyplomacją (Niemcy, Włochy, Hiszpania, Polska)
+
+-   **Francja** - potęga jądrowa, stałe miejsce w RB ONZ
+
+-   **ESDZ** - Europejska Służba Działań Zewnętrznych
+
+-   **Drugie wydatki na obronę** na świecie (łącznie)
+
+-   **Siła gospodarcza** - "power through trade"
+
+------------------------------------------------------------------------
+
+## Ograniczenia WPZiB
+
+-   UE nie jest państwem - brak terytorium do obrony
+
+-   Niechęć do oddania kontroli nad polityką zagraniczną
+
+-   Szczególne relacje historyczne państw z regionami świata
+
+-   Różnice między głównymi mocarstwami (Francja, Niemcy)
+
+-   **Wymóg jednomyślności** - prawo weta każdego państwa
+
+------------------------------------------------------------------------
+
+## Miękka vs twarda polityka bezpieczeństwa
+
+**Miękka siła (soft power):**
+
+-   Proces rozszerzenia UE jako narzędzie transformacji
+-   Handel, pomoc rozwojowa, współpraca polityczna
+-   Specjalni Przedstawiciele UE (SPUE)
+
+**Twarda siła (hard power) - ograniczona:**
+
+-   Grupy Bojowe UE (niewykorzystane operacyjnie)
+-   Misje głównie cywilne i cywilno-wojskowe
+-   Budowanie instytucji, szkolenie sił bezpieczeństwa
+
+------------------------------------------------------------------------
+
+## Instrumenty WPZiB
+
+-   **Działania dyplomatyczne** - oświadczenia, démarche, mediacje
+
+-   **Instrumenty gospodarcze** - preferencje handlowe, pomoc finansowa
+
+-   **Misje i operacje WPBiO** - cywilne i wojskowe
+
+-   **Sankcje** - dyplomatyczne (zawieszenie dialogu) i gospodarcze (embargo, zamrożenie aktywów)
+
+------------------------------------------------------------------------
+
+## Przykłady działań WPZiB
+
+-   **Mediacje Kosowo-Serbia** - normalizacja stosunków
+
+-   **Sankcje na Rosję** - po aneksji Krymu i inwazji na Ukrainę
+
+-   **Negocjacje nuklearne z Iranem** - JCPOA (2015)
+
+-   **Misje WPBiO** - EUNAVFOR Atalanta (antypiractwo), EUTM Mali (szkolenie)
+
+# Polityka rozwoju
+
+------------------------------------------------------------------------
+
+## UE jako globalny donator
+
+-   **UE + państwa członkowskie** = największy donator ODA na świecie
+
+-   Państwa członkowskie: ~45% globalnej pomocy rozwojowej
+
+-   UE jako instytucja: ~10% dodatkowe
+
+-   **Pomoc humanitarna:** państwa ~25%, UE (DG ECHO) ~30%
+
+------------------------------------------------------------------------
+
+## Motywacje polityki rozwojowej
+
+-   **Historyczne** - więzi z byłymi koloniami (Francja, Belgia, Holandia, Portugalia)
+
+-   **Moralne** - solidarność, godność ludzka, sprawiedliwość społeczna
+
+-   **Ekonomiczne/strategiczne** - nowe rynki, surowce, stabilizacja, ograniczenie migracji
+
+------------------------------------------------------------------------
+
+## Cele i kompetencje
+
+**Główny cel:** Likwidacja ubóstwa (zgodnie z SDGs)
+
+**Wartości:** Prawa człowieka, demokracja, rządy prawa, zrównoważony rozwój
+
+**Podział kompetencji:**
+
+-   Kompetencje dzielone UE/państwa członkowskie
+-   UE: wyłączność w aspektach związanych z handlem
+-   Państwa: własne programy bilateralne
+-   "Team Europe" - koordynacja działań
+
+------------------------------------------------------------------------
+
+## Instrumenty polityki rozwojowej
+
+-   **System Ogólnych Preferencji Taryfowych (GSP)**
+    -   GSP+ dla krajów wdrażających konwencje
+    -   "Wszystko Oprócz Broni" (EBA) dla LDC
+
+-   **Pomoc żywnościowa i humanitarna**
+
+-   **Umowy o współpracy**
+
+**Finansowanie:**
+
+-   Budżet UE: NDICI - Global Europe (2021-2027)
+-   Historycznie: Europejski Fundusz Rozwoju (włączony do budżetu)
+
+# Zewnętrzny wymiar polityki wewnętrznej
+
+------------------------------------------------------------------------
+
+## Eksternalizacja polityk wewnętrznych
+
+-   **Polityka transportowa** - umowy tranzytowe, "otwarte niebo", transport morski
+
+-   **Polityka energetyczna** - bezpieczeństwo dostaw, umowy z dostawcami
+
+-   **Polityka środowiskowa** - Porozumienie Paryskie, ochrona bioróżnorodności
+
+-   **Polityka konkurencji** - kontrola fuzji globalnych
+
+**"Efekt Brukseli"** - unijne standardy wpływają poza granice UE
+
+------------------------------------------------------------------------
+
+## Podstawa prawna - kompetencje dorozumiane
+
+-   **Przed Lizboną:** Doktryna AETR (orzecznictwo TSUE)
+
+-   **Art. 216 TFUE:** UE może zawierać umowy międzynarodowe gdy:
+    -   Przewidują to Traktaty
+    -   Konieczne do osiągnięcia celów UE
+    -   Przewidziane w akcie prawnym UE
+    -   Mogą wpłynąć na wspólne zasady
+
+**Zasada paralelizmu kompetencji** - kompetencje wewnętrzne = zewnętrzne
+
+# Problem spójności
+
+------------------------------------------------------------------------
+
+## Wyzwania koordynacji
+
+-   **Podział kompetencji** - różne instytucje odpowiadają za różne polityki (handel vs WPZiB vs rozwój)
+
+-   **Sprzeczne interesy** państw członkowskich
+
+-   **Polityka zagraniczna jako karta przetargowa** w sporach wewnętrznych
+
+-   **Niedostateczny rozwój instrumentów** - niedofinansowanie, jednomyślność
+
+------------------------------------------------------------------------
+
+## Dążenie do "jednego głosu"
+
+-   Wysoki Przedstawiciel ds. Zagranicznych i Polityki Bezpieczeństwa
+
+-   Europejska Służba Działań Zewnętrznych (ESDZ)
+
+-   Koordynacja "Team Europe"
+
+**Wyzwanie:** Pogodzenie 27 narodowych perspektyw z jednolitym stanowiskiem UE
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   **Handel** - najbardziej zintegrowany obszar, wyłączna kompetencja UE
+
+-   **WPZiB** - międzyrządowy charakter, wymóg jednomyślności, ograniczona skuteczność
+
+-   **Polityka rozwoju** - UE jako największy donator, motywacje mieszane
+
+-   **Eksternalizacja** - polityki wewnętrzne mają wymiar zewnętrzny
+
+-   **Spójność** - stałe wyzwanie dla UE jako aktora globalnego

@@ -1,0 +1,365 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 10 slides"
+subtitle: "Pozostałe instytucje UE"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Pozostałe instytucje i struktury UE
+
+1.  Europejski Bank Centralny
+2.  Komitet Ekonomiczno-Finansowy
+3.  Europejski Bank Inwestycyjny
+4.  Trybunał Obrachunkowy
+5.  Komitet Ekonomiczno-Społeczny
+6.  Komitet Regionów
+7.  WPZiB i WPBiO
+8.  PWBiS
+9.  Agencje UE
+
+# Europejski Bank Centralny
+
+------------------------------------------------------------------------
+
+## EBC - charakterystyka
+
+-   Utworzony na mocy **Traktatu z Maastricht** (1998)
+
+-   Od 1999 r. odpowiedzialny za **politykę pieniężną strefy euro**
+
+-   **Główny cel:** Stabilność cen (inflacja poniżej, ale blisko 2%)
+
+-   Wspiera cele gospodarcze UE (wzrost, zatrudnienie)
+
+-   Aktualny prezes: **Christine Lagarde** (od 2019)
+
+------------------------------------------------------------------------
+
+## Struktura organizacyjna EBC
+
+1.  **Rada Prezesów** - najważniejszy organ (Zarząd + prezesi banków centralnych strefy euro)
+
+2.  **Zarząd** - prezes, wiceprezes, 4 członków (kadencja 8 lat, bez możliwości ponownego wyboru)
+
+3.  **Rada Ogólna** - organ przejściowy (wszystkie państwa UE)
+
+------------------------------------------------------------------------
+
+## Główne funkcje EBC
+
+-   Ustalanie **stóp procentowych** dla pożyczek bankom komercyjnym
+
+-   Zarządzanie **rezerwami walutowymi** strefy euro
+
+-   Wspieranie krajowych organów **nadzoru finansowego**
+
+-   Monitorowanie trendów cenowych i ryzyka inflacyjnego
+
+-   Zatwierdzanie emisji **banknotów euro**
+
+-   **Wysoki stopień niezależności** - brak instrukcji od instytucji czy rządów
+
+# Komitet Ekonomiczno-Finansowy
+
+------------------------------------------------------------------------
+
+## KEF - organ doradczy
+
+-   Powołany na mocy **art. 134 TFUE**
+
+-   Zastąpił wcześniejszy Komitet Walutowy po wprowadzeniu euro
+
+-   **Skład:**
+
+    -   Po 2 przedstawicieli z każdego państwa (ministerstwa finansów + banki centralne)
+    -   2 przedstawicieli Komisji
+    -   2 przedstawicieli EBC
+
+------------------------------------------------------------------------
+
+## Główne zadania KEF
+
+-   Wydawanie opinii na żądanie Rady/Komisji lub z własnej inicjatywy
+
+-   Monitorowanie sytuacji gospodarczej i finansowej
+
+-   Przygotowanie prac **Rady ECOFIN**
+
+-   Prowadzenie dialogu między Radą a EBC
+
+-   Ocena wdrażania **procedury nadmiernego deficytu**
+
+-   Uczestnictwo w **Semestrze Europejskim**
+
+# Europejski Bank Inwestycyjny
+
+------------------------------------------------------------------------
+
+## EBI - charakterystyka
+
+-   Utworzony w **1958 r.** (Traktat Rzymski)
+
+-   Siedziba: **Luksemburg**
+
+-   **Udziałowcy:** Wszystkie państwa członkowskie UE
+
+-   Największa na świecie wielostronna instytucja kredytowa
+
+-   **Cel:** Zrównoważony rozwój wspólnego rynku (nie nastawiony na zysk)
+
+------------------------------------------------------------------------
+
+## Obszary działalności EBI
+
+-   Rozwój regionów mniej rozwiniętych
+
+-   Modernizacja przedsiębiorstw (projekty nie do sfinansowania krajowo)
+
+-   Projekty wspólnego zainteresowania (infrastruktura, energetyka)
+
+-   **Do 2025 r.:** 50% finansowania na klimat i środowisko
+
+-   Wspieranie innowacji i MŚP
+
+-   Wymiar zewnętrzny - polityka rozwojowa UE
+
+**Grupa EBI:** EBI + Europejski Fundusz Inwestycyjny (EFI)
+
+# Trybunał Obrachunkowy
+
+------------------------------------------------------------------------
+
+## TO - zewnętrzny audytor UE
+
+-   Status pełnoprawnej instytucji UE od **1993 r.** (Maastricht)
+
+-   **Skład:** Po 1 obywatelu z każdego państwa (kadencja 6 lat)
+
+-   Mianowani przez Radę po konsultacji z PE
+
+-   **Niezależność:** Działają w ogólnym interesie UE, bez instrukcji
+
+------------------------------------------------------------------------
+
+## Funkcje Trybunału Obrachunkowego
+
+1.  Kontrola rachunków dochodów i wydatków UE
+
+2.  Wspieranie PE i Rady w kontroli realizacji budżetu
+
+3.  Coroczne **poświadczenie wiarygodności** rachunków (DAS)
+
+4.  Roczne sprawozdanie po zamknięciu roku budżetowego
+
+**Trzy rodzaje kontroli:**
+
+-   Finansowe (prawdziwość rachunków)
+-   Zgodności (z przepisami)
+-   Wykonania zadań (oszczędność, wydajność, skuteczność)
+
+# Komitet Ekonomiczno-Społeczny
+
+------------------------------------------------------------------------
+
+## EKES - głos społeczeństwa obywatelskiego
+
+-   Utworzony w **1957 r.** (Traktaty Rzymskie)
+
+-   Organ doradczy - pomost między instytucjami UE a społeczeństwem
+
+-   **329 członków** (kadencja 5 lat)
+
+-   **Trzy grupy:**
+
+    -   Pracodawcy
+    -   Pracownicy
+    -   Różnorodne interesy (konsumenci, NGO, rolnicy, wolne zawody)
+
+------------------------------------------------------------------------
+
+## Struktura i funkcje EKES
+
+**Struktura:**
+
+-   Zgromadzenie Plenarne (sesje ~9x w roku)
+-   Przewodniczący + 2 wiceprzewodniczących (2,5 roku)
+-   Prezydium, sekcje specjalistyczne
+
+**Opinie:**
+
+-   Na wniosek instytucji UE (obowiązkowe/fakultatywne)
+-   Z własnej inicjatywy
+-   Rozpoznawcze
+
+# Komitet Regionów
+
+------------------------------------------------------------------------
+
+## KR - głos regionów i władz lokalnych
+
+-   Utworzony w **1994 r.** (Maastricht)
+
+-   **329 członków** z mandatem wyborczym (kadencja 5 lat)
+
+-   Przedstawiciele władz regionalnych i lokalnych
+
+-   **Rola:** Doradztwo, reprezentacja regionów w procesie decyzyjnym
+
+------------------------------------------------------------------------
+
+## Struktura i kompetencje KR
+
+**Struktura:**
+
+-   Zgromadzenie Plenarne (5-6x w roku)
+-   Prezydium, 6 komisji specjalistycznych
+
+**Obszary konsultacji:**
+
+-   Współpraca transgraniczna, transport
+-   Zdrowie publiczne, edukacja, kultura
+-   Zatrudnienie, środowisko, EFS
+
+**Szczególna rola:** Monitoring zasady subsydiarności, możliwość skargi do TSUE
+
+# WPZiB i WPBiO
+
+------------------------------------------------------------------------
+
+## Wspólna Polityka Zagraniczna i Bezpieczeństwa
+
+-   Ustanowiona w **1993 r.** (Maastricht)
+
+-   **Cele:**
+
+    -   Utrzymanie pokoju i bezpieczeństwa międzynarodowego
+    -   Propagowanie współpracy międzynarodowej
+    -   Rozwój demokracji, praworządności, praw człowieka
+
+-   **Charakter międzyrządowy** - decyzje jednomyślne
+
+------------------------------------------------------------------------
+
+## Struktury instytucjonalne WPZiB
+
+1.  **Wysoki Przedstawiciel ds. Zagranicznych** - przewodniczy Radzie ds. Zagranicznych, wiceprzewodniczący KE
+
+2.  **ESDZ** - Europejska Służba Działań Zewnętrznych (korpus dyplomatyczny UE)
+
+3.  **KPiB** - Komitet Polityczny i Bezpieczeństwa (ambasadorzy, monitorowanie sytuacji)
+
+------------------------------------------------------------------------
+
+## WPBiO - wymiar obronny
+
+-   Wspólna Polityka Bezpieczeństwa i Obrony
+
+-   Misje wojskowe i cywilne UE (Afryka, Bliski Wschód, Europa)
+
+-   **PESCO** - Stała Współpraca Strukturalna
+
+-   **Europejski Fundusz Obronny**
+
+-   Dążenie do **autonomii strategicznej**
+
+# PWBiS
+
+------------------------------------------------------------------------
+
+## Przestrzeń Wolności, Bezpieczeństwa i Sprawiedliwości
+
+Ustanowiona Traktatem z Amsterdamu (1999)
+
+**Trzy filary:**
+
+1.  **Wolność** - Schengen, azyl, imigracja, granice
+
+2.  **Bezpieczeństwo** - przestępczość, terroryzm, współpraca policyjna
+
+3.  **Sprawiedliwość** - współpraca sądowa, wzajemne uznawanie orzeczeń
+
+------------------------------------------------------------------------
+
+## Agencje i systemy PWBiS
+
+-   **Europol** - współpraca organów ścigania
+
+-   **Eurojust** - współpraca wymiarów sprawiedliwości
+
+-   **Frontex** - straż graniczna i przybrzeżna
+
+-   **SIS** - System Informacyjny Schengen
+
+-   **VIS** - Europejski System Informacji o Wizach
+
+**Strefa Schengen:** Podróżowanie bez kontroli granicznych (nie wszystkie państwa UE)
+
+# Agencje UE
+
+------------------------------------------------------------------------
+
+## Agencje - charakterystyka
+
+-   Wyodrębnione struktury z **osobowością prawną**
+
+-   Historia od lat 70. (Cedefop, Eurofound)
+
+-   Obecnie **ponad 40 agencji**
+
+**Kategorie:**
+
+1.  Agencje zdecentralizowane (EASA, EMA, EFSA)
+2.  Agencje wykonawcze (programy UE)
+3.  Agencje EURATOM
+4.  Inne organy (EIT)
+
+------------------------------------------------------------------------
+
+## Funkcje agencji UE
+
+**Trzy typy funkcjonalne:**
+
+1.  **Informacyjne** - gromadzenie, analiza danych (np. EEA)
+
+2.  **Doradcze** - ekspertyzy bez uprawnień decyzyjnych
+
+3.  **Wykonawcze** - uprawnienia decyzyjne (np. EMA - pozwolenia na leki)
+
+**Ogólne zadania:**
+
+-   Decentralizacja działalności UE
+-   Rozwijanie wiedzy specjalistycznej
+-   Integrowanie grup interesów
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   System instytucjonalny UE jest **wielopoziomowy i złożony**.
+
+-   Oprócz głównych instytucji funkcjonuje wiele wyspecjalizowanych organów.
+
+-   **EBC** - niezależna polityka pieniężna strefy euro.
+
+-   **EKES i KR** - głos społeczeństwa i regionów.
+
+-   **WPZiB/PWBiS** - obszary polityki o charakterze międzyrządowym.
+
+-   **Agencje** - specjalistyczna wiedza w konkretnych dziedzinach.
+
+-   System stale ewoluuje, dostosowując się do nowych wyzwań.

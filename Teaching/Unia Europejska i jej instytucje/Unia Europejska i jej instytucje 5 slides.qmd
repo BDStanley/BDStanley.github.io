@@ -1,0 +1,358 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 5 slides"
+subtitle: "Komisja Europejska - struktura i kompetencje"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Wprowadzenie
+
+------------------------------------------------------------------------
+
+## Komisja Europejska - rola w systemie UE
+
+-   Główny organ wykonawczy Unii Europejskiej.
+
+-   **Monopol na inicjatywę ustawodawczą** - jedyna instytucja uprawniona do proponowania nowych aktów prawnych.
+
+-   **"Strażnik traktatów"** - nadzoruje przestrzeganie prawa UE przez państwa członkowskie.
+
+-   Szerokie uprawnienia w polityce handlowej i konkurencji.
+
+-   W skład wchodzi kolegium komisarzy - po jednym z każdego państwa.
+
+# Historia Komisji Europejskiej
+
+------------------------------------------------------------------------
+
+## Geneza i ewolucja
+
+-   **1951:** Wysoka Władza EWWiS (kierowana przez Jeana Monneta) - pierwszy organ wykonawczy.
+
+-   **1957:** Traktaty Rzymskie - utworzenie odrębnych Komisji dla EWG i Euratomu.
+
+-   **1967:** Traktat o fuzji - połączenie struktur wykonawczych w jednolitą Komisję Wspólnot Europejskich.
+
+-   Kolejne traktaty (JAE, Maastricht, Amsterdam, Nicea, Lizbona) - modyfikacje kompetencji i struktury.
+
+# Główne funkcje Komisji
+
+------------------------------------------------------------------------
+
+## Cztery fundamentalne funkcje
+
+1.  **Propozycja prawodawstwa** - monopol inicjatywy ustawodawczej
+
+2.  **Zarządzanie i wdrażanie polityki** - wykonanie budżetu i programów UE
+
+3.  **Egzekwowanie prawa** - procedury naruszeniowe, polityka konkurencji
+
+4.  **Reprezentacja na arenie międzynarodowej** - polityka handlowa, współpraca rozwojowa
+
+------------------------------------------------------------------------
+
+## 1. Propozycja prawodawstwa
+
+**Proces przygotowania:**
+
+-   Identyfikacja problemów wymagających działania na poziomie UE
+-   Konsultacje z ekspertami, państwami członkowskimi, organizacjami, obywatelami
+-   **Ocena skutków regulacji** (impact assessment)
+-   Sprawdzenie zgodności z zasadą pomocniczości
+-   Kontrola przez parlamenty narodowe ("żółta kartka")
+
+------------------------------------------------------------------------
+
+## 2. Zarządzanie i wdrażanie polityki
+
+-   Nadzór nad wydatkowaniem budżetu UE (~150 mld EUR rocznie).
+
+-   **Główne programy:**
+
+    -   Fundusze strukturalne i inwestycyjne
+    -   Horyzont Europa (badania)
+    -   Erasmus+
+    -   Next Generation EU
+
+-   System zarządzania dzielonego z państwami członkowskimi (~80% budżetu).
+
+------------------------------------------------------------------------
+
+## 3. Egzekwowanie prawa - procedura naruszeniowa
+
+**Trzy etapy:**
+
+1.  **Wezwanie do usunięcia uchybienia** - informacja o potencjalnym naruszeniu
+
+2.  **Uzasadniona opinia** - formalne wezwanie do usunięcia naruszenia
+
+3.  **Skierowanie do TSUE** - możliwość nałożenia kar finansowych
+
+**Przykład:** Kara 1 mln EUR dziennie dla Polski za niewykonanie środków tymczasowych ws. Izby Dyscyplinarnej SN (2021).
+
+------------------------------------------------------------------------
+
+## 3. Egzekwowanie prawa - polityka konkurencji
+
+-   **Kontrola praktyk antykonkurencyjnych** - kartele, nadużywanie pozycji dominującej
+
+-   **Kontrola koncentracji** - fuzje i przejęcia
+
+-   **Nadzór nad pomocą państwa**
+
+-   Kary do 10% rocznego światowego obrotu przedsiębiorstwa.
+
+-   Przykład: kary dla Google >8 mld EUR za różne naruszenia.
+
+------------------------------------------------------------------------
+
+## 4. Reprezentacja na arenie międzynarodowej
+
+-   **Wspólna polityka handlowa:**
+
+    -   Negocjacje umów handlowych (CETA, Japonia, Wietnam)
+    -   Reprezentacja w WTO
+    -   Instrumenty ochrony handlu
+
+-   **Współpraca rozwojowa i pomoc humanitarna** - UE największy donator na świecie.
+
+-   **WPZiB** - Wysoki Przedstawiciel jako wiceprzewodniczący Komisji.
+
+# Skład i struktura Komisji
+
+------------------------------------------------------------------------
+
+## Liczba członków
+
+-   Historycznie: większe państwa miały po 2 komisarzy.
+
+-   **Traktat z Nicei (2001):** zasada "jeden kraj - jeden komisarz".
+
+-   Traktat z Lizbony przewidywał redukcję do 2/3 państw, ale w 2009 r. utrzymano pełną reprezentację.
+
+-   **Obecnie:** 27 komisarzy (po jednym z każdego państwa).
+
+-   System wiceprzewodniczących koordynujących zwiększa efektywność.
+
+------------------------------------------------------------------------
+
+## Sposób powoływania (1/2)
+
+**Wybór przewodniczącego:**
+
+-   Rada Europejska proponuje kandydata uwzględniając wyniki wyborów do PE.
+-   System **Spitzenkandidaten** - partie wskazują kandydatów przed wyborami.
+-   Parlament Europejski wybiera bezwzględną większością głosów.
+
+------------------------------------------------------------------------
+
+## Sposób powoływania (2/2)
+
+**Wybór pozostałych komisarzy:**
+
+-   Rada w porozumieniu z przewodniczącym przyjmuje listę kandydatów.
+-   Przewodniczący przydziela teki (obszary odpowiedzialności).
+-   Indywidualne przesłuchania przed komisjami PE.
+-   PE głosuje nad zatwierdzeniem całego kolegium.
+-   Rada Europejska kwalifikowaną większością mianuje Komisję.
+
+------------------------------------------------------------------------
+
+## Odpowiedzialność osobista
+
+**Art. 245 TFUE - komisarze zobowiązani są:**
+
+-   Działać niezależnie, w interesie UE jako całości
+-   Nie zwracać się o instrukcje od rządów
+-   Nie podejmować innej działalności zawodowej
+
+**Deklaracja interesów finansowych** - weryfikowana przez Komisję Prawną PE.
+
+------------------------------------------------------------------------
+
+## Odpowiedzialność zbiorowa
+
+-   **Wotum nieufności** (art. 234 TFUE) - większość 2/3 oddanych głosów, reprezentujących większość posłów.
+
+-   W praktyce nigdy nie przyjęte - najbliżej była Komisja Santera (1999), która sama zrezygnowała.
+
+-   **Bieżąca kontrola PE:**
+
+    -   Interpelacje i zapytania
+    -   Debaty plenarne
+    -   Procedura absolutorium z wykonania budżetu
+
+# Uprawnienia i obowiązki
+
+------------------------------------------------------------------------
+
+## Realizacja polityki i budżetu UE
+
+**Główne obszary wydatków:**
+
+-   **Polityka spójności** - ok. 1/3 budżetu
+-   **Wspólna Polityka Rolna** - drugi największy obszar
+-   **Badania i innowacje** - Horyzont Europa (95,5 mld EUR na 2021-2027)
+-   **Transformacja ekologiczna i cyfrowa**
+
+**Wieloletnie ramy finansowe 2021-2027:** ponad 1,2 bln EUR + Next Generation EU (750 mld EUR).
+
+------------------------------------------------------------------------
+
+## Wykonywanie budżetu UE
+
+1.  **Przygotowanie projektu budżetu** przez Komisję
+
+2.  **Zarządzanie wydatkami** zgodnie z zasadą należytego zarządzania finansami
+
+3.  **Mechanizmy kontroli:**
+
+    -   Kontrola ex-ante
+    -   Procedury weryfikacji
+    -   Systemy informatyczne
+    -   Służba Audytu Wewnętrznego
+
+4.  **Raportowanie** - sprawozdania dla Trybunału Obrachunkowego i PE
+
+------------------------------------------------------------------------
+
+## Przypadek Polski - praworządność
+
+**Etapy działań Komisji:**
+
+-   **2016:** Ramy Praworządności, pierwsze zalecenie
+-   **2017:** Uruchomienie art. 7 TUE (po raz pierwszy w historii UE)
+-   **2018-2021:** Postępowania przed TSUE (SN, system dyscyplinarny)
+-   **2021:** Kara 1 mln EUR dziennie
+-   **2022:** Mechanizm warunkowości budżetowej, warunki dla KPO
+
+# Organizacja i funkcjonowanie
+
+------------------------------------------------------------------------
+
+## Przewodniczący Komisji
+
+**Kompetencje:**
+
+-   Definiowanie priorytetów politycznych i strategii
+-   Kształtowanie struktury Komisji i przydzielanie tek
+-   Kierowanie pracami kolegium (cotygodniowe posiedzenia)
+-   Prawo do żądania rezygnacji komisarza
+
+**Najbardziej wpływowi:** Jacques Delors (1985-1995), Jean-Claude Juncker (2014-2019), Ursula von der Leyen (od 2019).
+
+------------------------------------------------------------------------
+
+## Struktura administracyjna
+
+**Dyrekcje Generalne (DG):**
+
+-   DG COMP (Konkurencja)
+-   DG GROW (Rynek Wewnętrzny)
+-   DG AGRI (Rolnictwo)
+-   DG REGIO (Polityka Regionalna)
+-   DG ECFIN (Sprawy Gospodarcze)
+
+**Służby specjalne:** Służba Prawna, OLAF, Urząd Publikacji
+
+**Agencje wykonawcze:** CINEA, EISMEA, HaDEA, REA, EACEA, ERCEA
+
+------------------------------------------------------------------------
+
+## Pracownicy Komisji
+
+-   Około **32 000 pracowników** - największa instytucja UE.
+
+-   **Kategorie:**
+
+    -   Urzędnicy stali (konkursy)
+    -   Pracownicy kontraktowi
+    -   Oddelegowani eksperci krajowi
+    -   Stażyści (Blue Book)
+
+------------------------------------------------------------------------
+
+## Proces decyzyjny w kolegium
+
+**Procedury przyjmowania decyzji:**
+
+-   **Procedura ustna** - kwestie wrażliwe politycznie
+-   **Procedura pisemna** - mniej kontrowersyjne sprawy
+-   **Procedura uprawnienia** - upoważnienie komisarza
+-   **Procedura subdelegacji** - delegacja na poziom administracyjny
+
+**Zasada kolegialności:** Wszystkie decyzje są formalnie przyjmowane przez całe kolegium.
+
+------------------------------------------------------------------------
+
+## Planowanie strategiczne
+
+-   **Program strategiczny** - długoterminowa wizja
+
+-   **Priorytety Przewodniczącej** (2019-2024):
+
+    -   Europejski Zielony Ład
+    -   Europa na miarę ery cyfrowej
+    -   Gospodarka służąca ludziom
+    -   Silniejsza pozycja Europy na świecie
+    -   Promowanie europejskiego stylu życia
+    -   Nowy impuls dla demokracji
+
+-   **Roczny program prac** - konkretne inicjatywy
+
+# Rola w systemie UE
+
+------------------------------------------------------------------------
+
+## Relacje instytucjonalne Komisji
+
+-   **Rada Europejska** - nominuje przewodniczącego, określa priorytety
+
+-   **Parlament Europejski** - zatwierdza Komisję, kontrola bieżąca, wotum nieufności
+
+-   **Rada UE** - rozpatruje propozycje legislacyjne, współpraca
+
+-   **TSUE** - Komisja wszczyna postępowania, sama podlega kontroli sądowej
+
+-   **Trybunał Obrachunkowy** - audyt budżetu zarządzanego przez Komisję
+
+-   **EBC** - koordynacja polityk gospodarczych i monetarnych
+
+------------------------------------------------------------------------
+
+## Ewolucja pozycji Komisji
+
+-   Od technokratycznego organu wykonawczego do bardziej politycznej instytucji.
+
+-   Rozwój kompetencji PE i rola Rady Europejskiej stworzyły nową dynamikę.
+
+-   **Wyzwanie:** równowaga między "strażnikiem traktatów" a politycznym charakterem działań.
+
+-   Zdolność adaptacji i budowania konsensusów kluczowa dla przyszłości integracji.
+
+# Podsumowanie
+
+------------------------------------------------------------------------
+
+## Kluczowe wnioski
+
+-   Komisja Europejska - centralny aktor w architekturze instytucjonalnej UE.
+
+-   **Łączy funkcje:**
+
+    -   Inicjatora prawodawstwa
+    -   Organu wykonawczego
+    -   Strażnika traktatów
+
+-   System wzajemnych hamulców i równowagi (checks and balances).
+
+-   Kluczowa rola w odpowiadaniu na współczesne wyzwania: klimat, cyfryzacja, migracje, geopolityka.

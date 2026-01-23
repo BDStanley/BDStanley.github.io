@@ -1,0 +1,459 @@
+---
+title: "Unia Europejska i jej instytucje"
+pagetitle: "Unia Europejska i jej instytucje 2 slides"
+subtitle: "Rozszerzenie Unii Europejskiej"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Fundamenty polityki rozszerzenia UE
+
+------------------------------------------------------------------------
+
+## Wprowadzenie
+
+-   Dziś omówimy proces geograficznego powiększania się wspólnoty europejskiej poprzez dołączanie kolejnych krajów na przestrzeni dekad.
+
+-   Ten terytorialny wymiar jednoczenia kontynentu jest równie istotny co pogłębianie współpracy między państwami.
+
+------------------------------------------------------------------------
+
+## Cele polityki rozszerzenia
+
+-   Jednoczenie państw Starego Kontynentu wokół wspólnych wartości i projektów ekonomiczno-politycznych
+
+-   Wspomaganie transformacji ustrojowych, modernizacji gospodarek oraz reform społecznych w krajach aspirujących
+
+-   Umacnianie ładu pokojowego i stabilizacji sytuacji politycznej
+
+-   Wzmacnianie procesów demokratycznych w całej Europie
+
+-   Zwiększanie globalnej pozycji i znaczenia UE na arenie międzynarodowej
+
+------------------------------------------------------------------------
+
+## Kryteria kopenhaskie (1993)
+
+Zgodnie z art. 49 TUE każde państwo europejskie respektujące wartości wspólnoty może ubiegać się o akcesję.
+
+**Trzy zasadnicze obszary:**
+
+1.  **Aspekty polityczne** - demokracja, państwo prawa, ochrona praw człowieka, prawa mniejszości
+
+2.  **Wymogi ekonomiczne** - gospodarka wolnorynkowa, zdolność do konkurencji w UE
+
+3.  **Gotowość do przyjęcia zobowiązań** - implementacja acquis communautaire
+
+------------------------------------------------------------------------
+
+## Zdolność absorpcyjna UE
+
+-   Kolejne fazy ekspansji wymagały reform instytucjonalnych
+
+-   Traktat lizboński wprowadził znaczące modyfikacje:
+
+    -   Dostosowanie organów i mechanizmów decyzyjnych
+    -   Trwałe rozwiązania niewymagające ciągłych korekt przy każdym rozszerzeniu
+
+-   Rozszerzenie nie może odbywać się ze szkodą dla skuteczności polityk europejskich
+
+# Etapy drogi do członkostwa
+
+------------------------------------------------------------------------
+
+## {.center}
+
+![**Główne etapy procesu przystąpienia do UE**](images/2_1.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+## {.center}
+
+![**Główne etapy procesu przystąpienia do UE**](images/2_2.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+## {.center}
+
+![**Główne etapy procesu przystąpienia do UE**](images/2_3.png){fig-align="center"}
+
+
+# Historyczne fazy rozszerzenia UE
+
+------------------------------------------------------------------------
+
+## Architekci zjednoczonej Europy (1957)
+
+**Sześć państw założycielskich EWG:**
+
+-   Francja
+-   Republika Federalna Niemiec
+-   Włochy
+-   Belgia
+-   Holandia
+-   Luksemburg
+
+Nadrzędny cel: zapobieżenie konfliktom zbrojnym poprzez silne powiązania ekonomiczne
+
+------------------------------------------------------------------------
+
+## Ekspansja na północ (1973)
+
+**Pierwsze rozszerzenie - wymiar północny:**
+
+-   Wielka Brytania
+-   Irlandia
+-   Dania
+
+**Kontekst:**
+
+-   Osłabienie pozycji Wielkiej Brytanii jako autonomicznej potęgi
+-   Reorientacja handlu brytyjskiego na partnerów europejskich
+-   Silne powiązania Irlandii i Danii z Wielką Brytanią
+
+------------------------------------------------------------------------
+
+## Otwarcie na południe (1981, 1986)
+
+**Rozszerzenie śródziemnomorskie:**
+
+-   Grecja (1981)
+-   Hiszpania i Portugalia (1986)
+
+**Znaczenie polityczne:**
+
+-   Wcześniej wykluczone ze względu na reżimy autorytarne
+-   Akcesja możliwa dopiero po przywróceniu demokracji
+-   Symboliczny powrót do europejskiej wspólnoty wartości
+
+------------------------------------------------------------------------
+
+## Zjednoczenie Niemiec (1990)
+
+-   Nietypowe rozszerzenie - włączenie byłej NRD
+
+-   Nowe terytoria zintegrowane bez standardowej procedury akcesyjnej
+
+-   Automatyczne włączenie w konsekwencji zjednoczenia państwa niemieckiego
+
+------------------------------------------------------------------------
+
+## Włączenie krajów EFTA (1995)
+
+**Czwarte rozszerzenie:**
+
+-   Austria
+-   Finlandia
+-   Szwecja
+
+**Kontekst:**
+
+-   Asymetryczne relacje między WE a EFTA
+-   Kraje EFTA implementowały regulacje WE bez wpływu na ich kształtowanie
+-   Norwegia odrzuciła członkostwo w referendum
+
+------------------------------------------------------------------------
+
+## Historyczne poszerzenie "10+2" (2004-2007)
+
+**2004 - dziesięć nowych państw:**
+
+-   Cypr, Czechy, Estonia, Litwa, Łotwa, Malta, Polska, Słowacja, Słowenia, Węgry
+
+**2007 - dwa kolejne państwa:**
+
+-   Bułgaria i Rumunia
+
+------------------------------------------------------------------------
+
+## Kontekst rozszerzenia 2004-2007
+
+-   Akcesja postrzegana jako "powrót do Europy" po upadku komunizmu
+
+-   Konieczność głębokiej transformacji politycznej i gospodarczej
+
+-   Implementacja zasad demokracji i wolnego rynku
+
+-   Bułgaria i Rumunia wymagały więcej czasu na spełnienie kryteriów (korupcja, wymiar sprawiedliwości)
+
+------------------------------------------------------------------------
+
+## Niekompletna integracja Bałkanów
+
+**Szczyt w Salonikach (2003)** - "europejska perspektywa" dla Bałkanów Zachodnich
+
+**Dotychczas tylko Chorwacja** (2013) sfinalizowała akcesję
+
+**Główne wyzwania:**
+
+-   Niedostatecznie rozwinięte gospodarki
+-   Słabość systemów politycznych i administracyjnych
+-   Nieskuteczny wymiar sprawiedliwości
+
+------------------------------------------------------------------------
+
+## Obecni kandydaci do UE (2026)
+
+**Dziewięć państw kandydujących:**
+
+-   Albania, Bośnia i Hercegowina, Czarnogóra, Macedonia Północna, Serbia (Bałkany Zachodnie)
+-   Mołdawia, Ukraina (od 2022, negocjacje od 2024)
+-   Gruzja (status kandydata 2023, ale proces zawieszony)
+-   Turcja (negocjacje zamrożone od 2016)
+
+**Potencjalni kandydaci:** Kosowo (wniosek 2022)
+
+------------------------------------------------------------------------
+
+## Postępy w negocjacjach akcesyjnych
+
+**Najbardziej zaawansowani kandydaci:**
+
+-   **Czarnogóra** - cel: zakończenie negocjacji do końca 2026, członkostwo 2028
+-   **Albania** - znaczące postępy, otwarte prawie wszystkie klastry negocjacyjne
+-   **Serbia** - negocjacje od 2014, ale wolniejsze tempo
+
+**Ukraina i Mołdawia:**
+
+-   Negocjacje rozpoczęte w 2024 roku
+-   Mołdawia aspiruje do członkostwa w 2028
+-   Ukraina - wyzwania związane z wojną i wielkością kraju
+
+------------------------------------------------------------------------
+
+## Brexit (2020)
+
+-   31 stycznia 2020 - Wielka Brytania opuściła UE
+
+-   Pierwszy przypadek wystąpienia państwa z Unii
+
+-   Rezultat referendum z 2016 roku
+
+-   Demonstracja, że proces integracji nie jest jednokierunkowy i nieodwracalny
+
+------------------------------------------------------------------------
+
+## Najnowsze zmiany (2024-2026)
+
+**Rozszerzenie strefy Schengen:**
+
+-   Bułgaria i Rumunia - pełne członkostwo od 1 stycznia 2025
+-   Obecnie 29 państw w strefie Schengen (25 z UE + 4 spoza UE)
+
+**Rozszerzenie strefy euro:**
+
+-   Bułgaria przyjęła euro 1 stycznia 2026
+-   Obecnie 21 państw w strefie euro
+
+# Motywacje stojące za rozszerzeniem UE
+
+------------------------------------------------------------------------
+
+## Dlaczego UE przyjmuje nowych członków?
+
+-   UE nigdy nie wypracowała jednoznacznej doktryny rozszerzeń
+
+-   Reagowała raczej na aplikacje niż proaktywnie kształtowała preferencje
+
+-   Do 1995 roku kandydaci byli częścią zachodnioeuropejskiej wspólnoty wartości
+
+-   Po 1995 roku kandydaci reprezentowali regiony o niższym poziomie rozwoju
+
+------------------------------------------------------------------------
+
+## Dwie interpretacje gotowości UE
+
+**Podejście pragmatyczne:**
+
+-   Bilans korzyści i kosztów pozostawał korzystny
+-   Zwiększenie jednolitego rynku
+-   Wzmocnienie bezpieczeństwa kontynentu
+
+**Interpretacja oparta na wartościach:**
+
+-   Imperatywy etyczne ważniejsze niż kalkulacja ekonomiczna
+-   Empatia i gotowość do wspierania aspirujących krajów
+
+# Korzyści i wyzwania - perspektywa kandydatów
+
+------------------------------------------------------------------------
+
+## Korzyści dla państw kandydujących (1)
+
+**Dostęp do jednolitego rynku:**
+
+-   Eliminacja barier handlowych i celnych
+-   Rynek około 450 milionów konsumentów
+-   Zwiększona atrakcyjność dla inwestycji zagranicznych
+-   Wzmocniona pozycja negocjacyjna w handlu światowym
+
+------------------------------------------------------------------------
+
+## Korzyści dla państw kandydujących (2)
+
+**Fundusze i programy rozwojowe:**
+
+-   Fundusze strukturalne i Fundusz Spójności
+-   Inwestycje infrastrukturalne
+-   Programy badawcze (Horyzont Europa)
+-   Programy edukacyjne (Erasmus+)
+
+------------------------------------------------------------------------
+
+## Korzyści dla państw kandydujących (3)
+
+**Wzmocnienie pozycji międzynarodowej:**
+
+-   Większa siła oddziaływania na arenie międzynarodowej
+-   Udział w kształtowaniu polityki zagranicznej UE
+-   Wsparcie dyplomatyczne w sytuacjach kryzysowych
+
+**Korzyści dla obywateli:**
+
+-   Swoboda podróżowania, studiowania i pracy
+-   Uznawanie kwalifikacji zawodowych
+-   Ochrona praw obywatelskich
+
+------------------------------------------------------------------------
+
+## Wyzwania dla państw kandydujących (1)
+
+**Ograniczenie suwerenności:**
+
+-   Przekazanie części kompetencji na poziom ponadnarodowy
+-   Zobowiązanie do implementacji prawa unijnego
+-   Podporządkowanie się orzeczeniom TSUE
+
+**Koszty dostosowawcze:**
+
+-   Implementacja standardów i norm unijnych
+-   Modernizacja zakładów produkcyjnych
+-   Wdrażanie dyrektyw środowiskowych
+
+------------------------------------------------------------------------
+
+## Wyzwania dla państw kandydujących (2)
+
+**Wyzwania związane z migracją:**
+
+-   Ryzyko "drenażu mózgów"
+-   Problemy demograficzne
+-   Zagrożenie dla systemów emerytalnych
+
+**Presja konkurencyjna:**
+
+-   Konkurencja ze strony firm z rozwiniętych gospodarek UE
+-   Zagrożenie dla lokalnych producentów
+
+# Korzyści i wyzwania - perspektywa obecnych członków
+
+------------------------------------------------------------------------
+
+## Korzyści dla dotychczasowych członków (1)
+
+**Rozwój jednolitego rynku:**
+
+-   Zwiększenie skali i potencjału gospodarczego UE
+-   Nowe rynki zbytu
+-   Dostęp do tańszych surowców i siły roboczej
+-   Nowe możliwości inwestycyjne
+
+------------------------------------------------------------------------
+
+## Korzyści dla dotychczasowych członków (2)
+
+**Wzmocnienie pozycji geopolitycznej:**
+
+-   Większa siła negocjacyjna w stosunkach międzynarodowych
+-   Rozszerzenie strefy stabilności i bezpieczeństwa
+-   Ograniczenie wpływów innych mocarstw
+-   Budowa silniejszej pozycji UE jako globalnego gracza
+
+------------------------------------------------------------------------
+
+## Korzyści dla dotychczasowych członków (3)
+
+**Korzyści strategiczne:**
+
+-   Wzmocnienie granic UE
+-   Lepsza kontrola przepływów migracyjnych
+-   Większa zdolność reagowania na kryzysy
+
+**Korzyści demograficzne:**
+
+-   Napływ młodych, wykształconych pracowników
+-   Uzupełnienie niedoborów na rynkach pracy
+
+------------------------------------------------------------------------
+
+## Trudności dla dotychczasowych członków (1)
+
+**Obciążenia finansowe:**
+
+-   Zwiększone wydatki na politykę spójności
+-   Subsydiowanie sektorów wrażliwych
+-   Napięcia między płatnikami netto a beneficjentami
+
+**Pogłębienie dysproporcji rozwojowych:**
+
+-   Zwiększenie różnic gospodarczych wewnątrz UE
+-   Ryzyko polaryzacji: centrum vs. peryferie
+
+------------------------------------------------------------------------
+
+## Trudności dla dotychczasowych członków (2)
+
+**Komplikacja procesu decyzyjnego:**
+
+-   Utrudnienia w osiąganiu konsensusu
+-   Zwiększona różnorodność interesów narodowych
+-   Ryzyko paraliżu decyzyjnego
+
+**Wyzwania związane z migracją wewnętrzną:**
+
+-   Napięcia społeczne
+-   Presja na systemy zabezpieczenia społecznego
+
+# Konsekwencje rozszerzenia UE
+
+------------------------------------------------------------------------
+
+## Sześć głównych konsekwencji
+
+1.  **Pogłębienie integracji** - reformy instytucjonalne, odejście od jednomyślności
+
+2.  **Rozbudowa instytucji** - większy PE, rotacyjna prezydencja, reforma Komisji
+
+3.  **Elastyczność decyzyjna** - mechanizm wzmocnionej współpracy
+
+------------------------------------------------------------------------
+
+## Sześć głównych konsekwencji (cd.)
+
+4.  **Trudności dużych państw** - większa liczba uczestników procesu decyzyjnego
+
+5.  **Nowe priorytety** - stosunki z Rosją, bezpieczeństwo energetyczne
+
+6.  **Wzmocnienie pozycji międzynarodowej** - UE jako kluczowy gracz globalny
+
+------------------------------------------------------------------------
+
+## Podsumowanie
+
+-   Rozszerzenie UE to złożony proces generujący wielowymiarowe konsekwencje
+
+-   Dla kandydatów: szansa na przyspieszony rozwój, ale wymaga kompromisów
+
+-   Dla obecnych członków: nowe możliwości, ale komplikacja procesu decyzyjnego
+
+-   W długofalowej perspektywie bilans korzyści przeważa nad kosztami
+
+-   Kolejne wykłady: analiza poszczególnych instytucji UE oraz mechanizmów decyzyjnych
