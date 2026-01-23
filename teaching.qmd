@@ -4,4 +4,4 @@ editor: visual
 
 ## Unia Europejska i jej instytucje
 
--  [Week 1](Teaching/Unia Europejska i jej instytucje/Unia Europejska i jej instytucje 1 slides.html)
+1. [Wprowadzenie do przedmiotu - UE w skrócie](Teaching/Unia%20Europejska%20i%20jej%20instytucje/Unia%20Europejska%20i%20jej%20instytucje%201%20slides.html)
