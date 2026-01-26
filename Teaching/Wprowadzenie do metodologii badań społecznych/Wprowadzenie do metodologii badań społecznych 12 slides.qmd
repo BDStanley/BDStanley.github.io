@@ -1,0 +1,803 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 12 slides"
+subtitle: "**Seminarium powtórzeniowe**"
+author:
+  - name: "Ben Stanley"
+    affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: "01/26/26"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, presentation_style.scss]
+    slide-number: true
+    overview: true
+    center: true
+    incremental: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    footer: "Wprowadzenie do metodologii badań społecznych"
+    link-external-newwindow: true
+    logo: swps.jpg
+execute:
+  cache: false
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+---
+
+# Wprowadzenie
+
+## Cele seminarium
+
+- Powtórzenie kluczowych zagadnień z kursu
+- Systematyzacja wiedzy z 11 wykładów
+- Przygotowanie do egzaminu końcowego
+
+## Struktura kursu - przegląd
+
+1. Projektowanie procesu badawczego
+2. Przegląd literatury, dane zastane, plagiat
+3. Ujęcia jakościowe, ilościowe, mieszane
+4. Planowanie projektu badawczego
+5. Etyka w badaniach społecznych
+6. Logika doboru próby
+7. Badania ilościowe (kwestionariusze)
+8. Badania jakościowe (wywiady)
+9. Analiza danych ilościowych
+10. Analiza danych jakościowych
+11. Opis i prezentowanie wyników badań
+
+# Blok 1: Podstawy metodologii (wykłady 1-2)
+
+## Kluczowe pojęcia
+
+:::: {.columns}
+::: {.column width="50%"}
+**Nauka i badania**
+
+- **Metodologia** - nauka o metodach badawczych
+- **Metodyka** - konkretne techniki i narzędzia
+- **Paradygmat** - wzorzec uprawiania nauki
+- **Obiektywność** - niezależność wyników od badacza
+- **Intersubiektywność** - możliwość replikacji badania
+:::
+
+::: {.column width="50%"}
+**Paradygmaty badawcze**
+
+- **Pozytywistyczny** - poszukiwanie praw ogólnych
+- **Interpretatywny** - rozumienie znaczeń
+- **Krytyczny** - odkrywanie struktur władzy
+- **Pragmatyczny** - praktyczna użyteczność
+- **Konstruktywistyczny** - rzeczywistość jako konstrukcja
+:::
+::::
+
+## Cele badań naukowych
+
+| Cel | Pytanie | Przykład |
+|-----|---------|----------|
+| **Eksploracyjny** | Co to jest? | Wstępne badanie nowego zjawiska |
+| **Deskryptywny** | Jak wygląda? | Opis rozkładu cech w populacji |
+| **Eksplanacyjny** | Dlaczego? | Wyjaśnienie przyczyn zjawiska |
+| **Predykcyjny** | Co będzie? | Prognozowanie trendów |
+| **Aplikacyjny** | Jak zastosować? | Praktyczne rozwiązania |
+
+## Problem i pytania badawcze
+
+**Kryteria dobrego problemu badawczego:**
+
+- **Oryginalność** - wypełnienie luki poznawczej
+- **Ważność** - teoretyczna lub praktyczna
+- **Precyzja** - jednoznaczne sformułowanie
+- **Realizowalność** - możliwość zbadania
+- **Etyczność** - zgodność z normami
+
+::: {.fragment}
+**Przykład złego pytania:** "Czy media są dobre czy złe?"
+:::
+
+::: {.fragment}
+**Przykład dobrego pytania:** "Jak korzystanie z mediów społecznościowych wpływa na poczucie tożsamości narodowej wśród młodych imigrantów w Polsce?"
+:::
+
+## Hipotezy badawcze
+
+**Rodzaje hipotez:**
+
+- **Kierunkowe** vs **bezkierunkowe**
+- **Zerowe** (H₀) vs **alternatywne** (H₁)
+- **Przyczynowe** vs **korelacyjne**
+
+**Wymagania wobec hipotez:**
+
+- Empiryczna sprawdzalność
+- Falsyfikowalność
+- Precyzja sformułowania
+- Zgodność z wiedzą naukową
+
+::: {.fragment}
+**Przykład:** H1: "Studenci z wyższym kapitałem kulturowym rodziców częściej wybierają studia zagraniczne"
+:::
+
+## Przegląd literatury
+
+:::: {.columns}
+::: {.column width="50%"}
+**Rodzaje przeglądów:**
+
+- Narracyjny
+- Systematyczny (PRISMA)
+- Meta-analiza
+- Krytyczny
+- Tematyczny
+
+**Model PICO:**
+
+- **P**opulation
+- **I**ntervention
+- **C**omparison
+- **O**utcomes
+:::
+
+::: {.column width="50%"}
+**Bazy danych:**
+
+- Scopus, Web of Science
+- PsycINFO, ERIC
+- Google Scholar
+
+**Funkcje przeglądu:**
+
+- Orientacyjna
+- Teoretyczna
+- Metodologiczna
+- Empiryczna
+- Krytyczna
+:::
+::::
+
+## Dane zastane i plagiat
+
+**Dane zastane:**
+
+- GUS, Eurostat, OECD
+- European Social Survey
+- Diagnoza Społeczna
+
+::: {.fragment}
+**Zalety:** oszczędność, duże próby, porównywalność
+:::
+
+::: {.fragment}
+**Ograniczenia:** brak kontroli jakości, niedostosowanie
+:::
+
+## Dane zastane i plagiat
+
+**Plagiat - rodzaje:**
+
+- Dosłowny (copy-paste)
+- Częściowy (fragmenty)
+- Parafraza bez źródła
+- Auto-plagiat
+- Strukturalny
+
+::: {.fragment}
+**Systemy referencyjne:** APA, Chicago, Harvard, Vancouver
+:::
+
+# Blok 2: Podejścia badawcze (wykłady 3-4)
+
+## Ilościowe vs jakościowe
+
+| Aspekt | Ilościowe | Jakościowe |
+|--------|-----------|------------|
+| **Cel** | Pomiar, weryfikacja | Zrozumienie, interpretacja |
+| **Pytania** | Ile? Jak często? | Jak? Dlaczego? |
+| **Próba** | Duża, reprezentatywna | Mała, celowa |
+| **Dane** | Liczby, statystyki | Narracje, znaczenia |
+| **Analiza** | Statystyczna | Interpretacyjna |
+| **Generalizacja** | Na populację | Kontekstowa |
+
+## Metody ilościowe
+
+**Techniki zbierania danych:**
+
+- Eksperyment
+- Badanie sondażowe (PAPI, CAWI, CATI, CAPI)
+- Analiza statystyczna
+- Obserwacja strukturalizowana
+
+::: {.fragment}
+**Kiedy stosować?**
+:::
+
+- Testowanie hipotez
+- Pomiar natężenia zjawisk
+- Badanie związków między zmiennymi
+- Uogólnianie na populację
+- Porównywanie grup
+
+## Metody jakościowe
+
+**Techniki zbierania danych:**
+
+- Etnografia
+- Studium przypadku
+- Badanie narracyjne
+- Fenomenologia
+- Teoria ugruntowana
+- Analiza dyskursu
+
+::: {.fragment}
+**Kiedy stosować?**
+:::
+
+- Eksploracja nowych obszarów
+- Rozumienie znaczeń i interpretacji
+- Badanie procesów i mechanizmów
+- Badanie wrażliwych tematów
+
+## Metody mieszane
+
+**Strategie łączenia metod:**
+
+- **Sekwencyjna wyjaśniająca:** Ankieta → Wywiady (wyjaśnienie)
+- **Sekwencyjna eksploracyjna:** Wywiady → Ankieta (testowanie)
+- **Równoległa:** Ankieta + Wywiady jednocześnie (triangulacja)
+- **Osadzona:** Eksperyment + wywiady z uczestnikami
+
+::: {.fragment}
+**Zalety**
+:::
+
+- Niwelowanie ograniczeń pojedynczych metod
+- Pełniejszy obraz zjawiska
+- Większa wiarygodność wyników
+
+## Projekt badawczy - etapy
+
+1. **Koncepcja** - pomysł i uzasadnienie
+2. **Planowanie** - przegląd literatury, metodologia
+3. **Realizacja** - zbieranie i analiza danych
+4. **Zamknięcie** - raportowanie
+5. **Ocena** - ewaluacja ex-post
+
+# Blok 3: Etyka i dobór próby (wykłady 5-6)
+
+## Etyka w badaniach społecznych
+
+**Główne zasady:**
+
+1. **Dobrowolne uczestnictwo**
+2. **Nie krzywdzić badanych**
+3. **Anonimowość i poufność**
+4. **Unikanie oszukiwania**
+5. **Rzetelna analiza i prezentacja**
+
+::: {.fragment}
+**Świadoma zgoda:**
+:::
+
+- Cel badania
+- Opis zagrożeń
+- Informacja o poufności
+- Dobrowolność udziału
+- Prawo do wycofania
+
+## Słynne kontrowersje etyczne
+
+:::: {.columns}
+::: {.column width="50%"}
+**Eksperyment Tuskegee (1932-72)**
+
+- Badanie syfilisu bez leczenia
+- Efekt: National Research Law
+
+**Eksperyment Milgrama (1961)**
+
+- Posłuszeństwo wobec autorytetu
+- 2/3 badanych wykonało polecenia do końca
+:::
+
+::: {.column width="50%"}
+**Stanford Prison Experiment (1971)**
+
+- Symulacja więzienia
+- Szkody psychiczne uczestników
+
+**Tearoom Trade (Humphreys)**
+
+- Badanie zachowań homoseksualnych
+- Naruszenie prywatności
+:::
+::::
+
+## Komisje etyczne
+
+- **IRB** (Institutional Review Board) - USA
+- **Komisje Etyki Badań Naukowych** - Polska
+- Cel: ochrona praw i interesów uczestników
+
+::: {.fragment}
+**Kodeksy etyki:**
+:::
+
+- AAPOR, ASA, APA
+- ESOMAR/ICC (międzynarodowy)
+
+## Dobór próby - podstawy
+
+**Kluczowe pojęcia:**
+
+- **Populacja** - wszystkie jednostki nas interesujące
+- **Próba** - podzbiór populacji do badania
+- **Operat losowania** - lista elementów do losowania
+- **Reprezentatywność** - próba odzwierciedla populację
+- **Błąd z próby** - maleje gdy próba rośnie
+
+## Rodzaje prób
+
+:::: {.columns}
+::: {.column width="50%"}
+**Probabilistyczne:**
+
+- Prosty dobór losowy
+- Dobór systematyczny
+- Dobór warstwowy
+- Dobór wielostopniowy (grupowy)
+:::
+
+::: {.column width="50%"}
+**Nieprobabilistyczne:**
+
+- Dobór kwotowy
+- Dobór celowy
+- Metoda kuli śnieżnej
+- Oparta na dostępności
+:::
+
+::::
+
+## Dobór kwotowy - przykład
+
+**Kwoty twarde:**
+
+- Płeć (np. 48% M, 52% K)
+- Wiek (przedziały)
+- Region (województwa)
+
+::: {.fragment}
+**Kwoty miękkie:**
+:::
+
+- Wykształcenie
+- Urbanizacja
+
+::: {.fragment}
+**Response rate (stopa realizacji):**
+:::
+
+- Wywiad twarzą w twarz: ~57%
+- CAWI: ~29%
+- CATI: ~18%
+
+# Blok 4: Badania ilościowe (wykład 7)
+
+## Techniki zbierania danych
+
+| Technika | Zalety | Wady |
+|----------|--------|------|
+| **PAPI** | Bez internetu, materiały wizualne | Błędy przy wprowadzaniu, kosztowne |
+| **CAWI** | Niski koszt, szybkie, duży zasięg | Wykluczenie cyfrowe, samoselekcja |
+| **CAPI** | Wysokie jakości, multimedia | Drogie, efekt ankietera |
+| **CATI** | Monitoring jakości, centralizacja | Brak wizualizacji, spadek telefonów stacjonarnych |
+
+## Budowa kwestionariusza
+
+**Struktura:**
+
+1. Wprowadzenie (cel, anonimowość, zgoda)
+2. Metryczka
+3. Pytania główne (bloki tematyczne)
+4. Instrukcje
+5. Podziękowanie
+
+::: {.fragment}
+**Zasady projektowania pytań:**
+:::
+
+- Jasne i jednoznaczne
+- Możliwe do odpowiedzi
+- Jednowątkowe
+- Neutralne
+- Bez podwójnych zaprzeczeń
+
+## Rodzaje pytań
+
+- **Zamknięte** - predefiniowane opcje
+- **Otwarte** - swobodna odpowiedź
+- **Półotwarte** - opcje + "Inne, jakie?"
+- **Jednokrotnego wyboru** (radio)
+- **Wielokrotnego wyboru** (checkbox)
+- **Filtrujące** - kierują do odpowiednich pytań
+- **Skalowe** (Likert, numeryczne, dyferencjał semantyczny)
+- **Macierzowe/tabelaryczne**
+
+## Najczęstsze błędy w pytaniach
+
+1. **Niespójne opcje odpowiedzi**
+2. **Zły format odpowiedzi** (mieszanie typów)
+3. **Żargon techniczny**
+4. **Nakładające się kategorie**
+5. **Niewyczerpujące opcje**
+6. **Pytania sugerujące**
+
+::: {.fragment}
+**Przykład złego pytania:**
+
+> "Czy nie uważa Pan/Pani, że postawa właściciela firmy jest karygodna?"
+:::
+
+# Blok 5: Badania jakościowe (wykład 8)
+
+## Charakterystyka badań jakościowych
+
+**Kluczowe cechy:**
+
+- Eksploracja znaczeń z perspektywy uczestników
+- Elastyczne podejście
+- Bogate dane narracyjne
+- Małe próby (5-30 osób)
+- Kontekst naturalny
+
+::: {.fragment}
+**Cele:**
+:::
+
+- Eksploracja
+- Rozumienie
+- Opis
+- Generowanie hipotez
+- Ewaluacja
+
+## IDI vs FGI
+
+| Aspekt | IDI | FGI |
+|--------|-----|-----|
+| **Uczestnicy** | 1 osoba | 6-10 osób |
+| **Czas** | 60-120 min | 90-120 min |
+| **Głębia** | Bardzo wysoka | Umiarkowana |
+| **Tematy wrażliwe** | Odpowiednie | Nieodpowiednie |
+| **Koszt na osobę** | Wysoki | Niski |
+| **Dynamika grupowa** | Brak | Wysoka |
+
+## Scenariusz wywiadu
+
+**Struktura:**
+
+1. **Wprowadzenie** (5-10 min) - cel, zgoda, budowanie relacji
+2. **Rozgrzewka** (5-10 min) - pytania łatwe
+3. **Tematy główne** (40-90 min) - od ogólnych do szczegółowych
+4. **Zakończenie** (5-10 min) - "Czy chce Pan/Pani coś dodać?"
+
+::: {.fragment}
+**Rodzaje pytań:**
+:::
+
+- Otwarte, narracyjne, hipotetyczne
+- Projekcyjne, kontrolne
+- Sondy ("Proszę powiedzieć więcej...")
+
+## Rekrutacja uczestników
+
+**Screener - elementy:**
+
+- Kryteria włączenia/wyłączenia
+- Pytania filtrujące
+- Informacja o badaniu
+- Zgoda na uczestnictwo
+
+::: {.fragment}
+**Strategie rekrutacji:**
+:::
+
+- Bezpośredni kontakt
+- Agencje rekrutacyjne
+- Ogłoszenia, media społecznościowe
+
+::: {.fragment}
+**Honorarium:** IDI 100-200 zł, FGI 150-300 zł
+:::
+
+# Blok 6: Analiza danych (wykłady 9-10)
+
+## Analiza danych ilościowych
+
+**Poziomy pomiaru:**
+
+- **Nominalny** - kategorie (płeć, kolor)
+- **Porządkowy** - hierarchia (wykształcenie)
+- **Przedziałowy** - równe odległości (temperatura)
+- **Ilorazowy** - absolutne zero (wiek, waga)
+
+::: {.fragment}
+**Rodzaje analizy:**
+:::
+
+- Jednozmiennowa (rozkłady, miary tendencji)
+- Dwuzmiennowa (korelacja, chi-kwadrat)
+- Wielozmiennowa (regresja)
+
+## Podstawowe statystyki
+
+**Miary tendencji centralnej:**
+
+- Średnia arytmetyczna
+- Mediana
+- Moda (dominanta)
+
+::: {.fragment}
+**Miary rozproszenia:**
+:::
+
+- Odchylenie standardowe
+- Wariancja
+- Rozstęp
+
+:::{.fragment}
+**Testy statystyczne:**
+:::
+
+- Chi-kwadrat (zmienne nominalne)
+- Korelacja Pearsona (zmienne przedziałowe)
+- t-test, ANOVA (porównanie grup)
+
+## Analiza danych jakościowych
+
+**Etapy:**
+
+1. Transkrypcja nagrań
+2. Pierwsze czytanie
+3. Kodowanie (etykietowanie fragmentów)
+4. Budowanie kategorii
+5. Interpretacja
+
+::: {.fragment}
+**Rodzaje kodowania:**
+:::
+
+- Opisowe ("co się dzieje?")
+- Interpretacyjne ("dlaczego?")
+- In vivo (słowa respondenta)
+
+## Kodowanie - praktyka
+
+**Kod** = etykieta dla fragmentu danych
+
+::: {.fragment}
+**Przykład:**
+
+> "Nie głosuję, bo politycy i tak mnie nie słuchają"
+
+→ Kod: **brak poczucia sprawczości**
+:::
+
+::: {.fragment}
+**Proces:**
+::: 
+
+- Pierwsza runda: 50-200 kodów
+- Druga runda: grupowanie w kategorie (5-15)
+- Budowanie tematów
+
+::: {.fragment}
+**Nasycenie teoretyczne** - gdy nowe dane nie wnoszą nowych informacji
+:::
+
+## Zapewnienie jakości analizy
+
+**Strategie:**
+
+- **Triangulacja** - różne źródła/metody
+- **Member checking** - weryfikacja z respondentami
+- **Peer debriefing** - dyskusja z kolegami
+- **Bogaty opis** - szczegóły, cytaty
+- **Audit trail** - dokumentacja decyzji
+
+::: {.fragment}
+**Typowe błędy:**
+:::
+
+- Za szybkie kodowanie
+- Zbyt ogólne/szczegółowe kody
+- Cherry-picking (wybieranie pasujących cytatów)
+- Brak memo
+
+# Blok 7: Prezentacja wyników (wykład 11)
+
+## Styl naukowy
+
+**Zasady:**
+
+- Poprawność językowa
+- Precyzyjny, jednoznaczny język
+- Formalność
+- Zwięzłość
+- Prosty, klarowna narracja
+
+:::{.fragment}
+**Unikać:**
+:::
+
+- Nacechowania emocjonalnego ("szokujące!")
+- Kolokwializmów ("super ważne")
+- Nadmiernych zabiegów stylistycznych
+
+## Wytyczne formalne (SWPS)
+
+- Czcionka: **Times New Roman 12**
+- Interlinia: **1,5**
+- Marginesy: **2,5 cm**
+- Tekst wyjustowany
+- Tytuły rozdziałów - **pogrubienie**
+- Przypisy dolne - tylko komentarze (APA)
+- Numeracja stron w stopce
+
+## Tabele i wykresy
+
+**Wymagania:**
+
+- Odpowiedni **tytuł** (Tabela 1., Wykres 1.)
+- Informacja o **źródle danych**
+- **Wielkość próby** (n=...)
+- Zrozumiałe nazwy kolumn/osi
+- Jasne co jest pokazane (%, n, jednostki)
+
+::: {.fragment}
+**Przykład źródła:**
+
+> Źródło: badanie własne, CAWI, n = 245
+:::
+
+## Cytaty w tekście
+
+::: {.fragment}
+**Format:**
+
+> *Trudno też tak jednoznacznie zakończyć pracę, maile przychodzą i się je czyta niezależnie od godziny.* (Monika, 34, księgowa)
+:::
+
+::: {.fragment}
+**Elementy opisu respondenta:**
+
+- Pseudonim (nie prawdziwe imię!)
+- Wiek
+- Cechy istotne dla tematu badania
+:::
+
+## Pisanie jako proces
+
+> "First draft is the **down draft** - you just get it down. The second draft is the **up draft** - you fix it up. The third draft is the **dental draft**, where you check every tooth..."
+>
+> (Lamott, 1994)
+
+::: {.fragment}
+**Zasady:**
+:::
+
+- Pisanie i redakcja osobno
+- Pierwszy szkic nie musi być idealny
+- Instytucja "przyjaznego laika"
+
+# Powtórzenie kluczowych pojęć
+
+## Terminologia - część 1
+
+| Termin | Definicja |
+|--------|-----------|
+| **Metodologia** | Nauka o metodach badawczych |
+| **Hipoteza zerowa** | Zakładamy brak związku/różnicy |
+| **Operacjonalizacja** | Przekształcenie pojęć teoretycznych na mierzalne |
+| **EPSEM** | Równe prawdopodobieństwo wyboru do próby |
+| **Response rate** | Proporcja zebranych ankiet do próby |
+| **Triangulacja** | Łączenie różnych metod/źródeł |
+
+## Terminologia - część 2
+
+| Termin | Definicja |
+|--------|-----------|
+| **IDI** | Indywidualny wywiad pogłębiony |
+| **FGI** | Zogniskowany wywiad grupowy |
+| **CAWI** | Ankieta internetowa |
+| **Nasycenie** | Nowe dane nie wnoszą nowych informacji |
+| **Kod (w analizie)** | Etykieta dla fragmentu danych |
+| **Świadoma zgoda** | Uczestnictwo oparte na pełnym zrozumieniu |
+
+## Terminologia - część 3
+
+| Termin | Definicja |
+|--------|-----------|
+| **Anonimowość** | Niemożność powiązania odpowiedzi z respondentem |
+| **Poufność** | Badacz zna tożsamość, ale nie ujawnia |
+| **Debriefing** | Rozmowa z uczestnikami po eksperymencie |
+| **Skala Likerta** | Skala zgody (np. 1-5) |
+| **Chi-kwadrat** | Test dla zmiennych nominalnych |
+| **Korelacja** | Siła związku między zmiennymi |
+
+# Pytania kontrolne
+
+## Pytania do dyskusji - część 1
+
+1. Czym różni się metodologia od metodyki?
+
+2. Jakie są kryteria dobrego problemu badawczego?
+
+3. Kiedy stosować metody ilościowe, a kiedy jakościowe?
+
+4. Czym różni się próba probabilistyczna od nieprobabilistycznej?
+
+5. Jakie są główne zasady etyczne w badaniach społecznych?
+
+## Pytania do dyskusji - część 2
+
+6. Jakie są zalety i wady techniki CAWI?
+
+7. Czym różni się IDI od FGI?
+
+8. Co to jest nasycenie teoretyczne?
+
+9. Jakie są poziomy pomiaru zmiennych?
+
+10. Jakie elementy powinna zawierać tabela w raporcie naukowym?
+
+## Zadanie praktyczne
+
+**Zidentyfikuj błędy w poniższym fragmencie:**
+
+> "metodologia
+>
+> Badanie przeprowadzono metodą ankiety internetowej. Zebrano 150 odpowiedzi. Wyniki są naprawdę ciekawe i szokujące! Kowalczyk (2020) też tak pisał."
+
+**Błędy:**
+
+1. Tytuł małą literą, bez pogrubienia
+2. Brak informacji o próbie (dobór, kryteria)
+3. Język emocjonalny ("naprawdę ciekawe", "szokujące")
+4. Cytowanie bez wpisu w bibliografii
+
+# Podsumowanie
+
+## Kluczowe wnioski z kursu
+
+1. **Metodologia** to fundament każdego badania - jasne cele, pytania, hipotezy
+
+2. **Wybór metody** zależy od celu: ilościowe (pomiar), jakościowe (zrozumienie), mieszane (pełny obraz)
+
+3. **Etyka** jest nieodzowna - świadoma zgoda, anonimowość, nie krzywdzić
+
+4. **Dobór próby** determinuje możliwość generalizacji
+
+5. **Jakość danych** zależy od narzędzi i procedur
+
+## Kluczowe wnioski (cd.)
+
+6. **Analiza** musi być systematyczna i udokumentowana
+
+7. **Prezentacja wyników** wymaga precyzji i formalności
+
+8. **Pisanie** to proces iteracyjny
+
+9. **Cytowanie** chroni przed plagiatem
+
+10. **Replikowalność** to cecha dobrego badania

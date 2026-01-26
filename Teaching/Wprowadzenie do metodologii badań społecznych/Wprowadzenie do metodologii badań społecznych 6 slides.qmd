@@ -1,0 +1,501 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 6 slides"
+subtitle: "Logika doboru próby"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Plan wykładu
+
+- Logika doboru próby
+- Probabilistyczny dobór próby
+- Nieprobabilistyczny dobór próby
+- Realizacja próby
+
+---
+
+## Techniki badawcze - powtórka
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Ilościowe
+
+- Wywiad kwestionariuszowy
+- Ankieta internetowa
+- Ankieta audytoryjna
+
+_W zależności od sposobu doboru uczestników_ - możliwa lub niemożliwa generalizacja wyników badań na całą populację
+:::
+
+::: {.column width="50%"}
+### Jakościowe
+
+- Indywidualny wywiad pogłębiony (IDI)
+- Zogniskowany wywiad grupowy (FGI)
+- Wywiady asynchroniczne
+- Obserwacja uczestnicząca (jawna/ukryta)
+- Analiza dokumentów
+
+_Brak możliwości generalizacji_ wyników badań na całą populację
+:::
+
+::::
+
+# Logika doboru próby
+
+---
+
+## Próba badawcza
+
+- **Populacja** - wszystkie pomiary, które nas interesują (np. wszyscy klienci naszej firmy). Badania całej populacji = badania pełne.
+
+- **Próba** - podzbiór populacji dobrany w sposób losowy lub nielosowy do badania.
+
+- W badaniach ilościowych na podstawie liczbowych charakterystyk próby możemy **wnioskować** jak wyglądają liczbowe charakterystyki populacji.
+
+- Jak obserwować, by wynik obserwacji móc ekstrapolować na populację → **idea reprezentatywności**
+
+---
+
+## Próba badawcza
+
+- Dobór próby może oznaczać każdą procedurę wyboru jednostek obserwacji - na przykład ankietowanie co dziesiątego przechodnia na ruchliwej ulicy.
+
+- **Kluczem do uogólniania wniosków** z próby na szerszą populację jest **probabilistyczny dobór próby**, powiązany z ważną ideą losowania.
+
+
+## Rodzaje prób
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Nieprobabilistyczne
+
+- Oparta na dostępności badanych
+- Dobór celowy/arbitralny
+- Metoda kuli śnieżnej
+- Dobór kwotowy
+:::
+
+::: {.column width="50%"}
+### Probabilistyczne
+
+- Prosty dobór losowy
+- Dobór systematyczny
+- Dobór warstwowy
+- Dobór wielostopniowy grupowy
+:::
+
+::::
+
+
+# Probabilistyczny dobór próby
+
+---
+
+## Reprezentatywność próby
+
+- Aby próba jednostek z całej populacji mogła być podstawą opisu całej populacji musi mieć zasadniczo **taką samą zmienność jak populacja**.
+
+- Zagregowane cechy próby reprezentatywnej odzwierciedlają zagregowane cechy populacji. Rozkład tych cech w próbie badawczej powinien w sposób losowy odtworzyć strukturę całej populacji, która aktualizowana jest w oparciu o **Narodowe Spisy Powszechne**.
+
+---
+
+## Reprezentatywność próby
+
+### Próba losowa
+
+- Gdy pobieramy próbę z wielkiej populacji to wyniki losowań są od siebie niezależne. Tak jak rzut monetą.
+
+### Błąd z próby
+
+- Rachunek prawdopodobieństwa pozwala oszacować reprezentatywność próby losowej - błąd z próby (losowy). **Gdy wielkość próby rośnie, błąd standardowy maleje.**- 
+
+---
+
+## Teoria i logika doboru losowego
+
+Podstawowa zasada doboru losowego jest następująca:
+
+- Próba jest reprezentatywna dla populacji, z której jest dobierana, jeśli wszyscy członkowie tej populacji mają takie same szanse, że zostaną wybrani do tej próby.
+
+- Próby mające taką własność są często określane jako próby **EPSEM** (metody równego prawdopodobieństwa wyboru, *equal probability of selection method*).
+
+---
+
+## Teoria i logika doboru losowego
+
+- Próby losowe, choć nigdy nie są doskonale reprezentatywne, są z reguły **bardziej reprezentatywne niż inne rodzaje prób**.
+
+- Praktycznie rzecz biorąc, bardziej prawdopodobne jest, że próba z jakiejś populacji będzie dla niej reprezentatywna, gdy jest to próba losowa, niż gdy jest to próba nielosowa.
+
+---
+
+## Teoria i logika doboru losowego
+
+- Dobór nieprobabilistyczny, choć poprawny przy niektórych celach badawczych, **nie może dać gwarancji**, że obserwowana przez nas próba jest reprezentatywna dla całej populacji.
+
+- **Wszystkie duże sondaże** korzystają z metod doboru probabilistycznego.
+
+- Fundamentalna idea: **aby próba jednostek z danej populacji mogła być podstawą dobrego opisu całej populacji, musi ona mieć zasadniczo taką samą zmienność jak populacja.**
+
+---
+
+## Losowanie - podstawowe pojęcia
+
+- **Element** jest tą jednostką, o której zbiera się informacje i która dostarcza podstaw do analiz; w badaniach sondażowych elementy to z reguły ludzie lub pewne typy ludzi, ale mogą to być też organizacje.
+
+- **Populacja** to określony teoretycznie zbiór elementów badania → **badana populacja** to ten zbiór elementów, z którego próba jest faktycznie pobrana.
+
+- **Operat losowania** jest to lista lub quasi-lista elementów, z której losuje się próbę. Dla ogólnopolskich badań społecznych jest to np. baza PESEL. Najprostsze z punktu widzenia doboru próby są często badania różnych organizacji, gdyż organizacje na ogół mają listy członków.
+
+---
+
+## Losowanie - kluczowe zasady
+
+- **Wyniki badań opartych na próbie można uznać za reprezentatywne tylko w odniesieniu do zbioru elementów tworzących operat losowania.**
+
+- Operaty losowania **nie zawsze zawierają naprawdę wszystkie elementy**, które mogłaby sugerować ich nazwa. Braki są niemal nieuniknione. Dlatego główną troską badacza powinno być określenie zakresu braków i wyrównanie ich, jeśli to możliwe.
+
+- Nawet jeśli wyniki są uogólniane tylko na populację tworzącą operat losowania, **wszystkie jej elementy muszą być tak samo reprezentowane** w operacie losowania.
+
+---
+
+## Prosty dobór losowy
+
+- **Prosty dobór losowy** jest podstawową metodą losowania, której użycie jest zakładane w obliczeniach statystycznych w badaniach społecznych.
+
+- Po właściwym ustaleniu operatu losowania badacz, który chce zastosować prosty dobór losowy, **numeruje kolejno wszystkie elementy listy**, nie pomijając żadnych numerów.
+
+- Następnie używa się **tablic liczb losowych**, aby dobrać elementy do próby (o ile operat losowania ma formę nadającą się do automatycznego odczytu, to próba losowa może zostać dobrana przez komputer → **generator liczb losowych**).
+
+---
+
+## Systematyczny dobór losowy
+
+- W systematycznym doborze próby do próby dobierany jest (systematycznie) **co k-ty element listy**.
+
+- Gdyby lista zawierała 10 000 elementów, a my chcielibyśmy dobrać próbę wielkości 1000, wybieralibyśmy do próby co dziesiąty element.
+
+- Aby uniknąć wszelkich możliwych obciążeń, spowodowanych działaniem czynnika ludzkiego, **pierwszy element powinien być wylosowany** → techniczne określenie tej metody to **próba systematyczna z losowym punktem startowym**.
+
+---
+
+## Systematyczny dobór losowy - pojęcia
+
+- **Interwał (odstęp) losowania** to standardowa odległość między elementami dobieranymi do próby; dla naszego przykładu wynosi on 10.
+
+- **Proporcja losowania** to stosunek liczby elementów wylosowanych do liczebności całej populacji; w naszym przykładzie jest to 1/10.
+
+- **Cykliczność jako wyzwanie** - przykład z numeracją mieszkań (np. każde 10. mieszkanie to mieszkanie narożne).
+
+---
+
+## Dobór warstwowy
+
+- Badacz gwarantuje, że w próbie znajdzie się **odpowiednia liczba elementów wylosowanych z homogenicznych podzbiorów** tej populacji, zamiast zdawać się na losowanie próby z całej populacji.
+
+- Na przykład aby otrzymać próbę warstwową studentów uniwersytetu, trzeba najpierw uporządkować tę populację według lat i kierunków studiów, i wtedy wylosować odpowiednią liczbę studentów w każdej z tych warstw.
+
+- **Ostatecznym celem stratyfikacji** jest zatem uporządkowanie populacji w homogeniczne podzbiory (które między sobą są heterogeniczne), a potem wylosowanie odpowiedniej liczby elementów z każdego z nich.
+
+---
+
+## Dobór wielostopniowy grupowy
+
+- **Podejście wielostopniowe**, z początkowym losowaniem grup elementów - zwanych także gronami czy wiązkami - a następnie losowaniem elementów w obrębie każdej wylosowanej grupy.
+
+- **Próba grupowa (gronowa, wiązkowa)** może być stosowana wtedy, gdy sporządzenie wyczerpującej listy elementów wchodzących w skład populacji jest niemożliwe lub bardzo trudne, np. wszyscy studenci i studentki wszystkich uczelni w Warszawie.
+
+- Jednak elementy populacji często są już pogrupowane w subpopulacje, a listy takich subpopulacji albo już istnieją, albo można je bez trudu sporządzić.
+
+---
+
+## Dobór wielostopniowy grupowy - ryzyko
+
+- **Ryzyko podwójnego błędu z próby i podwójnego skrzywienia** - bardziej prestiżowe uczelnie i lepiej uczący się studenci.
+
+- Może wystarczyć relatywnie niewielka liczba elementów, chociaż **niezbędna może być większa liczba grup**, aby odpowiednio reprezentować ich różnorodność.
+
+---
+
+## Realizacja próby
+
+- **Stopień realizacji próby** (*response rate*) - proporcja zebranych ankiet do całkowitej wielkości próby.
+
+- **Błąd braku odpowiedzi** (*non-response error*) - nieudzielenie odpowiedzi na pytanie przez respondenta. Może być:
+  - **Całkowity** (*unit*) - pusta ankieta
+  - **Częściowy** (*item*) - brakuje tylko niektórych pytań
+
+- **Obciążenia próby** (skrzywienie próby) - wybrane osoby nie są "typowe" czy "reprezentatywne" dla większej populacji, z której zostały dobrane. Ten rodzaj obciążenia nie musi być zamierzony. Praktycznie nie można go uniknąć, gdy dobiera się ludzi z najbliższego otoczenia.
+
+- **Ważenie próby** - niekiedy konieczne na etapie analizy, jeśli jakieś grupy są niedoreprezentowane w bazie zebranych danych.
+
+---
+
+## Realizacja próby - response rate
+
+**Z iloma osobami musisz się skontaktować, aby zebrać 100 odpowiedzi?**
+
+- **Wywiad twarzą w twarz**: ~57% (176 osób)
+- **Ankieta pocztowa**: ~50% (200 osób)
+- **Średnia wszystkich metod**: ~33% (303 osoby)
+- **Ankieta e-mailowa**: ~30% (333 osoby)
+- **Ankieta online**: ~29% (345 osób)
+- **Wywiad telefoniczny**: ~18% (556 osób)
+- **Ankieta w aplikacji**: ~13% (769 osób)
+
+# Nieprobabilistyczny dobór próby
+
+---
+
+## Dobór kwotowy
+
+- Kwotowy dobór próby opiera się na **znajomości określonych cech populacji**, z której dobiera się próbę: jaki jest w niej udział mężczyzn i kobiet, jaki jest udział różnych grup dochodu, wieku itd.
+
+- Ludzie dobierani są do próby kwotowej tak, aby **zachować proporcje tych cech występujące w całej populacji**.
+
+- Technika ta wymaga, aby badacz wiedział cokolwiek o całej populacji.
+
+- Wyniki uzyskane za pomocą takiej próby należy traktować ostrożnie, gdy celem jest opis statystyczny.
+
+- **Obecnie jest to najczęściej stosowany dobór próby przez komercyjne agencje badawcze** w badaniach ilościowych → panele badawcze.
+
+---
+
+## Dobór kwotowy - przykład: SWPS 2025
+
+**Badanie międzynarodowe: Polska, Hiszpania, Wielka Brytania**
+
+Próba reprezentatywna dla dorosłych mieszkańców (18+)
+
+**Kwoty twarde** (hard quotas) - muszą być precyzyjnie dopasowane:
+
+- Płeć
+- Wiek
+- Region
+
+**Kwoty miękkie** (soft quotas) - przedziały docelowe z akceptowalną wariancją:
+
+- Wykształcenie
+- Urbanizacja
+
+---
+
+## Kwoty: Płeć
+
+| Kraj | Mężczyźni | Kobiety |
+|------|-----------|---------|
+| **Polska** | 48,1% | 51,9% |
+| **Hiszpania** | 48,8% | 51,2% |
+| **Wielka Brytania** | 48,7% | 51,3% |
+
+**Przykład:** Próba 1000 osób z Polski = 481 mężczyzn + 519 kobiet
+
+*Źródło: Eurostat demo_pjangroup (PL/ES), ONS Mid-2023 (GB)*
+
+---
+
+## Kwoty: Wiek (ogółem)
+
+:::: {.columns}
+
+::: {.column width="33%"}
+### Polska
+
+| Wiek | % |
+|------|-----|
+| 18-24 | 8,6% |
+| 25-34 | 14,9% |
+| 35-44 | 17,2% |
+| 45-54 | 17,8% |
+| 55-64 | 16,3% |
+| 65+ | 25,2% |
+:::
+
+::: {.column width="33%"}
+### Hiszpania
+
+| Wiek | % |
+|------|-----|
+| 18-24 | 8,2% |
+| 25-34 | 14,0% |
+| 35-44 | 17,4% |
+| 45-54 | 18,6% |
+| 55-64 | 14,9% |
+| 65+ | 26,9% |
+:::
+
+::: {.column width="33%"}
+### W. Brytania
+
+| Wiek | % |
+|------|-----|
+| 18-24 | 10,1% |
+| 25-34 | 16,3% |
+| 35-44 | 15,8% |
+| 45-54 | 16,2% |
+| 55-64 | 14,3% |
+| 65+ | 27,3% |
+:::
+
+::::
+
+---
+
+## Kwoty: Wiek × Płeć (Polska)
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Mężczyźni (48,1%)
+
+| Wiek | % w populacji mężczyzn |
+|------|-----|
+| 18-24 | 9,2% |
+| 25-34 | 15,8% |
+| 35-44 | 18,2% |
+| 45-54 | 18,5% |
+| 55-64 | 16,8% |
+| 65+ | 21,5% |
+:::
+
+::: {.column width="50%"}
+### Kobiety (51,9%)
+
+| Wiek | % w populacji kobiet |
+|------|-----|
+| 18-24 | 8,1% |
+| 25-34 | 14,1% |
+| 35-44 | 16,3% |
+| 45-54 | 17,1% |
+| 55-64 | 15,9% |
+| 65+ | 28,5% |
+:::
+
+::::
+
+**Przykład:** Próba 1000 osób z Polski = 481 mężczyzn, w tym 44 mężczyzn w wieku 18-24 (9,2% × 481)
+
+---
+
+## Kwoty: Regiony - Polska (NUTS 2)
+
+:::: {.columns}
+
+::: {.column width="50%"}
+| Województwo | % |
+|-------------|-----|
+| Mazowieckie | 14,6% |
+| Śląskie | 11,4% |
+| Wielkopolskie | 9,2% |
+| Małopolskie | 8,9% |
+| Dolnośląskie | 7,6% |
+| Łódzkie | 6,5% |
+| Pomorskie | 6,2% |
+| Kujawsko-Pomorskie | 5,4% |
+:::
+
+::: {.column width="50%"}
+| Województwo | % |
+|-------------|-----|
+| Lubelskie | 5,4% |
+| Podkarpackie | 5,4% |
+| Zachodniopomorskie | 4,4% |
+| Warmińsko-Mazurskie | 3,7% |
+| Świętokrzyskie | 3,1% |
+| Podlaskie | 3,0% |
+| Lubuskie | 2,6% |
+| Opolskie | 2,5% |
+:::
+
+::::
+
+*Źródło: Eurostat demo_r_pjangroup (18+, 2024)*
+
+---
+
+## Kwoty: Wykształcenie (25-64 lata)
+
+**ISCED Classification:**
+
+- **ISCED 0-2 (Niskie)**: Podstawowe i gimnazjalne
+- **ISCED 3-4 (Średnie)**: Liceum, technikum, policealne
+- **ISCED 5-8 (Wyższe)**: Studia licencjackie, magisterskie, doktoranckie
+
+| Kraj | Niskie | Średnie | Wyższe |
+|------|--------|---------|--------|
+| **Polska** | 8,0% | 58,0% | 34,0% |
+| **Hiszpania** | 35,0% | 23,5% | 41,5% |
+| **Wielka Brytania** | 17,0% | 35,0% | 48,0% |
+
+*Kwota miękka - dokładne dopasowanie może być trudne w terenie*
+
+---
+
+## Kwoty: Urbanizacja (DEGURBA)
+
+**Klasyfikacja DEGURBA:**
+
+- **Miasta (1)**: Gęsto zaludnione obszary (≥1500 osób/km²)
+- **Przedmieścia (2)**: Średnia gęstość (≥300 osób/km²)
+- **Wieś (3)**: Rzadko zaludnione obszary
+
+| Kraj | Miasta | Przedmieścia | Wieś |
+|------|--------|--------------|------|
+| **Polska** | 29,5% | 31,5% | 39,0% |
+| **Hiszpania** | 52,0% | 28,0% | 20,0% |
+| **Wielka Brytania** | 57,0% | 26,0% | 17,0% |
+
+*Kwota miękka - urbanizacja trudna do precyzyjnej weryfikacji*
+
+---
+
+## Próba oparta na dostępności badanych
+
+- Metoda ta w sposób oczywisty **nie dopuszcza żadnej kontroli nad reprezentatywnością próby**. Opieramy się na grupach, do których mamy bezpośredni dostęp (np. studenci i studentki na uczelniach wyższych).
+
+- Metoda przydatna, jeśli chcemy zbadać osoby, które znajdują się w **konkretnym miejscu i czasie** (np. naszych klientów). Również w celu tzw. **pilotażu próby**.
+
+- Trzeba zachować wielką ostrożność w uogólnianiu wniosków z tak uzyskanych danych. Należy również **uczulić odbiorców wyników na ryzyko** związane z tą metodą.
+
+---
+
+## Dobór celowy/arbitralny
+
+- Dobranie próby na podstawie **własnej wiedzy o badanej populacji oraz o celach badań**. Próba musi być wtedy dokładnie zdefiniowana na podstawie określonych cech, użytecznych do celów badań.
+
+- Można chcieć zbadać **mały podzbiór większej populacji**, w której wielu członków tego podzbioru da się łatwo rozpoznać, ale sporządzenie wykazu ich wszystkich byłoby najprawdopodobniej niemożliwe.
+
+- Badacze empiryczni są często szczególnie zainteresowani badaniem **przypadków odbiegających od normy** - takich, które nie pasują do ściśle określonych wzorców postaw czy zachowań - aby lepiej zrozumieć te bardziej regularne wzorce.
+
+---
+
+## Metoda kuli śnieżnej
+
+- Ta procedura jest właściwa, gdy **trudno jest odszukać członków jakiejś specyficznej populacji**, takiej jak bezdomni, robotnicy napływowi czy nielegalni imigranci.
+
+- W metodzie kuli śnieżnej badacz zbiera dane o kilku członkach badanej populacji, których da się odszukać, a następnie **prosi te osoby o dostarczenie informacji potrzebnych do odszukania innych członków tej populacji**, których akurat znają.
+
+---
+
+## Podsumowanie
+
+- **Probabilistyczny dobór próby** umożliwia generalizację wyników na całą populację
+- **Kluczem jest losowanie** - każdy element populacji ma znaną szansę wyboru
+- Istnieją różne **techniki losowania**: prosty, systematyczny, warstwowy, wielostopniowy
+- **Nieprobabilistyczny dobór** utrudniają wyciąganie wniosków statystycznych
+- Metody nieprobabilistyczne są użyteczne: kwotowy, celowy, kuli śnieżnej, oparty na dostępności
+- **Realizacja próby** (response rate) jest kluczowa dla jakości badania
+- Różne metody zbierania danych mają różną **skuteczność realizacji**
+- Należy być świadomym **ograniczeń każdej metody doboru**

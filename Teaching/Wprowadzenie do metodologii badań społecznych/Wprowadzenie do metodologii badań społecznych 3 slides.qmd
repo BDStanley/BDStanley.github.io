@@ -1,0 +1,351 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 3 slides"
+subtitle: "Ujęcia jakościowe, ilościowe, mieszane"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs: 
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Kluczowe zagadnienia
+- Jakie są różnice między podejściami badawczymi?
+- Kiedy stosować metody ilościowe vs jakościowe?
+- Czym charakteryzują się metody mieszane?
+- Jak zaprojektować eksperyment badawczy?
+- Jakie są rodzaje obserwacji naukowej?
+
+---
+
+## Podejście ilościowe i jakościowe
+
+:::: {.columns}
+::: {.column width="50%"}
+**Badania ilościowe**
+
+- **Koncepcja rzeczywistości**: Statyczna, zewnętrzna wobec wszystkich aktorów
+- **Zakres**: Nomotetyczny - ustalenie uniwersalnych praw rządzących życiem społecznym
+- **Związek teoria-badania**: Konfirmacja/weryfikacja - teoria określa, co i w jaki sposób będzie badane
+- **Strategia**: Ustrukturowana - jednoznacznie określona procedura badawcza
+:::
+
+::: {.column width="50%"}
+**Badania jakościowe**
+
+- **Koncepcja rzeczywistości**: Zmienna, procesualna, społecznie konstruowana przez aktorów
+- **Zakres**: Idiograficzny - opis dotyczący konkretnych osób, czasu i miejsca
+- **Związek teoria-badania**: Odkrywanie - opis i ewentualne tworzenie teorii
+- **Strategia**: Nieustrukturowana - brak z góry określonego planu
+:::
+::::
+
+---
+
+## Podejście ilościowe i jakościowe (cd.)
+
+:::: {.columns}
+::: {.column width="50%"}
+**Badania ilościowe**
+
+- **Charakter danych**: "twarde", "solidne", "porównywalne"
+- **Pozycja badacza**: *Outsider* - obserwator zdystansowany, zewnętrzny i niezależny wobec badanego przedmiotu
+- **Związek badacz-badani**: Odległy - brak kontaktu lub jedynie sporadyczny kontakt
+:::
+
+::: {.column width="50%"}
+**Badania jakościowe**
+
+- **Charakter danych**: "miękkie", "głębokie", "wyjątkowe"
+- **Pozycja badacza**: *Insider* - poznanie i opisanie konkretnej rzeczywistości społecznej z perspektywy jej uczestników
+- **Związek badacz-badani**: Bliski - długotrwały kontakt w przypadku realizacji wywiadów i obserwacji
+:::
+::::
+
+---
+
+## Metody ilościowe
+- **Eksperyment** - kontrola zmiennych
+- **Badanie sondażowe** - ankiety, kwestionariusze
+- **Analiza statystyczna** - wtórne opracowanie danych
+- **Obserwacja** strukturalizowana
+- **Analiza treści** ilościowa
+
+---
+
+## Zbieranie danych - techniki ilościowe
+
+- **Metody eksperymentalne i quasi-eksperymentalne**
+- **Metody sondażowe**:
+  - **PAPI** (Pen and Paper Interview) - papierowa ankieta do samodzielnego wypełniania
+  - **CAWI** (Computer Assisted Web Interviewing) - ankieta opublikowana na stronie internetowej
+  - **CATI** (Computer Assisted Telephone Interviewing) - telefoniczny wywiad ankieterski
+
+---
+
+## Metody jakościowe
+
+- **Etnografia** - badanie kultur i społeczności
+- **Studium przypadku** - dogłębna analiza jednostkowa
+- **Badanie narracyjne** - historie życia, biografie
+- **Fenomenologia** - badanie doświadczenia świadomościowego
+- **Teoria ugruntowana** (grounded theory) - budowa teorii z danych
+- **Analiza dyskursu** - badanie języka i znaczeń
+
+---
+
+## Zbieranie danych - techniki jakościowe
+
+- **Wywiady**:
+  - Indywidualne półustrukturyzowany
+  - Indywidualne biograficzne
+  - Zogniskowane wywiady grupowe (FGI)
+- **Obserwacja**:
+  - Jawna
+  - Ukryta
+
+---
+
+## Metody mieszane
+- **Kombinacja** podejść ilościowego i jakościowego
+- **Triangulacja** - wieloaspektowość
+- **Komplementarność** - uzupełnianie się metod
+- **Ekspansja** - poszerzenie perspektywy
+- **Rozwój** - budowa na wynikach
+
+---
+
+## Rodzaje metod mieszanych
+- **Sekwencyjne** - jedna metoda po drugiej
+- **Równoległe** - jednoczesne stosowanie
+- **Osadzone** - jedna metoda w ramach drugiej
+- **Transformacyjne** - zorientowane na zmianę
+- **Pragmatyczne** - elastyczny wybór
+
+---
+
+## Zalety metod mieszanych
+- **Niwelowanie** ograniczeń pojedynczych metod
+- **Pełniejszy obraz** badanego zjawiska
+- **Większa wiarygodność** wyników
+- **Różnorodność** perspektyw
+- **Elastyczność** w adaptacji
+
+---
+
+## Kryteria wyboru metod
+- **Cel badania** - eksploracja vs weryfikacja
+- **Pytania badawcze** - typ i charakter
+- **Dostępność** zasobów
+- **Kompetencje** badacza
+- **Ograniczenia** czasowe i finansowe
+
+---
+
+## Kryteria wyboru metod badawczych
+
+- **Cel badania** - eksploracja vs weryfikacja vs rozumienie
+- **Typ pytań badawczych** - "ile?", "jak często?" vs "dlaczego?", "jak?"
+- **Charakter zjawiska** - mierzalne vs niemierzalne
+- **Dostępność próby** - duża reprezentatywna vs mała celowa
+- **Zasoby** - czas, budżet, kompetencje zespołu
+- **Stan wiedzy** - obszar dobrze zbadany vs nowy/słabo poznany
+
+---
+
+## Kiedy stosować metody ilościowe?
+
+:::: {.columns}
+::: {.column width="50%"}
+**Najlepsze zastosowanie:**
+
+- Testowanie hipotez i teorii
+- Pomiar natężenia zjawisk
+- Badanie związków między zmiennymi
+- Uogólnianie na populację
+- Porównywanie grup
+- Śledzenie trendów w czasie
+:::
+
+::: {.column width="50%"}
+**Przykłady pytań:**
+
+- Jaki procent studentów korzysta z biblioteki?
+- Czy istnieje związek między wiekiem a korzystaniem z mediów społecznościowych?
+- Czy interwencja X wpływa na wynik Y?
+- Jak zmieniła się frekwencja wyborcza w ostatnich 20 latach?
+:::
+::::
+
+---
+
+## Kiedy stosować metody jakościowe?
+
+:::: {.columns}
+::: {.column width="50%"}
+**Najlepsze zastosowanie:**
+
+- Eksploracja nowych obszarów
+- Rozumienie znaczeń i interpretacji
+- Badanie procesów i mechanizmów
+- Analiza kontekstu społeczno-kulturowego
+- Generowanie nowych teorii
+- Badanie wrażliwych tematów
+:::
+
+::: {.column width="50%"}
+**Przykłady pytań:**
+
+- Jak studenci doświadczają przejścia na studia?
+- Jakie znaczenia nadają uczestnicy protestom społecznym?
+- Jak przebiega proces integracji imigrantów?
+- Dlaczego ludzie podejmują określone decyzje życiowe?
+:::
+::::
+
+---
+
+## Kiedy stosować metody mieszane?
+
+:::: {.columns}
+::: {.column width="50%"}
+**Najlepsze zastosowanie:**
+
+- Pełniejsze zrozumienie złożonych zjawisk
+- Triangulacja wyników
+- Wyjaśnienie nieoczekiwanych wyników ilościowych
+- Pogłębienie wyników ilościowych
+- Generalizacja wyników jakościowych
+- Badania ewaluacyjne
+:::
+
+::: {.column width="50%"}
+**Przykłady strategii:**
+
+- Sekwencyjna wyjaśniająca: Ankieta → Wywiady pogłębione (wyjaśnienie wyników)
+- Sekwencyjna eksploracyjna: Wywiady → Ankieta (testowanie odkryć)
+- Równoległa: Ankieta + Wywiady jednocześnie (triangulacja)
+- Osadzona: Eksperyment + wywiady z uczestnikami
+:::
+::::
+
+---
+
+## Techniki w metodach ilościowych
+
+:::: {.columns}
+::: {.column width="50%"}
+**Zbieranie danych:**
+
+- Ankiety standaryzowane (PAPI, CAWI, CATI)
+- Testy psychologiczne
+- Obserwacja strukturalizowana
+- Eksperymenty
+- Analiza danych zastanych
+:::
+
+::: {.column width="50%"}
+**Analiza danych:**
+
+- Statystyki opisowe
+- Testy istotności
+- Analiza korelacji i regresji
+- Analiza wariancji (ANOVA)
+- Modelowanie statystyczne
+:::
+::::
+
+---
+
+## Techniki w metodach jakościowych
+
+:::: {.columns}
+::: {.column width="50%"}
+**Zbieranie danych:**
+
+- Wywiady pogłębione
+- Wywiady biograficzne
+- Zogniskowane wywiady grupowe (FGI)
+- Obserwacja uczestnicząca
+- Analiza dokumentów
+- Fotografie, nagrania wideo
+:::
+
+::: {.column width="50%"}
+**Analiza danych:**
+
+- Kodowanie (otwarte, osiowe, selektywne)
+- Analiza tematyczna
+- Analiza narracyjna
+- Analiza dyskursu
+- Teoria ugruntowana
+- Analiza treści jakościowa
+:::
+::::
+
+---
+
+## Dobór próby: ilościowe vs jakościowe
+
+:::: {.columns}
+::: {.column width="50%"}
+**Badania ilościowe**
+
+- **Próba losowa** - reprezentatywność statystyczna
+- **Próba warstwowa** - proporcje w populacji
+- **Próba systematyczna** - co n-ty element
+- **Cel**: Uogólnienie na populację
+- **Wielkość**: Zazwyczaj duża (n>100)
+- **Kryterium**: Reprezentatywność
+:::
+
+::: {.column width="50%"}
+**Badania jakościowe**
+
+- **Próba celowa** - kryteria merytoryczne
+- **Próba kuli śniegowej** - kontakty
+- **Próba teoretyczna** - nasycenie kategorii
+- **Cel**: Głębia i bogactwo danych
+- **Wielkość**: Zazwyczaj mała (n=5-30)
+- **Kryterium**: Nasycenie informacyjne
+:::
+::::
+
+---
+
+## Trafność i rzetelność
+
+:::: {.columns}
+::: {.column width="50%"}
+**Badania ilościowe**
+
+- **Trafność wewnętrzna** - kontrola zmiennych zakłócających
+- **Trafność zewnętrzna** - możliwość generalizacji
+- **Rzetelność** - stabilność i spójność pomiaru
+- **Obiektywność** - niezależność od badacza
+- **Replikowalność** - możliwość powtórzenia
+:::
+
+::: {.column width="50%"}
+**Badania jakościowe**
+
+- **Wiarygodność** - długotrwałe zaangażowanie
+- **Możliwość przeniesienia** - szczegółowy opis kontekstu
+- **Zależność** - ścieżka audytu, triangulacja
+- **Potwierdzalność** - refleksyjność badacza
+- **Autentyczność** - wierność perspektywie uczestników
+:::
+::::
+
+---
+
+## Kluczowe wnioski
+- Wybór metody zależy od celów i pytań badawczych
+- Podejścia ilościowe służą pomiarowi i weryfikacji
+- Metody jakościowe umożliwiają głębokie zrozumienie
+- Metody mieszane łączą zalety różnych podejść

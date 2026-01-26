@@ -1,0 +1,538 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 7 slides"
+subtitle: "Badania ilościowe"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs: 
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Czym są badania sondażowe?
+
+Badanie sondażowe dostarcza **liczbowego opisu tendencji, postaw lub opinii** występujących w populacji na podstawie danych dotyczących próby tej populacji. *(Creswell, 2013)*
+
+Kluczowe cechy:
+
+-   Standaryzowane zbieranie danych
+-   Duże próby badawcze
+-   Analiza statystyczna
+-   Możliwość uogólniania na populację
+
+## Agenda
+
+- Techniki zbierania danych (PAPI, CAWI, CAPI, CATI)
+- Budowa kwestionariusza
+- Rodzaje pytań kwestionariuszowych
+- Najczęściej popełniane błędy w konstrukcji pytań
+
+# Techniki zbierania danych
+
+## Przegląd technik badawczych
+
+Współczesne badania ilościowe wykorzystują różne metody zbierania danych:
+
+1.  **PAPI** - Papierowa ankieta do samodzielnego wypełniania (Pen and Paper Interview)
+2.  **CAWI** - Ankieta internetowa (Computer Assisted Web Interviewing)
+3.  **CAPI** - Wywiad wspomagany komputerowo (Computer Assisted Personal Interview)
+4.  **CATI** - Telefoniczny wywiad ankieterski (Computer Assisted Telephone Interviewing)
+
+Każda metoda ma swoje zalety i ograniczenia w zależności od celów badania, budżetu i populacji docelowej.
+
+## PAPI: Papierowa ankieta
+
+Tradycyjne kwestionariusze papierowe wypełniane przez respondentów lub administrowane przez ankieterów.
+
+### Kluczowe cechy
+
+-   Fizyczne formularze ankietowe
+-   Wymagane ręczne wprowadzanie danych po zebraniu
+-   Bezpośrednia lub samodzielna administracja
+-   Brak wymagań technologicznych dla respondentów
+
+## CAWI: Ankieta internetowa
+
+Ankiety online dostępne przez przeglądarki internetowe, wypełniane samodzielnie przez respondentów.
+
+### Kluczowe cechy
+
+-   Administracja przez internet
+-   Automatyczne zbieranie danych
+-   Elastyczny czas i miejsce wypełniania
+-   Wbudowana logika i walidacja
+
+## CAPI: Wywiad wspomagany komputerowo
+
+Wywiady bezpośrednie prowadzone przy użyciu tabletów lub laptopów ze specjalistycznym oprogramowaniem.
+
+### Kluczowe cechy
+
+-   Obecność ankietera
+-   Elektroniczne rejestrowanie danych
+-   Reguły przejścia w czasie rzeczywistym
+-   Możliwości multimedialne
+
+## CATI: Telefoniczny wywiad ankieterski
+
+Wywiady telefoniczne z wykorzystaniem systemów komputerowych do wyświetlania pytań i rejestrowania odpowiedzi.
+
+### Kluczowe cechy
+
+-   Scentralizowane call center
+-   Możliwość losowego wybierania numerów
+-   Monitoring w czasie rzeczywistym
+-   Standaryzowana administracja
+
+## Zestawienie zalet i wad
+
+::: {style="font-size: 0.75em;"}
+| Technika | Zalety | Wady |
+|-----------------|----------------------------|----------------------------|
+| **PAPI** | Niskie wymagania technologiczne; Działa bez internetu; Łatwe użycie materiałów wizualnych; Brak efektu ankietera przy samodzielnym wypełnianiu | Błędy przy wprowadzaniu danych; Wyższy koszt dla dużych prób; Trudne egzekwowanie reguł przejścia; Wyzwania logistyczne i przechowywanie |
+| **CAWI** | Niski koszt na odpowiedź; Szybkie zbieranie danych; Duży zasięg geograficzny; Automatyczna walidacja; Automatyzacja reguł przejścia | Wymagany dostęp do internetu; Błąd samoselekcji; Niższe wskaźniki odpowiedzi; Brak ankietera do wyjaśnień; Wykluczenie cyfrowe |
+| **CAPI** | Możliwe złożone kwestionariusze; Wysoka jakość danych; Bogate opcje odpowiedzi; Integracja multimediów; Walidacja w czasie rzeczywistym | Wysokie koszty ankieterów; Wymagany sprzęt; Intensywne szkolenia; Możliwy efekt ankietera |
+| **CATI** | Umiarkowany koszt; Dobre wskaźniki odpowiedzi; Monitoring jakości; Szybka realizacja; Scentralizowana kontrola | Brak materiałów wizualnych; Spadek użycia telefonów stacjonarnych; Ograniczona złożoność pytań; Zmęczenie respondenta |
+:::
+
+## Aspekty kosztowe
+
+| Technika | Inwestycja początkowa | Koszt na odpowiedź | Skalowalność |
+|----------|-----------------------|--------------------|--------------|
+| PAPI     | Niska                 | Wysoki             | Słaba        |
+| CAWI     | Średnia               | Bardzo niski       | Doskonała    |
+| CAPI     | Wysoka                | Wysoki             | Umiarkowana  |
+| CATI     | Wysoka                | Średni             | Dobra        |
+
+## Czynniki jakości danych
+
+| Czynnik jakości            | PAPI           | CAWI   | CAPI   | CATI    |
+|----------------------------|----------------|--------|--------|---------|
+| Dokładność reguł przejścia | Niska          | Wysoka | Wysoka | Wysoka  |
+| Ryzyko braków danych       | Wysokie        | Niskie | Niskie | Niskie  |
+| Błąd aprobaty społecznej   | Średni         | Niski  | Wysoki | Średni  |
+| Efekt ankietera            | Wysoki | Brak   | Wysoki | Średni  |
+| Możliwość wyjaśnień        | Zmienna        | Brak   | Wysoka | Średnia |
+
+## Wybór odpowiedniej techniki
+
+### Czynniki decyzyjne
+
+Rozważ te pytania przy wyborze techniki badawczej:
+
+1.  **Populacja docelowa**: Jaki jest dostęp do technologii?
+2.  **Wrażliwość tematu**: Czy anonimowość ma znaczenie?
+3.  **Złożoność pytań**: Czy potrzebne są materiały wizualne?
+4.  **Ograniczenia budżetowe**: Jakie zasoby są dostępne?
+5.  **Harmonogram**: Jak szybko potrzebne są dane?
+6.  **Zasięg geograficzny**: Lokalny, krajowy czy międzynarodowy?
+
+
+# Budowa kwestionariusza
+
+## Struktura kwestionariusza
+
+Dobrze zaprojektowany kwestionariusz zawiera:
+
+1.  **Wprowadzenie** - informacja o badaniu, zapewnienie o anonimowości, zgoda
+2.  **Metryczka** - może być na początku lub na końcu
+3.  **Pytania główne** - zorganizowane w bloki tematyczne
+4.  **Jasne instrukcje** - dla każdego typu pytania
+5.  **Podziękowanie** - uznanie i informacje końcowe
+
+## Kluczowe zasady projektowania
+
+### Pytania muszą być:
+
+-   **Jasne i jednoznaczne** - bez żargonu i terminów technicznych
+-   **Możliwe do odpowiedzi** - respondenci muszą mieć wiedzę, by odpowiedzieć
+-   **Jednowątkowe** - unikać pytań podwójnych
+-   **Neutralne** - bez sugestywnego lub obciążonego języka
+-   **Pozytywne** - unikać przeczeń i podwójnych zaprzeczeń
+
+## Układ kwestionariusza
+
+### Najlepsze praktyki
+
+-   **Logiczny przepływ** - grupowanie powiązanych pytań
+-   **Zdania przejściowe** - wprowadzanie nowych sekcji
+-   **Przejrzystość wizualna** - nawet jeśli wydłuża ankietę
+-   **Logika warunkowa** - odpowiednie filtrowanie pytań
+-   **Wskaźniki postępu** - pokazanie statusu ukończenia (CAWI)
+-   **Rozsądna długość** - podanie szacowanego czasu wypełniania
+
+# Rodzaje pytań kwestionariuszowych
+
+## Przegląd kategorii pytań
+
+1.  Pytania zamknięte (z kafeterią odpowiedzi)
+2.  Pytania otwarte
+3.  Pytania półotwarte/półzamknięte
+4.  Pytania jednokrotnego wyboru
+5.  Pytania wielokrotnego wyboru
+6.  Pytania filtrujące/warunkowe
+7.  Pytania skalowe
+8.  Pytania tabelaryczne/macierzowe
+9.  Pytania metryczkowe
+
+## Pytania zamknięte
+
+### Charakterystyka
+
+-   Predefiniowane opcje odpowiedzi
+-   Kategorie odpowiedzi muszą być **rozłączne** i **wyczerpujące**
+-   Zawierać "Inne, jakie?..." gdy to stosowne
+-   Łatwiejsze do analizy statystycznej
+
+### Przykład
+
+> Co uważa Pan/Pani za najważniejszy warunek udanego życia? 
+>
+> ☐ Pieniądze ☐ Rodzina ☐ Zdrowie ☐ Przyjaciele ☐ Praca ☐ Inne
+
+## Pytania otwarte
+
+### Charakterystyka
+
+-   Brak predefiniowanych odpowiedzi
+-   Pozwalają na szczegółowe, osobiste odpowiedzi
+-   Muszą być jasno i jednoznacznie sformułowane
+-   Wyższe ryzyko braków danych
+-   Wymagają kodowania do analizy
+
+### Przykład
+
+> Jakie benefity pracownicze można byłoby wprowadzić w firmie X?
+>
+>   \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+## Pytania półotwarte/półzamknięte
+
+### Charakterystyka
+
+-   Łączą elementy zamknięte i otwarte
+-   Zapewniają typowe opcje plus "Inne"
+-   Równoważą strukturę z elastycznością
+
+### Przykład
+
+> Jaki jest Pana/Pani główny środek transportu do pracy?
+>
+> ☐ Samochód ☐ Komunikacja miejska ☐ Rower ☐ Pieszo
+>
+> ☐ Inne, jakie?: \_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+## Pytania jednokrotnego vs. wielokrotnego wyboru
+
+::::: columns
+::: {.column width="50%"}
+### Jednokrotnego wyboru
+
+-   Dozwolona tylko jedna odpowiedź
+-   Używać przycisków radio (CAWI/CAPI)
+-   Przykład: "Oceń ogólne zadowolenie"
+
+```         
+☑ Bardzo zadowolony/a
+☐ Zadowolony/a  
+☐ Ani tak, ani nie
+☐ Niezadowolony/a
+☐ Bardzo niezadowolony/a
+```
+:::
+
+::: {.column width="50%"}
+### Wielokrotnego wyboru
+
+-   Dozwolonych wiele odpowiedzi
+-   Używać pól wyboru (checkboxy)
+-   Wyraźnie zaznaczyć "zaznacz wszystkie pasujące"
+
+```         
+☑ E-mail
+☑ Telefon
+☐ Poczta
+☑ Osobiście
+```
+:::
+:::::
+
+## Pytania filtrujące (warunkowe)
+
+### Cel
+
+Kierowanie respondentów do odpowiednich pytań na podstawie poprzednich odpowiedzi.
+
+### Przykładowy przepływ
+
+> P1: Czy jest Pan/Pani członkiem jakiejś organizacji?\
+> ☐ Tak → *przejdź do P2*\
+> ☐ Nie → *przejdź do P5*
+>
+> P2: Czy aktywnie Pan/Pani uczestniczy?\
+> P3: Jaka to organizacja?
+
+**Uwaga**: CAWI/CAPI obsługują to automatycznie; PAPI wymaga jasnych instrukcji.
+
+## Pytania skalowe
+
+### Rodzaje skal
+
+**Skala numeryczna (0-10)**
+
+> Jak silne w tych dniach jest Pana pragnienie życia? (0 = w ogóle nie chce mi się żyć, 10 = bardzo mocno chce mi się żyć)<br> 0 ☐ 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 ☐ 7 ☐ 8 ☐ 9 ☐ 10 ☐
+
+**Skala Likerta**
+
+> Zgadzam się ze stwierdzeniem: "Równowaga praca-życie jest ważna."
+>
+> ☐ Zdecydowanie tak ☐ Raczej tak ☐ Ani tak, ani nie ☐ Raczej nie ☐ Zdecydowanie nie
+
+## Dyferencjał semantyczny
+
+### Opis
+
+Mierzy postawy za pomocą par przeciwstawnych przymiotników ze skalą między nimi.
+
+### Przykład
+
+> Oceń trudność zadania:
+>
+> Łatwe ←——●——○——○——○——→ Trudne
+>
+> Nie pochłaniające czasu ←——○——○——●——○——→ Czasochłonne
+
+Przydatny do mierzenia percepcji, postaw i wizerunku marki.
+
+## Pytania tabelaryczne/macierzowe
+
+### Opis
+
+Wiele elementów ocenianych na tej samej skali, przedstawionych w formie tabeli.
+
+### Przykład
+
+| W minionym miesiącu czy doświadczał/a Pan/Pani: | Nie miałem/am | Rzadziej niż przez 15 dni | Co najmniej przez połowę miesiąca |
+|------------------------|---------------|---------------|-----------------|
+| Silne bóle głowy | ☑ | ☐ | ☐ |
+| Bóle brzucha lub wzdęcia | ☐ | ☐ | ☑  |
+| Uczucie zmęczenia | ☐ | ☐ | ☑  |
+| Problemy ze snem | ☐ | ☑  | ☐ |
+
+**Zaleta**: Efektywność; **Ryzyko**: Straight-lining (zmęczenie respondenta)
+
+## Pytania metryczkowe
+
+### Typowe dane demograficzne
+
+-   **Płeć**
+-   **Wiek** (dokładny lub przedziały)
+-   **Wykształcenie** - dostosować kategorie do potrzeb badania
+-   **Status zatrudnienia** i stanowisko
+-   **Miejsce zamieszkania** - miasto/wieś, region
+-   **Status związku**
+-   **Posiadanie dzieci**
+
+# Najczęściej popełniane błędy
+
+## Niespójne opcje odpowiedzi
+
+### Problem
+
+> Jak oceniasz stres w pracy? 
+> 
+> ☐ Niski ☐ Wysoki ☐ Nie do zniesienia ☐ Pracuję bez stresu
+
+**Problemy:**
+
+-   Kategorie nie są na tym samym wymiarze
+-   "Nie do zniesienia" to coś innego niż ocena
+-   Ostatnia opcja całkowicie zmienia pytanie
+
+## Zły format odpowiedzi
+
+### Problem
+
+> Czy stres w pracy ma wpływ na Twoje życie rodzinne/osobiste? ☐ Tak ☐ Nie ☐ **Sporadycznie**
+
+**Problem:**
+
+-   "Sporadycznie" to częstotliwość, nie odpowiedź tak/nie
+-   Mieszanie typów kategorii
+
+**Lepiej:** 
+
+> Jak często stres w pracy wpływa na Twoje życie rodzinne?
+>
+> ☐ Nigdy ☐ Rzadko ☐ Czasami ☐ Często ☐ Zawsze
+
+## Żargon techniczny
+
+### Problem
+
+> Czy w Twoim otoczeniu występuje mobbing korporacyjny (systemowy)? 
+>
+> ☐ Tak ☐ Nie
+
+**Problemy:**
+
+-   "Mobbing korporacyjny" i "systemowy" to terminy techniczne
+-   Wielu respondentów nie zrozumie pytania
+-   Wybór binarny upraszcza złożony problem
+
+## Nakładające się kategorie
+
+### Problem - Wykształcenie
+
+> ☐ Podstawowe/gimnazjalne ☐ Średnie ☐ Jestem w trakcie studiów\
+> ☐ Wyższe inżynierskie/licencjackie ☐ Wyższe magisterskie ☐ Wyższe doktoranckie
+
+**Problem:**
+
+-   "Jestem w trakcie studiów" nakłada się na poziomy wykształcenia
+-   Doktorant mógłby pasować do wielu kategorii
+
+**Rozwiązanie:** Oddzielić status obecnego kształcenia od najwyższego ukończonego stopnia.
+
+## Niewyczerpujące opcje
+
+### Problem
+
+> Czy kumplujesz się z ludźmi z pracy? 
+>
+> ☐ Tak, mam więcej niż 3 osoby, z którymi się kumpluję ☐ Tak, mam jedną taką osobę ☐ Nie, nie kumpluję się z ludźmi z pracy, mam dużo znajomych poza nią
+
+**Problemy:**
+
+-   Co z 2-3 osobami?
+-   Opcja "Nie" zakłada coś dodatkowego
+-   Gdzie jest proste "Nie, nie mam takiej osoby"?
+
+## Pytania sugerujące
+
+### Problem
+
+> Czy zgodzi się Pan/Pani, że postawa właściciela firmy jest karygodna? 
+> 
+> ☐ Tak ☐ Nie
+
+**Problemy:**
+
+-   "Karygodna" to obciążony termin
+-   Sugeruje prawidłową odpowiedź
+-   Brak neutralnego języka
+
+**Lepiej:** Pytać o konkretne zachowania bez osądzania.
+
+# Unikanie braków danych
+
+## Strategie na kompletne dane
+
+1.  **Zwięzłość** - minimalizować długość kwestionariusza
+2.  **Podać czas trwania** - realistyczne szacunki (lepiej nie zaniżać!)
+3.  **Pasek postępu** - pokazać procent ukończenia
+4.  **Pola wymagane** - oznaczyć większość pytań jako obowiązkowe (CAWI)
+5.  **Testowanie pilotażowe** - przetestować z próbą respondentów
+6.  **Jasne instrukcje** - zmniejszyć dezorientację
+
+
+# Wybór platformy do ankiet
+
+## Kluczowe kryteria
+
+| Czynnik | Rozważania |
+|-------------------------------|-----------------------------------------|
+| **Możliwości techniczne** | Typy pytań, reguły przejścia, wersja mobilna, randomizacja, metadane |
+| **Ochrona danych** | Zgodność z RODO, lokalizacja przechowywania danych, szyfrowanie |
+| **Ochrona przed nadużyciami** | Kontrola IP, captcha, zapobieganie duplikatom |
+| **Eksport danych** | Formaty CSV, Excel (nie tylko zbiorcze tabele!) |
+| **Wersja mobilna** | Responsywny design dla smartfonów |
+| **Czas dostępu** | Okres dostępności ankiety |
+| **Cena** | Struktura cenowa, limity respondentów |
+
+## Polecane platformy
+
+### Opcje bezpłatne/niskokosztowe
+
+-   **Google Forms** - bezpłatne, podstawowe funkcje, dobre dla prostych ankiet
+-   **Microsoft Forms** - w zestawie z Microsoft 365
+
+### Opcje zaawansowane
+
+-   **Qualtrics** - kompleksowe funkcje, często dostępne przez uniwersytety
+-   **Webankieta** - popularna w polskich badaniach akademickich
+-   **SurveyMonkey** - szeroko stosowana, warstwowy cennik
+-   **LimeSurvey** - open source, opcja samodzielnego hostingu
+
+# Podsumowanie najlepszych praktyk
+
+## Lista kontrolna projektowania kwestionariusza
+
+✓ Jasne, jednoznaczne sformułowania\
+✓ Rozłączne opcje odpowiedzi\
+✓ Wyczerpujące kategorie odpowiedzi\
+✓ Odpowiednia kolejność pytań\
+✓ Logiczne reguły przejścia\
+✓ Neutralny, nieobciążony język\
+✓ Przeprowadzone testowanie pilotażowe\
+✓ Zweryfikowany eksport danych\
+✓ Zawarte informacje o prywatności/zgodzie
+
+## Podsumowanie wyboru techniki
+
+::::: columns
+::: {.column width="50%"}
+**Wybierz PAPI gdy:**
+
+-   Brak dostępu do internetu
+-   Populacja starsza/niecyfrowa
+-   Potrzebne materiały wizualne
+-   Mała, lokalna próba
+
+**Wybierz CAWI gdy:**
+
+-   Duży zasięg geograficzny
+-   Ograniczony budżet
+-   Populacja biegła technologicznie
+-   Potrzebna szybka realizacja
+:::
+
+::: {.column width="50%"}
+**Wybierz CAPI gdy:**
+
+-   Złożone kwestionariusze
+-   Wymagane multimedia
+-   Krytyczna wysoka jakość danych
+-   Dostępne zasoby
+
+**Wybierz CATI gdy:**
+
+-   Umiarkowana wielkość próby
+-   Szybkie zbieranie danych
+-   Ważny monitoring jakości
+-   Populacja ma telefony
+:::
+:::::
+
+# Podsumowanie
+
+## Kluczowe wnioski
+
+1.  **Wybór techniki badawczej** zależy od populacji, budżetu, złożoności i harmonogramu
+
+2.  **Projektowanie pytań** wymaga jasności, neutralności i wyczerpujących opcji
+
+3.  **Struktura kwestionariusza** powinna mieć logiczny przepływ z jasnymi instrukcjami
+
+4.  **Testowanie pilotażowe** jest niezbędne przed pełnym wdrożeniem
+
+5.  **Jakość danych** zależy zarówno od projektu, jak i administracji
+
+# Sondaż
+
+![](images/7_1.png){fig-align="center"}

@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pl"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
+
+  <meta name="author" content="Ben Stanley">
+  <title>Ben Stanley – Wprowadzenie do metodologii badań społecznych 5 slides</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../presentation_style.scss">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Wprowadzenie do metodologii badań społecznych</h1>
+  <p class="subtitle">Etyka w badaniach społecznych.</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Ben Stanley 
+</div>
+        <p class="quarto-title-affiliation">
+            Wydział Nauk Społecznych, Uniwersytet SWPS
+          </p>
+    </div>
+</div>
+
+</section>
+<section class="slide level2">
+
+<h3 id="plan-wykładu">Plan wykładu</h3>
+<ul>
+<li>Wprowadzenie do etyki badań społecznych</li>
+<li>Zagadnienia etyczne w badaniach społecznych</li>
+<li>Dwie kontrowersje etyczne</li>
+<li>Polityczne aspekty badań społecznych</li>
+</ul>
+</section>
+<section id="wprowadzenie" class="slide level2">
+<h2>Wprowadzenie</h2>
+<ul>
+<li>Badania społeczne odbywają się w określonym kontekście społecznym.</li>
+<li>Podczas projektowania i prowadzenia badań należy uwzględnić cztery główne ograniczenia:
+<ul>
+<li><strong>Naukowe</strong> – logika badawcza</li>
+<li><strong>Organizacyjne</strong> – koszty, czas</li>
+<li><strong>Etyczne</strong> – co jest dopuszczalne</li>
+<li><strong>Polityczne</strong> – co jest możliwe</li>
+</ul></li>
+</ul>
+</section>
+<section id="etyka-vs-polityka-w-badaniach" class="slide level2">
+<h2>Etyka vs polityka w badaniach</h2>
+<ul>
+<li><strong>Etyka badań</strong> – zajmuje się głównie stosowanymi metodami</li>
+<li><strong>Polityka badań</strong> – koncentruje się na treści i wykorzystaniu badań</li>
+<li>Obie sfery są ze sobą powiązane, ale wymagają osobnej analizy</li>
+<li>Nie istnieje powszechnie zaakceptowany kodeks określający, co jest politycznie akceptowalne</li>
+</ul>
+</section>
+<section id="zagadnienia-etyczne-definicja" class="slide level2">
+<h2>Zagadnienia etyczne – definicja</h2>
+<ul>
+<li>Pojęcie <strong>etyki</strong> wiąże się z pojęciem <strong>moralności</strong> – oba odnoszą się do kwestii dobra i zła</li>
+<li>Źródła rozróżnienia mogą być różne:
+<ul>
+<li>Religia</li>
+<li>Ideologia polityczna</li>
+<li>Pragmatyczna obserwacja</li>
+</ul></li>
+<li><strong>Etyczny</strong> = „zgodny z grupowymi bądź zawodowymi standardami postępowania”</li>
+</ul>
+</section>
+<section id="główne-zasady-etyczne" class="slide level2">
+<h2>Główne zasady etyczne</h2>
+<ol type="1">
+<li><strong>Dobrowolne uczestnictwo</strong></li>
+<li><strong>Nie krzywdzić badanych</strong></li>
+<li><strong>Anonimowość i poufność</strong></li>
+<li><strong>Unikanie oszukiwania badanych</strong></li>
+<li><strong>Rzetelna analiza i prezentacja wyników</strong></li>
+</ol>
+</section>
+<section id="dobrowolne-uczestnictwo" class="slide level2">
+<h2>Dobrowolne uczestnictwo</h2>
+<ul>
+<li>Nikt nie może być zmuszany do udziału w badaniach</li>
+<li>Problem: zasada ta jest w konflikcie z interesem naukowym badacza</li>
+<li>Wyniki badań mogą nie nadawać się do uogólnienia, jeśli uczestniczą tylko osoby chętne</li>
+<li><strong>Przykład</strong>: studenci proszeni o wypełnienie ankiety mogą obawiać się wpływu odmowy na ocenę</li>
+</ul>
+</section>
+<section id="dobrowolne-uczestnictwo-dylematy" class="slide level2">
+<h2>Dobrowolne uczestnictwo – dylematy</h2>
+<ul>
+<li>W badaniach terenowych badacz często nie może ujawnić, że prowadzi badania</li>
+<li>Badani nie mają możliwości dobrowolnego udziału lub odmowy</li>
+<li>Jeśli łamiemy zasadę dobrowolności, tym ważniejsze jest przestrzeganie innych norm etycznych</li>
+</ul>
+</section>
+<section id="nie-krzywdzić-badanych" class="slide level2">
+<h2>Nie krzywdzić badanych</h2>
+<ul>
+<li>Badania nie powinny wyrządzać żadnej krzywdy uczestnikom</li>
+<li>Dotyczy to zarówno szkód <strong>fizycznych</strong>, jak i <strong>psychicznych</strong></li>
+<li><strong>Przykłady szkód</strong>:
+<ul>
+<li>Ujawnienie informacji wprawiających w zakłopotanie</li>
+<li>Zagrożenie życiu rodzinnemu, przyjaźniom, pracy</li>
+<li>Zmuszenie do zmierzenia się z trudnymi aspektami siebie</li>
+</ul></li>
+</ul>
+</section>
+<section id="eksperyment-z-tuskegee-1932-1972" class="slide level2">
+<h2>Eksperyment z Tuskegee (1932-1972)</h2>
+<ul>
+<li>Amerykańska służba zdrowia badała niemal 400 ubogich czarnoskórych mężczyzn chorych na syfilis</li>
+<li>Nawet po odkryciu penicyliny odmówiono im leczenia</li>
+<li>Chciano obserwować pełny rozwój choroby</li>
+<li>Efekt: formalne przeprosiny prezydenta Clintona, odszkodowania, uchwalenie National Research Law (1974)</li>
+</ul>
+</section>
+<section id="raport-z-belmont-trzy-zasady" class="slide level2">
+<h2>Raport z Belmont – trzy zasady</h2>
+<ol type="1">
+<li><strong>Szacunek wobec ludzi</strong> – uczestnictwo musi być dobrowolne i oparte na pełnym zrozumieniu</li>
+<li><strong>Dobroczynność</strong> – badani nie powinni ucierpieć, a w idealnym scenariuszu powinni uzyskać korzyści</li>
+<li><strong>Sprawiedliwość</strong> – obciążenia i korzyści płynące z badań powinny być sprawiedliwie dzielone</li>
+</ol>
+</section>
+<section id="stanfordzki-eksperyment-więzienny-1971" class="slide level2">
+<h2>Stanfordzki eksperyment więzienny (1971)</h2>
+<ul>
+<li>Philip Zimbardo stworzył symulację życia w więzieniu</li>
+<li>Studenci losowo przydzieleni do ról więźniów lub strażników</li>
+<li>Symulacja szybko stała się rzeczywistością</li>
+<li>Wielu studentów-więźniów doznało szkód psychicznych</li>
+<li>Eksperyment został natychmiast zakończony, stworzono program terapeutyczny</li>
+</ul>
+</section>
+<section id="świadoma-zgoda" class="slide level2">
+<h2>Świadoma zgoda</h2>
+<ul>
+<li>Badani muszą oprzeć swój udział na <strong>pełnym zrozumieniu ewentualnych zagrożeń</strong></li>
+<li>Elementy świadomej zgody:
+<ul>
+<li>Oświadczenie o celach badania</li>
+<li>Opis zagrożeń i niedogodności</li>
+<li>Opis korzyści</li>
+<li>Informacja o poufności</li>
+<li>Oświadczenie o dobrowolności udziału</li>
+</ul></li>
+</ul>
+</section>
+<section id="eksperyment-facebooka-2012" class="slide level2">
+<h2>Eksperyment Facebooka (2012)</h2>
+<ul>
+<li>Badacze manipulowali treściami na stronach 700 000 użytkowników</li>
+<li>Jedni otrzymywali pozytywne, inni negatywne relacje</li>
+<li>Monitorowano następnie posty użytkowników</li>
+<li><strong>Problem</strong>: naruszenie normy świadomej zgody</li>
+<li>Żaden uczestnik nie miał możliwości zdecydowania o udziale</li>
+</ul>
+</section>
+<section id="anonimowość" class="slide level2">
+<h2>Anonimowość</h2>
+<ul>
+<li>Projekt gwarantuje <strong>anonimowość</strong>, gdy ani badacze, ani czytelnicy nie są w stanie powiązać odpowiedzi z konkretnym respondentem</li>
+<li><strong>Przykład</strong>: ankieta pocztowa bez elementów identyfikujących</li>
+<li>Problem: utrudnia monitorowanie zwrotów kwestionariuszy</li>
+</ul>
+</section>
+<section id="poufność" class="slide level2">
+<h2>Poufność</h2>
+<ul>
+<li>Projekt gwarantuje <strong>poufność</strong>, gdy badacz może zidentyfikować autora, ale obiecuje nie ujawniać informacji</li>
+<li>Badacz musi jasno poinformować o tym badanych</li>
+<li><strong>Nie należy</strong> stosować pojęcia anonimowości jako synonimu poufności</li>
+<li>Dane z badań społecznych nie są objęte tajemnicą zawodową</li>
+</ul>
+</section>
+<section id="przypadek-mt-exxon-valdez-1991" class="slide level2">
+<h2>Przypadek MT Exxon Valdez (1991)</h2>
+<ul>
+<li>Gminy pozwały firmę Exxon za szkody po katastrofie tankowca</li>
+<li>Przeprowadzono badania na próbie gospodarstw domowych</li>
+<li>Respondentom zagwarantowano poufność</li>
+<li>Firma Exxon zażądała załączenia kwestionariuszy do akt sprawy</li>
+<li>Sąd nakazał przekazanie ankiet wraz z danymi identyfikacyjnymi</li>
+</ul>
+</section>
+<section id="ochrona-poufności-techniki" class="slide level2">
+<h2>Ochrona poufności – techniki</h2>
+<ul>
+<li>Szkolenie osób mających dostęp do danych</li>
+<li><strong>Niszczenie danych</strong> pozwalających zidentyfikować badanych, gdy przestają być potrzebne</li>
+<li>Zastępowanie nazwisk i adresów numerami identyfikacyjnymi</li>
+<li>Od 2002 r. – program „Certyfikatu poufności” w USA</li>
+</ul>
+</section>
+<section id="oszukiwanie-badanych" class="slide level2">
+<h2>Oszukiwanie badanych</h2>
+<ul>
+<li>Oszukiwanie ludzi jest nieetyczne</li>
+<li>Musi być uzasadnione <strong>ważnymi względami naukowymi lub organizacyjnymi</strong></li>
+<li>Nawet wtedy postawa będzie dyskusyjna</li>
+<li><strong>Przykład</strong>: badania nad konformizmem – nie można ich prowadzić bez oszukiwania badanych</li>
+</ul>
+</section>
+<section id="debriefing" class="slide level2">
+<h2>Debriefing</h2>
+<ul>
+<li>Wywiady z uczestnikami po zakończeniu eksperymentu</li>
+<li>Cel: wykrycie problemów powstałych w wyniku doświadczenia badawczego</li>
+<li>Powiedzenie prawdy później może zrekompensować konieczność okłamania na początku</li>
+<li>Należy upewnić się, że u badanych nie wzbudzono złego samopoczucia</li>
+</ul>
+</section>
+<section id="analiza-i-prezentacja-wyników" class="slide level2">
+<h2>Analiza i prezentacja wyników</h2>
+<ul>
+<li>Badacze mają zobowiązania etyczne wobec kolegów</li>
+<li>Obowiązek <strong>poinformowania o słabościach i ograniczeniach</strong> badań</li>
+<li>Negatywne wyniki również powinny być publikowane</li>
+<li>Unikać pokusy opisywania odkryć jako produktu starannie zaplanowanej strategii, jeśli tak nie było</li>
+</ul>
+</section>
+<section id="nieuczciwe-praktyki" class="slide level2">
+<h2>Nieuczciwe praktyki</h2>
+<ul>
+<li><strong>Plagiat</strong> – przepisywanie cudzej pracy i przedstawianie jej jako własnej</li>
+<li><strong>Fałszowanie danych</strong> – twierdzenia o badaniach, które nie zostały przeprowadzone</li>
+<li>Przykład: holenderski profesor psychologii – artykuły o badaniach, które nigdy nie zostały przeprowadzone</li>
+<li>Strona kontrolna: retractionwatch.wordpress.com</li>
+</ul>
+</section>
+<section id="instytucjonalne-komisje-rewizyjne-irb" class="slide level2">
+<h2>Instytucjonalne komisje rewizyjne (IRB)</h2>
+<ul>
+<li>Każda instytucja ubiegająca się o fundusze federalne musi powołać komisję rewizyjną</li>
+<li>Cel: zagwarantowanie ochrony praw i interesów uczestników badań</li>
+<li>Komisje mogą odmówić zatwierdzenia badań lub zażądać poprawienia projektu</li>
+<li>W Polsce: Komisje Etyki Badań Naukowych</li>
+</ul>
+</section>
+<section id="kodeksy-etyki-zawodowej" class="slide level2">
+<h2>Kodeksy etyki zawodowej</h2>
+<ul>
+<li>Większość stowarzyszeń badaczy społecznych stworzyła oficjalne kodeksy postępowania</li>
+<li>Przykłady:
+<ul>
+<li>AAPOR (American Association for Public Opinion Research)</li>
+<li>ASA (Amerykańskie Towarzystwo Socjologiczne)</li>
+<li>APA (Amerykańskie Towarzystwo Psychologiczne)</li>
+</ul></li>
+<li>W Polsce i Europie: Międzynarodowy Kodeks ESOMAR/ICC</li>
+</ul>
+</section>
+<section id="kontrowersja-1-tearoom-trade-humphreys" class="slide level2">
+<h2>Kontrowersja 1: Tearoom Trade (Humphreys)</h2>
+<ul>
+<li>Laud Humphreys badał zachowania homoseksualne w publicznych toaletach („kafejkach”)</li>
+<li>Pełnił rolę „czujki” – osoby stojącej na czatach</li>
+<li>Zapisywał numery rejestracyjne samochodów uczestników</li>
+<li>Ustalał nazwiska i adresy, po czym odwiedzał ich w domach pod pretekstem badań opinii</li>
+</ul>
+</section>
+<section id="tearoom-trade-kontrowersje" class="slide level2">
+<h2>Tearoom Trade – kontrowersje</h2>
+<ul>
+<li><strong>Zarzuty krytyków</strong>:
+<ul>
+<li>Rażące naruszenie prywatności</li>
+<li>Oszustwo – sugerowanie, że jest podglądaczem</li>
+<li>Nieetyczne odwiedzanie badanych w domach</li>
+</ul></li>
+<li><strong>Obrona zwolenników</strong>:
+<ul>
+<li>Temat wart analizy</li>
+<li>Nie można go było zbadać inaczej</li>
+<li>Humphreys zadbał o nieujawnienie tajemnicy badanych</li>
+</ul></li>
+</ul>
+</section>
+<section id="kontrowersja-2-eksperyment-milgrama" class="slide level2">
+<h2>Kontrowersja 2: Eksperyment Milgrama</h2>
+<ul>
+<li>Stanley Milgram badał gotowość ludzi do krzywdzenia innych w ramach wykonywania rozkazów</li>
+<li>40 dorosłych mężczyzn w warunkach laboratoryjnych</li>
+<li>„Nauczyciel” miał aplikować „uczniowi” wstrząsy elektryczne za błędne odpowiedzi</li>
+<li>Wstrząsy były na niby, „uczeń” był współpracownikiem eksperymentatora</li>
+</ul>
+</section>
+<section id="eksperyment-milgrama-wyniki" class="slide level2">
+<h2>Eksperyment Milgrama – wyniki</h2>
+<ul>
+<li>Żaden z 40 badanych nie odmówił aplikowania wstrząsów, aż „uczeń” zaczął kopać w ścianę</li>
+<li><strong>2/3 badanych</strong> (26 z 40) wykonywało polecenia do końca serii</li>
+<li>Badani doświadczali niemal takiego samego bólu, jak ten, który sądzili, że zadają</li>
+<li>Byli skrajnie zaniepokojeni i zdenerwowani</li>
+</ul>
+</section>
+<section id="eksperyment-milgrama-krytyka-etyczna" class="slide level2">
+<h2>Eksperyment Milgrama – krytyka etyczna</h2>
+<ul>
+<li>Wpływ eksperymentu na badanych był poważny</li>
+<li>Wielu błagało o pozwolenie na przerwanie</li>
+<li>Niektórzy przestali kontrolować swoje zachowanie</li>
+<li>Pytanie: Czy temat był wystarczająco ważny, by uzasadnić takie działania?</li>
+</ul>
+</section>
+<section id="polityczne-aspekty-badań-społecznych" class="slide level2">
+<h2>Polityczne aspekty badań społecznych</h2>
+<ul>
+<li>Badania społeczne nieuchronnie mają wymiar polityczny i ideologiczny</li>
+<li><strong>Nauka</strong> jest neutralna politycznie, ale <strong>naukowcy</strong> nie są</li>
+<li>Wiele badań społecznych wiąże się z przekonaniami politycznymi ludzi spoza społeczności naukowej</li>
+</ul>
+</section>
+<section id="obiektywność-a-ideologia" class="slide level2">
+<h2>Obiektywność a ideologia</h2>
+<ul>
+<li>Max Weber: postulat <strong>socjologii wolnej od sądów wartościujących</strong></li>
+<li>Nauka powinna być wolna od osobistych wartości wyznawanych przez poszczególnych uczonych</li>
+<li><strong>Intersubiektywność</strong> – różni uczeni, stosując uznane techniki, powinni dochodzić do takich samych wyników</li>
+</ul>
+</section>
+<section id="socjologia-publiczna" class="slide level2">
+<h2>Socjologia publiczna</h2>
+<ul>
+<li>W 2004 r. Michael Burawoy zaproponował koncepcję „socjologii publicznej”</li>
+<li>Wielu badaczy opowiada się za uznaniem, że badania powinny mieć zamierzony wpływ społeczny</li>
+<li>Marksiści i neomarksiści: nie da się i nie powinno się rozdzielać nauk społecznych od działań społecznych</li>
+</ul>
+</section>
+<section id="badania-społeczne-a-kwestie-rasowe" class="slide level2">
+<h2>Badania społeczne a kwestie rasowe</h2>
+<ul>
+<li>1896: Sąd Najwyższy USA ustanowił zasadę „oddzielni, lecz równi”</li>
+<li>Wpływ prac Williama Grahama Sumnera: „stateways do not make folkways”</li>
+<li>1954: Odrzucenie tej zasady (Brown kontra Rada Edukacji)</li>
+<li>Nowe orzeczenie opierało się na badaniach socjologicznych i psychologicznych</li>
+</ul>
+</section>
+<section id="kontrowersyjne-badania-rasowe" class="slide level2">
+<h2>Kontrowersyjne badania rasowe</h2>
+<ul>
+<li><strong>James Coleman (1966)</strong>: niewielkie różnice między osiągnięciami uczniów w szkołach integracyjnych i segregacyjnych</li>
+<li><strong>Daniel Moynihan (1965)</strong>: krytyczna analiza funkcjonowania czarnoskórych rodzin</li>
+<li><strong>Arthur Jensen (1969)</strong>: różnice genetyczne a wyniki testów IQ</li>
+<li>Wszystkie wywołały burzliwe kontrowersje polityczne</li>
+</ul>
+</section>
+<section id="polityka-badań-seksualnych" class="slide level2">
+<h2>Polityka badań seksualnych</h2>
+<ul>
+<li>Alfred Kinsey (lata 40. i 50. XX w.): przełomowe badania praktyk seksualnych</li>
+<li>Wywołały oburzenie opinii publicznej</li>
+<li>1987: NIH potrzebował danych o praktykach seksualnych do walki z AIDS</li>
+<li>Projekt Laumanna został zablokowany przez senatorów Helmsa i Dannemeyera</li>
+</ul>
+</section>
+<section id="polityka-przez-małe-p" class="slide level2">
+<h2>Polityka przez małe „p”</h2>
+<ul>
+<li>Badacze społeczni jako „biegli” w sądzie</li>
+<li>Naukowy ideał „poszukiwania prawdy” vs.&nbsp;rzeczywistość procesu sądowego</li>
+<li>Biegli powoływani są na wniosek i za pieniądze jednej ze stron</li>
+<li>Ich zeznania zwykle wspierają wersję tej strony</li>
+</ul>
+</section>
+<section id="konflikt-interesów-w-badaniach" class="slide level2">
+<h2>Konflikt interesów w badaniach</h2>
+<ul>
+<li>Badania sponsorowane przez firmy farmaceutyczne</li>
+<li>Badania przemysłu węglowego/naftowego o zmianach klimatu</li>
+<li>Informacje o sponsorze powinny być podawane do wiadomości publicznej</li>
+<li>AAPOR (2009): „Inicjatywa Transparentności”</li>
+</ul>
+</section>
+<section id="polityka-we-właściwych-proporcjach" class="slide level2">
+<h2>Polityka we właściwych proporcjach</h2>
+<ul>
+<li>Nauka nie jest wolna od polityki</li>
+<li>Nauka rozwija się pośród politycznych kontrowersji</li>
+<li>Świadomość aspektów ideologicznych wzbogaca metodologię</li>
+<li>Naukowcy mogą i powinni brać udział w debatach publicznych</li>
+</ul>
+</section>
+<section id="cztery-wnioski-końcowe" class="slide level2">
+<h2>Cztery wnioski końcowe</h2>
+<ol type="1">
+<li>Nauka nie jest wolna od polityki – wpływ ideologii dotyczy także nauk przyrodniczych</li>
+<li>Nauka rozwija się mimo sporów ideologicznych – kontrowersje mogą nawet wzmagać współzawodnictwo</li>
+<li>Świadomość aspektów ideologicznych wzbogaca metodologię – techniki jak intersubiektywność pomagają kontrolować uprzedzenia</li>
+<li>Naukowcy mogą dzielić się wiedzą naukową i osobistymi wartościami w debatach publicznych</li>
+</ol>
+</section>
+<section id="kluczowe-pojęcia" class="slide level2">
+<h2>Kluczowe pojęcia</h2>
+<ul>
+<li><strong>Anonimowość</strong> – ani badacze, ani czytelnicy nie mogą powiązać odpowiedzi z konkretnym respondentem</li>
+<li><strong>Poufność</strong> – badacz może zidentyfikować odpowiedź, ale obiecuje nie ujawniać jej publicznie</li>
+<li><strong>Świadoma zgoda</strong> – uczestnictwo oparte na pełnym zrozumieniu możliwych zagrożeń</li>
+<li><strong>Debriefing</strong> – wywiady z uczestnikami po zakończeniu eksperymentu</li>
+</ul>
+</section>
+<section class="slide level2">
+
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../swps.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Skopiowano!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Skopiowano!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

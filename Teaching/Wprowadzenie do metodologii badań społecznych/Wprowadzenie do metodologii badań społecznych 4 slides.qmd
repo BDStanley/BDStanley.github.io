@@ -1,0 +1,352 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 4 slides"
+subtitle: "Planowanie, organizacja i realizacja projektu badawczego."
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs: 
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Kluczowe zagadnienia
+- Czym jest projekt badawczy?
+- Jak zaplanować proces badawczy?
+- Jakie są kluczowe etapy realizacji?
+- Jak organizować zespół badawczy?
+- Jak zarządzać ryzykiem w badaniach?
+
+---
+
+## Projekt badawczy
+- Systematyczne działanie poznawcze o określonych ramach
+- Cel - rozwiązanie problemu badawczego
+- Ograniczenia czasowe, finansowe i zasobowe
+- Produkty - wiedza, publikacje, rozwiązania
+- Proces - od koncepcji do wdrożenia
+
+Przykład: Badanie wpływu social mediów na zdrowie psychiczne młodzieży - określony problem, 12-miesięczny harmonogram, budżet 50 tys. zł, cel: publikacja i rekomendacje dla szkół
+
+---
+
+## Cechy projektu badawczego
+- Niepewność wyników - ryzyko poznawcze
+- Innowacyjność - tworzenie nowej wiedzy
+- Kompleksowość - wieloetapowy proces
+- Interdyscyplinarność - łączenie dziedzin
+- Społeczna odpowiedzialność - etyka badań
+
+Przykład: Projekt o polaryzacji politycznej łączy socjologię, psychologię i informatykę (analiza big data), wymaga zgody etycznej na badanie opinii publicznych
+
+---
+
+## Rodzaje projektów badawczych
+- Podstawowe vs stosowane - cel poznawczy
+- Ilościowe vs jakościowe - metodologia
+- Krótkoterminowe vs długoterminowe - czas trwania
+- Indywidualne vs zespołowe - organizacja
+- Krajowe vs międzynarodowe - zasięg
+
+Przykłady: Badanie podstawowe - teoria tożsamości społecznej; stosowane - strategie integracji imigrantów. Ilościowe - ankieta 1000 osób; jakościowe - 20 wywiadów pogłębionych
+
+---
+
+## Cykl życia projektu badawczego
+- Koncepcja - pomysł i uzasadnienie
+- Planowanie - szczegółowe przygotowanie
+- Realizacja - zbieranie i analiza danych
+- Zamknięcie - raportowanie i wdrożenie
+- Ocena - ewaluacja ex-post
+
+Przykład: Koncepcja (miesiąc 1-2) - problem niskiej frekwencji wyborczej; Planowanie (3-4) - ankieta, harmonogram; Realizacja (5-10) - 800 wywiadów; Zamknięcie (11-12) - raport i publikacja
+
+---
+
+## Etap konceptualny
+- Identyfikacja problemu badawczego
+- Przegląd literatury przedmiotu
+- Określenie luki badawczej
+- Sformułowanie celów i pytań
+- Wstępne założenia metodologiczne
+
+Przykład: Problem - czy pandemia zmieniła postawy wobec pracy zdalnej? Przegląd literatury - brak badań polskich z 2023/24. Luka - nowe dane po powrocie do biur
+
+---
+
+## Problem badawczy
+- Precyzja sformułowania - jasność i konkretność
+- Oryginalność - wkład w wiedzę
+- Ważność - znaczenie teoretyczne i praktyczne
+- Realizowalność - możliwość zbadania
+- Etyczność - zgodność z normami
+
+Przykład dobrego problemu: "Jak doświadczenie dyskryminacji wpływa na poczucie tożsamości narodowej wśród młodych imigrantów w Polsce?"
+Zły przykład: "Czy imigranci są dobrzy czy źli?" (brak precyzji, etyczności, naukowego charakteru)
+
+---
+
+## Cele badawcze
+- Cel główny - nadrzędne zadanie poznawcze
+- Cele szczegółowe - konkretne zadania
+- Cele praktyczne - zastosowanie wyników
+- SMART - specificzne, mierzalne, osiągalne, realistyczne, terminowe
+- Spójność z problemem badawczym
+
+Przykład SMART: "Zbadanie poziomu wypalenia zawodowego u 300 nauczycieli szkół podstawowych w Warszawie do czerwca 2025 r., w celu opracowania programu profilaktycznego"
+
+---
+
+## Pytania badawcze
+- Pytanie główne - centralny problem
+- Pytania pomocnicze - aspekty szczegółowe
+- Jasność językowa i merytoryczna
+- Empiryczna sprawdzalność
+- Logiczna sekwencja pytań
+
+Przykład: Główne - "Jakie czynniki wpływają na decyzję o studiowaniu za granicą?" Pomocnicze - "Jaka jest rola kapitału ekonomicznego?", "Jak wpływa wsparcie rodziny?", "Czy płeć różnicuje te decyzje?"
+
+---
+
+## Hipotezy badawcze
+- Tymczasowe odpowiedzi na pytania
+- Empiryczna testowalność
+- Falsyfikowalność - możliwość obalenia
+- Teoretyczne uzasadnienie
+- Precyzja sformułowania
+
+Przykład: H1: "Studenci z wyższym kapitałem kulturowym rodziców częściej wybierają studia zagraniczne" (testowalna, falsyfikowalna, oparta na teorii Bourdieu)
+H2: "Kobiety częściej niż mężczyźni studiują humanistykę za granicą"
+
+---
+
+## Przegląd literatury
+- Systematyczne wyszukiwanie źródeł
+- Krytyczna ocena publikacji
+- Identyfikacja luk badawczych
+- Teoretyczne ramy odniesienia
+- Bibliografia - źródła i referencje
+
+Przykład: Wyszukiwanie w Web of Science, Scopus, Google Scholar - słowa kluczowe: "political polarization" AND "social media" AND "Poland" - znaleziono 45 artykułów, z czego 12 wysokiej jakości, ale tylko 2 z polskim kontekstem
+
+---
+
+## Metodologia projektu
+- Paradygmat - orientacja metodologiczna
+- Podejście - ilościowe, jakościowe, mieszane
+- Metody zbierania danych
+- Techniki analityczne
+- Uzasadnienie wyborów metodologicznych
+
+Przykład podejścia mieszanego: Faza 1 - 15 wywiadów pogłębionych (eksploracja problemu); Faza 2 - ankieta online na 600 osobach (weryfikacja hipotez); Faza 3 - 4 studia przypadku (pogłębienie zrozumienia)
+
+---
+
+## Planowanie zasobów
+- Zasoby ludzkie - zespół badawczy
+- Zasoby finansowe - budżet projektu
+- Zasoby materialne - sprzęt, narzędzia
+- Zasoby informacyjne - bazy danych, literatura
+- Infrastruktura - laboratoria, miejsca badań
+
+Przykład: Zespół - 1 kierownik (prof.), 2 badaczy senior, 3 doktorantów; Budżet 200 tys. zł; Sprzęt - licencja SPSS, dyktafony; Bazy - dostęp do JSTOR; Lab - sala do wywiadów
+
+---
+
+## Budżetowanie projektu
+- Koszty personelu - wynagrodzenia, honoraria
+- Koszty rzeczowe - materiały, sprzęt
+- Koszty podróży - badania terenowe
+- Koszty pośrednie - administracja, overheady
+- Rezerwy - nieprzewidziane wydatki
+
+Przykład budżetu (100 tys. zł): Personel 50% (50 tys.), Rzeczowe 20% (laptopy, oprogramowanie - 20 tys.), Podróże 15% (15 tys.), Pośrednie 10% (10 tys.), Rezerwa 5% (5 tys.)
+
+---
+
+## Harmonogramowanie
+- Dekompozycja zadań - struktura podziału pracy
+- Sekwencja działań - kolejność realizacji
+- Szacowanie czasu trwania
+- Zależności między zadaniami
+- Kamienie milowe - kluczowe osiągnięcia
+
+Przykład: M1-2: Przegląd literatury (kamień milowy: raport); M3-4: Konstrukcja kwestionariusza (zależy od przeglądu); M5: Pilotaż; M6-8: Zbieranie danych; M9-10: Analiza; M11-12: Raport
+
+---
+
+## Narzędzia planowania
+- Wykres Gantta - wizualizacja czasowa
+- Sieć PERT - analiza ścieżki krytycznej
+- Kanban - zarządzanie przepływem pracy
+- Agile - elastyczne podejście
+- Oprogramowanie projektowe - MS Project, Trello
+
+Przykład użycia: Wykres Gantta w MS Project do planowania 18-miesięcznego projektu z 25 zadaniami. Trello do codziennego zarządzania - kolumny: Do zrobienia, W trakcie, Zrobione, Zablokowane
+
+---
+
+## Przykład wykresu Gantta
+
+
+| Etap | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|------|---|---|---|---|---|---|---|---|---|----|----|----|
+| Przegląd literatury | ■ | ■ |   |   |   |   |   |   |   |    |    |    |
+| Kwestionariusz |   | ■ | ■ |   |   |   |   |   |   |    |    |    |
+| Zgoda etyczna |   |   | ■ |   |   |   |   |   |   |    |    |    |
+| Pilotaż |   |   |   | ■ |   |   |   |   |   |    |    |    |
+| Rekrutacja |   |   |   | ■ | ■ |   |   |   |   |    |    |    |
+| Zbieranie |   |   |   |   |   | ■ | ■ | ■ |   |    |    |    |
+| Analiza |   |   |   |   |   |   |   | ■ | ■ | ■  |    |    |
+| Raport |   |   |   |   |   |   |   |   |   | ■  | ■  |    |
+| Publikacja |   |   |   |   |   |   |   |   |   |    | ■  | ■  |
+| Upowszechnianie |   |   |   |   |   |   |   |   |   |    |    | ■  |
+
+---
+
+## Organizacja zespołu
+- Kierownik projektu - odpowiedzialność ogólna
+- Badacze główni - ekspertyza merytoryczna
+- Asystenci badawczy - wsparcie operacyjne
+- Konsultanci - doradztwo specjalistyczne
+- Partnerzy zewnętrzni - współpraca instytucjonalna
+
+Przykład: Kierownik - prof. Kowalska (20% etatu); Badacze - dr Nowak (socjolog, 50%), dr Wiśniewska (psycholog, 50%); Asystenci - 2 doktorantów (100%); Konsultant statystyczny - dr Lewandowski (15 godz.)
+
+---
+
+## Zarządzanie zespołem
+- Podział ról i odpowiedzialności
+- Komunikacja - spotkania, raporty
+- Motywacja - cele indywidualne i zespołowe
+- Rozwiązywanie konfliktów
+- Rozwój kompetencji zespołu
+
+Przykład: Cotygodniowe spotkania online (poniedziałki 10:00), miesięczne raporty postępu, kwartalne szkolenia metodologiczne. System nagród - publikacje wspólne, możliwość prezentacji na konferencjach
+
+---
+
+## Zarządzanie ryzykiem
+- Ryzyko merytoryczne - błędne wyniki
+- Ryzyko czasowe - opóźnienia w realizacji
+- Ryzyko finansowe - przekroczenie budżetu
+- Ryzyko kadrowe - rotacja zespołu
+- Strategie radzenia sobie z ryzykiem
+
+Przykład ryzyk: Niska stopa odpowiedzi (mitygacja: większa próba +20%, zachęty finansowe). Odejście kluczowego badacza (plan B: zastępca, dokumentacja). Opóźnienie w danych z GUS (alternatywne źródła)
+
+---
+
+## Etyka w projektach badawczych
+- Zgoda komisji etycznej
+- Świadoma zgoda uczestników
+- Poufność i anonimowość
+- Uczciwość badawcza
+- Odpowiedzialność społeczna
+
+Przykład: Wniosek do komisji etycznej SWPS (4 tygodnie na decyzję). Formularz zgody - informacja o celu, dobrowolności, prawie do wycofania. Dane kodowane (ID zamiast nazwisk), szyfrowane, przechowywane 5 lat
+
+---
+
+## Realizacja projektu
+- Uruchomienie działań badawczych
+- Zbieranie danych empirycznych
+- Monitorowanie postępu prac
+- Bieżące korekty i dostosowania
+- Dokumentacja procesów
+
+Przykład: Kick-off meeting (dzień 1), szkolenie ankieterów (tydzień 1), start zbierania danych (miesiąc 2). Cotygodniowe sprawdzanie KPI - planowano 50 wywiadów/tydzień, faktycznie 38 → zwiększono ekipę
+
+---
+
+## Zbieranie danych
+- Przygotowanie narzędzi badawczych
+- Pilotaż - testowanie procedur
+- Rekrutacja uczestników badania
+- Realizacja badań terenowych
+- Kontrola jakości danych
+
+Przykład: Kwestionariusz w Qualtrics (30 pytań, 15 min.). Pilotaż n=30 - wykryto niejasne pytanie Q17, poprawiono. Rekrutacja przez panel online + Facebook ads. Kontrola - odrzucono 5% ankiet (czas <5 min., wzorzec odpowiedzi)
+
+---
+
+## Monitorowanie postępu
+- Wskaźniki postępu - KPI projektu
+- Raporty okresowe - status i problemy
+- Spotkania kontrolne zespołu
+- Analiza odchyleń od planu
+- Działania korygujące
+
+Przykład KPI: Liczba ukończonych wywiadów (cel: 500, aktualnie: 320, 64%), wydatkowany budżet (cel: 60 tys. do M6, faktycznie: 58 tys., 97%), artykuły opublikowane (cel: 2, fakt: 0 - opóźnienie, przyczyna: recenzje)
+
+---
+
+## Analiza danych
+- Przygotowanie danych do analizy
+- Analiza statystyczna lub jakościowa
+- Interpretacja wyników
+- Weryfikacja hipotez badawczych
+- Wnioski i implikacje
+
+Przykład: Czyszczenie danych - usunięto 23 duplikaty, imputowano 5% braków. Analiza w SPSS - regresja logistyczna (zmienne: wykształcenie, wiek, dochód → zmienna zależna: intencja emigracji). H1 potwierdzona (p<0.05), H2 odrzucona
+
+---
+
+## Raportowanie wyników
+- Raport końcowy projektu
+- Publikacje naukowe
+- Prezentacje konferencyjne
+- Materiały popularnonaukowe
+- Rekomendacje praktyczne
+
+Przykład: Raport dla NCN (80 stron, deadline M12), artykuł do "Studia Socjologiczne" (submitted), prezentacja na ESA Conference w Krakowie, infografika dla portalu Nauka o Nauce, policy brief dla MEN (5 stron, rekomendacje)
+
+---
+
+## Upowszechnianie wyników
+- Czasopisma naukowe - peer review
+- Konferencje krajowe i międzynarodowe
+- Media społecznościowe i tradycyjne
+- Warsztaty i seminaria
+- Współpraca z praktykami
+
+Przykład: Publikacja w "European Sociological Review" (IF 3.1), prezentacja na konferencji PTS w Gdańsku, wywiad w Gazeta Wyborcza, wątek na Twitter/X (20k wyświetleń), warsztat dla NGO, konsultacje z Ministerstwem Rodziny
+
+---
+
+## Wdrożenie wyników
+- Transfer technologii
+- Polityki publiczne
+- Praktyki organizacyjne
+- Edukacja i szkolenia
+- Dalsze badania
+
+Przykład: Rekomendacje z badania o wypaleniu nauczycieli wdrożone w 5 warszawskich szkołach (program superwizji). Wyniki wpłynęły na zmianę rozporządzenia MEN dot. liczby uczniów w klasie. Grant follow-up na badanie longitudinalne
+
+---
+
+## Ocena projektu
+- Ocena osiągnięcia celów
+- Analiza efektywności zasobów
+- Wpływ na rozwój wiedzy
+- Satysfakcja zespołu i interesariuszy
+- Wnioski na przyszłość
+
+Przykład ewaluacji: Cele zrealizowane w 90% (brak publikacji międzynarodowej). Budżet: 95 tys./100 tys. (5% oszczędności). Cytowania: 15 w ciągu roku. Ankieta zespołu: średnia satysfakcja 4.2/5. Lessons learned: więcej czasu na rekrutację
+
+---
+
+## Kluczowe wnioski
+- Planowanie jest fundamentem sukcesu projektu badawczego
+- Jasne cele i pytania badawcze kierunkują całym procesem
+- Właściwa organizacja zespołu zwiększa efektywność pracy
+- Systematyczne monitorowanie umożliwia bieżące korekty
+- Zarządzanie ryzykiem minimalizuje niepowodzenia
+- Etyka badawcza jest nieodzownym elementem projektu
+- Upowszechnianie wyników maksymalizuje wpływ badań
+- Ewaluacja dostarcza cennych wniosków na przyszłość
+

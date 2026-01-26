@@ -1,0 +1,329 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 2 slides"
+subtitle: "Przegląd literatury. Analiza danych zastanych. Plagiat. Stosowanie referencji."
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs: 
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+    font-size: 20px
+---
+
+## Plan wykładu
+- Przegląd literatury - definicje i typologie
+- Systematyczny przegląd literatury
+- Strategie wyszukiwania źródeł
+- Analiza danych zastanych
+- Metody analizy wtórnej
+- Plagiat - definicje i rodzaje
+- Etyka cytowania i parafrazowania
+- Systemy referencyjne
+- Zarządzanie bibliografią
+
+---
+
+## Kluczowe zagadnienia
+- Jakie są rodzaje przeglądów literatury?
+- Jak przeprowadzić systematyczny przegląd?
+- Czym są dane zastane i jak je analizować?
+- Co stanowi plagiat w pracy naukowej?
+- Jak prawidłowo stosować referencje?
+
+---
+
+## Przegląd literatury
+- **Synteza** istniejącej wiedzy naukowej - łączenie ustaleń z różnych badań w spójną całość
+- **Identyfikacja** luk badawczych - wykrycie obszarów, które wymagają dalszych analiz
+- **Podstawa** dla nowych badań - uzasadnienie celowości projektowanego badania
+- **Kontekst** teoretyczny problemu - osadzenie w ramach istniejących teorii
+- **Stan wiedzy** w danej dziedzinie - aktualny poziom rozumienia tematu
+- *Przykład:* Przegląd badań nad wpływem mediów społecznościowych na zdrowie psychiczne młodzieży
+
+---
+
+## Funkcje przeglądu literatury
+- **Orientacyjna** - zapoznanie z tematyką, podstawowymi pojęciami i głównymi nurtami badań
+- **Teoretyczna** - budowa ram pojęciowych dla problemu badawczego
+- **Metodologiczna** - wybór metod badawczych na podstawie doświadczeń innych badaczy
+- **Empiryczna** - porównanie własnych wyników z dotychczasowymi odkryciami
+- **Krytyczna** - ocena mocnych i słabych stron dotychczasowej wiedzy
+- *Przykład:* Przegląd metod pomiaru jakości życia w badaniach nad seniorami
+
+---
+
+## Rodzaje przeglądów literatury
+- **Przegląd narracyjny** - tradycyjny, opisowy; swobodny dobór źródeł
+- **Przegląd systematyczny** - metodyczny, rygorystyczny; ściśle określone kryteria
+- **Meta-analiza** - statystyczna synteza wyników z wielu badań ilościowych
+- **Przegląd krytyczny** - ocena jakości badań i ich wkładu teoretycznego
+- **Przegląd tematyczny** - mapowanie obszaru badawczego i głównych koncepcji
+- *Przykład:* Meta-analiza skuteczności terapii poznawczo-behawioralnej w leczeniu depresji
+
+---
+
+## Przegląd narracyjny
+- **Subiektywny** dobór literatury - autor decyduje, co jest istotne
+- **Opisowy** charakter analizy - narracyjne przedstawienie głównych wątków
+- **Brak** rygorystycznej metodologii - trudno zreplikować proces doboru źródeł
+- **Elastyczność** w strukturze - możliwość organizacji według różnych kryteriów
+- **Szeroki** zakres tematyczny - obejmuje różnorodne aspekty problemu
+- *Zastosowanie:* Wprowadzenie do nowego obszaru badawczego, rozdziały teoretyczne w pracach
+
+---
+
+## Przegląd systematyczny
+- **Jasno określone** pytanie badawcze - sformułowane np. w modelu PICO
+- **Systematyczne** wyszukiwanie źródeł - przeszukanie określonych baz danych
+- **Przejrzyste** kryteria włączenia/wyłączenia - np. tylko badania randomizowane z lat 2010-2024
+- **Standaryzowana** ocena jakości - przy użyciu narzędzi typu PRISMA, CASP
+- **Replikowalność** procedur - inni badacze powinni móc powtórzyć proces
+- *Przykład:* Przegląd PRISMA badań nad skutecznością mindfulness w redukcji stresu
+
+---
+
+## Etapy przeglądu systematycznego
+- **Formułowanie** pytania badawczego PICO
+- **Opracowanie** protokołu przeglądu
+- **Wyszukiwanie** literatury w bazach
+- **Selekcja** artykułów według kryteriów
+- **Ocena** jakości wybranych badań
+- **Synteza** i **interpretacja** wyników
+
+---
+
+## Model PICO
+- **P (Population)** - populacja/grupa docelowa (np. dorośli z depresją)
+- **I (Intervention)** - interwencja/ekspozycja (np. terapia poznawczo-behawioralna)
+- **C (Comparison)** - grupa porównawcza (np. farmakoterapia, placebo)
+- **O (Outcomes)** - mierzone efekty (np. redukcja objawów depresji w skali BDI)
+- *Przykład pytania:* Czy CBT (I) jest skuteczniejsza niż farmakoterapia (C) w redukcji objawów depresji (O) u dorosłych (P)?
+
+---
+
+## Strategie wyszukiwania
+- **Bazy bibliograficzne** - Scopus, Web of Science (multidyscyplinarne)
+- **Bazy dziedzinowe** - PsycINFO (psychologia), ERIC (edukacja), Sociological Abstracts
+- **Słowa kluczowe** i **operatory** logiczne - AND, OR, NOT, * (wildcard)
+- **Wyszukiwanie** w bibliografiach - metoda "kuli śniegowej"
+- **Literatura szara** - raporty, konferencje, prace doktorskie, materiały niepublikowane
+- *Przykład zapytania:* (depression OR "depressive symptoms") AND (CBT OR "cognitive behavio*r therapy")
+
+---
+
+## Kryteria włączenia i wyłączenia
+- **Czasowe** - okres publikacji (np. ostatnie 10 lat: 2014-2024)
+- **Językowe** - język publikacji (np. angielski, polski)
+- **Metodologiczne** - typ badania (np. tylko badania eksperymentalne, z grupą kontrolną)
+- **Tematyczne** - zgodność z problemem (np. dotyczy dorosłych, nie dzieci)
+- **Jakościowe** - poziom naukowy (np. tylko czasopisma recenzowane, IF > 2.0)
+- *Przykład kryterium wyłączenia:* Studia przypadku, przeglądy narracyjne, badania na zwierzętach
+
+---
+
+## Ocena jakości źródeł
+- **Metodologia** - poprawność badania
+- **Transparentność** - opis procedur
+- **Reprezentatywność** - próba badawcza
+- **Trafność** i **rzetelność** narzędzi
+- **Recenzja** - peer review
+
+---
+
+## Analiza danych zastanych
+- **Dane wtórne** - zebrane wcześniej przez innych badaczy lub instytucje
+- **Różne źródła** - statystyki publiczne, archiwa, dane z wcześniejszych badań
+- **Niższe koszty** niż badania pierwotne - brak kosztów rekrutacji i zbierania danych
+- **Dostępność** historyczna - możliwość analizy trendów z przeszłości
+- **Ograniczenia** w kontroli jakości - brak wpływu na sposób zbierania danych
+- *Przykład:* Analiza danych Diagnozy Społecznej (panel gospodarstw domowych w Polsce)
+
+---
+
+## Rodzaje danych zastanych
+- **Dane statystyczne** - GUS (Bank Danych Lokalnych), Eurostat, OECD, WHO
+- **Bazy danych** - administracyjne (ZUS, NFZ), komercyjne (Nielsen, CBOS)
+- **Archiwa** - dokumenty historyczne, protokoły, akta instytucjonalne
+- **Materiały** medialne - prasa (analiza treści artykułów), internet (media społecznościowe)
+- **Wyniki** wcześniejszych badań - European Social Survey, World Values Survey
+- *Przykład:* Dane GUS o stopie bezrobocia w województwach 2000-2024
+
+---
+
+## Analiza wtórna danych
+- **Re-analiza** - nowe pytania do starych danych (np. analiza gender w danych z lat 90.)
+- **Analiza porównawcza** - różne badania (np. porównanie wyników ESS w krajach UE)
+- **Meta-analiza** - łączenie wyników statystycznych z wielu badań
+- **Analiza treści** - dokumenty, media (np. analiza ramowania w artykułach prasowych)
+- **Analiza** szeregów czasowych - trendy w danych GUS 2000-2024
+- *Przykład:* Wtórna analiza danych PISA w celu badania nierówności edukacyjnych
+
+---
+
+## Zalety danych zastanych
+- **Oszczędność** czasu i środków - nie trzeba prowadzić własnego badania terenowego
+- **Duże** próby badawcze - reprezentatywne próby krajowe (np. ESS: n>1500)
+- **Dane** niedostępne inną drogą - dane historyczne, zjawiska rzadkie
+- **Porównywalność** w czasie - te same pytania zadawane cyklicznie
+- **Możliwość** replikacji badań - dostęp do tych samych danych dla innych badaczy
+- *Przykład:* Analiza zmian postaw wobec imigrantów w Polsce 2002-2024 (ESS)
+
+---
+
+## Ograniczenia danych zastanych
+- **Brak kontroli** nad jakością danych - nie znamy szczegółów realizacji badania
+- **Niedostosowanie** do nowych pytań - brak interesujących nas zmiennych
+- **Problemy** z dostępnością - ograniczenia prawne, RODO, koszty dostępu
+- **Różne** standardy metodologiczne - trudność porównywania różnych badań
+- **Kontekst** historyczny i kulturowy - zmiany w rozumieniu pytań na przestrzeni lat
+- *Przykład problemu:* Brak danych o mediach społecznościowych w badaniach sprzed 2010 roku
+
+---
+
+## Plagiat w nauce
+- **Przywłaszczenie** cudzej własności intelektualnej
+- **Brak** odpowiednich przypisów
+- **Naruszenie** praw autorskich
+- **Nieuczciwość** akademicka
+- **Zagrożenie** dla wiarygodności nauki
+
+---
+
+## Rodzaje plagiatu
+- **Plagiat dosłowny** - przepisanie bez zmian i cudzysłowu (copy-paste)
+- **Plagiat** częściowy - fragmenty cudzego tekstu bez przypisów bibliograficznych
+- **Parafrazowanie** bez źródła - przeformułowanie cudzych myśli bez wskazania autora
+- **Auto-plagiat** - własne teksty publikowane wcześniej bez wskazania (self-plagiarism)
+- **Plagiat** strukturalny - kopiowanie kompozycji, logiki argumentacji
+- *Przykład:* Skopiowanie 3 zdań z artykułu bez cudzysłowu i przypisu = plagiat dosłowny
+
+---
+
+## Plagiat w erze cyfrowej
+- **Łatwość** kopiowania z internetu - Wikipedia, blogi, portale edukacyjne
+- **Plagiat** z wielu źródeł jednocześnie - "patchwork plagiarism"
+- **Tłumaczenie** jako ukrywanie plagiatu - tłumaczenie z języków obcych bez przypisów
+- **Generatory** tekstów AI - ChatGPT, Claude bez wskazania użycia AI
+- **Współpraca** między studentami - udostępnianie prac, "ghost writing"
+- *Przykład:* Sklecenie pracy z fragmentów 10 różnych artykułów znalezionych w Google
+
+---
+
+## Wykrywanie plagiatu
+- **Systemy antyplagiatowe** - Turnitin, Plagiat.pl, iThenticate (bazy miliardów dokumentów)
+- **Porównanie** z bazami danych - publikacje naukowe, prace studenckie, internet
+- **Analiza** stylu pisania - nagłe zmiany stylistyki mogą wskazywać na plagiat
+- **Weryfikacja** źródeł - sprawdzanie, czy cytowane pozycje faktycznie istnieją
+- **Ocena** spójności tekstu - fragmenty niedopasowane do poziomu wiedzy autora
+- *Przykład:* Raport Turnitin pokazuje 45% podobieństwa - wymaga wyjaśnienia
+
+---
+
+## Etyka cytowania
+- **Przypisanie** autorstwa idei
+- **Dokładność** w odwoływaniu się
+- **Kompletność** informacji źródłowej
+- **Rozróżnienie** między cytatem a parafrazą
+- **Uczciwość** w interpretacji
+
+---
+
+## Cytowanie vs parafrazowanie
+- **Cytat dosłowny** - dokładne przepisanie w "cudzysłowie" z podaniem strony
+- **Parafraza** - przekład własnymi słowami z podaniem źródła (bez cudzysłowu)
+- **Streszczenie** - skrót głównych myśli z kilku stron/rozdziałów
+- **Komentarz** - własna interpretacja i krytyczna ocena cudzych myśli
+- **Synteza** - łączenie wielu źródeł w spójną narrację
+- *Przykład cytatu:* Kowalski (2023, s. 45) twierdzi, że "media społecznościowe..."
+- *Przykład parafrazy:* Według Kowalskiego (2023) media społecznościowe wpływają na...
+
+---
+
+## Systemy referencyjne
+- **APA** - American Psychological Association (psychologia, nauki społeczne)
+- **MLA** - Modern Language Association (literatura, humanistyka)
+- **Chicago** - Chicago Manual of Style (historia, sztuka)
+- **Harvard** - system autor-data (biznes, nauki przyrodnicze)
+- **Vancouver** - system numeryczny [1], [2] (medycyna, nauki ścisłe)
+- *Zasada:* Wybierz jeden styl i stosuj konsekwentnie w całej pracy!
+
+---
+
+## System APA
+- **Autor-data** w tekście (Kowalski, 2023) lub (Kowalski, 2023, s. 45)
+- **Alfabetyczna** bibliografia końcowa według nazwisk autorów
+- **Nacisk** na rok publikacji - ważny dla nauk empirycznych
+- **Popularne** w naukach społecznych - psychologia, socjologia, pedagogika
+- **Precyzyjne** reguły formatowania - kursywa dla tytułów książek/czasopism
+- *Przykład w tekście:* Badania pokazują (Kowalski & Nowak, 2023), że...
+- *Przykład w bibliografii:* Kowalski, J., & Nowak, A. (2023). *Tytuł książki*. Wydawnictwo.
+
+---
+
+## System Chicago
+- **Notes-Bibliography** - przypisy dolne z pełną informacją przy pierwszym cytowaniu
+- **Author-Date** - podobny do APA, używany w naukach społecznych
+- **Elastyczność** w stosowaniu - dopuszcza większą swobodę niż APA
+- **Popularne** w naukach humanistycznych - historia, filozofia, religioznawstwo
+- **Szczegółowe** informacje bibliograficzne - miejsce wydania, wydawca
+- *Przykład przypisu:* ^1^ Jan Kowalski, *Tytuł książki* (Warszawa: PWN, 2023), 45.
+- *Skrócony przypis:* ^2^ Kowalski, *Tytuł*, 67.
+
+---
+
+## Bibliografia vs wykaz literatury
+- **Bibliografia** - wszystkie wykorzystane źródła (również czytane, ale niecytowane)
+- **Wykaz literatury** - tylko publikacje cytowane w tekście (częściej stosowane)
+- **Netografia** - źródła internetowe (osobna sekcja lub włączone do bibliografii)
+- **Źródła** pierwotne i wtórne - można rozdzielić na osobne kategorie
+- **Chronologia** vs układ alfabetyczny - najczęściej alfabetycznie według nazwisk
+- *Zasada APA:* W wykazie literatury tylko te pozycje, które cytowane w tekście!
+
+---
+
+## Zarządzanie bibliografią
+- **Mendeley** - darmowy manager referencji, łatwy eksport z baz danych
+- **Zotero** - open source, wtyczki przeglądarek, import jednym kliknięciem
+- **EndNote** - profesjonalne rozwiązanie (płatne), popularne w nauce
+- **RefWorks** - platforma webowa, dostęp z różnych urządzeń
+- **Integracja** z edytorami tekstów - wtyczki do Word, LibreOffice, Google Docs
+- *Zaleta:* Automatyczne formatowanie bibliografii (zmiana stylu jednym kliknięciem)
+- *Przykład:* Import artykułu z PsycINFO do Zotero → wstawienie cytowania w Word
+
+---
+
+## Etyczne wykorzystanie AI
+- **Transparentność** w używaniu AI - jasne wskazanie, które fragmenty wygenerowano AI
+- **Oznaczanie** tekstów generowanych - np. "Fragment wygenerowany przez ChatGPT 4.0"
+- **Weryfikacja** faktów i źródeł - AI może "halucynować" nieistniejące badania!
+- **Odpowiedzialność** za treść - autor odpowiada za błędy, nawet jeśli napisał je AI
+- **Nowe** wyzwania dla uczciwości - polityki uczelni i czasopism wobec AI się różnią
+- *Przykład dobrej praktyki:* "Niniejszy tekst został zredagowany z pomocą ChatGPT..."
+- *Problem:* AI może wymyślić nieistniejące artykuły naukowe z wiarygodnymi tytułami!
+
+---
+
+## Dobre praktyki
+- **Systematyczność** w gromadzeniu źródeł - od początku używaj menedżera bibliografii
+- **Krytyczność** w ocenie literatury - nie wszystkie źródła są równej jakości
+- **Precyzyjność** w cytowaniu - dokładne numery stron, poprawne dane bibliograficzne
+- **Uczciwość** w prezentacji wyników - nie pomijaj wyników sprzecznych z hipotezą
+- **Transparentność** w metodologii - opisz ograniczenia i możliwe źródła błędu
+- *Wskazówka:* Notuj dane bibliograficzne od razu przy czytaniu - zaoszczędzisz czas później!
+
+---
+
+## Kluczowe wnioski
+- Przegląd literatury jest podstawą każdego badania naukowego 
+- Systematyczność i metodyczność poprawiają jakość przeglądu
+- Dane zastane oferują bogate możliwości badawcze 
+- Plagiat zagraża wiarygodności nauki i kariery 
+- Prawidłowe cytowanie jest podstawą etyki akademickiej 
+- Nowoczesne narzędzia wspierają zarządzanie bibliografią 
+- Sztuczna inteligencja wymaga nowych standardów etycznych
+

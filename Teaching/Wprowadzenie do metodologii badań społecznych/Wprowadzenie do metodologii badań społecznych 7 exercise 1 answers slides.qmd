@@ -1,0 +1,992 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 7 exercise 1 answers slides"
+subtitle: "Ćwiczenia - Odpowiedzi"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Grupa 1: Satysfakcja z pracy
+
+## P1. Atmosfera w miejscu pracy
+
+**Pytanie:**
+
+Jak oceniasz atmosferę w miejscu pracy?
+
+☐ Dobra
+☐ Zła
+☐ Nie do wytrzymania
+☐ Pracuję samodzielnie bez kontaktu z innymi
+
+## P1. Błąd: Niespójne opcje
+
+**Problem:**
+
+- Kategorie nie są na tym samym wymiarze
+- "Dobra/Zła" to ocena, "Nie do wytrzymania" to coś innego
+- Ostatnia opcja całkowicie zmienia pytanie
+
+**Poprawiona wersja:**
+
+> Jak oceniasz atmosferę w miejscu pracy?
+>
+> ☐ Bardzo dobra
+> ☐ Raczej dobra
+> ☐ Ani dobra, ani zła
+> ☐ Raczej zła
+> ☐ Bardzo zła
+> ☐ Nie dotyczy - pracuję samodzielnie
+
+## P2. Poziom wynagrodzenia ✓
+
+**Pytanie:**
+
+Jak oceniasz poziom wynagrodzenia w Twojej firmie?
+
+☐ Zdecydowanie za niski
+☐ Raczej za niski
+☐ Odpowiedni
+☐ Raczej za wysoki
+☐ Zdecydowanie za wysoki
+
+**To pytanie jest poprawnie sformułowane** - neutralny język, zbilansowana skala
+
+## P3. Stres zawodowy
+
+**Pytanie:**
+
+Czy stres zawodowy wpływa na Twoje życie prywatne?
+
+☐ Tak
+☐ Nie
+☐ Czasami
+
+## P3. Błąd: Zły format
+
+**Problem:**
+
+- "Czasami" to częstotliwość, nie odpowiedź tak/nie
+- Mieszanie typów kategorii
+
+**Poprawiona wersja:**
+
+> Jak często stres zawodowy wpływa na Twoje życie prywatne?
+>
+> ☐ Nigdy
+> ☐ Rzadko
+> ☐ Czasami
+> ☐ Często
+> ☐ Bardzo często
+
+## P4. Poziom wykształcenia
+
+**Pytanie:**
+
+Jaki jest Twój poziom wykształcenia?
+
+☐ Podstawowe/gimnazjalne
+☐ Średnie
+☐ Studiuję obecnie
+☐ Wyższe licencjackie
+☐ Wyższe magisterskie
+☐ Doktorat
+
+## P4. Błąd: Nakładające się kategorie
+
+**Problem:**
+
+- "Studiuję obecnie" nakłada się na poziomy wykształcenia
+- Doktorant może pasować do wielu kategorii
+
+**Poprawiona wersja - dwa pytania:**
+
+> Jakie jest Twoje najwyższe ukończone wykształcenie?
+> ☐ Podstawowe ☐ Gimnazjalne ☐ Średnie ☐ Wyższe licencjackie ☐ Wyższe magisterskie ☐ Doktorat
+>
+> Czy obecnie się kształcisz?
+> ☐ Tak, studia licencjackie ☐ Tak, studia magisterskie ☐ Tak, doktoranckie ☐ Nie
+
+## P5. Mobbing w firmie ✓
+
+**Pytanie:**
+
+Czy w ciągu ostatnich 12 miesięcy doświadczyłeś/aś lub byłeś/aś świadkiem systematycznego nękania lub poniżania któregokolwiek pracownika przez przełożonego lub współpracownika?
+
+☐ Tak, doświadczyłem/am osobiście
+☐ Tak, byłem/am świadkiem
+☐ Nie
+☐ Nie jestem pewien/pewna
+
+**Poprawnie sformułowane** - unika żargonu, precyzyjny przedział czasowy
+
+## P6. Przyjaciele w pracy
+
+**Pytanie:**
+
+Czy masz przyjaciół w pracy?
+
+☐ Tak, mam więcej niż 5 bliskich przyjaciół
+☐ Tak, mam 1 przyjaciela
+☐ Nie, wolę mieć przyjaciół poza pracą
+
+## P6. Błąd: Niewyczerpujące opcje
+
+**Problem:**
+
+- Co z osobami mającymi 2-4 przyjaciół?
+- Opcja "Nie" zawiera dodatkowe założenie
+- Brak prostej odpowiedzi "Nie mam przyjaciół w pracy"
+
+**Poprawiona wersja:**
+
+> Ilu bliskich przyjaciół masz wśród współpracowników?
+>
+> ☐ Żadnego
+> ☐ 1 osobę
+> ☐ 2-3 osoby
+> ☐ 4-5 osób
+> ☐ Więcej niż 5 osób
+
+## P7. Benefity pracownicze
+
+**Pytanie:**
+
+Jak często wykorzystujesz benefity pracownicze (karta sportowa, prywatna opieka medyczna, dofinansowanie do wakacji)?
+
+☐ Regularnie
+☐ Od czasu do czasu
+☐ Rzadko
+☐ Nigdy
+
+## P7. Błąd: Założenie o dostępności
+
+**Problem:**
+
+- Pytanie zakłada, że respondent ma dostęp do benefitów
+- Brak opcji "nie mam benefitów"
+
+**Poprawiona wersja - pytanie filtrujące:**
+
+> Czy Twoja firma oferuje benefity pracownicze?
+> ☐ Tak → przejdź do P7a ☐ Nie → przejdź do P8
+>
+> **P7a.** Jak często korzystasz z oferowanych benefitów?
+> ☐ Regularnie ☐ Często ☐ Od czasu do czasu ☐ Rzadko ☐ Nigdy
+
+## P8. Zadowolenie z aspektów pracy
+
+**Pytanie:**
+
+| Aspekt | Wysoki | Niski | Średni | Bardzo niski |
+|--------|--------|-------|--------|--------------|
+| Wynagrodzenie | ☐ | ☐ | ☐ | ☐ |
+| Relacje | ☐ | ☐ | ☐ | ☐ |
+| Rozwój | ☐ | ☐ | ☐ | ☐ |
+
+## P8. Błąd: Niespójna skala
+
+**Problem:**
+
+- Skala nie jest uporządkowana logicznie (wysoki, niski, średni, bardzo niski)
+- Brak poziomu "bardzo wysoki"
+
+**Poprawiona wersja:**
+
+| Aspekt | Bardzo zadowolony/a | Raczej zadowolony/a | Ani zadowolony/a, ani nie | Raczej niezadowolony/a | Bardzo niezadowolony/a |
+|--------|---------------------|---------------------|---------------------------|------------------------|------------------------|
+| Wynagrodzenie | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Relacje | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Rozwój | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+## P9. Jak długo pracujesz w firmie ✓
+
+**Pytanie:**
+
+Jak długo pracujesz w obecnej firmie?
+
+☐ Krócej niż rok
+☐ 1-2 lata
+☐ 3-5 lat
+☐ 6-10 lat
+☐ Powyżej 10 lat
+
+**Poprawnie sformułowane** - przedziały nie nakładają się
+
+## P10. Home office
+
+**Pytanie:**
+
+Czy korzystasz z home office?
+
+☐ Tak, pracuję wyłącznie zdalnie
+☐ Tak, pracuję hybrydowo (część czasu w biurze, część zdalnie)
+☐ Nie, pracuję wyłącznie stacjonarnie
+☐ Rzadko
+
+## P10. Błąd: Niespójne opcje
+
+**Problem:**
+
+- "Rzadko" to częstotliwość, pozostałe to tryb pracy
+- Mieszanie kategorii
+
+**Poprawiona wersja:**
+
+> Jaki jest Twój tryb pracy?
+>
+> ☐ Wyłącznie zdalnie (home office)
+> ☐ Głównie zdalnie (powyżej 50% czasu)
+> ☐ Hybrydowo (mniej więcej po połowie)
+> ☐ Głównie stacjonarnie (powyżej 50% w biurze)
+> ☐ Wyłącznie stacjonarnie
+
+# Grupa 2: Poglądy polityczne
+
+## P1. Zainteresowanie polityką
+
+**Pytanie:**
+
+Jak bardzo interesujesz się polityką?
+
+☐ Bardzo
+☐ Średnio
+☐ Zupełnie mnie to nie obchodzi
+☐ Nie mam czasu na politykę
+
+## P1. Błąd: Niespójne opcje
+
+**Problem:**
+
+- "Zupełnie mnie to nie obchodzi" i "Nie mam czasu" to różne wymiary
+- Pierwsza odnosi się do zainteresowania, druga do czasu
+- Nie są rozłączne
+
+**Poprawiona wersja:**
+
+> Jak bardzo interesujesz się polityką?
+>
+> ☐ Bardzo się interesuję
+> ☐ Raczej się interesuję
+> ☐ Ani się interesuję, ani nie
+> ☐ Raczej się nie interesuję
+> ☐ Zupełnie się nie interesuję
+
+## P2. Polityka migracyjna ✓
+
+**Pytanie:**
+
+Jak oceniasz obecną politykę migracyjną rządu?
+
+☐ Zdecydowanie pozytywnie
+☐ Raczej pozytywnie
+☐ Ani pozytywnie, ani negatywnie
+☐ Raczej negatywnie
+☐ Zdecydowanie negatywnie
+☐ Nie mam zdania
+
+**Poprawnie sformułowane** - neutralny język, zbilansowana skala
+
+## P3. Sytuacja gospodarcza
+
+**Pytanie:**
+
+Jak oceniasz sytuację gospodarczą w Polsce?
+
+☐ Dobra
+☐ Zła
+☐ Katastrofalna
+☐ Nie wiem
+
+## P3. Błąd: Niespójna skala
+
+**Problem:**
+
+- Skala niezrównoważona (dobra, zła, katastrofalna)
+- "Katastrofalna" to skrajność bez odpowiednika po pozytywnej stronie
+- Brak poziomów pośrednich
+
+**Poprawiona wersja:**
+
+> Jak oceniasz obecną sytuację gospodarczą w Polsce?
+>
+> ☐ Bardzo dobra
+> ☐ Raczej dobra
+> ☐ Ani dobra, ani zła
+> ☐ Raczej zła
+> ☐ Bardzo zła
+> ☐ Trudno powiedzieć
+
+## P4. Media głównego nurtu
+
+**Pytanie:**
+
+Czy uważasz, że media głównego nurtu (mainstream media) manipulują informacjami?
+
+☐ Tak
+☐ Nie
+☐ Niektóre tak, niektóre nie
+
+## P4. Błąd: Zły format + żargon
+
+**Problem:**
+
+- "Niektóre tak, niektóre nie" to oczywista odpowiedź, ale nie pasuje do tak/nie
+- Pytanie generalizuje wszystkie media
+- Żargon ("mainstream media")
+
+**Poprawiona wersja:**
+
+> Jak często Twoim zdaniem media głównego nurtu przedstawiają informacje w sposób stronniczy?
+>
+> ☐ Zawsze lub prawie zawsze ☐ Często ☐ Czasami ☐ Rzadko ☐ Nigdy lub prawie nigdy ☐ Trudno powiedzieć
+
+## P5. Źródła informacji o polityce ✓
+
+**Pytanie:**
+
+Skąd czerpiesz informacje o polityce? (zaznacz wszystkie pasujące)
+
+☐ Telewizja
+☐ Portale informacyjne w internecie
+☐ Media społecznościowe
+☐ Gazety drukowane
+☐ Radio
+☐ Inne
+
+**Poprawnie sformułowane** - precyzyjne kategorie, wyczerpujące
+
+## P6. Udział w wyborach
+
+**Pytanie:**
+
+Jak często uczestniczysz w wyborach?
+
+☐ Zawsze
+☐ Często
+☐ Czasami
+☐ Nigdy
+☐ Tylko w wyborach prezydenckich
+
+## P6. Błąd: Niespójne kategorie
+
+**Problem:**
+
+- "Tylko w wyborach prezydenckich" to rodzaj wyborów, nie częstotliwość
+- Mieszanie dwóch wymiarów
+
+**Poprawiona wersja - dwa pytania:**
+
+> Jak często bierzesz udział w wyborach?
+> ☐ Zawsze lub prawie zawsze ☐ Często ☐ Czasami ☐ Rzadko ☐ Nigdy
+>
+> W jakich typach wyborów głosujesz? (zaznacz wszystkie)
+> ☐ Prezydenckie ☐ Parlamentarne ☐ Samorządowe ☐ Europejskie
+
+## P7. Poparcie dla działań rządu
+
+**Pytanie:**
+
+| Działanie | Popieram | Nie popieram |
+|-----------|----------|--------------|
+| Polityka społeczna | ☐ | ☐ |
+| Polityka zagraniczna | ☐ | ☐ |
+| Polityka gospodarcza | ☐ | ☐ |
+
+## P7. Błąd: Zbyt uproszczona skala
+
+**Problem:**
+
+- Skala binarna nie oddaje niuansów
+- Brak możliwości wyrażenia braku zdania
+- Zbyt ogólne kategorie
+
+**Poprawiona wersja:**
+
+| Obszar | Zdecydowanie popieram | Raczej popieram | Ani popieram, ani nie | Raczej nie popieram | Zdecydowanie nie popieram | Brak zdania |
+|--------|----------------------|-----------------|----------------------|---------------------|--------------------------|-------------|
+| Polityka społeczna | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Polityka zagraniczna | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Polityka gospodarcza | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+## P8. Głosowanie w wyborach
+
+**Pytanie:**
+
+Na którą partię głosowałeś/aś w ostatnich wyborach parlamentarnych?
+
+☐ PiS ☐ PO ☐ Lewica
+☐ PSL ☐ Konfederacja
+☐ Nie głosowałem/am
+
+## P8. Błąd: Niewyczerpująca lista
+
+**Problem:**
+
+- Brak kategorii dla innych partii
+- Bardzo wrażliwe pytanie bez zapewnienia
+- Brak opcji "Wolę nie odpowiadać"
+
+**Poprawiona wersja:**
+
+> Czy w ostatnich wyborach parlamentarnych oddałeś/aś głos?
+> ☐ Tak ☐ Nie ☐ Nie pamiętam ☐ Wolę nie odpowiadać
+>
+> **Jeśli tak:** Na którą partię? (odpowiedź jest anonimowa)
+> ☐ PiS ☐ PO ☐ Lewica ☐ PSL ☐ Konfederacja ☐ Trzecia Droga ☐ Inna ☐ Wolę nie odpowiadać
+
+## P9. Wydatki na obronność ✓
+
+**Pytanie:**
+
+Czy popierasz zwiększenie wydatków na obronność?
+
+☐ Zdecydowanie tak
+☐ Raczej tak
+☐ Ani tak, ani nie
+☐ Raczej nie
+☐ Zdecydowanie nie
+☐ Nie mam zdania
+
+**Poprawnie sformułowane** - dotyczy jednego tematu, zbilansowana skala
+
+## P10. Wiek
+
+**Pytanie:**
+
+W jakiej grupie wiekowej się znajdujesz?
+
+☐ 18-25 lat
+☐ 25-35 lat
+☐ 35-50 lat
+☐ 50-65 lat
+☐ 65+ lat
+
+## P10. Błąd: Nakładające się przedziały
+
+**Problem:**
+
+- Przedziały nakładają się (25, 35, 50, 65 powtarzają się)
+- Osoba w wieku 25, 35, 50 lub 65 lat nie wie, którą wybrać
+
+**Poprawiona wersja:**
+
+> Ile masz lat?
+>
+> ☐ 18-24 lata
+> ☐ 25-34 lata
+> ☐ 35-49 lat
+> ☐ 50-64 lata
+> ☐ 65 lat i więcej
+
+# Grupa 3: Satysfakcja z życia
+
+## P1. Zadowolenie z życia
+
+**Pytanie:**
+
+Jak oceniasz swoje ogólne zadowolenie z życia?
+
+☐ Wysokie
+☐ Niskie
+☐ Czuję się nieszczęśliwy/a
+☐ Nie mam powodów do narzekań
+
+## P1. Błąd: Niespójne opcje
+
+**Problem:**
+
+- "Czuję się nieszczęśliwy/a" i "Nie mam powodów do narzekań" nie są na tej samej skali
+- Ostatnia opcja to ocena przyczyn, nie poziom zadowolenia
+- Brak spójności
+
+**Poprawiona wersja:**
+
+> Jak oceniasz swoje ogólne zadowolenie z życia?
+>
+> ☐ Bardzo zadowolony/a
+> ☐ Raczej zadowolony/a
+> ☐ Ani zadowolony/a, ani niezadowolony/a
+> ☐ Raczej niezadowolony/a
+> ☐ Bardzo niezadowolony/a
+
+## P2. Przygnębienie ✓
+
+**Pytanie:**
+
+Jak często w ciągu ostatnich 2 tygodni odczuwałeś/aś przygnębienie, smutek lub beznadziejność?
+
+☐ Wcale
+☐ Kilka dni
+☐ Więcej niż połowę dni
+☐ Prawie codziennie
+☐ Wolę nie odpowiadać
+
+**Poprawnie sformułowane** - precyzyjny przedział czasowy, skala częstotliwości, opcja odmowy
+
+## P3. Sens życia
+
+**Pytanie:**
+
+Czy czujesz, że Twoje życie ma sens?
+
+☐ Tak
+☐ Nie
+☐ Czasami
+
+## P3. Błąd: Zły format
+
+**Problem:**
+
+- "Czasami" nie pasuje do formatu tak/nie
+- Poczucie sensu życia to zmienna cecha
+- Mieszanie formatów
+
+**Poprawiona wersja:**
+
+> Jak często czujesz, że Twoje życie ma sens i cel?
+>
+> ☐ Zawsze lub prawie zawsze
+> ☐ Często
+> ☐ Czasami
+> ☐ Rzadko
+> ☐ Nigdy lub prawie nigdy
+
+## P4. Stan cywilny
+
+**Pytanie:**
+
+Jaki jest Twój stan cywilny?
+
+☐ Kawaler/Panna
+☐ W związku
+☐ Żonaty/Zamężna
+☐ Rozwiedziony/a
+☐ Wdowiec/Wdowa
+
+## P4. Błąd: Nakładające się kategorie
+
+**Problem:**
+
+- "W związku" nakłada się na "Żonaty/Zamężna"
+- Brak precyzji co do "w związku"
+
+**Poprawiona wersja:**
+
+> Jaki jest Twój stan cywilny?
+>
+> ☐ Kawaler/Panna, nie jestem w stałym związku
+> ☐ Kawaler/Panna, jestem w stałym związku
+> ☐ Żonaty/Zamężna
+> ☐ W separacji
+> ☐ Rozwiedziony/a
+> ☐ Wdowiec/Wdowa
+
+## P5. Narzekanie na życie
+
+**Pytanie:**
+
+Czy uważasz, że ludzie, którzy narzekają na swoje życie, po prostu nie potrafią docenić tego, co mają?
+
+☐ Zdecydowanie tak ☐ Raczej tak
+☐ Raczej nie ☐ Zdecydowanie nie
+
+## P5. Błąd: Pytanie obciążone
+
+**Problem:**
+
+- Sugeruje, że narzekanie wynika z niewdzięczności
+- Brak neutralności
+- Może wywołać reakcję obronną
+
+**Poprawiona wersja:**
+
+> W jakim stopniu zgadzasz się: "Poziom zadowolenia z życia zależy głównie od tego, jak bardzo cenimy to, co mamy"
+>
+> ☐ Zdecydowanie się zgadzam
+> ☐ Raczej się zgadzam
+> ☐ Ani się zgadzam, ani nie
+> ☐ Raczej się nie zgadzam
+> ☐ Zdecydowanie się nie zgadzam
+
+## P6. Aktywność fizyczna ✓
+
+**Pytanie:**
+
+Jak często uprawiasz aktywność fizyczną przez co najmniej 30 minut (np. sport, bieganie, szybki spacer)?
+
+☐ Codziennie lub prawie codziennie
+☐ 4-5 razy w tygodniu
+☐ 2-3 razy w tygodniu
+☐ Raz w tygodniu
+☐ Kilka razy w miesiącu
+☐ Rzadziej lub wcale
+
+**Poprawnie sformułowane** - precyzyjna definicja, przykłady
+
+## P7. Zadowolenie z aspektów życia
+
+**Pytanie:**
+
+| Aspekt życia | Zadowolony/a | Niezadowolony/a | Bardzo zadowolony/a |
+|--------------|--------------|-----------------|---------------------|
+| Zdrowie | ☐ | ☐ | ☐ |
+| Finanse | ☐ | ☐ | ☐ |
+| Relacje | ☐ | ☐ | ☐ |
+
+## P7. Błąd: Niespójna skala
+
+**Problem:**
+
+- Skala nie jest uporządkowana (zadowolony, niezadowolony, bardzo zadowolony)
+- Brak poziomu "bardzo niezadowolony"
+- Niezbilansowana
+
+**Poprawiona wersja:**
+
+| Aspekt | Bardzo zadowolony/a | Raczej zadowolony/a | Ani zadowolony/a, ani nie | Raczej niezadowolony/a | Bardzo niezadowolony/a |
+|--------|---------------------|---------------------|---------------------------|------------------------|------------------------|
+| Zdrowie | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Finanse | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Relacje | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+## P8. Sen
+
+**Pytanie:**
+
+Ile godzin dziennie śpisz?
+
+☐ Mniej niż 5 godzin
+☐ 5-6 godzin
+☐ 7-8 godzin
+☐ Powyżej 8 godzin
+
+## P8. Błąd: Brak precyzji
+
+**Problem:**
+
+- Nie wiadomo, czy pytamy o średnią, dni powszednie czy weekend
+- Czas snu może się znacznie różnić
+
+**Poprawiona wersja - dwa pytania:**
+
+> Ile godzin średnio śpisz w nocy w dni powszednie?
+> ☐ Mniej niż 5 ☐ 5-6 ☐ 7-8 ☐ 9 lub więcej
+>
+> Ile godzin średnio śpisz w weekendy?
+> ☐ Mniej niż 5 ☐ 5-6 ☐ 7-8 ☐ 9 lub więcej
+
+## P9. Techniki relaksacyjne ✓
+
+**Pytanie:**
+
+Czy regularnie praktykujesz techniki relaksacyjne lub medytacyjne (np. medytacja, joga)?
+
+☐ Tak, codziennie lub prawie codziennie
+☐ Tak, kilka razy w tygodniu
+☐ Tak, od czasu do czasu
+☐ Nie, ale praktykowałem/am w przeszłości
+☐ Nie, nigdy nie praktykowałem/am
+
+**Poprawnie sformułowane** - zrozumiały język, skala częstotliwości
+
+## P10. Dzieci
+
+**Pytanie:**
+
+Czy masz dzieci?
+
+☐ Tak, jedno dziecko
+☐ Tak, dwoje dzieci
+☐ Tak, troje lub więcej
+☐ Nie mam dzieci, ale planuję
+☐ Nie mam dzieci i nie planuję
+
+## P10. Błąd: Niewyczerpujące opcje
+
+**Problem:**
+
+- Brak opcji "Nie mam dzieci" bez określenia planów
+- Wymusza deklarację planów
+
+**Poprawiona wersja:**
+
+> Czy masz dzieci?
+>
+> ☐ Tak, jedno dziecko
+> ☐ Tak, dwoje dzieci
+> ☐ Tak, troje dzieci
+> ☐ Tak, czworo lub więcej dzieci
+> ☐ Nie
+
+# Grupa 4: Zachowania ekonomiczne
+
+## P1. Sytuacja finansowa
+
+**Pytanie:**
+
+Jak oceniasz swoją sytuację finansową?
+
+☐ Dobra
+☐ Zła
+☐ Beznadziejna
+☐ Nie mam długów
+
+## P1. Błąd: Niespójna skala
+
+**Problem:**
+
+- "Beznadziejna" to skrajność bez odpowiednika po pozytywnej stronie
+- "Nie mam długów" to inny wymiar niż ocena sytuacji
+- Kategorie nie są na tym samym wymiarze
+
+**Poprawiona wersja:**
+
+> Jak oceniasz swoją obecną sytuację finansową?
+>
+> ☐ Bardzo dobra
+> ☐ Raczej dobra
+> ☐ Ani dobra, ani zła
+> ☐ Raczej zła
+> ☐ Bardzo zła
+
+## P2. Wydatki miesięczne
+
+**Pytanie:**
+
+Ile miesięcznie wydajesz na jedzenie, odzież i rozrywkę?
+
+☐ Do 500 zł
+☐ 500-1000 zł
+☐ 1000-2000 zł
+☐ Powyżej 2000 zł
+
+## P2. Błąd: Pytanie potrójne
+
+**Problem:**
+
+- Trzy różne kategorie wydatków w jednym pytaniu
+- Niemożliwe do sensownej odpowiedzi
+- Nie da się zsumować tych kategorii
+
+**Poprawiona wersja - trzy pytania:**
+
+> Ile średnio miesięcznie wydajesz na żywność?
+> ☐ Do 500 zł ☐ 501-1000 zł ☐ 1001-1500 zł ☐ Powyżej 1500 zł
+>
+> Ile średnio miesięcznie wydajesz na odzież?
+> (analogicznie)
+
+## P3. Oszczędzanie ✓
+
+**Pytanie:**
+
+W jakim stopniu zgadzasz się z następującym stwierdzeniem: "Każdy powinien regularnie oszczędzać część swoich dochodów"
+
+☐ Zdecydowanie się zgadzam
+☐ Raczej się zgadzam
+☐ Ani się zgadzam, ani nie zgadzam
+☐ Raczej się nie zgadzam
+☐ Zdecydowanie się nie zgadzam
+
+**Poprawnie sformułowane** - neutralna forma, zbilansowana skala
+
+## P4. Zakupy online
+
+**Pytanie:**
+
+Czy robisz zakupy online?
+
+☐ Tak
+☐ Nie
+☐ Sporadycznie
+
+## P4. Błąd: Zły format
+
+**Problem:**
+
+- "Sporadycznie" to częstotliwość, a nie odpowiedź tak/nie
+- Mieszanie kategorii
+
+**Poprawiona wersja:**
+
+> Jak często robisz zakupy online?
+>
+> ☐ Kilka razy w tygodniu lub częściej
+> ☐ Raz w tygodniu
+> ☐ Kilka razy w miesiącu
+> ☐ Raz w miesiącu
+> ☐ Rzadziej niż raz w miesiącu
+> ☐ Nigdy
+
+## P5. E-commerce
+
+**Pytanie:**
+
+Jak często korzystasz z usług e-commerce oraz platform C2C i B2C?
+
+☐ Regularnie
+☐ Czasami
+☐ Rzadko
+☐ Nigdy
+
+## P5. Błąd: Żargon techniczny
+
+**Problem:**
+
+- Terminy "e-commerce", "C2C", "B2C" to żargon niezrozumiały dla wielu
+- Zbyt techniczne
+
+**Poprawiona wersja:**
+
+> Jak często kupujesz produkty lub usługi przez internet (sklepy internetowe, Allegro, OLX)?
+>
+> ☐ Kilka razy w tygodniu
+> ☐ Raz w tygodniu
+> ☐ Kilka razy w miesiącu
+> ☐ Raz w miesiącu
+> ☐ Rzadziej
+> ☐ Nigdy
+
+## P6. Oszczędności ✓
+
+**Pytanie:**
+
+Jaki procent swoich miesięcznych dochodów netto średnio odkładasz (oszczędności, inwestycje)?
+
+☐ 0% (nie odkładam)
+☐ 1-5%
+☐ 6-10%
+☐ 11-20%
+☐ 21-30%
+☐ Powyżej 30%
+
+**Poprawnie sformułowane** - przedziały nie nakładają się
+
+## P7. Wydatki w kategoriach
+
+**Pytanie:**
+
+| Kategoria | Wysokie | Niskie | Umiarkowane |
+|-----------|---------|--------|-------------|
+| Żywność | ☐ | ☐ | ☐ |
+| Transport | ☐ | ☐ | ☐ |
+| Rozrywka | ☐ | ☐ | ☐ |
+
+## P7. Błąd: Niespójna skala
+
+**Problem:**
+
+- Skala nie jest logicznie uporządkowana
+- Nie wiadomo, czy "wysokie" to dobrze czy źle
+- Lepiej pytać o udział w budżecie
+
+**Poprawiona wersja:**
+
+| Kategoria | Zdecydowanie za wysoki | Raczej za wysoki | Odpowiedni | Raczej za niski | Zdecydowanie za niski |
+|-----------|------------------------|------------------|------------|-----------------|----------------------|
+| Żywność | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Transport | ☐ | ☐ | ☐ | ☐ | ☐ |
+| Rozrywka | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+## P8. Wynagrodzenie
+
+**Pytanie:**
+
+Jakie jest Twoje miesięczne wynagrodzenie netto?
+
+☐ Poniżej 3000 zł
+☐ 3000-5000 zł
+☐ 5000-8000 zł
+☐ 8000-12000 zł
+☐ Powyżej 12000 zł
+
+## P8. Błąd: Wrażliwe bez kontekstu
+
+**Problem:**
+
+- Bardzo wrażliwe pytanie bez wyjaśnienia i opcji odmowy
+- Nie wiadomo, czy chodzi o dochody z jednej pracy czy wszystkie
+- Brak opcji dla osób bez dochodów
+
+**Poprawiona wersja:**
+
+> Poniższe pytanie jest opcjonalne. Odpowiedzi są anonimowe.
+>
+> Jakie są Twoje łączne miesięczne dochody netto?
+> ☐ Do 2000 zł ☐ 2001-3000 zł ☐ 3001-5000 zł ☐ 5001-7000 zł ☐ 7001-10000 zł ☐ Powyżej 10000 zł ☐ Nie mam stałych dochodów ☐ Wolę nie odpowiadać
+
+## P9. Kredyty i pożyczki ✓
+
+**Pytanie:**
+
+Czy obecnie korzystasz z kredytów lub pożyczek? (zaznacz wszystkie pasujące)
+
+☐ Tak, mam kredyt hipoteczny
+☐ Tak, mam kredyt konsumpcyjny
+☐ Tak, mam pożyczkę w firmie pożyczkowej
+☐ Tak, mam kredyt studencki
+☐ Nie, nie mam żadnych kredytów ani pożyczek
+
+**Poprawnie sformułowane** - wyraźna instrukcja wielokrotnego wyboru
+
+## P10. Wiek
+
+**Pytanie:**
+
+Jaki jest Twój wiek?
+
+☐ 18-25 lat
+☐ 25-40 lat
+☐ 40-60 lat
+☐ 60+ lat
+
+## P10. Błąd: Nakładające się przedziały
+
+**Problem:**
+
+- Przedziały nakładają się (25, 40, 60)
+- Osoba w wieku 25, 40 lub 60 lat nie wie, którą wybrać
+
+**Poprawiona wersja:**
+
+> Ile masz lat?
+>
+> ☐ 18-24 lata
+> ☐ 25-39 lat
+> ☐ 40-59 lat
+> ☐ 60 lat i więcej
+
+# Podsumowanie
+
+## Najczęstsze błędy - przypomnienie
+
+1. **Niespójne opcje odpowiedzi** - kategorie na różnych wymiarach
+2. **Nakładające się kategorie** - przedziały, które się pokrywają
+3. **Pytania sugerujące** - obciążone, wartościujące terminy
+4. **Żargon techniczny** - terminy niezrozumiałe dla respondentów
+5. **Zły format odpowiedzi** - mieszanie skal i typów
+6. **Niewyczerpujące opcje** - brak odpowiedzi dla wszystkich
+7. **Pytania podwójne** - kilka pytań w jednym
+8. **Wrażliwe pytania bez kontekstu** - brak opcji odmowy
+9. **Nielogiczne skale** - niezbilansowane, nieuporządkowane
+10. **Założenia w pytaniach** - pytania zakładające coś o repondencie
+
+## Kluczowe zasady
+
+**Dobre pytania są:**
+
+- **Jasne i jednoznaczne** - bez żargonu
+- **Możliwe do odpowiedzi** - respondenci mają wiedzę
+- **Jednowątkowe** - unikać pytań podwójnych
+- **Neutralne** - bez sugestywnego języka
+- **Wyczerpujące** - kategorie pokrywają wszystkie opcje
+- **Rozłączne** - kategorie się nie nakładają

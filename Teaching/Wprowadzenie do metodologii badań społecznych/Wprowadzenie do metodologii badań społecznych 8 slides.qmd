@@ -1,0 +1,980 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 8 slides"
+subtitle: "Badania jakościowe"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Czym są badania jakościowe?
+
+Badania jakościowe to podejście badawcze służące **głębokiemu zrozumieniu znaczeń, doświadczeń i kontekstów społecznych** z perspektywy uczestników badania.
+
+Kluczowe cechy:
+
+-   Eksploracja znaczeń nadawanych przez uczestników
+-   Elastyczne podejście do zbierania danych
+-   Bogate dane narracyjne
+-   Małe próby badawcze - głębia zamiast szerokości
+-   Kontekst naturalny badania
+
+## Agenda
+
+- Charakterystyka badań jakościowych
+- Indywidualny wywiad pogłębiony (IDI)
+- Zogniskowany wywiad grupowy (FGI)
+- Przygotowanie narzędzi badawczych
+- Techniki prowadzenia wywiadów
+- Rekrutacja uczestników
+
+# Charakterystyka badań jakościowych
+
+## Cele badań jakościowych
+
+Badania jakościowe służą różnym celom poznawczym:
+
+1.  **Eksploracja** - poznanie nowego, słabo rozpoznanego obszaru problemowego
+2.  **Rozumienie** - głęboka interpretacja znaczeń i kontekstów społecznych
+3.  **Opis** - szczegółowa charakterystyka zjawisk w naturalnym środowisku
+4.  **Generowanie hipotez** - budowa teorii wyłaniających się z danych
+5.  **Ewaluacja** - ocena procesów, programów i interwencji
+
+## Kluczowe założenia badań jakościowych
+
+### Założenia epistemologiczne
+
+-   **Interpretatywizm** - rzeczywistość społeczna jest konstruowana przez uczestników
+-   **Holistyczne podejście** - zjawiska rozumiane w całościowym kontekście
+-   **Indukcyjne wnioskowanie** - teoria wyłania się z danych, nie odwrotnie
+-   **Subiektywność jako wartość** - perspektywy uczestników są kluczowe
+-   **Naturalne środowisko** - badanie w rzeczywistych warunkach
+
+## Porównanie: badania jakościowe vs. ilościowe
+
+::: {style="font-size: 0.75em;"}
+| Aspekt | Badania jakościowe | Badania ilościowe |
+|--------|-------------------|-------------------|
+| **Cel** | Zrozumienie i interpretacja | Pomiar i weryfikacja |
+| **Pytania badawcze** | "Jak?", "Dlaczego?", "Co to znaczy?" | "Ile?", "Jak często?", "Czy istnieje związek?" |
+| **Próba** | Mała, celowo dobrana (5-30 osób) | Duża, reprezentatywna (setki-tysiące) |
+| **Dane** | Narracje, opisy, znaczenia | Liczby, statystyki, zmienne |
+| **Analiza** | Interpretacyjna, tematyczna | Statystyczna, numeryczna |
+| **Generalizacja** | Transferowalność kontekstowa | Generalizacja na populację |
+| **Elastyczność** | Wysoka - modyfikacje w trakcie | Niska - ustalony protokół |
+| **Narzędzia** | Scenariusze wywiadów, obserwacja | Kwestionariusze, testy |
+:::
+
+## Proces planowania badań jakościowych
+
+### Etapy przygotowania
+
+1.  **Określenie celów** - sformułowanie pytań badawczych
+2.  **Przegląd literatury** - kontekst teoretyczny i stan wiedzy
+3.  **Wybór strategii** - IDI, FGI, obserwacja, analiza dokumentów
+4.  **Dobór uczestników** - kryteria i strategie rekrutacji
+5.  **Przygotowanie narzędzi** - scenariusze i materiały wspomagające
+6.  **Pilotaż** - testowanie narzędzi i procedur
+7.  **Realizacja terenowa** - zbieranie danych
+8.  **Analiza** - kodowanie i interpretacja
+
+## Pytania badawcze w badaniach jakościowych
+
+### Charakterystyka dobrych pytań badawczych
+
+-   **Otwarte sformułowanie** - używanie "jak?", "dlaczego?", "w jaki sposób?"
+-   **Eksploracyjne** - poszukiwanie nowych aspektów zjawiska
+-   **Kontekstowe** - uwzględnienie sytuacji i okoliczności
+-   **Procesowe** - zainteresowanie zmianami w czasie
+-   **Interpretatywne** - znaczenia z perspektywy uczestników
+
+### Przykłady
+
+> Źle: "Czy stres wpływa na pracowników?" (pytanie zamknięte)
+>
+> Dobrze: "Jak pracownicy doświadczają stresu w miejscu pracy i jakie nadają mu znaczenie?"
+
+## Strategie doboru uczestników
+
+Badania jakościowe wykorzystują **dobór celowy** (purposive sampling), nie losowy:
+
+1.  **Dobór teoretyczny** - budowa teorii ugruntowanej, nasycenie kategorii
+2.  **Maksymalnego zróżnicowania** - różne perspektywy i doświadczenia
+3.  **Typowych przypadków** - reprezentatywność jakościowa
+4.  **Przypadków krytycznych** - szczególnie ilustrujące zjawisko
+5.  **Kuli śnieżnej** - dostęp do trudno dostępnych grup
+6.  **Przypadków ekstremalnych** - nietypowe, wyjątkowe sytuacje
+
+# Indywidualny wywiad pogłębiony (IDI)
+
+## Czym jest IDI?
+
+Indywidualny wywiad pogłębiony (In-Depth Interview) to **bezpośrednia rozmowa** między badaczem a respondentem, mająca na celu głęboką eksplorację doświadczeń, postaw i znaczeń.
+
+### Kluczowe cechy
+
+-   Rozmowa jeden-na-jeden
+-   Czas trwania: 60-120 minut
+-   Elastyczna struktura - scenariusz jako przewodnik
+-   Intymna, poufna atmosfera
+-   Głęboka eksploracja tematów
+
+## Rodzaje wywiadów pogłębionych
+
+**Wywiad ustrukturyzowany**
+
+-   Ustalona kolejność i forma pytań
+-   Porównywalność odpowiedzi
+-   Mniej elastyczności
+
+## Rodzaje wywiadów pogłębionych
+
+**Wywiad półustrukturyzowany** (najczęściej stosowany)
+
+-   Scenariusz z głównymi tematami
+-   Swoboda w formułowaniu pytań
+-   Możliwość zgłębiania wątków
+
+## Rodzaje wywiadów pogłębionych
+
+**Wywiad nieustrukturyzowany**
+
+-   Tylko ogólny temat
+-   Maksymalna elastyczność
+-   Rozmowa kierowana przez respondenta
+
+## Zalety wywiadów IDI
+
+::::: columns
+::: {.column width="50%"}
+### Głębia i szczegółowość
+
+-   Dogłębne poznanie perspektywy uczestnika
+-   Czas na eksplorację złożonych kwestii
+-   Możliwość zadawania pytań uzupełniających
+-   Zrozumienie kontekstu i niuansów
+
+### Prywatność i otwartość
+
+-   Intymność sytuacji badawczej
+-   Większa gotowość do dzielenia się
+-   Tematy wrażliwe i osobiste
+-   Brak wpływu i oceny grupy
+:::
+
+::: {.column width="50%"}
+### Elastyczność
+
+-   Dostosowanie do respondenta
+-   Modyfikacja scenariusza w trakcie
+-   Pogłębianie ciekawych wątków
+-   Kontrola nad tempem rozmowy
+
+### Autentyczność
+
+-   Autentyczne opinie bez konformizmu
+-   Brak dynamiki grupowej
+-   Indywidualne doświadczenia
+-   Szczere wypowiedzi
+:::
+:::::
+
+## Wady wywiadów IDI
+
+::::: columns
+::: {.column width="50%"}
+### Koszty i czas
+
+-   Wysokie koszty realizacji
+-   Czasochłonność - przeprowadzenie i transkrypcja
+-   Trudności logistyczne
+-   Ograniczona liczba wywiadów
+
+### Brak dynamiki grupowej
+
+-   Nie ma wzajemnego inspirowania
+-   Brak reakcji na opinie innych
+-   Mniej spontanicznych wątków
+:::
+
+::: {.column width="50%"}
+### Wyzwania metodologiczne
+
+-   Wysoka subiektywność badacza
+-   Trudności w generalizacji
+-   Intensywność - obciążenie badacza
+-   Wymagane wysokie kompetencje prowadzącego
+-   Ryzyko wpływu badacza na odpowiedzi
+:::
+:::::
+
+## Kiedy stosować IDI?
+
+### IDI jest odpowiednie gdy:
+
+-   Temat jest **wrażliwy lub intymny** (finanse, zdrowie, trauma)
+-   Potrzebna jest **głębia** zamiast szerokości
+-   Uczestnicy mogą być **nieśmiali** lub zdominowani w grupie
+-   Wymagane jest **zrozumienie indywidualnych doświadczeń**
+-   Badane zjawisko jest **osobiste i subiektywne**
+-   Potrzebna jest **elastyczność** w dostosowaniu do respondenta
+-   Uczestnicy są **geograficznie rozproszeni**
+
+# Zogniskowany wywiad grupowy (FGI)
+
+## Czym jest FGI?
+
+Zogniskowany wywiad grupowy (Focus Group Interview) to **moderowana dyskusja grupowa** prowadzona w celu eksploracji postaw, opinii i doświadczeń uczestników.
+
+### Kluczowe cechy
+
+-   Grupa 6-10 uczestników
+-   Czas trwania: 90-120 minut
+-   Moderator prowadzący dyskusję
+-   Dynamika grupowa - wzajemne inspiracje
+-   Interakcja między uczestnikami
+
+## Struktura i role w FGI
+
+**Moderator**
+
+-   Prowadzi dyskusję według scenariusza
+-   Zarządza dynamiką grupy
+-   Zachęca do wypowiedzi
+-   Kontroluje dominujących uczestników
+
+## Struktura i role w FGI
+
+**Asystent/obserwator** (opcjonalnie)
+
+-   Notuje obserwacje nieverbalne
+-   Obsługuje sprzęt nagrywający
+-   Pomaga w organizacji
+
+## Struktura i role w FGI
+
+**Uczestnicy**
+
+-   6-10 osób spełniających kryteria rekrutacyjne
+-   Zazwyczaj nieznajomi (lepsze wyniki)
+-   Zróżnicowani lub homogeniczni (zależy od celu)
+
+## Zalety wywiadów FGI
+
+::::: columns
+::: {.column width="50%"}
+### Dynamika grupowa
+
+-   Wzajemne stymulowanie uczestników
+-   Efekt synergii - niespodziewane wątki
+-   Naturalne środowisko dyskusji
+-   Reakcje na opinie innych
+-   Spontaniczność wypowiedzi
+
+### Efektywność
+
+-   Więcej uczestników jednocześnie
+-   Niższy koszt na osobę
+-   Szybsze zbieranie danych
+-   Bogactwo perspektyw w krótkim czasie
+:::
+
+::: {.column width="50%"}
+### Wielość perspektyw
+
+-   Różnorodność opinii i doświadczeń
+-   Ujawnienie rozbieżności
+-   Spektrum postaw w grupie
+-   Możliwość obserwacji interakcji
+
+### Praktyczność
+
+-   Łatwiejsze podejmowanie decyzji biznesowych
+-   Szybki feedback o produkcie/usłudze
+-   Identyfikacja głównych trendów
+:::
+:::::
+
+## Wady wywiadów FGI
+
+::::: columns
+::: {.column width="50%"}
+### Problemy z dynamiką grupy
+
+-   **Dominacja** niektórych uczestników
+-   **Konformizm** - myślenie grupowe (groupthink)
+-   **Polaryzacja** - ekstremalne opinie
+-   **Milczący uczestnicy** - trudność w zabraniu głosu
+-   **Konflikty** między uczestnikami
+
+### Powierzchowność
+
+-   Brak czasu na głębię dla każdego
+-   Ograniczone możliwości zgłębiania wątków
+-   Przeskakiwanie między tematami
+:::
+
+::: {.column width="50%"}
+### Wyzwania organizacyjne
+
+-   Trudności logistyczne - koordynacja terminów
+-   Wymagane odpowiednie pomieszczenie
+-   Ryzyko niestawiennictwa
+-   Potrzeba wynajmu lokalizacji
+
+### Ograniczenia tematyczne
+
+-   Nieodpowiednie dla tematów wrażliwych
+-   Trudność w omawianiu osobistych kwestii
+-   Wpływ moderatora na przebieg
+-   Efekt aprobaty społecznej
+:::
+:::::
+
+## Kiedy stosować FGI?
+
+### FGI jest odpowiednie gdy:
+
+-   Interesują nas **postawy społeczne i normy grupowe**
+-   Potrzebna jest **dynamika i wzajemne inspirowanie**
+-   Temat **nie jest zbyt wrażliwy**
+-   Ważna jest **różnorodność perspektyw**
+-   Chcemy obserwować **interakcje społeczne**
+-   Budżet jest **ograniczony** (efektywność kosztowa)
+-   Potrzebne są **szybkie wyniki** (badania marketingowe)
+
+## Porównanie IDI i FGI
+
+::: {style="font-size: 0.7em;"}
+| Aspekt | IDI | FGI |
+|--------|-----|-----|
+| **Liczba uczestników** | 1 osoba | 6-10 osób |
+| **Czas trwania** | 60-120 minut | 90-120 minut |
+| **Głębia eksploracji** | Bardzo wysoka | Umiarkowana |
+| **Dynamika grupowa** | Brak | Wysoka - wzajemne inspirowanie |
+| **Tematy wrażliwe** | Bardzo odpowiednie | Nieodpowiednie |
+| **Koszt na uczestnika** | Wysoki | Niski |
+| **Logistyka** | Prosta | Złożona |
+| **Wpływ grupy** | Brak | Silny (konformizm, dominacja) |
+| **Elastyczność** | Bardzo wysoka | Umiarkowana |
+| **Indywidualne doświadczenia** | Bardzo szczegółowe | Ogólne |
+| **Perspektywy społeczne** | Ograniczone | Bogate, zróżnicowane |
+| **Wymagane kompetencje** | Umiejętności prowadzenia wywiadu | Umiejętności moderacji grupy |
+:::
+
+# Przygotowanie narzędzi badawczych
+
+## Scenariusz wywiadu - funkcje
+
+Scenariusz wywiadu to **przewodnik tematyczny**, nie sztywny kwestionariusz:
+
+### Główne funkcje
+
+-   **Struktura** - logiczny przepływ zagadnień
+-   **Kompletność** - pokrycie wszystkich celów badawczych
+-   **Elastyczność** - możliwość dostosowania w trakcie
+-   **Spójność** - porównywalność między wywiadami
+-   **Wsparcie** - pomoc dla badacza w prowadzeniu rozmowy
+
+## Struktura scenariusza wywiadu
+
+### Elementy scenariusza
+
+1.  **Wprowadzenie (5-10 min)**
+    -   Przedstawienie badacza i celu badania
+    -   Zapewnienie o anonimowości i poufności
+    -   Zgoda na nagrywanie
+    -   Budowanie relacji i zaufania
+
+2.  **Rozgrzewka (5-10 min)**
+    -   Pytania łatwe, ogólne
+    -   Oswojenie z sytuacją
+    -   Rozpoczęcie rozmowy
+
+## Struktura scenariusza (cd.)
+
+3.  **Tematy główne (40-90 min)**
+    -   Kluczowe zagadnienia badawcze
+    -   Pytania główne i pomocnicze
+    -   Od ogólnych do szczegółowych
+    -   Od mniej do bardziej wrażliwych
+
+4.  **Zakończenie (5-10 min)**
+    -   Podsumowanie głównych wątków
+    -   Pytanie: "Czy chce Pan/Pani coś dodać?"
+    -   Pytania metryczkowe (wiek, wykształcenie, itp.)
+    -   Podziękowanie, honorarium
+
+5.  **Post-wywiad**
+    -   Notatki badacza o przebiegu wywiadu
+    -   Obserwacje nieverbalne, kontekst
+
+## Rodzaje pytań w wywiadach
+
+**Pytania otwarte**
+
+-   Dają swobodę wypowiedzi
+-   "Jak Pan/Pani to przeżył/a?"
+-   "Co Pan/Pani o tym sądzi?"
+
+**Pytania narracyjne**
+
+-   Zaproszenie do opowiadania historii
+-   "Proszę opowiedzieć o sytuacji, gdy..."
+-   "Jak wyglądał typowy dzień pracy?"
+
+**Pytania hipotetyczne**
+
+-   Sytuacje wyobrażone
+-   "Co by się stało, gdyby...?"
+-   "Jak zareagowałby Pan/Pani, jeśli...?"
+
+## Rodzaje pytań (cd.)
+
+**Pytania projekcyjne**
+
+-   Techniki pośrednie
+-   "Co inni myślą o...?"
+-   "Gdyby Pana/Pani firma była osobą, jaka by była?"
+
+**Pytania kontrolne**
+
+-   Weryfikacja informacji
+-   "Czy dobrze rozumiem, że...?"
+-   "Czy może Pan/Pani to rozwinąć?"
+
+**Pytania uzupełniające (sondy)**
+
+-   "Czy może Pan/Pani powiedzieć więcej?"
+-   "Co Pan/Pani przez to rozumie?"
+-   "Czy może Pan/Pani podać przykład?"
+
+## Techniki projekcyjne
+
+Techniki projekcyjne pozwalają ujawnić postawy i opinie **pośrednio**, gdy bezpośrednie pytania mogą być zbyt nachalające.
+
+**Personifikacja**
+
+> "Gdyby ta marka była osobą, kim by była? Jak by wyglądała? Co by robiła?"
+
+**Analogie i metafory**
+
+> "Do czego można porównać pracę w tej firmie?" (zwierzę, pojazd, budynek)
+
+**Kolarz zdjęć**
+
+> Pokazanie zdjęć i prośba o wybór reprezentujących daną opinię lub uczucie
+
+## Techniki projekcyjne (cd.)
+
+**Dokończenie zdań**
+
+> "Ludzie pracujący w tej branży są..."
+>
+> "Najlepsze w mojej pracy jest..."
+
+**Mapa mentalna / Kolaż**
+
+> Wizualizacja skojarzeń, tworzenie obrazu z wyciętych elementów
+
+**Role-playing / Scenki**
+
+> "Proszę wyobrazić sobie sytuację, w której... Jak by Pan/Pani zareagował/a?"
+
+**Trzecia osoba**
+
+> "Co Pana/Pani znajomi myślą o...?" (łatwiej wypowiedzieć własne opinie)
+
+## Zasady formułowania pytań
+
+Pytania powinny być:
+
+-   **Otwarte** - unikać pytań zamkniętych (tak/nie)
+-   **Jasne i jednoznaczne** - bez żargonu, prostym językiem
+-   **Jednowątkowe** - jedno pytanie = jeden temat
+-   **Neutralne** - bez sugestii i wartościowania
+-   **Pozytywne** - unikać podwójnych przeczeń
+-   **Dopasowane** - do poziomu uczestnika
+-   **Nieoceniające** - bez krytyki i osądzania
+
+Unikać:
+
+✗ "Czy nie uważa Pan/Pani, że...?" (sugestywne)\
+✗ "Czy jest Pan/Pani zadowolony?" (zamknięte)\
+✗ "Jak często i w jakich sytuacjach...?" (podwójne)
+
+# Techniki prowadzenia wywiadów
+
+## Kompetencje badacza
+
+**Wiedza merytoryczna**
+
+-   Znajomość tematu badania
+-   Kontekst teoretyczny
+-   Terminologia dziedziny
+
+## Kompetencje badacza
+
+**Umiejętności komunikacyjne**
+
+-   Aktywne słuchanie
+-   Empatia i zrozumienie
+-   Jasne formułowanie pytań
+-   Zadawanie pytań uzupełniających
+
+## Kompetencje badacza
+
+**Postawa badacza**
+
+-   Neutralność - unikanie sugestii
+-   Otwartość na różne perspektywy
+-   Elastyczność w reakcjach
+-   Refleksyjność metodologiczna
+
+## Techniki aktywnego słuchania
+
+**Pełna uwaga**
+
+-   Kontakt wzrokowy
+-   Mowa ciała pokazująca zainteresowanie
+-   Eliminacja rozpraszaczy
+-   Obecność mentalna "tu i teraz"
+
+## Techniki aktywnego słuchania
+
+**Werbalne sygnały zainteresowania**
+
+-   "Mhm", "Rozumiem", "Aha"
+-   "To bardzo interesujące"
+-   "Proszę kontynuować"
+
+## Techniki aktywnego słuchania
+
+**Parafrazowanie**
+
+-   "Jeśli dobrze rozumiem, chodzi o...?"
+-   "Innymi słowy, Pan/Pani mówi, że...?"
+-   Sprawdzenie zrozumienia
+
+## Techniki pogłębiania wypowiedzi
+
+**Pytania uzupełniające**
+
+> "Czy może Pan/Pani powiedzieć więcej o tym?"
+>
+> "Co Pan/Pani przez to rozumie?"
+>
+> "Czy może Pan/Pani podać przykład?"
+
+**Cisza strategiczna**
+
+-   Pauza po odpowiedzi - czas na refleksję
+-   Respondent często sam rozwija wypowiedź
+-   Nie przerywać zbyt szybko
+
+## Wyzwania i rozwiązania
+
+**Zbyt zwięzłe odpowiedzi**
+
+-   Użyć sond i pytań uzupełniających
+-   Zadać pytanie narracyjne: "Proszę opowiedzieć o..."
+-   Pokazać autentyczne zainteresowanie
+
+## Wyzwania i rozwiązania
+ 
+**Zbyt rozwlekłe odpowiedzi**
+
+-   Delikatnie przerwać i podsumować
+-   "To bardzo ciekawe, czy mógłbym/mogłabym jeszcze zapytać o...?"
+-   Wrócić do scenariusza
+
+## Wyzwania i rozwiązania
+
+**Unikanie tematu**
+
+-   Zauważyć opór, nie naciskać nadmiernie
+-   Przeformułować pytanie
+-   Wrócić do tematu później, jeśli możliwe
+
+## Moderacja grup fokusowych
+
+**Zarządzanie dynamiką grupy**
+
+-   Zachęcanie milczących uczestników
+-   "Pani Karolino, co Pani o tym sądzi?"
+-   Utrzymywanie równowagi głosów
+
+## Moderacja grup fokusowych
+
+**Hamowanie dominujących uczestników**
+
+-   "Dziękuję, to bardzo ciekawe. Chciałbym/chciałabym usłyszeć też innych."
+-   Kontakt wzrokowy z innymi uczestnikami
+-   Technika "zejścia z oczu" dominującego
+
+## Moderacja grup fokusowych
+
+**Prowadzenie dyskusji**
+
+-   Trzymanie się scenariusza
+-   Zarządzanie czasem
+-   Przejścia między tematami
+
+## Moderacja grup fokusowych
+
+**Reagowanie na konflikty**
+
+-   Uznać różnice zdań jako wartościowe
+-   "Widzę, że są różne perspektywy na ten temat..."
+-   Nie dopuścić do eskalacji osobistych ataków
+-   Zmienić temat, jeśli napięcie rośnie
+
+## Moderacja grup fokusowych
+
+**Techniki włączania**
+
+-   Zadawanie pytań kolejno do wszystkich
+-   "Przejdźmy dookoła - co każdy z Was sądzi?"
+-   Zachęcanie niewerbalnie (kontakt wzrokowy, skinienie)
+
+## Moderacja grup fokusowych
+
+**Kontrola czasu**
+
+-   Elastyczność, ale świadomość harmonogramu
+-   Decyzje: czy zgłębić ciekawy wątek czy przejść dalej?
+
+# Rekrutacja uczestników badań
+
+## Przygotowanie screener'a
+
+**Screener** to kwestionariusz kwalifikacyjny służący do rekrutacji odpowiednich uczestników.
+
+-   **Kryteria włączenia** - kto może uczestniczyć
+-   **Kryteria wyłączenia** - kto nie może uczestniczyć
+-   **Pytania filtrujące** - weryfikacja kryteriów
+-   **Pytania metryczkowe** - podstawowe dane
+-   **Informacja o badaniu** - ogólny temat, czas, miejsce
+-   **Zgoda na uczestnictwo** - potwierdzenie gotowości
+
+## Przykład kryteriów rekrutacyjnych
+
+### Badanie: doświadczenia pracowników w pracy zdalnej
+
+**Kryteria włączenia:**
+
+-   Doświadczenie pracy zdalnej min. 6 miesięcy
+-   Pełny etat
+-   Wiek 25-55 lat
+-   Różne branże (IT, marketing, finanse, edukacja)
+
+**Kryteria wyłączenia:**
+
+-   Samozatrudnieni / freelancerzy
+-   Osoby pracujące w badaniach rynku
+-   Uczestnicy wywiadów w ciągu ostatnich 6 miesięcy
+-   Znajomi badacza
+
+**Zróżnicowanie:**
+
+-   50% kobiet, 50% mężczyzn
+-   Różne poziomy stanowisk (specjalista, menedżer, dyrektor)
+
+## Strategie rekrutacji
+
+### Kanały rekrutacyjne
+
+**Bezpośredni kontakt**
+
+-   Osobista sieć kontaktów
+-   Rekomendacje od znajomych
+-   Media społecznościowe (grupy tematyczne)
+
+**Agencje rekrutacyjne**
+
+-   Specjalistyczne firmy badawcze
+-   Bazy respondentów
+-   Profesjonalna rekrutacja (droższa)
+
+**Ogłoszenia**
+
+-   Portale społecznościowe, fora
+-   Grupy tematyczne online
+-   Tablice ogłoszeń (uczelnie, organizacje)
+
+## Motywowanie uczestników
+
+### Formy gratyfikacji
+
+**Honorarium finansowe**
+
+-   IDI: 100-200 zł (60-90 min)
+-   FGI: 150-300 zł (90-120 min)
+-   Wyższe dla trudno dostępnych grup (specjaliści, wysoki status)
+
+**Inne formy motywacji**
+
+-   Bony / vouchery do sklepów
+-   Produkty / usługi testowane w badaniu
+-   Dostęp do wyników badania
+-   Wkład w rozwój nauki / ważnego projektu
+
+**Logistyka**
+
+-   Dogodna lokalizacja / online
+-   Elastyczne terminy
+-   Poczęstunek (FGI)
+-   Pokrycie kosztów dojazdu
+
+## Wielkość próby
+
+### Ile wywiadów przeprowadzić?
+
+**IDI:** zazwyczaj **15-30 wywiadów**, zależy od:
+
+-   Złożoności tematu
+-   Zróżnicowania populacji
+-   Nasycenia kategorii (saturation)
+
+**FGI:** zazwyczaj **4-8 grup**, zależy od:
+
+-   Liczby segmentów badawczych
+-   Zróżnicowania uczestników
+-   Nasycenia tematów
+
+### Zasada nasycenia (saturation)
+
+Zbieranie danych kontynuuje się do momentu, gdy **nowe wywiady nie wnoszą nowych informacji** - kategorie są "nasycone".
+
+# Realizacja badań terenowych
+
+## Warunki przeprowadzania wywiadów
+
+### Miejsce
+
+**IDI:**
+
+-   Ciche, spokojne pomieszczenie
+-   Komfortowe dla respondenta (dom, biuro, kawiarnia, centrum badawcze)
+-   Neutralne - bez zbędnych rozpraszaczy
+-   Prywatność - brak obecności osób trzecich
+
+**FGI:**
+
+-   Sala konferencyjna / studio fokusowe
+-   Stół umożliwiający kontakt wzrokowy wszystkich
+-   Tablica / flipchart (opcjonalnie)
+-   Lustro weneckie / pokój obserwacyjny (opcjonalnie)
+
+## Warunki przeprowadzania wywiadów (cd.)
+
+### Czas
+
+-   Dogodny dla uczestników
+-   Unikać późnych godzin wieczornych
+-   Zapewnić wystarczający czas (bez pośpiechu)
+-   Buffer czasowy między wywiadami (15-30 min)
+
+### Atmosfera
+
+-   Przyjazna, bezpieczna
+-   Ciepła, profesjonalna
+-   Bez osądzania
+-   Poczucie, że każda opinia jest wartościowa
+
+## Rejestracja danych
+
+**Nagranie audio**
+
+-   Podstawowy standard - pełny zapis rozmowy
+-   Dyktafon / aplikacja mobilna
+-   Wysoka jakość nagrania
+-   Backup - dwa urządzenia jednocześnie
+
+**Nagranie wideo**
+
+-   Kontekst niewerbalny (gesty, mimika)
+-   Przydatne w FGI (identyfikacja mówiącego)
+-   Wymaga zgody uczestnika
+-   Więcej zakłóceń (świadomość kamery)
+
+**Notatki badacza**
+
+-   Spostrzeżenia bieżące
+-   Obserwacje niewerbalne
+-   Kontekst rozmowy
+-   Refleksje metodologiczne
+
+## Etyka w badaniach jakościowych
+
+### Zasady etyczne
+
+**Świadoma zgoda (informed consent)**
+
+-   Pełna informacja o celach badania
+-   Informacja o procedurze i czasie
+-   Prawo do odmowy odpowiedzi
+-   Prawo do wycofania się w każdej chwili
+
+**Anonimowość i poufność**
+
+-   Ochrona tożsamości uczestników
+-   Bezpieczne przechowywanie danych
+-   Pseudonimy w raportach
+-   Usuwanie danych identyfikujących
+
+**Bezpieczeństwo uczestników**
+
+-   Minimalizacja ryzyka psychologicznego
+-   Wrażliwe tematy - szczególna ostrożność
+-   Informacja o dostępnym wsparciu (jeśli potrzeba)
+
+## Etyka w badaniach jakościowych
+
+**Dobrowolność**
+
+-   Brak przymusu uczestnictwa
+-   Brak negatywnych konsekwencji odmowy
+-   Możliwość przerwania w dowolnym momencie
+
+**Transparentność**
+
+-   Jasne wyjaśnienie celów badania
+-   Informacja o finansowaniu
+-   Informacja o wykorzystaniu wyników
+-   Możliwość zadawania pytań
+
+**Zgoda na nagrywanie**
+
+> "Czy zgadza się Pan/Pani na nagranie tej rozmowy? Nagranie będzie wykorzystane wyłącznie do celów naukowych i po transkrypcji zostanie usunięte."
+
+# Zastosowania badań jakościowych
+
+## Obszary zastosowań
+
+### Marketing i badania konsumenckie
+
+-   Zrozumienie motywacji zakupowych
+-   Postrzeganie marki i produktu
+-   Testy koncepcji reklamowych
+-   Customer journey - ścieżka klienta
+-   Identyfikacja potrzeb konsumentów
+
+**Przykład:** FGI z użytkownikami aplikacji mobilnej w celu zrozumienia barier w korzystaniu i oczekiwań funkcjonalnych.
+
+## Obszary zastosowań
+
+### Socjologia i nauki społeczne
+
+-   Procesy społeczne i zmiany
+-   Tożsamość i role społeczne
+-   Normy i wartości kulturowe
+-   Wykluczenie społeczne
+-   Ruchy społeczne
+
+**Przykład:** IDI z imigrantami o doświadczeniach asymilacji i konstruowania tożsamości w nowym kraju.
+
+## Obszary zastosowań
+
+### Psychologia
+
+-   Doświadczenia emocjonalne i trauma
+-   Proces terapii i zmian osobistych
+-   Tożsamość i rozwój osobisty
+-   Strategie radzenia sobie
+-   Relacje interpersonalne
+
+**Przykład:** Wywiady narracyjne z osobami po utracie bliskiej osoby o procesie radzenia sobie z żałobą.
+
+## Obszary zastosowań
+
+### Edukacja
+
+-   Doświadczenia uczenia się
+-   Motywacja do nauki
+-   Relacje nauczyciel-uczeń
+-   Ewaluacja programów edukacyjnych
+-   Innowacje pedagogiczne
+
+**Przykład:** FGI ze studentami o doświadczeniach nauczania zdalnego w pandemii - co działało, a co nie.
+
+## Obszary zastosowań
+
+### Zarządzanie i organizacje
+
+-   Kultura organizacyjna
+-   Satysfakcja i motywacja pracowników
+-   Przywództwo i zarządzanie zmianą
+-   Komunikacja w organizacjach
+-   Work-life balance
+
+**Przykład:** IDI z menedżerami o wyzwaniach w zarządzaniu zespołami w modelu hybrydowym.
+
+## Obszary zastosowań
+
+### Zdrowie publiczne
+
+-   Doświadczenia choroby i leczenia
+-   Bariery w dostępie do opieki zdrowotnej
+-   Strategie zdrowotne pacjentów
+-   Relacje pacjent-lekarz
+-   Ewaluacja programów zdrowotnych
+
+**Przykład:** Wywiady z osobami z chorobami przewlekłymi o codziennych wyzwaniach w zarządzaniu stanem zdrowia.
+
+## Obszary zastosowań
+
+### Policy i ewaluacja
+
+-   Ewaluacja programów społecznych
+-   Perspektywy beneficjentów polityk
+-   Implementacja reform
+-   Partycypacja obywatelska
+
+**Przykład:** FGI z beneficjentami programu mieszkaniowego o jego skuteczności i barierach w dostępie.
+
+# Podsumowanie
+
+## Kluczowe wnioski
+
+1.  **Badania jakościowe** służą głębokiemu zrozumieniu znaczeń, doświadczeń i kontekstów społecznych
+
+2.  **IDI** zapewniają głębię i intymność, **FGI** dynamikę grupową i różnorodność perspektyw
+
+3.  **Scenariusz wywiadu** to elastyczny przewodnik, nie sztywny kwestionariusz
+
+4.  **Kompetencje badacza** - aktywne słuchanie, empatia, neutralność - są kluczowe dla jakości danych
+
+5.  **Rekrutacja celowa** zapewnia odpowiednich uczestników dla celów badawczych
+
+## Kluczowe wnioski
+
+6.  **Etyka** - świadoma zgoda, anonimowość, bezpieczeństwo - jest fundamentem badań
+
+7.  **Analiza danych** to iteracyjny proces kodowania, kategoryzacji i interpretacji
+
+8.  **Wiarygodność** zapewniana przez triangulację, member checking, gruby opis i refleksyjność
+
+9.  **Raportowanie** wymaga bogatych cytatów, szczegółowego kontekstu i przejrzystej metodologii
+
+10. **Zastosowania** badań jakościowych są szerokie - od marketingu po socjologię, psychologię i zdrowie publiczne
+
+## Lista kontrolna badań jakościowych
+
+ - Jasne pytania badawcze (jak? dlaczego?)\
+ - Odpowiedni dobór metody (IDI vs. FGI)\
+ - Szczegółowy scenariusz z pytaniami otwartymi\
+ - Celowa rekrutacja uczestników\
+ - Zapewnienie warunków etycznych\
+ - Profesjonalna rejestracja danych (audio/wideo)\
+ - Dokładna transkrypcja wywiadów\
+ - Systematyczne kodowanie i kategoryzacja\
+ - Triangulacja dla wiarygodności\
+ - Bogate cytaty w raportowaniu

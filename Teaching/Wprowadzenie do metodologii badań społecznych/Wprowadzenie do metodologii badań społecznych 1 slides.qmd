@@ -1,0 +1,359 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 1 slides"
+subtitle: "Wprowadzenie do projektowania procesu badawczego"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+## Informacje o przedmiocie
+
+- **Forma zajęć:** Konwersatorium (30 godzin)
+- **Punkty ECTS:** 4
+- **Semestr:** Zimowy 2025/2026
+- **Rok studiów:** 1
+- **Kierunek:** Zarządzanie i przywództwo
+- **Koordynatorka:** dr Olga Czeranowska
+
+---
+
+## Cele przedmiotu
+
+Po ukończeniu przedmiotu student/ka:
+
+- **Zna i rozumie** ilościowe i jakościowe paradygmaty wyjaśniające zjawiska zachodzące w organizacji
+- **Zna i rozumie** metody, techniki i narzędzia badawcze wykorzystywane w badaniu organizacji
+- **Rozumie** istotę oraz zastosowania badań ilościowych, jakościowych oraz mieszanych w zarządzaniu organizacją
+- **Potrafi zaplanować** etapy procesu badawczego, którego celem jest diagnoza problemu organizacyjnego
+- **Jest gotów/gotowa** do krytycznej oceny posiadanej wiedzy w zakresie zarządzania organizacją
+
+---
+
+## Harmonogram zajęć
+
+1. **Spotkanie 1:** Wprowadzenie do projektowania procesu badawczego
+2. **Spotkanie 2:** Przegląd literatury, analiza danych zastanych, plagiat
+3. **Spotkanie 3-4:** Ujęcia jakościowe, ilościowe, mieszane - eksperyment, obserwacja
+4. **Spotkanie 5:** Etyka w badaniach społecznych
+5. **Spotkanie 6:** Dobór badanych i rekrutacja
+6. **Spotkanie 7-8:** Badania ilościowe - ankieta (CAPI, CATI, CAWI)
+7. **Spotkanie 9-10:** Badania jakościowe - wywiad (indywidualny, grupowy)
+8. **Spotkanie 11:** Analiza danych ilościowych
+
+---
+
+## Harmonogram zajęć (cd.)
+
+9. **Spotkanie 12:** Analiza danych jakościowych
+10. **Spotkanie 13:** Opis i prezentowanie wyników badań
+11. **Spotkanie 14-15:** Powtórzenie wiadomości przed sprawdzianem
+
+**Zaliczenie:** Egzamin w sesji (pytania jednokrotnego wyboru i otwarte)
+
+**Wymagana obecność:** Min. 50% zajęć
+
+**Skala ocen:** 51-60% = 3.0, 61-70% = 3.5, 71-80% = 4.0, 81-90% = 4.5, 91-100% = 5.0
+
+---
+
+## Plan wykładu
+- Podstawowe pojęcia badań społecznych
+- Metodologia vs metodyka badań
+- Cele badania naukowego
+- Formułowanie problemów badawczych
+- Pytania badawcze - typologie i konstrukcja
+- Założenia teoretyczne i metodologiczne
+- Hipotezy badawcze - rodzaje i weryfikacja
+- Projektowanie procesu badawczego
+- Etapy realizacji badań
+
+---
+
+## Kluczowe zagadnienia
+- Czym różni się metodologia od metodyki?
+- Jak formułować cele i problemy badawcze?
+- Jakie są rodzaje pytań badawczych?
+- Czym są założenia i hipotezy badawcze?
+- Jak zaprojektować proces badawczy?
+
+---
+
+## Nauka i badania naukowe
+- **Nauka** - systematyczna działalność poznawcza zmierzająca do odkrywania praw i zależności między zjawiskami
+- **Badania naukowe** - planowy, uporządkowany proces poznawczy prowadzący do weryfikowalnych wniosków
+- **Obiektywność** - dążenie do niezależności wyników od osobistych przekonań i wartości badacza
+- **Intersubiektywność** - możliwość powtórzenia badania przez różnych badaczy i uzyskania zbliżonych rezultatów
+- **Falsyfikowalność** - możliwość empirycznego obalenia teorii lub hipotezy (kryterium demarkacji nauki)
+
+---
+
+## Metodologia vs metodyka
+- **Metodologia** - nauka o metodach badawczych, ich założeniach filozoficznych i logice stosowania
+- **Metodyka** - zbiór konkretnych technik i narzędzi badawczych wraz z procedurami ich zastosowania
+- **Filozofia nauki** - refleksja nad podstawami, celami i granicami poznania naukowego
+- **Paradygmat** - wzorzec uprawiania nauki obejmujący wspólne założenia, wartości i praktyki badawcze
+- **Model** - uproszczona reprezentacja rzeczywistości wydobywająca najistotniejsze relacje i mechanizmy
+
+---
+
+## Paradygmaty badawczy
+- **Pozytywistyczny** - wyjaśnianie zjawisk poprzez poszukiwanie praw ogólnych, dążenie do obiektywności
+- **Interpretatywny** - rozumienie subiektywnych znaczeń nadawanych przez aktorów społecznych
+- **Krytyczny** - odkrywanie ukrytych struktur władzy i emancypacja grup marginalizowanych
+- **Pragmatyczny** - orientacja na praktyczną użyteczność wiedzy i rozwiązywanie problemów
+- **Konstruktywistyczny** - rzeczywistość jako społecznie konstruowana przez interakcje i dyskursy
+
+---
+
+## Metodologia pozytywistyczna
+- **Jedność nauk** - stosowanie tych samych metod naukowych dla nauk przyrodniczych i społecznych
+- **Obiektywizm** - eliminacja sądów wartościujących, separacja faktów od wartości
+- **Empiryzm** - prymat doświadczenia zmysłowego jako źródła wiedzy naukowej
+- **Weryfikowalność** - twierdzenia naukowe muszą być sprawdzalne empirycznie
+- **Determinizm** - wszystkie zjawiska podlegają związkom przyczynowo-skutkowym
+
+---
+
+## Metodologia interpretatywna
+- **Rozumienie** (Verstehen) zamiast wyjaśniania - rekonstrukcja znaczeń i motywów działań
+- **Subiektywność** jako nieodłączna cecha świata społecznego i poznania ludzkiego
+- **Kontekst** społeczny i kulturowy jako kluczowy dla interpretacji działań
+- **Znaczenia** nadawane przez aktorów społecznych w ich codziennych interakcjach
+- **Hermeneutyka** - sztuka i teoria interpretacji tekstów i działań społecznych
+
+---
+
+## Cele badań naukowych
+- **Eksploracyjne** - wstępne poznanie nowego, słabo zbadanego obszaru rzeczywistości
+- **Deskryptywne** - systematyczny i dokładny opis zjawisk, ich cech i właściwości
+- **Eksplanacyjne** - wyjaśnienie przyczyn, mechanizmów i związków między zjawiskami
+- **Predykcyjne** - przewidywanie przyszłych stanów i trendów na podstawie wiedzy naukowej
+- **Aplikacyjne** - praktyczne zastosowanie wiedzy do rozwiązywania problemów społecznych
+
+---
+
+## Cele eksploracyjne
+- **Pierwszy kontakt** z problemem - rozpoznanie terenu, wstępna diagnoza
+- **Orientacja** w nowym obszarze - zrozumienie podstawowych wymiarów zjawiska
+- **Identyfikacja** kluczowych zagadnień, aktorów i zmiennych istotnych dla badania
+- **Generowanie** hipotez i pytań badawczych do dalszej weryfikacji
+- **Przygotowanie** dalszych etapów badawczych i projektowanie badań właściwych
+
+---
+
+## Cele deskryptywne
+- **Systematyczny opis** zjawisk zgodnie z ustalonymi kategoriami i kryteriami
+- **Charakterystyka** populacji - profile demograficzne, społeczne, psychologiczne
+- **Rozkład** cech i właściwości w badanej zbiorowości (częstości, proporcje)
+- **Struktury** i relacje między elementami badanego systemu społecznego
+- **Dokumentacja** stanu rzeczy jako podstawa dla przyszłych badań porównawczych
+
+---
+
+## Cele eksplanacyjne
+- **Poszukiwanie przyczyn** zjawisk społecznych i ich uwarunkowań
+- **Testowanie teorii** naukowych poprzez konfrontację z danymi empirycznymi
+- **Związki przyczynowo-skutkowe** - identyfikacja wpływu zmiennych niezależnych na zależne
+- **Mechanizmy** działania - odkrywanie procesów pośredniczących między przyczyną a skutkiem
+- **Modele** teoretyczne wyjaśniające złożone relacje między wieloma zmiennymi
+
+---
+
+## Problem badawczy
+- **Identyfikacja** obszaru problemowego wymagającego naukowego wyjaśnienia
+- **Precyzyjne** sformułowanie pytania wyrażające lukę w wiedzy naukowej
+- **Określenie granic** badania - zakres przedmiotowy, czasowy i przestrzenny
+- **Uzasadnienie** teoretycznego i praktycznego znaczenia problemu
+- **Osadzenie** w kontekście teorii, dotychczasowych badań i debaty naukowej
+
+---
+
+## Kryteria dobrego problemu
+- **Oryginalność** - wniesienie nowej wiedzy, wypełnienie luki poznawczej
+- **Ważność** - istotny wkład teoretyczny lub praktyczna użyteczność rozwiązania
+- **Precyzja** - jednoznaczne, operacyjne sformułowanie umożliwiające empiryczną weryfikację
+- **Realizowalność** - możliwość zbadania przy dostępnych zasobach, metodach i czasie
+- **Etyczność** - zgodność z normami etycznymi i prawami osób badanych
+
+---
+
+## Pytania badawcze
+- **Pytania opisowe** - "co?", "jak?" - charakterystyka zjawisk, ich właściwości i rozkładów
+- **Pytania przyczynowe** - "dlaczego?" - poszukiwanie uwarunkowań i przyczyn zjawisk
+- **Pytania przewidujące** - "co będzie?" - prognozowanie przyszłych stanów i trendów
+- **Pytania normatywne** - "co powinno być?" - ocena i rekomendacje praktyczne
+- **Pytania metodologiczne** - "jak badać?" - wybór strategii i metod badawczych
+
+---
+
+## Konstrukcja pytań badawczych
+- **Jasność** i precyzja sformułowania - unikanie wieloznaczności i ogólników
+- **Jednoznaczność** interpretacji - jedno pytanie, jeden problem do rozstrzygnięcia
+- **Empiryczna sprawdzalność** - możliwość zebrania danych do udzielenia odpowiedzi
+- **Teoretyczne** uzasadnienie - osadzenie w literaturze i teorii naukowej
+- **Logiczna spójność** ze sobą - pytania szczegółowe muszą składać się na pytanie główne
+
+---
+
+## Pytania główne i szczegółowe
+- **Pytanie główne** - centralny problem badawczy wyrażający istotę badania
+- **Pytania szczegółowe** - dekompozycja problemu głównego na aspekty cząstkowe
+- **Pytania pomocnicze** - kwestie techniczne i metodologiczne wspierające realizację badania
+- **Spójność** między poziomami - odpowiedzi na pytania szczegółowe tworzą odpowiedź na pytanie główne
+- **Kompleksowość** ujęcia - pytania obejmują wszystkie istotne wymiary problemu
+
+---
+
+## Założenia badawcze
+- **Założenia ontologiczne** - założenia o naturze i strukturze badanej rzeczywistości społecznej
+- **Założenia epistemologiczne** - przekonania o możliwościach i sposobach poznania naukowego
+- **Założenia metodologiczne** - wybór strategii badawczej wynikający z założeń ontologicznych i epistemologicznych
+- **Założenia aksjologiczne** - stanowisko wobec roli wartości i celów w procesie badawczym
+- **Założenia pragmatyczne** - przekonania o celach badań i sposobach wykorzystania wiedzy
+
+---
+
+## Założenia ontologiczne
+- **Obiektywna** vs **subiektywna** rzeczywistość - czy istnieje niezależnie od obserwatora?
+- **Struktury** społeczne jako dane, zewnętrzne wobec jednostek (realizm)
+- **Konstruowanie** rzeczywistości przez aktorów w procesie interakcji (konstruktywizm)
+- **Emergencja** - systemy społeczne posiadają właściwości nieredukowalne do jednostek
+- **Zmienność** vs **stałość** zjawisk - czy rzeczywistość jest dynamiczna czy statyczna?
+
+---
+
+## Założenia epistemologiczne
+- **Empiryzm** - wiedza pochodzi z doświadczenia zmysłowego i obserwacji empirycznej
+- **Racjonalizm** - poznanie opiera się na rozumie i dedukcji z aksjomatów
+- **Realizm** - możliwe jest poznanie rzeczywistości takiej, jaką jest niezależnie od poznającego
+- **Idealizm** - rzeczywistość poznawana jest zawsze przez pryzmat umysłu i kultury
+- **Pragmatyzm** - prawdziwość teorii mierzy się jej praktyczną użytecznością i skutecznością
+
+---
+
+## Hipotezy badawcze
+- **Przypuszczenie** o związkach między zjawiskami wyprowadzone z teorii lub obserwacji
+- **Tymczasowa odpowiedź** na pytanie badawcze wymagająca empirycznej weryfikacji
+- **Przewidywanie** konkretnych wyników empirycznych możliwych do zaobserwowania
+- **Kierunek** dla procesu badawczego - wskazanie, co i jak badać
+- **Kryterium** weryfikacji teorii - konfrontacja teoretycznych przewidywań z rzeczywistością
+
+---
+
+## Rodzaje hipotez
+- **Hipotezy główne** (centralne dla badania) i **pomocnicze** (uszczegółowiające główne)
+- **Hipotezy kierunkowe** (określają kierunek związku) i **bezkierunkowe** (tylko istnienie związku)
+- **Hipotezy zerowe** (brak związku/różnicy) i **alternatywne** (istnienie związku/różnicy)
+- **Hipotezy substantywne** (merytoryczne) i **statystyczne** (do testowania statystycznego)
+- **Hipotezy przyczynowe** (X wpływa na Y) i **korelacyjne** (X współwystępuje z Y)
+
+---
+
+## Wymagania wobec hipotez
+- **Empiryczna sprawdzalność** - możliwość zebrania danych weryfikujących lub obalających hipotezę
+- **Falsyfikowalność** - możliwość określenia warunków empirycznych obalających hipotezę
+- **Precyzja** sformułowania - jednoznaczne określenie zmiennych i relacji między nimi
+- **Zgodność** z wiedzą naukową - spójność z istniejącymi teoriami i wynikami badań
+- **Prostota** i **oszczędność** - preferowanie prostszych wyjaśnień (brzytwa Ockhama)
+
+---
+
+## Weryfikacja hipotez
+- **Operacjonalizacja** pojęć teoretycznych - przekształcenie na mierzalne wskaźniki
+- **Dobór** metod badawczych adekwatnych do charakteru hipotezy i zmiennych
+- **Zbieranie** danych empirycznych zgodnie z zaplanowaną procedurą badawczą
+- **Analiza** statystyczna - testy istotności, siła związku, kontrola zmiennych zakłócających
+- **Interpretacja** wyników - ocena potwierdzenia/odrzucenia hipotezy i implikacje teoretyczne
+
+---
+
+## Operacjonalizacja pojęć
+- **Pojęcia teoretyczne** (abstrakcyjne, ogólne) vs **empiryczne** (obserwowalne, mierzalne)
+- **Definicje nominalne** (znaczenie pojęcia) i **operacyjne** (sposób pomiaru)
+- **Wskaźniki** (pojedyncze miary) i **indeksy** (złożone miary z wielu wskaźników)
+- **Zmienne** i ich **pomiar** - przekształcenie cech jakościowych na wartości liczbowe
+- **Skale** pomiarowe - nominalna, porządkowa, przedziałowa, ilorazowa
+
+---
+
+## Projektowanie procesu badawczego
+- **Określenie** celów badania i precyzyjne sformułowanie problemu badawczego
+- **Przegląd** literatury przedmiotu - analiza stanu wiedzy i identyfikacja luki badawczej
+- **Wybór** strategii badawczej (jakościowa, ilościowa, mieszana) zgodnej z celami
+- **Dobór** metod i technik badawczych oraz narzędzi zbierania danych
+- **Harmonogram** realizacji z uwzględnieniem wszystkich etapów i zasobów
+
+---
+
+## Strategie badawcze
+- **Strategia jakościowa** - dogłębne zrozumienie znaczeń, kontekstów i procesów społecznych
+- **Strategia ilościowa** - pomiar zmiennych, testowanie hipotez, analiza statystyczna
+- **Strategia mieszana** - integracja metod jakościowych i ilościowych (triangulacja)
+- **Studium przypadku** - intensywna analiza pojedynczego przypadku lub kilku przypadków
+- **Badania porównawcze** - systematyczna analiza podobieństw i różnic między przypadkami
+
+---
+
+## Dobór metod badawczych
+- **Zgodność** z celami badania - metody muszą umożliwiać odpowiedź na pytania badawcze
+- **Adekwatność** do problemu i charakteru badanych zjawisk (jakościowych vs ilościowych)
+- **Dostępność** zasobów - czas, budżet, dostęp do respondentów i infrastruktury badawczej
+- **Kompetencje** badacza - znajomość metodologii i umiejętność zastosowania wybranych metod
+- **Uwarunkowania** etyczne - metody muszą być zgodne z zasadami etyki badań społecznych
+
+---
+
+## Triangulacja w badaniach
+- **Triangulacja metodologiczna** - łączenie różnych metod badawczych (np. wywiad + ankieta)
+- **Triangulacja źródeł** - wykorzystanie różnych źródeł danych (osoby, dokumenty, obserwacje)
+- **Triangulacja badaczy** - zaangażowanie wielu badaczy zwiększające obiektywność
+- **Triangulacja teoretyczna** - interpretacja zjawisk z perspektywy różnych teorii
+- **Korzyści** (większa trafność, pełniejszy obraz) i **ograniczenia** (czas, koszty, złożoność)
+
+---
+
+## Harmonogram badań
+- **Etap przygotowawczy** - projekt badań, przegląd literatury, operacjonalizacja, pilotaż
+- **Etap realizacyjny** - rekrutacja respondentów i systematyczne zbieranie danych
+- **Etap analityczny** - opracowanie i analiza zebranych danych (kodowanie, statystyka)
+- **Etap sprawozdawczy** - pisanie raportu, artykułów, prezentacja wyników
+- **Rezerwy** czasowe i **elastyczność** - uwzględnienie nieprzewidzianych trudności i opóźnień
+
+---
+
+## Etyka badań społecznych
+- **Zgoda** uczestników badania - świadoma, dobrowolna zgoda na udział (informed consent)
+- **Anonimowość** i **poufność** - ochrona tożsamości i danych osobowych respondentów
+- **Zasada** nieczynienia szkody - minimalizacja ryzyka fizycznego, psychicznego i społecznego
+- **Prawda** w raportowaniu - uczciwe prezentowanie wyników bez manipulacji i fałszowania
+- **Odpowiedzialność** społeczna - uwzględnienie konsekwencji badań dla społeczeństwa
+
+---
+
+## Jakość badań naukowych
+- **Trafność** (validity) - czy badamy to, co zamierzamy badać? (wewnętrzna, zewnętrzna, konstruktu)
+- **Rzetelność** (reliability) - stabilność i powtarzalność pomiarów przy powtórzeniu badania
+- **Obiektywność** - minimalizacja wpływu stronniczości badacza na wyniki badania
+- **Reprezentatywność** - możliwość uogólnienia wyników na szerszą populację
+- **Praktyczna** użyteczność - znaczenie wyników dla teorii i praktyki społecznej
+
+---
+
+## Kluczowe wnioski
+- Metodologia dostarcza ram teoretycznych dla badań
+- Cele determinują wybór strategii badawczej
+- Pytania badawcze muszą być precyzyjne i sprawdzalne
+- Założenia wpływają na cały proces badawczy
+- Hipotezy wymagają empirycznej weryfikacji
+- Projektowanie badań wymaga systematycznego podejścia
+- Etyka jest integralną częścią procesu badawczego
+- Jakość badań zależy od metodologicznej dyscypliny
+

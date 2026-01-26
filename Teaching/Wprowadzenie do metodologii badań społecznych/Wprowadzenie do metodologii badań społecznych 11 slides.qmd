@@ -1,0 +1,597 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 11 slides"
+subtitle: "**Opis i prezentowanie wyników badań**"
+author:
+  - name: "Ben Stanley"
+    affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: "01/26/26"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, presentation_style.scss]
+    slide-number: true
+    overview: true
+    center: true
+    incremental: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    footer: "Wprowadzenie do metodologii badań społecznych"
+    link-external-newwindow: true
+    logo: swps.jpg
+execute:
+  cache: false
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(ggplot2)
+
+# Custom theme function for all plots
+theme_plots <- function(base_size = 11, base_family = "Jost") {
+  theme_bw(base_size, base_family) +
+    theme(
+      panel.background = element_rect(fill = "#ffffff", colour = NA),
+      title = element_text(size = rel(1), family = "Jost", face = "bold"),
+      plot.subtitle = element_text(
+        size = rel(0.8),
+        family = "Jost",
+        face = "plain"
+      ),
+      plot.caption = element_text(
+        margin = margin(t = 10),
+        size = rel(0.6),
+        family = "Jost",
+        face = "plain"
+      ),
+      panel.border = element_rect(
+        color = "grey50",
+        fill = NA,
+        linewidth = 0.15
+      ),
+      panel.spacing = unit(1, "lines"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(linewidth = 0.25, colour = "grey90"),
+      axis.line = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_text(
+        size = rel(0.8),
+        family = "Jost",
+        face = "plain"
+      ),
+      axis.title.x = element_text(margin = margin(t = 10)),
+      axis.title.y = element_text(hjust = 1, margin = margin(r = 10)),
+      legend.position = "bottom",
+      legend.title = element_text(
+        size = rel(0.8),
+        vjust = 0.5,
+        family = "Jost",
+        face = "bold"
+      ),
+      legend.key.size = unit(0.7, "line"),
+      legend.key = element_blank(),
+      legend.spacing = unit(0.1, "lines"),
+      legend.justification = "left",
+      legend.margin = margin(t = 0, b = 0, l = 0, r = 0),
+      strip.text = element_text(
+        size = rel(0.9),
+        hjust = 0,
+        family = "Jost",
+        face = "plain"
+      ),
+      strip.background = element_rect(fill = "white", colour = NA),
+      plot.margin = unit(c(0, 0, 0, 0), "cm")
+    )
+}
+```
+
+
+# Plan zajęć
+
+## Plan zajęć
+
+-   Elementy pisania akademickiego
+-   Zasady stylu naukowego
+-   Wytyczne formalne
+-   Logika pracy dyplomowej/empirycznej
+-   Opis metodologii i prezentowanie wyników
+-   Redakcja i praca nad tekstem
+
+# Elementy pisania akademickiego
+
+## Elementy pisania akademickiego
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 6
+#| fig-align: center
+
+library(ggplot2)
+library(ggforce)
+
+# Define elements and their positions in a circle
+elements <- c(
+  "Odbiorcy",
+  "Cel",
+  "Organizacja\ntekstu",
+  "Styl",
+  "Flow",
+  "Prezentacja"
+)
+n <- length(elements)
+
+# Calculate positions on a circle
+angles <- seq(pi / 2, pi / 2 - 2 * pi, length.out = n + 1)[1:n]
+radius <- 2.5
+x <- radius * cos(angles)
+y <- radius * sin(angles)
+
+# Create data frame for elements
+df <- data.frame(
+  x = x,
+  y = y,
+  label = elements
+)
+
+# Create connections (circular path)
+connections <- data.frame(
+  x = c(x, x[1]),
+  y = c(y, y[1])
+)
+
+# Plot
+ggplot() +
+  # Draw the circular connecting line
+
+  geom_path(
+    data = connections,
+    aes(x = x, y = y),
+    color = "#6c9dc6",
+    linewidth = 1.2
+  ) +
+  # Draw boxes for each element
+  geom_label(
+    data = df,
+    aes(x = x, y = y, label = label),
+    fill = "#4472c4",
+    color = "white",
+    size = 5,
+    fontface = "bold",
+    label.padding = unit(0.6, "lines"),
+    label.size = 0
+  ) +
+  coord_fixed(ratio = 1, xlim = c(-5.5, 4), ylim = c(-3.5, 3.5)) +
+  theme_void(base_family = "Jost") +
+  theme(
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+```
+
+Źródło: Swales, Feak 2012
+
+# Zasady stylu naukowego
+
+## Zasady stylu naukowego
+
+-   Poprawność językowa
+-   Precyzyjny, jednoznaczny język
+-   Odpowiednie zastosowanie terminologii naukowej
+-   Formalność
+-   Zwięzłość
+-   Odpowiednio sformułowane przypisy
+-   Prosty, klarowna narracja
+-   Bez: nacechowania emocjonalnego, kolokwializmów, nadmiernych zabiegów stylistycznych
+
+# Wytyczne formalne
+
+## Wytyczne formalne
+
+Praca powinna być napisana zgodnie z poniższymi wytycznymi:
+
+-  czcionka: Times New Roman 12,
+-  interlinia: 1,5,
+-  tekst wyjustowany, zapis jednokolumnowy,
+-  marginesy: 2,5 cm,
+-  tytuły rozdziałów i podrozdziałów - pogrubienie,
+-  numeracja stron w stopce,
+-  przypisy dolne mogą zawierać tylko komentarze i informacje uzupełniające (zgodnie z systemem APA)
+
+::: {.fragment}
+Źródło: Standardy prac dyplomowych realizowanych na Wydziale Nauk Społecznych w Warszawie
+:::
+
+## Mierzenie długości tekstu
+
+-   W zależności od kontekstu i wymogów formalnych:
+    -   Strony
+    -   Słowa
+    -   Znaki (ze spacjami/bez spacji)
+-   Strona znormalizowanego maszynopisu: 1800 znaków, w tym spacje i znaki interpunkcyjne
+-   Arkusz wydawniczy – 40 000 znaków, co oznacza ok. 22 strony znormalizowanego maszynopisu
+
+## Ćwiczenie
+
+Bardzo proszę poprawić błędy w tekście, tak aby zachowane zostały wytyczne formalne ze „Standardów prac dyplomowych na WNS".
+
+## Błąd 1: Niewłaściwa czcionka
+
+- **Problem**: Tekst napisany jest czcionką Arial
+- **Wymaganie**: Times New Roman 12
+- **Dlaczego to błąd**: Wytyczne formalne WNS jednoznacznie określają rodzaj czcionki. Arial to czcionka bezszeryfowa, podczas gdy Times New Roman to czcionka szeryfowa, która jest standardem w pracach akademickich
+
+## Błąd 2: Niewłaściwy rozmiar czcionki
+
+- **Problem**: Czcionka ma rozmiar 9 punktów
+- **Wymaganie**: 12 punktów
+- **Dlaczego to błąd**: Zbyt mały rozmiar czcionki utrudnia czytanie tekstu i nie spełnia wymogów formalnych. Standardowy rozmiar 12pt zapewnia czytelność i profesjonalny wygląd dokumentu
+
+## Błąd 3: Niewłaściwa interlinia
+
+- **Problem**: Interlinia wynosi 1,0 (pojedyncza)
+- **Wymaganie**: 1,5
+- **Dlaczego to błąd**: Pojedyncza interlinia utrudnia czytanie dłuższych tekstów i nie pozostawia miejsca na ewentualne adnotacje. Interlinia 1,5 jest standardem w pracach akademickich
+
+## Błąd 4: Niewłaściwe marginesy
+
+- **Problem**: Marginesy wynoszą 5 cm
+- **Wymaganie**: 2,5 cm
+- **Dlaczego to błąd**: Zbyt szerokie marginesy zmniejszają ilość tekstu na stronie i mogą być postrzegane jako próba sztucznego wydłużenia pracy. Standardowe marginesy 2,5 cm zapewniają właściwe proporcje strony
+
+## Błąd 5: Brak pogrubienia tytułu rozdziału
+
+- **Problem**: Tytuł „metodologia" napisany małą literą, bez pogrubienia
+- **Wymaganie**: Tytuły rozdziałów i podrozdziałów powinny być pogrubione
+- **Dlaczego to błąd**: Tytuły rozdziałów powinny wyróżniać się wizualnie i zaczynać wielką literą. Brak pogrubienia utrudnia nawigację po tekście
+
+## Błąd 6: Niespójny styl cytowania
+
+- **Problem**: CBOS cytowany w przypisie dolnym, inne źródła w stylu APA w tekście
+- **Wymaganie**: Przypisy dolne mogą zawierać tylko komentarze i informacje uzupełniające (zgodnie z systemem APA)
+- **Dlaczego to błąd**: Mieszanie stylów cytowania jest niedopuszczalne. W systemie APA wszystkie cytowania powinny być w tekście (autor, rok)
+
+## Błąd 7: Cytowanie źródła spoza bibliografii
+
+- **Problem**: W tekście cytowany jest „Kowalczyk (2020)", którego nie ma w bibliografii
+- **Wymaganie**: Każde cytowanie w tekście musi mieć odpowiadający wpis w bibliografii
+- **Dlaczego to błąd**: Czytelnik nie może zweryfikować źródła. To poważny błąd formalny, który może być uznany za nierzetelność naukową
+
+## Błąd 8: Tabela bez źródła
+
+- **Problem**: Tabela z danymi o platformach nie zawiera informacji o źródle
+- **Wymaganie**: Tabele muszą mieć odpowiedni tytuł + informację o źródle danych i wielkości próby
+- **Dlaczego to błąd**: Brak źródła uniemożliwia weryfikację danych i jest niezgodny ze standardami prezentacji wyników badań
+
+## Błąd 9: Wykres bez tytułu i źródła
+
+- **Problem**: Wykres nie ma tytułu (np. „Wykres 1. ...") ani informacji o źródle
+- **Wymaganie**: Wykresy muszą mieć odpowiedni tytuł + informację o źródle danych i wielkości próby
+- **Dlaczego to błąd**: Podobnie jak w przypadku tabel, każda wizualizacja danych musi być odpowiednio opisana i opatrzona informacją o źródle
+
+## Błąd 10: Język emocjonalny i potoczny
+
+- **Problem**: Wyrażenia takie jak „naprawdę ciekawy", „super ważne", „niesamowite", „szokujące i budzi ogromne obawy o przyszłość naszej młodzieży!"
+- **Wymaganie**: Styl naukowy: bez nacechowania emocjonalnego, kolokwializmów, nadmiernych zabiegów stylistycznych
+- **Dlaczego to błąd**: Język naukowy powinien być obiektywny, precyzyjny i pozbawiony emocji. Wyrażenia wartościujące i potoczne obniżają wiarygodność tekstu
+
+# Logika pracy dyplomowej/empirycznej
+
+## Logika pracy dyplomowej/empirycznej
+
+```{r}
+#| echo: false
+#| fig-width: 12
+#| fig-height: 5
+#| fig-align: center
+
+library(ggplot2)
+
+# Define stages
+stages <- c(
+  "Przegląd\nliteratury",
+  "Konceptualizacja\nprojektu\nbadawczego",
+  "Metodologia\nbadania",
+  "Wyniki",
+  "Dyskusja\nwyników"
+)
+n <- length(stages)
+
+# Box positions
+box_width <- 1.8
+box_height <- 1.2
+spacing <- 2.5
+x_positions <- seq(0, (n - 1) * spacing, by = spacing)
+y_position <- 0
+
+# Create data frame for boxes
+df_boxes <- data.frame(
+  x = x_positions,
+  y = y_position,
+  label = stages
+)
+
+# Create arrows between boxes (forward)
+df_arrows_forward <- data.frame(
+  x_start = x_positions[-n] + box_width / 2 + 0.1,
+  x_end = x_positions[-1] - box_width / 2 - 0.1,
+  y = y_position
+)
+
+# Create bidirectional arrows (backward) - between first 3 boxes
+df_arrows_back <- data.frame(
+  x_start = x_positions[2:3] - box_width / 2 - 0.1,
+  x_end = x_positions[1:2] + box_width / 2 + 0.1,
+  y = y_position - 0.3
+)
+
+# Plot
+ggplot() +
+  # Draw boxes
+  geom_tile(
+    data = df_boxes,
+    aes(x = x, y = y),
+    width = box_width,
+    height = box_height,
+    fill = "#4472c4",
+    color = "#4472c4"
+  ) +
+  # Add labels
+  geom_text(
+    data = df_boxes,
+    aes(x = x, y = y, label = label),
+    color = "white",
+    size = 4,
+    family = "Jost",
+    fontface = "bold",
+    lineheight = 0.9
+  ) +
+  # Forward arrows (single direction for last two)
+  geom_segment(
+    data = df_arrows_forward[3:4, ],
+    aes(x = x_start, xend = x_end, y = y, yend = y),
+    arrow = arrow(length = unit(0.3, "cm"), type = "closed"),
+    color = "#4472c4",
+    linewidth = 1
+  ) +
+  # Bidirectional arrows between first 3 boxes (top)
+  geom_segment(
+    data = df_arrows_forward[1:2, ],
+    aes(x = x_start, xend = x_end, y = y, yend = y),
+    arrow = arrow(length = unit(0.25, "cm"), type = "closed"),
+    color = "#4472c4",
+    linewidth = 0.8
+  ) +
+  geom_segment(
+    data = df_arrows_back,
+    aes(x = x_start, xend = x_end, y = y + 0.45, yend = y + 0.45),
+    arrow = arrow(length = unit(0.25, "cm"), type = "closed"),
+    color = "#4472c4",
+    linewidth = 0.8
+  ) +
+  coord_fixed(
+    ratio = 1,
+    xlim = c(-1.5, max(x_positions) + 1.5),
+    ylim = c(-1.2, 1.2)
+  ) +
+  theme_void(base_family = "Jost") +
+  theme(
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+```
+
+## Artykuł naukowy
+
+-   Struktura i inne wytyczne zależne od dyscypliny, ale również planowanego miejsca publikacji
+-   Zazwyczaj w artykule z zakresu nauk społecznych mamy część teoretyczną (przegląd wcześniejszych badań i prac teoretycznych związanych z tematem) oraz część empiryczną (opis własnych badań wraz z metodologią)
+-   Zakończenie: dyskusja i konkluzje
+-   Inne opcje: artykuł teoretyczny, metaanaliza
+
+# Opis metodologii
+
+## Opis metodologii
+
+-   Metody i techniki zbierania danych
+-   Dobór próby wraz z metodami rekrutacji
+-   Narzędzia badawcze
+-   Procedura badania
+
+::: {.fragment}
+Metodologia powinna być opisana na tyle przejrzyście i kompletnie, żeby możliwa była replikacja badania (aczkolwiek to wytyczna bardziej dla badań ilościowych)
+:::
+
+# Prezentowanie wyników
+
+## Jak opisywać dane – struktura i strona formalna
+
+-   Struktura problemowa (która może być strukturą narzędzia badawczego, ale nie musi)
+-   Cytaty/wizualizacje danych nie mogą „mówić same za siebie" (tak samo jak cytaty ze źródeł w części teoretycznej)
+-   Nie musimy w opisie wyników przedstawiać wszystkich pozyskanych danych, np. jeśli jakieś pytanie w ankiecie "nie zagrało", nie przyniosło interesujących wyników to możemy pominąć ten wątek (zwłaszcza jeśli mamy inne dane pozwalające na odpowiedź na pytania badawcze)
+
+## Tabele w raportach/pracach naukowych
+
+-   Muszą mieć odpowiedni tytuł + informację o źródle danych i wielkości próby (jeśli nie ma jej w samej tabeli)
+-   Nazwy kolumn i wierszy powinny być zrozumiałe dla osoby, która nie zna danej bazy danych (np. nie używamy surowych nazw zmiennych)
+-   Musi być jasne co jest pokazane w tabeli (n/%, jednostki, pytania jednokrotnego/wielokrotnego wyboru)
+-   Nie trzeba w tekście opisywać wszystkiego, co jest w tabeli, lepiej wyciągnąć najważniejsze/najciekawsze informacje
+
+## Przykład tabeli
+
+Tabela 1. Miejsce zakupu herbaty w podziale na częstość picia herbaty.
+
+|                                  | Market | Sklep osiedlowy | Sklep specjalistyczny online | Sklep specjalistyczny stacjonarnie | Ogółem |
+|----------------------------------|--------|-----------------|------------------------------|-----------------------------------|--------|
+| Pije herbatę codziennie          | 15     | 4               | 3                            | 4                                 | 26     |
+| Pije herbatę rzadziej niż raz dziennie | 6  | 3               | 7                            | 1                                 | 17     |
+| Ogółem                           | 21     | 7               | 10                           | 5                                 | 43     |
+
+Źródło: badanie CAWI, n=43
+
+## Wykresy w raportach/pracach naukowych
+
+-   Muszą mieć odpowiedni tytuł + informację o źródle danych i wielkości próby
+-   Wykresy w raporcie powinny mieć spójną kolorystykę i projekt graficzny
+-   Nazwy osi i innych elementów wykresu powinny być zrozumiałe dla osoby, która nie zna danej bazy danych (np. nie używamy surowych nazw zmiennych)
+-   Musi być jasne co jest pokazane na wykresie (n/%, jednostki, pytania jednokrotnego/wielokrotnego wyboru)
+
+## Przykład wykresu
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5
+#| fig-align: center
+
+library(ggplot2)
+
+# Data from PDF (page 17)
+df <- data.frame(
+  kategoria = factor(
+    c(
+      "Rzadziej niż raz\nw tygodniu",
+      "Raz w tygodniu",
+      "Kilka razy\nw tygodniu",
+      "Raz dziennie",
+      "Kilka razy\ndziennie"
+    ),
+    levels = c(
+      "Rzadziej niż raz\nw tygodniu",
+      "Raz w tygodniu",
+      "Kilka razy\nw tygodniu",
+      "Raz dziennie",
+      "Kilka razy\ndziennie"
+    )
+  ),
+  procent = c(17.39, 13.04, 26.09, 17.39, 26.09)
+)
+
+ggplot(df, aes(x = kategoria, y = procent)) +
+  geom_col(fill = "#4472c4", width = 0.7) +
+  geom_label(
+    aes(label = paste0(format(procent, nsmall = 2), "%")),
+    vjust = 0.5,
+    size = 4,
+    fill = "white",
+    label.size = 0.3,
+    label.padding = unit(0.2, "lines")
+  ) +
+  scale_y_continuous(
+    limits = c(0, 30),
+    breaks = seq(0, 30, by = 10),
+    expand = c(0, 0)
+  ) +
+  labs(
+    title = "Wykres 1. Respondenci według częstości picia herbaty (%)",
+    x = NULL,
+    y = "Procent",
+    caption = "Źródło: badanie CAWI, n=43"
+  ) +
+  theme_plots()
+```
+
+## Cytaty
+
+...niektórzy badani zauważają, że praca w trybie zdalnym spowodowała u nich wydłużenie się godzin przeznaczanych na obowiązki zawodowe.
+
+> *Trudno też tak jednoznacznie zakończyć pracę, maile przychodzą i się je czyta niezależnie od godziny.* (Monika, 34, księgowa w firmie remontowej)
+
+-   **Monika** - to nie jest prawdziwe imię, tylko pseudonim osoby biorącej udział w badaniu
+-   **34, księgowa w firmie remontowej** - zakres informacji związany z tematem badania. Gdyby badanie było o karierach osób mających dzieci, ważniejszą informacją byłoby czy Monika ma dzieci i ile
+
+# Dyskusja i konkluzje
+
+## Dyskusja
+
+-   „Dyskusja" jest dyskusją naszych danych z wcześniejszymi badaniami/pracami teoretycznymi
+-   Ma za zadanie pokazać, że nasze badanie jest powiązane ze state of the art naszej dyscypliny
+-   Nie powtórzenie treści, które były opisane wcześniej, raczej przyszłościowe nastawienie – co te wyniki znaczą na przyszłość dla tego tematu
+
+## Konkluzje/podsumowanie
+
+-   Warto przypomnieć pytania/hipotezy badawcze i odnieść się do nich
+-   Część kończąca tekst powinna streszczać wyniki w sposób zwięzły, bez powtarzania dosłownie tego, co było powiedziane wcześniej
+-   Dobrze jest odnieść się do ograniczeń/limitów przeprowadzonych badań (np. próba była nieliczna)
+-   Można pokazać, jakie są skutki/wyniki przeprowadzonego badania:
+    -   jak wzbogaca ono literaturę dyscypliny/subdyscypliny
+    -   jakie dalsze kroki badawcze mogłyby być podjęte
+    -   jakie rekomendacje z niego wynikają
+
+# Jak pisać?
+
+## Pisanie to proces
+
+-   Pisanie akademickie to **proces iteracyjny**, nie jednorazowe działanie
+-   Znaczenie przerw i świeżego spojrzenia „z zewnątrz" - odpoczynek, feedback i powrót do tekstu (Murray i Moore, 2006)
+-   Nie oczekujemy perfekcji od pierwszego szkicu!
+
+## Trzy wersje robocze
+
+> „...first draft is the **down draft** - you just get it down. The second draft is the **up draft** - you fix it up. You try to say what you have to say more accurately. And the third draft is the **dental draft**, where you check every tooth..."
+>
+> (Lamott, 1994, s. 60)
+
+## Pisanie i redakcja osobno
+
+> „Generating text and revising text are distinct parts of writing - don't do both at once."
+>
+> (Silva, 2007, s. 73)
+
+-   Najpierw pisz – potem poprawiaj
+-   Perfekcjonizm na etapie pisania blokuje kreatywność
+-   Redakcja wymaga innego nastawienia niż tworzenie
+
+## Na co warto zwrócić uwagę przy redakcji tekstu
+
+-   Poprawność językowa (literówki, interpunkcja, powtórzenia, bardzo długie zdania)
+-   Styl naukowy: bez ozdobników, formalność, odpowiednie wykorzystanie terminologii naukowej, przypisy
+-   Klarowna narracja i przejścia pomiędzy częściami tekstu
+-   Zgodność z wymaganiami danej formy (np. wytycznymi dla pracy zaliczeniowej, wytycznych czasopisma naukowego)
+
+## Redakcja jest redukcją – jak skracać tekst
+
+-   Uproszczenie zdań (unikamy zdań ciągnących się przez kilka linijek zdań wielokrotnie złożonych, jak również zdań „pustych")
+-   Usunięcie powtórzeń
+-   Usunięcie ozdobników
+-   (W miarę możliwości i potrzeby) usunięcie dygresji i wątków pobocznych nie związanych ściśle z tematem tekstu
+
+## Praktyczne wskazówki
+
+-   Dobry harmonogram i fokus głównie na bieżący etap
+-   Znalezienie swojego stylu pracy (ale też próbowanie nowych rozwiązań)
+-   Pozostawienie odpowiedniego marginesu (czasu, uwagi etc.) na poprawki
+-   Uwaga na nadmierny optymizm w planowaniu (*overconfidence bias*, Buehler i in., 1995)
+
+## Instytucja „Przyjaznego laika"
+
+-   Poproś kogoś spoza Twojej dziedziny o przeczytanie tekstu
+-   Jeśli laik nie rozumie głównej myśli – tekst wymaga uproszczenia
+-   Świeże oczy wychwycą błędy, które Ty przeoczysz
+-   Feedback jest darem – przyjmuj go z otwartością
+
+# Podsumowanie
+
+## Kluczowe wnioski z dzisiejszego wykładu
+
+1. **Pisanie akademickie** to umiejętność, którą można rozwijać – wymaga praktyki i świadomości zasad
+
+2. **Wytyczne formalne** (czcionka, marginesy, interlinia, cytowania) nie są arbitralne – ułatwiają czytanie i ocenę pracy
+
+3. **Styl naukowy** = precyzja, obiektywność, formalność – bez emocji i kolokwializmów
+
+4. **Tabele i wykresy** muszą mieć tytuły, źródła i być zrozumiałe bez czytania całego tekstu
+
+5. **Pisanie to proces** – pierwszy szkic nie musi być idealny, ale ostateczna wersja musi spełniać wszystkie wymogi

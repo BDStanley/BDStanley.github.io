@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pl"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
+
+  <meta name="author" content="Ben Stanley">
+  <title>Ben Stanley – Wprowadzenie do metodologii badań społecznych 2 slides</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../presentation_style.scss">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Wprowadzenie do metodologii badań społecznych</h1>
+  <p class="subtitle">Przegląd literatury. Analiza danych zastanych. Plagiat. Stosowanie referencji.</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Ben Stanley 
+</div>
+        <p class="quarto-title-affiliation">
+            Wydział Nauk Społecznych, Uniwersytet SWPS
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="plan-wykładu" class="slide level2">
+<h2>Plan wykładu</h2>
+<ul>
+<li>Przegląd literatury - definicje i typologie</li>
+<li>Systematyczny przegląd literatury</li>
+<li>Strategie wyszukiwania źródeł</li>
+<li>Analiza danych zastanych</li>
+<li>Metody analizy wtórnej</li>
+<li>Plagiat - definicje i rodzaje</li>
+<li>Etyka cytowania i parafrazowania</li>
+<li>Systemy referencyjne</li>
+<li>Zarządzanie bibliografią</li>
+</ul>
+</section>
+<section id="kluczowe-zagadnienia" class="slide level2">
+<h2>Kluczowe zagadnienia</h2>
+<ul>
+<li>Jakie są rodzaje przeglądów literatury?</li>
+<li>Jak przeprowadzić systematyczny przegląd?</li>
+<li>Czym są dane zastane i jak je analizować?</li>
+<li>Co stanowi plagiat w pracy naukowej?</li>
+<li>Jak prawidłowo stosować referencje?</li>
+</ul>
+</section>
+<section id="przegląd-literatury" class="slide level2">
+<h2>Przegląd literatury</h2>
+<ul>
+<li><strong>Synteza</strong> istniejącej wiedzy naukowej - łączenie ustaleń z różnych badań w spójną całość</li>
+<li><strong>Identyfikacja</strong> luk badawczych - wykrycie obszarów, które wymagają dalszych analiz</li>
+<li><strong>Podstawa</strong> dla nowych badań - uzasadnienie celowości projektowanego badania</li>
+<li><strong>Kontekst</strong> teoretyczny problemu - osadzenie w ramach istniejących teorii</li>
+<li><strong>Stan wiedzy</strong> w danej dziedzinie - aktualny poziom rozumienia tematu</li>
+<li><em>Przykład:</em> Przegląd badań nad wpływem mediów społecznościowych na zdrowie psychiczne młodzieży</li>
+</ul>
+</section>
+<section id="funkcje-przeglądu-literatury" class="slide level2">
+<h2>Funkcje przeglądu literatury</h2>
+<ul>
+<li><strong>Orientacyjna</strong> - zapoznanie z tematyką, podstawowymi pojęciami i głównymi nurtami badań</li>
+<li><strong>Teoretyczna</strong> - budowa ram pojęciowych dla problemu badawczego</li>
+<li><strong>Metodologiczna</strong> - wybór metod badawczych na podstawie doświadczeń innych badaczy</li>
+<li><strong>Empiryczna</strong> - porównanie własnych wyników z dotychczasowymi odkryciami</li>
+<li><strong>Krytyczna</strong> - ocena mocnych i słabych stron dotychczasowej wiedzy</li>
+<li><em>Przykład:</em> Przegląd metod pomiaru jakości życia w badaniach nad seniorami</li>
+</ul>
+</section>
+<section id="rodzaje-przeglądów-literatury" class="slide level2">
+<h2>Rodzaje przeglądów literatury</h2>
+<ul>
+<li><strong>Przegląd narracyjny</strong> - tradycyjny, opisowy; swobodny dobór źródeł</li>
+<li><strong>Przegląd systematyczny</strong> - metodyczny, rygorystyczny; ściśle określone kryteria</li>
+<li><strong>Meta-analiza</strong> - statystyczna synteza wyników z wielu badań ilościowych</li>
+<li><strong>Przegląd krytyczny</strong> - ocena jakości badań i ich wkładu teoretycznego</li>
+<li><strong>Przegląd tematyczny</strong> - mapowanie obszaru badawczego i głównych koncepcji</li>
+<li><em>Przykład:</em> Meta-analiza skuteczności terapii poznawczo-behawioralnej w leczeniu depresji</li>
+</ul>
+</section>
+<section id="przegląd-narracyjny" class="slide level2">
+<h2>Przegląd narracyjny</h2>
+<ul>
+<li><strong>Subiektywny</strong> dobór literatury - autor decyduje, co jest istotne</li>
+<li><strong>Opisowy</strong> charakter analizy - narracyjne przedstawienie głównych wątków</li>
+<li><strong>Brak</strong> rygorystycznej metodologii - trudno zreplikować proces doboru źródeł</li>
+<li><strong>Elastyczność</strong> w strukturze - możliwość organizacji według różnych kryteriów</li>
+<li><strong>Szeroki</strong> zakres tematyczny - obejmuje różnorodne aspekty problemu</li>
+<li><em>Zastosowanie:</em> Wprowadzenie do nowego obszaru badawczego, rozdziały teoretyczne w pracach</li>
+</ul>
+</section>
+<section id="przegląd-systematyczny" class="slide level2">
+<h2>Przegląd systematyczny</h2>
+<ul>
+<li><strong>Jasno określone</strong> pytanie badawcze - sformułowane np. w modelu PICO</li>
+<li><strong>Systematyczne</strong> wyszukiwanie źródeł - przeszukanie określonych baz danych</li>
+<li><strong>Przejrzyste</strong> kryteria włączenia/wyłączenia - np. tylko badania randomizowane z lat 2010-2024</li>
+<li><strong>Standaryzowana</strong> ocena jakości - przy użyciu narzędzi typu PRISMA, CASP</li>
+<li><strong>Replikowalność</strong> procedur - inni badacze powinni móc powtórzyć proces</li>
+<li><em>Przykład:</em> Przegląd PRISMA badań nad skutecznością mindfulness w redukcji stresu</li>
+</ul>
+</section>
+<section id="etapy-przeglądu-systematycznego" class="slide level2">
+<h2>Etapy przeglądu systematycznego</h2>
+<ul>
+<li><strong>Formułowanie</strong> pytania badawczego PICO</li>
+<li><strong>Opracowanie</strong> protokołu przeglądu</li>
+<li><strong>Wyszukiwanie</strong> literatury w bazach</li>
+<li><strong>Selekcja</strong> artykułów według kryteriów</li>
+<li><strong>Ocena</strong> jakości wybranych badań</li>
+<li><strong>Synteza</strong> i <strong>interpretacja</strong> wyników</li>
+</ul>
+</section>
+<section id="model-pico" class="slide level2">
+<h2>Model PICO</h2>
+<ul>
+<li><strong>P (Population)</strong> - populacja/grupa docelowa (np. dorośli z depresją)</li>
+<li><strong>I (Intervention)</strong> - interwencja/ekspozycja (np. terapia poznawczo-behawioralna)</li>
+<li><strong>C (Comparison)</strong> - grupa porównawcza (np. farmakoterapia, placebo)</li>
+<li><strong>O (Outcomes)</strong> - mierzone efekty (np. redukcja objawów depresji w skali BDI)</li>
+<li><em>Przykład pytania:</em> Czy CBT (I) jest skuteczniejsza niż farmakoterapia (C) w redukcji objawów depresji (O) u dorosłych (P)?</li>
+</ul>
+</section>
+<section id="strategie-wyszukiwania" class="slide level2">
+<h2>Strategie wyszukiwania</h2>
+<ul>
+<li><strong>Bazy bibliograficzne</strong> - Scopus, Web of Science (multidyscyplinarne)</li>
+<li><strong>Bazy dziedzinowe</strong> - PsycINFO (psychologia), ERIC (edukacja), Sociological Abstracts</li>
+<li><strong>Słowa kluczowe</strong> i <strong>operatory</strong> logiczne - AND, OR, NOT, * (wildcard)</li>
+<li><strong>Wyszukiwanie</strong> w bibliografiach - metoda “kuli śniegowej”</li>
+<li><strong>Literatura szara</strong> - raporty, konferencje, prace doktorskie, materiały niepublikowane</li>
+<li><em>Przykład zapytania:</em> (depression OR “depressive symptoms”) AND (CBT OR “cognitive behavio*r therapy”)</li>
+</ul>
+</section>
+<section id="kryteria-włączenia-i-wyłączenia" class="slide level2">
+<h2>Kryteria włączenia i wyłączenia</h2>
+<ul>
+<li><strong>Czasowe</strong> - okres publikacji (np. ostatnie 10 lat: 2014-2024)</li>
+<li><strong>Językowe</strong> - język publikacji (np. angielski, polski)</li>
+<li><strong>Metodologiczne</strong> - typ badania (np. tylko badania eksperymentalne, z grupą kontrolną)</li>
+<li><strong>Tematyczne</strong> - zgodność z problemem (np. dotyczy dorosłych, nie dzieci)</li>
+<li><strong>Jakościowe</strong> - poziom naukowy (np. tylko czasopisma recenzowane, IF &gt; 2.0)</li>
+<li><em>Przykład kryterium wyłączenia:</em> Studia przypadku, przeglądy narracyjne, badania na zwierzętach</li>
+</ul>
+</section>
+<section id="ocena-jakości-źródeł" class="slide level2">
+<h2>Ocena jakości źródeł</h2>
+<ul>
+<li><strong>Metodologia</strong> - poprawność badania</li>
+<li><strong>Transparentność</strong> - opis procedur</li>
+<li><strong>Reprezentatywność</strong> - próba badawcza</li>
+<li><strong>Trafność</strong> i <strong>rzetelność</strong> narzędzi</li>
+<li><strong>Recenzja</strong> - peer review</li>
+</ul>
+</section>
+<section id="analiza-danych-zastanych" class="slide level2">
+<h2>Analiza danych zastanych</h2>
+<ul>
+<li><strong>Dane wtórne</strong> - zebrane wcześniej przez innych badaczy lub instytucje</li>
+<li><strong>Różne źródła</strong> - statystyki publiczne, archiwa, dane z wcześniejszych badań</li>
+<li><strong>Niższe koszty</strong> niż badania pierwotne - brak kosztów rekrutacji i zbierania danych</li>
+<li><strong>Dostępność</strong> historyczna - możliwość analizy trendów z przeszłości</li>
+<li><strong>Ograniczenia</strong> w kontroli jakości - brak wpływu na sposób zbierania danych</li>
+<li><em>Przykład:</em> Analiza danych Diagnozy Społecznej (panel gospodarstw domowych w Polsce)</li>
+</ul>
+</section>
+<section id="rodzaje-danych-zastanych" class="slide level2">
+<h2>Rodzaje danych zastanych</h2>
+<ul>
+<li><strong>Dane statystyczne</strong> - GUS (Bank Danych Lokalnych), Eurostat, OECD, WHO</li>
+<li><strong>Bazy danych</strong> - administracyjne (ZUS, NFZ), komercyjne (Nielsen, CBOS)</li>
+<li><strong>Archiwa</strong> - dokumenty historyczne, protokoły, akta instytucjonalne</li>
+<li><strong>Materiały</strong> medialne - prasa (analiza treści artykułów), internet (media społecznościowe)</li>
+<li><strong>Wyniki</strong> wcześniejszych badań - European Social Survey, World Values Survey</li>
+<li><em>Przykład:</em> Dane GUS o stopie bezrobocia w województwach 2000-2024</li>
+</ul>
+</section>
+<section id="analiza-wtórna-danych" class="slide level2">
+<h2>Analiza wtórna danych</h2>
+<ul>
+<li><strong>Re-analiza</strong> - nowe pytania do starych danych (np. analiza gender w danych z lat 90.)</li>
+<li><strong>Analiza porównawcza</strong> - różne badania (np. porównanie wyników ESS w krajach UE)</li>
+<li><strong>Meta-analiza</strong> - łączenie wyników statystycznych z wielu badań</li>
+<li><strong>Analiza treści</strong> - dokumenty, media (np. analiza ramowania w artykułach prasowych)</li>
+<li><strong>Analiza</strong> szeregów czasowych - trendy w danych GUS 2000-2024</li>
+<li><em>Przykład:</em> Wtórna analiza danych PISA w celu badania nierówności edukacyjnych</li>
+</ul>
+</section>
+<section id="zalety-danych-zastanych" class="slide level2">
+<h2>Zalety danych zastanych</h2>
+<ul>
+<li><strong>Oszczędność</strong> czasu i środków - nie trzeba prowadzić własnego badania terenowego</li>
+<li><strong>Duże</strong> próby badawcze - reprezentatywne próby krajowe (np. ESS: n&gt;1500)</li>
+<li><strong>Dane</strong> niedostępne inną drogą - dane historyczne, zjawiska rzadkie</li>
+<li><strong>Porównywalność</strong> w czasie - te same pytania zadawane cyklicznie</li>
+<li><strong>Możliwość</strong> replikacji badań - dostęp do tych samych danych dla innych badaczy</li>
+<li><em>Przykład:</em> Analiza zmian postaw wobec imigrantów w Polsce 2002-2024 (ESS)</li>
+</ul>
+</section>
+<section id="ograniczenia-danych-zastanych" class="slide level2">
+<h2>Ograniczenia danych zastanych</h2>
+<ul>
+<li><strong>Brak kontroli</strong> nad jakością danych - nie znamy szczegółów realizacji badania</li>
+<li><strong>Niedostosowanie</strong> do nowych pytań - brak interesujących nas zmiennych</li>
+<li><strong>Problemy</strong> z dostępnością - ograniczenia prawne, RODO, koszty dostępu</li>
+<li><strong>Różne</strong> standardy metodologiczne - trudność porównywania różnych badań</li>
+<li><strong>Kontekst</strong> historyczny i kulturowy - zmiany w rozumieniu pytań na przestrzeni lat</li>
+<li><em>Przykład problemu:</em> Brak danych o mediach społecznościowych w badaniach sprzed 2010 roku</li>
+</ul>
+</section>
+<section id="plagiat-w-nauce" class="slide level2">
+<h2>Plagiat w nauce</h2>
+<ul>
+<li><strong>Przywłaszczenie</strong> cudzej własności intelektualnej</li>
+<li><strong>Brak</strong> odpowiednich przypisów</li>
+<li><strong>Naruszenie</strong> praw autorskich</li>
+<li><strong>Nieuczciwość</strong> akademicka</li>
+<li><strong>Zagrożenie</strong> dla wiarygodności nauki</li>
+</ul>
+</section>
+<section id="rodzaje-plagiatu" class="slide level2">
+<h2>Rodzaje plagiatu</h2>
+<ul>
+<li><strong>Plagiat dosłowny</strong> - przepisanie bez zmian i cudzysłowu (copy-paste)</li>
+<li><strong>Plagiat</strong> częściowy - fragmenty cudzego tekstu bez przypisów bibliograficznych</li>
+<li><strong>Parafrazowanie</strong> bez źródła - przeformułowanie cudzych myśli bez wskazania autora</li>
+<li><strong>Auto-plagiat</strong> - własne teksty publikowane wcześniej bez wskazania (self-plagiarism)</li>
+<li><strong>Plagiat</strong> strukturalny - kopiowanie kompozycji, logiki argumentacji</li>
+<li><em>Przykład:</em> Skopiowanie 3 zdań z artykułu bez cudzysłowu i przypisu = plagiat dosłowny</li>
+</ul>
+</section>
+<section id="plagiat-w-erze-cyfrowej" class="slide level2">
+<h2>Plagiat w erze cyfrowej</h2>
+<ul>
+<li><strong>Łatwość</strong> kopiowania z internetu - Wikipedia, blogi, portale edukacyjne</li>
+<li><strong>Plagiat</strong> z wielu źródeł jednocześnie - “patchwork plagiarism”</li>
+<li><strong>Tłumaczenie</strong> jako ukrywanie plagiatu - tłumaczenie z języków obcych bez przypisów</li>
+<li><strong>Generatory</strong> tekstów AI - ChatGPT, Claude bez wskazania użycia AI</li>
+<li><strong>Współpraca</strong> między studentami - udostępnianie prac, “ghost writing”</li>
+<li><em>Przykład:</em> Sklecenie pracy z fragmentów 10 różnych artykułów znalezionych w Google</li>
+</ul>
+</section>
+<section id="wykrywanie-plagiatu" class="slide level2">
+<h2>Wykrywanie plagiatu</h2>
+<ul>
+<li><strong>Systemy antyplagiatowe</strong> - Turnitin, Plagiat.pl, iThenticate (bazy miliardów dokumentów)</li>
+<li><strong>Porównanie</strong> z bazami danych - publikacje naukowe, prace studenckie, internet</li>
+<li><strong>Analiza</strong> stylu pisania - nagłe zmiany stylistyki mogą wskazywać na plagiat</li>
+<li><strong>Weryfikacja</strong> źródeł - sprawdzanie, czy cytowane pozycje faktycznie istnieją</li>
+<li><strong>Ocena</strong> spójności tekstu - fragmenty niedopasowane do poziomu wiedzy autora</li>
+<li><em>Przykład:</em> Raport Turnitin pokazuje 45% podobieństwa - wymaga wyjaśnienia</li>
+</ul>
+</section>
+<section id="etyka-cytowania" class="slide level2">
+<h2>Etyka cytowania</h2>
+<ul>
+<li><strong>Przypisanie</strong> autorstwa idei</li>
+<li><strong>Dokładność</strong> w odwoływaniu się</li>
+<li><strong>Kompletność</strong> informacji źródłowej</li>
+<li><strong>Rozróżnienie</strong> między cytatem a parafrazą</li>
+<li><strong>Uczciwość</strong> w interpretacji</li>
+</ul>
+</section>
+<section id="cytowanie-vs-parafrazowanie" class="slide level2">
+<h2>Cytowanie vs parafrazowanie</h2>
+<ul>
+<li><strong>Cytat dosłowny</strong> - dokładne przepisanie w “cudzysłowie” z podaniem strony</li>
+<li><strong>Parafraza</strong> - przekład własnymi słowami z podaniem źródła (bez cudzysłowu)</li>
+<li><strong>Streszczenie</strong> - skrót głównych myśli z kilku stron/rozdziałów</li>
+<li><strong>Komentarz</strong> - własna interpretacja i krytyczna ocena cudzych myśli</li>
+<li><strong>Synteza</strong> - łączenie wielu źródeł w spójną narrację</li>
+<li><em>Przykład cytatu:</em> Kowalski (2023, s. 45) twierdzi, że “media społecznościowe…”</li>
+<li><em>Przykład parafrazy:</em> Według Kowalskiego (2023) media społecznościowe wpływają na…</li>
+</ul>
+</section>
+<section id="systemy-referencyjne" class="slide level2">
+<h2>Systemy referencyjne</h2>
+<ul>
+<li><strong>APA</strong> - American Psychological Association (psychologia, nauki społeczne)</li>
+<li><strong>MLA</strong> - Modern Language Association (literatura, humanistyka)</li>
+<li><strong>Chicago</strong> - Chicago Manual of Style (historia, sztuka)</li>
+<li><strong>Harvard</strong> - system autor-data (biznes, nauki przyrodnicze)</li>
+<li><strong>Vancouver</strong> - system numeryczny [1], [2] (medycyna, nauki ścisłe)</li>
+<li><em>Zasada:</em> Wybierz jeden styl i stosuj konsekwentnie w całej pracy!</li>
+</ul>
+</section>
+<section id="system-apa" class="slide level2">
+<h2>System APA</h2>
+<ul>
+<li><strong>Autor-data</strong> w tekście (Kowalski, 2023) lub (Kowalski, 2023, s. 45)</li>
+<li><strong>Alfabetyczna</strong> bibliografia końcowa według nazwisk autorów</li>
+<li><strong>Nacisk</strong> na rok publikacji - ważny dla nauk empirycznych</li>
+<li><strong>Popularne</strong> w naukach społecznych - psychologia, socjologia, pedagogika</li>
+<li><strong>Precyzyjne</strong> reguły formatowania - kursywa dla tytułów książek/czasopism</li>
+<li><em>Przykład w tekście:</em> Badania pokazują (Kowalski &amp; Nowak, 2023), że…</li>
+<li><em>Przykład w bibliografii:</em> Kowalski, J., &amp; Nowak, A. (2023). <em>Tytuł książki</em>. Wydawnictwo.</li>
+</ul>
+</section>
+<section id="system-chicago" class="slide level2">
+<h2>System Chicago</h2>
+<ul>
+<li><strong>Notes-Bibliography</strong> - przypisy dolne z pełną informacją przy pierwszym cytowaniu</li>
+<li><strong>Author-Date</strong> - podobny do APA, używany w naukach społecznych</li>
+<li><strong>Elastyczność</strong> w stosowaniu - dopuszcza większą swobodę niż APA</li>
+<li><strong>Popularne</strong> w naukach humanistycznych - historia, filozofia, religioznawstwo</li>
+<li><strong>Szczegółowe</strong> informacje bibliograficzne - miejsce wydania, wydawca</li>
+<li><em>Przykład przypisu:</em> <sup>1</sup> Jan Kowalski, <em>Tytuł książki</em> (Warszawa: PWN, 2023), 45.</li>
+<li><em>Skrócony przypis:</em> <sup>2</sup> Kowalski, <em>Tytuł</em>, 67.</li>
+</ul>
+</section>
+<section id="bibliografia-vs-wykaz-literatury" class="slide level2">
+<h2>Bibliografia vs wykaz literatury</h2>
+<ul>
+<li><strong>Bibliografia</strong> - wszystkie wykorzystane źródła (również czytane, ale niecytowane)</li>
+<li><strong>Wykaz literatury</strong> - tylko publikacje cytowane w tekście (częściej stosowane)</li>
+<li><strong>Netografia</strong> - źródła internetowe (osobna sekcja lub włączone do bibliografii)</li>
+<li><strong>Źródła</strong> pierwotne i wtórne - można rozdzielić na osobne kategorie</li>
+<li><strong>Chronologia</strong> vs układ alfabetyczny - najczęściej alfabetycznie według nazwisk</li>
+<li><em>Zasada APA:</em> W wykazie literatury tylko te pozycje, które cytowane w tekście!</li>
+</ul>
+</section>
+<section id="zarządzanie-bibliografią" class="slide level2">
+<h2>Zarządzanie bibliografią</h2>
+<ul>
+<li><strong>Mendeley</strong> - darmowy manager referencji, łatwy eksport z baz danych</li>
+<li><strong>Zotero</strong> - open source, wtyczki przeglądarek, import jednym kliknięciem</li>
+<li><strong>EndNote</strong> - profesjonalne rozwiązanie (płatne), popularne w nauce</li>
+<li><strong>RefWorks</strong> - platforma webowa, dostęp z różnych urządzeń</li>
+<li><strong>Integracja</strong> z edytorami tekstów - wtyczki do Word, LibreOffice, Google Docs</li>
+<li><em>Zaleta:</em> Automatyczne formatowanie bibliografii (zmiana stylu jednym kliknięciem)</li>
+<li><em>Przykład:</em> Import artykułu z PsycINFO do Zotero → wstawienie cytowania w Word</li>
+</ul>
+</section>
+<section id="etyczne-wykorzystanie-ai" class="slide level2">
+<h2>Etyczne wykorzystanie AI</h2>
+<ul>
+<li><strong>Transparentność</strong> w używaniu AI - jasne wskazanie, które fragmenty wygenerowano AI</li>
+<li><strong>Oznaczanie</strong> tekstów generowanych - np. “Fragment wygenerowany przez ChatGPT 4.0”</li>
+<li><strong>Weryfikacja</strong> faktów i źródeł - AI może “halucynować” nieistniejące badania!</li>
+<li><strong>Odpowiedzialność</strong> za treść - autor odpowiada za błędy, nawet jeśli napisał je AI</li>
+<li><strong>Nowe</strong> wyzwania dla uczciwości - polityki uczelni i czasopism wobec AI się różnią</li>
+<li><em>Przykład dobrej praktyki:</em> “Niniejszy tekst został zredagowany z pomocą ChatGPT…”</li>
+<li><em>Problem:</em> AI może wymyślić nieistniejące artykuły naukowe z wiarygodnymi tytułami!</li>
+</ul>
+</section>
+<section id="dobre-praktyki" class="slide level2">
+<h2>Dobre praktyki</h2>
+<ul>
+<li><strong>Systematyczność</strong> w gromadzeniu źródeł - od początku używaj menedżera bibliografii</li>
+<li><strong>Krytyczność</strong> w ocenie literatury - nie wszystkie źródła są równej jakości</li>
+<li><strong>Precyzyjność</strong> w cytowaniu - dokładne numery stron, poprawne dane bibliograficzne</li>
+<li><strong>Uczciwość</strong> w prezentacji wyników - nie pomijaj wyników sprzecznych z hipotezą</li>
+<li><strong>Transparentność</strong> w metodologii - opisz ograniczenia i możliwe źródła błędu</li>
+<li><em>Wskazówka:</em> Notuj dane bibliograficzne od razu przy czytaniu - zaoszczędzisz czas później!</li>
+</ul>
+</section>
+<section id="kluczowe-wnioski" class="slide level2">
+<h2>Kluczowe wnioski</h2>
+<ul>
+<li>Przegląd literatury jest podstawą każdego badania naukowego</li>
+<li>Systematyczność i metodyczność poprawiają jakość przeglądu</li>
+<li>Dane zastane oferują bogate możliwości badawcze</li>
+<li>Plagiat zagraża wiarygodności nauki i kariery</li>
+<li>Prawidłowe cytowanie jest podstawą etyki akademickiej</li>
+<li>Nowoczesne narzędzia wspierają zarządzanie bibliografią</li>
+<li>Sztuczna inteligencja wymaga nowych standardów etycznych</li>
+</ul>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../swps.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Skopiowano!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Skopiowano!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

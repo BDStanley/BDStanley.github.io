@@ -1,0 +1,1840 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 9 slides"
+subtitle: "Analiza danych ilościowych"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(ggplot2)
+
+# Custom theme function for all plots
+theme_plots <- function(base_size = 11, base_family = "Jost") {
+  theme_bw(base_size, base_family) +
+    theme(
+      panel.background = element_rect(fill = "#ffffff", colour = NA),
+      title = element_text(size = rel(1), family = "Jost", face = "bold"),
+      plot.subtitle = element_text(
+        size = rel(0.8),
+        family = "Jost",
+        face = "plain"
+      ),
+      plot.caption = element_text(
+        margin = margin(t = 10),
+        size = rel(0.6),
+        family = "Jost",
+        face = "plain"
+      ),
+      panel.border = element_rect(
+        color = "grey50",
+        fill = NA,
+        linewidth = 0.15
+      ),
+      panel.spacing = unit(1, "lines"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(linewidth = 0.25, colour = "grey90"),
+      axis.line = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_text(
+        size = rel(0.8),
+        family = "Jost",
+        face = "plain"
+      ),
+      axis.title.x = element_text(margin = margin(t = 10)),
+      axis.title.y = element_text(hjust = 1, margin = margin(r = 10)),
+      legend.position = "bottom",
+      legend.title = element_text(
+        size = rel(0.8),
+        vjust = 0.5,
+        family = "Jost",
+        face = "bold"
+      ),
+      legend.key.size = unit(0.7, "line"),
+      legend.key = element_blank(),
+      legend.spacing = unit(0.1, "lines"),
+      legend.justification = "left",
+      legend.margin = margin(t = 0, b = 0, l = 0, r = 0),
+      strip.text = element_text(
+        size = rel(0.9),
+        hjust = 0,
+        family = "Jost",
+        face = "plain"
+      ),
+      strip.background = element_rect(fill = "white", colour = NA),
+      plot.margin = unit(c(0, 0, 0, 0), "cm")
+    )
+}
+```
+
+# Poziomy pomiaru w analizie ilościowej {.center}
+
+## Techniczne aspekty analizy danych ilościowych
+
+-   **Kwantyfikacja** – nadanie danym formy liczbowej
+    -   Podstawowy proces przekształcania odpowiedzi w dane numeryczne
+    -   Umożliwia stosowanie metod statystycznych
+-   **Kodowanie** – szczególnie istotne przy pytaniach otwartych i półotwartych
+    -   Tworzenie kategorii dla odpowiedzi tekstowych
+    -   Przypisywanie kodów numerycznych do kategorii
+-   **Wsparcie komputerowe**: SPSS, Stata, R, ale też Excel
+    -   Wybór narzędzia zależy od złożoności analizy i preferencji badacza
+
+## Książka kodowa
+
+Książka kodowa to dokument zawierający:
+
+-   Listę wszystkich zmiennych w badaniu
+-   Kody przypisane do poszczególnych wartości
+-   Instrukcje dotyczące interpretacji danych
+
+| POLVIEWS (poglądy polityczne) | ATTEND (uczestnictwo w obrzędach)     |
+|-------------------------------|---------------------------------------|
+| 1 = Zdecydowanie liberalny    | 0 = Nigdy                             |
+| 2 = Liberalny                 | 1 = Rzadziej niż raz w roku           |
+| 3 = Umiarkowanie liberalny    | 2 = Mniej więcej raz, dwa razy w roku |
+| ...                           | ...                                   |
+
+## Poziomy pomiaru zmiennych - przegląd
+
+Istnieją cztery poziomy pomiaru zmiennych:
+
+1.  **Nominalny** - najmniej precyzyjny
+2.  **Porządkowy** 
+3.  **Przedziałowy**
+4.  **Ilorazowy** - najbardziej precyzyjny
+
+Każdy kolejny poziom zawiera właściwości poprzednich i dodaje nowe możliwości analityczne.
+
+## Poziom nominalny (jakościowy) {.smaller}
+
+**Charakterystyka:**
+
+-   Rozróżnienie kategorii bez naturalnego porządku (np. kierunek studiów, płeć, stan cywilny)
+-   Kategorie są wzajemnie wykluczające się
+-   Nie można ich sensownie uszeregować
+
+**Dozwolone operacje:**
+
+-   Zliczanie częstości
+-   Obliczanie dominanty (mody)
+-   **NIE**: średnia, mediana, odchylenie standardowe
+
+## Przykład analizy zmiennej nominalnej {.smaller}
+
+**Pytanie:** "Z której platformy społecznościowej korzystasz najczęściej?"
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4.5
+
+set.seed(2024)
+n <- 250
+
+platformy <- c(
+  "Instagram",
+  "TikTok",
+  "Facebook",
+  "YouTube",
+  "X (Twitter)",
+  "Inna"
+)
+prawdopodobienstwa <- c(0.35, 0.25, 0.12, 0.18, 0.05, 0.05)
+
+dane <- data.frame(
+  platforma = sample(platformy, n, replace = TRUE, prob = prawdopodobienstwa)
+)
+
+tabela_n <- table(dane$platforma)
+dane_wykres <- data.frame(
+  Platforma = names(tabela_n),
+  Liczebnosc = as.vector(tabela_n),
+  Procent = round(as.vector(tabela_n) / n * 100, 1)
+)
+
+ggplot(
+  dane_wykres,
+  aes(x = reorder(Platforma, -Liczebnosc), y = Liczebnosc)
+) +
+  geom_bar(stat = "identity", fill = "red") +
+  geom_text(aes(label = paste0(Procent, "%")), vjust = -0.5, size = 6) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(
+    x = "Platforma",
+    y = "Liczba respondentów",
+    caption = paste0("N = ", n, "; Dominanta: ", names(which.max(tabela_n)))
+  ) +
+  theme_plots(base_size = 16) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Poziom porządkowy {.smaller}
+
+**Charakterystyka:**
+
+-   Istnieje logiczny porządek między kategoriami (np. oceny szkolne, ranking ulubionych potraw, "zgadzam się / nie zgadzam się")
+-   Możemy powiedzieć, że coś jest "więcej" lub "mniej"
+-   **NIE wiemy**, jak duże są różnice między kategoriami
+
+**Dozwolone operacje:**
+
+-   Wszystko co dla nominalnego PLUS:
+-   Mediana, kwartyle, percentyle
+-   Średnia jest **dyskusyjna** (niektórzy akceptują, inni nie)
+
+## Przykład analizy zmiennej porządkowej {.smaller}
+
+**Pytanie:** "W jakim stopniu zgadzasz się z twierdzeniem: *Media społecznościowe pozytywnie wpływają na moje samopoczucie psychiczne*?"
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4.5
+
+set.seed(2024)
+n <- 250
+
+odpowiedzi <- c(
+  "Zdecydowanie się nie zgadzam",
+  "Raczej się nie zgadzam",
+  "Ani się zgadzam, ani nie zgadzam",
+  "Raczej się zgadzam",
+  "Zdecydowanie się zgadzam"
+)
+
+# Prawdopodobieństwa - więcej osób jest sceptycznych
+prawdopodobienstwa <- c(0.25, 0.30, 0.25, 0.15, 0.05)
+
+dane_ord <- data.frame(
+  odpowiedz = factor(
+    sample(odpowiedzi, n, replace = TRUE, prob = prawdopodobienstwa),
+    levels = odpowiedzi,
+    ordered = TRUE
+  )
+)
+
+tabela_ord <- table(dane_ord$odpowiedz)
+dane_wykres_ord <- data.frame(
+  Odpowiedz = factor(names(tabela_ord), levels = odpowiedzi, ordered = TRUE),
+  Liczebnosc = as.vector(tabela_ord),
+  Procent = round(as.vector(tabela_ord) / n * 100, 1)
+)
+
+# Skrócone etykiety dla osi X
+etykiety_krotkie <- c(
+  "Zdecydowanie\nnie",
+  "Raczej\nnie",
+  "Ani tak,\nani nie",
+  "Raczej\ntak",
+  "Zdecydowanie\ntak"
+)
+
+# Obliczenie mediany
+kody <- as.numeric(dane_ord$odpowiedz)
+mediana_kod <- median(kody)
+mediana_tekst <- odpowiedzi[mediana_kod]
+
+ggplot(dane_wykres_ord, aes(x = Odpowiedz, y = Liczebnosc)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  geom_text(aes(label = paste0(Procent, "%")), vjust = -0.5, size = 6) +
+  scale_x_discrete(labels = etykiety_krotkie) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(
+    x = "Stopień zgodności",
+    y = "Liczba respondentów",
+    caption = paste0("N = ", n, "; Mediana: ", mediana_tekst)
+  ) +
+  theme_plots(base_size = 16) +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))
+```
+
+## Poziom przedziałowy {.smaller}
+
+**Charakterystyka:**
+
+-   Ma porządek i równe odległości między wartościami (np. rok urodzenia, temperatura)
+-   Brak „prawdziwego zera" – zero jest umowne
+-   Różnice są mierzalne i porównywalne
+
+**Dozwolone operacje:**
+
+-   Wszystko co dla porządkowego PLUS:
+-   Średnia arytmetyczna
+-   Odchylenie standardowe
+-   **NIE można**: dzielić jednej wartości przez drugą (proporcje)
+
+## Przykład analizy zmiennej przedziałowej {.smaller}
+
+**Pytanie:** "Ile godzin dziennie spędzasz w mediach społecznościowych?"
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4.5
+
+set.seed(2024)
+n <- 250
+
+# Generowanie danych z rozkładu normalnego (średnia: 3.5h, odch. std: 1.5h)
+godziny <- rnorm(n, mean = 3.5, sd = 1.5)
+# Ograniczenie do wartości sensownych (0-10 godzin)
+godziny <- pmin(pmax(godziny, 0.5), 10)
+
+dane_przedzial <- data.frame(godziny = godziny)
+
+# Obliczenie statystyk
+srednia <- mean(godziny)
+mediana <- median(godziny)
+odch_std <- sd(godziny)
+
+ggplot(dane_przedzial, aes(x = godziny)) +
+  geom_histogram(binwidth = 0.5, fill = "steelblue", color = "white") +
+  geom_vline(
+    aes(xintercept = srednia),
+    color = "red",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  annotate(
+    "text",
+    x = srednia + 0.3,
+    y = Inf,
+    label = paste0("Średnia: ", round(srednia, 1), "h"),
+    vjust = 2,
+    hjust = 0,
+    color = "red",
+    size = 5
+  ) +
+  scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    x = "Liczba godzin dziennie",
+    y = "Liczba respondentów",
+    caption = paste0(
+      "N = ",
+      n,
+      "; Średnia = ",
+      round(srednia, 1),
+      "h",
+      "; Mediana = ",
+      round(mediana, 1),
+      "h",
+      "; Odch. std. = ",
+      round(odch_std, 1),
+      "h"
+    )
+  ) +
+  theme_plots(base_size = 16)
+```
+
+## Poziom ilorazowy (stosunkowy) {.smaller}
+
+**Charakterystyka:**
+
+-   Szczególny przypadek poziomu przedziałowego (np. wiek, dochód, waga)
+-   Posiada **prawdziwe zero** (oznacza brak cechy)
+-   Można sensownie tworzyć proporcje i stosunki
+
+**Dozwolone operacje:**
+
+-   Wszystkie operacje matematyczne
+-   Proporcje i stosunki (np. "dwa razy więcej")
+
+## Przykład analizy zmiennej ilorazowej {.smaller}
+
+**Pytanie:** "Ile masz obserwujących (followers) na platformie, z której korzystasz najczęściej?"
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4.5
+
+set.seed(2024)
+n <- 250
+
+# Generowanie danych z rozkładu log-normalnego (typowe dla liczby obserwujących)
+# Większość ma mało obserwujących, nieliczni mają bardzo dużo
+followers <- rlnorm(n, meanlog = 5, sdlog = 1.2)
+# Zaokrąglenie do liczb całkowitych
+followers <- round(followers)
+
+dane_iloraz <- data.frame(followers = followers)
+
+# Obliczenie statystyk
+srednia <- mean(followers)
+mediana <- median(followers)
+odch_std <- sd(followers)
+
+# Dla lepszej wizualizacji - histogram z logarytmiczną skalą x
+ggplot(dane_iloraz, aes(x = followers)) +
+  geom_histogram(bins = 30, fill = "purple", color = "white") +
+  geom_vline(
+    aes(xintercept = srednia),
+    color = "red",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  geom_vline(
+    aes(xintercept = mediana),
+    color = "blue",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  annotate(
+    "text",
+    x = srednia * 1.5,
+    y = Inf,
+    label = paste0("Średnia: ", round(srednia, 0)),
+    vjust = 2,
+    hjust = 0,
+    color = "red",
+    size = 5
+  ) +
+  annotate(
+    "text",
+    x = mediana * 0.4,
+    y = Inf,
+    label = paste0("Mediana: ", round(mediana, 0)),
+    vjust = 4,
+    hjust = 0.5,
+    color = "blue",
+    size = 5
+  ) +
+  scale_x_log10(labels = scales::comma) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    x = "Liczba obserwujących (skala logarytmiczna)",
+    y = "Liczba respondentów",
+    caption = paste0(
+      "N = ",
+      n,
+      "; Średnia = ",
+      round(srednia, 0),
+      "; Mediana = ",
+      round(mediana, 0),
+      "; Odch. std. = ",
+      round(odch_std, 0)
+    )
+  ) +
+  theme_plots(base_size = 16)
+```
+
+## Podsumowanie poziomów pomiaru
+
+| Poziom       | Kategorie | Porządek | Równe odstępy | Prawdziwe zero |
+|--------------|-----------|----------|---------------|----------------|
+| Nominalny    | ✓         | ✗        | ✗             | ✗              |
+| Porządkowy   | ✓         | ✓        | ✗             | ✗              |
+| Przedziałowy | ✓         | ✓        | ✓             | ✗              |
+| Ilorazowy    | ✓         | ✓        | ✓             | ✓              |
+
+**Zasada:** Im wyższy poziom pomiaru, tym więcej możliwości analitycznych.
+
+# Analiza danych ilościowych
+
+## ![](images/9_1.png) {.center}
+
+## ![](images/9_2.png) {.center}
+
+## Przygotowanie bazy danych
+
+Przed rozpoczęciem analizy należy:
+
+1.  **Sprawdzić kompletność danych**
+    -   Zidentyfikować braki danych (missing values)
+    -   Zdecydować, jak traktować braki
+2.  **Zweryfikować poprawność kodowania**
+    -   Sprawdzić, czy wartości mieszczą się w dozwolonych zakresach
+    -   Zidentyfikować wartości odstające
+3.  **Utworzyć nowe zmienne** (jeśli potrzebne)
+    -   Przekodowanie zmiennych
+    -   Tworzenie indeksów i skal
+
+## Sprawdzenie kompletności danych {.smaller}
+
+**Problem:** Braki danych (missing values) - respondenci nie odpowiedzieli na wszystkie pytania
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 3.5
+
+set.seed(2024)
+n <- 250
+
+# Symulacja danych z brakami
+dane_braki <- data.frame(
+  id = 1:n,
+  platforma = sample(
+    c("Instagram", "TikTok", "Facebook", "YouTube", NA),
+    n,
+    replace = TRUE,
+    prob = c(0.35, 0.25, 0.15, 0.15, 0.10)
+  ),
+  godziny_dziennie = ifelse(runif(n) < 0.12, NA, round(rnorm(n, 3.5, 1.5), 1)),
+  satysfakcja = ifelse(runif(n) < 0.08, NA, sample(1:5, n, replace = TRUE))
+)
+
+# Wizualizacja braków danych
+braki_analiza <- data.frame(
+  Zmienna = c("Platforma", "Godziny dziennie", "Satysfakcja"),
+  Kompletne = c(
+    sum(!is.na(dane_braki$platforma)),
+    sum(!is.na(dane_braki$godziny_dziennie)),
+    sum(!is.na(dane_braki$satysfakcja))
+  ),
+  Braki = c(
+    sum(is.na(dane_braki$platforma)),
+    sum(is.na(dane_braki$godziny_dziennie)),
+    sum(is.na(dane_braki$satysfakcja))
+  )
+)
+
+braki_analiza$Procent_brakow <- round(braki_analiza$Braki / n * 100, 1)
+
+print(braki_analiza)
+```
+
+## Wizualizacja braków danych {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+library(tidyr)
+
+braki_long <- pivot_longer(
+  braki_analiza,
+  cols = c(Kompletne, Braki),
+  names_to = "Status",
+  values_to = "Liczba"
+)
+
+ggplot(braki_long, aes(x = Zmienna, y = Liczba, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +
+  geom_text(
+    aes(label = Liczba),
+    position = position_stack(vjust = 0.5),
+    color = "white",
+    size = 6
+  ) +
+  scale_fill_manual(values = c("Kompletne" = "darkgreen", "Braki" = "red")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    title = "",
+    x = "Zmienna",
+    y = "Liczba obserwacji",
+    caption = paste0("N = ", n)
+  ) +
+  theme_plots(base_size = 16)
+```
+
+**Decyzja:** Czy usunąć przypadki z brakami, czy je imputować (uzupełnić)?
+
+## Weryfikacja poprawności kodowania {.smaller}
+
+**Problem:** Wartości poza dozwolonym zakresem lub odstające
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 3.5
+
+set.seed(2024)
+n <- 250
+
+# Symulacja danych z błędami
+dane_bledy <- data.frame(
+  id = 1:n,
+  wiek = c(
+    sample(18:30, n - 5, replace = TRUE),
+    7,
+    99,
+    150,
+    -5,
+    999 # Błędne wartości
+  ),
+  godziny_dziennie = c(
+    rnorm(n - 3, 3.5, 1.5),
+    25,
+    30,
+    -2 # Wartości odstające/niemożliwe
+  )
+)
+
+# Identyfikacja problemów
+cat("Sprawdzenie wieku:\n")
+cat("Min:", min(dane_bledy$wiek), "Max:", max(dane_bledy$wiek), "\n")
+cat(
+  "Wartości poza zakresem 18-30:",
+  sum(dane_bledy$wiek < 18 | dane_bledy$wiek > 30),
+  "\n\n"
+)
+
+cat("Sprawdzenie godzin dziennie:\n")
+cat(
+  "Min:",
+  round(min(dane_bledy$godziny_dziennie), 1),
+  "Max:",
+  round(max(dane_bledy$godziny_dziennie), 1),
+  "\n"
+)
+cat(
+  "Wartości niemożliwe (<0 lub >24):",
+  sum(dane_bledy$godziny_dziennie < 0 | dane_bledy$godziny_dziennie > 24)
+)
+```
+
+## Wizualizacja wartości odstających {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+library(ggplot2)
+
+# Boxplot dla godzin dziennie
+ggplot(dane_bledy, aes(y = godziny_dziennie)) +
+  geom_boxplot(fill = "steelblue", outlier.color = "red", outlier.size = 3) +
+  geom_hline(
+    yintercept = c(0, 24),
+    linetype = "dashed",
+    color = "red",
+    linewidth = 1
+  ) +
+  annotate(
+    "text",
+    x = 0.3,
+    y = 24,
+    label = "Max możliwe (24h)",
+    vjust = -0.5,
+    color = "red",
+    size = 5
+  ) +
+  annotate(
+    "text",
+    x = 0.3,
+    y = 0,
+    label = "Min możliwe (0h)",
+    vjust = 1.5,
+    color = "red",
+    size = 5
+  ) +
+  scale_y_continuous(breaks = seq(-5, 35, by = 5)) +
+  labs(
+    title = "",
+    subtitle = "Godziny dziennie w mediach społecznościowych",
+    y = "Godziny dziennie",
+    caption = paste0("N = ", n, "; Czerwone punkty = wartości odstające")
+  ) +
+  coord_flip() +
+  theme_plots(base_size = 16)
+```
+
+**Decyzja:** Usunąć błędne wartości lub zamienić na NA?
+
+## Tworzenie nowych zmiennych {.smaller}
+
+**Problem:** Potrzeba kategoryzacji lub łączenia zmiennych
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+set.seed(2024)
+n <- 250
+
+# Oryginalne dane
+dane_nowe <- data.frame(
+  id = 1:n,
+  godziny_dziennie = pmax(0, rnorm(n, 3.5, 1.5))
+)
+
+# 1. Kategoryzacja zmiennej ciągłej
+dane_nowe$intensywnosc <- cut(
+  dane_nowe$godziny_dziennie,
+  breaks = c(0, 2, 4, 6, Inf),
+  labels = c(
+    "Niska (<2h)",
+    "Umiarkowana (2-4h)",
+    "Wysoka (4-6h)",
+    "Bardzo wysoka (>6h)"
+  ),
+  include.lowest = TRUE
+)
+
+# Porównanie przed i po
+cat("Przykładowe dane przed i po kategoryzacji:\n\n")
+print(head(dane_nowe[, c("godziny_dziennie", "intensywnosc")], 10))
+```
+
+## Wizualizacja nowej zmiennej {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+# Zliczenie kategorii
+tabela_kat <- table(dane_nowe$intensywnosc)
+dane_kat_wykres <- data.frame(
+  Kategoria = names(tabela_kat),
+  Liczebnosc = as.vector(tabela_kat),
+  Procent = round(as.vector(tabela_kat) / n * 100, 1)
+)
+
+ggplot(dane_kat_wykres, aes(x = Kategoria, y = Liczebnosc)) +
+  geom_bar(stat = "identity", fill = "orange") +
+  geom_text(aes(label = paste0(Procent, "%")), vjust = -0.5, size = 4) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
+  labs(
+    title = "",
+    subtitle = "Utworzona zmienna kategoryczna na podstawie godzin dziennie",
+    x = "Kategoria intensywności",
+    y = "Liczba respondentów",
+    caption = paste0("N = ", n)
+  ) +
+  theme_plots(base_size = 16) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+**Zastosowanie:** Łatwiejsza analiza i interpretacja wyników
+
+## Analiza jednozmiennowa – opis próby
+
+**Cel:** Opisać rozkład każdej zmiennej osobno
+
+**Elementy analizy:**
+
+-   **Rozkład wartości**
+    -   Częstości (liczby bezwzględne i procenty)
+    -   Ważne odpowiedzi vs braki odpowiedzi
+-   **Miary tendencji centralnej**
+    -   Dominanta (modalna) – wartość najczęstsza
+    -   Mediana – wartość środkowa
+    -   Średnia arytmetyczna
+-   **Miary rozproszenia**
+    -   Zakres (rozstęp) wartości
+    -   Odchylenie standardowe
+
+## Rozkład wartości: Częstości {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+set.seed(2024)
+n <- 250
+
+# Dane o platformie z brakami
+platforma_dane <- sample(
+  c("Instagram", "TikTok", "Facebook", "YouTube", "Brak odpowiedzi"),
+  n,
+  replace = TRUE,
+  prob = c(0.35, 0.25, 0.15, 0.15, 0.10)
+)
+
+tabela_freq <- table(platforma_dane)
+dane_freq <- data.frame(
+  Kategoria = names(tabela_freq),
+  Liczebnosc = as.vector(tabela_freq),
+  Procent = round(as.vector(tabela_freq) / n * 100, 1)
+)
+
+# Kolorowanie - czerwony dla braków
+kolory <- ifelse(dane_freq$Kategoria == "Brak odpowiedzi", "red", "steelblue")
+
+ggplot(dane_freq, aes(x = reorder(Kategoria, -Liczebnosc), y = Liczebnosc)) +
+  geom_bar(stat = "identity", fill = kolory) +
+  geom_text(
+    aes(label = paste0(Liczebnosc, " (", Procent, "%)")),
+    vjust = -0.3,
+    size = 4
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    subtitle = "Najczęściej używane media społecznościowe",
+    x = "Platforma",
+    y = "Liczba respondentów (Procent)",
+    caption = paste0("N = ", n, " (w tym braki odpowiedzi)")
+  ) +
+  theme_plots(base_size = 16) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+**Interpretacja:** Instagram dominuje (36.4%), wysokie braki odpowiedzi (8.8%)
+
+## Miary tendencji centralnej {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+set.seed(2024)
+n <- 250
+
+# Generowanie godzin dziennie
+godziny <- pmax(0.5, rnorm(n, mean = 3.5, sd = 1.5))
+
+# Obliczenie miar
+srednia <- mean(godziny)
+mediana <- median(godziny)
+
+# Dla dominanty - zaokrąglamy do 0.5
+godziny_округlone <- round(godziny * 2) / 2
+dominanta <- as.numeric(names(sort(table(godziny_округlone), decreasing = TRUE)[
+  1
+]))
+
+ggplot(data.frame(godziny = godziny), aes(x = godziny)) +
+  geom_histogram(binwidth = 0.5, fill = "lightblue", color = "white") +
+  geom_vline(
+    aes(xintercept = dominanta, color = "Dominanta"),
+    linetype = "solid",
+    linewidth = 1.5
+  ) +
+  geom_vline(
+    aes(xintercept = mediana, color = "Mediana"),
+    linetype = "dashed",
+    linewidth = 1.5
+  ) +
+  geom_vline(
+    aes(xintercept = srednia, color = "Średnia"),
+    linetype = "dotted",
+    linewidth = 1.5
+  ) +
+  scale_color_manual(
+    name = "Miary tendencji\ncentralnej",
+    values = c(
+      "Dominanta" = "purple",
+      "Mediana" = "blue",
+      "Średnia" = "red"
+    )
+  ) +
+  scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    subtitle = "Godziny dziennie w mediach społecznościowych",
+    x = "Liczba godzin",
+    y = "Liczba respondentów",
+    caption = paste0(
+      "Dominanta = ",
+      round(dominanta, 1),
+      "h; Mediana = ",
+      round(mediana, 1),
+      "h; Średnia = ",
+      round(srednia, 1),
+      "h"
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  theme(legend.position = "right")
+```
+
+**Interpretacja:** Wszystkie trzy miary są podobne (\~3.5h), co wskazuje na symetryczny rozkład
+
+## Miary rozproszenia {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 4
+
+set.seed(2024)
+n <- 250
+
+# Dwa rozkłady - niskie i wysokie rozproszenie
+godziny_niskie <- rnorm(n, mean = 3.5, sd = 0.5)
+godziny_wysokie <- rnorm(n, mean = 3.5, sd = 2)
+
+# Ograniczenie do sensownych wartości
+godziny_niskie <- pmax(0, pmin(10, godziny_niskie))
+godziny_wysokie <- pmax(0, pmin(10, godziny_wysokie))
+
+# Obliczenie statystyk
+sd_niskie <- sd(godziny_niskie)
+zakres_niskie <- diff(range(godziny_niskie))
+
+sd_wysokie <- sd(godziny_wysokie)
+zakres_wysokie <- diff(range(godziny_wysokie))
+
+# Łączenie danych
+dane_porownanie <- data.frame(
+  godziny = c(godziny_niskie, godziny_wysokie),
+  typ = rep(
+    c(
+      paste0("Niskie rozproszenie\n(SD=", round(sd_niskie, 1), "h)"),
+      paste0("Wysokie rozproszenie\n(SD=", round(sd_wysokie, 1), "h)")
+    ),
+    each = n
+  )
+)
+
+ggplot(dane_porownanie, aes(x = godziny, fill = typ)) +
+  geom_histogram(
+    binwidth = 0.5,
+    color = "white",
+    alpha = 0.7,
+    position = "identity"
+  ) +
+  geom_vline(xintercept = 3.5, linetype = "dashed", linewidth = 1) +
+  scale_fill_manual(values = c("darkgreen", "orange")) +
+  scale_x_continuous(breaks = seq(0, 10, by = 1)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    subtitle = "Porównanie niskiego i wysokiego rozproszenia",
+    x = "Liczba godzin dziennie",
+    y = "Liczba respondentów",
+    fill = "Typ rozkładu"
+  ) +
+  theme_plots(base_size = 16) +
+  theme(legend.position = "top")
+```
+
+**Interpretacja:** Wyższe SD = większe zróżnicowanie w czasie korzystania
+
+## Dobór miar do typu zmiennej
+
+| Poziom pomiaru | Tendencja centralna | Rozproszenie       |
+|----------------|---------------------|--------------------|
+| Nominalny      | Dominanta           | \-                 |
+| Porządkowy     | Dominanta, Mediana  | Rozstęp kwartylowy |
+| Przedziałowy   | Średnia, Mediana    | Odch. standardowe  |
+| Ilorazowy      | Średnia, Mediana    | Odch. standardowe  |
+
+**Uwaga:** Zawsze można użyć miar z niższych poziomów, ale nie z wyższych.
+
+## Przykład analizy jednozmiennowej
+
+**Pytanie:** "Jak oceniasz ogólny wpływ mediów społecznościowych na Twoje życie?"
+
+| Odpowiedź                    | \%  |
+|------------------------------|-----|
+| Bardzo pozytywny             | 8%  |
+| Raczej pozytywny             | 27% |
+| Ani pozytywny, ani negatywny | 35% |
+| Raczej negatywny             | 22% |
+| Bardzo negatywny             | 8%  |
+
+Źródło: Dane przykładowe, 2025
+
+## Test istotności różnic między kategoriami {.smaller}
+
+**Pytanie badawcze:** Czy rozkład odpowiedzi różni się istotnie od rozkładu równomiernego?
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Obserwowane częstości
+obserwowane <- c(20, 68, 88, 55, 20)
+kategorie <- c(
+  "Bardzo pozytywny",
+  "Raczej pozytywny",
+  "Neutralny",
+  "Raczej negatywny",
+  "Bardzo negatywny"
+)
+
+# Test chi-kwadrat dopasowania (goodness of fit)
+# H0: rozkład jest równomierny (każda kategoria 20%)
+# H1: rozkład nie jest równomierny
+
+n_total <- sum(obserwowane)
+oczekiwane <- rep(n_total / 5, 5) # Rozkład równomierny
+
+chi_test <- chisq.test(obserwowane, p = rep(0.2, 5))
+
+cat("TEST CHI-KWADRAT DOPASOWANIA\n")
+cat("================================\n\n")
+cat(
+  "Hipoteza zerowa (H0): Wszystkie kategorie są równie prawdopodobne (20% każda)\n"
+)
+cat("Hipoteza alternatywna (H1): Rozkład różni się od równomiernego\n\n")
+
+cat("Obserwowane częstości:\n")
+for (i in 1:5) {
+  cat(sprintf(
+    "  %s: %d (%.1f%%)\n",
+    kategorie[i],
+    obserwowane[i],
+    obserwowane[i] / n_total * 100
+  ))
+}
+
+cat("\nOczekiwane częstości (przy H0):\n")
+for (i in 1:5) {
+  cat(sprintf("  %s: %.1f (20.0%%)\n", kategorie[i], oczekiwane[i]))
+}
+
+cat("\n\nWyniki testu:\n")
+cat("χ² =", round(chi_test$statistic, 2), "\n")
+cat("df =", chi_test$parameter, "\n")
+cat("p-value =", round(chi_test$p.value, 4), "\n\n")
+
+if (chi_test$p.value < 0.05) {
+  cat("WNIOSEK: Odrzucamy H0 (p < 0.05)\n")
+  cat("Rozkład odpowiedzi różni się ISTOTNIE od równomiernego.\n")
+  cat("Respondenci nie odpowiadają losowo - widoczny wzorzec:\n")
+  cat("najwięcej osób wybiera odpowiedzi neutralne i raczej pozytywne.\n")
+} else {
+  cat("WNIOSEK: Nie ma podstaw do odrzucenia H0 (p ≥ 0.05)\n")
+  cat("Rozkład odpowiedzi NIE różni się istotnie od równomiernego.\n")
+}
+```
+
+## Wizualizacja testu dopasowania {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+library(ggplot2)
+
+dane_test <- data.frame(
+  Kategoria = factor(kategorie, levels = kategorie),
+  Obserwowane = obserwowane,
+  Oczekiwane = oczekiwane
+)
+
+dane_long <- tidyr::pivot_longer(
+  dane_test,
+  cols = c(Obserwowane, Oczekiwane),
+  names_to = "Typ",
+  values_to = "Liczba"
+)
+
+ggplot(dane_long, aes(x = Kategoria, y = Liczba, fill = Typ)) +
+  geom_bar(stat = "identity", position = "dodge", alpha = 0.8) +
+  geom_text(
+    aes(label = round(Liczba, 0)),
+    position = position_dodge(width = 0.9),
+    vjust = -0.5,
+    size = 4
+  ) +
+  scale_fill_manual(
+    name = "",
+    values = c("Obserwowane" = "#E74C3C", "Oczekiwane" = "#95A5A6"),
+    labels = c("Rozkład równomierny (H0)", "Rozkład obserwowany")
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    subtitle = "Porównanie obserwowanego i oczekiwanego rozkładu odpowiedzi",
+    x = "Ocena wpływu mediów społecznościowych",
+    y = "Liczba respondentów",
+    caption = paste0(
+      "N = ",
+      n_total,
+      "; χ² = ",
+      round(chi_test$statistic, 2),
+      ", p = ",
+      round(chi_test$p.value, 4),
+      "\n",
+      ifelse(
+        chi_test$p.value < 0.05,
+        "Różnice statystycznie istotne - respondenci preferują odpowiedzi neutralne i pozytywne",
+        "Różnice statystycznie nieistotne"
+      )
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  )
+```
+
+**Interpretacja:** Rozkład odpowiedzi różni się istotnie od równomiernego (χ² = `r round(chi_test$statistic, 2)`, p < 0.001). Respondenci najczęściej wybierają odpowiedzi neutralne (35%) i raczej pozytywne (27%), co sugeruje umiarkowanie pozytywne nastawienie do mediów społecznościowych z dużą dozą ambiwolencji.
+
+## Analiza dwuzmiennowa – wyjaśnienie
+
+**Cel:** Zbadać związek między dwiema zmiennymi
+
+**Kiedy możemy mówić o wpływie?**
+
+-   Gdy mamy porównanie między grupami
+-   I to nie zawsze – korelacja ≠ przyczynowość!
+
+**Narzędzia:**
+
+-   Tabele krzyżowe (kontyngencji)
+-   Testy statystyczne (np. test chi-kwadrat)
+-   Miary korelacji
+
+## Przykład: Korelacja dodatnia
+
+**Związek między czasem w mediach społecznościowych a liczbą postów**
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(2024)
+n <- 250
+
+# Generowanie danych z dodatnią korelacją
+godziny <- rnorm(n, mean = 3.5, sd = 1.5)
+godziny <- pmax(0, godziny) # Nie może być ujemnych wartości
+
+# Liczba postów skorelowana z godzinami (z pewnym szumem)
+posty_tydzien <- 5 * godziny + rnorm(n, mean = 0, sd = 3)
+posty_tydzien <- pmax(0, posty_tydzien) # Nie może być ujemnych wartości
+
+dane_korelacja <- data.frame(
+  godziny = godziny,
+  posty = posty_tydzien
+)
+
+# Oblicz współczynnik korelacji
+korelacja <- cor(dane_korelacja$godziny, dane_korelacja$posty)
+
+# Wykres
+p <- ggplot(dane_korelacja, aes(x = godziny, y = posty)) +
+  geom_point(alpha = 0.5, size = 2.5, color = "#2C3E50") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E74C3C", linewidth = 1.2) +
+  labs(
+    x = "Godziny dziennie w mediach społecznościowych",
+    y = "Liczba postów w tygodniu",
+    caption = paste0(
+      "r = ",
+      round(korelacja, 2),
+      " – silna korelacja dodatnia\nWięcej czasu w mediach = więcej postowanych treści"
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  scale_x_continuous(limits = c(0, 8), breaks = seq(0, 8, 2)) +
+  scale_y_continuous(limits = c(0, max(dane_korelacja$posty) * 1.1))
+
+print(p)
+```
+
+## Przykład: Korelacja ujemna
+
+**Związek między czasem w mediach społecznościowych a jakością snu**
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(2024)
+
+# Generowanie danych z ujemną korelacją
+godziny2 <- rnorm(n, mean = 3.5, sd = 1.5)
+godziny2 <- pmax(0, godziny2)
+
+# Jakość snu (skala 1-10) ujemnie skorelowana z czasem w mediach
+jakosc_snu <- 8 - 0.8 * godziny2 + rnorm(n, mean = 0, sd = 1)
+jakosc_snu <- pmax(1, pmin(10, jakosc_snu)) # Ograniczenie do skali 1-10
+
+dane_korelacja2 <- data.frame(
+  godziny = godziny2,
+  sen = jakosc_snu
+)
+
+# Oblicz współczynnik korelacji
+korelacja2 <- cor(dane_korelacja2$godziny, dane_korelacja2$sen)
+
+# Wykres
+p2 <- ggplot(dane_korelacja2, aes(x = godziny, y = sen)) +
+  geom_point(alpha = 0.5, size = 2.5, color = "#2C3E50") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E74C3C", linewidth = 1.2) +
+  labs(
+    x = "Godziny dziennie w mediach społecznościowych",
+    y = "Jakość snu (skala 1-10)",
+    caption = paste0(
+      "r = ",
+      round(korelacja2, 2),
+      " – umiarkowana korelacja ujemna\nWięcej czasu w mediach = gorsza jakość snu"
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  scale_x_continuous(limits = c(0, 8), breaks = seq(0, 8, 2)) +
+  scale_y_continuous(limits = c(1, 10), breaks = seq(1, 10, 2))
+
+print(p2)
+```
+
+## Przykład: Brak korelacji
+
+**Związek między czasem w mediach społecznościowych a wiekiem**
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(2024)
+
+# Generowanie danych bez korelacji
+wiek_respondentow <- sample(18:30, n, replace = TRUE)
+godziny3 <- rnorm(n, mean = 3.5, sd = 1.5)
+godziny3 <- pmax(0, godziny3)
+
+dane_korelacja3 <- data.frame(
+  wiek = wiek_respondentow,
+  godziny = godziny3
+)
+
+# Oblicz współczynnik korelacji
+korelacja3 <- cor(dane_korelacja3$wiek, dane_korelacja3$godziny)
+
+# Wykres
+p3 <- ggplot(dane_korelacja3, aes(x = wiek, y = godziny)) +
+  geom_point(alpha = 0.5, size = 2.5, color = "#2C3E50") +
+  geom_smooth(method = "lm", se = TRUE, color = "#95A5A6", linewidth = 1.2) +
+  labs(
+    x = "Wiek respondenta (lata)",
+    y = "Godziny dziennie w mediach społecznościowych",
+    caption = paste0(
+      "r = ",
+      round(korelacja3, 2),
+      " – brak korelacji\nWiek nie wpływa na czas spędzany w mediach społecznościowych"
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  scale_x_continuous(limits = c(17, 31), breaks = seq(18, 30, 3)) +
+  scale_y_continuous(limits = c(0, max(dane_korelacja3$godziny) * 1.1))
+
+print(p3)
+```
+
+## Kroki tworzenia tabeli dwuzmiennowej
+
+1.  **Zdefiniuj zmienne**
+    -   Zmienna niezależna (np. płeć)
+    -   Zmienna zależna (np. plany zawodowe)
+2.  **Podziel przypadki na grupy**
+    -   Zgodnie z wartościami zmiennej niezależnej
+3.  **Opisz każdą podgrupę**
+    -   W kategoriach wartości zmiennej zależnej
+4.  **Odczytaj porównanie**
+    -   Jakie są różnice między grupami?
+
+## Przykład analizy dwuzmiennowej {.smaller}
+
+**Pytanie:** "Czy zgadzasz się z twierdzeniem: *Media społecznościowe pozytywnie wpływają na moje życie społeczne*?" (według płci)
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+set.seed(2024)
+n <- 250
+
+# Symulacja danych - kobiety są znacznie bardziej sceptyczne
+plec <- sample(c("Kobiety", "Mężczyźni"), n, replace = TRUE, prob = c(0.5, 0.5))
+
+odpowiedzi <- sapply(plec, function(p) {
+  if (p == "Kobiety") {
+    sample(
+      c("Zdecydowanie tak", "Raczej tak", "Raczej nie", "Zdecydowanie nie"),
+      1,
+      prob = c(0.08, 0.22, 0.40, 0.30) # Bardzo sceptyczne
+    )
+  } else {
+    sample(
+      c("Zdecydowanie tak", "Raczej tak", "Raczej nie", "Zdecydowanie nie"),
+      1,
+      prob = c(0.35, 0.45, 0.15, 0.05) # Bardzo pozytywne
+    )
+  }
+})
+
+# Tworzenie tabeli krzyżowej
+tabela <- table(plec, odpowiedzi)
+tabela_procent <- prop.table(tabela, margin = 1) * 100
+
+# Test chi-kwadrat
+chi_test <- chisq.test(tabela)
+
+# Wyświetlenie tabeli
+cat("Tabela krzyżowa (procenty wierszowe):\n\n")
+print(round(tabela_procent, 1))
+cat("\n\nLiczebności bezwzględne:\n\n")
+print(tabela)
+cat("\n\nTest chi-kwadrat:\n")
+cat("χ² =", round(chi_test$statistic, 2), "\n")
+cat("df =", chi_test$parameter, "\n")
+cat("p-value =", round(chi_test$p.value, 4), "\n")
+if (chi_test$p.value < 0.05) {
+  cat("\nWynik: Różnice między płciami są statystycznie istotne (p < 0.05)\n")
+} else {
+  cat(
+    "\nWynik: Różnice między płciami NIE są statystycznie istotne (p ≥ 0.05)\n"
+  )
+}
+```
+
+## Wizualizacja analizy dwuzmiennowej {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+# Przygotowanie danych do wykresu
+dane_wykres <- as.data.frame(tabela_procent)
+colnames(dane_wykres) <- c("Plec", "Odpowiedz", "Procent")
+
+# Upewnienie się, że odpowiedzi są w odpowiedniej kolejności
+dane_wykres$Odpowiedz <- factor(
+  dane_wykres$Odpowiedz,
+  levels = c("Zdecydowanie tak", "Raczej tak", "Raczej nie", "Zdecydowanie nie")
+)
+
+# Wykres słupkowy grupowany
+ggplot(dane_wykres, aes(x = Odpowiedz, y = Procent, fill = Plec)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(
+    aes(label = paste0(round(Procent, 1), "%")),
+    position = position_dodge(width = 0.9),
+    vjust = -0.5,
+    size = 4
+  ) +
+  scale_fill_manual(
+    name = "Płeć",
+    values = c("Kobiety" = "#E74C3C", "Mężczyźni" = "#3498DB")
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15)), limits = c(0, 50)) +
+  labs(
+    subtitle = "Ocena wpływu mediów społecznościowych na życie społeczne według płci",
+    x = "Odpowiedź",
+    y = "Procent respondentów",
+    caption = paste0(
+      "N = ",
+      n,
+      "; χ² = ",
+      round(chi_test$statistic, 2),
+      ", p = ",
+      round(chi_test$p.value, 4),
+      "\n",
+      ifelse(
+        chi_test$p.value < 0.05,
+        "Różnice statystycznie istotne (p < 0.05)",
+        "Różnice statystycznie nieistotne (p ≥ 0.05)"
+      )
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  )
+```
+
+**Interpretacja:** Mężczyźni znacznie częściej wyrażają pozytywne opinie o wpływie mediów społecznościowych na życie społeczne (około 80% odpowiedzi pozytywnych vs około 30% u kobiet). Kobiety wykazują silny sceptycyzm - około 70% odpowiedzi negatywnych. Test chi-kwadrat potwierdza, że różnice między płciami są statystycznie wysoce istotne (p \< 0.001).
+
+## Analiza wielozmiennowa – wyjaśnienie
+
+**Cel:** Zbadać złożone zależności między wieloma zmiennymi jednocześnie
+
+**Narzędzia:**
+
+-   Tabele wielozmiennowe (z kontrolą trzeciej zmiennej)
+-   Modele regresji
+    -   Regresja liniowa (zmienna zależna ciągła)
+    -   Regresja logistyczna (zmienna zależna binarna)
+
+**Zastosowanie:**
+
+-   Kontrolowanie wpływu zmiennych zakłócających
+-   Przewidywanie wartości jednej zmiennej na podstawie innych
+
+## Przykład analizy wielozmiennowej
+
+**Pytanie:** "Jak oceniasz wpływ mediów społecznościowych na Twoje samopoczucie?" (według płci i roku)
+
+Analiza uwzględnia trzy zmienne:
+
+1.  Rok badania (2018-2025)
+2.  Płeć (kobiety/mężczyźni)
+3.  Ocena wpływu na samopoczucie (skala 1-10)
+
+## Wizualizacja analizy wielozmiennowej {.smaller}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(2024)
+
+# Symulacja danych wieloletnich
+lata <- 2018:2025
+n_na_rok <- 150
+
+# Funkcja do generowania danych dla każdego roku
+dane_lata <- do.call(
+  rbind,
+  lapply(lata, function(rok) {
+    # Trend: oceny spadają z czasem (rosnąca świadomość negatywnych skutków)
+    # Różnica między płciami rośnie z czasem
+
+    lata_od_poczatku <- rok - 2018
+
+    # Kobiety - spadek bardziej stromy (-0.4 punktu rocznie)
+    trend_kobiety <- lata_od_poczatku * (-0.4)
+    kobiety_ocena <- 6.5 + trend_kobiety + rnorm(n_na_rok / 2, 0, 1.2)
+    kobiety_ocena <- pmax(1, pmin(10, kobiety_ocena))
+
+    # Mężczyźni - spadek łagodniejszy (-0.15 punktu rocznie)
+    trend_mezczyzni <- lata_od_poczatku * (-0.15)
+    mezczyzni_ocena <- 6.5 + trend_mezczyzni + rnorm(n_na_rok / 2, 0, 1.2)
+    mezczyzni_ocena <- pmax(1, pmin(10, mezczyzni_ocena))
+
+    data.frame(
+      rok = rok,
+      plec = rep(c("Kobiety", "Mężczyźni"), each = n_na_rok / 2),
+      ocena = c(kobiety_ocena, mezczyzni_ocena)
+    )
+  })
+)
+
+# Obliczenie średnich dla każdego roku i płci
+dane_agregat <- aggregate(ocena ~ rok + plec, dane_lata, mean)
+
+# Wykres liniowy z trendami
+ggplot(dane_agregat, aes(x = rok, y = ocena, color = plec, group = plec)) +
+  geom_line(linewidth = 1.5) +
+  geom_point(size = 3) +
+  scale_color_manual(
+    name = "Płeć",
+    values = c("Kobiety" = "#E74C3C", "Mężczyźni" = "#3498DB")
+  ) +
+  scale_x_continuous(breaks = lata) +
+  scale_y_continuous(limits = c(1, 10), breaks = seq(1, 10, 1)) +
+  labs(
+    title = "Ocena wpływu mediów społecznościowych na samopoczucie",
+    subtitle = "Według płci i roku badania (skala 1-10, gdzie 10 = bardzo pozytywny wpływ)",
+    x = "Rok badania",
+    y = "Średnia ocena wpływu na samopoczucie",
+    caption = paste0(
+      "N = ",
+      nrow(dane_lata),
+      " (ok. ",
+      n_na_rok,
+      " respondentów rocznie)\n",
+      "Różnica między płciami rośnie z czasem - kobiety wykazują bardziej stromy spadek ocen"
+    )
+  ) +
+  theme_plots(base_size = 16) +
+  theme(
+    legend.position = "top",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+**Obserwacje:**
+
+-   Oceny wpływu mediów społecznościowych spadły od 2018 roku u obu płci
+-   **Różnica między płciami rośnie z czasem**: w 2018 obie grupy miały podobne oceny (\~6.5), w 2025 różnica wynosi około 2 punkty
+-   Kobiety wykazują bardziej stromy spadek ocen (efekt interakcji między rokiem a płcią)
+-   Możliwe interpretacje: rosnąca świadomość negatywnego wpływu mediów społecznościowych szczególnie wśród kobiet
+
+## Podsumowanie: typy analizy
+
+| Typ analizy    | Liczba zmiennych | Cel         | Przykładowe narzędzia |
+|----------------|------------------|-------------|-----------------------|
+| Jednozmiennowa | 1                | Opis        | Częstości, średnia    |
+| Dwuzmiennowa   | 2                | Związek     | Tabele krzyżowe, chi² |
+| Wielozmiennowa | 3+               | Wyjaśnienie | Regresja              |
+
+## Kluczowe zasady analizy ilościowej
+
+1.  Dobierz metodę do poziomu pomiaru
+2.  Pamiętaj o brakach danych
+3.  Korelacja ≠ przyczynowość
+4.  Interpretuj w kontekście
+
+## Dobierz metodę do poziomu pomiaru
+
+**Problem:** Obliczanie średniej dla zmiennej nominalnej jest bez sensu
+
+- Błędne podejście
+
+  - Pytanie: "Z której platformy korzystasz najczęściej?"
+  - Kodowanie: Instagram=1, TikTok=2, Facebook=3, YouTube=4, X=5
+  - Obliczona "średnia": 2.47
+  - Co to znaczy? Nic.
+
+- Poprawne podejście:
+  - Dominanta (najczęstsza wartość): Instagram
+  - Procenty: Instagram (35%), TikTok (25%), Facebook (15%), YouTube (15%), X (10%)
+  - To ma sens - pokazuje najpopularniejszą platformę
+
+Zmienna nominalna → dominanta, częstości, procenty.
+
+## Pamiętaj o brakach danych
+
+**Problem:** Braki danych mogą być systematyczne i wprowadzać błąd
+
+- Scenariusz:
+  - Badanie: "Ile godzin dziennie spędzasz w mediach społecznościowych?"
+  - Osoby spędzające sporo czasu (\>6h) częściej nie odpowiadają (wstyd, unikanie)
+  - 40% osób z wysokim użyciem nie odpowiada
+  - Tylko 5% osób z niskim użyciem nie odpowiada
+
+- Konsekwencje:
+  - Prawdziwa średnia: 4.2 godziny
+  - Obserwowana średnia (z brakami): 3.5 godziny
+  - Zaniżenie o prawie godzinę
+
+Zawsze sprawdzaj wzorzec braków - czy są losowe czy systematyczne?
+
+## Korelacja ≠ przyczynowość
+
+**Problem:** Związek statystyczny nie oznacza związku przyczynowego
+
+- Pozorny związek:
+
+  - Obserwacja: Im więcej czasu w mediach społecznościowych, tym więcej znajomych (r = 0.75)
+
+- Błędna interpretacja:
+
+  - "Media społecznościowe POWODUJĄ więcej znajomości!"
+
+- Prawdziwa przyczyna - zmienna zakłócająca:
+
+  - Ekstrawersja wpływa zarówno na:
+    - Czas w mediach społecznościowych (ekstrawertyczni więcej korzystają)
+    - Liczbę znajomych (ekstrawertyczni mają więcej znajomych)
+
+Korelacja może być efektem trzeciej zmiennej.
+
+## Interpretuj w kontekście
+
+**Problem:** Te same liczby mogą znaczyć co innego w różnych kontekstach
+
+- Przykład: 3 godziny dziennie w mediach społecznościowych
+
+  - Kontekst 1: Student
+      - Średnia dla studentów: 5 godzin dziennie
+      - 3 godziny = poniżej średniej
+      - Interpretacja: Umiarkowane użycie
+  
+  - Kontekst 2: Pracujący full-time
+    - Średnia dla pracujących: 2 godziny dziennie
+    - 3 godziny = powyżej średniej
+    - Interpretacja: Intensywne użycie
+
+Liczby nabierają sensu tylko w kontekście teorii, norm grupowych i problemu badawczego.
+
+# Podsumowanie: Krok po kroku analiza ilościowa
+
+## Krok 1: Przygotowanie danych
+
+**Przed analizą:**
+
+1. **Import i weryfikacja danych**
+   - Wczytaj dane do programu (SPSS, R, Excel)
+   - Sprawdź, czy wszystkie zmienne są poprawnie zakodowane
+   - Zweryfikuj typy zmiennych (nominalna, porządkowa, przedziałowa, ilorazowa)
+
+2. **Czyszczenie danych**
+   - Zidentyfikuj braki danych (missing values)
+   - Sprawdź wartości odstające i błędne
+   - Zdecyduj o strategii radzenia sobie z brakami
+
+3. **Tworzenie nowych zmiennych** (jeśli potrzebne)
+   - Przekodowanie (np. wiek → grupy wiekowe)
+   - Tworzenie skal i indeksów
+   - Odwracanie skal (jeśli potrzebne)
+
+## Krok 2: Analiza jednozmiennowa (opisowa)
+
+**Cel:** Poznaj rozkład każdej zmiennej osobno
+
+**Dla każdej zmiennej:**
+
+1. **Oblicz podstawowe statystyki** (dostosowane do poziomu pomiaru)
+2. **Stwórz wizualizację** (wykres słupkowy, histogram)
+3. **Opisz rozkład** (jaka jest typowa wartość? jak bardzo zróżnicowana?)
+
+**Typowe pytania:**
+
+- Jaka jest średnia/mediana/dominanta?
+- Jak bardzo zróżnicowane są odpowiedzi?
+- Ile jest braków danych?
+- Czy rozkład jest symetryczny czy skośny?
+
+## Krok 3: Analiza dwuzmiennowa (relacyjna)
+
+**Cel:** Zbadaj związki między parami zmiennych
+
+**Proces:**
+
+1. **Wybierz parę zmiennych do analizy**
+   - Zmienna niezależna (ta, która może wpływać)
+   - Zmienna zależna (ta, na którą wpływa)
+
+2. **Dobierz metodę** (zależy od typów zmiennych - patrz następne slajdy)
+
+3. **Wykonaj analizę i test statystyczny**
+
+4. **Zinterpretuj wyniki**
+   - Czy jest związek?
+   - Jak silny jest związek?
+   - Czy jest statystycznie istotny?
+
+## Krok 4: Analiza wielozmiennowa (zaawansowana)
+
+**Cel:** Kontroluj wpływ zmiennych zakłócających, buduj modele predykcyjne
+
+**Podejścia:**
+
+1. **Tabele wielopolowe**
+   - Analiza związku między dwiema zmiennymi z kontrolą trzeciej
+   - Sprawdź, czy związek jest pozorny czy rzeczywisty
+
+2. **Modele regresji**
+   - Przewiduj wartość zmiennej zależnej na podstawie wielu predyktorów
+   - Kontroluj jednocześnie wpływ wielu zmiennych
+
+**To już bardziej zaawansowane - wykracza poza ten kurs**
+
+## Krok 5: Raportowanie wyników
+
+**Co zawrzeć w raporcie?**
+
+1. **Opis próby**
+   - Liczebność, struktura demograficzna
+   - Braki danych
+
+2. **Wyniki analiz**
+   - Tabele i wykresy
+   - Statystyki opisowe
+   - Testy statystyczne (jeśli stosowane)
+
+3. **Interpretacja**
+   - Co wyniki oznaczają w kontekście pytania badawczego?
+   - Jakie są ograniczenia?
+
+# Dobór metody analizy do typu zmiennych
+
+## Przegląd: Jaką metodę wybrać?
+
+**Kluczowe pytanie:** Jakiego typu są moje zmienne?
+
+Metoda analizy zależy od **poziomu pomiaru** zmiennych:
+
+- Zmienna **niezależna** (ta, która wpływa)
+- Zmienna **zależna** (ta, na którą wpływa)
+
+**Podstawowe zasady:**
+
+1. Dla zmiennych nominalnych → częstości, tabele krzyżowe
+2. Dla zmiennych porządkowych → mediany, testy nieparametryczne
+3. Dla zmiennych przedziałowych/ilorazowych → średnie, korelacje, regresje
+
+## Schemat decyzyjny: Jedna zmienna
+
+**Analiza jednozmiennowa** (opisowa)
+
+| Typ zmiennej | Miary tendencji centralnej | Miary rozproszenia | Wizualizacja |
+|--------------|---------------------------|-------------------|--------------|
+| **Nominalna** | Dominanta<br> Częstości | Liczba kategorii | Wykres słupkowy<br> Wykres kołowy |
+| **Porządkowa** | Dominanta<br> Mediana<br> (Średnia - dyskusyjne) | Rozstęp<br> Rozstęp kwartylowy |  Wykres słupkowy |
+| **Przedziałowa / Ilorazowa** | Średnia<br> Mediana<br> Dominanta | Odchylenie standardowe<br> Wariancja<br> Zakres | Histogram<br> Boxplot |
+
+**Przykłady:**
+
+- Nominalna: Płeć → "60% kobiet, 40% mężczyzn"
+- Porządkowa: Wykształcenie → "Mediana: średnie wykształcenie"
+- Przedziałowa: Wiek → "Średnia: 24.3 lat, SD = 3.2"
+
+## Schemat decyzyjny: Dwie zmienne {.smaller}
+
+**Analiza dwuzmiennowa** - zależności między zmiennymi
+
+::: {.smaller}
+
+| Zmienna niezależna | Zmienna zależna | Metoda analizy | Test statystyczny | Wizualizacja |
+|-------------------|----------------|----------------|------------------|--------------|
+| **Nominalna** | **Nominalna** | Tabela krzyżowa<br>Procenty | Chi-kwadrat (χ²) | Wykres słupkowy grupowany |
+| **Nominalna** | **Porządkowa** | Porównanie median | Test U Manna-Whitneya<br>Test Kruskala-Wallisa | Boxplot dla grup |
+| **Nominalna** | **Przedziałowa/Ilorazowa** | Porównanie średnich | Test t-Studenta<br>ANOVA | Wykres słupkowy średnich<br>Boxplot |
+| **Porządkowa** | **Porządkowa** | Korelacja rang | Korelacja Spearmana (ρ) | Wykres punktowy |
+| **Porządkowa** | **Przedziałowa/Ilorazowa** | Korelacja | Korelacja Spearmana | Wykres punktowy |
+| **Przedziałowa/Ilorazowa** | **Przedziałowa/Ilorazowa** | Korelacja liniowa | Korelacja Pearsona (r)<br>Regresja liniowa | Wykres punktowy z linią trendu |
+
+:::
+
+## Przykład 1: Nominalna × Nominalna {.smaller}
+
+**Pytanie badawcze:** Czy płeć wpływa na wybór platformy społecznościowej?
+
+**Zmienne:**
+
+- Niezależna: **Płeć** (nominalna: Kobieta, Mężczyzna)
+- Zależna: **Platforma** (nominalna: Instagram, TikTok, Facebook, YouTube)
+
+**Metoda:**
+
+1. **Tabela krzyżowa** z procentami wierszowymi
+2. **Test chi-kwadrat** (χ²) - czy różnice są statystycznie istotne?
+
+**Wizualizacja:**
+
+- Wykres słupkowy grupowany
+- Każda platforma = osobny słupek, podzielony według płci
+
+**Interpretacja:**
+
+- "Kobiety częściej wybierają Instagram (45%) niż mężczyźni (25%)"
+- "Różnice są statystycznie istotne (χ² = 23.4, p < 0.001)"
+
+## Przykład 2: Nominalna × Przedziałowa {.smaller}
+
+**Pytanie badawcze:** Czy płeć wpływa na czas spędzany w mediach społecznościowych?
+
+**Zmienne:**
+
+- Niezależna: **Płeć** (nominalna: Kobieta, Mężczyzna)
+- Zależna: **Godziny dziennie** (ilorazowa: 0-24)
+
+**Metoda:**
+
+1. **Porównanie średnich** dla grup
+2. **Test t-Studenta** - czy różnica między średnimi jest istotna?
+
+**Wizualizacja:**
+
+- Wykres słupkowy średnich z błędami standardowymi
+- Boxplot dla każdej grupy
+
+**Interpretacja:**
+
+- "Kobiety spędzają średnio 4.2h dziennie (SD=1.8), mężczyźni 3.1h (SD=1.5)"
+- "Różnica jest statystycznie istotna (t = 4.32, p < 0.001)"
+
+## Przykład 3: Przedziałowa × Przedziałowa {.smaller}
+
+**Pytanie badawcze:** Czy czas w mediach społecznościowych wpływa na jakość snu?
+
+**Zmienne:**
+
+- Niezależna: **Godziny dziennie** (ilorazowa: 0-24)
+- Zależna: **Jakość snu** (przedziałowa: skala 1-10)
+
+**Metoda:**
+
+1. **Korelacja Pearsona** (r) - siła i kierunek związku
+2. **Regresja liniowa** (jeśli chcemy przewidywać)
+
+**Wizualizacja:**
+
+- Wykres punktowy (scatter plot) z linią trendu
+
+**Interpretacja:**
+
+- "r = -0.52 - umiarkowana korelacja ujemna"
+- "Więcej czasu w mediach wiąże się z gorszą jakością snu"
+- "10% wariancji jakości snu wyjaśniane czasem w mediach (R² = 0.10)"
+
+## Przykład 4: Nominalna × Porządkowa {.smaller}
+
+**Pytanie badawcze:** Czy wykształcenie różni się według płci?
+
+**Zmienne:**
+
+- Niezależna: **Płeć** (nominalna: Kobieta, Mężczyzna)
+- Zależna: **Wykształcenie** (porządkowa: podstawowe < średnie < wyższe)
+
+**Metoda:**
+
+1. **Porównanie median** (nie średnich!)
+2. **Test U Manna-Whitneya** - dla 2 grup
+3. **Test Kruskala-Wallisa** - dla 3+ grup
+
+**Wizualizacja:**
+
+- Wykres słupkowy z rozkładem procentowym dla każdej kategorii
+- Tabela krzyżowa z procentami
+
+**Interpretacja:**
+
+- "Mediana dla kobiet: wykształcenie wyższe"
+- "Mediana dla mężczyzn: wykształcenie średnie"
+- "Różnica statystycznie istotna (U = 1245, p = 0.003)"
+
+## Przykład 5: Porządkowa × Porządkowa {.smaller}
+
+**Pytanie badawcze:** Czy wykształcenie wiąże się z poziomem satysfakcji z życia?
+
+**Zmienne:**
+
+- Niezależna: **Wykształcenie** (porządkowa: podstawowe < średnie < wyższe)
+- Zależna: **Satysfakcja** (porządkowa: skala Likerta 1-5)
+
+**Metoda:**
+
+1. **Korelacja rang Spearmana** (ρ)
+
+**Wizualizacja:**
+
+- Wykres punktowy 
+- Lepiej: tabela krzyżowa z procentami
+
+**Interpretacja:**
+
+- "ρ = 0.34 - słaba do umiarkowanej korelacja dodatnia"
+- "Wyższe wykształcenie wiąże się z wyższą satysfakcją życia"
+- "Związek statystycznie istotny (p < 0.001)"

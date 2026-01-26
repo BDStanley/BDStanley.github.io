@@ -1,0 +1,594 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 7 exercise 2 answers slides"
+subtitle: "Ćwiczenie 2 - Przykładowe odpowiedzi"
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs:
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+# Grupa 1 {.center}
+
+Korzystanie z mediów społecznościowych
+
+## Pytanie 1: Platformy (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+Z których z poniższych mediów społecznościowych korzystasz regularnie (co najmniej raz w tygodniu)? (zaznacz wszystkie pasujące)
+
+**Opcje:** Facebook | Instagram | TikTok | X (Twitter) | LinkedIn | YouTube | Snapchat | Pinterest | Reddit | Discord | Threads | BeReal | Inne: \_\_\_\_\_\_ | Nie korzystam regularnie z żadnych
+
+**Uzasadnienie:** Identyfikuje używane platformy. Wielokrotny wybór - multihoming. Definicja "regularnie" = jasne kryterium. Opcja "Inne" z możliwością wpisania. CAWI ułatwia długie listy.
+
+## Pytanie 2: Intensywność (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+Ile czasu dziennie średnio spędzasz korzystając z mediów społecznościowych?
+
+**Opcje:** Mniej niż 30 min | 30 min - 1h | 1-2h | 2-3h | 3-4h | 4-5h | Powyżej 5h | Trudno powiedzieć
+
+**Uzasadnienie:** Kluczowa zmienna - intensywność użycia. Przedziały uchwytują różnice. Opcja "Trudno powiedzieć" dla osób niepewnych - lepsze niż brak odpowiedzi.
+
+## Pytanie 3: Cele użytkowania (wielokrotnego z limitem)
+
+**Treść pytania:**
+
+W jakich celach najczęściej korzystasz z mediów społecznościowych? (zaznacz maksymalnie 3 najważniejsze)
+
+**Opcje:** Kontakt ze znajomymi | Poznawanie nowych osób | Wiadomości/informacje | Rozrywka | Edukacja | Śledzenie influencerów | Dzielenie się własnymi treściami | Zakupy | Budowanie sieci zawodowej | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Motywacje użycia. Limit 3 zmusza do priorytetyzacji - unika zaznaczania wszystkiego. Różnorodne cele pokrywają główne funkcje platform.
+
+## Pytanie 4: Porównania społeczne (skalowe Likerta)
+
+**Treść pytania:**
+
+W jakim stopniu zgadzasz się z następującym stwierdzeniem: "Kiedy oglądam posty innych osób w mediach społecznościowych, często porównuję się do nich"
+
+**Opcje:** Zdecydowanie się zgadzam | Raczej się zgadzam | Ani tak, ani nie | Raczej się nie zgadzam | Zdecydowanie się nie zgadzam | Trudno powiedzieć
+
+**Uzasadnienie:** Wrażliwy temat - porównania społeczne jako mechanizm wpływu na samopoczucie. Neutralne sformułowanie nie sugeruje czy to złe. Stwierdzenie opisowe, nie wartościujące.
+
+## Pytanie 5: Odczucia - tabela (tabelaryczne)
+
+**Treść pytania:**
+
+Jak często w ostatnim miesiącu czułeś/aś następujące emocje w związku z korzystaniem z mediów społecznościowych?
+
+**Skala:** Nigdy | Rzadko | Czasami | Często | Bardzo często
+
+**Elementy:** Poczucie osamotnienia | Lęk o coś przegapienie (FOMO) | Inspiracja | Relaks/rozrywka | Przytłoczenie ilością informacji | Zainteresowanie życiem innych | Frustracja
+
+**Uzasadnienie:** Psychologiczne konsekwencje. Mix pozytywnych i negatywnych - neutralność. Format tabelaryczny efektywny. Konkretny przedział czasowy (miesiąc).
+
+## Pytanie 6: Wpływ na sen (filtrujące)
+
+**Treść pytania:**
+
+Czy korzystasz z mediów społecznościowych w ciągu godziny przed snem?
+
+**Opcje:**
+- Tak, prawie zawsze → Pytanie 6a
+- Tak, często → Pytanie 6a
+- Tak, czasami → Pytanie 6a
+- Rzadko → Pytanie 7
+- Nie, nigdy → Pytanie 7
+
+**Uzasadnienie:** Filtruje do pytania uzupełniającego o problemy ze snem. Konkretny przedział czasowy. Skala częstotliwości zamiast tak/nie.
+
+## Pytanie 6a: Problemy ze snem (warunkowe)
+
+**Treść pytania:**
+
+[Tylko dla korzystających przed snem]
+
+Czy zauważyłeś/aś, że korzystanie z mediów społecznościowych przed snem wpływa na Twoją jakość snu?
+
+**Opcje:** Tak, negatywnie | Tak, pozytywnie | Nie zauważyłem/am wpływu | Trudno powiedzieć
+
+**Uzasadnienie:** Postrzegany wpływ na zdrowie. Opcja pozytywnego wpływu (relaksacja) - neutralność. Tylko dla osób z P6 - logika warunkowa.
+
+## Pytanie 7: Kontrola czasu (skalowe numeryczne)
+
+**Treść pytania:**
+
+Na skali od 0 do 10, jak oceniasz swoją kontrolę nad czasem spędzanym w mediach społecznościowych?
+
+0 = Zupełnie nie kontroluję, często spędzam więcej czasu niż planuję
+10 = Mam pełną kontrolę, zawsze korzystam tyle ile zamierzam
+
+**Skala:** 0 ☐ 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 ☐ 7 ☐ 8 ☐ 9 ☐ 10 ☐
+
+**Uzasadnienie:** Poczucie kontroli - ważny aspekt problematycznego użycia. Skala 0-10 pozwala na precyzję. Jasne opisy końców skali.
+
+## Pytanie 8: Próby ograniczenia (otwarte)
+
+**Treść pytania:**
+
+Czy próbowałeś/aś kiedyś ograniczyć swoje korzystanie z mediów społecznościowych? Jeśli tak, co Ci pomogło lub przeszkodziło?
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Pytanie otwarte - wzbogaca dane jakościowe. Pozwala uchwycić niuanse i strategie. Dwuczęściowe ale powiązane. CAWI ułatwia wpisywanie.
+
+## Pytanie 9: Preferowana platforma (półotwarte)
+
+**Treść pytania:**
+
+Która platforma społecznościowa jest Twoją ulubioną i dlaczego?
+
+Platforma: ☐ Facebook ☐ Instagram ☐ TikTok ☐ X ☐ YouTube ☐ Inna: \_\_\_\_\_\_
+
+Dlaczego: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Półotwarte - łączy strukturę z jakością. Część zamknięta łatwa do analizy. Część otwarta wyjaśnia preferencje. Insight o przewagach platform.
+
+## Pytanie 10: Ogólna ocena (dyferencjał semantyczny)
+
+**Treść pytania:**
+
+Jak ogólnie oceniasz wpływ mediów społecznościowych na Twoje życie? Zaznacz miejsce na skali między przeciwstawnymi określeniami:
+
+Szkodliwe ←—○—○—○—○—●—○—○—→ Korzystne
+
+Stresujące ←—○—○—●—○—○—○—○—→ Relaksujące
+
+Izolujące ←—○—○—○—●—○—○—○—→ Łączące z innymi
+
+Czasochłonne ←—●—○—○—○—○—○—○—→ Efektywne
+
+**Uzasadnienie:** Dyferencjał semantyczny - wizualna ocena na wielu wymiarach. Pary przeciwstawnych określeń pokrywają różne aspekty wpływu. Końcowe podsumowanie.
+
+
+# Grupa 2 {.center}
+
+Postawy wobec zmian klimatu
+
+## Pytanie 1: Świadomość problemu (skalowe Likerta)
+
+**Treść pytania:**
+
+Jak poważnym problemem są Twoim zdaniem zmiany klimatyczne?
+
+**Opcje:** Bardzo poważnym | Raczej poważnym | Ani tak, ani nie | Raczej niepoważnym | W ogóle niepoważnym | Nie wiem / Nie mam zdania
+
+**Uzasadnienie:** Fundamentalna zmienna - powaga problemu. Neutralne "Twoim zdaniem" - akceptuje różne poglądy. Opcja dla niezdecydowanych. Bez sugerowania "właściwej" odpowiedzi.
+
+## Pytanie 2: Przyczyny (skalowe numeryczne)
+
+**Treść pytania:**
+
+Według Ciebie, w jakim stopniu działalność człowieka jest odpowiedzialna za zmiany klimatyczne?
+
+0 = W ogóle nie jest odpowiedzialna, to naturalne cykle
+10 = Jest w pełni odpowiedzialna
+
+**Skala:** 0 ☐ 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 ☐ 7 ☐ 8 ☐ 9 ☐ 10 ☐ | Nie wiem ☐
+
+**Uzasadnienie:** Przekonania o przyczynach - kluczowe. Skala 0-10 pozwala na niuanse (nie tylko tak/nie). Jasne kotwiczenie końców. Opcja "Nie wiem".
+
+## Pytanie 3: Źródła informacji (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+Skąd najczęściej czerpiesz informacje o zmianach klimatycznych? (zaznacz wszystkie pasujące)
+
+**Opcje:** Telewizja | Prasa | Media społecznościowe | Strony naukowe | Organizacje ekologiczne | Rząd/instytucje | Szkoła/uczelnia | Rozmowy ze znajomymi | Dokumenty/filmy | Podcasts | Nie szukam informacji | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Źródła kształtują postawy. Różna wiarygodność źródeł. Wielokrotny wybór - ludzie korzystają z wielu. Opcja "nie szukam" ważna.
+
+## Pytanie 4: Działania prośrodowiskowe - tabela (tabelaryczne)
+
+**Treść pytania:**
+
+Jak często robisz następujące rzeczy?
+
+**Skala:** Zawsze | Często | Czasami | Rzadko | Nigdy | Nie dotyczy mnie
+
+**Elementy:** Segreguję odpady | Ograniczam zużycie plastiku | Oszczędzam wodę | Oszczędzam energię (światło, ogrzewanie) | Kupuję lokalne produkty | Ograniczam spożycie mięsa | Używam transportu publicznego/roweru | Unikam podróży samolotami | Kupuję rzeczy używane/naprawiam | Wspieram organizacje ekologiczne
+
+**Uzasadnienie:** Faktyczne zachowania (nie tylko postawy). Od łatwych do trudnych. "Nie dotyczy" dla nierelewantnych (np. brak samochodu). Format tabelaryczny efektywny dla CAWI/CATI.
+
+## Pytanie 5: Gotowość do działań (tabelaryczne Likerta)
+
+**Treść pytania:**
+
+Gdyby pomogło to znacząco w walce ze zmianami klimatycznymi, jak bardzo byłbyś/byłabyś skłonny/skłonna do następujących działań?
+
+**Skala:** Zdecydowanie tak | Raczej tak | Ani tak, ani nie | Raczej nie | Zdecydowanie nie
+
+**Działania:** Płacić wyższe podatki ekologiczne | Akceptować droższe produkty przyjazne środowisku | Zrezygnować z samochodu | Znacznie ograniczyć lub zrezygnować z mięsa | Zrezygnować z lotów wakacyjnych | Zainstalować panele słoneczne/pompy ciepła | Zmienić pracę na bardziej ekologiczną
+
+**Uzasadnienie:** Deklarowana gotowość do kosztownych działań - silniejszy wskaźnik. Warunek "gdyby pomogło" - hipotetyczny scenariusz. Działania wymagające realnych poświęceń.
+
+## Pytanie 6: Odpowiedzialność (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+Kto Twoim zdaniem ponosi największą odpowiedzialność za walkę ze zmianami klimatycznymi? (wybierz jedną odpowiedź)
+
+**Opcje:** Każdy obywatel indywidualnie | Rządy państw | Organizacje międzynarodowe | Wielkie korporacje | Naukowcy i innowacje technologiczne | Wszyscy w równym stopniu | Nikt - problem przereklamowany | Inne: \_\_\_\_\_\_ | Trudno powiedzieć
+
+**Uzasadnienie:** Atrybucja odpowiedzialności wpływa na gotowość do działania. Jednokrotny wybór zmusza do wyboru głównego aktora. Pełne spektrum opinii. Opcja sceptyczna dla rzetelności.
+
+## Pytanie 7: Efektywność działań (filtrujące)
+
+**Treść pytania:**
+
+Czy uważasz, że Twoje indywidualne działania prośrodowiskowe mogą realnie wpłynąć na problem zmian klimatycznych?
+
+**Opcje:**
+- Tak, zdecydowanie → Pytanie 8
+- Tak, w pewnym stopniu → Pytanie 8
+- Nie jestem pewien/pewna → Pytanie 7a
+- Raczej nie → Pytanie 7a
+- Zdecydowanie nie → Pytanie 7a
+
+**Uzasadnienie:** Poczucie sprawczości kluczowe dla motywacji. Filtruje do pytania o przyczyny. Skala zamiast binarnego tak/nie.
+
+## Pytanie 7a: Przyczyny braku wiary (warunkowe otwarte)
+
+**Treść pytania:**
+
+[Tylko dla niepewnych/niezgadzających się]
+
+Dlaczego uważasz, że indywidualne działania nie mają wpływu?
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Pytanie otwarte wyjaśnia bariery psychologiczne. Tylko dla sceptycznych - warunkowe. Insight o przyczynach bierności. Neutralne "dlaczego uważasz" nie ocenia.
+
+## Pytanie 8: Bariery (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+Co najbardziej utrudnia Ci podejmowanie działań prośrodowiskowych? (zaznacz maksymalnie 3)
+
+**Opcje:** Koszt | Brak czasu | Niewygoda | Brak wiedzy jak zacząć | Brak infrastruktury (np. recyclingu) | Nie widzę sensu w moich działaniach | Inni tego nie robią | Brak oferty ekologicznych produktów | Przyzwyczajenia trudno zmienić | Inne priorytety | Nic nie utrudnia | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Praktyczne bariery - co można zmienić. Limit 3 = najważniejsze. Różne typy: ekonomiczne, czasowe, strukturalne, psychologiczne, społeczne. Opcja "nic" dla aktywnych.
+
+## Pytanie 9: Zmiany w czasie (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+W porównaniu z sytuacją sprzed 2-3 lat, Twoja troska o zmiany klimatyczne:
+
+**Opcje:** Znacznie wzrosła | Nieco wzrosła | Pozostała na podobnym poziomie | Nieco zmalała | Znacznie zmalała | Trudno porównać / Nie pamiętam
+
+**Uzasadnienie:** Zmiana postaw w czasie. 2-3 lata - wystarczająco długo na zmiany, ale pamięć jeszcze świeża. Opcja "trudno porównać" dla uczciwości.
+
+## Pytanie 10: Optymizm (dyferencjał semantyczny)
+
+**Treść pytania:**
+
+Jak oceniasz następujące kwestie związane ze zmianami klimatycznymi? Zaznacz miejsce na skali:
+
+Pesymistycznie ←—○—○—○—○—○—○—○—→ Optymistycznie
+*Czy ludzkość poradzi sobie ze zmianami klimatycznymi?*
+
+Niemożliwe ←—○—○—○—○—○—○—○—→ Możliwe
+*Czy uniknięcie katastrofy klimatycznej jest jeszcze możliwe?*
+
+Bezsilny/a ←—○—○—○—○—○—○—○—→ Wpływowy/a
+*Jak czujesz się wobec swojej roli w walce ze zmianami klimatu?*
+
+**Uzasadnienie:** Dyferencjał semantyczny - emocjonalne i poznawcze wymiary. Pesymizm/optymizm wpływa na działanie. Trzy kluczowe wymiary.
+
+# Grupa 3 {.center}
+
+Zaufanie do instytucji publicznych
+
+## Pytanie 1: Poziom zaufania - tabela (tabelaryczne)
+
+**Treść pytania:**
+
+W jakim stopniu ufasz następującym instytucjom?
+
+**Skala:** W pełni ufam | Raczej ufam | Ani tak, ani nie | Raczej nie ufam | Całkowicie nie ufam | Nie znam tej instytucji
+
+**Instytucje:** Prezydent RP | Sejm i Senat | Rząd | Sądy | Prokuratura | Policja | Wojsko | Samorząd lokalny | Służba zdrowia | Szkoły publiczne | Media publiczne | Media prywatne | Unia Europejska
+
+**Uzasadnienie:** Kluczowa zmienna. Format tabelaryczny umożliwia porównanie. Opcja "Nie znam" nie zmusza do oceny. Szeroki zestaw instytucji z różnych dziedzin.
+
+## Pytanie 2: Ocena działania (tabelaryczne)
+
+**Treść pytania:**
+
+Jak oceniasz działanie następujących instytucji w ciągu ostatnich 12 miesięcy?
+
+**Skala:** Bardzo dobrze | Raczej dobrze | Ani dobrze, ani źle | Raczej źle | Bardzo źle | Trudno powiedzieć / Nie obserwowałem/am
+
+**Instytucje:** Rząd | Samorząd lokalny | Służba zdrowia | System edukacji | Policja | Sądy
+
+**Uzasadnienie:** Ocena działania ≠ zaufanie (można ufać ale krytykować działanie). 12 miesięcy = konkretny, niedawny okres. Instytucje z widocznym działaniem.
+
+## Pytanie 3: Osobisty kontakt (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+Czy w ciągu ostatnich 12 miesięcy miałeś/aś bezpośredni kontakt z którąś z poniższych instytucji? (zaznacz wszystkie pasujące)
+
+**Opcje:** Urząd miasta/gminy | Urząd skarbowy | ZUS | Policja | Sąd | Służba zdrowia (szpital, przychodnia) | Szkoła/uczelnia | Urząd pracy | MOPS/GOPS | NFZ | Straż miejska | Sanepid | Żadna z powyższych
+
+**Uzasadnienie:** Osobiste doświadczenie moderuje zaufanie. Wielokrotny wybór - możliwy kontakt z kilkoma. 12 miesięcy = świeża pamięć. Zmienna kontrolna.
+
+## Pytanie 4: Filtrujące o kontakt
+
+**Treść pytania:**
+
+[Tylko dla osób z kontaktem z P3]
+
+Jak oceniasz swoją ostatnią osobistą interakcję z instytucją publiczną?
+
+**Opcje:**
+- Bardzo pozytywnie → Pytanie 5
+- Raczej pozytywnie → Pytanie 5
+- Neutralnie → Pytanie 5
+- Raczej negatywnie → Pytanie 4a
+- Bardzo negatywnie → Pytanie 4a
+- Trudno ocenić → Pytanie 5
+
+**Uzasadnienie:** Filtruje do pytania o szczegóły negatywnych doświadczeń. Warunkowość - tylko dla osób z kontaktem. Skala oceny.
+
+## Pytanie 4a: Negatywne doświadczenie (warunkowe otwarte)
+
+**Treść pytania:**
+
+[Tylko dla negatywnych ocen]
+
+Co sprawiło, że Twoje doświadczenie było negatywne?
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Pytanie otwarte - niuanse negatywnych doświadczeń. Warunek logiczny. Insight o problemach w funkcjonowaniu. CAPI/CATI - ankieter może notować.
+
+## Pytanie 5: Czynniki zaufania (wielokrotnego z limitem)
+
+**Treść pytania:**
+
+Co Twoim zdaniem najbardziej wpływa na to, czy obywatele ufają instytucjom publicznym? (wybierz maksymalnie 3 najważniejsze)
+
+**Opcje:** Skuteczność działania | Przejrzystość | Uczciwość | Szacunek dla obywateli | Profesjonalizm | Szybkość załatwiania spraw | Sprawiedliwość | Dotrzymywanie obietnic | Niezależność polityczna | Dostępność | Komunikacja z obywatelami | Kompetencje | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Postrzegane przyczyny zaufania. Limit 3 = priorytetyzacja. Lista z literatury o zaufaniu instytucjonalnym. Pytamy o ogólną opinię, nie osobiste zaufanie.
+
+## Pytanie 6: Zmiana w czasie (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+W porównaniu z sytuacją sprzed 5 lat, Twoje osobiste zaufanie do instytucji publicznych w Polsce:
+
+**Opcje:** Znacznie wzrosło | Nieco wzrosło | Pozostało na podobnym poziomie | Nieco spadło | Znacznie spadło | Trudno powiedzieć / Nie pamiętam | 5 lat temu nie mieszkałem/am w Polsce
+
+**Uzasadnienie:** Zmiana zaufania w czasie. 5 lat = wystarczająco długo, ale pamięć. Teraz o osobistym zaufaniu. Opcja dla osób spoza Polski ważna.
+
+## Pytanie 7: Konsekwencje zaufania - Likerta (skalowe)
+
+**Treść pytania:**
+
+W jakim stopniu zgadzasz się z następującym stwierdzeniem: "Można ufać, że instytucje publiczne w Polsce działają w interesie zwykłych obywateli"
+
+**Opcje:** Zdecydowanie się zgadzam | Raczej się zgadzam | Ani tak, ani nie | Raczej się nie zgadzam | Zdecydowanie się nie zgadzam | Trudno powiedzieć
+
+**Uzasadnienie:** Generalne zaufanie - czy instytucje dbają o interes publiczny. Skala Likerta standardowa. Ważna zmienna - fundamentalne przekonanie.
+
+## Pytanie 8: Zachowania obywatelskie (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+Które z poniższych działań podejmowałeś/aś w ciągu ostatnich 2 lat? (zaznacz wszystkie pasujące)
+
+**Opcje:** Głosowałem/am w wyborach | Podpisałem/am petycję | Kontaktowałem/am się z urzędnikiem/politykiem | Uczestniczyłem/am w konsultacjach społecznych | Brałem/am udział w manifestacji/proteście | Angażowałem/am się w organizację społeczną | Zgłaszałem/am problemy do mediów | Płaciłem/am podatki terminowo i uczciwie | Nic z powyższego
+
+**Uzasadnienie:** Zachowania obywatelskie jako konsekwencja zaufania. 2 lata = szersze okno niż 12 miesięcy. Od biernych (płacenie podatków) do aktywnych (protesty).
+
+## Pytanie 9: Preferowana reforma (półotwarte)
+
+**Treść pytania:**
+
+Gdybyś mógł/mogła zmienić jedną rzecz w sposobie funkcjonowania instytucji publicznych w Polsce, co by to było?
+
+☐ Większa przejrzystość
+☐ Szybsze załatwianie spraw
+☐ Uproszczenie procedur
+☐ Lepszy kontakt z obywatelami
+☐ Więcej niezależności od polityków
+☐ Mniejsza biurokracja
+☐ Inne, co konkretnie: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Półotwarte - konkretne opcje + możliwość własnej propozycji. Actionable insights. Zmusza do wyboru jednej rzeczy (najważniejszej). Praktyczne dla reform.
+
+## Pytanie 10: Porównanie międzynarodowe (skalowe numeryczne)
+
+**Treść pytania:**
+
+W porównaniu z innymi krajami europejskimi, jak oceniasz poziom zaufania obywateli do instytucji publicznych w Polsce?
+
+0 = Znacznie niższy niż w innych krajach
+10 = Znacznie wyższy niż w innych krajach
+5 = Podobny do innych krajów
+
+**Skala:** 0 ☐ 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 ☐ 7 ☐ 8 ☐ 9 ☐ 10 ☐ | Trudno porównać ☐
+
+**Uzasadnienie:** Porównanie międzynarodowe - kontekst. Skala 0-10 z zakotwiczeniem w środku (5). Opcja "trudno porównać" dla uczciwości.
+
+
+# Grupa 4 {.center}
+
+Motywacje do wolontariatu
+
+## Pytanie 1: Filtrujące - status wolontariusza
+
+**Treść pytania:**
+
+Czy kiedykolwiek angażowałeś/angażowałaś się w działania wolontariackie lub nieodpłatnie pomagałeś/aś innym (nie licząc rodziny)?
+
+**Opcje:**
+- Tak, obecnie jestem wolontariuszem/ką → sekcja dla aktywnych
+- Tak, byłem/am w przeszłości → sekcja dla byłych
+- Nie, nigdy → sekcja o barierach
+- Nie jestem pewien/pewna co liczyć jako wolontariat → sekcja dla aktywnych
+
+**Uzasadnienie:** Fundamentalne pytanie filtrujące - dzieli na 3 grupy wymagające innych pytań. Definicja w nawiasie - jasność. Opcja niepewności (ludzie mogą nie identyfikować pomocy jako "wolontariat").
+
+## Pytanie 2: Obszary działania (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+[Obecni i byli wolontariusze]
+
+W jakich obszarach angażujesz/angażowałeś się w wolontariat? (zaznacz wszystkie pasujące)
+
+**Opcje:** Pomoc seniorom | Dzieci i młodzież | Osoby z niepełnosprawnościami | Sytuacje kryzysowe/pomoc humanitarna | Ochrona zwierząt | Ochrona środowiska | Kultura i sztuka | Sport i rekreacja | Ratownictwo (WOPR, GOPR, straż) | Organizacje religijne | Edukacja | Zdrowie | Wspieranie społeczności lokalnej | Pomoc bezdomnym | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Różne obszary przyciągają różnych ludzi. Szerokie spektrum. Wielokrotny wybór - możliwe kilka obszarów. Dla obecnych i byłych.
+
+## Pytanie 3: Częstotliwość (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+[Tylko obecni wolontariusze]
+
+Jak często średnio angażujesz się w działania wolontariackie?
+
+**Opcje:** Codziennie lub prawie codziennie | Kilka razy w tygodniu | Raz w tygodniu | Kilka razy w miesiącu | Raz w miesiącu | Kilka razy w roku | Rzadziej | Nieregularnie, w zależności od potrzeb
+
+**Uzasadnienie:** Intensywność zaangażowania - kluczowa zmienna. Różnica między intensywnym a okazjonalnym. Opcja nieregularnego ważna - wiele form projektowych/sezonowych.
+
+## Pytanie 4: Motywacje - tabela (tabelaryczne Likerta)
+
+**Treść pytania:**
+
+[Wszyscy respondenci]
+
+Jak ważne są/byłyby dla Ciebie następujące powody zaangażowania w wolontariat?
+
+**Skala:** Bardzo ważne | Raczej ważne | Ani tak, ani nie | Raczej nieważne | Zupełnie nieważne
+
+**Motywacje:** Chęć pomagania innym | Rozwój własnych umiejętności | Zdobycie doświadczenia zawodowego | Poznanie nowych ludzi | Wypełnienie wolnego czasu | Osobista satysfakcja | Działanie na rzecz ważnej sprawy | Odwdzięczenie się społeczeństwu | Wpływ na zmiany w środowisku | Budowanie CV/networking | Zachęta ze strony innych | Poczucie obowiązku moralnego/religijnego
+
+**Uzasadnienie:** Kluczowe dla zrozumienia co przyciąga. Mix altruistycznych, instrumentalnych, społecznych, aksjologicznych. Dla wszystkich - także hipotetycznie. Nie wartościuje motywacji.
+
+## Pytanie 5: Bariery (wielokrotnego wyboru)
+
+**Treść pytania:**
+
+[Nigdy lub byli wolontariusze]
+
+Co powstrzymuje/powstrzymywało Cię od (dalszego) angażowania się w wolontariat? (zaznacz wszystkie pasujące)
+
+**Opcje:** Brak czasu | Nie wiem jak znaleźć możliwości | Nie czuję się wystarczająco kompetentny/a | Obawa przed długoterminowym zobowiązaniem | Problemy zdrowotne | Brak odpowiedniej oferty w moim regionie | Wcześniejsze złe doświadczenia | Brak odpowiedzi od organizacji | Nie wydaje mi się wartościowe | Preferuję inne formy pomocy (np. darowizny) | Po prostu mnie nie interesuje | Nic nie przeszkadza | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Bariery - co można poprawić. Dla niezaangażowanych i byłych. Różne typy: czasowe, informacyjne, kompetencyjne, zdrowotne, strukturalne, doświadczeniowe. Opcja "nic" ważna.
+
+## Pytanie 6: Czas zaangażowania (zamknięte jednokrotnego)
+
+**Treść pytania:**
+
+[Obecni i byli]
+
+Jak długo w sumie angażujesz się/angażowałeś w wolontariat?
+
+**Opcje:** Mniej niż miesiąc | 1-6 miesięcy | 6-12 miesięcy | 1-2 lata | 2-5 lat | 5-10 lat | Ponad 10 lat
+
+**Uzasadnienie:** Długość zaangażowania - wskaźnik trwałości. Różnica między jednorazowym a długoterminowym. Przedziały pokrywają różne wzorce.
+
+## Pytanie 7: Preferowane formy - tabela (tabelaryczne)
+
+**Treść pytania:**
+
+[Wszyscy respondenci]
+
+Jak bardzo byłbyś/byłabyś zainteresowany/a następującymi formami wolontariatu?
+
+**Skala:** Bardzo | Raczej | Ani tak, ani nie | Raczej nie | Zupełnie nie
+
+**Formy:** Jednorazowa akcja (np. zbiórka, wydarzenie) | Kilka godzin miesięcznie, regularnie | Kilka godzin tygodniowo, regularnie | Wolontariat umiejętności (wykorzystanie zawodowych kompetencji) | Wolontariat zdalny/online | Wolontariat rodzinny (z dziećmi/partnerem) | Wolontariat firmowy (zorganizowany przez pracodawcę) | Długoterminowy projekt (kilka miesięcy) | Wolontariat krótkoterminowy podczas urlopu
+
+**Uzasadnienie:** Preferencje form - praktyczne dla rekrutacji. Różne formy pasują do różnych ograniczeń. Dla wszystkich - także hipotetycznie. Szeroki wachlarz opcji.
+
+## Pytanie 8: Zachęty (wielokrotnego z limitem)
+
+**Treść pytania:**
+
+Co mogłoby najbardziej zachęcić Cię do (większego) zaangażowania w wolontariat? (wybierz maksymalnie 3)
+
+**Opcje:** Uznanie społeczne/nagrody | Certyfikaty potwierdzające zaangażowanie | Ulgi podatkowe | Elastyczność czasowa | Możliwość pracy zdalnej | Krótkookresowe zobowiązania | Szkolenia i rozwój kompetencji | Lepsze dopasowanie do moich zainteresowań | Informacje o konkretnych potrzebach | Widoczny wpływ mojej pracy | Lepsza komunikacja ze strony organizacji | Wsparcie organizacyjne | Nic mnie nie zachęci | Inne: \_\_\_\_\_\_
+
+**Uzasadnienie:** Zachęty - actionable insights dla organizacji. Limit 3 = priorytetyzacja. Mix materialnych i niematerialnych. Opcja "nic" dla szczerości.
+
+## Pytanie 9: Skojarzenia (otwarte)
+
+**Treść pytania:**
+
+Jakie pierwsze skojarzenie przychodzi Ci do głowy, gdy myślisz o wolontariacie?
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+**Uzasadnienie:** Pytanie otwarte - spontaniczne skojarzenia. Ujawnia stereotypy, nastawienie emocjonalne. Krótkie więc łatwe w CAWI. Insight o wizerunku wolontariatu.
+
+## Pytanie 10: Wpływ społeczny (skalowe Likerta)
+
+**Treść pytania:**
+
+W jakim stopniu zgadzasz się z następującym stwierdzeniem: "Wolontariat może realnie przyczynić się do rozwiązywania ważnych problemów społecznych"
+
+**Opcje:** Zdecydowanie się zgadzam | Raczej się zgadzam | Ani tak, ani nie | Raczej się nie zgadzam | Zdecydowanie się nie zgadzam | Nie mam zdania
+
+**Uzasadnienie:** Postrzegana efektywność wolontariatu - wpływa na motywację. Skala Likerta standardowa. Ogólne przekonanie o wartości wolontariatu. Końcowe pytanie podsumowujące postawy.
+
+# Podsumowanie {.center}
+
+Wspólne zasady i wzorce
+
+## Kluczowe zasady we wszystkich rozwiązaniach
+
+1. **Jasność** - unikanie żargonu, definicje w nawiasach gdzie potrzeba
+2. **Neutralność** - nie sugerowanie "właściwych" odpowiedzi
+3. **Kompletność** - kategorie rozłączne i wyczerpujące
+4. **Odpowiedni typ** - dopasowanie do mierzonej zmiennej
+5. **Różnorodność** - wykorzystanie różnych typów pytań (10 różnych)
+
+## Kluczowe zasady (cd.)
+
+6. **Przedziały czasowe** - konkretne ramy ("ostatnie 12 miesięcy")
+7. **Wrażliwe pytania** - neutralne sformułowania, opcje odmowy
+8. **Logika warunkowa** - filtrowanie do właściwych podgrup (CAWI ułatwia)
+9. **Unikanie zmęczenia** - max 10-12 elementów w tabelach
+10. **Trafność** - każde pytanie służy celowi badania
+
+## Wykorzystane typy pytań (10 różnych)
+
+We wszystkich przykładach wykorzystano:
+
+1. **Zamknięte jednokrotnego wyboru** - jednoznaczne zmienne
+2. **Zamknięte wielokrotnego wyboru** - platformy, bariery, zachowania
+3. **Wielokrotnego z limitem** - priorytetyzacja (max 3)
+4. **Skalowe Likerta** - zgoda ze stwierdzeniami
+5. **Skalowe numeryczne 0-10** - kontrola, przyczyny klimatu
+
+## Wykorzystane typy pytań (cd.)
+
+6. **Tabelaryczne/macierzowe** - porównanie na tej samej skali
+7. **Filtrujące/warunkowe** - kierowanie do odpowiednich sekcji
+8. **Otwarte** - niuanse, doświadczenia, skojarzenia
+9. **Półotwarte** - struktura + jakość
+10. **Dyferencjał semantyczny** - ocena na parach przeciwieństw
+
+## Typowe wzorce struktury
+
+- **Pytanie 1** - często filtrujące lub ustala podstawowy kontekst (status, świadomość)
+- **Pytania 2-4** - główne zmienne (zachowania, częstotliwość, obszary)
+- **Pytania 5-7** - głębsze zmienne (odczucia, bariery, motywacje)
+- **Pytania 8-9** - kontekst lub rozwiązania (zachęty, reformy, preferencje)
+- **Pytanie 10** - często podsumowujące (ogólna ocena, porównanie)

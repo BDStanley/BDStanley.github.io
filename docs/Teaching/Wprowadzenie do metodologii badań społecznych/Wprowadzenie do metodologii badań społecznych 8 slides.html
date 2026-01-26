@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="pl"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
+
+  <meta name="author" content="Ben Stanley">
+  <title>Ben Stanley – Wprowadzenie do metodologii badań społecznych 8 slides</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../presentation_style.scss">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Wprowadzenie do metodologii badań społecznych</h1>
+  <p class="subtitle">Badania jakościowe</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Ben Stanley 
+</div>
+        <p class="quarto-title-affiliation">
+            Wydział Nauk Społecznych, Uniwersytet SWPS
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="czym-są-badania-jakościowe" class="slide level2">
+<h2>Czym są badania jakościowe?</h2>
+<p>Badania jakościowe to podejście badawcze służące <strong>głębokiemu zrozumieniu znaczeń, doświadczeń i kontekstów społecznych</strong> z perspektywy uczestników badania.</p>
+<p>Kluczowe cechy:</p>
+<ul>
+<li>Eksploracja znaczeń nadawanych przez uczestników</li>
+<li>Elastyczne podejście do zbierania danych</li>
+<li>Bogate dane narracyjne</li>
+<li>Małe próby badawcze - głębia zamiast szerokości</li>
+<li>Kontekst naturalny badania</li>
+</ul>
+</section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<ul>
+<li>Charakterystyka badań jakościowych</li>
+<li>Indywidualny wywiad pogłębiony (IDI)</li>
+<li>Zogniskowany wywiad grupowy (FGI)</li>
+<li>Przygotowanie narzędzi badawczych</li>
+<li>Techniki prowadzenia wywiadów</li>
+<li>Rekrutacja uczestników</li>
+</ul>
+</section>
+<section>
+<section id="charakterystyka-badań-jakościowych" class="title-slide slide level1 center">
+<h1>Charakterystyka badań jakościowych</h1>
+
+</section>
+<section id="cele-badań-jakościowych" class="slide level2">
+<h2>Cele badań jakościowych</h2>
+<p>Badania jakościowe służą różnym celom poznawczym:</p>
+<ol type="1">
+<li><strong>Eksploracja</strong> - poznanie nowego, słabo rozpoznanego obszaru problemowego</li>
+<li><strong>Rozumienie</strong> - głęboka interpretacja znaczeń i kontekstów społecznych</li>
+<li><strong>Opis</strong> - szczegółowa charakterystyka zjawisk w naturalnym środowisku</li>
+<li><strong>Generowanie hipotez</strong> - budowa teorii wyłaniających się z danych</li>
+<li><strong>Ewaluacja</strong> - ocena procesów, programów i interwencji</li>
+</ol>
+</section>
+<section id="kluczowe-założenia-badań-jakościowych" class="slide level2">
+<h2>Kluczowe założenia badań jakościowych</h2>
+<h3 id="założenia-epistemologiczne">Założenia epistemologiczne</h3>
+<ul>
+<li><strong>Interpretatywizm</strong> - rzeczywistość społeczna jest konstruowana przez uczestników</li>
+<li><strong>Holistyczne podejście</strong> - zjawiska rozumiane w całościowym kontekście</li>
+<li><strong>Indukcyjne wnioskowanie</strong> - teoria wyłania się z danych, nie odwrotnie</li>
+<li><strong>Subiektywność jako wartość</strong> - perspektywy uczestników są kluczowe</li>
+<li><strong>Naturalne środowisko</strong> - badanie w rzeczywistych warunkach</li>
+</ul>
+</section>
+<section id="porównanie-badania-jakościowe-vs.-ilościowe" class="slide level2">
+<h2>Porównanie: badania jakościowe vs.&nbsp;ilościowe</h2>
+<div style="font-size: 0.75em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 41%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspekt</th>
+<th>Badania jakościowe</th>
+<th>Badania ilościowe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cel</strong></td>
+<td>Zrozumienie i interpretacja</td>
+<td>Pomiar i weryfikacja</td>
+</tr>
+<tr class="even">
+<td><strong>Pytania badawcze</strong></td>
+<td>“Jak?”, “Dlaczego?”, “Co to znaczy?”</td>
+<td>“Ile?”, “Jak często?”, “Czy istnieje związek?”</td>
+</tr>
+<tr class="odd">
+<td><strong>Próba</strong></td>
+<td>Mała, celowo dobrana (5-30 osób)</td>
+<td>Duża, reprezentatywna (setki-tysiące)</td>
+</tr>
+<tr class="even">
+<td><strong>Dane</strong></td>
+<td>Narracje, opisy, znaczenia</td>
+<td>Liczby, statystyki, zmienne</td>
+</tr>
+<tr class="odd">
+<td><strong>Analiza</strong></td>
+<td>Interpretacyjna, tematyczna</td>
+<td>Statystyczna, numeryczna</td>
+</tr>
+<tr class="even">
+<td><strong>Generalizacja</strong></td>
+<td>Transferowalność kontekstowa</td>
+<td>Generalizacja na populację</td>
+</tr>
+<tr class="odd">
+<td><strong>Elastyczność</strong></td>
+<td>Wysoka - modyfikacje w trakcie</td>
+<td>Niska - ustalony protokół</td>
+</tr>
+<tr class="even">
+<td><strong>Narzędzia</strong></td>
+<td>Scenariusze wywiadów, obserwacja</td>
+<td>Kwestionariusze, testy</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="proces-planowania-badań-jakościowych" class="slide level2">
+<h2>Proces planowania badań jakościowych</h2>
+<h3 id="etapy-przygotowania">Etapy przygotowania</h3>
+<ol type="1">
+<li><strong>Określenie celów</strong> - sformułowanie pytań badawczych</li>
+<li><strong>Przegląd literatury</strong> - kontekst teoretyczny i stan wiedzy</li>
+<li><strong>Wybór strategii</strong> - IDI, FGI, obserwacja, analiza dokumentów</li>
+<li><strong>Dobór uczestników</strong> - kryteria i strategie rekrutacji</li>
+<li><strong>Przygotowanie narzędzi</strong> - scenariusze i materiały wspomagające</li>
+<li><strong>Pilotaż</strong> - testowanie narzędzi i procedur</li>
+<li><strong>Realizacja terenowa</strong> - zbieranie danych</li>
+<li><strong>Analiza</strong> - kodowanie i interpretacja</li>
+</ol>
+</section>
+<section id="pytania-badawcze-w-badaniach-jakościowych" class="slide level2">
+<h2>Pytania badawcze w badaniach jakościowych</h2>
+<h3 id="charakterystyka-dobrych-pytań-badawczych">Charakterystyka dobrych pytań badawczych</h3>
+<ul>
+<li><strong>Otwarte sformułowanie</strong> - używanie “jak?”, “dlaczego?”, “w jaki sposób?”</li>
+<li><strong>Eksploracyjne</strong> - poszukiwanie nowych aspektów zjawiska</li>
+<li><strong>Kontekstowe</strong> - uwzględnienie sytuacji i okoliczności</li>
+<li><strong>Procesowe</strong> - zainteresowanie zmianami w czasie</li>
+<li><strong>Interpretatywne</strong> - znaczenia z perspektywy uczestników</li>
+</ul>
+<h3 id="przykłady">Przykłady</h3>
+<blockquote>
+<p>Źle: “Czy stres wpływa na pracowników?” (pytanie zamknięte)</p>
+<p>Dobrze: “Jak pracownicy doświadczają stresu w miejscu pracy i jakie nadają mu znaczenie?”</p>
+</blockquote>
+</section>
+<section id="strategie-doboru-uczestników" class="slide level2">
+<h2>Strategie doboru uczestników</h2>
+<p>Badania jakościowe wykorzystują <strong>dobór celowy</strong> (purposive sampling), nie losowy:</p>
+<ol type="1">
+<li><strong>Dobór teoretyczny</strong> - budowa teorii ugruntowanej, nasycenie kategorii</li>
+<li><strong>Maksymalnego zróżnicowania</strong> - różne perspektywy i doświadczenia</li>
+<li><strong>Typowych przypadków</strong> - reprezentatywność jakościowa</li>
+<li><strong>Przypadków krytycznych</strong> - szczególnie ilustrujące zjawisko</li>
+<li><strong>Kuli śnieżnej</strong> - dostęp do trudno dostępnych grup</li>
+<li><strong>Przypadków ekstremalnych</strong> - nietypowe, wyjątkowe sytuacje</li>
+</ol>
+</section></section>
+<section>
+<section id="indywidualny-wywiad-pogłębiony-idi" class="title-slide slide level1 center">
+<h1>Indywidualny wywiad pogłębiony (IDI)</h1>
+
+</section>
+<section id="czym-jest-idi" class="slide level2">
+<h2>Czym jest IDI?</h2>
+<p>Indywidualny wywiad pogłębiony (In-Depth Interview) to <strong>bezpośrednia rozmowa</strong> między badaczem a respondentem, mająca na celu głęboką eksplorację doświadczeń, postaw i znaczeń.</p>
+<h3 id="kluczowe-cechy">Kluczowe cechy</h3>
+<ul>
+<li>Rozmowa jeden-na-jeden</li>
+<li>Czas trwania: 60-120 minut</li>
+<li>Elastyczna struktura - scenariusz jako przewodnik</li>
+<li>Intymna, poufna atmosfera</li>
+<li>Głęboka eksploracja tematów</li>
+</ul>
+</section>
+<section id="rodzaje-wywiadów-pogłębionych" class="slide level2">
+<h2>Rodzaje wywiadów pogłębionych</h2>
+<p><strong>Wywiad ustrukturyzowany</strong></p>
+<ul>
+<li>Ustalona kolejność i forma pytań</li>
+<li>Porównywalność odpowiedzi</li>
+<li>Mniej elastyczności</li>
+</ul>
+</section>
+<section id="rodzaje-wywiadów-pogłębionych-1" class="slide level2">
+<h2>Rodzaje wywiadów pogłębionych</h2>
+<p><strong>Wywiad półustrukturyzowany</strong> (najczęściej stosowany)</p>
+<ul>
+<li>Scenariusz z głównymi tematami</li>
+<li>Swoboda w formułowaniu pytań</li>
+<li>Możliwość zgłębiania wątków</li>
+</ul>
+</section>
+<section id="rodzaje-wywiadów-pogłębionych-2" class="slide level2">
+<h2>Rodzaje wywiadów pogłębionych</h2>
+<p><strong>Wywiad nieustrukturyzowany</strong></p>
+<ul>
+<li>Tylko ogólny temat</li>
+<li>Maksymalna elastyczność</li>
+<li>Rozmowa kierowana przez respondenta</li>
+</ul>
+</section>
+<section id="zalety-wywiadów-idi" class="slide level2">
+<h2>Zalety wywiadów IDI</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="głębia-i-szczegółowość">Głębia i szczegółowość</h3>
+<ul>
+<li>Dogłębne poznanie perspektywy uczestnika</li>
+<li>Czas na eksplorację złożonych kwestii</li>
+<li>Możliwość zadawania pytań uzupełniających</li>
+<li>Zrozumienie kontekstu i niuansów</li>
+</ul>
+<h3 id="prywatność-i-otwartość">Prywatność i otwartość</h3>
+<ul>
+<li>Intymność sytuacji badawczej</li>
+<li>Większa gotowość do dzielenia się</li>
+<li>Tematy wrażliwe i osobiste</li>
+<li>Brak wpływu i oceny grupy</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="elastyczność">Elastyczność</h3>
+<ul>
+<li>Dostosowanie do respondenta</li>
+<li>Modyfikacja scenariusza w trakcie</li>
+<li>Pogłębianie ciekawych wątków</li>
+<li>Kontrola nad tempem rozmowy</li>
+</ul>
+<h3 id="autentyczność">Autentyczność</h3>
+<ul>
+<li>Autentyczne opinie bez konformizmu</li>
+<li>Brak dynamiki grupowej</li>
+<li>Indywidualne doświadczenia</li>
+<li>Szczere wypowiedzi</li>
+</ul>
+</div></div>
+</section>
+<section id="wady-wywiadów-idi" class="slide level2">
+<h2>Wady wywiadów IDI</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="koszty-i-czas">Koszty i czas</h3>
+<ul>
+<li>Wysokie koszty realizacji</li>
+<li>Czasochłonność - przeprowadzenie i transkrypcja</li>
+<li>Trudności logistyczne</li>
+<li>Ograniczona liczba wywiadów</li>
+</ul>
+<h3 id="brak-dynamiki-grupowej">Brak dynamiki grupowej</h3>
+<ul>
+<li>Nie ma wzajemnego inspirowania</li>
+<li>Brak reakcji na opinie innych</li>
+<li>Mniej spontanicznych wątków</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="wyzwania-metodologiczne">Wyzwania metodologiczne</h3>
+<ul>
+<li>Wysoka subiektywność badacza</li>
+<li>Trudności w generalizacji</li>
+<li>Intensywność - obciążenie badacza</li>
+<li>Wymagane wysokie kompetencje prowadzącego</li>
+<li>Ryzyko wpływu badacza na odpowiedzi</li>
+</ul>
+</div></div>
+</section>
+<section id="kiedy-stosować-idi" class="slide level2">
+<h2>Kiedy stosować IDI?</h2>
+<h3 id="idi-jest-odpowiednie-gdy">IDI jest odpowiednie gdy:</h3>
+<ul>
+<li>Temat jest <strong>wrażliwy lub intymny</strong> (finanse, zdrowie, trauma)</li>
+<li>Potrzebna jest <strong>głębia</strong> zamiast szerokości</li>
+<li>Uczestnicy mogą być <strong>nieśmiali</strong> lub zdominowani w grupie</li>
+<li>Wymagane jest <strong>zrozumienie indywidualnych doświadczeń</strong></li>
+<li>Badane zjawisko jest <strong>osobiste i subiektywne</strong></li>
+<li>Potrzebna jest <strong>elastyczność</strong> w dostosowaniu do respondenta</li>
+<li>Uczestnicy są <strong>geograficznie rozproszeni</strong></li>
+</ul>
+</section></section>
+<section>
+<section id="zogniskowany-wywiad-grupowy-fgi" class="title-slide slide level1 center">
+<h1>Zogniskowany wywiad grupowy (FGI)</h1>
+
+</section>
+<section id="czym-jest-fgi" class="slide level2">
+<h2>Czym jest FGI?</h2>
+<p>Zogniskowany wywiad grupowy (Focus Group Interview) to <strong>moderowana dyskusja grupowa</strong> prowadzona w celu eksploracji postaw, opinii i doświadczeń uczestników.</p>
+<h3 id="kluczowe-cechy-1">Kluczowe cechy</h3>
+<ul>
+<li>Grupa 6-10 uczestników</li>
+<li>Czas trwania: 90-120 minut</li>
+<li>Moderator prowadzący dyskusję</li>
+<li>Dynamika grupowa - wzajemne inspiracje</li>
+<li>Interakcja między uczestnikami</li>
+</ul>
+</section>
+<section id="struktura-i-role-w-fgi" class="slide level2">
+<h2>Struktura i role w FGI</h2>
+<p><strong>Moderator</strong></p>
+<ul>
+<li>Prowadzi dyskusję według scenariusza</li>
+<li>Zarządza dynamiką grupy</li>
+<li>Zachęca do wypowiedzi</li>
+<li>Kontroluje dominujących uczestników</li>
+</ul>
+</section>
+<section id="struktura-i-role-w-fgi-1" class="slide level2">
+<h2>Struktura i role w FGI</h2>
+<p><strong>Asystent/obserwator</strong> (opcjonalnie)</p>
+<ul>
+<li>Notuje obserwacje nieverbalne</li>
+<li>Obsługuje sprzęt nagrywający</li>
+<li>Pomaga w organizacji</li>
+</ul>
+</section>
+<section id="struktura-i-role-w-fgi-2" class="slide level2">
+<h2>Struktura i role w FGI</h2>
+<p><strong>Uczestnicy</strong></p>
+<ul>
+<li>6-10 osób spełniających kryteria rekrutacyjne</li>
+<li>Zazwyczaj nieznajomi (lepsze wyniki)</li>
+<li>Zróżnicowani lub homogeniczni (zależy od celu)</li>
+</ul>
+</section>
+<section id="zalety-wywiadów-fgi" class="slide level2">
+<h2>Zalety wywiadów FGI</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="dynamika-grupowa">Dynamika grupowa</h3>
+<ul>
+<li>Wzajemne stymulowanie uczestników</li>
+<li>Efekt synergii - niespodziewane wątki</li>
+<li>Naturalne środowisko dyskusji</li>
+<li>Reakcje na opinie innych</li>
+<li>Spontaniczność wypowiedzi</li>
+</ul>
+<h3 id="efektywność">Efektywność</h3>
+<ul>
+<li>Więcej uczestników jednocześnie</li>
+<li>Niższy koszt na osobę</li>
+<li>Szybsze zbieranie danych</li>
+<li>Bogactwo perspektyw w krótkim czasie</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="wielość-perspektyw">Wielość perspektyw</h3>
+<ul>
+<li>Różnorodność opinii i doświadczeń</li>
+<li>Ujawnienie rozbieżności</li>
+<li>Spektrum postaw w grupie</li>
+<li>Możliwość obserwacji interakcji</li>
+</ul>
+<h3 id="praktyczność">Praktyczność</h3>
+<ul>
+<li>Łatwiejsze podejmowanie decyzji biznesowych</li>
+<li>Szybki feedback o produkcie/usłudze</li>
+<li>Identyfikacja głównych trendów</li>
+</ul>
+</div></div>
+</section>
+<section id="wady-wywiadów-fgi" class="slide level2">
+<h2>Wady wywiadów FGI</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="problemy-z-dynamiką-grupy">Problemy z dynamiką grupy</h3>
+<ul>
+<li><strong>Dominacja</strong> niektórych uczestników</li>
+<li><strong>Konformizm</strong> - myślenie grupowe (groupthink)</li>
+<li><strong>Polaryzacja</strong> - ekstremalne opinie</li>
+<li><strong>Milczący uczestnicy</strong> - trudność w zabraniu głosu</li>
+<li><strong>Konflikty</strong> między uczestnikami</li>
+</ul>
+<h3 id="powierzchowność">Powierzchowność</h3>
+<ul>
+<li>Brak czasu na głębię dla każdego</li>
+<li>Ograniczone możliwości zgłębiania wątków</li>
+<li>Przeskakiwanie między tematami</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="wyzwania-organizacyjne">Wyzwania organizacyjne</h3>
+<ul>
+<li>Trudności logistyczne - koordynacja terminów</li>
+<li>Wymagane odpowiednie pomieszczenie</li>
+<li>Ryzyko niestawiennictwa</li>
+<li>Potrzeba wynajmu lokalizacji</li>
+</ul>
+<h3 id="ograniczenia-tematyczne">Ograniczenia tematyczne</h3>
+<ul>
+<li>Nieodpowiednie dla tematów wrażliwych</li>
+<li>Trudność w omawianiu osobistych kwestii</li>
+<li>Wpływ moderatora na przebieg</li>
+<li>Efekt aprobaty społecznej</li>
+</ul>
+</div></div>
+</section>
+<section id="kiedy-stosować-fgi" class="slide level2">
+<h2>Kiedy stosować FGI?</h2>
+<h3 id="fgi-jest-odpowiednie-gdy">FGI jest odpowiednie gdy:</h3>
+<ul>
+<li>Interesują nas <strong>postawy społeczne i normy grupowe</strong></li>
+<li>Potrzebna jest <strong>dynamika i wzajemne inspirowanie</strong></li>
+<li>Temat <strong>nie jest zbyt wrażliwy</strong></li>
+<li>Ważna jest <strong>różnorodność perspektyw</strong></li>
+<li>Chcemy obserwować <strong>interakcje społeczne</strong></li>
+<li>Budżet jest <strong>ograniczony</strong> (efektywność kosztowa)</li>
+<li>Potrzebne są <strong>szybkie wyniki</strong> (badania marketingowe)</li>
+</ul>
+</section>
+<section id="porównanie-idi-i-fgi" class="slide level2">
+<h2>Porównanie IDI i FGI</h2>
+<div style="font-size: 0.7em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspekt</th>
+<th>IDI</th>
+<th>FGI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Liczba uczestników</strong></td>
+<td>1 osoba</td>
+<td>6-10 osób</td>
+</tr>
+<tr class="even">
+<td><strong>Czas trwania</strong></td>
+<td>60-120 minut</td>
+<td>90-120 minut</td>
+</tr>
+<tr class="odd">
+<td><strong>Głębia eksploracji</strong></td>
+<td>Bardzo wysoka</td>
+<td>Umiarkowana</td>
+</tr>
+<tr class="even">
+<td><strong>Dynamika grupowa</strong></td>
+<td>Brak</td>
+<td>Wysoka - wzajemne inspirowanie</td>
+</tr>
+<tr class="odd">
+<td><strong>Tematy wrażliwe</strong></td>
+<td>Bardzo odpowiednie</td>
+<td>Nieodpowiednie</td>
+</tr>
+<tr class="even">
+<td><strong>Koszt na uczestnika</strong></td>
+<td>Wysoki</td>
+<td>Niski</td>
+</tr>
+<tr class="odd">
+<td><strong>Logistyka</strong></td>
+<td>Prosta</td>
+<td>Złożona</td>
+</tr>
+<tr class="even">
+<td><strong>Wpływ grupy</strong></td>
+<td>Brak</td>
+<td>Silny (konformizm, dominacja)</td>
+</tr>
+<tr class="odd">
+<td><strong>Elastyczność</strong></td>
+<td>Bardzo wysoka</td>
+<td>Umiarkowana</td>
+</tr>
+<tr class="even">
+<td><strong>Indywidualne doświadczenia</strong></td>
+<td>Bardzo szczegółowe</td>
+<td>Ogólne</td>
+</tr>
+<tr class="odd">
+<td><strong>Perspektywy społeczne</strong></td>
+<td>Ograniczone</td>
+<td>Bogate, zróżnicowane</td>
+</tr>
+<tr class="even">
+<td><strong>Wymagane kompetencje</strong></td>
+<td>Umiejętności prowadzenia wywiadu</td>
+<td>Umiejętności moderacji grupy</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section></section>
+<section>
+<section id="przygotowanie-narzędzi-badawczych" class="title-slide slide level1 center">
+<h1>Przygotowanie narzędzi badawczych</h1>
+
+</section>
+<section id="scenariusz-wywiadu---funkcje" class="slide level2">
+<h2>Scenariusz wywiadu - funkcje</h2>
+<p>Scenariusz wywiadu to <strong>przewodnik tematyczny</strong>, nie sztywny kwestionariusz:</p>
+<h3 id="główne-funkcje">Główne funkcje</h3>
+<ul>
+<li><strong>Struktura</strong> - logiczny przepływ zagadnień</li>
+<li><strong>Kompletność</strong> - pokrycie wszystkich celów badawczych</li>
+<li><strong>Elastyczność</strong> - możliwość dostosowania w trakcie</li>
+<li><strong>Spójność</strong> - porównywalność między wywiadami</li>
+<li><strong>Wsparcie</strong> - pomoc dla badacza w prowadzeniu rozmowy</li>
+</ul>
+</section>
+<section id="struktura-scenariusza-wywiadu" class="slide level2">
+<h2>Struktura scenariusza wywiadu</h2>
+<h3 id="elementy-scenariusza">Elementy scenariusza</h3>
+<ol type="1">
+<li><strong>Wprowadzenie (5-10 min)</strong>
+<ul>
+<li>Przedstawienie badacza i celu badania</li>
+<li>Zapewnienie o anonimowości i poufności</li>
+<li>Zgoda na nagrywanie</li>
+<li>Budowanie relacji i zaufania</li>
+</ul></li>
+<li><strong>Rozgrzewka (5-10 min)</strong>
+<ul>
+<li>Pytania łatwe, ogólne</li>
+<li>Oswojenie z sytuacją</li>
+<li>Rozpoczęcie rozmowy</li>
+</ul></li>
+</ol>
+</section>
+<section id="struktura-scenariusza-cd." class="slide level2">
+<h2>Struktura scenariusza (cd.)</h2>
+<ol start="3" type="1">
+<li><strong>Tematy główne (40-90 min)</strong>
+<ul>
+<li>Kluczowe zagadnienia badawcze</li>
+<li>Pytania główne i pomocnicze</li>
+<li>Od ogólnych do szczegółowych</li>
+<li>Od mniej do bardziej wrażliwych</li>
+</ul></li>
+<li><strong>Zakończenie (5-10 min)</strong>
+<ul>
+<li>Podsumowanie głównych wątków</li>
+<li>Pytanie: “Czy chce Pan/Pani coś dodać?”</li>
+<li>Pytania metryczkowe (wiek, wykształcenie, itp.)</li>
+<li>Podziękowanie, honorarium</li>
+</ul></li>
+<li><strong>Post-wywiad</strong>
+<ul>
+<li>Notatki badacza o przebiegu wywiadu</li>
+<li>Obserwacje nieverbalne, kontekst</li>
+</ul></li>
+</ol>
+</section>
+<section id="rodzaje-pytań-w-wywiadach" class="slide level2">
+<h2>Rodzaje pytań w wywiadach</h2>
+<p><strong>Pytania otwarte</strong></p>
+<ul>
+<li>Dają swobodę wypowiedzi</li>
+<li>“Jak Pan/Pani to przeżył/a?”</li>
+<li>“Co Pan/Pani o tym sądzi?”</li>
+</ul>
+<p><strong>Pytania narracyjne</strong></p>
+<ul>
+<li>Zaproszenie do opowiadania historii</li>
+<li>“Proszę opowiedzieć o sytuacji, gdy…”</li>
+<li>“Jak wyglądał typowy dzień pracy?”</li>
+</ul>
+<p><strong>Pytania hipotetyczne</strong></p>
+<ul>
+<li>Sytuacje wyobrażone</li>
+<li>“Co by się stało, gdyby…?”</li>
+<li>“Jak zareagowałby Pan/Pani, jeśli…?”</li>
+</ul>
+</section>
+<section id="rodzaje-pytań-cd." class="slide level2">
+<h2>Rodzaje pytań (cd.)</h2>
+<p><strong>Pytania projekcyjne</strong></p>
+<ul>
+<li>Techniki pośrednie</li>
+<li>“Co inni myślą o…?”</li>
+<li>“Gdyby Pana/Pani firma była osobą, jaka by była?”</li>
+</ul>
+<p><strong>Pytania kontrolne</strong></p>
+<ul>
+<li>Weryfikacja informacji</li>
+<li>“Czy dobrze rozumiem, że…?”</li>
+<li>“Czy może Pan/Pani to rozwinąć?”</li>
+</ul>
+<p><strong>Pytania uzupełniające (sondy)</strong></p>
+<ul>
+<li>“Czy może Pan/Pani powiedzieć więcej?”</li>
+<li>“Co Pan/Pani przez to rozumie?”</li>
+<li>“Czy może Pan/Pani podać przykład?”</li>
+</ul>
+</section>
+<section id="techniki-projekcyjne" class="slide level2">
+<h2>Techniki projekcyjne</h2>
+<p>Techniki projekcyjne pozwalają ujawnić postawy i opinie <strong>pośrednio</strong>, gdy bezpośrednie pytania mogą być zbyt nachalające.</p>
+<p><strong>Personifikacja</strong></p>
+<blockquote>
+<p>“Gdyby ta marka była osobą, kim by była? Jak by wyglądała? Co by robiła?”</p>
+</blockquote>
+<p><strong>Analogie i metafory</strong></p>
+<blockquote>
+<p>“Do czego można porównać pracę w tej firmie?” (zwierzę, pojazd, budynek)</p>
+</blockquote>
+<p><strong>Kolarz zdjęć</strong></p>
+<blockquote>
+<p>Pokazanie zdjęć i prośba o wybór reprezentujących daną opinię lub uczucie</p>
+</blockquote>
+</section>
+<section id="techniki-projekcyjne-cd." class="slide level2">
+<h2>Techniki projekcyjne (cd.)</h2>
+<p><strong>Dokończenie zdań</strong></p>
+<blockquote>
+<p>“Ludzie pracujący w tej branży są…”</p>
+<p>“Najlepsze w mojej pracy jest…”</p>
+</blockquote>
+<p><strong>Mapa mentalna / Kolaż</strong></p>
+<blockquote>
+<p>Wizualizacja skojarzeń, tworzenie obrazu z wyciętych elementów</p>
+</blockquote>
+<p><strong>Role-playing / Scenki</strong></p>
+<blockquote>
+<p>“Proszę wyobrazić sobie sytuację, w której… Jak by Pan/Pani zareagował/a?”</p>
+</blockquote>
+<p><strong>Trzecia osoba</strong></p>
+<blockquote>
+<p>“Co Pana/Pani znajomi myślą o…?” (łatwiej wypowiedzieć własne opinie)</p>
+</blockquote>
+</section>
+<section id="zasady-formułowania-pytań" class="slide level2">
+<h2>Zasady formułowania pytań</h2>
+<p>Pytania powinny być:</p>
+<ul>
+<li><strong>Otwarte</strong> - unikać pytań zamkniętych (tak/nie)</li>
+<li><strong>Jasne i jednoznaczne</strong> - bez żargonu, prostym językiem</li>
+<li><strong>Jednowątkowe</strong> - jedno pytanie = jeden temat</li>
+<li><strong>Neutralne</strong> - bez sugestii i wartościowania</li>
+<li><strong>Pozytywne</strong> - unikać podwójnych przeczeń</li>
+<li><strong>Dopasowane</strong> - do poziomu uczestnika</li>
+<li><strong>Nieoceniające</strong> - bez krytyki i osądzania</li>
+</ul>
+<p>Unikać:</p>
+<p>✗ “Czy nie uważa Pan/Pani, że…?” (sugestywne)<br>
+✗ “Czy jest Pan/Pani zadowolony?” (zamknięte)<br>
+✗ “Jak często i w jakich sytuacjach…?” (podwójne)</p>
+</section></section>
+<section>
+<section id="techniki-prowadzenia-wywiadów" class="title-slide slide level1 center">
+<h1>Techniki prowadzenia wywiadów</h1>
+
+</section>
+<section id="kompetencje-badacza" class="slide level2">
+<h2>Kompetencje badacza</h2>
+<p><strong>Wiedza merytoryczna</strong></p>
+<ul>
+<li>Znajomość tematu badania</li>
+<li>Kontekst teoretyczny</li>
+<li>Terminologia dziedziny</li>
+</ul>
+</section>
+<section id="kompetencje-badacza-1" class="slide level2">
+<h2>Kompetencje badacza</h2>
+<p><strong>Umiejętności komunikacyjne</strong></p>
+<ul>
+<li>Aktywne słuchanie</li>
+<li>Empatia i zrozumienie</li>
+<li>Jasne formułowanie pytań</li>
+<li>Zadawanie pytań uzupełniających</li>
+</ul>
+</section>
+<section id="kompetencje-badacza-2" class="slide level2">
+<h2>Kompetencje badacza</h2>
+<p><strong>Postawa badacza</strong></p>
+<ul>
+<li>Neutralność - unikanie sugestii</li>
+<li>Otwartość na różne perspektywy</li>
+<li>Elastyczność w reakcjach</li>
+<li>Refleksyjność metodologiczna</li>
+</ul>
+</section>
+<section id="techniki-aktywnego-słuchania" class="slide level2">
+<h2>Techniki aktywnego słuchania</h2>
+<p><strong>Pełna uwaga</strong></p>
+<ul>
+<li>Kontakt wzrokowy</li>
+<li>Mowa ciała pokazująca zainteresowanie</li>
+<li>Eliminacja rozpraszaczy</li>
+<li>Obecność mentalna “tu i teraz”</li>
+</ul>
+</section>
+<section id="techniki-aktywnego-słuchania-1" class="slide level2">
+<h2>Techniki aktywnego słuchania</h2>
+<p><strong>Werbalne sygnały zainteresowania</strong></p>
+<ul>
+<li>“Mhm”, “Rozumiem”, “Aha”</li>
+<li>“To bardzo interesujące”</li>
+<li>“Proszę kontynuować”</li>
+</ul>
+</section>
+<section id="techniki-aktywnego-słuchania-2" class="slide level2">
+<h2>Techniki aktywnego słuchania</h2>
+<p><strong>Parafrazowanie</strong></p>
+<ul>
+<li>“Jeśli dobrze rozumiem, chodzi o…?”</li>
+<li>“Innymi słowy, Pan/Pani mówi, że…?”</li>
+<li>Sprawdzenie zrozumienia</li>
+</ul>
+</section>
+<section id="techniki-pogłębiania-wypowiedzi" class="slide level2">
+<h2>Techniki pogłębiania wypowiedzi</h2>
+<p><strong>Pytania uzupełniające</strong></p>
+<blockquote>
+<p>“Czy może Pan/Pani powiedzieć więcej o tym?”</p>
+<p>“Co Pan/Pani przez to rozumie?”</p>
+<p>“Czy może Pan/Pani podać przykład?”</p>
+</blockquote>
+<p><strong>Cisza strategiczna</strong></p>
+<ul>
+<li>Pauza po odpowiedzi - czas na refleksję</li>
+<li>Respondent często sam rozwija wypowiedź</li>
+<li>Nie przerywać zbyt szybko</li>
+</ul>
+</section>
+<section id="wyzwania-i-rozwiązania" class="slide level2">
+<h2>Wyzwania i rozwiązania</h2>
+<p><strong>Zbyt zwięzłe odpowiedzi</strong></p>
+<ul>
+<li>Użyć sond i pytań uzupełniających</li>
+<li>Zadać pytanie narracyjne: “Proszę opowiedzieć o…”</li>
+<li>Pokazać autentyczne zainteresowanie</li>
+</ul>
+</section>
+<section id="wyzwania-i-rozwiązania-1" class="slide level2">
+<h2>Wyzwania i rozwiązania</h2>
+<p><strong>Zbyt rozwlekłe odpowiedzi</strong></p>
+<ul>
+<li>Delikatnie przerwać i podsumować</li>
+<li>“To bardzo ciekawe, czy mógłbym/mogłabym jeszcze zapytać o…?”</li>
+<li>Wrócić do scenariusza</li>
+</ul>
+</section>
+<section id="wyzwania-i-rozwiązania-2" class="slide level2">
+<h2>Wyzwania i rozwiązania</h2>
+<p><strong>Unikanie tematu</strong></p>
+<ul>
+<li>Zauważyć opór, nie naciskać nadmiernie</li>
+<li>Przeformułować pytanie</li>
+<li>Wrócić do tematu później, jeśli możliwe</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Zarządzanie dynamiką grupy</strong></p>
+<ul>
+<li>Zachęcanie milczących uczestników</li>
+<li>“Pani Karolino, co Pani o tym sądzi?”</li>
+<li>Utrzymywanie równowagi głosów</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych-1" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Hamowanie dominujących uczestników</strong></p>
+<ul>
+<li>“Dziękuję, to bardzo ciekawe. Chciałbym/chciałabym usłyszeć też innych.”</li>
+<li>Kontakt wzrokowy z innymi uczestnikami</li>
+<li>Technika “zejścia z oczu” dominującego</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych-2" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Prowadzenie dyskusji</strong></p>
+<ul>
+<li>Trzymanie się scenariusza</li>
+<li>Zarządzanie czasem</li>
+<li>Przejścia między tematami</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych-3" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Reagowanie na konflikty</strong></p>
+<ul>
+<li>Uznać różnice zdań jako wartościowe</li>
+<li>“Widzę, że są różne perspektywy na ten temat…”</li>
+<li>Nie dopuścić do eskalacji osobistych ataków</li>
+<li>Zmienić temat, jeśli napięcie rośnie</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych-4" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Techniki włączania</strong></p>
+<ul>
+<li>Zadawanie pytań kolejno do wszystkich</li>
+<li>“Przejdźmy dookoła - co każdy z Was sądzi?”</li>
+<li>Zachęcanie niewerbalnie (kontakt wzrokowy, skinienie)</li>
+</ul>
+</section>
+<section id="moderacja-grup-fokusowych-5" class="slide level2">
+<h2>Moderacja grup fokusowych</h2>
+<p><strong>Kontrola czasu</strong></p>
+<ul>
+<li>Elastyczność, ale świadomość harmonogramu</li>
+<li>Decyzje: czy zgłębić ciekawy wątek czy przejść dalej?</li>
+</ul>
+</section></section>
+<section>
+<section id="rekrutacja-uczestników-badań" class="title-slide slide level1 center">
+<h1>Rekrutacja uczestników badań</h1>
+
+</section>
+<section id="przygotowanie-screenera" class="slide level2">
+<h2>Przygotowanie screener’a</h2>
+<p><strong>Screener</strong> to kwestionariusz kwalifikacyjny służący do rekrutacji odpowiednich uczestników.</p>
+<ul>
+<li><strong>Kryteria włączenia</strong> - kto może uczestniczyć</li>
+<li><strong>Kryteria wyłączenia</strong> - kto nie może uczestniczyć</li>
+<li><strong>Pytania filtrujące</strong> - weryfikacja kryteriów</li>
+<li><strong>Pytania metryczkowe</strong> - podstawowe dane</li>
+<li><strong>Informacja o badaniu</strong> - ogólny temat, czas, miejsce</li>
+<li><strong>Zgoda na uczestnictwo</strong> - potwierdzenie gotowości</li>
+</ul>
+</section>
+<section id="przykład-kryteriów-rekrutacyjnych" class="slide level2">
+<h2>Przykład kryteriów rekrutacyjnych</h2>
+<h3 id="badanie-doświadczenia-pracowników-w-pracy-zdalnej">Badanie: doświadczenia pracowników w pracy zdalnej</h3>
+<p><strong>Kryteria włączenia:</strong></p>
+<ul>
+<li>Doświadczenie pracy zdalnej min. 6 miesięcy</li>
+<li>Pełny etat</li>
+<li>Wiek 25-55 lat</li>
+<li>Różne branże (IT, marketing, finanse, edukacja)</li>
+</ul>
+<p><strong>Kryteria wyłączenia:</strong></p>
+<ul>
+<li>Samozatrudnieni / freelancerzy</li>
+<li>Osoby pracujące w badaniach rynku</li>
+<li>Uczestnicy wywiadów w ciągu ostatnich 6 miesięcy</li>
+<li>Znajomi badacza</li>
+</ul>
+<p><strong>Zróżnicowanie:</strong></p>
+<ul>
+<li>50% kobiet, 50% mężczyzn</li>
+<li>Różne poziomy stanowisk (specjalista, menedżer, dyrektor)</li>
+</ul>
+</section>
+<section id="strategie-rekrutacji" class="slide level2">
+<h2>Strategie rekrutacji</h2>
+<h3 id="kanały-rekrutacyjne">Kanały rekrutacyjne</h3>
+<p><strong>Bezpośredni kontakt</strong></p>
+<ul>
+<li>Osobista sieć kontaktów</li>
+<li>Rekomendacje od znajomych</li>
+<li>Media społecznościowe (grupy tematyczne)</li>
+</ul>
+<p><strong>Agencje rekrutacyjne</strong></p>
+<ul>
+<li>Specjalistyczne firmy badawcze</li>
+<li>Bazy respondentów</li>
+<li>Profesjonalna rekrutacja (droższa)</li>
+</ul>
+<p><strong>Ogłoszenia</strong></p>
+<ul>
+<li>Portale społecznościowe, fora</li>
+<li>Grupy tematyczne online</li>
+<li>Tablice ogłoszeń (uczelnie, organizacje)</li>
+</ul>
+</section>
+<section id="motywowanie-uczestników" class="slide level2">
+<h2>Motywowanie uczestników</h2>
+<h3 id="formy-gratyfikacji">Formy gratyfikacji</h3>
+<p><strong>Honorarium finansowe</strong></p>
+<ul>
+<li>IDI: 100-200 zł (60-90 min)</li>
+<li>FGI: 150-300 zł (90-120 min)</li>
+<li>Wyższe dla trudno dostępnych grup (specjaliści, wysoki status)</li>
+</ul>
+<p><strong>Inne formy motywacji</strong></p>
+<ul>
+<li>Bony / vouchery do sklepów</li>
+<li>Produkty / usługi testowane w badaniu</li>
+<li>Dostęp do wyników badania</li>
+<li>Wkład w rozwój nauki / ważnego projektu</li>
+</ul>
+<p><strong>Logistyka</strong></p>
+<ul>
+<li>Dogodna lokalizacja / online</li>
+<li>Elastyczne terminy</li>
+<li>Poczęstunek (FGI)</li>
+<li>Pokrycie kosztów dojazdu</li>
+</ul>
+</section>
+<section id="wielkość-próby" class="slide level2">
+<h2>Wielkość próby</h2>
+<h3 id="ile-wywiadów-przeprowadzić">Ile wywiadów przeprowadzić?</h3>
+<p><strong>IDI:</strong> zazwyczaj <strong>15-30 wywiadów</strong>, zależy od:</p>
+<ul>
+<li>Złożoności tematu</li>
+<li>Zróżnicowania populacji</li>
+<li>Nasycenia kategorii (saturation)</li>
+</ul>
+<p><strong>FGI:</strong> zazwyczaj <strong>4-8 grup</strong>, zależy od:</p>
+<ul>
+<li>Liczby segmentów badawczych</li>
+<li>Zróżnicowania uczestników</li>
+<li>Nasycenia tematów</li>
+</ul>
+<h3 id="zasada-nasycenia-saturation">Zasada nasycenia (saturation)</h3>
+<p>Zbieranie danych kontynuuje się do momentu, gdy <strong>nowe wywiady nie wnoszą nowych informacji</strong> - kategorie są “nasycone”.</p>
+</section></section>
+<section>
+<section id="realizacja-badań-terenowych" class="title-slide slide level1 center">
+<h1>Realizacja badań terenowych</h1>
+
+</section>
+<section id="warunki-przeprowadzania-wywiadów" class="slide level2">
+<h2>Warunki przeprowadzania wywiadów</h2>
+<h3 id="miejsce">Miejsce</h3>
+<p><strong>IDI:</strong></p>
+<ul>
+<li>Ciche, spokojne pomieszczenie</li>
+<li>Komfortowe dla respondenta (dom, biuro, kawiarnia, centrum badawcze)</li>
+<li>Neutralne - bez zbędnych rozpraszaczy</li>
+<li>Prywatność - brak obecności osób trzecich</li>
+</ul>
+<p><strong>FGI:</strong></p>
+<ul>
+<li>Sala konferencyjna / studio fokusowe</li>
+<li>Stół umożliwiający kontakt wzrokowy wszystkich</li>
+<li>Tablica / flipchart (opcjonalnie)</li>
+<li>Lustro weneckie / pokój obserwacyjny (opcjonalnie)</li>
+</ul>
+</section>
+<section id="warunki-przeprowadzania-wywiadów-cd." class="slide level2">
+<h2>Warunki przeprowadzania wywiadów (cd.)</h2>
+<h3 id="czas">Czas</h3>
+<ul>
+<li>Dogodny dla uczestników</li>
+<li>Unikać późnych godzin wieczornych</li>
+<li>Zapewnić wystarczający czas (bez pośpiechu)</li>
+<li>Buffer czasowy między wywiadami (15-30 min)</li>
+</ul>
+<h3 id="atmosfera">Atmosfera</h3>
+<ul>
+<li>Przyjazna, bezpieczna</li>
+<li>Ciepła, profesjonalna</li>
+<li>Bez osądzania</li>
+<li>Poczucie, że każda opinia jest wartościowa</li>
+</ul>
+</section>
+<section id="rejestracja-danych" class="slide level2">
+<h2>Rejestracja danych</h2>
+<p><strong>Nagranie audio</strong></p>
+<ul>
+<li>Podstawowy standard - pełny zapis rozmowy</li>
+<li>Dyktafon / aplikacja mobilna</li>
+<li>Wysoka jakość nagrania</li>
+<li>Backup - dwa urządzenia jednocześnie</li>
+</ul>
+<p><strong>Nagranie wideo</strong></p>
+<ul>
+<li>Kontekst niewerbalny (gesty, mimika)</li>
+<li>Przydatne w FGI (identyfikacja mówiącego)</li>
+<li>Wymaga zgody uczestnika</li>
+<li>Więcej zakłóceń (świadomość kamery)</li>
+</ul>
+<p><strong>Notatki badacza</strong></p>
+<ul>
+<li>Spostrzeżenia bieżące</li>
+<li>Obserwacje niewerbalne</li>
+<li>Kontekst rozmowy</li>
+<li>Refleksje metodologiczne</li>
+</ul>
+</section>
+<section id="etyka-w-badaniach-jakościowych" class="slide level2">
+<h2>Etyka w badaniach jakościowych</h2>
+<h3 id="zasady-etyczne">Zasady etyczne</h3>
+<p><strong>Świadoma zgoda (informed consent)</strong></p>
+<ul>
+<li>Pełna informacja o celach badania</li>
+<li>Informacja o procedurze i czasie</li>
+<li>Prawo do odmowy odpowiedzi</li>
+<li>Prawo do wycofania się w każdej chwili</li>
+</ul>
+<p><strong>Anonimowość i poufność</strong></p>
+<ul>
+<li>Ochrona tożsamości uczestników</li>
+<li>Bezpieczne przechowywanie danych</li>
+<li>Pseudonimy w raportach</li>
+<li>Usuwanie danych identyfikujących</li>
+</ul>
+<p><strong>Bezpieczeństwo uczestników</strong></p>
+<ul>
+<li>Minimalizacja ryzyka psychologicznego</li>
+<li>Wrażliwe tematy - szczególna ostrożność</li>
+<li>Informacja o dostępnym wsparciu (jeśli potrzeba)</li>
+</ul>
+</section>
+<section id="etyka-w-badaniach-jakościowych-1" class="slide level2">
+<h2>Etyka w badaniach jakościowych</h2>
+<p><strong>Dobrowolność</strong></p>
+<ul>
+<li>Brak przymusu uczestnictwa</li>
+<li>Brak negatywnych konsekwencji odmowy</li>
+<li>Możliwość przerwania w dowolnym momencie</li>
+</ul>
+<p><strong>Transparentność</strong></p>
+<ul>
+<li>Jasne wyjaśnienie celów badania</li>
+<li>Informacja o finansowaniu</li>
+<li>Informacja o wykorzystaniu wyników</li>
+<li>Możliwość zadawania pytań</li>
+</ul>
+<p><strong>Zgoda na nagrywanie</strong></p>
+<blockquote>
+<p>“Czy zgadza się Pan/Pani na nagranie tej rozmowy? Nagranie będzie wykorzystane wyłącznie do celów naukowych i po transkrypcji zostanie usunięte.”</p>
+</blockquote>
+</section></section>
+<section>
+<section id="zastosowania-badań-jakościowych" class="title-slide slide level1 center">
+<h1>Zastosowania badań jakościowych</h1>
+
+</section>
+<section id="obszary-zastosowań" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="marketing-i-badania-konsumenckie">Marketing i badania konsumenckie</h3>
+<ul>
+<li>Zrozumienie motywacji zakupowych</li>
+<li>Postrzeganie marki i produktu</li>
+<li>Testy koncepcji reklamowych</li>
+<li>Customer journey - ścieżka klienta</li>
+<li>Identyfikacja potrzeb konsumentów</li>
+</ul>
+<p><strong>Przykład:</strong> FGI z użytkownikami aplikacji mobilnej w celu zrozumienia barier w korzystaniu i oczekiwań funkcjonalnych.</p>
+</section>
+<section id="obszary-zastosowań-1" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="socjologia-i-nauki-społeczne">Socjologia i nauki społeczne</h3>
+<ul>
+<li>Procesy społeczne i zmiany</li>
+<li>Tożsamość i role społeczne</li>
+<li>Normy i wartości kulturowe</li>
+<li>Wykluczenie społeczne</li>
+<li>Ruchy społeczne</li>
+</ul>
+<p><strong>Przykład:</strong> IDI z imigrantami o doświadczeniach asymilacji i konstruowania tożsamości w nowym kraju.</p>
+</section>
+<section id="obszary-zastosowań-2" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="psychologia">Psychologia</h3>
+<ul>
+<li>Doświadczenia emocjonalne i trauma</li>
+<li>Proces terapii i zmian osobistych</li>
+<li>Tożsamość i rozwój osobisty</li>
+<li>Strategie radzenia sobie</li>
+<li>Relacje interpersonalne</li>
+</ul>
+<p><strong>Przykład:</strong> Wywiady narracyjne z osobami po utracie bliskiej osoby o procesie radzenia sobie z żałobą.</p>
+</section>
+<section id="obszary-zastosowań-3" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="edukacja">Edukacja</h3>
+<ul>
+<li>Doświadczenia uczenia się</li>
+<li>Motywacja do nauki</li>
+<li>Relacje nauczyciel-uczeń</li>
+<li>Ewaluacja programów edukacyjnych</li>
+<li>Innowacje pedagogiczne</li>
+</ul>
+<p><strong>Przykład:</strong> FGI ze studentami o doświadczeniach nauczania zdalnego w pandemii - co działało, a co nie.</p>
+</section>
+<section id="obszary-zastosowań-4" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="zarządzanie-i-organizacje">Zarządzanie i organizacje</h3>
+<ul>
+<li>Kultura organizacyjna</li>
+<li>Satysfakcja i motywacja pracowników</li>
+<li>Przywództwo i zarządzanie zmianą</li>
+<li>Komunikacja w organizacjach</li>
+<li>Work-life balance</li>
+</ul>
+<p><strong>Przykład:</strong> IDI z menedżerami o wyzwaniach w zarządzaniu zespołami w modelu hybrydowym.</p>
+</section>
+<section id="obszary-zastosowań-5" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="zdrowie-publiczne">Zdrowie publiczne</h3>
+<ul>
+<li>Doświadczenia choroby i leczenia</li>
+<li>Bariery w dostępie do opieki zdrowotnej</li>
+<li>Strategie zdrowotne pacjentów</li>
+<li>Relacje pacjent-lekarz</li>
+<li>Ewaluacja programów zdrowotnych</li>
+</ul>
+<p><strong>Przykład:</strong> Wywiady z osobami z chorobami przewlekłymi o codziennych wyzwaniach w zarządzaniu stanem zdrowia.</p>
+</section>
+<section id="obszary-zastosowań-6" class="slide level2">
+<h2>Obszary zastosowań</h2>
+<h3 id="policy-i-ewaluacja">Policy i ewaluacja</h3>
+<ul>
+<li>Ewaluacja programów społecznych</li>
+<li>Perspektywy beneficjentów polityk</li>
+<li>Implementacja reform</li>
+<li>Partycypacja obywatelska</li>
+</ul>
+<p><strong>Przykład:</strong> FGI z beneficjentami programu mieszkaniowego o jego skuteczności i barierach w dostępie.</p>
+</section></section>
+<section>
+<section id="podsumowanie" class="title-slide slide level1 center">
+<h1>Podsumowanie</h1>
+
+</section>
+<section id="kluczowe-wnioski" class="slide level2">
+<h2>Kluczowe wnioski</h2>
+<ol type="1">
+<li><p><strong>Badania jakościowe</strong> służą głębokiemu zrozumieniu znaczeń, doświadczeń i kontekstów społecznych</p></li>
+<li><p><strong>IDI</strong> zapewniają głębię i intymność, <strong>FGI</strong> dynamikę grupową i różnorodność perspektyw</p></li>
+<li><p><strong>Scenariusz wywiadu</strong> to elastyczny przewodnik, nie sztywny kwestionariusz</p></li>
+<li><p><strong>Kompetencje badacza</strong> - aktywne słuchanie, empatia, neutralność - są kluczowe dla jakości danych</p></li>
+<li><p><strong>Rekrutacja celowa</strong> zapewnia odpowiednich uczestników dla celów badawczych</p></li>
+</ol>
+</section>
+<section id="kluczowe-wnioski-1" class="slide level2">
+<h2>Kluczowe wnioski</h2>
+<ol start="6" type="1">
+<li><p><strong>Etyka</strong> - świadoma zgoda, anonimowość, bezpieczeństwo - jest fundamentem badań</p></li>
+<li><p><strong>Analiza danych</strong> to iteracyjny proces kodowania, kategoryzacji i interpretacji</p></li>
+<li><p><strong>Wiarygodność</strong> zapewniana przez triangulację, member checking, gruby opis i refleksyjność</p></li>
+<li><p><strong>Raportowanie</strong> wymaga bogatych cytatów, szczegółowego kontekstu i przejrzystej metodologii</p></li>
+<li><p><strong>Zastosowania</strong> badań jakościowych są szerokie - od marketingu po socjologię, psychologię i zdrowie publiczne</p></li>
+</ol>
+</section>
+<section id="lista-kontrolna-badań-jakościowych" class="slide level2">
+<h2>Lista kontrolna badań jakościowych</h2>
+<ul>
+<li>Jasne pytania badawcze (jak? dlaczego?)<br>
+</li>
+<li>Odpowiedni dobór metody (IDI vs.&nbsp;FGI)<br>
+</li>
+<li>Szczegółowy scenariusz z pytaniami otwartymi<br>
+</li>
+<li>Celowa rekrutacja uczestników<br>
+</li>
+<li>Zapewnienie warunków etycznych<br>
+</li>
+<li>Profesjonalna rejestracja danych (audio/wideo)<br>
+</li>
+<li>Dokładna transkrypcja wywiadów<br>
+</li>
+<li>Systematyczne kodowanie i kategoryzacja<br>
+</li>
+<li>Triangulacja dla wiarygodności<br>
+</li>
+<li>Bogate cytaty w raportowaniu</li>
+</ul>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../swps.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Skopiowano!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Skopiowano!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

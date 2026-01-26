@@ -1,0 +1,379 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych 5 slides"
+subtitle: "Etyka w badaniach społecznych."
+author: "Ben Stanley"
+institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+format:
+  revealjs: 
+    css: ../presentation_style.scss
+    logo: ../swps.jpg
+---
+
+### Plan wykładu
+
+- Wprowadzenie do etyki badań społecznych
+- Zagadnienia etyczne w badaniach społecznych
+- Dwie kontrowersje etyczne
+- Polityczne aspekty badań społecznych
+
+---
+
+## Wprowadzenie
+
+- Badania społeczne odbywają się w określonym kontekście społecznym.
+- Podczas projektowania i prowadzenia badań należy uwzględnić cztery główne ograniczenia:
+  - **Naukowe** – logika badawcza
+  - **Organizacyjne** – koszty, czas
+  - **Etyczne** – co jest dopuszczalne
+  - **Polityczne** – co jest możliwe
+
+---
+
+## Etyka vs polityka w badaniach
+
+- **Etyka badań** – zajmuje się głównie stosowanymi metodami
+- **Polityka badań** – koncentruje się na treści i wykorzystaniu badań
+- Obie sfery są ze sobą powiązane, ale wymagają osobnej analizy
+- Nie istnieje powszechnie zaakceptowany kodeks określający, co jest politycznie akceptowalne
+
+---
+
+## Zagadnienia etyczne – definicja
+
+- Pojęcie **etyki** wiąże się z pojęciem **moralności** – oba odnoszą się do kwestii dobra i zła
+- Źródła rozróżnienia mogą być różne:
+  - Religia
+  - Ideologia polityczna
+  - Pragmatyczna obserwacja
+- **Etyczny** = „zgodny z grupowymi bądź zawodowymi standardami postępowania"
+
+---
+
+## Główne zasady etyczne
+
+1. **Dobrowolne uczestnictwo**
+2. **Nie krzywdzić badanych**
+3. **Anonimowość i poufność**
+4. **Unikanie oszukiwania badanych**
+5. **Rzetelna analiza i prezentacja wyników**
+
+---
+
+## Dobrowolne uczestnictwo
+
+- Nikt nie może być zmuszany do udziału w badaniach
+- Problem: zasada ta jest w konflikcie z interesem naukowym badacza
+- Wyniki badań mogą nie nadawać się do uogólnienia, jeśli uczestniczą tylko osoby chętne
+- **Przykład**: studenci proszeni o wypełnienie ankiety mogą obawiać się wpływu odmowy na ocenę
+
+---
+
+## Dobrowolne uczestnictwo – dylematy
+
+- W badaniach terenowych badacz często nie może ujawnić, że prowadzi badania
+- Badani nie mają możliwości dobrowolnego udziału lub odmowy
+- Jeśli łamiemy zasadę dobrowolności, tym ważniejsze jest przestrzeganie innych norm etycznych
+
+---
+
+## Nie krzywdzić badanych
+
+- Badania nie powinny wyrządzać żadnej krzywdy uczestnikom
+- Dotyczy to zarówno szkód **fizycznych**, jak i **psychicznych**
+- **Przykłady szkód**:
+  - Ujawnienie informacji wprawiających w zakłopotanie
+  - Zagrożenie życiu rodzinnemu, przyjaźniom, pracy
+  - Zmuszenie do zmierzenia się z trudnymi aspektami siebie
+
+---
+
+## Eksperyment z Tuskegee (1932-1972)
+
+- Amerykańska służba zdrowia badała niemal 400 ubogich czarnoskórych mężczyzn chorych na syfilis
+- Nawet po odkryciu penicyliny odmówiono im leczenia
+- Chciano obserwować pełny rozwój choroby
+- Efekt: formalne przeprosiny prezydenta Clintona, odszkodowania, uchwalenie National Research Law (1974)
+
+---
+
+## Raport z Belmont – trzy zasady
+
+1. **Szacunek wobec ludzi** – uczestnictwo musi być dobrowolne i oparte na pełnym zrozumieniu
+2. **Dobroczynność** – badani nie powinni ucierpieć, a w idealnym scenariuszu powinni uzyskać korzyści
+3. **Sprawiedliwość** – obciążenia i korzyści płynące z badań powinny być sprawiedliwie dzielone
+
+---
+
+## Stanfordzki eksperyment więzienny (1971)
+
+- Philip Zimbardo stworzył symulację życia w więzieniu
+- Studenci losowo przydzieleni do ról więźniów lub strażników
+- Symulacja szybko stała się rzeczywistością
+- Wielu studentów-więźniów doznało szkód psychicznych
+- Eksperyment został natychmiast zakończony, stworzono program terapeutyczny
+
+---
+
+## Świadoma zgoda
+
+- Badani muszą oprzeć swój udział na **pełnym zrozumieniu ewentualnych zagrożeń**
+- Elementy świadomej zgody:
+  - Oświadczenie o celach badania
+  - Opis zagrożeń i niedogodności
+  - Opis korzyści
+  - Informacja o poufności
+  - Oświadczenie o dobrowolności udziału
+
+---
+
+## Eksperyment Facebooka (2012)
+
+- Badacze manipulowali treściami na stronach 700 000 użytkowników
+- Jedni otrzymywali pozytywne, inni negatywne relacje
+- Monitorowano następnie posty użytkowników
+- **Problem**: naruszenie normy świadomej zgody
+- Żaden uczestnik nie miał możliwości zdecydowania o udziale
+
+---
+
+## Anonimowość
+
+- Projekt gwarantuje **anonimowość**, gdy ani badacze, ani czytelnicy nie są w stanie powiązać odpowiedzi z konkretnym respondentem
+- **Przykład**: ankieta pocztowa bez elementów identyfikujących
+- Problem: utrudnia monitorowanie zwrotów kwestionariuszy
+
+---
+
+## Poufność
+
+- Projekt gwarantuje **poufność**, gdy badacz może zidentyfikować autora, ale obiecuje nie ujawniać informacji
+- Badacz musi jasno poinformować o tym badanych
+- **Nie należy** stosować pojęcia anonimowości jako synonimu poufności
+- Dane z badań społecznych nie są objęte tajemnicą zawodową
+
+---
+
+## Przypadek MT Exxon Valdez (1991)
+
+- Gminy pozwały firmę Exxon za szkody po katastrofie tankowca
+- Przeprowadzono badania na próbie gospodarstw domowych
+- Respondentom zagwarantowano poufność
+- Firma Exxon zażądała załączenia kwestionariuszy do akt sprawy
+- Sąd nakazał przekazanie ankiet wraz z danymi identyfikacyjnymi
+
+---
+
+## Ochrona poufności – techniki
+
+- Szkolenie osób mających dostęp do danych
+- **Niszczenie danych** pozwalających zidentyfikować badanych, gdy przestają być potrzebne
+- Zastępowanie nazwisk i adresów numerami identyfikacyjnymi
+- Od 2002 r. – program „Certyfikatu poufności" w USA
+
+---
+
+## Oszukiwanie badanych
+
+- Oszukiwanie ludzi jest nieetyczne
+- Musi być uzasadnione **ważnymi względami naukowymi lub organizacyjnymi**
+- Nawet wtedy postawa będzie dyskusyjna
+- **Przykład**: badania nad konformizmem – nie można ich prowadzić bez oszukiwania badanych
+
+---
+
+## Debriefing
+
+- Wywiady z uczestnikami po zakończeniu eksperymentu
+- Cel: wykrycie problemów powstałych w wyniku doświadczenia badawczego
+- Powiedzenie prawdy później może zrekompensować konieczność okłamania na początku
+- Należy upewnić się, że u badanych nie wzbudzono złego samopoczucia
+
+---
+
+## Analiza i prezentacja wyników
+
+- Badacze mają zobowiązania etyczne wobec kolegów
+- Obowiązek **poinformowania o słabościach i ograniczeniach** badań
+- Negatywne wyniki również powinny być publikowane
+- Unikać pokusy opisywania odkryć jako produktu starannie zaplanowanej strategii, jeśli tak nie było
+
+---
+
+## Nieuczciwe praktyki
+
+- **Plagiat** – przepisywanie cudzej pracy i przedstawianie jej jako własnej
+- **Fałszowanie danych** – twierdzenia o badaniach, które nie zostały przeprowadzone
+- Przykład: holenderski profesor psychologii – artykuły o badaniach, które nigdy nie zostały przeprowadzone
+- Strona kontrolna: retractionwatch.wordpress.com
+
+---
+
+## Instytucjonalne komisje rewizyjne (IRB)
+
+- Każda instytucja ubiegająca się o fundusze federalne musi powołać komisję rewizyjną
+- Cel: zagwarantowanie ochrony praw i interesów uczestników badań
+- Komisje mogą odmówić zatwierdzenia badań lub zażądać poprawienia projektu
+- W Polsce: Komisje Etyki Badań Naukowych
+
+---
+
+## Kodeksy etyki zawodowej
+
+- Większość stowarzyszeń badaczy społecznych stworzyła oficjalne kodeksy postępowania
+- Przykłady:
+  - AAPOR (American Association for Public Opinion Research)
+  - ASA (Amerykańskie Towarzystwo Socjologiczne)
+  - APA (Amerykańskie Towarzystwo Psychologiczne)
+- W Polsce i Europie: Międzynarodowy Kodeks ESOMAR/ICC
+
+---
+
+## Kontrowersja 1: Tearoom Trade (Humphreys)
+
+- Laud Humphreys badał zachowania homoseksualne w publicznych toaletach („kafejkach")
+- Pełnił rolę „czujki" – osoby stojącej na czatach
+- Zapisywał numery rejestracyjne samochodów uczestników
+- Ustalał nazwiska i adresy, po czym odwiedzał ich w domach pod pretekstem badań opinii
+
+---
+
+## Tearoom Trade – kontrowersje
+
+- **Zarzuty krytyków**:
+  - Rażące naruszenie prywatności
+  - Oszustwo – sugerowanie, że jest podglądaczem
+  - Nieetyczne odwiedzanie badanych w domach
+- **Obrona zwolenników**:
+  - Temat wart analizy
+  - Nie można go było zbadać inaczej
+  - Humphreys zadbał o nieujawnienie tajemnicy badanych
+
+---
+
+## Kontrowersja 2: Eksperyment Milgrama
+
+- Stanley Milgram badał gotowość ludzi do krzywdzenia innych w ramach wykonywania rozkazów
+- 40 dorosłych mężczyzn w warunkach laboratoryjnych
+- „Nauczyciel" miał aplikować „uczniowi" wstrząsy elektryczne za błędne odpowiedzi
+- Wstrząsy były na niby, „uczeń" był współpracownikiem eksperymentatora
+
+---
+
+## Eksperyment Milgrama – wyniki
+
+- Żaden z 40 badanych nie odmówił aplikowania wstrząsów, aż „uczeń" zaczął kopać w ścianę
+- **2/3 badanych** (26 z 40) wykonywało polecenia do końca serii
+- Badani doświadczali niemal takiego samego bólu, jak ten, który sądzili, że zadają
+- Byli skrajnie zaniepokojeni i zdenerwowani
+
+---
+
+## Eksperyment Milgrama – krytyka etyczna
+
+- Wpływ eksperymentu na badanych był poważny
+- Wielu błagało o pozwolenie na przerwanie
+- Niektórzy przestali kontrolować swoje zachowanie
+- Pytanie: Czy temat był wystarczająco ważny, by uzasadnić takie działania?
+
+---
+
+## Polityczne aspekty badań społecznych
+
+- Badania społeczne nieuchronnie mają wymiar polityczny i ideologiczny
+- **Nauka** jest neutralna politycznie, ale **naukowcy** nie są
+- Wiele badań społecznych wiąże się z przekonaniami politycznymi ludzi spoza społeczności naukowej
+
+---
+
+## Obiektywność a ideologia
+
+- Max Weber: postulat **socjologii wolnej od sądów wartościujących**
+- Nauka powinna być wolna od osobistych wartości wyznawanych przez poszczególnych uczonych
+- **Intersubiektywność** – różni uczeni, stosując uznane techniki, powinni dochodzić do takich samych wyników
+
+---
+
+## Socjologia publiczna
+
+- W 2004 r. Michael Burawoy zaproponował koncepcję „socjologii publicznej"
+- Wielu badaczy opowiada się za uznaniem, że badania powinny mieć zamierzony wpływ społeczny
+- Marksiści i neomarksiści: nie da się i nie powinno się rozdzielać nauk społecznych od działań społecznych
+
+---
+
+## Badania społeczne a kwestie rasowe
+
+- 1896: Sąd Najwyższy USA ustanowił zasadę „oddzielni, lecz równi"
+- Wpływ prac Williama Grahama Sumnera: „stateways do not make folkways"
+- 1954: Odrzucenie tej zasady (Brown kontra Rada Edukacji)
+- Nowe orzeczenie opierało się na badaniach socjologicznych i psychologicznych
+
+---
+
+## Kontrowersyjne badania rasowe
+
+- **James Coleman (1966)**: niewielkie różnice między osiągnięciami uczniów w szkołach integracyjnych i segregacyjnych
+- **Daniel Moynihan (1965)**: krytyczna analiza funkcjonowania czarnoskórych rodzin
+- **Arthur Jensen (1969)**: różnice genetyczne a wyniki testów IQ
+- Wszystkie wywołały burzliwe kontrowersje polityczne
+
+---
+
+## Polityka badań seksualnych
+
+- Alfred Kinsey (lata 40. i 50. XX w.): przełomowe badania praktyk seksualnych
+- Wywołały oburzenie opinii publicznej
+- 1987: NIH potrzebował danych o praktykach seksualnych do walki z AIDS
+- Projekt Laumanna został zablokowany przez senatorów Helmsa i Dannemeyera
+
+---
+
+## Polityka przez małe „p"
+
+- Badacze społeczni jako „biegli" w sądzie
+- Naukowy ideał „poszukiwania prawdy" vs. rzeczywistość procesu sądowego
+- Biegli powoływani są na wniosek i za pieniądze jednej ze stron
+- Ich zeznania zwykle wspierają wersję tej strony
+
+---
+
+## Konflikt interesów w badaniach
+
+- Badania sponsorowane przez firmy farmaceutyczne
+- Badania przemysłu węglowego/naftowego o zmianach klimatu
+- Informacje o sponsorze powinny być podawane do wiadomości publicznej
+- AAPOR (2009): „Inicjatywa Transparentności"
+
+---
+
+## Polityka we właściwych proporcjach
+
+- Nauka nie jest wolna od polityki
+- Nauka rozwija się pośród politycznych kontrowersji
+- Świadomość aspektów ideologicznych wzbogaca metodologię
+- Naukowcy mogą i powinni brać udział w debatach publicznych
+
+---
+
+## Cztery wnioski końcowe
+
+1. Nauka nie jest wolna od polityki – wpływ ideologii dotyczy także nauk przyrodniczych
+2. Nauka rozwija się mimo sporów ideologicznych – kontrowersje mogą nawet wzmagać współzawodnictwo
+3. Świadomość aspektów ideologicznych wzbogaca metodologię – techniki jak intersubiektywność pomagają kontrolować uprzedzenia
+4. Naukowcy mogą dzielić się wiedzą naukową i osobistymi wartościami w debatach publicznych
+
+---
+
+## Kluczowe pojęcia
+
+- **Anonimowość** – ani badacze, ani czytelnicy nie mogą powiązać odpowiedzi z konkretnym respondentem
+- **Poufność** – badacz może zidentyfikować odpowiedź, ale obiecuje nie ujawniać jej publicznie
+- **Świadoma zgoda** – uczestnictwo oparte na pełnym zrozumieniu możliwych zagrożeń
+- **Debriefing** – wywiady z uczestnikami po zakończeniu eksperymentu
+
+---

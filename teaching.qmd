@@ -2,6 +2,11 @@
 editor: visual
 ---
 
+## Wprowadzenie do metodologii badań społecznych
+
+11. [Opis i prezentowanie wyników badań](Teaching/Wprowadzenie%20do%20metodologii%20badań%20społecznych/Wprowadzenie%20do%20metodologii%20badań%20społecznych%2011%20slides.html)
+12. [Seminarium powtórzeniowe](Teaching/Wprowadzenie do metodologii badań społecznych/Wprowadzenie do metodologii badań społecznych 12 slides.html)
+
 ## Unia Europejska i jej instytucje
 
-1. [Wprowadzenie do przedmiotu - UE w skrócie](Teaching/Unia%20Europejska%20i%20jej%20instytucje/Unia%20Europejska%20i%20jej%20instytucje%201%20slides.html)
+1.  [Wprowadzenie do przedmiotu - UE w skrócie](Teaching/Unia%20Europejska%20i%20jej%20instytucje/Unia%20Europejska%20i%20jej%20instytucje%201%20slides.html)
