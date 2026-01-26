@@ -1,7 +1,7 @@
 ---
 title: "Unia Europejska i jej instytucje"
 pagetitle: "Unia Europejska i jej instytucje 11 slides"
-subtitle: "Rola państw członkowskich w UE"
+subtitle: "**Rola państw członkowskich w UE**"
 author: "Ben Stanley"
 institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
 date-format: long

@@ -1,7 +1,7 @@
 ---
 title: "Wprowadzenie do metodologii badań społecznych"
 pagetitle: "Wprowadzenie do metodologii badań społecznych 7 exercise 1 answers slides"
-subtitle: "Ćwiczenia - Odpowiedzi"
+subtitle: "**Ćwiczenia - Odpowiedzi**"
 author: "Ben Stanley"
 institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
 date-format: long

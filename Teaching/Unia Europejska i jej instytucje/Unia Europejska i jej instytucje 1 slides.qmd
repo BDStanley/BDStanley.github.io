@@ -2,11 +2,11 @@
 title: "Unia Europejska i jej instytucje"
 pagetitle: "Unia Europejska i jej instytucje 1 slides"
 subtitle: "**Wprowadzenie do przedmiotu - UE w skrócie**"
-date: last-modified
-date-format: long
 author:
   - name: "Ben Stanley"
     affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: last-modified
+date-format: long
 lang: pl
 slide-number: true
 show-slide-number: all
@@ -22,7 +22,7 @@ format:
     navigation-mode: vertical
     progress: false
     controls: true
-    footer: "Dziennikarstwo danych"
+    footer: "Unia Europejska i jej instytucje"
     link-external-newwindow: true
     logo: swps.jpg
 execute: 

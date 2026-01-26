@@ -1,17 +1,37 @@
 ---
 title: "Unia Europejska i jej instytucje"
 pagetitle: "Unia Europejska i jej instytucje 15 slides"
-subtitle: "UE jako system polityczny - podsumowanie"
-author: "Ben Stanley"
-institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+subtitle: "**UE jako system polityczny - podsumowanie**"
+author:
+  - name: "Ben Stanley"
+    affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: last-modified
 date-format: long
 lang: pl
 slide-number: true
 show-slide-number: all
-format:
+editor: 
+  render-on-save: true
+format: 
   revealjs:
-    css: ../presentation_style.scss
-    logo: ../swps.jpg
+    theme: [default, presentation_style.scss]
+    slide-number: true
+    overview: true
+    center: true
+    incremental: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    footer: "Unia Europejska i jej instytucje"
+    link-external-newwindow: true
+    logo: swps.jpg
+execute: 
+  cache: false
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
 ---
 
 # Wprowadzenie

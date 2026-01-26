@@ -1,17 +1,37 @@
 ---
 title: "Wprowadzenie do metodologii badań społecznych"
 pagetitle: "Wprowadzenie do metodologii badań społecznych 5 slides"
-subtitle: "Etyka w badaniach społecznych."
-author: "Ben Stanley"
-institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+subtitle: "**Etyka w badaniach społecznych.**"
+author:
+  - name: "Ben Stanley"
+    affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: last-modified
 date-format: long
 lang: pl
 slide-number: true
 show-slide-number: all
-format:
-  revealjs: 
-    css: ../presentation_style.scss
-    logo: ../swps.jpg
+editor: 
+  render-on-save: true
+format: 
+  revealjs:
+    theme: [default, presentation_style.scss]
+    slide-number: true
+    overview: true
+    center: true
+    incremental: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    footer: "Wprowadzenie do metodologii badań społecznych"
+    link-external-newwindow: true
+    logo: swps.jpg
+execute: 
+  cache: false
+code:
+  execute: 
+    - r
+    - python
+embed-resources: true
 ---
 
 ### Plan wykładu

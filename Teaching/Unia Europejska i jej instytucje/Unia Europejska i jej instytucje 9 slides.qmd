@@ -1,7 +1,7 @@
 ---
 title: "Unia Europejska i jej instytucje"
 pagetitle: "Unia Europejska i jej instytucje 9 slides"
-subtitle: "System sądowy Unii Europejskiej"
+subtitle: "**System sądowy Unii Europejskiej**"
 author: "Ben Stanley"
 institute: "Wydział Nauk Społecznych, Uniwersytet SWPS"
 date-format: long
@@ -10,8 +10,8 @@ slide-number: true
 show-slide-number: all
 format:
   revealjs:
-    css: ../presentation_style.scss
-    logo: ../swps.jpg
+    css: presentation_style.scss
+    logo: swps.jpg
 ---
 
 # Wprowadzenie
