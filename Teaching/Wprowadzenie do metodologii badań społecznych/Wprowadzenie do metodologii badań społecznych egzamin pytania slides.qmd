@@ -1,0 +1,588 @@
+---
+title: "Wprowadzenie do metodologii badań społecznych"
+pagetitle: "Wprowadzenie do metodologii badań społecznych - Przykładowe pytania egzaminacyjne"
+subtitle: "**Przykładowe pytania egzaminacyjne**"
+author:
+  - name: "Ben Stanley"
+    affiliation: "Wydział Nauk Społecznych, Uniwersytet SWPS"
+date: "01/27/26"
+date-format: long
+lang: pl
+slide-number: true
+show-slide-number: all
+editor:
+  render-on-save: true
+format:
+  revealjs:
+    theme: [default, presentation_style.scss]
+    slide-number: true
+    overview: true
+    center: true
+    navigation-mode: vertical
+    progress: false
+    controls: true
+    footer: "Wprowadzenie do metodologii badań społecznych"
+    link-external-newwindow: true
+    logo: swps.jpg
+execute:
+  cache: false
+code:
+  execute:
+    - r
+    - python
+embed-resources: true
+---
+
+# Pytanie 1: Wprowadzenie do projektowania procesu badawczego
+
+## Pytanie 1
+
+Które z poniższych JEST kryterium dobrego problemu badawczego?
+
+A. Oryginalność
+
+B. Złożoność
+
+C. Popularność w mediach
+
+D. Subiektywność
+
+---
+
+## Pytanie 1 - Odpowiedź
+
+Które z poniższych JEST kryterium dobrego problemu badawczego?
+
+**A. Oryginalność** ✓
+
+B. Złożoność
+
+C. Popularność w mediach
+
+D. Subiektywność
+
+---
+
+## Pytanie 1 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: A. Oryginalność**
+
+**Dlaczego A jest prawidłowe:**
+Oryginalność JEST kluczowym kryterium dobrego problemu badawczego. Problem powinien wnosić nową wiedzę, wypełniać lukę poznawczą lub oferować nową perspektywę na istniejący problem. Badania powinny rozwijać naukę, a nie powielać to, co już wiemy.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **B. Złożoność** - To NIE jest kryterium; problem powinien być precyzyjnie i jasno sformułowany, niekoniecznie złożony
+- **C. Popularność w mediach** - To NIE jest kryterium naukowe; wartość badawcza nie zależy od medialnej popularności tematu
+- **D. Subiektywność** - To NIE jest kryterium; problem badawczy powinien być obiektywny i możliwy do zbadania metodami naukowymi
+
+# Pytanie 2: Przegląd literatury, analiza danych zastanych, plagiat
+
+## Pytanie 2
+
+Co to jest plagiat dosłowny?
+
+A. Przeformułowanie cudzych myśli bez wskazania autora
+
+B. Przepisanie tekstu bez zmian i cudzysłowu
+
+C. Własne teksty publikowane wcześniej bez wskazania
+
+D. Kopiowanie kompozycji i logiki argumentacji
+
+---
+
+## Pytanie 2 - Odpowiedź
+
+Co to jest plagiat dosłowny?
+
+A. Przeformułowanie cudzych myśli bez wskazania autora
+
+**B. Przepisanie tekstu bez zmian i cudzysłowu** ✓
+
+C. Własne teksty publikowane wcześniej bez wskazania
+
+D. Kopiowanie kompozycji i logiki argumentacji
+
+---
+
+## Pytanie 2 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: B. Przepisanie tekstu bez zmian i cudzysłowu**
+
+**Dlaczego B jest prawidłowe:**
+Plagiat dosłowny polega na skopiowaniu tekstu dokładnie tak, jak jest w oryginale (copy-paste), bez użycia cudzysłowu i bez podania źródła.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Przeformułowanie cudzych myśli bez wskazania autora** - To jest parafrazowanie bez źródła, inny rodzaj plagiatu
+- **C. Własne teksty publikowane wcześniej bez wskazania** - To jest auto-plagiat (self-plagiarism)
+- **D. Kopiowanie kompozycji i logiki argumentacji** - To jest plagiat strukturalny
+
+# Pytanie 3: Ujęcia jakościowe, ilościowe, mieszane
+
+## Pytanie 3
+
+Która z poniższych cech NIE charakteryzuje badań ilościowych?
+
+A. Koncepcja rzeczywistości jako statycznej i zewnętrznej
+
+B. Zakres idiograficzny
+
+C. Strategia ustrukturowana
+
+D. Charakter danych "twarde", "porównywalne"
+
+---
+
+## Pytanie 3 - Odpowiedź
+
+Która z poniższych cech NIE charakteryzuje badań ilościowych?
+
+A. Koncepcja rzeczywistości jako statycznej i zewnętrznej
+
+**B. Zakres idiograficzny** ✓
+
+C. Strategia ustrukturowana
+
+D. Charakter danych "twarde", "porównywalne"
+
+---
+
+## Pytanie 3 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: B. Zakres idiograficzny**
+
+**Dlaczego B jest prawidłowe:**
+Zakres idiograficzny (opis dotyczący konkretnych osób, czasu i miejsca) charakteryzuje badania JAKOŚCIOWE. Badania ilościowe mają zakres nomotetyczny - dążą do ustalenia uniwersalnych praw rządzących życiem społecznym.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Koncepcja rzeczywistości jako statycznej i zewnętrznej** - Charakteryzuje badania ilościowe
+- **C. Strategia ustrukturowana** - Charakteryzuje badania ilościowe (jednoznacznie określona procedura badawcza)
+- **D. Charakter danych "twarde", "porównywalne"** - Charakteryzuje badania ilościowe
+
+# Pytanie 4: Planowanie, organizacja i realizacja projektu badawczego
+
+## Pytanie 4
+
+Która z poniższych NIE jest cechą dobrego celu badawczego według zasady SMART?
+
+A. Specificzny (szczegółowy)
+
+B. Mierzalny
+
+C. Ambitny
+
+D. Realistyczny
+
+---
+
+## Pytanie 4 - Odpowiedź
+
+Która z poniższych NIE jest cechą dobrego celu badawczego według zasady SMART?
+
+A. Specifyczny (szczegółowy)
+
+B. Mierzalny
+
+**C. Ambitny** ✓
+
+D. Realistyczny
+
+---
+
+## Pytanie 4 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: C. Ambitny**
+
+**Dlaczego C jest prawidłowe:**
+Akronim SMART oznacza: **S**pecific (szczegółowy), **M**easurable (mierzalny), **A**chievable (osiągalny), **R**ealistic (realistyczny), **T**imely (terminowy). "Ambitny" nie jest częścią tej zasady - przeciwnie, cele powinny być osiągalne i realistyczne.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Specificzny** - Jest elementem SMART (S = Specific)
+- **B. Mierzalny** - Jest elementem SMART (M = Measurable)
+- **D. Realistyczny** - Jest elementem SMART (R = Realistic)
+
+# Pytanie 5: Etyka w badaniach społecznych
+
+## Pytanie 5
+
+Która z poniższych zasad jest kluczowa w etyce badań społecznych?
+
+A. Maksymalizacja zysków z badań
+
+B. Świadoma zgoda uczestników
+
+C. Minimalizacja czasu trwania badania
+
+D. Publikacja wszystkich wyników bez wyjątku
+
+---
+
+## Pytanie 5 - Odpowiedź
+
+Która z poniższych zasad jest kluczowa w etyce badań społecznych?
+
+A. Maksymalizacja zysków z badań
+
+**B. Świadoma zgoda uczestników** ✓
+
+C. Minimalizacja czasu trwania badania
+
+D. Publikacja wszystkich wyników bez wyjątku
+
+---
+
+## Pytanie 5 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: B. Świadoma zgoda uczestników**
+
+**Dlaczego B jest prawidłowe:**
+Świadoma zgoda (informed consent) jest fundamentalną zasadą etyki badawczej. Oznacza, że uczestnicy muszą dobrowolnie zgodzić się na udział w badaniu po otrzymaniu pełnej informacji o jego celu, procedurach, ryzykach i korzyściach. To kluczowy element szacunku wobec autonomii uczestników.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Maksymalizacja zysków z badań** - To nie jest zasada etyczna; etyka koncentruje się na dobru uczestników, nie na zyskach finansowych
+- **C. Minimalizacja czasu trwania badania** - Czas badania powinien być adekwatny do celów badawczych; skracanie go kosztem jakości nie jest zasadą etyczną
+- **D. Publikacja wszystkich wyników bez wyjątku** - Należy chronić poufność danych uczestników; nie wszystkie wyniki mogą być publikowane w niezmienionej formie
+
+# Pytanie 6: Logika doboru próby
+
+## Pytanie 6
+
+Która metoda doboru próby umożliwia generalizację wyników na całą populację?
+
+A. Dobór kwotowy
+
+B. Dobór celowy
+
+C. Prosty dobór losowy
+
+D. Metoda kuli śnieżnej
+
+---
+
+## Pytanie 6 - Odpowiedź
+
+Która metoda doboru próby umożliwia generalizację wyników na całą populację?
+
+A. Dobór kwotowy
+
+B. Dobór celowy
+
+**C. Prosty dobór losowy** ✓
+
+D. Metoda kuli śnieżnej
+
+---
+
+## Pytanie 6 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: C. Prosty dobór losowy**
+
+**Dlaczego C jest prawidłowe:**
+Prosty dobór losowy jest podstawową metodą probabilistycznego doboru próby, w której każdy element populacji ma znaną i równą szansę wyboru. To umożliwia generalizację statystyczną wyników na całą populację i obliczenie błędu próby.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Dobór kwotowy** - To metoda nieprobabilistyczna; utrudnia generalizację wyników, choć próbuje zachować proporcje cech w populacji
+- **B. Dobór celowy** - To metoda nieprobabilistyczna oparta na wiedzy badacza; nie pozwala na generalizację statystyczną
+- **D. Metoda kuli śnieżnej** - To metoda nieprobabilistyczna stosowana dla trudno dostępnych populacji; nie pozwala na generalizację
+
+# Pytanie 7: Badania ilościowe
+
+## Pytanie 7
+
+Która z poniższych technik badawczych JEST metodą ilościową?
+
+A. FGI (Focus Group Interview)
+
+B. IDI (In-Depth Interview)
+
+C. CAWI (Computer Assisted Web Interviewing)
+
+D. Obserwacja uczestnicząca
+
+---
+
+## Pytanie 7 - Odpowiedź
+
+Która z poniższych technik badawczych JEST metodą ilościową?
+
+A. FGI (Focus Group Interview)
+
+B. IDI (In-Depth Interview)
+
+**C. CAWI (Computer Assisted Web Interviewing)** ✓
+
+D. Obserwacja uczestnicząca
+
+---
+
+## Pytanie 7 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: C. CAWI (Computer Assisted Web Interviewing)**
+
+**Dlaczego C jest prawidłowe:**
+CAWI to metoda ILOŚCIOWA - ankieta internetowa do samodzielnego wypełniania przez respondentów. Pozwala na zbieranie standaryzowanych danych liczbowych od dużej liczby uczestników, które następnie można poddać analizie statystycznej. Jest to popularna metoda badań sondażowych.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. FGI (Focus Group Interview)** - To metoda jakościowa; moderowana dyskusja grupowa (6-10 uczestników) służąca głębokiej eksploracji postaw i opinii
+- **B. IDI (In-Depth Interview)** - To metoda jakościowa; indywidualny wywiad pogłębiony do szczegółowej eksploracji doświadczeń i perspektyw
+- **D. Obserwacja uczestnicząca** - To metoda jakościowa; badacz uczestniczy w życiu grupy, obserwując i interpretując zachowania w naturalnym kontekście
+
+# Pytanie 8: Badania jakościowe
+
+## Pytanie 8
+
+Która z poniższych jest zaletą indywidualnego wywiadu pogłębionego (IDI) w porównaniu z zogniskowanym wywiadem grupowym (FGI)?
+
+A. Niższy koszt na uczestnika
+
+B. Dynamika grupowa
+
+C. Odpowiednie dla tematów wrażliwych
+
+D. Szybsze zbieranie danych
+
+---
+
+## Pytanie 8 - Odpowiedź
+
+Która z poniższych jest zaletą indywidualnego wywiadu pogłębionego (IDI) w porównaniu z zogniskowanym wywiadem grupowym (FGI)?
+
+A. Niższy koszt na uczestnika
+
+B. Dynamika grupowa
+
+**C. Odpowiednie dla tematów wrażliwych** ✓
+
+D. Szybsze zbieranie danych
+
+---
+
+## Pytanie 8 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: C. Odpowiednie dla tematów wrażliwych**
+
+**Dlaczego C jest prawidłowe:**
+IDI zapewnia intymność i prywatność sytuacji badawczej, co sprawia, że respondenci są bardziej skłonni dzielić się informacjami na tematy wrażliwe, osobiste lub trudne. Nie ma wpływu grupy ani obawy przed oceną innych uczestników.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Niższy koszt na uczestnika** - To jest zaleta FGI, nie IDI (w FGI zbiera się dane od wielu osób jednocześnie)
+- **B. Dynamika grupowa** - To jest zaleta FGI, nie IDI (w IDI nie ma dynamiki grupowej)
+- **D. Szybsze zbieranie danych** - To jest zaleta FGI, nie IDI (FGI pozwala zbierać dane od kilku osób w krótszym czasie)
+
+# Pytanie 9: Analiza danych ilościowych
+
+## Pytanie 9
+
+Który poziom pomiaru zmiennych pozwala na sensowne tworzenie proporcji i stosunków (np. "dwa razy więcej")?
+
+A. Nominalny
+
+B. Porządkowy
+
+C. Przedziałowy
+
+D. Ilorazowy
+
+---
+
+## Pytanie 9 - Odpowiedź
+
+Który poziom pomiaru zmiennych pozwala na sensowne tworzenie proporcji i stosunków (np. "dwa razy więcej")?
+
+A. Nominalny
+
+B. Porządkowy
+
+C. Przedziałowy
+
+**D. Ilorazowy** ✓
+
+---
+
+## Pytanie 9 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: D. Ilorazowy**
+
+**Dlaczego D jest prawidłowe:**
+Poziom ilorazowy (stosunkowy) posiada prawdziwe zero, które oznacza brak cechy. Dzięki temu można sensownie tworzyć proporcje i stosunki - można powiedzieć, że ktoś zarabia "dwa razy więcej", waży "trzy razy mniej" itp. Przykłady: wiek, dochód, waga.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Nominalny** - Najniższy poziom pomiaru; rozróżnienie kategorii bez porządku; nie można tworzyć proporcji
+- **B. Porządkowy** - Istnieje porządek, ale nie znamy wielkości różnic między kategoriami; nie można tworzyć proporcji
+- **C. Przedziałowy** - Brak prawdziwego zera (zero jest umowne), więc nie można sensownie tworzyć proporcji (np. 20°C to nie jest "dwa razy cieplej" niż 10°C)
+
+# Pytanie 10: Analiza danych jakościowych
+
+## Pytanie 10
+
+Co to jest "nasycenie teoretyczne" w analizie jakościowej?
+
+A. Moment, gdy badacz ma zbyt dużo danych
+
+B. Moment, gdy kolejne wywiady nie dodają nowych informacji
+
+C. Moment, gdy osiągnięto 100 wywiadów
+
+D. Moment, gdy teoria jest zbyt skomplikowana
+
+---
+
+## Pytanie 10 - Odpowiedź
+
+Co to jest "nasycenie teoretyczne" w analizie jakościowej?
+
+A. Moment, gdy badacz ma zbyt dużo danych
+
+**B. Moment, gdy kolejne wywiady nie dodają nowych informacji** ✓
+
+C. Moment, gdy osiągnięto 100 wywiadów
+
+D. Moment, gdy teoria jest zbyt skomplikowana
+
+---
+
+## Pytanie 10 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: B. Moment, gdy kolejne wywiady nie dodają nowych informacji**
+
+**Dlaczego B jest prawidłowe:**
+Nasycenie teoretyczne (theoretical saturation) to punkt w procesie zbierania danych, w którym nowe wywiady przestają przynosić nowe tematy, kody czy kategorie. Oznacza to, że zebrano wystarczająco danych do pełnego zrozumienia badanego zjawiska. Zwykle następuje po 12-20 wywiadach dla homogenicznej grupy.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Moment, gdy badacz ma zbyt dużo danych** - To nie jest definicja nasycenia; w badaniach jakościowych nie chodzi o ilość, ale o jakość i kompletność informacji
+- **C. Moment, gdy osiągnięto 100 wywiadów** - Nie ma sztywnej liczby wywiadów określającej nasycenie; zależy to od złożoności tematu i różnorodności grupy
+- **D. Moment, gdy teoria jest zbyt skomplikowana** - To nie ma związku z nasyceniem teoretycznym
+
+# Pytanie 11: Opis i prezentowanie wyników badań
+
+## Pytanie 11
+
+Które z poniższych NIE jest wymaganiem dla tabel w raportach naukowych?
+
+A. Odpowiedni tytuł
+
+B. Informacja o źródle danych
+
+C. Kolorowa grafika
+
+D. Zrozumiałe nazwy kolumn i wierszy
+
+---
+
+## Pytanie 11 - Odpowiedź
+
+Które z poniższych NIE jest wymaganiem dla tabel w raportach naukowych?
+
+A. Odpowiedni tytuł
+
+B. Informacja o źródle danych
+
+C. Zrozumiałe nazwy kolumn i wierszy
+
+**D. Kolorowa grafika** ✓
+
+---
+
+## Pytanie 11 - Wyjaśnienie
+
+**Prawidłowa odpowiedź: D. Kolorowa grafika**
+
+**Dlaczego D jest prawidłowe:**
+Kolorowa grafika NIE jest wymaganiem dla tabel naukowych. Tabele mogą być czarno-białe i nadal spełniać wszystkie wymogi. Ważniejsze są klarowność, czytelność i kompletność informacji niż estetyka kolorystyczna.
+
+**Dlaczego pozostałe odpowiedzi są nieprawidłowe:**
+
+- **A. Odpowiedni tytuł** - Jest wymaganiem (np. "Tabela 1. Miejsce zakupu herbaty w podziale na częstość picia herbaty")
+- **B. Informacja o źródle danych** - Jest wymaganiem (np. "Źródło: badanie CAWI, n=43")
+- **C. Zrozumiałe nazwy kolumn i wierszy** - Jest wymaganiem (nazwy powinny być zrozumiałe dla osoby, która nie zna bazy danych; nie używamy surowych nazw zmiennych)
+
+# Pytanie otwarte 1: Różnice między badaniami jakościowymi i ilościowymi
+
+## Pytanie otwarte 1
+
+Wyjaśnij kluczowe różnice między badaniami jakościowymi a ilościowymi. W swojej odpowiedzi odnieś się do co najmniej trzech wymiarów porównania (np. cel badań, charakter danych, wielkość próby, metody analizy).
+
+---
+
+## Pytanie otwarte 1 - Przykładowa odpowiedź
+
+Badania jakościowe i ilościowe różnią się w kilku kluczowych wymiarach. Po pierwsze, różnią się celem badań. Badania ilościowe dążą do testowania hipotez i ustalania uniwersalnych praw, co określa się jako zakres nomotetyczny. Z kolei badania jakościowe koncentrują się na zrozumieniu znaczeń i kontekstu, mając zakres idiograficzny.
+
+Po drugie, różni się charakter danych. Dane ilościowe są "twarde", liczbowe i porównywalne, takie jak skale czy wskaźniki. Natomiast dane jakościowe są "miękkie", tekstowe i bogate w szczegóły, obejmujące opisy i narracje uczestników.
+
+Po trzecie, różni się wielkość próby. Badania ilościowe wymagają dużych, reprezentatywnych prób, często obejmujących setki lub tysiące uczestników. Badania jakościowe natomiast pracują z małymi próbami, często liczącymi 10-30 uczestników, ale badają je w znacznie większej głębokości.
+
+Wreszcie, różnią się metody analizy. W badaniach ilościowych stosuje się analizę statystyczną, w tym testy statystyczne, analizy korelacji i regresje. W badaniach jakościowych używa się kodowania oraz analizy tematycznej lub teorii ugruntowanej, które pozwalają na identyfikację wzorców i znaczeń w danych tekstowych.
+
+---
+
+## Pytanie otwarte 1 - Wyjaśnienie
+
+**Dlaczego ta odpowiedź jest dobra:**
+
+1. **Struktura i organizacja** - Odpowiedź jest logicznie zorganizowana według wymiarów porównania, co ułatwia zrozumienie
+
+2. **Kompleksowość** - Obejmuje więcej niż wymagane minimum trzech wymiarów, pokazując szeroką wiedzę
+
+3. **Konkrety i przykłady** - Każdy wymiar zawiera konkretne przykłady (np. "skale, wskaźniki" dla danych ilościowych, "opisy, narracje" dla jakościowych)
+
+4. **Zrozumienie kontekstu** - Odpowiedź pokazuje, że różnice wynikają z odmiennych celów poznawczych obu podejść
+
+5. **Terminologia** - Używa właściwej terminologii metodologicznej (nomotetyczny vs. idiograficzny, teoria ugruntowana)
+
+**Co można by dodać dla jeszcze lepszej odpowiedzi:**
+
+- Informacje o strategii badawczej (ustrukturowana vs. elastyczna)
+- Przykład konkretnego badania dla każdego podejścia
+- Odniesienie do paradygmatów filozoficznych (pozytywizm vs. interpretatywizm)
+
+# Pytanie otwarte 2: Etyczne problemy w badaniach społecznych
+
+## Pytanie otwarte 2
+
+Opisz główne zasady etyczne w badaniach społecznych. Dlaczego każda z tych zasad jest ważna? Podaj przykład sytuacji badawczej, w której mogłoby dojść do naruszenia zasad etycznych.
+
+---
+
+## Pytanie otwarte 2 - Przykładowa odpowiedź
+
+W badaniach społecznych obowiązują cztery główne zasady etyczne. Pierwszą jest świadoma zgoda (informed consent), która wymaga, aby uczestnicy dobrowolnie zgodzili się na udział w badaniu po otrzymaniu pełnej informacji o jego celu, procedurach i ryzykach. Jest to kluczowe dla respektowania autonomii uczestników i ich prawa do samostanowienia.
+
+Drugą zasadą jest poufność i anonimowość. Dane uczestników muszą być chronione, a ich tożsamość zabezpieczona, co chroni uczestników przed potencjalnymi szkodami wynikającymi z ujawnienia informacji. Trzecią zasadą jest "nie szkodzić" (do no harm) - badanie nie powinno powodować fizycznych, psychologicznych ani społecznych szkód dla uczestników, a potencjalne korzyści powinny przewyższać ryzyka. Czwartą zasadą jest sprawiedliwość, zgodnie z którą obciążenia i korzyści płynące z badań powinny być sprawiedliwie rozdzielone, tak aby żadna grupa nie była nadmiernie obciążona ryzykiem ani wykluczona z potencjalnych korzyści.
+
+Przykładem naruszenia zasad etycznych może być sytuacja, w której badacz przeprowadza badanie o zachowaniach ryzykownych wśród młodzieży w szkole. Zbiera dane poprzez obserwację i rozmowy, ale nie informuje uczniów, że prowadzi badanie naukowe. Następnie publikuje wyniki zawierające szczegółowe opisy konkretnych osób, które można zidentyfikować po podanych charakterystykach, takich jak klasa, wiek czy opisane zachowanie. W tym przypadku doszło do trzech poważnych naruszeń: braku świadomej zgody uczestników, naruszenia poufności poprzez możliwość identyfikacji osób oraz potencjalnej szkody dla uczniów w postaci stygmatyzacji i problemów w szkole.
+
+---
+
+## Pytanie otwarte 2 - Wyjaśnienie
+
+**Dlaczego ta odpowiedź jest dobra:**
+
+1. **Kompletność** - Przedstawia główne zasady etyczne z wyraźnym wyjaśnieniem ich znaczenia
+
+2. **Zrozumienie "dlaczego"** - Dla każdej zasady wyjaśnia, dlaczego jest ważna (np. autonomia, ochrona przed szkodą)
+
+3. **Konkretny przykład** - Podaje realistyczny scenariusz badawczy, który ilustruje potencjalne naruszenia
+
+4. **Analiza przykładu** - Jasno wskazuje, które konkretnie zasady zostały naruszone i dlaczego
+
+5. **Praktyczne zastosowanie** - Pokazuje, że student rozumie nie tylko teorię, ale potrafi ją zastosować do analizy sytuacji
+
+**Co można by dodać dla jeszcze lepszej odpowiedzi:**
+
+- Odniesienie do konkretnych dokumentów (np. Raport z Belmont, Kodeks Etyki Socjologa)
+- Wskazanie, jak można było uniknąć naruszeń w podanym przykładzie
+- Omówienie roli komisji etycznych w ocenie projektów badawczych
+- Wspomnienie o szczególnych przypadkach (dzieci, osoby z niepełnosprawnościami)
+
+
