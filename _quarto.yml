@@ -26,17 +26,17 @@ website:
       - href: index.qmd
         text: Home
 
+      - href: publications.qmd
+        text: Publications
+
       - href: research projects.qmd
         text: Research projects
 
-      - href: publications.qmd
-        text: Publications
+      - href: media.qmd
+        text: Media
       
       - href: Pooling the Poles.qmd
         text: Pooling the Poles
-        
-      - href: media.qmd
-        text: Media
       
       - href: Good Change.qmd
         text: Good Change

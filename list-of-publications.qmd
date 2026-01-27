@@ -2,26 +2,6 @@
 editor: visual
 ---
 
-```{=html}
-<style>
-/* Force consistent spacing for all content */
-p {
-  margin-bottom: 1rem !important;
-}
-
-/* Ensure headings have consistent spacing */
-h2, h3 {
-  margin-top: 2rem !important;
-  margin-bottom: 1rem !important;
-}
-
-/* Make sure all text blocks have the same spacing */
-div, section {
-  margin-bottom: 1rem;
-}
-</style>
-```
-
 ## Journal articles
 
 {{< include journal_articles.qmd >}}
