@@ -11,7 +11,13 @@ about:
 <style>
 @media (orientation: portrait) {
   #hero-heading .about-image {
-    max-width: 50% !important;
+    max-width: 30% !important;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 768px) {
+  #hero-heading .about-image {
+    max-width: 40% !important;
   }
 }
 </style>
