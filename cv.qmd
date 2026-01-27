@@ -5,15 +5,16 @@ format:
     toc: true
   typst:
     margin:
-      x: 3cm
-      y: 3cm
+      x: 2.54cm
+      y: 2.54cm
     font-size: 11pt
     mainfont: "Minion Pro"
     sansfont: "Roboto"
     monofont: "Myriad Pro"
     include-in-header:
       text: |
-        #show raw: set text(font: "Myriad Pro")
+        #show raw: set text(font: "Myriad Pro", size: 10pt, weight: "black", fill: rgb("#888888"))
+        #show strong: set text(weight: "bold")
 ---
 
 # Ben Stanley
@@ -325,9 +326,7 @@ Podstawy dziennikarstwa danych \[*Fundamentals of Data Journalism*\], undergradu
 
 `2008` "Comparative research methods." *Essex Summer School in Social Science Data Analysis*, 7--18 July 2008.
 
-## Other professional activities
-
-### Awards
+## Awards
 
 *East European Politics* Best Article Prize (shared with Mikołaj Cześnik), 2022.
 
@@ -336,6 +335,8 @@ Rector's Award for Scientific Achievements 2024/2025, SWPS University, 2025.
 Rector's Award for Scientific Achievements 2023/2024, SWPS University, 2024.
 
 Rector's Award for Scientific Achievements 2020/2021, SWPS University, 2021.
+
+## Other professional activities
 
 ### Editorial
 
