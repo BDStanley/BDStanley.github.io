@@ -2,6 +2,14 @@ project:
   type: website
   output-dir: docs
   resources: "CNAME"
+  render:
+    - index.qmd
+    - publications.qmd
+    - research projects.qmd
+    - Pooling the Poles.qmd
+    - media.qmd
+    - Good Change.qmd
+    - cv.qmd
 
 website:
   page-navigation: true
@@ -17,12 +25,12 @@ website:
     left:
       - href: index.qmd
         text: Home
-        
-      - href: publications.qmd
-        text: Publications
 
       - href: research projects.qmd
         text: Research projects
+
+      - href: publications.qmd
+        text: Publications
       
       - href: Pooling the Poles.qmd
         text: Pooling the Poles
@@ -67,7 +75,7 @@ website:
 format:
   html:
     theme:
-      - bds.scss
+      - website_style.scss
     css: styles.css
     toc: true # Your custom theme
 

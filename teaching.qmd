@@ -6,7 +6,7 @@ editor: visual
 
 11. [Opis i prezentowanie wyników badań](Teaching/Wprowadzenie%20do%20metodologii%20badań%20społecznych/Wprowadzenie%20do%20metodologii%20badań%20społecznych%2011%20slides.html)
 12. [Seminarium powtórzeniowe](Teaching/Wprowadzenie%20do%20metodologii%20badań%20społecznych/Wprowadzenie%20do%20metodologii%20badań%20społecznych%2012%20slides.html)
-13. [Przykładowe pytania](Teaching/Wprowadzenie do metodologii badań społecznych/Wprowadzenie do metodologii badań społecznych egzamin pytania slides.html)
+13. [Przykładowe pytania](Teaching/Wprowadzenie%20do%20metodologii%20badań%20społecznych/Wprowadzenie%20do%20metodologii%20badań%20społecznych%20egzamin%20pytania%20slides.html)
 
 ## Unia Europejska i jej instytucje
 

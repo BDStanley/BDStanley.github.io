@@ -1,1 +1,6 @@
 /* css styles */
+
+/* Force scrollbar to always be present to prevent layout shift */
+html {
+    overflow-y: scroll;
+}
