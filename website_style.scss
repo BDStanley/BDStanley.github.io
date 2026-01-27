@@ -374,3 +374,24 @@ h2 {
 h3 {
     font-weight: 400 !important;
 }
+
+
+// ============================================================================
+// ABOUT PAGE IMAGE RESPONSIVE STYLES
+// ============================================================================
+
+// Make profile images smaller in portrait mode on tablets
+@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+  .about-image {
+    width: 25% !important;
+    max-width: 25% !important;
+  }
+}
+
+// Make profile images smaller in portrait mode on phones
+@media (orientation: portrait) and (max-width: 767px) {
+  .about-image {
+    width: 40% !important;
+    max-width: 40% !important;
+  }
+}
