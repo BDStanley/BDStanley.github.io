@@ -1,11 +1,17 @@
 /*-- scss:defaults --*/
 
+// ============================================================================
+// THEME CONFIGURATION
+// ============================================================================
+
 $theme: "ath" !default;
 
-//
-// Color system
-//
 
+// ============================================================================
+// COLOR SYSTEM
+// ============================================================================
+
+// Grayscale palette - neutral colors from white to black
 $white: #ffffff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
@@ -18,6 +24,7 @@ $gray-800: #373a3c !default;
 $gray-900: #212529 !default;
 $black: #000000 !default;
 
+// Brand and accent colors
 $blue: #2780e3 !default;
 $indigo: #6610f2 !default;
 $purple: #170C3A !default;
@@ -32,6 +39,7 @@ $teal: #20c997 !default;
 $cyan: #3093CF !default;
 $goodchange: #d9232a !default;
 
+// Theme color mappings - assign brand colors to semantic Bootstrap roles
 $primary: $pink !default;
 $secondary: $gray-700 !default;
 $success: $green !default;
@@ -43,51 +51,77 @@ $dark: $black !default;
 
 // $min-contrast-ratio: 2.6 !default;
 
-// Fonts
 
+// ============================================================================
+// TYPOGRAPHY
+// ============================================================================
 
+// Base font family for body text
 $font-family-sans-serif: "Libre Franklin" !default;
 
+// Heading fonts
 $headings-font-family: "Jost" !default;
 $headings-font-weight: 600 !default;
 
+// Component-specific font families
 $navbar-font-family: "Jost" !default;
 $toc-font-family: "Jost" !default;
 $footer-font-family: "Jost" !default;
 $code-font-family: "Jost" !default;
 $body-font-family: "Jost" !default;
 
-
+// Font sizes (commented out - using defaults)
 // $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
 // $font-size-sm: $font-size-base * .875 !default;
 
 
-// Body
+// ============================================================================
+// BODY STYLES
+// ============================================================================
+
 $body-color: $gray-900 !default;
 
-// Links
+
+// ============================================================================
+// LINK STYLES
+// ============================================================================
+
 $link-color: $red !default;
 $link-decoration: none !default;
 $link-hover-color: $gray-700 !default;
 //$link-hover-decoration: underline !default;
 
-// Inline code
+
+// ============================================================================
+// CODE BLOCKS
+// ============================================================================
+
+// Inline code styling
 $code-bg: $gray-200 !default;
 $code-color: $gray-900 !default;
 
-// Code copy
+// Code copy button styling
 $btn-code-copy-color-active: $orange !default;
 
-// TOC
+
+// ============================================================================
+// TABLE OF CONTENTS (TOC)
+// ============================================================================
+
 $toc-color: $red;
 $toc-font-size: 1em;
 
-// Navbar
+
+// ============================================================================
+// NAVIGATION BAR
+// ============================================================================
+
 $navbar-bg: $red !default;
 $navbar-fg: $white !default;
 //$navbar-hl: $orange !default;
 $link-hover-decoration: underline !default;
 
+// Active navigation link styling - makes current page link bold
 .nav-link {
     // normal link styles
 
@@ -96,7 +130,11 @@ $link-hover-decoration: underline !default;
     }
 }
 
-// Footer
+
+// ============================================================================
+// FOOTER
+// ============================================================================
+
 $footer-bg: $red !default;
 $footer-fg: $white !default;
 $footer-hl: $white !default;
@@ -104,33 +142,52 @@ $footer-hl: $white !default;
 
 /*-- scss:rules --*/
 
+// ============================================================================
+// FONT IMPORTS
+// ============================================================================
+
+// Google Fonts - imports Jost and Libre Franklin font families
 $web-font-path: "https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
 }
 
+
+// ============================================================================
+// GLOBAL STYLES
+// ============================================================================
+
+// Improve font rendering on webkit browsers
 body {
     -webkit-font-smoothing: antialiased;
 }
 
+// Support for right-to-left languages
 .rtl {
     direction: rtl;
 }
 
 
+// ============================================================================
+// HOME PAGE SPECIFIC STYLES
+// ============================================================================
+
+// Remove bottom margin from title banner on home page
 .home {
     .quarto-title-banner {
         margin-bottom: 0;
     }
 }
 
+// Reduce spacing below title block on home page
 #title-block-header {
     &.home {
         margin-block-end: 0.5rem;
     }
 }
 
+// Combined home page title spacing adjustments
 .home {
     .quarto-title-banner {
         margin-bottom: 0;
@@ -141,42 +198,65 @@ body {
     }
 }
 
-// Shrink blocks of code
+
+// ============================================================================
+// CODE BLOCKS
+// ============================================================================
+
+// Reduce font size for code blocks to fit more content
 pre.text,
 pre.sourceCode,
 .cell-output pre {
     font-size: 0.775em;
 }
 
+
+// ============================================================================
+// NAVIGATION BAR STYLES
+// ============================================================================
+
+// Apply custom font family to navbar
 .navbar {
     font-family: $navbar-font-family;
 }
 
-// Put all the icons in a single row in the hamburger menu
+// Display social/icon links in a single row in mobile hamburger menu
 .navbar-nav.navbar-nav-scroll.ms-auto {
     flex-direction: row;
 }
 
+
+// ============================================================================
+// TABLE OF CONTENTS (TOC) STYLES
+// ============================================================================
+
+// TOC styling with custom font and weights
 #TOC {
     font-family: $toc-font-family;
     padding-bottom: 0.1em;
     font-weight: 300;
 
     .active {
-        font-weight: 400;
+        font-weight: 300;
     }
 
     #toc-title {
-        font-weight: 600;
+        font-weight: 400;
     }
 }
 
+// Adjust spacing between TOC items in sidebar
 .sidebar nav[role="doc-toc"]>ul li a {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }
 
 
+// ============================================================================
+// FOOTER STYLES
+// ============================================================================
+
+// Custom footer layout with flexbox for responsive three-column design
 .nav-footer {
     align-items: flex-start; // Align all flex items to the top
     flex-wrap: wrap;
@@ -184,23 +264,25 @@ pre.sourceCode,
     min-height: 3em;
     font-family: $footer-font-family;
 
+    // Footer links should be white
     a {
         color: $white;
     }
 
+    // Block-level display for certain footer elements
     .faux-block {
         display: block;
         padding-bottom: 0.4em;
     }
 
+    // Monospace font for fingerprint/hash displays
     .fingerprint {
         font-family: $font-family-monospace;
         font-size: 0.8em;
     }
 
-    // In the default Quarto template, .nav-footer-center has position: absolute 
-    // turned on, which makes the div not be a flex item
-    // This changes that so that it *is* a flex item
+    // Override Quarto's absolute positioning to make center section a flex item
+    // This allows for better responsive layout control
     .nav-footer-center {
         text-align: center;
         position: inherit;
@@ -212,8 +294,8 @@ pre.sourceCode,
         }
     }
 
-    // When the screen is medium or smaller, make each footer chunk be 100% width 
-    // and centered; otherwise make them be 33% width and left/right/centerd
+    // Mobile: full-width centered sections
+    // Desktop: three equal columns with left/center/right alignment
     .nav-footer-left,
     .nav-footer-right,
     .nav-footer-center {
@@ -239,6 +321,12 @@ pre.sourceCode,
     }
 }
 
+
+// ============================================================================
+// TITLE BLOCK STYLES
+// ============================================================================
+
+// Title banner customization with larger description text
 #title-block-header {
     .quarto-title-banner {
         font-family: $headings-font-family;
@@ -250,6 +338,12 @@ pre.sourceCode,
     }
 }
 
+
+// ============================================================================
+// COLUMN LAYOUT STYLES
+// ============================================================================
+
+// Add visual separator between columns
 .columns {
     .column {
         &:first-child {
@@ -263,10 +357,16 @@ pre.sourceCode,
     }
 }
 
+
+// ============================================================================
+// HEADING WEIGHTS
+// ============================================================================
+
+// Override default heading weights for h1 and h2
 h1 {
     font-weight: 500 !important;
 }
 
 h2 {
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }

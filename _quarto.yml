@@ -30,8 +30,8 @@ website:
       - href: media.qmd
         text: Media
       
-      - href: Pooling the Poles.qmd
-        text: Pooling the Poles
+      - href: Good Change.qmd
+        text: Good Change
         
     right:
       - href: cv.qmd

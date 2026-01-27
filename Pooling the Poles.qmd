@@ -3,14 +3,14 @@ title: "Pooling the Poles"
 editor: visual 
 ---
 
-![](PTP images/latest_parl.png)
+![](PTP%20images/latest_parl.png)
 
-![](PTP images/trends_parl.png)
+![](PTP%20images/trends_parl.png)
 
-![](PTP images/seats_parl.png)
+![](PTP%20images/seats_parl.png)
 
-![](PTP images/house_effects.png)
+![](PTP%20images/house_effects.png)
 
-![](PTP images/scenario1_KO_plus_seats.png)
+![](PTP%20images/scenario1_KO_plus_seats.png)
 
-![](PTP images/scenario2_Lewica_plus_seats.png)
+![](PTP%20images/scenario2_Lewica_plus_seats.png)
