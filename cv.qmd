@@ -1,5 +1,19 @@
 ---
 editor: visual
+format:
+  html:
+    toc: true
+  typst:
+    margin:
+      x: 3cm
+      y: 3cm
+    font-size: 11pt
+    mainfont: "Minion Pro"
+    sansfont: "Roboto"
+    monofont: "Myriad Pro"
+    include-in-header:
+      text: |
+        #show raw: set text(font: "Myriad Pro")
 ---
 
 # Ben Stanley
@@ -10,6 +24,7 @@ ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
 
+::: {.content-visible when-format="html"}
 ::::: {style="display: flex; justify-content: space-between; margin-top: 20px;"}
 ::: {style="flex: 1;"}
 **Gender:** Male\
@@ -25,6 +40,24 @@ Poland\
 **ORCID:** <a href="https://orcid.org/0000-0001-6932-1046">0000-0001-6932-1046</a>
 :::
 :::::
+:::
+
+::: {.content-visible when-format="typst"}
+```{=typst}
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [*Gender:* Male\
+   *Date of birth:* 17.05.1979\
+   *Nationality:* British, Irish\
+   *Residence:* Poland],
+  [*Phone:* #link("tel:+48798814801")[(+48)798814801]\
+   *Email:* #link("mailto:bstanley@swps.edu.pl")[bstanley\@swps.edu.pl]\
+   *Website:* #link("https://www.benstanley.eu")[benstanley.eu]\
+   *ORCID:* #link("https://orcid.org/0000-0001-6932-1046")[0000-0001-6932-1046]]
+)
+```
+:::
 
 ## Employment
 
