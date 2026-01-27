@@ -382,16 +382,16 @@ h3 {
 
 // Make profile images smaller in portrait mode on tablets
 @media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
-  .about-image {
-    width: 25% !important;
-    max-width: 25% !important;
-  }
+    .about-image {
+        width: 40% !important;
+        max-width: 40% !important;
+    }
 }
 
 // Make profile images smaller in portrait mode on phones
 @media (orientation: portrait) and (max-width: 767px) {
-  .about-image {
-    width: 40% !important;
-    max-width: 40% !important;
-  }
+    .about-image {
+        width: 40% !important;
+        max-width: 40% !important;
+    }
 }
