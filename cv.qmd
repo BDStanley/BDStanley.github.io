@@ -18,10 +18,9 @@ format:
         #set block(below: 2em)
         #show heading.where(level: 2): set block(above: 1.4em, below: 0.80em, spacing: 0em)
         #show heading.where(level: 3): set block(above: 1em)
-        
 ---
 
-:::::: {.content-visible when-format="html"}
+::: {.content-visible when-format="html"}
 # Ben Stanley
 
 Associate Professor of Political Science \
@@ -29,7 +28,7 @@ SWPS University\
 ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
-::::::
+:::
 
 ::: {.content-visible when-format="typst"}
 ```{=typst}
