@@ -60,8 +60,6 @@ all_pubs <- all_pubs %>%
 if (nrow(all_pubs) > 0) {
   output <- c(
     "### Recent",
-    "",
-    sprintf("*Publications from %d onwards*", cutoff_year),
     ""
   )
 
