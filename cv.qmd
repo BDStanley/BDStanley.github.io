@@ -9,12 +9,16 @@ format:
       y: 2.54cm
     font-size: 11pt
     mainfont: "Minion Pro"
-    sansfont: "Gill Sans"
+    sansfont: "Minion Pro"
     monofont: "Minion Pro"
     include-in-header:
       text: |
         #show raw: set text(font: "Minion Pro", size: 10pt, weight: "black", fill: rgb("#999999"))
         #show strong: set text(weight: "bold")
+        #set block(below: 2em)
+        #show heading.where(level: 2): set block(above: 1.4em, below: 0.80em, spacing: 0em)
+        #show heading.where(level: 3): set block(above: 1em)
+        
 ---
 
 :::::: {.content-visible when-format="html"}
