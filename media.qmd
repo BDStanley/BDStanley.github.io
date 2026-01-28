@@ -1,6 +1,8 @@
 ---
 title: "Media"
 editor: visual
+filters:
+  - recent_media.lua
 ---
 
 {{< include kultura_liberalna_articles.qmd >}}
@@ -92,6 +94,12 @@ editor: visual
 -   [Stanley dla „Polityki”: Duda wciąż faworytem, ale drugiej tury](https://www.polityka.pl/tygodnikpolityka/kraj/1949534,1,stanley-dla-polityki-duda-wciaz-faworytem-ale-drugiej-tury.read). (25.03.2020)
 
 ### Other
+
+-   [Democracy After Illiberalism: A Warning from Poland](https://newbooksnetwork.com/democracy-after-illiberalism-a-warning-from-poland) \[*New Books Network*, podcast\](28.10.2025)
+
+-   [Democracy After Illiberalism](https://www.youtube.com/watch?v=TI4BULBuqBs) \[*Converging Dialogues*, podcast\](09.10.2025)
+
+-   [Illiberal Trap](https://revdem.ceu.edu/2025/09/01/illiberal-trap/) \[*Journal of Democracy in Central and Eastern Europe*, podcast\] (01.09.2025)
 
 -   [The Ambivalence of Polish Populism](https://europe.columbia.edu/content/rise-and-resilience-populism-eastern-europe) \[*Rise and Resilience of Populism in Eastern Europe, Columbia European Institute*, interviewed\] (20.01.2022)
 

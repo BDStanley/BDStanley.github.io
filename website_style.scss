@@ -365,6 +365,7 @@ pre.sourceCode,
 // Override default heading weights for h1 and h2
 h1 {
     font-weight: 500 !important;
+    font-size: 1.7rem !important;  // Slightly smaller than default (~32px instead of ~40px)
 }
 
 h2 {
@@ -395,3 +396,4 @@ h3 {
         max-width: 40% !important;
     }
 }
+
