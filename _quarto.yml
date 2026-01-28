@@ -2,6 +2,7 @@ project:
   type: website
   output-dir: docs
   resources: "CNAME"
+  pre-render: generate_recent_publications.R
   render:
     - index.qmd
     - publications.qmd

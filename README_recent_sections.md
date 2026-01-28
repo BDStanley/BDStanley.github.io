@@ -14,23 +14,29 @@ The media page uses a **Lua filter** (`recent_media.lua`) that automatically gen
 
 The publications page uses an **R script** (`generate_recent_publications.R`) that generates a "Recent" section with publications from the current and previous year (if in first half of year).
 
-### How to update recent publications:
+### Automatic Updates:
+
+The script runs **automatically** as a pre-render step whenever you render the site:
 
 ```bash
-Rscript generate_recent_publications.R
+quarto render
 ```
 
-This will:
+The script will:
 1. Scan all publication files (journal_articles.qmd, books.qmd, book_chapters.qmd, essays_interviews_reviews.qmd)
 2. Extract publications from the cutoff year onwards
 3. Generate `recent_publications.qmd` with the results
 4. This file is automatically included in the publications page
 
-### When to run it:
+### Manual Updates (optional):
 
-- After adding new publications to any of the publication files
-- At the start of each new year
-- Whenever you want to refresh the recent publications list
+You can also run the script manually if needed:
+
+```bash
+Rscript generate_recent_publications.R
+```
+
+This is useful for testing or if you want to update just the publications without rendering the entire site.
 
 ### How it works:
 
