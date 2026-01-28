@@ -9,14 +9,15 @@ format:
       y: 2.54cm
     font-size: 11pt
     mainfont: "Minion Pro"
-    sansfont: "Roboto"
-    monofont: "Myriad Pro"
+    sansfont: "Gill Sans"
+    monofont: "Minion Pro"
     include-in-header:
       text: |
-        #show raw: set text(font: "Myriad Pro", size: 10pt, weight: "black", fill: rgb("#888888"))
+        #show raw: set text(font: "Minion Pro", size: 10pt, weight: "black", fill: rgb("#999999"))
         #show strong: set text(weight: "bold")
 ---
 
+:::::: {.content-visible when-format="html"}
 # Ben Stanley
 
 Associate Professor of Political Science \
@@ -24,6 +25,20 @@ SWPS University\
 ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
+::::::
+
+::: {.content-visible when-format="typst"}
+```{=typst}
+#align(center)[
+  #text(size: 16pt, weight: "bold")[Ben Stanley]\
+  Associate Professor of Political Science \
+  SWPS University\
+  ul. Chodakowska 19/31\
+  03-815 Warsaw\
+  Poland
+]
+```
+:::
 
 :::::: {.content-visible when-format="html"}
 ::::: {style="display: flex; justify-content: space-between; margin-top: 20px;"}
@@ -45,10 +60,20 @@ Poland\
 
 ::: {.content-visible when-format="typst"}
 ```{=typst}
-#text(size: 9pt)[
-  *Gender:* Male #h(1em) *Date of birth:* 17.05.1979 #h(1em) *Nationality:* British/Irish #h(1em) *Residence:* Poland.\
-  *Phone:* (+48)798814801 #h(1em) *Email:* bstanley\@swps.edu.pl #h(1em) *Website:* benstanley.eu #h(1em) *ORCID:* 0000-0001-6932-1046
+#v(1em)
+
+#align(center)[
+  #text(
+    size: 9pt,
+    font: "Minion Pro",
+    fill: rgb("#555555"),  // Gray for subtlety
+    [*Gender:* Male #h(1em) *Date of birth:* 17.05.1979 #h(1em) *Nationality:* British/Irish #h(1em) *Residence:* Poland\
+     *Phone:* (+48)798814801 #h(1em) *Email:* bstanley\@swps.edu.pl #h(1em)
+     *Website:* benstanley.eu #h(1em) *ORCID:* 0000-0001-6932-1046]
+  )
 ]
+
+#v(1em)
 ```
 :::
 
