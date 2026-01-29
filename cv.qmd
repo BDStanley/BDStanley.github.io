@@ -3,6 +3,8 @@ editor: visual
 format:
   html:
     toc: true
+  gfm:
+    variant: gfm
   typst:
     margin:
       x: 2.54cm
@@ -28,6 +30,26 @@ SWPS University\
 ul. Chodakowska 19/31\
 03-815 Warsaw\
 Poland\
+:::
+
+::: {.content-visible when-format="gfm"}
+# Ben Stanley
+
+Associate Professor of Political Science\
+SWPS University\
+ul. Chodakowska 19/31\
+03-815 Warsaw\
+Poland
+
+**Gender:** Male\
+**Date of birth:** 17.05.1979\
+**Nationality:** British, Irish\
+**Residence:** Poland
+
+**Phone:** (+48)798814801\
+**Email:** bstanley@swps.edu.pl\
+**Website:** benstanley.eu\
+**ORCID:** 0000-0001-6932-1046
 :::
 
 ::: {.content-visible when-format="typst"}
