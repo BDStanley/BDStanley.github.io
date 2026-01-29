@@ -2,7 +2,9 @@ project:
   type: website
   output-dir: docs
   resources: "CNAME"
-  pre-render: generate_recent_publications.R
+  pre-render: 
+    - generate_recent_publications.R
+    - KL_article_scraper.R
   render:
     - index.qmd
     - publications.qmd
@@ -10,7 +12,6 @@ project:
     - Pooling the Poles.qmd
     - media.qmd
     - Good Change.qmd
-    - cv.qmd
 
 website:
   page-navigation: true
@@ -43,7 +44,7 @@ website:
         text: Good Change
         
     right:
-      - href: cv.qmd
+      - href: CV/cv.pdf
         text: CV
     
       - text: "{{< fa brands whatsapp >}}"

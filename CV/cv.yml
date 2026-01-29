@@ -1,0 +1,853 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/roaldarbol/academicv/main/cv.typ.schema.json
+
+# Document settings
+settings:
+  font-heading: "Jost"
+  font-body: "Jost"
+  fontsize: 9pt
+  spacing-section: 12pt
+  spacing-entry: 0.1em
+  spacing-element: 3pt
+  spacing-line: 5pt
+  color-hyperlink: rgb(96, 96, 96)
+  page:
+    paper: "a4"
+    numbering: "1 / 1"
+    number-align: "center"
+    margin: 2.54cm
+
+# Personal information
+personal:
+  name: Ben Stanley
+  titles:
+    - Associate Professor of Political Science
+  location:
+    city: Warsaw
+    country: Poland
+  contact:
+    email: bstanley@swps.edu.pl
+    phone: "+48 798814801"
+    website: https://benstanley.eu
+  profiles:
+    - network: ORCiD
+      username: 0000-0001-6932-1046
+      url: https://orcid.org/0000-0001-6932-1046
+
+# Section definitions and content
+sections:
+  - key: personal
+    layout: header
+    show: true
+    include: ["titles", "location", "contact"]
+
+  - key: statement
+    layout: prose
+    title: Professional summary
+    show: true
+    entries:
+      - Associate Professor of Political Science specialising in populism, democratic backsliding, and electoral behaviour in Central and Eastern Europe.
+
+  - key: education
+    layout: timeline
+    primary-element: ["institution"]
+    secondary-element: ["title"]
+    tertiary-element: ["description"]
+    title: Education
+    show: true
+    entries:
+      - institution: Polish Academy of Sciences
+        location: Warsaw, Poland
+        title: Habilitation, Social Sciences
+        start-date: 2018
+        description: |
+          Cycle of papers: "Populism as a normal feature of post-communist politics"
+      - institution: The University of Essex
+        location: Colchester, United Kingdom
+        title: Ph.D, Government
+        start-date: 2010
+        description: |
+          Dissertation: "Populism in the Polish party system: party appeals and voter mobilisation"
+      - institution: The University of Essex
+        location: Essex, United Kingdom
+        title: M.A., European Politics (distinction)
+        start-date: 2005
+        description: |
+          Thesis: "The controversial concept of populism"
+      - institution: The University of Durham
+        location: Durham, United Kingdom
+        title: M.A., International Studies (distinction)
+        start-date: 2001
+      - institution: The University of Warwick
+        location: Warwick, United Kingdom
+        title: B.A., English Literature (First Class with distinction)
+        start-date: 2000
+
+  - key: experience
+    layout: timeline
+    primary-element: ["institution"]
+    secondary-element: ["title"]
+    title: Employment
+    show: true
+    entries:
+      - institution: Centre for the Study of Democracy, SWPS University
+        location: Warsaw, Poland
+        title: Associate Professor
+        start-date: 2018
+        end-date: Present
+        description: |
+          Research and teaching on political science, populism, democratic backsliding, and electoral behavior in Central and Eastern Europe. Principal investigator on multiple research grants.
+      - institution: Centre for the Study of Democracy, SWPS University
+        location: Warsaw, Poland
+        title: Assistant Professor
+        start-date: 2015
+        end-date: 2018
+        description: |
+          Research and teaching on comparative politics and European integration.
+      - institution: School of Law, Politics and Sociology, University of Sussex
+        location: Brighton, United Kingdom
+        title: Marie Curie Intra-European Research Fellow
+        start-date: 2013
+        end-date: 2015
+        description: |
+          Research project: "The Winner-Loser Divide? A Comparative Analysis of Voting Behaviour and Cleavage Formation in Post-Communist Party Systems (WINLOSE)"
+      - institution: Faculty of History and Social Sciences, Cardinal Stefan Wyszyński University
+        location: Warsaw, Poland
+        title: Assistant Professor
+        start-date: 2013
+        end-date: 2015
+      - institution: Centre for Baltic and East European Studies, Södertörn University
+        location: Stockholm, Sweden
+        title: Guest Researcher
+        start-date: 2011
+        end-date: 2011
+      - institution: Institute for Public Affairs
+        location: Bratislava, Slovakia
+        title: Marie Curie Post-Doctoral Fellow
+        start-date: 2010
+        end-date: 2010
+      - institution: Department of Government, The University of Essex
+        location: Colchester, United Kingdom
+        title: Graduate Teaching Assistant
+        start-date: 2008
+        end-date: 2008
+
+  
+  - key: monographs
+    layout: numbered-list
+    title: Monographs
+    show: true
+    entries:
+      - "Bill, Stanley and Ben Stanley. 2025. *Good Change: The Rise and Fall of Poland's Illiberal Revolution*. Stanford University Press."
+
+      - "Szulecki, Kacper, Marta Bivand Erdal, and Ben Stanley. 2022. *External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation*. Palgrave Macmillan Cham. https://doi.org/10.1007/978-3-031-19246-3."
+
+  - key: journal_articles
+    layout: numbered-list
+    title: Journal articles
+    show: true
+    entries:
+      - "Bill, Stanley, and Ben Stanley. 2025. 'Democracy After Illiberalism: A Warning from Poland'. *Journal of Democracy* 36(3): 16–32."
+
+      - "Enyedi, Zsolt, and Ben Stanley. 2025. 'Farewell to the Liberal Consensus: The Intellectualisation of Political Projects in Poland and Hungary'. *European Political Science*. doi:10.1057/s41304-025-00542-8."
+
+      - "Claassen, Christopher, Kathrin Ackermann, Eri Bertsou, Lucas Borba, Ryan E. Carlin, Amnon Cavari, Sirianne Dahlum, et al. 2025. 'Conceptualizing and Measuring Support for Democracy: A New Approach'. *Comparative Political Studies* 58(6): 1171–98. doi:10.1177/00104140241259458."
+
+      - "Markowski, Radosław, Marta Żerkowska-Balas, and Ben Stanley. 2024. 'Participation in Polish Local Elections: Sheer Rational Choice or Social Embeddedness Fate?' *East European Politics and Societies* 38(1): 123–47. doi:10.1177/08883254231177416."
+
+      - "Szulecki, Kacper, Michał Kotnarowski, and Ben Stanley. 2023. 'Emigrant External Voting in Central-Eastern Europe after EU Enlargement'. *Electoral Studies* 81: 102552. doi:10.1016/j.electstud.2022.102552."
+
+      - "Stanley, Ben, Radosław Markowski, and Mikołaj Cześnik. 2021. 'Marginalization, Not Mainstreaming: Explaining the Failure of Fringe Parties in Poland'. *Party Politics* 21(1): 46–57. doi:10.1177/1354068819863616."
+
+      - "Stanley, Ben, and Mikołaj Cześnik. 2021. 'Uninformed or Informed Populists? The Relationship between Political Knowledge, Socio-Economic Status and Populist Attitudes in Poland'. *East European Politics* 38(1): 43–60. doi:10.1080/21599165.2021.1876676."
+
+      - "Pirro, P. L. Andrea, and Ben Stanley. 2021. 'Forging, Bending, and Breaking: Enacting the 'Illiberal Playbook' in Hungary and Poland'. *Perspectives on Politics* 20(1): 86–101. doi:10.1017/s1537592721001924."
+
+      - "Bill, Stanley, and Ben Stanley. 2020. 'Whose Poland Is It to Be? PiS and the Struggle between Monism and Pluralism'. *East European Politics* 36(3): 378–94. doi:10.1080/21599165.2020.1787161."
+
+      - "Markowski, Radosław, and Ben Stanley. 2020. 'Poczucie politycznego sprawstwa: O determinantach i korelatach zjawiska'. *Studia Polityczne* 47(3): 11–34. doi:10.35757/STP.2019.47.3.01."
+
+      - "Stanley, Ben. 2019a. 'A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections'. *East European Politics and Societies* 33: 17–43. doi:10.1177/0888325418783056."
+
+      - "Stanley, Ben. 2019b. 'Backsliding Away? The Quality of Democracy in Central and Eastern Europe'. *Journal of Contemporary European Research* 15(4): 343–53. doi:10.30950/jcer.v15i4.1122."
+
+      - "Cichocki, Marek A., and Ben Stanley. 2019. 'Brexit i rewolucja populizmu w Europie'. *Sprawy Międzynarodowe* 72(2): 9–16. doi:https://doi.org/10.35757/sm.2019.72.2.01."
+
+      - "Markowski, Radosław, and Ben Stanley. 2016. 'Rozłamy socjopolityczne w Polsce: Iluzja czy rzeczywistość?' *Studia Socjologiczne* 4(223): 17–40."
+
+      - "Kwiatkowska, Agnieszka, Mikołaj Cześnik, Marta Żerkowska-Balas, and Ben Stanley. 2016. 'Ideologiczna treść wymiaru lewica-prawica w Polsce w latach 1997-2015'. *Studia Socjologiczne* 4(223): 97–129."
+
+      - "Stanley, Ben. 2016a. 'Confrontation by Default and Confrontation by Design: Strategic and Institutional Responses to Poland's Populist Coalition Government'. *Democratization* 23(2): 263–82. doi:10.1080/13510347.2015.1058782."
+
+      - "Stanley, Ben. 2016b. 'Robert Rohrschneider and Stephen Whitefield, The Strain of Representation: How Parties Represent Diverse Voters in Western and Eastern Europe, Reviewed by Ben Stanley'. *Party Politics* 22(1): 137–38. doi:10.1177/1354068815615270."
+
+      - "Stanley, Ben, and Mikolaj Czesnik. 2016. 'Poland's Palikot Movement'. *Party Politics* 22(6): 705–18. doi:10.1177/1354068814560911."
+
+      - "Stanley, Ben. 2014. 'The Dynamics of Party-System Supply and Demand in Poland, 1997–2007. Cleavage Change or Shapeless Shifting?' *Europe-Asia Studies* 66(8): 1295–1322. doi:10.1080/09668136.2014.939522."
+
+      - "Stanley, Ben. 2011. 'Populism, Nationalism, or National Populism? An Analysis of Slovak Voting Behaviour at the 2010 Parliamentary Election'. *Communist and Post-Communist Studies* 44(4): 257–70. doi:10.1016/j.postcomstud.2011.10.005."
+
+      - "Stanley, Ben. 2008. 'The Thin Ideology of Populism'. *Journal of Political Ideologies* 13(1): 95–110. doi:10.1080/13569310701822289."
+
+  - key: book_chapters
+    layout: numbered-list
+    title: Book chapters
+    show: true
+    entries:
+      - "Stanley, Ben, 2025. 'Political Parties and Ideological Representation'. In *The Oxford Handbook of Polish Politics*, eds. Katarzyna Walecka, Simona Guerra, and Fernando Casal Bértoa. Oxford University Press."
+
+      - "Stanley, Ben. 2022. 'Poland: When Populists Must Manage Crisis Instead of Performing It'. In *Populists and the Pandemic: How Populists Around the World Responded to COVID-19*, eds. Nils Ringe and Lucio Rennó. Routledge, 105–16."
+
+      - "Stanley, Ben. 2020. 'A Comparison of Two Polish Party Leaders: Jarosław Kaczyński and Donald Tusk'. In *Party Leaders in Eastern Europe*, ed. Sergiu Gherghina. 171–95."
+
+      - "Stanley, Ben. 2019. 'Working in the Gaps Left behind: Radical Right Movements in a Consolidating Party System'. In *Radical Right 'Movement Parties' in Europe*, eds. Manuela Caiani and Ondrej Cisar. London and New York: Routledge, 168–83."
+
+      - "Stanley, Ben, and Mikołaj Cześnik. 2019. 'Populism in Poland'. In *Populism Around the World*, ed. Daniel Stockemer. Springer, 67–87."
+
+      - "Stanley, Ben. 2017. 'Populism in Central and Eastern Europe'. In *The Oxford Handbook of Populism*, eds. Cristóbal Rovira Kaltwasser, Paul Taggart, Paulina Ochoa Espejo, and Pierre Ostiguy. Oxford and New York: Oxford University Press, 140–60."
+
+      - "Stanley, Ben. 2016a. 'Defenders of the Cross'. In *Saving the People: How Populists Hijack Religion*, eds. Nadia Marzouki, Duncan McDonnell, and Olivier Roy. London: Hurst Publishers, 109–28."
+
+      - "Stanley, Ben. 2016b. 'The Politics of the Past in the Present: Poland's Electoral Geography'. In *More Sex, Lies and the Ballot Box*, eds. Philip Cowley and Robert Ford. London: Biteback Publishing, 233–36."
+
+      - "Stanley, Ben. 2015a. 'The Polish Self-Defence Party: From Agrarian Protest to the Politics of Populism, 1991-2007'. In *Rural Protest Groups and Populist Political Parties*, eds. Dirk Strijker, Gerrit Voerman, and Ida Terluin. Wageningen Academic Publishers, 191–216."
+
+      - "Stanley, Ben. 2015b. 'The Post-Populist Non-Crisis in Poland'. In *Populism in the Shadow of the Great Recession*, eds. Hanspeter Kriesi and Takis S. Pappas. Colchester: ECPR Press, 251–69."
+
+      - "Stanley, Ben. 2014. 'Poland 20 Years Later: The Long Arm of Transition'. In *Europe Today: A Twenty-First Century Introduction*, eds. Ronald Tiersky and Erik Jones. Plymouth: Rowman & Littlefield Ltd., 257–91."
+
+      - "Stanley, Ben. 2013a. 'Poland'. In *The Handbook of Political Change in Eastern Europe*, eds. Sten Berglund, Joakim Ekman, Kevin Deegan-Krause, and Terje Knutsen. Cheltenham: Edward Elgar Publishing Limited, 167–215."
+
+      - "Stanley, Ben. 2013b. 'Populism'. In *Encyclopedia of Modern Political Thought*, ed. Gregory Claeys. Thousand Oaks: SAGE Publications, Ltd., 642."
+
+      - "Stanley, Ben. 2011. 'Poland 20 Years Later: The Long Arm of Transition'. In *Europe Today: A Twenty-First Century Introduction*, eds. Ronald Tiersky and Erik Jones. Plymouth: Rowman & Littlefield Ltd., 243–73."
+
+  - key: datasets
+    layout: numbered-list
+    title: Datasets
+    show: true
+    entries:
+      - "Stanley, Ben. 2024a. 'Partisan Bias or Indifference? Panel Survey, Wave 1'. doi:10.7910/DVN/2WSILI."
+
+      - "Stanley, Ben. 2024b. 'Partisan Bias or Indifference? Panel Survey, Wave 2'. doi:10.7910/DVN/D3927J."
+
+      - "Stanley, Ben. 2024c. 'Partisan Bias or Indifference? Panel Survey, Wave 3'. doi:10.7910/DVN/TUUHGV."
+
+      - "Stanley, Ben. 2024d. 'Partisan Bias or Indifference? Pilot Survey'. doi:10.7910/DVN/4L5WI7."
+
+  - key: projects_current
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["description"]
+    title: Current Research Projects
+    show: true
+    entries:
+      - institution: National Science Center, OPUS 20
+        title: Plemienność czy obojętność? Badanie rzeczywiście istniejących wartości demokratycznych i ich konsekwencji w Polsce
+        start-date: 2021
+        end-date: 2026
+        description: |
+          Principal investigator. "Partisan bias or a climate of indifference? An investigation of actually-existing democratic values and their consequences in Poland". Funding: 783,228 zł.
+
+  - key: projects_previous
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["description"]
+    title: Previous research projects
+    show: true
+    entries:
+      - institution: HORIZON-CL2-2021-DEMOCRACY-01
+        title: AUTHLIB – Neo-Authoritarianisms in Europe and the Liberal Democratic Response
+        start-date: 2023
+        end-date: 2025
+        description: |
+          Co-investigator, Work Packages 2 and 4. Total funding: €2,523,765.
+      - institution: Regionalna Inicjatywa Doskonałości w SWPS Uniwersytecie Humanistycznospołecznym
+        title: Wiedza, postawy i preferencje Polek i Polaków względem nowych zagrożeń cywilizacyjnych
+        start-date: 2022
+        end-date: 2022
+        description: |
+          Co-investigator. "Political knowledge and preferences of Poles regarding new civilisational threats." Funding: 118,770 zł.
+      - institution: Norwegian Research Council, EUROPA (Europe in Transitions) A2–Values Under Pressure
+        title: DIASPOlitic - Understanding the Political Dynamics of Émigré Communities in an Era of European Democratic Backsliding
+        start-date: 2019
+        end-date: 2021
+        description: |
+          Principal investigator. Funding: 212,264.32 zł.
+      - institution: Narodowe Centrum Nauki, MINIATURA 2
+        title: Mierząc populizm - badanie pilotażowe mające na celu udoskonalenie istniejących pytań
+        start-date: 2019
+        end-date: 2020
+        description: |
+          Principal investigator. "Measuring populism: a pilot study to improve existing questions." Funding: 43,972 zł.
+      - institution: SWPS University BST grant
+        title: A Survey-Based Experiment on the Relationship Between Populism and Conspiracy Theories
+        start-date: 2017
+        end-date: 2018
+        description: |
+          Principal investigator. Funding: 26,876 zł.
+      - institution: Marie Curie Intra-European Fellowship, Seventh Framework Programme
+        title: The Winner-Loser Divide? A Comparative Analysis of Voting Behaviour and Cleavage Formation in Post-Communist Party Systems (WINLOSE)
+        start-date: 2013
+        end-date: 2015
+        description: |
+          Principal investigator. Funding: €231,283.
+      - institution: ELECDEM Initial Training Network (ref. 238607), Marie Curie Action, Seventh Framework Programme
+        title: Integration versus Demarcation? A Comparative Classification of Party Appeals, Voter Preferences and Candidate Attitudes in the European Parliamentary Elections of 2009
+        start-date: 2010
+        end-date: 2010
+        description: |
+          Principal investigator. Funding: £68,290.
+
+  - key: conferences_organisation
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["description"]
+    title: Conference organisation
+    show: true
+    entries:
+      - title: "Good Change: The Rise and Fall of Poland's Illiberal Revolution"
+        institution: Sidney Sussex College, University of Cambridge
+        start-date: 2025
+        description: "Book launch with Stanley Bill"
+      - title: The Rise and Appeal of Ideological Alternatives to Liberal Democracy in the 21st Century
+        institution: IPSA 28th World Congress of Political Science, Seoul
+        start-date: 2025
+        description: Panel co-organised with Caterina Froio
+      - title: "Central European Diasporas in Western Europe 15 years after the EU's Eastern Enlargement - Political and Social Dynamics"
+        institution: SWPS University, Warsaw
+        start-date: 2019
+        description: |
+          Workshop co-organised with Kacper Szulecki and Marta Bivand Erdal for the DIASPOlitic project.
+      - title: Internalising the Insurgency - Understanding the Interaction of Radical Antiestablishment and Mainstream Parties
+        institution: ECPR General Conference, Wrocław
+        start-date: 2019
+        description: |
+          Panel
+      - title: Structures of political competition in post-communist democracies - if not cleavages, then what?
+        institution: ECPR Joint Sessions of Workshops, Warsaw
+        start-date: 2015
+        description: |
+          Workshop co-organised with Radosław Markowski
+      - title: Crisis, Corruption and Cleavages - Continuities and Change in Party Politics in Central and Eastern Europe
+        institution: APSA Annual Meeting, Washington, D.C.
+        start-date: 2014
+        description: |
+          Panel
+
+  - key: conferences_participation
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["conference"]
+    title: Conference papers and invited talks
+    show: true
+    entries:
+      - title: "Author Meets Critics - Good Change: The Rise and Fall of Democratic Illiberalism"
+        institution: APSA Annual Meeting, Vancouver
+        start-date: 2025
+      - title: Measuring a Moving Target? Populist Attitudes When Populists are In and Out of Power
+        institution: ECPR General Conference, Thessaloniki
+        start-date: 2025
+      - title: Trading Democracy Off - Exploring Populist, Illiberal and Authoritarian Challenges to Liberal Democracy
+        institution: IPSA World Congress, Seoul
+        start-date: 2025
+      - title: Pocketbook or Rosary Isn't Dead ... It's Not Even Past!
+        institution: PIASA Annual Meeting 2025, Columbia University
+        start-date: 2025
+      - title: Democratic Hypocrisy in Practice - A panel study of revealed preferences for liberal democracy in Poland
+        institution: Interdisciplinary Seminar in Empirical Social Science, University of Warsaw
+        start-date: 2025
+      - title: Liberal democracy after the Good Change - the challenges of post-PiS reform in Poland
+        institution: ViPET seminar, University of Vienna
+        start-date: 2024
+      - title: "Liberal-democratic hypocrisy? Stability and change in Polish citizens' attitudes towards liberal democracy"
+        institution: ECPR General Conference, Lisbon
+        start-date: 2024
+      - title: "Liberal-democratic hypocrisy? Stability and change in Polish citizens' attitudes towards liberal democracy"
+        institution: 5th International ESS Conference, Lisbon
+        start-date: 2024
+      - title: "Liberal-democratic hypocrisy? Stability and change in Polish citizens' attitudes towards liberal democracy"
+        institution: Workshop on Political Behaviour in Central and Eastern Europe, European University Institute, Florence
+        start-date: 2024
+      - title: Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland
+        institution: Grassroots Unrest in Europe and the Erosion of Liberal Democracy, Illiberalism Studies Program, George Washington University, Washington, DC
+        start-date: 2023
+      - title: "Polish Elections - What's Left of the Liberal Order?"
+        institution: Norwegian Institute of International Affairs (NUPI), Oslo
+        start-date: 2023
+      - title: Do Central European Diasporas Matter for Homeland Election Results?
+        institution: Peace Research Institute (PRIO), Oslo
+        start-date: 2023
+      - title: You Are What You Eat - Edible Extremism and Cultural Polarisation in the Netherlands and Poland
+        institution: ECPR General Conference, Prague
+        start-date: 2023
+      - title: Lip-Service Liberalism? Declared and Revealed Attitudes to Democracy in Poland
+        institution: APSA Annual Meeting, Los Angeles
+        start-date: 2023
+      - title: "Squeezed from both sides - the dilemma of Poland's social-democratic left"
+        institution: European Forum on the Future of Political Parties, Rome
+        start-date: 2022
+      - title: Would democratic backsliders be elected to office if only CEE migrants voted?
+        institution: 19th IMISCOE International Conference, Oslo
+        start-date: 2022
+      - title: When Populists Must Manage Crisis Instead of Performing It - COVID-19 in Poland
+        institution: VIII Congress of The Czech Political Science Association, Masaryk University, Brno
+        start-date: 2021
+      - title: External voting, diaspora party systems & (il)liberal remittances - A comparative analysis of Central European post-accession elections
+        institution: ECPR General Conference, virtual event
+        start-date: 2021
+      - title: Populism and the Pandemic - Crisis, Technocracy and Democracy in Poland
+        institution: Populism and the Pandemic Virtual Lecture Series, Jean Monnet EU Center for Comparative Populism, University of Wisconsin-Madison
+        start-date: 2020
+      - title: If Migrants Chose Governments - A Comparative Analysis of Central Eastern European Diaspora Votes
+        institution: ECPR General Conference, virtual event
+        start-date: 2020
+      - title: Democratic Backsliding in Central and Eastern Europe - Transition to Illiberal Democracy?
+        institution: "TRASC - Europe–What's Next? Transformational Leadership and Confidence Building for Young Professionals, Georgian Institute for Strategic Studies (GISS), Tbilisi"
+        start-date: 2019
+      - title: "Inconsequential Radicalism - Explaining the Non-Impact of Poland's Eurosceptic Turn on Public Attitudes to the EU"
+        institution: ECPR General Conference, Wrocław
+        start-date: 2019
+      - title: Illiberal Remittances? Studying the Political Dynamics and Voting Patterns of CEE Migrants in Western Europe
+        institution: ECPR General Conference, Wrocław
+        start-date: 2019
+      - title: Dealing with the incumbency problem - designing a pilot study to improve populist attitude questions
+        institution: Comparative Populism Project closing conference, Central European University, Budapest
+        start-date: 2019
+      - title: "Inconsequential Radicalism - Explaining the Non-Impact of Poland's Eurosceptic Turn on Public Attitudes to the EU; Central Europe's Illiberal Turn - Causes, Consequences and Prospects"
+        institution: EUSA International Biennial Conference, Denver
+        start-date: 2019
+      - title: Conspiracy theory mentality and its socio-demographic and ideological correlates
+        institution: Workshop on "The Anatomy of Disbelief", Jagiellonian University, Kraków
+        start-date: 2019
+      - title: "Populism in spite of the people? Confronting myths about Poland's anti-liberal turn"
+        institution: Conference on "Democracy, Illiberal Democracy or Neoauthoritarianism", Cardinal Stefan Wyszyński University, Warsaw
+        start-date: 2018
+      - title: The Growth of Populism in CEE?
+        institution: Commission of Democracy workshop, Danish Youth Council, Copenhagen
+        start-date: 2018
+        description: Invited lecture
+      - title: Populism and Democracy in Poland
+        institution: IES Abroad European Union Programme, Warsaw
+        start-date: 2018
+        description: Invited lecture
+      - title: Working in the gaps left behind - radical right movement parties in a consolidating party system
+        institution: ECPR General Conference, Hamburg
+        start-date: 2018
+      - title: "Brexit - Explaining Britain's decision to leave the European Union"
+        institution: Collegium Civitas, Warsaw
+        start-date: 2018
+        description: Invited lecture
+      - title: Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist Attitudes and Vote Choice in Central and Eastern Europe
+        institution: Seminar in Politics and Society, Collegio Carlo Alberto, Turin
+        start-date: 2018
+        description: Invited lecture
+      - title: Populist voting, or just voting for populists? A comparative analysis of attitudes and voting behaviour in Central and Eastern Europe
+        institution: Advanced Research Seminar, Centre for Baltic and East European Studies, Södertörn University, Stockholm
+        start-date: 2017
+        description: Invited lecture
+      - title: Populism in Central and Eastern Europe
+        institution: Research Group in Populist Political Communication, Adam Mickiewicz University, Poznań
+        start-date: 2017
+        description: Invited lecture
+      - title: Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist Attitudes and Vote Choice in Central and Eastern Europe
+        institution: Dilemmas of Democracy Conference, Wisła
+        start-date: 2017
+      - title: Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist Attitudes and Vote Choice in Central and Eastern Europe
+        institution: ECPR General Conference, Oslo
+        start-date: 2017
+      - title: A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections
+        institution: UACES 47th Annual Conference, Kraków
+        start-date: 2017
+      - title: Voting Populist or Just Voting for Populists? A Comparative Analysis of Populist Attitudes and Vote Choice in Central and Eastern Europe
+        institution: 3rd Prague Populism Conference, Charles University, Prague
+        start-date: 2017
+      - title: Post-communist Populist Voting
+        institution: 75th Annual MPSA Conference, Chicago
+        start-date: 2017
+      - title: A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections
+        institution: Contemporary Political Parties Amid the Crisis of Democracy, Turzno
+        start-date: 2016
+      - title: Solidarism, Liberalism and Populism - voting behaviour in the 2015 Polish Parliamentary Elections
+        institution: ECPR General Conference, Prague
+        start-date: 2016
+      - title: A new populist divide? Correspondences of supply and demand in the 2015 Polish parliamentary elections
+        institution: 2nd Prague Populism Conference, Prague
+        start-date: 2016
+      - title: The winner-loser divide in Central and Eastern Europe - a new set of political potentials?
+        institution: ECPR Joint Sessions of Workshops, Warsaw
+        start-date: 2015
+      - title: Eating the starters - The mainstreaming of populism in post-communist Poland
+        institution: ECPR General Conference, Glasgow
+        start-date: 2014
+      - title: Integration for the Winners, Demarcation for the Losers? Poland A and Poland B as a Cleavage
+        institution: APSA Annual Meeting, Washington, D.C.
+        start-date: 2014
+      - title: Populism in Central and Eastern Europe
+        institution: Populism in Europe and the Americas - a cross-regional perspective, Catholic University of Chile, Santiago
+        start-date: 2014
+      - title: The Dog That Already Barked - Post-Populism Crisis in Poland
+        institution: Populism in the Shadow of the Great Recession, European University Institute, Florence
+        start-date: 2014
+      - title: Understanding the Palikot Movement
+        institution: UCL School of Slavonic and East European Studies, London
+        start-date: 2013
+        description: Invited seminar presentation
+      - title: From periphery to power - the emergence of Polish populism
+        institution: Studying Europe's Populisms by Regional Country Clusters, European University Institute, Florence
+        start-date: 2012
+      - title: The Thin Ideology of Populism
+        institution: Populist Political Parties in East Central Europe, Masaryk University, Brno
+        start-date: 2012
+      - title: No Room On The Left? The Stagnation of Poland's Democratic Left Alliance
+        institution: The financial crisis and left politics - Parties, unions, and social movements in Eastern Europe, Charles University, Prague
+        start-date: 2012
+      - title: Down With the Pseudo-Elite! Populism as a Strategy for Elite Replacement in Post-Communist Poland
+        institution: International Political Science Association XXII World Congress of Political Science, Madrid
+        start-date: 2012
+      - title: The Polish Self-Defence party - from agrarian protest to the politics of populism, 1990–2007
+        institution: Rural Protest Groups and Populist Political Parties - Exploring Objectives, Activities and Relationships, University of Groningen
+        start-date: 2012
+      - title: Cleavage change or shapeless shifting? The dynamics of party-system supply and demand in Poland, 1997-2007
+        institution: Old Theory, New Cases, The Study of Party Politics in Central and Eastern Europe, Södertörn University, Stockholm
+        start-date: 2011
+      - title: Cleavage change or shapeless shifting? The dynamics of party-system supply and demand in Poland, 1997–2007
+        institution: ECPR General Conference, Reykjavik
+        start-date: 2011
+      - title: Eating the starters - the mainstreaming of Polish populism, 2001-2007
+        institution: 18th Conference of Europeanists, Barcelona
+        start-date: 2011
+      - title: Populism, Nationalism, or National Populism? An Analysis of Slovak Voting Behaviour in the 2010 Parliamentary Elections
+        institution: CBEES Departmental Seminar, Södertörn University, Stockholm
+        start-date: 2011
+      - title: Change of government and the locus of politics–power shifts in post-communist Poland
+        institution: Change of government and the Locus of Politics - Power Shifts in the Baltic Sea Region, Södertörn University, Stockholm
+        start-date: 2011
+      - title: The Polish presidential elections, June–July 2010 - background and implications
+        institution: Free Elections 20 Years After - The Splendor and Misery of the Central European Dream, Institute for Public Affairs and International Visegrad Fund, Bratislava
+        start-date: 2010
+      - title: Populism and its programmatic correlates in the Polish party system - a comprehensive classification
+        institution: ECPR Joint Sessions of Workshops, Münster
+        start-date: 2010
+      - title: Voting for Polish populist anti-liberal parties - 1997–2005
+        institution: From post-communism and transitology to non-teleological change - present and future research on Eastern and Central Europe, Södertörn University
+        start-date: 2009
+      - title: Populist Anti-liberal Ideology in the Polish Party System, 2001–2007
+        institution: Populism in Enlarged Europe, Södertörn University, Stockholm
+        start-date: 2007
+
+  - key: teaching_lectures
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["translation"]
+    tertiary-element: ["description"]
+    title: Teaching - lectures
+    show: true
+    entries:
+      - institution: SWPS University
+        title: Demokratyzacja i regres demokracji 
+        translation: Democratization and Democratic Backsliding
+        start-date: 2025
+        description: undergraduate
+      - institution: SWPS University
+        title: Unia Europejska i jej instytucje
+        translation: The European Union and its Institutions
+        start-date: 2023
+        end-date: 2026
+        description: undergraduate
+      - institution: SWPS University
+        title: Europa Środkowo-Wschodnia w okresie przejściowym
+        translation: Central and Eastern Europe in Transition
+        start-date: 2023
+        end-date: 2023
+        description: undergraduate
+      - institution: SWPS University
+        title: The Social Psychology of Democracies in Transition
+        start-date: 2021
+        end-date: 2026
+        description: undergraduate
+      - institution: SWPS University
+        title: International Relations
+        start-date: 2019
+        end-date: 2019
+        description: undergraduate
+      - institution: SWPS University
+        title: International Business - The Challenges of Globalization
+        start-date: 2016
+        end-date: 2018
+        description: undergraduate
+      - institution: SWPS University
+        title: Introduction to International Politics
+        start-date: 2015
+        end-date: 2020
+        description: undergraduate
+
+  - key: teaching_seminars
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["translation"]
+    tertiary-element: ["description"]
+    title: Teaching - seminars
+    show: true
+    entries:
+      - institution: SWPS University
+        title: Systemy polityczne
+        translation: Political Systems
+        start-date: 2025
+        description: undergraduate
+      - institution: SWPS University
+        title: Wprowadzenie do metodologii badań społecznych
+        translation: Introduction to Social Research Methodology
+        start-date: 2025
+        description: undergraduate
+      - institution: SWPS University
+        title: Savoir vivre w biznesie
+        translation: Savoir vivre in business
+        start-date: 2024
+        description: undergraduate
+      - institution: SWPS University
+        title: Savoir vivre in business
+        start-date: 2024
+        description: undergraduate
+      - institution: SWPS University
+        title: Social Psychology of Conspiracy Theories
+        start-date: 2021
+        end-date: 2024
+        description: undergraduate
+      - institution: SWPS University
+        title: Rola teorii spiskowych we współczesnym życiu społecznym i politycznym
+        translation: The Role of Conspiracy Theories in Social and Political Life
+        start-date: 2023
+        description: undergraduate
+      - institution: SWPS University
+        title: Social Research Methodology
+        start-date: 2022
+        end-date: 2023
+        description: undergraduate
+      - institution: SWPS University
+        title: The Psychology of Prejudice
+        start-date: 2022
+        description: undergraduate
+      - institution: SWPS University
+        title: Populizm, natywizm i problemy współczesnej demokracji liberalnej 
+        translation: Populism, Nativism and the Problems of Contemporary Liberal Democracy
+        start-date: 2022
+        description: undergraduate
+      - institution: SWPS University
+        title: International Relations and European Integration
+        start-date: 2021
+        description: undergraduate
+      - institution: SWPS University
+        title: European Integration
+        start-date: 2020
+        description: undergraduate
+      - institution: SWPS University
+        title: International Relations
+        start-date: 2017
+        end-date: 2020
+        description: undergraduate
+      - institution: SWPS University
+        title: Introduction to Political Psychology
+        start-date: 2019
+        end-date: 2023
+        description: undergraduate
+      - institution: SWPS University
+        title: English in Professional Use
+        start-date: 2024
+        end-date: 2025
+        description: postgraduate
+      - institution: SWPS University
+        title: Communication in Business
+        start-date: 2017
+        description: postgraduate
+
+  - key: teaching_workshops
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["translation"]
+    tertiary-element: ["description"]
+    title: Teaching - workshops
+    show: true
+    entries:
+      - institution: SWPS University
+        title: Podstawy dziennikarstwa danych
+        translation: Fundamentals of Data Journalism
+        start-date: 2026
+        description: undergraduate
+      - institution: SWPS University
+        title: Wyzwania życia publicznego - uprzedzenia
+        translation: Challenges of Public Life - Prejudice
+        start-date: 2022
+        end-date: 2025
+        description: undergraduate
+      - institution: SWPS University
+        title: Wyzwania życia publicznego - polaryzacja
+        translation: Challenges of Public Life - Polarisation
+        start-date: 2022
+        description: undergraduate
+      - institution: SWPS University
+        title: Academic Writing
+        start-date: 2021
+        end-date: 2022
+        description: undergraduate
+      - institution: SWPS University
+        title: Dziennikarstwo danych
+        translation: Data Journalism
+        start-date: 2025
+        description: postgraduate
+      - institution: SWPS University
+        title: Język angielski w zastosowaniu zawodowym
+        translation: English for Professional Purposes
+        start-date: 2019
+        end-date: 2026
+        description: postgraduate
+      - institution: SWPS University
+        title: Critical Analysis and Thinking
+        start-date: 2024
+        description: postgraduate
+      - institution: SWPS University
+        title: Advanced English in Research
+        start-date: 2021
+        description: postgraduate
+      - institution: SWPS University
+        title: Professional Communication Skills - Writing in Business
+        start-date: 2018
+        end-date: 2021
+        description: postgraduate
+      - institution: SWPS University
+        title: Professional Communication Skills - Presentations
+        start-date: 2018
+        end-date: 2019
+        description: postgraduate
+      - institution: SWPS University
+        title: Komunikowanie wyników badań
+        translation: Oral Presentation Skills
+        start-date: 2019
+        description: postgraduate
+      - institution: SWPS University
+        title: Academic English
+        start-date: 2019
+        description: postgraduate
+      - institution: SWPS University
+        title: Academic Writing
+        start-date: 2019
+        description: postgraduate
+
+  - key: awards
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["description"]
+    title: Honours & awards
+    show: true
+    entries:
+      - institution: SWPS University
+        title: Rector's Award for Scientific Achievements 2024/2025
+        start-date: 2025
+      - institution: SWPS University
+        title: Rector's Award for Scientific Achievements 2023/2024
+        start-date: 2024
+      - institution: East European Politics
+        title: Best Article Prize (shared with Mikołaj Cześnik)
+        start-date: 2022
+      - institution: SWPS University
+        title: Rector's Award for Scientific Achievements 2020/2021
+        start-date: 2021
+
+  - key: training
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: []
+    title: Research Training and Skills
+    show: true
+    entries:
+      - institution: Essex Summer School in Social Science Data Analysis
+        title: Spatial Econometrics and Bayesian Analysis in the Social Sciences
+        start-date: 2014-08-04
+        end-date: 2014-08-15
+      - institution: Essex Summer School in Social Science Data Analysis
+        title: Data analysis in R
+        start-date: 2010-07-26
+        end-date: 2010-08-06
+      - institution: ELECDEM, Brussels
+        title: Workshop in Experimental Methods
+        start-date: 2010-06-28
+        end-date: 2010-07-02
+      - institution: ELECDEM, Central European University, Budapest
+        title: Workshop in Electoral Survey Design
+        start-date: 2010-04-30
+        end-date: 2010-05-04
+      - institution: Mannheim Centre for European Social Research, University of Mannheim
+        title: Euromanifesto coder training
+        start-date: 2009-05-08
+        end-date: 2009-05-10
+      - institution: Essex Summer School in Social Science Data Analysis
+        title: Comparative research methods
+        start-date: 2008-07-07
+        end-date: 2008-07-18
+
+  - key: editorial
+    layout: prose
+    title: Editorial Activities
+    show: true
+    entries:
+      - Deputy editor, _Polish Sociological Review_, 2025–present. Member of the editorial advisory board - _Czech Journal of Political Science_, 2013–present; _Journal of Elections, Public Opinion and Parties_, 2016–present.
+
+  - key: reviewing
+    layout: prose
+    title: Peer reviewing
+    show: true
+    entries:
+      - Peer reviewer for _American Journal of Political Science_, _Cambridge Review of International Affairs_, _Comparative Political Studies_, _East European Politics_, _East European Politics and Societies_, _Europe-Asia Studies_, _European Journal of Political Research_, _German Politics_, _Government and Opposition_, _Journal of Elections, Public Opinion and Parties_, _Journal of European Integration_, _Journal of Legislative Studies_, _Party Politics_, _Perspectives on Politics_, _Political Research Exchange_, _Political Research Quarterly_, _Political Studies_, _Political Studies Review_, _Politics_, _Politics and Religion_, _Problems of Post-Communism_, _Representation_. External reviewer of grant bid under _SASPRO Slovak Academy of Sciences Programme_, 2015.
+
+  - key: thesis_examination
+    layout: timeline
+    primary-element: ["title"]
+    secondary-element: ["institution"]
+    tertiary-element: ["description"]
+    title: Doctoral thesis examination
+    show: true
+    entries:
+      - institution: University of Warsaw
+        title: Karolina Zbytniewska
+        description: Populist skirmishers and the erosion of civility
+        start-date: 2026
+      - institution: University of Warsaw
+        title: Alexander Alekseev
+        description: "Hijacking Liberal Democracy? Democracy And Rights In Populist Radical Right Discourses In France And Poland"
+        start-date: 2025
+      - institution: University College London
+        title: Paulina Lenik
+        start-date: 2022
+        description: A pendulum swung back? Comparative analysis of populism in Central and Eastern Europe
+      - institution: University of Southampton
+        title: Justyna Lisińska
+        description: How do populist supporters engage online?
+        start-date: 2021
+      - institution: European University Institute
+        title: Agnieszka Sztajdel
+        description: The Post-Truth Narrative in Post-Smolensk Poland
+        start-date: 2019
+
+  - key: misc_professional
+    layout: prose
+    title: Other professional activities
+    show: true
+    entries:
+      - Member of the selection committee for the *ECPR Joint Sessions of Workshops*, 2019. 
+      - Member of the questionnaire committee for the Polish National Election Study 2015, 2019 and 2023 post-electoral surveys, *SWPS University*, 2015. 
+      - Member of the questionnaire committee for the CSES Slovakia 2010 post-electoral survey, *Institute of Sociology, Slovak Academy of Sciences*, 2010. 
+      - Manifesto coder for the Euromanifesto project, 2009. 
+      - Country coder for the Varieties of Democracy (_V-Dem_) project.
+      - Columnist for _Kultura Liberalna_.
+
+  - key: languages
+    layout: prose
+    title: Languages
+    show: true
+    entries:
+      - "Native: English. Advanced: Polish."
