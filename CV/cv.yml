@@ -762,37 +762,31 @@ sections:
     primary-element: ["title"]
     secondary-element: ["institution"]
     tertiary-element: []
-    title: Research Training and Skills
+    title: Research training and skills
     show: true
     entries:
       - institution: Essex Summer School in Social Science Data Analysis
         title: Spatial Econometrics and Bayesian Analysis in the Social Sciences
-        start-date: 2014-08-04
-        end-date: 2014-08-15
+        start-date: 2014
       - institution: Essex Summer School in Social Science Data Analysis
         title: Data analysis in R
-        start-date: 2010-07-26
-        end-date: 2010-08-06
+        start-date: 2010
       - institution: ELECDEM, Brussels
         title: Workshop in Experimental Methods
-        start-date: 2010-06-28
-        end-date: 2010-07-02
+        start-date: 2010
       - institution: ELECDEM, Central European University, Budapest
         title: Workshop in Electoral Survey Design
-        start-date: 2010-04-30
-        end-date: 2010-05-04
+        start-date: 2010
       - institution: Mannheim Centre for European Social Research, University of Mannheim
         title: Euromanifesto coder training
-        start-date: 2009-05-08
-        end-date: 2009-05-10
+        start-date: 2009
       - institution: Essex Summer School in Social Science Data Analysis
         title: Comparative research methods
-        start-date: 2008-07-07
-        end-date: 2008-07-18
+        start-date: 2008
 
   - key: editorial
     layout: prose
-    title: Editorial Activities
+    title: Editorial activities
     show: true
     entries:
       - Deputy editor, _Polish Sociological Review_, 2025–present. Member of the editorial advisory board - _Czech Journal of Political Science_, 2013–present; _Journal of Elections, Public Opinion and Parties_, 2016–present.
