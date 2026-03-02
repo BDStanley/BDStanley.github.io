@@ -6,3 +6,9 @@ system("git push")
 system(
     'rsync -av --delete --size-only --exclude=".git" --exclude="_site" "/Users/benstanley/Positron/Website/" "/Users/benstanley/Library/Mobile Documents/com~apple~CloudDocs/Website/"'
 )
+system(
+    'rsync -av --delete --checksum --exclude=".git" --exclude="_site" \\
+  --protect-args \\
+  "/Users/benstanley/Positron/Website/" \\
+  "/Users/benstanley/Library/Mobile Documents/com~apple~CloudDocs/Website/"'
+)
