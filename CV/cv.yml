@@ -239,7 +239,7 @@ sections:
     primary-element: ["title"]
     secondary-element: ["institution"]
     tertiary-element: ["description"]
-    title: Current Research Projects
+    title: Current research projects
     show: true
     entries:
       - institution: National Science Center, OPUS 20
