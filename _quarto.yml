@@ -46,6 +46,9 @@ website:
     right:
       - href: CV/cv.pdf
         text: CV
+
+      - text: "{{< fa brands linkedin >}}"
+        href: https://www.linkedin.com/in/ben-stanley-0452803b8
     
       - text: "{{< fa brands whatsapp >}}"
         href: "tel:+48798814801"
