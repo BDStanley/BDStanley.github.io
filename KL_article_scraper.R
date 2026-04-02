@@ -12,7 +12,7 @@ library(xml2)
 scrape_ben_stanley_articles <- function() {
   # Base configuration
   base_url <- "https://kulturaliberalna.pl"
-  author_url <- "https://kulturaliberalna.pl/autor/ben-stanley"
+  author_base_url <- "https://kulturaliberalna.pl/autor/ben-stanley"
 
   # User agent to appear more like a browser
   user_agent <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -25,62 +25,86 @@ scrape_ben_stanley_articles <- function() {
     stringsAsFactors = FALSE
   )
 
-  cat("Scraping Ben Stanley author page directly...\n")
+  page_num <- 1
 
-  tryCatch(
-    {
-      # Make request with proper headers
-      response <- GET(
-        author_url,
-        add_headers(`User-Agent` = user_agent),
-        timeout(30)
-      )
-
-      if (status_code(response) == 200) {
-        page <- read_html(response)
-
-        # Get all links from the author page
-        all_links <- html_nodes(page, "a")
-
-        for (link in all_links) {
-          href <- html_attr(link, "href")
-          title <- html_text(link, trim = TRUE)
-
-          # Skip empty or very short titles
-          if (is.na(href) || is.na(title) || nchar(title) < 10) {
-            next
-          }
-
-          # Convert relative URLs to absolute
-          url <- ifelse(startsWith(href, "http"), href, paste0(base_url, href))
-
-          # Check if this looks like an article URL
-          if (is_article_url(url)) {
-            # Extract date from URL
-            date <- extract_date_from_url(url)
-
-            # Add to results (since we're on Ben Stanley's author page, we assume all articles are his)
-            articles <- bind_rows(
-              articles,
-              data.frame(
-                title = title,
-                date = date,
-                url = url,
-                stringsAsFactors = FALSE
-              )
-            )
-
-            cat("Found article:", title, "\n")
-          }
-        }
-      } else {
-        cat("Failed to load author page, status:", status_code(response), "\n")
-      }
-    },
-    error = function(e) {
-      cat("Error:", e$message, "\n")
+  repeat {
+    # Build paginated URL (page 1 uses the base URL, subsequent pages use /page/N/)
+    author_url <- if (page_num == 1) {
+      author_base_url
+    } else {
+      paste0(author_base_url, "/page/", page_num, "/")
     }
-  )
+
+    cat("Scraping page", page_num, ":", author_url, "\n")
+
+    page_found_articles <- 0
+
+    tryCatch(
+      {
+        # Make request with proper headers
+        response <- GET(
+          author_url,
+          add_headers(`User-Agent` = user_agent),
+          timeout(30)
+        )
+
+        if (status_code(response) == 200) {
+          page <- read_html(response)
+
+          # Get all links from the author page
+          all_links <- html_nodes(page, "a")
+
+          for (link in all_links) {
+            href <- html_attr(link, "href")
+            title <- html_text(link, trim = TRUE)
+
+            # Skip empty or very short titles
+            if (is.na(href) || is.na(title) || nchar(title) < 10) {
+              next
+            }
+
+            # Convert relative URLs to absolute
+            url <- ifelse(startsWith(href, "http"), href, paste0(base_url, href))
+
+            # Check if this looks like an article URL and not already seen
+            if (is_article_url(url) && !url %in% articles$url) {
+              # Extract date from URL
+              date <- extract_date_from_url(url)
+
+              # Add to results
+              articles <- bind_rows(
+                articles,
+                data.frame(
+                  title = title,
+                  date = date,
+                  url = url,
+                  stringsAsFactors = FALSE
+                )
+              )
+
+              page_found_articles <- page_found_articles + 1
+              cat("Found article:", title, "\n")
+            }
+          }
+        } else {
+          cat("Page", page_num, "returned status:", status_code(response), "- stopping pagination\n")
+          break
+        }
+      },
+      error = function(e) {
+        cat("Error on page", page_num, ":", e$message, "\n")
+      }
+    )
+
+    # Stop if no new articles were found on this page (end of pagination)
+    if (page_found_articles == 0) {
+      cat("No new articles found on page", page_num, "- stopping pagination\n")
+      break
+    }
+
+    page_num <- page_num + 1
+    Sys.sleep(1) # Be respectful between page requests
+  }
 
   # Remove duplicates based on URL and clean up
   articles <- articles %>%
