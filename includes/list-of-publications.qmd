@@ -1,0 +1,25 @@
+---
+editor: visual
+---
+
+{{< include ../includes/recent-publications.qmd >}}
+
+### Journal articles
+
+{{< include ../includes/journal_articles.qmd >}}
+
+### Monographs
+
+{{< include ../includes/books.qmd >}}
+
+### Book chapters
+
+{{< include ../includes/book_chapters.qmd >}}
+
+### Essays, interviews and reviews
+
+{{< include ../includes/essays_interviews_reviews.qmd >}}
+
+### Datasets
+
+{{< include ../includes/datasets.qmd >}}

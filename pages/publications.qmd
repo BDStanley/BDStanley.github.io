@@ -1,0 +1,14 @@
+---
+title: "Publications"
+editor: visual
+---
+
+Total citations as of March 2026:
+
+- [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013): 1,153 (h-index = 10)
+
+- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en): 3,845 (h-index = 18, i10-index = 20)
+
+- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley): 64 citations across 52 policy documents.
+
+{{< include ../includes/list-of-publications.qmd >}}

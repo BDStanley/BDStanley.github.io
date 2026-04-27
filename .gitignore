@@ -7,8 +7,10 @@
 
 **/*.quarto_ipynb
 .DS_Store
-.DS_Store
-.DS_Store
-.DS_Store
 
 /.luarc.json
+
+# Quarto build artefacts (root-level — should only live in docs/)
+/*.html
+/*_files/
+/_quarto_internal_scss_error.scss

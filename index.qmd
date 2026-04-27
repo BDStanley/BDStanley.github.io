@@ -1,5 +1,5 @@
 ---
-image: profile.jpg
+image: assets/images/profile.jpg
 #page-layout: full
 about:
   id: hero-heading

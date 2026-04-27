@@ -1,0 +1,16 @@
+---
+title: "Pooling the Poles"
+page-layout: full
+image: "../assets/images/ptp/thumbnail.png"
+open-graph:
+  title: "Pooling the Poles"
+  description: "Interactive Polish polling tracker"
+  image: "../assets/images/ptp/thumbnail.png"
+twitter-card:
+  title: "Pooling the Poles"
+  description: "Interactive Polish polling tracker"
+  image: "../assets/images/ptp/thumbnail.png"
+  card-style: summary_large_image
+---
+
+<iframe src="https://ben-stanley.shinyapps.io/polish-polls/" width="100%" height="1200px" style="border:none;"></iframe>
