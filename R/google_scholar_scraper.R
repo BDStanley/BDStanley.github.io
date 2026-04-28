@@ -1,12 +1,22 @@
 # Google Scholar Scraper for Ben Stanley (SWPS University)
 # This script scrapes Google Scholar for articles by Ben Stanley affiliated with SWPS University
 
-# Load required libraries
-library(rvest)
-library(httr)
-library(dplyr)
-library(stringr)
-library(xml2)
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak", repos = "https://cran.r-project.org")
+}
+
+pkgs <- c(
+  "rvest",
+  "httr",
+  "dplyr",
+  "stringr",
+  "xml2"
+)
+missing_pkgs <- setdiff(pkgs, rownames(installed.packages()))
+if (length(missing_pkgs) > 0) {
+  pak::pkg_install(missing_pkgs, ask = FALSE)
+}
+invisible(lapply(pkgs, library, character.only = TRUE))
 
 # Function to scrape Google Scholar
 scrape_google_scholar <- function(author = "Ben Stanley", 
@@ -300,16 +310,7 @@ display_results <- function(results) {
 main <- function() {
   cat("Google Scholar Scraper for Ben Stanley (SWPS University)\n")
   cat("======================================================\n\n")
-  
-  # Check if required packages are installed
-  required_packages <- c("rvest", "httr", "dplyr", "stringr", "xml2")
-  missing_packages <- required_packages[!required_packages %in% installed.packages()[,"Package"]]
-  
-  if (length(missing_packages) > 0) {
-    cat("Installing missing packages:", paste(missing_packages, collapse = ", "), "\n")
-    install.packages(missing_packages, repos = "https://cran.r-project.org/")
-  }
-  
+
   # Run the scraper
   raw_results <- scrape_google_scholar(
     author = "Ben Stanley", 

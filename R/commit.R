@@ -1,4 +1,15 @@
-library(here)
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak", repos = "https://cran.r-project.org")
+}
+
+pkgs <- c(
+  "here"
+)
+missing_pkgs <- setdiff(pkgs, rownames(installed.packages()))
+if (length(missing_pkgs) > 0) {
+  pak::pkg_install(missing_pkgs, ask = FALSE)
+}
+invisible(lapply(pkgs, library, character.only = TRUE))
 
 # Run all git/render operations from the project root
 project_root <- here()

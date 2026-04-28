@@ -1,13 +1,23 @@
 # R Web Scraper for Ben Stanley Articles on kulturaliberalna.pl
 # Returns results as QMD format
 
-# Load required libraries
-library(rvest)
-library(httr)
-library(dplyr)
-library(stringr)
-library(xml2)
-library(here)
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak", repos = "https://cran.r-project.org")
+}
+
+pkgs <- c(
+  "rvest",
+  "httr",
+  "dplyr",
+  "stringr",
+  "xml2",
+  "here"
+)
+missing_pkgs <- setdiff(pkgs, rownames(installed.packages()))
+if (length(missing_pkgs) > 0) {
+  pak::pkg_install(missing_pkgs, ask = FALSE)
+}
+invisible(lapply(pkgs, library, character.only = TRUE))
 
 # Simple, direct scraper function for Ben Stanley articles
 scrape_ben_stanley_articles <- function() {

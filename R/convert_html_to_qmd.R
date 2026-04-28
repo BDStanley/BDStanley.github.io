@@ -1,6 +1,17 @@
 # Bibliography HTML to Markdown Converter
-library(rvest)
-library(stringr)
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak", repos = "https://cran.r-project.org")
+}
+
+pkgs <- c(
+  "rvest",
+  "stringr"
+)
+missing_pkgs <- setdiff(pkgs, rownames(installed.packages()))
+if (length(missing_pkgs) > 0) {
+  pak::pkg_install(missing_pkgs, ask = FALSE)
+}
+invisible(lapply(pkgs, library, character.only = TRUE))
 
 # Function to convert bibliography HTML to markdown
 convert_bibliography_html_to_md <- function(html_file, md_file) {

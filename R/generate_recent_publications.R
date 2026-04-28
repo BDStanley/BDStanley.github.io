@@ -2,8 +2,19 @@
 # Script to generate recent_publications.qmd with publications from the last 6 months
 # Run this script to update the recent publications list
 
-library(tidyverse)
-library(here)
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak", repos = "https://cran.r-project.org")
+}
+
+pkgs <- c(
+  "tidyverse",
+  "here"
+)
+missing_pkgs <- setdiff(pkgs, rownames(installed.packages()))
+if (length(missing_pkgs) > 0) {
+  pak::pkg_install(missing_pkgs, ask = FALSE)
+}
+invisible(lapply(pkgs, library, character.only = TRUE))
 
 # Function to extract year from a publication line
 extract_year <- function(text) {
