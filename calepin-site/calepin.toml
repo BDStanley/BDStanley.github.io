@@ -45,6 +45,16 @@ target = "pages/research-projects.typ"
 label  = "Research projects"
 weight = 30
 
+# Teaching landing (Heiss-style course cards). This page and the per-course
+# pages under pages/teaching/ are generated at build time from the local
+# Teaching repo by scripts/sync-teaching.py (run by build.sh). Read-only: the
+# Teaching repo is never modified; slide/handout links point at the rendered
+# artifacts on the Netlify teaching site.
+[[menus.main]]
+target = "pages/teaching.typ"
+label  = "Teaching"
+weight = 35
+
 [[menus.main]]
 target = "pages/media.typ"
 label  = "Media"
@@ -128,7 +138,7 @@ weight = 110
 # -----------------------------------------------------------------------------
 [[menus.footer]]
 target = "https://creativecommons.org/licenses/by/4.0/"
-label  = "© 2025 Ben Stanley · CC BY 4.0"
+label  = "© 2026 Ben Stanley · CC BY 4.0"
 
 [[menus.footer]]
 target = "https://github.com/vincentarelbundock/calepin"

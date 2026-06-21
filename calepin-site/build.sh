@@ -45,6 +45,13 @@ fi
 echo "→ Building CV PDF from cv/cv.yml ..."
 typst compile cv/cv.typ cv/cv.pdf
 
+# Regenerate the Teaching pages from the local Teaching repo (read-only). Editing
+# the Teaching repo and rebuilding the site reflects the changes here. Override
+# the source/host with TEACHING_SRC / TEACHING_NETLIFY_BASE. Missing repo -> the
+# script warns and keeps any previously generated pages (doesn't fail the build).
+echo "→ Syncing Teaching pages from the Teaching repo ..."
+python3 "$SRC/scripts/sync-teaching.py"
+
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 

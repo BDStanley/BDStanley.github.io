@@ -25,9 +25,6 @@
                 {% if site.pagefind %}
                 <pagefind-modal-trigger></pagefind-modal-trigger>
                 {% endif %}
-                {% set calepin_theme_toggle_class = "academic-theme-toggle" %}
-                {% set calepin_theme_toggle_storage_key = "calepin-academic-theme" %}
-                {% include "partials/theme-toggle.html" %}
                 {% if site.languages and site.languages | length > 1 %}
                 <select class="academic-language-picker" aria-label="Language" data-calepin-language-picker>
                     {% for language in site.languages %}

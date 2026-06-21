@@ -1,7 +1,7 @@
 {
   "outputs": [
-    ".calepin/calepin-website.80749c32eb0bd5b6.js",
-    ".calepin/calepin-website.b109758a08a03ff8.css",
+    ".calepin/calepin-website.1e265c23be75f819.css",
+    ".calepin/calepin-website.aa39e51f829243c0.js",
     ".calepin/favicon.svg",
     "404.html",
     "assets/good-change.png",
@@ -14,6 +14,15 @@
     "pages/pooling-the-poles.html",
     "pages/publications.html",
     "pages/research-projects.html",
+    "pages/teaching/dziennikarstwo-danych.html",
+    "pages/teaching/jezyk-angielski.html",
+    "pages/teaching/podstawy-dziennikarstwa.html",
+    "pages/teaching/social-psychology-democracies.html",
+    "pages/teaching/systemy-polityczne.html",
+    "pages/teaching/unia-europejska.html",
+    "pages/teaching/wprowadzenie-metodologia.html",
+    "pages/teaching/wyzwania-uprzedzenia.html",
+    "pages/teaching.html",
     "robots.txt",
     "sitemap.xml"
   ]

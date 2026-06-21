@@ -100,69 +100,13 @@
 
 }
 
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --calepin-color-background: #111820;
-  --calepin-color-text: #d8dee9;
-  --calepin-color-muted: #9aa7b6;
-  --calepin-color-border: #344252;
-  --calepin-color-accent: #67d4df;
-  --calepin-color-accent-hover: #8be4ec;
-  --calepin-color-accent-contrast: #071316;
-  --calepin-color-link: var(--calepin-color-accent);
-  --calepin-color-link-hover: var(--calepin-color-accent-hover);
-  --calepin-color-focus: var(--calepin-color-accent);
-  --calepin-color-info: #74c0fc;
-  --calepin-color-success: #8ce99a;
-  --calepin-color-warning: #ffd43b;
-  --calepin-color-danger: #ff8787;
-  --calepin-color-important: #b197fc;
-  --calepin-surface: #17202a;
-  --calepin-surface-muted: #202b36;
-  --calepin-surface-raised: #1d2833;
-  --calepin-surface-inset: #101820;
-  --calepin-surface-code: #151d26;
-  --calepin-surface-output: var(--calepin-surface-muted);
-  --calepin-shadow-card: 0 10px 30px rgba(0, 0, 0, 0.22);
-}
-
 @media (min-width: 48rem) {
   :root {
     --pico-font-size: 106.25%;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) {
-    color-scheme: dark;
-    --calepin-color-background: #111820;
-    --calepin-color-text: #d8dee9;
-    --calepin-color-muted: #9aa7b6;
-    --calepin-color-border: #344252;
-    --calepin-color-accent: #67d4df;
-    --calepin-color-accent-hover: #8be4ec;
-    --calepin-color-accent-contrast: #071316;
-    --calepin-color-link: var(--calepin-color-accent);
-    --calepin-color-link-hover: var(--calepin-color-accent-hover);
-    --calepin-color-focus: var(--calepin-color-accent);
-    --calepin-color-info: #74c0fc;
-    --calepin-color-success: #8ce99a;
-    --calepin-color-warning: #ffd43b;
-    --calepin-color-danger: #ff8787;
-    --calepin-color-important: #b197fc;
-    --calepin-surface: #17202a;
-    --calepin-surface-muted: #202b36;
-    --calepin-surface-raised: #1d2833;
-    --calepin-surface-inset: #101820;
-    --calepin-surface-code: #151d26;
-    --calepin-surface-output: var(--calepin-surface-muted);
-    --calepin-shadow-card: 0 10px 30px rgba(0, 0, 0, 0.22);
-  }
-}
-
-:root,
-html[data-theme="light"],
-html[data-theme="dark"] {
+:root {
   --pico-background-color: var(--calepin-color-background);
   --pico-color: var(--calepin-color-text);
   --pico-muted-color: var(--calepin-color-muted);

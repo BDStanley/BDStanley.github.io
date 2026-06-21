@@ -1,4 +1,3 @@
-[data-calepin-theme-toggle],
 .calepin-nav-toggle {
   min-width: 0;
   border: 0;
@@ -9,19 +8,6 @@
   font-size: 0.82rem;
 }
 
-[data-calepin-theme-toggle] {
-  display: inline-grid;
-  width: 2.2rem;
-  height: 2.2rem;
-  margin: 0;
-  padding: 0;
-  place-items: center;
-  line-height: 1;
-}
-
-[data-calepin-theme-toggle]:hover,
-[data-calepin-theme-toggle]:focus,
-[data-calepin-theme-toggle]:active,
 .calepin-nav-toggle:hover,
 .calepin-nav-toggle:focus,
 .calepin-nav-toggle:active {
@@ -31,22 +17,9 @@
   color: inherit;
 }
 
-[data-calepin-theme-toggle]:focus-visible,
 .calepin-nav-toggle:focus-visible {
   outline: 2px solid var(--calepin-color-focus);
   outline-offset: 2px;
-}
-
-[data-calepin-theme-toggle] svg {
-  width: 1.05rem;
-  height: 1.05rem;
-  color: inherit;
-  stroke: currentColor;
-  fill: none;
-}
-
-[data-calepin-theme-toggle] svg path[fill="currentColor"] {
-  fill: currentColor;
 }
 
 .calepin-nav-icon {
