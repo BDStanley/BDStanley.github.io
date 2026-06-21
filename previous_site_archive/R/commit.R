@@ -18,6 +18,7 @@ on.exit(setwd(old_wd))
 
 system("git pull")
 quarto::quarto_render()
+system("./calepin-site/build.sh")
 system("git add -A")
 system('git commit -m "Update $(date +"%Y-%m-%d %H:%M:%S")"')
 system("git push")
