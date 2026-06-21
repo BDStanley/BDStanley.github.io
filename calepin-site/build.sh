@@ -20,6 +20,28 @@ else
   OUT="$(cd .. && pwd)/docs"
 fi
 
+# Resolve the `calepin` binary. Prefer one on PATH; otherwise fall back to the
+# copy bundled with the Positron/VS Code "Calepin for Typst" extension, which
+# ships `calepin` but does NOT add it to PATH (so `commit.R` -> this script
+# can't see it). The glob tolerates extension version bumps; sort -V picks the
+# newest installed version. See README.md → Prerequisites.
+if command -v calepin >/dev/null 2>&1; then
+  CALEPIN="calepin"
+else
+  CALEPIN="$(ls -d \
+    "$HOME"/.positron/extensions/vincentarel-bundock.calepin-*/bin/calepin \
+    "$HOME"/.vscode/extensions/vincentarel-bundock.calepin-*/bin/calepin \
+    "$HOME"/.cursor/extensions/vincentarel-bundock.calepin-*/bin/calepin \
+    2>/dev/null | sort -V | tail -n1 || true)"
+  if [ -z "${CALEPIN}" ] || [ ! -x "${CALEPIN}" ]; then
+    echo "Error: 'calepin' is not on PATH and no bundled copy was found in the" >&2
+    echo "Positron/VS Code 'Calepin for Typst' extension." >&2
+    echo "Install it (see README.md → Prerequisites) or put 'calepin' on PATH." >&2
+    exit 1
+  fi
+  echo "→ Using bundled calepin: $CALEPIN"
+fi
+
 echo "→ Building CV PDF from cv/cv.yml ..."
 typst compile cv/cv.typ cv/cv.pdf
 
@@ -27,7 +49,7 @@ echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 
 echo "→ Building site into $OUT ..."
-calepin compile "$SRC" "$OUT"
+"$CALEPIN" compile "$SRC" "$OUT"
 
 # Calepin copies non-page source into the output too; the deployed site doesn't
 # need it (CSS/JS are bundled into .calepin/). Drop the theme sources, any stray
