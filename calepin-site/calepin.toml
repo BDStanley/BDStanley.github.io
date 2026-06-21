@@ -1,0 +1,147 @@
+# =============================================================================
+# Calepin site configuration — a replica of benstanley.eu built with Calepin
+# (https://github.com/vincentarelbundock/calepin) instead of Quarto.
+#
+# This file is completely self-contained. Nothing here touches or depends on the
+# Quarto site in the parent directory. All paths below are relative to THIS
+# directory (the one that contains calepin.toml).
+# =============================================================================
+
+title       = "Ben Stanley"
+description  = "Associate Professor at the Centre for the Study of Democracy, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
+base_url     = "https://benstanley.eu"
+
+# Local copy of the built-in `academic` theme (a reading-first theme with a top
+# navigation bar, closest in spirit to the original Quarto navbar). It was
+# ejected with `calepin new theme ... --theme academic` and then extended with a
+# footer partial (themes/site-theme/partials/site-footer.html) wired into the
+# webpage/landing layouts. Brand colours/fonts are layered on via assets/site.css.
+theme  = "themes/site-theme"
+styles = ["assets/site.css"]
+
+# The original site ships HTML only (no per-page PDF twins). Keep it that way so
+# the iframe-based pages and external embeds build cleanly.
+pdf    = false
+minify = true
+search = "pagefind"
+
+# -----------------------------------------------------------------------------
+# Top navigation — left-hand page links (mirror of the Quarto navbar `left:`)
+# -----------------------------------------------------------------------------
+[[menus.main]]
+target = "index.typ"
+label  = "Home"
+weight = 10
+
+[[menus.main]]
+target = "pages/publications.typ"
+label  = "Publications"
+weight = 20
+
+[[menus.main]]
+target = "pages/research-projects.typ"
+label  = "Research projects"
+weight = 30
+
+[[menus.main]]
+target = "pages/media.typ"
+label  = "Media"
+weight = 40
+
+[[menus.main]]
+target = "pages/pooling-the-poles.typ"
+label  = "Pooling the Poles"
+weight = 50
+
+[[menus.main]]
+target = "pages/good-change.typ"
+label  = "Good Change"
+weight = 60
+
+# -----------------------------------------------------------------------------
+# Top navigation — right-hand icon/links (mirror of the Quarto navbar `right:`)
+# Icons use Iconify collections (fetched at build time). If a name 404s, swap it
+# for another collection — see README.md.
+# -----------------------------------------------------------------------------
+[[menus.social]]
+target = "cv/cv.pdf"
+label  = "CV"
+weight = 10
+
+[[menus.social]]
+target = "https://www.linkedin.com/in/ben-stanley-0452803b8"
+label  = "{icon:fa6-brands:linkedin}"
+weight = 20
+
+[[menus.social]]
+target = "tel:+48798814801"
+label  = "{icon:fa6-brands:whatsapp}"
+weight = 30
+
+[[menus.social]]
+target = "mailto:bstanley@swps.edu.pl"
+label  = "{icon:lucide:mail}"
+weight = 40
+
+[[menus.social]]
+target = "https://bsky.app/profile/benstanley.eu"
+label  = "{icon:fa6-brands:bluesky}"
+weight = 50
+
+[[menus.social]]
+target = "https://orcid.org/0000-0001-6932-1046"
+label  = "{icon:academicons:orcid}"
+weight = 60
+
+[[menus.social]]
+target = "https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en"
+label  = "{icon:simple-icons:googlescholar}"
+weight = 70
+
+[[menus.social]]
+target = "https://www.webofscience.com/wos/author/record/J-7051-2013"
+label  = "{icon:academicons:clarivate}"
+weight = 80
+
+[[menus.social]]
+target = "https://github.com/BDStanley"
+label  = "{icon:fa6-brands:github}"
+weight = 90
+
+[[menus.social]]
+target = "https://dataverse.harvard.edu/dataverse/bdstanley"
+label  = "{icon:academicons:dataverse}"
+weight = 100
+
+[[menus.social]]
+target = "https://www.zotero.org/benstanleypl/library"
+label  = "{icon:academicons:zotero}"
+weight = 110
+
+# -----------------------------------------------------------------------------
+# Footer. NOTE: the built-in `academic` theme does not render a footer region,
+# so these entries are currently inert — kept here so the licence/credit line
+# appears automatically if you switch to a theme that supports a `footer` menu
+# (e.g. a local/ejected theme). See README.md.
+# -----------------------------------------------------------------------------
+[[menus.footer]]
+target = "https://creativecommons.org/licenses/by/4.0/"
+label  = "© 2025 Ben Stanley · CC BY 4.0"
+
+[[menus.footer]]
+target = "https://github.com/vincentarelbundock/calepin"
+label  = "Made with Typst and Calepin"
+
+# -----------------------------------------------------------------------------
+# Static files copied verbatim into the build output (not rendered as pages).
+# -----------------------------------------------------------------------------
+[static]
+include = [
+  "assets/**",
+  "cv/cv.pdf",   # the CV PDF, built from cv/cv.yml by build.sh (see README)
+]
+
+# Keep theme internals and the CV Typst sources from being built as site pages.
+# (cv/cv.yml is still read by the publications/research-projects pages via yaml().)
+[pages]
+exclude = ["themes/**", "cv/**", "_site/**"]

@@ -1,0 +1,7 @@
+    <footer class="calepin-site-footer">
+        <div class="calepin-site-footer-inner">
+            {% for item in site.menus.footer %}
+            <span class="calepin-site-footer-item"><a href="{{ item.href }}">{{ item.label_html }}</a></span>
+            {% endfor %}
+        </div>
+    </footer>

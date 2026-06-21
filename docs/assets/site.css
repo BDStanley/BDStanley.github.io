@@ -1,0 +1,232 @@
+/* =============================================================================
+   Brand overlay for the Calepin replica of benstanley.eu.
+
+   Loads AFTER the built-in `academic` theme CSS, so it only needs to override
+   the public --calepin-* design tokens plus a few navbar/footer rules to
+   reproduce the look of the original Quarto site:
+     - typeface   : Jost across the whole site (loaded from Google Fonts)
+     - links/accent: dark red (#8B0000) with pink (#A52C60) highlights
+     - top navbar : solid dark-red bar with white links
+   ============================================================================= */
+
+/* Jost is used throughout the site (body and headings). It's loaded via a
+   <link> in the theme head (themes/site-theme/partials/site-head.html). An
+   @import can't be used here: Calepin bundles all CSS into one file, so a
+   mid-bundle @import is ignored. */
+
+/* ---- Design tokens (light + dark share the brand hues) ------------------- */
+:root,
+html[data-theme="light"] {
+  --calepin-font-body: "Jost", system-ui, -apple-system, sans-serif;
+  --calepin-font-heading: "Jost", system-ui, -apple-system, sans-serif;
+
+  --calepin-color-accent: #a52c60;        /* pink — primary accent  */
+  --calepin-color-accent-hover: #8b0000;  /* dark red on hover      */
+  --calepin-color-link: #8b0000;          /* dark-red links         */
+  --calepin-color-link-hover: #495057;    /* muted grey on hover    */
+  --calepin-heading-weight: 600;
+}
+
+html[data-theme="dark"] {
+  --calepin-color-accent: #d76a96;
+  --calepin-color-accent-hover: #f0a9c4;
+  --calepin-color-link: #ef9a9a;
+  --calepin-color-link-hover: #ffcdd2;
+}
+
+/* Reading text: bring the body size down so it sits in proportion to the
+   (Jost) nav bar, with a slightly tighter line height. */
+.calepin-content {
+  font-size: 0.92rem;
+}
+.calepin-content :where(p, li, dd) {
+  line-height: 1.55;
+}
+
+/* Headings: lighter weight (Jost), compact scale above the body. */
+.calepin-content h1,
+.calepin-content h2,
+.calepin-content h3,
+.calepin-content h4 {
+  font-family: var(--calepin-font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.calepin-content h1 { font-size: 1.25rem; }   /* page title (#title) */
+.calepin-content h2 { font-size: 1.08rem; }   /* section headings    */
+.calepin-content h3 { font-size: 0.98rem; }
+.calepin-content h4 { font-size: 0.92rem; }
+/* Home-page name stays a touch larger than section headings. */
+.hero-portrait h1 { font-size: 1.3rem; }
+
+/* ---- Top navigation: solid dark-red bar with white text, set in Jost ----- */
+.academic-topbar,
+.calepin-site-topbar {
+  background: #8b0000;
+  font-family: "Jost", system-ui, -apple-system, sans-serif;
+}
+/* Explicitly set Jost on the brand + links too (the brand is the site title). */
+.academic-brand,
+.calepin-site-brand,
+.academic-menu a,
+.academic-nav a {
+  font-family: "Jost", system-ui, -apple-system, sans-serif;
+}
+
+/* ---- Roomier top nav (desktop only; the <=48rem dropdown is left intact) -- */
+@media (min-width: 48.01rem) {
+  /* Let the bar use most of the viewport instead of the narrow reading width,
+     so the links + icons have room and never wrap mid-word. */
+  .academic-nav {
+    width: min(100% - 3rem, 1400px);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    font-size: 0.95rem;
+  }
+  .academic-brand {
+    white-space: nowrap;
+    font-size: 1.15rem;
+  }
+  /* Re-form the flattened menu into its own flex group, pushed to the right of
+     the brand, with each label kept on a single line. */
+  .academic-menu {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem 0.9rem;
+    margin-left: 1.25rem;
+  }
+  .academic-menu a {
+    white-space: nowrap;
+  }
+}
+.academic-nav a,
+.academic-brand,
+.calepin-site-brand,
+.academic-menu a {
+  color: #ffffff !important;
+}
+.academic-menu a:hover,
+.academic-nav a:hover {
+  text-decoration: underline;
+}
+.academic-menu a.active {
+  font-weight: 600;
+}
+/* Keep the theme toggle / search trigger legible on the red bar. */
+.academic-topbar button,
+.academic-topbar .academic-theme-toggle {
+  color: #ffffff;
+}
+.academic-nav-toggle span { background: #ffffff; }
+
+/* ---- Sticky footer: keep it pinned to the bottom of the viewport on short
+   pages (e.g. the home page), while still sitting after the content on long
+   pages. The body is a flex column; the content region grows to fill. -------- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.academic-page,
+.academic-landing {
+  flex: 1 0 auto;
+}
+
+/* ---- Footer (added to the local theme via partials/site-footer.html) ----- */
+.calepin-site-footer {
+  flex-shrink: 0;
+  background: #8b0000;
+  color: #ffffff;
+  margin-top: 3rem;
+  padding: 1.3rem 1rem;
+  font-family: var(--calepin-font-heading);
+  font-size: 0.9rem;
+}
+.calepin-site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  width: min(100% - 2rem, var(--calepin-content-width));
+  margin-inline: auto;
+}
+.calepin-site-footer-item:only-child,
+.calepin-site-footer-inner:has(.calepin-site-footer-item:only-child) {
+  justify-content: center;
+}
+.calepin-site-footer a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .calepin-site-footer-inner { justify-content: center; text-align: center; }
+}
+
+/* ---- Home-page hero (trestles-style: portrait beside the bio) ----------- */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;   /* bio starts level with the top of the photo */
+  gap: 2rem;
+  margin-block: 1rem 2rem;
+}
+.hero-portrait {
+  flex: 0 0 240px;
+  max-width: 240px;
+  margin-inline: auto;
+}
+.hero-portrait img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.hero-bio {
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+/* Two-column book layout on the "Good Change" page, with a divider that
+   mirrors the original .columns separator. */
+.gc-columns { align-items: start; }
+@media (min-width: 768px) {
+  .gc-columns > div:first-child {
+    border-right: 1px solid var(--calepin-color-border);
+    padding-right: 1.5rem;
+  }
+}
+
+/* Research projects — CV-style entry formatting (see pages/research-projects.typ).
+   Italic date + bold title on line 1, italic funder on line 2, smaller details. */
+.proj {
+  margin-bottom: 1.1em;
+}
+.proj-date {
+  font-style: italic;       /* (the date is also wrapped in <em>) */
+  margin-right: 0.7em;
+}
+.proj-title strong {
+  font-weight: 700;
+}
+.proj-funder {
+  font-style: italic;
+}
+.proj-detail {
+  font-size: 0.85em;
+  color: var(--calepin-color-muted);
+}
+
+/* "Pooling the Poles" embed — break out of the narrow reading column to give the
+   Shiny app a bit more room (centred on the viewport, capped width). */
+.embed-frame {
+  width: min(92vw, 900px);
+  max-width: none;
+  height: 1200px;
+  border: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

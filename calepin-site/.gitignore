@@ -1,0 +1,22 @@
+# Calepin regenerable cache (recreated on every build)
+.calepin/
+
+# Build output (when compiling to a separate directory)
+_site/
+
+# Pagefind search index + generated feeds/sitemap, if built in place
+/pagefind/
+/sitemap.xml
+/robots.txt
+/atom.xml
+/rss.xml
+
+# In-place HTML output (only appears if you compile into this directory)
+/index.html
+/404.html
+/pages/*.html
+
+# CV PDF is generated from cv/cv.yml by build.sh
+/cv/cv.pdf
+
+.DS_Store
