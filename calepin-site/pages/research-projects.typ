@@ -13,17 +13,19 @@
   if en != "" and en != s { s + "–" + en } else { s }
 }
 
-// One entry, formatted like the CV: italic date + bold title on the first line,
-// italic funder on its own line, smaller details below. Classes are styled in
-// assets/site.css (HTML-only build, so html.elem is safe here).
+// One entry, formatted exactly like the CV's `timeline` layout: the date sits in
+// a right-aligned left column, separated from the content by a vertical dividing
+// line, with bold title / italic funder / smaller details stacked on the right.
+// Classes are styled in assets/site.css (HTML-only build, so html.elem is safe).
 #let render-projects(entries) = {
   for e in entries {
     html.elem("div", attrs: (class: "proj"))[
-      #html.elem("div", attrs: (class: "proj-title"))[
-        #html.elem("span", attrs: (class: "proj-date"))[#emph(fmt-range(e))]#strong(e.title)
+      #html.elem("div", attrs: (class: "proj-date"))[#fmt-range(e)]
+      #html.elem("div", attrs: (class: "proj-body"))[
+        #html.elem("div", attrs: (class: "proj-title"))[#strong(e.title)]
+        #html.elem("div", attrs: (class: "proj-funder"))[#emph(e.at("institution", default: ""))]
+        #html.elem("div", attrs: (class: "proj-detail"))[#e.at("description", default: "").trim()]
       ]
-      #html.elem("div", attrs: (class: "proj-funder"))[#emph(e.at("institution", default: ""))]
-      #html.elem("div", attrs: (class: "proj-detail"))[#e.at("description", default: "").trim()]
     ]
   }
 }

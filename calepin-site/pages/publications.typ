@@ -50,7 +50,7 @@ _Updated: March 2026_
       if entries == none { entries = () }
       if entries.len() > 0 {
         heading(level: 1, sec.title)
-        enum(..entries.map(render-entry))
+        list(..entries.map(render-entry))
       }
     }
   }

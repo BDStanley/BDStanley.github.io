@@ -1255,6 +1255,38 @@ html[data-theme="dark"] {
     white-space: nowrap;
   }
 }
+
+/* ---- Portrait: text links on one line, icons + search centred below ------- */
+/* Above the hamburger breakpoint but in a portrait viewport (a tablet held
+   upright, or a tall/narrow desktop window), stack the bar so the text links
+   stay on their own line and everything after CV — the social icons, the
+   search trigger and the theme toggle — drops onto a second, centred line.
+   The wrap is forced by an empty full-width flex item injected right after the
+   CV entry (partials/site-nav.html); it is display:none in every other mode. */
+.academic-menu-break {
+  display: none;
+}
+@media (orientation: portrait) and (min-width: 48.01rem) {
+  .academic-nav {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+  .academic-menu {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+  .academic-menu-break {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
 .academic-nav a,
 .academic-brand,
 .calepin-site-brand,
@@ -1351,14 +1383,23 @@ body {
   }
 }
 
-/* Research projects — CV-style entry formatting (see pages/research-projects.typ).
-   Italic date + bold title on line 1, italic funder on line 2, smaller details. */
+/* Research projects — mirrors the CV's `timeline` layout (academicv): the date
+   sits in a right-aligned left column, a vertical line divides it from the body,
+   then bold title / italic funder / smaller details stack on the right.
+   (see pages/research-projects.typ) */
 .proj {
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  column-gap: 1em;
   margin-bottom: 1.1em;
 }
 .proj-date {
-  font-style: italic;       /* (the date is also wrapped in <em>) */
-  margin-right: 0.7em;
+  text-align: right;
+  white-space: nowrap;
+}
+.proj-body {
+  border-left: 1px solid var(--calepin-color-border);
+  padding-left: 0.7em;
 }
 .proj-title strong {
   font-weight: 700;

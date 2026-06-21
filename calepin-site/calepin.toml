@@ -23,7 +23,9 @@ styles = ["assets/site.css"]
 # the iframe-based pages and external embeds build cleanly.
 pdf    = false
 minify = true
-search = "pagefind"
+# Search is disabled: no search box in the nav (the pagefind trigger, modal and
+# JS/CSS are all guarded by `site.pagefind`, so omitting this removes them all).
+# search = "pagefind"
 
 # -----------------------------------------------------------------------------
 # Top navigation — left-hand page links (mirror of the Quarto navbar `left:`)
