@@ -6,6 +6,17 @@
 
 #html.elem("div", attrs: (class: "course-list"))[
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/social-research-methodology.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/social-research-methodology.html"))[#"Introduction to Social Research Methodology"]
+#html.elem("div", attrs: (class: "course-meta"))[#"SWPS University"]
+#html.elem("div", attrs: (class: "course-desc"))[#"An introduction to social research methodology: the nature and purpose of social research, qualitative and quantitative approaches, and the stages of the research process from design to interpretation."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Winter 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/unia-europejska.svg", alt: ""))
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "teaching/unia-europejska.html"))[#"Unia Europejska i jej instytucje"]
@@ -42,7 +53,6 @@
 #html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/social-psychology-democracies.svg", alt: ""))
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "teaching/social-psychology-democracies.html"))[#"Social Psychology of Democracies in Transition"]
-#html.elem("div", attrs: (class: "course-meta"))[#"PE.S11.T28 | SWPS University"]
 #html.elem("div", attrs: (class: "course-desc"))[#"The social psychology of post-communist transition: communist legacies, attitudes and values, intergroup relations, and the foundations of democracy and democratic backsliding."]
 #html.elem("div", attrs: (class: "course-terms"))[
 #html.elem("span", attrs: (class: "course-term"))[#"Summer 2026"]

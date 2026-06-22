@@ -1314,7 +1314,7 @@ body {
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1.25;
-  color: var(--calepin-color-link) !important;
+  color: var(--calepin-color-text) !important;
   text-decoration: none;
 }
 .course-name:hover,
