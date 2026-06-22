@@ -1115,14 +1115,37 @@ body:has(.academic-document-main .calepin-sidefigure) .academic-document-main {
   }
 }
 
-/* ---- Landscape: page links after the brand, CV + icons on the right -------- */
-/* The page links (main menu) now start immediately after "Ben Stanley"; give the
-   CV entry an auto left margin so it and everything after it (the social icons)
-   are pushed to the right edge. Landscape-only, so the centred portrait two-line
-   layout below is untouched. */
-@media (min-width: 48.01rem) and (orientation: landscape) {
+/* ---- Wide landscape (desktop / landscape tablet): CV + icons to the right --- */
+/* The page links (main menu) start immediately after "Ben Stanley"; give the CV
+   entry an auto left margin so it and everything after it (the social icons) are
+   pushed to the right edge, all on the brand's row. Only above 64rem, where there
+   is room for the whole row — narrower landscape viewports stack instead (below). */
+@media (min-width: 64.01rem) and (orientation: landscape) {
   .academic-menu a[href$="cv/cv.pdf"] {
     margin-left: auto;
+  }
+}
+
+/* The before-CV break is hidden in every mode except the narrow-landscape range
+   immediately below; it must precede that rule so the show wins the cascade. */
+.academic-menu-break-social {
+  display: none;
+}
+
+/* ---- Narrow landscape (a phone held sideways, <=64rem): CV + icons drop below */
+/* There isn't room for the links + CV + ten icons across, so the right-aligned
+   cluster would wrap into a ragged second/third row. Instead drop the whole
+   CV + social-icon cluster onto a row of its own, beneath the page links, by
+   switching on the full-width break span injected before CV in
+   partials/site-nav.html. (No auto margin here, so the cluster sits at the left.) */
+@media (min-width: 48.01rem) and (max-width: 64rem) and (orientation: landscape) {
+  .academic-menu-break-social {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+    margin: 0;
+    padding: 0;
   }
 }
 
