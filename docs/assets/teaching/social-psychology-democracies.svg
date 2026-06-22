@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 115" role="img" aria-label="Social Psychology of Democracies in Transition">
+  <!-- icon: lucide users-round · white hex, #8b0000 border + icon (matches _placeholder.svg) -->
+  <polygon points="50,3 95,29 95,86 50,112 5,86 5,29"
+           fill="#ffffff" stroke="#8b0000" stroke-width="6" stroke-linejoin="round"/>
+  <g transform="translate(29.5,37) scale(1.71)" fill="none" stroke="#8b0000"
+     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 21a8 8 0 0 0-16 0" />
+    <circle cx="10" cy="8" r="5" />
+    <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+  </g>
+</svg>

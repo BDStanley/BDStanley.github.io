@@ -4,18 +4,93 @@
 #set document(title: "Teaching")
 #metadata((title: "Teaching")) <website-metadata>
 
-#heading(level: 1)[#"2026 summer term"]
-#html.elem("div", attrs: (class: "course-grid"))[
-#html.elem("a", attrs: (class: "course-card", href: "teaching/unia-europejska.html"))[#"Unia Europejska i jej instytucje"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/jezyk-angielski.html"))[#"Język angielski w zastosowaniu zawodowym"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/podstawy-dziennikarstwa.html"))[#"Podstawy dziennikarstwa danych"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/social-psychology-democracies.html"))[#"Social Psychology of Democracies in Transition"]
+#html.elem("div", attrs: (class: "course-list"))[
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/unia-europejska.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/unia-europejska.html"))[#"Unia Europejska i jej instytucje"]
+#html.elem("div", attrs: (class: "course-meta"))[#"ZP.S12.T07 | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Funkcjonowanie instytucji Unii Europejskiej, proces integracji i rozszerzenia oraz rola państw członkowskich w systemie politycznym UE."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
 ]
-
-#heading(level: 1)[#"2025 winter term"]
-#html.elem("div", attrs: (class: "course-grid"))[
-#html.elem("a", attrs: (class: "course-card", href: "teaching/wprowadzenie-metodologia.html"))[#"Wprowadzenie do metodologii badań społecznych"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/dziennikarstwo-danych.html"))[#"Dziennikarstwo danych"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/wyzwania-uprzedzenia.html"))[#"Wyzwania życia publicznego - uprzedzenia"]
-#html.elem("a", attrs: (class: "course-card", href: "teaching/systemy-polityczne.html"))[#"Systemy polityczne"]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/jezyk-angielski.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/jezyk-angielski.html"))[#"Język angielski w zastosowaniu zawodowym"]
+#html.elem("div", attrs: (class: "course-meta"))[#"ZA.N21.T76.A | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Język angielski w kontekście zawodowym i biznesowym: komunikacja pisemna i ustna, kultura organizacyjna, przywództwo oraz słownictwo biznesowe."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/podstawy-dziennikarstwa.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/podstawy-dziennikarstwa.html"))[#"Podstawy dziennikarstwa danych"]
+#html.elem("div", attrs: (class: "course-meta"))[#"DZ.N13.T26.A | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Wprowadzenie do dziennikarstwa danych: pozyskiwanie i analiza danych, wizualizacja oraz budowanie narracji opartej na danych."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/social-psychology-democracies.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/social-psychology-democracies.html"))[#"Social Psychology of Democracies in Transition"]
+#html.elem("div", attrs: (class: "course-meta"))[#"PE.S11.T28 | SWPS University"]
+#html.elem("div", attrs: (class: "course-desc"))[#"The social psychology of post-communist transition: communist legacies, attitudes and values, intergroup relations, and the foundations of democracy and democratic backsliding."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Summer 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/wprowadzenie-metodologia.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/wprowadzenie-metodologia.html"))[#"Wprowadzenie do metodologii badań społecznych"]
+#html.elem("div", attrs: (class: "course-meta"))[#"ZA.S11.T40 | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Projektowanie badań społecznych: podejścia ilościowe, jakościowe i mieszane, dobór próby, etyka oraz analiza i prezentacja wyników."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/dziennikarstwo-danych.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/dziennikarstwo-danych.html"))[#"Dziennikarstwo danych"]
+#html.elem("div", attrs: (class: "course-meta"))[#"DZ.N22.T10 | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Czym jest dziennikarstwo danych: źródła i analiza danych, narzędzia, wizualizacja oraz krytyczna ocena praktyki dziennikarskiej."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/wyzwania-uprzedzenia.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/wyzwania-uprzedzenia.html"))[#"Wyzwania życia publicznego - uprzedzenia"]
+#html.elem("div", attrs: (class: "course-meta"))[#"ZP.S12.T13 | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Stereotypy, uprzedzenia i dyskryminacja: mechanizmy powstawania uprzedzeń, tożsamość społeczna oraz społeczne konsekwencje uprzedzeń."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/systemy-polityczne.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/systemy-polityczne.html"))[#"Systemy polityczne"]
+#html.elem("div", attrs: (class: "course-meta"))[#"DZ.S13.T18 | Uniwersytet SWPS"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Pojęcia i typy systemów politycznych, systemy demokratyczne i niedemokratyczne, konstytucja i praworządność w Polsce oraz współczesne kryzysy demokracji."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+]
+]
+]
 ]
