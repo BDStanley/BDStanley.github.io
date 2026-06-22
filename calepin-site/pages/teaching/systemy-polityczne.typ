@@ -19,10 +19,24 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-6-slides", "Pięć kryzysów demokracji w XXI wieku") },
 )
 
+#heading(level: 2)[#"Materiały"]
+
+#list(
+  { link("https://bdstanley.netlify.app/systemy-polityczne-1-handout", "Systemy polityczne — pojęcia i typy") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout", "Demokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout", "Niedemokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-4-handout", "Konstytucja i system polityczny w Polsce. Wartość praworządności") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-handout", "Państwo prawa: instytucje, procedury, ochrona praw i rola mediów") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-6-handout", "Pięć kryzysów demokracji w XXI wieku") },
+)
+
 #heading(level: 2)[#"Ćwiczenia"]
 
 #list(
-  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers-slides", "Ćwiczenie - projektowanie systemów politycznych") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-answers-slides", "Reformy konstytucyjne - diagnoza i propozycje zmian") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-preamble-slides", "Kryzysy konstytucyjne i polaryzacja polityczna w Polsce") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise", "Ćwiczenie: Klasyfikacja i porównanie systemów politycznych") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise", "Ćwiczenie: Zaprojektuj własną demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise", "Ćwiczenie: Projektowanie systemu w okresie transformacji") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise", "Ćwiczenie: Przeprojektowanie Konstytucji RP") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise", "Ćwiczenie: Audyt praworządności i plan naprawczy") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise", "Ćwiczenie: Pakiet odporności demokratycznej") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise-answers", "answers") },
 )

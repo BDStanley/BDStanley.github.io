@@ -6,22 +6,13 @@
 
 #html.elem("div", attrs: (class: "course-list"))[
 #html.elem("div", attrs: (class: "course-row"))[
-#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/social-research-methodology.svg", alt: ""))
-#html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "teaching/social-research-methodology.html"))[#"Introduction to Social Research Methodology"]
-#html.elem("div", attrs: (class: "course-desc"))[#"An introduction to social research methodology: the nature and purpose of social research, qualitative and quantitative approaches, and the stages of the research process from design to interpretation."]
-#html.elem("div", attrs: (class: "course-terms"))[
-#html.elem("span", attrs: (class: "course-term"))[#"Winter 2026"]
-]
-]
-]
-#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/unia-europejska.svg", alt: ""))
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "teaching/unia-europejska.html"))[#"Unia Europejska i jej instytucje"]
 #html.elem("div", attrs: (class: "course-desc"))[#"Funkcjonowanie instytucji Unii Europejskiej, proces integracji i rozszerzenia oraz rola państw członkowskich w systemie politycznym UE."]
 #html.elem("div", attrs: (class: "course-terms"))[
 #html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2027"]
 ]
 ]
 ]
@@ -32,6 +23,7 @@
 #html.elem("div", attrs: (class: "course-desc"))[#"Język angielski w kontekście zawodowym i biznesowym: komunikacja pisemna i ustna, kultura organizacyjna, przywództwo oraz słownictwo biznesowe."]
 #html.elem("div", attrs: (class: "course-terms"))[
 #html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2027"]
 ]
 ]
 ]
@@ -42,6 +34,49 @@
 #html.elem("div", attrs: (class: "course-desc"))[#"Wprowadzenie do dziennikarstwa danych: pozyskiwanie i analiza danych, wizualizacja oraz budowanie narracji opartej na danych."]
 #html.elem("div", attrs: (class: "course-terms"))[
 #html.elem("span", attrs: (class: "course-term"))[#"Lato 2026"]
+#html.elem("span", attrs: (class: "course-term"))[#"Lato 2027"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/english-professional-purposes.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/english-professional-purposes.html"))[#"English for Professional Purposes"]
+#html.elem("div", attrs: (class: "course-desc"))[#"English for the professional workplace: reading comprehension, grammar and business vocabulary, writing proposals, and delivering presentations."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Summer 2027"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/social-research-methodology.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/social-research-methodology.html"))[#"Introduction to Social Research Methodology"]
+#html.elem("div", attrs: (class: "course-desc"))[#"An introduction to social research methodology: the nature and purpose of social research, qualitative and quantitative approaches, and the stages of the research process from design to interpretation."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Winter 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/systemy-polityczne.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/systemy-polityczne.html"))[#"Systemy polityczne"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Pojęcia i typy systemów politycznych, systemy demokratyczne i niedemokratyczne, konstytucja i praworządność w Polsce oraz współczesne kryzysy demokracji."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2026"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/wyzwania-uprzedzenia.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/wyzwania-uprzedzenia.html"))[#"Wyzwania życia publicznego - uprzedzenia"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Stereotypy, uprzedzenia i dyskryminacja: mechanizmy powstawania uprzedzeń, tożsamość społeczna oraz społeczne konsekwencje uprzedzeń."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
+#html.elem("span", attrs: (class: "course-term"))[#"Zima 2026"]
 ]
 ]
 ]
@@ -70,26 +105,6 @@
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "teaching/dziennikarstwo-danych.html"))[#"Dziennikarstwo danych"]
 #html.elem("div", attrs: (class: "course-desc"))[#"Czym jest dziennikarstwo danych: źródła i analiza danych, narzędzia, wizualizacja oraz krytyczna ocena praktyki dziennikarskiej."]
-#html.elem("div", attrs: (class: "course-terms"))[
-#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
-]
-]
-]
-#html.elem("div", attrs: (class: "course-row"))[
-#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/wyzwania-uprzedzenia.svg", alt: ""))
-#html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "teaching/wyzwania-uprzedzenia.html"))[#"Wyzwania życia publicznego - uprzedzenia"]
-#html.elem("div", attrs: (class: "course-desc"))[#"Stereotypy, uprzedzenia i dyskryminacja: mechanizmy powstawania uprzedzeń, tożsamość społeczna oraz społeczne konsekwencje uprzedzeń."]
-#html.elem("div", attrs: (class: "course-terms"))[
-#html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
-]
-]
-]
-#html.elem("div", attrs: (class: "course-row"))[
-#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/systemy-polityczne.svg", alt: ""))
-#html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "teaching/systemy-polityczne.html"))[#"Systemy polityczne"]
-#html.elem("div", attrs: (class: "course-desc"))[#"Pojęcia i typy systemów politycznych, systemy demokratyczne i niedemokratyczne, konstytucja i praworządność w Polsce oraz współczesne kryzysy demokracji."]
 #html.elem("div", attrs: (class: "course-terms"))[
 #html.elem("span", attrs: (class: "course-term"))[#"Zima 2025"]
 ]

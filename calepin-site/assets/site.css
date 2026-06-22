@@ -313,7 +313,7 @@ body {
 }
 .course-name {
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: 1.08rem;   /* match the h2 section headings on other pages */
   font-weight: 600;
   line-height: 1.25;
   color: var(--calepin-color-heading) !important;

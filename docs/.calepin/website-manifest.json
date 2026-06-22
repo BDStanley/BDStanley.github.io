@@ -1,7 +1,7 @@
 {
   "outputs": [
     ".calepin/calepin-website.aa39e51f829243c0.js",
-    ".calepin/calepin-website.b33e18dacc9a73b2.css",
+    ".calepin/calepin-website.c856d1e203f65c51.css",
     ".calepin/favicon.svg",
     "404.html",
     "assets/good-change.png",
@@ -9,6 +9,7 @@
     "assets/site.css",
     "assets/teaching/_placeholder.svg",
     "assets/teaching/dziennikarstwo-danych.svg",
+    "assets/teaching/english-professional-purposes.svg",
     "assets/teaching/jezyk-angielski.svg",
     "assets/teaching/podstawy-dziennikarstwa.svg",
     "assets/teaching/social-psychology-democracies.svg",
@@ -25,6 +26,7 @@
     "pages/publications.html",
     "pages/research-projects.html",
     "pages/teaching/dziennikarstwo-danych.html",
+    "pages/teaching/english-professional-purposes.html",
     "pages/teaching/jezyk-angielski.html",
     "pages/teaching/podstawy-dziennikarstwa.html",
     "pages/teaching/social-psychology-democracies.html",

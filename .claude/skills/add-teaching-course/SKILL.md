@@ -1,6 +1,6 @@
 ---
 name: add-teaching-course
-description: Onboard new (or fix incomplete) Teaching courses on benstanley.eu after they appear in the Teaching repo. Use when the user says they added/updated a class in the Teaching repo (BDStanley/Classes, the local ../../Teaching checkout), asks to "sync the teaching page" / "add the new course(s) to the website", or when a build prints "[teaching] needs attention" or the landing shows a course with the placeholder hexsticker, no description, or no code. Reads the Teaching repo READ-ONLY, drafts a Polish/English description, creates a hexsticker SVG, fills the course code, then rebuilds and verifies.
+description: Onboard new (or fix incomplete) Teaching courses on benstanley.eu after they appear in the Teaching repo. Use when the user says they added/updated a class in the Teaching repo (BDStanley/Classes, the local ../../Teaching checkout), asks to "sync the teaching page" / "add the new course(s) to the website", or when a build prints "[teaching] needs attention" or the landing shows a course with the placeholder hexsticker or no description. Reads the Teaching repo READ-ONLY, drafts a Polish/English description, creates a hexsticker SVG, then rebuilds and verifies.
 ---
 
 # Add a Teaching course to benstanley.eu
@@ -20,23 +20,21 @@ Running `./build.sh` already handles, for any course listed under a term in
 `../../Teaching/index.qmd`:
 - the landing row and the per-course page (slide/handout links → the Netlify teaching site);
 - the **term badge(s)** — Polish for `lang: pl` courses ("Zima 2025" / "Lato 2026"), English otherwise; a course relisted under another term just gains another badge;
-- the **course code, university and language** — *only if* the course's first slide deck (`<slug>-1-slides.qmd`) carries them in `footer:` (a trailing `(CODE)`), author `affiliation:`, and `lang:`.
+- the course's **language** — read from the first slide deck's (`<slug>-1-slides.qmd`) `lang:` field — which sets whether the term badges render in Polish or English.
 
-Three things are NOT auto-derivable; the build prints a `needs attention` line listing them
+Two things are NOT auto-derivable; the build prints a `needs attention` line listing them
 per course, and this skill supplies them:
 
 1. **Description** — authored, one short sentence in the course's language → the
    `COURSE_DESCRIPTIONS` dict in `scripts/sync-teaching.py`.
-2. **Course code**, when the slides don't carry one → the `COURSE_CODES` fallback dict in the
-   same file. The code itself must come from the user (SWPS/USOS catalogue).
-3. **Hexsticker icon** → a per-course SVG at `assets/teaching/<slug>.svg` (otherwise the
+2. **Hexsticker icon** → a per-course SVG at `assets/teaching/<slug>.svg` (otherwise the
    shared `assets/teaching/_placeholder.svg` is used).
 
 ## Procedure
 
 1. **See what's needed.** From `calepin-site/`, run `python3 scripts/sync-teaching.py`
    (or `./build.sh`). Read the `[teaching] needs attention:` lines — each names a slug and
-   what it's missing (`description`, `code`, `icon`). If the new course isn't listed at all,
+   what it's missing (`description`, `icon`). If the new course isn't listed at all,
    it isn't in `../../Teaching/index.qmd` yet — tell the user to add it there (under the right
    term); the website never edits the Teaching repo.
 
@@ -46,13 +44,7 @@ per course, and this skill supplies them:
    the existing `COURSE_DESCRIPTIONS` entries. Add it there keyed by slug. Tell the user it's a
    draft to review.
 
-3. **Course code** (if flagged). Look in `../../Teaching/**/Slides/<slug>-1-slides.qmd` at the
-   `footer:` value for a trailing `(CODE)` — if present, the generator already uses it, nothing
-   to do. If absent, ask the user for the USOS subject code (they can paste it or a screenshot
-   of the catalogue; the code is the one next to the subject that contains this class) and add
-   it to `COURSE_CODES` keyed by slug.
-
-4. **Hexsticker** (if flagged). Pick a fitting Lucide icon (https://lucide.dev) — propose 1–2
+3. **Hexsticker** (if flagged). Pick a fitting Lucide icon (https://lucide.dev) — propose 1–2
    options and avoid duplicating an in-use icon unless the user wants it (see list below).
    Fetch its exact path data:
    `curl -s https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/<icon>.svg`
@@ -61,12 +53,12 @@ per course, and this skill supplies them:
    inherit) into the `<g>`. Keep the hexagon geometry and `#8b0000`/white colours identical to
    `assets/teaching/_placeholder.svg`.
 
-5. **Rebuild & verify.** Run `./build.sh`; confirm the course is no longer in `needs attention`.
+4. **Rebuild & verify.** Run `./build.sh`; confirm the course is no longer in `needs attention`.
    Then serve and screenshot the landing:
    `cd ../docs && (python3 -m http.server 8920 &) ; sleep 1` then headless Chrome
    `--screenshot` of `http://localhost:8920/pages/teaching.html` (use
    `--force-device-scale-factor=2` for a crisp shot); kill the server after. Check the new row:
-   icon, name, `CODE | university`, description, badge(s). Do not commit unless asked.
+   icon, name, description, badge(s). Do not commit unless asked.
 
 ## Hexsticker template
 
@@ -94,6 +86,7 @@ reuse it verbatim.
 - `newspaper` — both Podstawy dziennikarstwa danych & Dziennikarstwo danych (intentional)
 - `users-round` — Social Psychology of Democracies in Transition
 - `chart-column` — Wprowadzenie do metodologii badań społecznych
+- `chart-scatter` — Introduction to Social Research Methodology
 - `hand-fist` — Wyzwania życia publicznego: uprzedzenia
 - `vote` — Systemy polityczne
 
@@ -101,6 +94,10 @@ reuse it verbatim.
 
 - Generator output is deterministic — rebuilding with an unchanged Teaching repo produces
   byte-identical pages (no spurious git churn).
+- A course's **code and university are no longer rendered** on the landing — rows show
+  icon · name · description · badge(s) only. `sync-teaching.py` still derives them (slide
+  `footer:` `(CODE)` / the `COURSE_CODES` fallback / author `affiliation:`) but keeps them
+  dormant, so you never need to ask the user for a code when onboarding a new course.
 - The generated `pages/teaching.typ` + `pages/teaching/*.typ` and the `assets/teaching/*.svg`
   are committed as part of the normal flow; they are not hand-edited.
 - Overrides for source/host exist if ever needed: env vars `TEACHING_SRC` (default

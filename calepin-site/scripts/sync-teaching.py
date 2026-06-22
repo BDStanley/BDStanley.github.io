@@ -56,6 +56,9 @@ COURSE_DESCRIPTIONS = {
         "An introduction to social research methodology: the nature and purpose of social "
         "research, qualitative and quantitative approaches, and the stages of the research "
         "process from design to interpretation.",
+    "english-professional-purposes":
+        "English for the professional workplace: reading comprehension, grammar and business "
+        "vocabulary, writing proposals, and delivering presentations.",
     "unia-europejska":
         "Funkcjonowanie instytucji Unii Europejskiej, proces integracji i rozszerzenia "
         "oraz rola państw członkowskich w systemie politycznym UE.",
