@@ -67,11 +67,18 @@
   font-family: "Jost", system-ui, -apple-system, sans-serif;
 }
 /* Sit the larger "Ben Stanley" brand on the same baseline as the smaller nav
-   links so their bottoms are flush (instead of vertically centering the brand,
-   which leaves it dipping below). Icons have no text baseline, so keep them
+   links so their text bottoms are flush, while keeping the whole row centered in
+   the bar. The nav sizes to its (baseline-aligned) content instead of filling the
+   bar's height — otherwise baseline items pack to the top — and the topbar centers
+   that content-height nav vertically. Icons have no text baseline, so keep them
    centered. */
+.academic-topbar.calepin-site-topbar {
+  display: flex;
+  align-items: center;
+}
 .academic-nav.calepin-site-nav {
   align-items: baseline;
+  min-height: auto;
 }
 .academic-nav.calepin-site-nav a:has(.calepin-nav-icon) {
   align-self: center;
