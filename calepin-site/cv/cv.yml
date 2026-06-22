@@ -20,7 +20,7 @@ settings:
 personal:
   name: Ben Stanley
   titles:
-    - Associate Professor of Political Science
+    - Associate Professor of Social Science
   location:
     city: Warsaw
     country: Poland
@@ -45,7 +45,7 @@ sections:
     title: Professional summary
     show: true
     entries:
-      - Associate Professor of Political Science specialising in populism, democratic backsliding, and electoral behaviour in Central and Eastern Europe.
+      - Associate Professor of Social Science specialising in populism, democratic backsliding, and electoral behaviour in Central and Eastern Europe.
 
   - key: education
     layout: timeline
