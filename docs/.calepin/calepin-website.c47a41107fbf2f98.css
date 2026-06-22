@@ -1065,6 +1065,16 @@ body:has(.academic-document-main .calepin-sidefigure) .academic-document-main {
 .academic-nav a {
   font-family: "Jost", system-ui, -apple-system, sans-serif;
 }
+/* Sit the larger "Ben Stanley" brand on the same baseline as the smaller nav
+   links so their bottoms are flush (instead of vertically centering the brand,
+   which leaves it dipping below). Icons have no text baseline, so keep them
+   centered. */
+.academic-nav.calepin-site-nav {
+  align-items: baseline;
+}
+.academic-nav.calepin-site-nav a:has(.calepin-nav-icon) {
+  align-self: center;
+}
 
 /* ---- Roomier top nav (desktop only; the <=48rem dropdown is left intact) -- */
 @media (min-width: 48.01rem) {
