@@ -6,6 +6,17 @@
 
 #html.elem("div", attrs: (class: "course-list"))[
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/statistics-quantitative.svg", alt: ""))
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "teaching/statistics-quantitative.html"))[#"Statistics and quantitative research"]
+#html.elem("div", attrs: (class: "course-meta"))[#"IM.S11.T75.A"]
+#html.elem("div", attrs: (class: "course-desc"))[#"Foundations of statistics and quantitative research: descriptive and inferential statistics, hypothesis testing, regression, and the analysis and interpretation of quantitative data."]
+#html.elem("div", attrs: (class: "course-terms"))[
+#html.elem("span", attrs: (class: "course-term"))[#"Summer 2027"]
+]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("img", attrs: (class: "course-hex", src: "../assets/teaching/unia-europejska.svg", alt: ""))
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "teaching/unia-europejska.html"))[#"Unia Europejska i jej instytucje"]
