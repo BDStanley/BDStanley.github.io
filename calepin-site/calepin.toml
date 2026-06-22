@@ -30,11 +30,8 @@ minify = true
 # -----------------------------------------------------------------------------
 # Top navigation — left-hand page links (mirror of the Quarto navbar `left:`)
 # -----------------------------------------------------------------------------
-[[menus.main]]
-target = "index.typ"
-label  = "Home"
-weight = 10
-
+# "Home" is intentionally omitted: the "Ben Stanley" brand (top-left) already
+# links to index.typ, so a separate Home entry would be redundant.
 [[menus.main]]
 target = "pages/publications.typ"
 label  = "Publications"
