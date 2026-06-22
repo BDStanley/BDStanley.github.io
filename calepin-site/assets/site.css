@@ -35,13 +35,14 @@
   line-height: 1.55;
 }
 
-/* Headings: lighter weight (Jost), compact scale above the body. */
+/* Headings: bold and in the site's dark red (Jost), compact scale above body. */
 .calepin-content h1,
 .calepin-content h2,
 .calepin-content h3,
 .calepin-content h4 {
   font-family: var(--calepin-font-heading);
-  font-weight: 400;
+  font-weight: 700;
+  color: #8b0000;
   line-height: 1.2;
 }
 .calepin-content h1 { font-size: 1.25rem; }   /* page title (#title) */
