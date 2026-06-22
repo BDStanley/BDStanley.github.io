@@ -77,10 +77,6 @@ COURSE_DESCRIPTIONS = {
     "systemy-polityczne":
         "Pojęcia i typy systemów politycznych, systemy demokratyczne i niedemokratyczne, "
         "konstytucja i praworządność w Polsce oraz współczesne kryzysy demokracji.",
-    "statistics-quantitative":
-        "Foundations of statistics and quantitative research: descriptive and inferential "
-        "statistics, hypothesis testing, regression, and the analysis and interpretation of "
-        "quantitative data.",
 }
 
 # Course codes for courses whose slide decks carry no code in their footer. Taken
@@ -88,7 +84,6 @@ COURSE_DESCRIPTIONS = {
 # slides always wins. Edit/extend as the catalogue changes.
 COURSE_CODES = {
     "dziennikarstwo-danych": "DZ.N22.T10",
-    "statistics-quantitative": "IM.S11.T75.A",
     "systemy-polityczne": "DZ.S13.T18",
     "wprowadzenie-metodologia": "ZA.S11.T40",
     "wyzwania-uprzedzenia": "ZP.S12.T13",
