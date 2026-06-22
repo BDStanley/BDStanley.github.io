@@ -1152,6 +1152,15 @@ body:has(.academic-document-main .calepin-sidefigure) .academic-document-main {
 .academic-menu a.active {
   font-weight: 600;
 }
+/* Drop the theme's pink underline bar on the active/hovered nav item (it looks
+   out of place on the dark-red bar). The active page is still marked by its
+   bold weight; the transparent border keeps the 1px so nothing shifts. */
+.academic-menu a:hover,
+.academic-menu a:focus-visible,
+.academic-menu a.active,
+.academic-menu a[aria-current] {
+  border-bottom-color: transparent;
+}
 /* Keep the mobile hamburger button legible on the red bar. */
 .academic-topbar button {
   color: #ffffff;
