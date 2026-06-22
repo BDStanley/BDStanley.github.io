@@ -1022,6 +1022,7 @@ body:has(.academic-document-main .calepin-sidefigure) .academic-document-main {
   --calepin-color-accent-hover: #8b0000;  /* dark red on hover      */
   --calepin-color-link: #8b0000;          /* dark-red links         */
   --calepin-color-link-hover: #495057;    /* muted grey on hover    */
+  --calepin-color-heading: #374151;       /* slate grey — headings  */
   --calepin-heading-weight: 600;
 }
 
@@ -1034,14 +1035,14 @@ body:has(.academic-document-main .calepin-sidefigure) .academic-document-main {
   line-height: 1.55;
 }
 
-/* Headings: bold and in the site's dark red (Jost), compact scale above body. */
+/* Headings: bold and in a slate grey (Jost), compact scale above body. */
 .calepin-content h1,
 .calepin-content h2,
 .calepin-content h3,
 .calepin-content h4 {
   font-family: var(--calepin-font-heading);
   font-weight: 700;
-  color: #8b0000;
+  color: var(--calepin-color-heading);
   line-height: 1.2;
 }
 .calepin-content h1 { font-size: 1.25rem; }   /* page title (#title) */
@@ -1314,7 +1315,7 @@ body {
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1.25;
-  color: var(--calepin-color-text) !important;
+  color: var(--calepin-color-heading) !important;
   text-decoration: none;
 }
 .course-name:hover,
