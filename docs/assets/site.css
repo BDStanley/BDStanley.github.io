@@ -186,6 +186,20 @@
 }
 .academic-nav-toggle span { background: #ffffff; }
 
+/* ---- Mobile dropdown menu: match the dark-red bar ------------------------- */
+/* At <=48rem the theme turns the nav into a pop-over panel whose background is
+   the (white) page colour. The brand rules above paint every nav link white and
+   the social-icon SVGs draw with `currentColor`, so on a white panel the whole
+   menu is invisible — it reads as an empty box. Give the pop-over the same
+   dark-red as the bar (and a faint light border) so the white links + icons show
+   through, matching the desktop bar. */
+@media (max-width: 48rem) {
+  .academic-menu {
+    background: #8b0000;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
 /* ---- Sticky footer: keep it pinned to the bottom of the viewport on short
    pages (e.g. the home page), while still sitting after the content on long
    pages. The body is a flex column; the content region grows to fill. -------- */
