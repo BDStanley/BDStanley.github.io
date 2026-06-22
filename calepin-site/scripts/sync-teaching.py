@@ -323,7 +323,7 @@ def emit_course_page(title: str, blocks) -> str:
 
 def emit_landing(entries) -> str:
     """Heiss-style landing: a single list of course rows (hexsticker · name ·
-    code|university · description · one badge per semester taught)."""
+    description · one badge per semester taught)."""
     out = [GENERATED_NOTE]
     out.append('#set document(title: "Teaching")')
     out.append('#metadata((title: "Teaching")) <website-metadata>')
@@ -339,8 +339,6 @@ def emit_landing(entries) -> str:
             '#html.elem("a", attrs: (class: "course-name", href: "teaching/%s.html"))[#"%s"]'
             % (e["slug"], tystr(e["title"]))
         )
-        if e["meta"]:
-            out.append('#html.elem("div", attrs: (class: "course-meta"))[#"%s"]' % tystr(e["meta"]))
         if e["description"]:
             out.append('#html.elem("div", attrs: (class: "course-desc"))[#"%s"]' % tystr(e["description"]))
         if e["badges"]:
@@ -418,8 +416,6 @@ def main() -> int:
                 missing = []
                 if slug not in COURSE_DESCRIPTIONS:
                     missing.append("description")
-                if not code:
-                    missing.append("code")
                 if hexsrc.endswith("_placeholder.svg"):
                     missing.append("icon")
                 by_slug[slug] = {
