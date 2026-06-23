@@ -7,3 +7,19 @@
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../teaching.html", "← All courses")]
 
 #heading(level: 1)[#"English for Professional Purposes"]
+
+#heading(level: 2)[#"Slides"]
+
+#enum(
+  { link("https://bdstanley.netlify.app/english-professional-purposes-1-slides", "Course introduction / Globalization of the economy") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-2-slides", "Types of business entities") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-3-slides", "Types of business entities") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-4-slides", "The grammar of cause and effect in business communication") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-5-slides", "Culture and ethics") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-6-slides", "Management and leadership styles") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-7-slides", "Finance of organisations") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-8-slides", "Active vs. passive voice in people management") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-9-slides", "Speaking skills 1: presentations") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-10-slides", "Speaking skills 2: introduction and presentation of the company profile; calls; negotiations") },
+  { link("https://bdstanley.netlify.app/english-professional-purposes-11-slides", "Writing skills") },
+)
