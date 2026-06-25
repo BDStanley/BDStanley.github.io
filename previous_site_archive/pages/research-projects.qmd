@@ -1,6 +1,0 @@
----
-title: "Research projects"
-editor: visual
----
-
-{{< include ../includes/list-of-research-projects.qmd >}}
