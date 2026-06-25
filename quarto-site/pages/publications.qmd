@@ -1,0 +1,59 @@
+---
+title: ""
+---
+
+```{r}
+#| echo: false
+#| output: asis
+# Locate the project root INDEPENDENTLY of the working directory, then load the
+# CV helpers. Positron/Quarto may render with the working dir set to the page
+# folder, the project root, or the workspace root *above* the project — so we
+# can't just walk up from getwd(). Prefer Quarto's QUARTO_PROJECT_DIR, then the
+# .qmd's own location, then the working dir.
+.find_root <- function() {
+  walk_up <- function(start) {
+    d <- normalizePath(start, winslash = "/", mustWork = FALSE)
+    for (i in 1:12) {
+      if (file.exists(file.path(d, "_quarto.yml"))) {
+        return(d)
+      }
+      p <- dirname(d)
+      if (p == d) {
+        break
+      }
+      d <- p
+    }
+    NULL
+  }
+  pd <- Sys.getenv("QUARTO_PROJECT_DIR", "")
+  if (nzchar(pd) && file.exists(file.path(pd, "_quarto.yml"))) {
+    return(pd)
+  }
+  ci <- tryCatch(knitr::current_input(dir = TRUE), error = function(e) "")
+  if (nzchar(ci)) {
+    r <- walk_up(dirname(normalizePath(ci, winslash = "/", mustWork = FALSE)))
+    if (!is.null(r)) return(r)
+  }
+  r <- walk_up(getwd())
+  if (!is.null(r)) r else getwd()
+}
+.root <- .find_root()
+options(cvsite_root = .root)
+source(file.path(.root, "R", "cv-helpers.R"))
+```
+
+## Citations
+
+_Updated: March 2026_
+
+- [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013): 1,153 (h-index = 10)
+- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en): 3,845 (h-index = 18, i10-index = 20)
+- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley): 64 citations across 52 policy documents.
+
+```{r}
+#| echo: false
+#| output: asis
+# Single source of truth: the same cv/cv.yml that builds cv/cv.pdf. Sections
+# appear in CV order (Monographs first) with the CV's own titles.
+emit_publications()
+```

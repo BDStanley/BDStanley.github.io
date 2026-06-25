@@ -1,6 +1,6 @@
 ---
 name: add-teaching-course
-description: Onboard new (or fix incomplete) Teaching courses on benstanley.eu after they appear in the Teaching repo. Use when the user says they added/updated a class in the Teaching repo (BDStanley/Classes, the local ../../Teaching checkout), asks to "sync the teaching page" / "add the new course(s) to the website", or when a build prints "[teaching] needs attention" or the landing shows a course with the placeholder hexsticker or no description. Reads the Teaching repo READ-ONLY, drafts a Polish/English description, creates a hexsticker SVG, then rebuilds and verifies.
+description: Onboard new (or fix incomplete) Teaching courses on benstanley.eu after they appear in the Teaching repo. Use when the user says they added/updated a class in the Teaching repo (BDStanley/Classes, the local ../../Teaching checkout), asks to "sync the teaching page" / "add the new course(s) to the website", or when a build prints "[teaching] needs attention" or the landing shows a course with the placeholder hexsticker or no description. Reads the Teaching repo READ-ONLY, drafts a Polish/English description, creates a hexsticker SVG, then rebuilds and verifies the canonical Calepin site (calepin-site/ → docs/, the live website) and mirrors the change into the quarto-site/ backup to keep it current.
 ---
 
 # Add a Teaching course to benstanley.eu
@@ -9,10 +9,35 @@ The Teaching section is generated from the Teaching repo (a Quarto site, `BDStan
 checked out locally at `../../Teaching` relative to `calepin-site/`) by
 `calepin-site/scripts/sync-teaching.py`, which `calepin-site/build.sh` runs before the
 Calepin compile. **The Teaching repo is the source of truth and must never be modified by
-this site.** Everything below happens inside `calepin-site/`.
+this site.** The primary work happens inside `calepin-site/` — the **canonical** build that
+produces the live website — and a final step mirrors the two changed artifacts into the
+`quarto-site/` **backup** (see *Two site builds* below).
 
 A course's **slug** is the `.qmd` basename used in the Teaching repo's `index.qmd`
 (`### [Foo Bar](foo-bar.qmd)` → slug `foo-bar`). It is the key for every per-course value.
+
+## Two site builds: Calepin is canonical, Quarto is a backup
+
+The site has **two parallel builds** from the same content:
+
+- **`calepin-site/` — canonical.** The live site at <https://benstanley.eu> is produced **only**
+  by `calepin-site/build.sh` → `../docs` (GitHub Pages). This is the version that ships; if there
+  is ever any doubt or divergence, **Calepin wins**.
+- **`quarto-site/` — backup.** A functional twin built with Quarto, kept solely as a fallback in
+  case the site is ever switched off Calepin. It does **not** deploy (it renders to
+  `quarto-site/_site`, never to `../docs`).
+
+**Rule: keep the Quarto backup current with Calepin.** Whenever this skill (or any site change)
+edits content, mirror it into `quarto-site/` so the backup stays a faithful, switch-ready copy.
+For a Teaching course that means the two artifacts this skill creates:
+
+- the **description** → keep `COURSE_DESCRIPTIONS` identical in **both**
+  `calepin-site/scripts/sync-teaching.py` **and** `quarto-site/scripts/sync-teaching.py`;
+- the **hexsticker** → copy the SVG to **both** `calepin-site/assets/teaching/<slug>.svg` **and**
+  `quarto-site/assets/teaching/<slug>.svg`.
+
+This canonical-Calepin / Quarto-backup relationship applies to the **whole site**, not just
+Teaching: only edit the Quarto version to mirror Calepin, never to lead it.
 
 ## What's automatic vs. what this skill supplies
 
@@ -42,7 +67,8 @@ per course, and this skill supplies them:
    and the first slide deck for `lang:`. Draft ONE concise sentence summarising the topics, in
    the course's language (Polish for `lang: pl`, English for `lang: en`), matching the tone of
    the existing `COURSE_DESCRIPTIONS` entries. Add it there keyed by slug. Tell the user it's a
-   draft to review.
+   draft to review. **Mirror the identical entry into `../quarto-site/scripts/sync-teaching.py`**
+   (same `COURSE_DESCRIPTIONS` key/value) so the backup stays current.
 
 3. **Hexsticker** (if flagged). Pick a fitting Lucide icon (https://lucide.dev) — propose 1–2
    options and avoid duplicating an in-use icon unless the user wants it (see list below).
@@ -51,7 +77,8 @@ per course, and this skill supplies them:
    Create `assets/teaching/<slug>.svg` from the template below, pasting the icon's inner
    elements (the `<path>`/`<circle>`/`<rect>` lines, without their own stroke/fill — they
    inherit) into the `<g>`. Keep the hexagon geometry and `#8b0000`/white colours identical to
-   `assets/teaching/_placeholder.svg`.
+   `assets/teaching/_placeholder.svg`. **Copy the finished SVG to
+   `../quarto-site/assets/teaching/<slug>.svg`** so the backup uses the same icon.
 
 4. **Rebuild & verify.** Run `./build.sh`; confirm the course is no longer in `needs attention`.
    Then serve and screenshot the landing:
@@ -59,6 +86,12 @@ per course, and this skill supplies them:
    `--screenshot` of `http://localhost:8920/pages/teaching.html` (use
    `--force-device-scale-factor=2` for a crisp shot); kill the server after. Check the new row:
    icon, name, description, badge(s). Do not commit unless asked.
+
+5. **Keep the Quarto backup current.** With the description + SVG already mirrored (steps 2–3),
+   run `../quarto-site/build.sh` to regenerate the backup's Teaching pages from the mirrored
+   content. It renders to `quarto-site/_site` and never deploys, so it can't affect the live site;
+   it just keeps the backup a faithful, switch-ready copy. A quick check that the new course
+   appears is enough — the canonical screenshot/verification in step 4 is the one that matters.
 
 ## Hexsticker template
 
@@ -99,6 +132,8 @@ reuse it verbatim.
   `footer:` `(CODE)` / the `COURSE_CODES` fallback / author `affiliation:`) but keeps them
   dormant, so you never need to ask the user for a code when onboarding a new course.
 - The generated `pages/teaching.typ` + `pages/teaching/*.typ` and the `assets/teaching/*.svg`
-  are committed as part of the normal flow; they are not hand-edited.
+  are committed as part of the normal flow; they are not hand-edited. The Quarto backup's
+  equivalents (`quarto-site/pages/teaching.qmd` + `quarto-site/pages/teaching/*.qmd`, and the
+  mirrored `quarto-site/assets/teaching/*.svg`) are committed the same way.
 - Overrides for source/host exist if ever needed: env vars `TEACHING_SRC` (default
   `../../Teaching`) and `TEACHING_NETLIFY_BASE` (default `https://bdstanley.netlify.app`).

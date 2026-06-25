@@ -1,0 +1,45 @@
+---
+title: ""
+---
+
+```{r}
+#| echo: false
+#| output: asis
+# Read straight from cv/cv.yml — the same source as the CV PDF. Sections follow
+# the CV: Current research projects, then Previous research projects.
+#
+# Locate the project root INDEPENDENTLY of the working directory (Positron/Quarto
+# may render from the page folder, the project root, or the workspace root above
+# the project). Prefer QUARTO_PROJECT_DIR, then the .qmd's own location, then cwd.
+.find_root <- function() {
+  walk_up <- function(start) {
+    d <- normalizePath(start, winslash = "/", mustWork = FALSE)
+    for (i in 1:12) {
+      if (file.exists(file.path(d, "_quarto.yml"))) {
+        return(d)
+      }
+      p <- dirname(d)
+      if (p == d) {
+        break
+      }
+      d <- p
+    }
+    NULL
+  }
+  pd <- Sys.getenv("QUARTO_PROJECT_DIR", "")
+  if (nzchar(pd) && file.exists(file.path(pd, "_quarto.yml"))) {
+    return(pd)
+  }
+  ci <- tryCatch(knitr::current_input(dir = TRUE), error = function(e) "")
+  if (nzchar(ci)) {
+    r <- walk_up(dirname(normalizePath(ci, winslash = "/", mustWork = FALSE)))
+    if (!is.null(r)) return(r)
+  }
+  r <- walk_up(getwd())
+  if (!is.null(r)) r else getwd()
+}
+.root <- .find_root()
+options(cvsite_root = .root)
+source(file.path(.root, "R", "cv-helpers.R"))
+emit_projects()
+```

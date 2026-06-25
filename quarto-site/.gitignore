@@ -1,0 +1,16 @@
+# Quarto build output (local backup build — never deployed)
+/_site/
+/.quarto/
+
+# CV PDF is a build artefact (regenerated from cv/cv.yml by build.sh)
+/cv/cv.pdf
+
+# R / Quarto cruft
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+**/*_files/
+**/*.quarto_ipynb
+
+.DS_Store

@@ -1,0 +1,112 @@
+# =============================================================================
+# Quarto BACKUP of benstanley.eu — a parallel rebuild of the Calepin site
+# (../calepin-site) using Quarto instead of Typst/Calepin.
+#
+# This project is fully self-contained and DOES NOT deploy. The live site is
+# produced by ../calepin-site/build.sh -> ../docs (GitHub Pages). This Quarto
+# version renders into ./_site only, so it never touches ../docs. It exists so
+# the site can be switched back to a Quarto toolchain in future with the same
+# functionality. See README.md.
+#
+# Single source of truth: cv/cv.yml builds the CV PDF *and* feeds the
+# Publications and Research projects pages (read with the R `yaml` package),
+# exactly as the Calepin site does.
+# =============================================================================
+
+project:
+  type: website
+  output-dir: _site          # local build only — NOT ../docs (the live site)
+  execute-dir: project       # run R chunks from the project root, so cv/cv.yml resolves
+  render:
+    - index.qmd
+    - 404.qmd
+    - pages/publications.qmd
+    - pages/research-projects.qmd
+    - pages/teaching.qmd
+    - pages/teaching/*.qmd
+    - pages/media.qmd
+    - pages/pooling-the-poles.qmd
+    - pages/good-change.qmd
+
+website:
+  title: "Ben Stanley"
+  description: "Associate Professor at the Centre for the Study of Democracy, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
+  page-navigation: false
+
+  page-footer:
+    left: |
+      <span class="faux-block">{{< fa brands creative-commons >}} 2026 Ben Stanley · All content licensed under [{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)</span>
+    right: |
+      <span class="faux-block">Made with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span>
+
+  navbar:
+    # The "Ben Stanley" title (top-left) links to the home page, so — like the
+    # Calepin site — there is no separate "Home" entry.
+    left:
+      - href: pages/publications.qmd
+        text: Publications
+      - href: pages/research-projects.qmd
+        text: Research projects
+      - href: pages/teaching.qmd
+        text: Teaching
+      - href: pages/media.qmd
+        text: Media
+      - href: pages/pooling-the-poles.qmd
+        text: Pooling the Poles
+      - href: pages/good-change.qmd
+        text: Good Change
+
+    right:
+      - href: cv/cv.pdf
+        text: CV
+
+      - text: "{{< fa brands linkedin >}}"
+        href: https://www.linkedin.com/in/ben-stanley-0452803b8
+
+      - text: "{{< fa brands whatsapp >}}"
+        href: "tel:+48798814801"
+
+      - text: "{{< iconify bi envelope size=1.1em title='E-mail' >}}"
+        href: mailto:bstanley@swps.edu.pl
+
+      - text: "{{< iconify fa6-brands bluesky size=1.1em title='Bluesky' >}}"
+        href: https://bsky.app/profile/benstanley.eu
+
+      - text: "{{< ai orcid >}}"
+        href: https://orcid.org/0000-0001-6932-1046
+
+      - text: "{{< ai google-scholar >}}"
+        href: https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en
+
+      - text: "{{< ai clarivate >}}"
+        href: https://www.webofscience.com/wos/author/record/J-7051-2013
+
+      - text: "{{< iconify bi github size=1.1em title='GitHub' >}}"
+        href: https://github.com/BDStanley
+
+      - text: "{{< ai dataverse >}}"
+        href: https://dataverse.harvard.edu/dataverse/bdstanley
+
+      - text: "{{< ai zotero >}}"
+        href: https://www.zotero.org/benstanleypl/library
+
+# The CV PDF (built from cv/cv.yml by build.sh) is linked from the navbar; make
+# sure Quarto copies it into the output even though no .qmd references it.
+resources:
+  - cv/cv.pdf
+
+# Never let R chunk warnings/messages leak onto the rendered pages (the
+# CV-driven and Media pages run R). Code is hidden site-wide; output stays.
+execute:
+  warning: false
+  message: false
+  echo: false
+
+format:
+  html:
+    theme:
+      - assets/styles/website_style.scss
+    css: assets/styles/styles.css
+    toc: false
+    grid:
+      body-width: 900px

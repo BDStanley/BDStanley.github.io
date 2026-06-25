@@ -1,0 +1,20 @@
+---
+title: "Pooling the Poles"
+pagetitle: "Pooling the Poles"
+page-layout: full
+description-meta: "Interactive Polish polling tracker"
+open-graph:
+  title: "Pooling the Poles"
+  description: "Interactive Polish polling tracker"
+twitter-card:
+  title: "Pooling the Poles"
+  description: "Interactive Polish polling tracker"
+  card-style: summary_large_image
+---
+
+<!-- The Shiny app embedded in a centred, capped-width frame (.embed-frame in
+     styles.css), matching the Calepin site's pages/pooling-the-poles.typ. -->
+<iframe src="https://ben-stanley.shinyapps.io/polish-polls/"
+        class="embed-frame"
+        title="Pooling the Poles — interactive Polish polling tracker"
+        loading="lazy"></iframe>

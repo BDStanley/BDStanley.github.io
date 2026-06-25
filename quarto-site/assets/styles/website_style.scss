@@ -1,0 +1,129 @@
+/*-- scss:defaults --*/
+
+// =============================================================================
+// Brand theme for the Quarto backup of benstanley.eu. Mirrors the Calepin
+// site's look: Jost everywhere, dark-red (#8B0000) navbar + footer, red links
+// with a pink primary accent and muted-grey hover.
+// =============================================================================
+
+// ---- Colours ----------------------------------------------------------------
+$white:    #ffffff !default;
+$gray-200: #e9ecef !default;
+$gray-700: #495057 !default;
+$gray-900: #212529 !default;
+
+$pink: #A52C60 !default;   // primary accent
+$red:  #8B0000 !default;   // navbar / footer / links
+
+$primary:   $pink !default;
+$secondary: $gray-700 !default;
+
+// ---- Typography: Jost across the whole site ---------------------------------
+$font-family-sans-serif: "Jost" !default;   // body text
+$headings-font-family:   "Jost" !default;
+$headings-font-weight:   600 !default;
+$navbar-font-family:     "Jost" !default;
+$toc-font-family:        "Jost" !default;
+$footer-font-family:     "Jost" !default;
+$code-font-family:       "Jost" !default;
+
+$body-color: $gray-900 !default;
+
+// ---- Links ------------------------------------------------------------------
+$link-color:           $red !default;
+$link-decoration:      none !default;
+$link-hover-color:     $gray-700 !default;
+$link-hover-decoration: underline !default;
+
+// ---- Code -------------------------------------------------------------------
+$code-bg:    $gray-200 !default;
+$code-color: $gray-900 !default;
+
+// ---- Navbar (solid dark-red, white text) ------------------------------------
+$navbar-bg: $red !default;
+$navbar-fg: $white !default;
+
+// ---- Footer (solid dark-red, white text) ------------------------------------
+$footer-bg: $red !default;
+$footer-fg: $white !default;
+$footer-hl: $white !default;
+
+
+/*-- scss:rules --*/
+
+// ---- Fonts: load Jost from Google Fonts -------------------------------------
+$web-font-path: "https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" !default;
+@if $web-font-path {
+  @import url($web-font-path);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+// ---- Navbar -----------------------------------------------------------------
+.navbar {
+  font-family: $navbar-font-family;
+}
+// Keep the social-icon links in a single row in the mobile hamburger menu.
+.navbar-nav.navbar-nav-scroll.ms-auto {
+  flex-direction: row;
+}
+
+// ---- Headings: bold, slate-grey, compact scale ------------------------------
+h1 { font-weight: 600 !important; font-size: 1.5rem !important; }
+h2 { font-weight: 600 !important; }
+h3 { font-weight: 600 !important; }
+
+// ---- Footer -----------------------------------------------------------------
+.nav-footer {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: 0 !important;
+  min-height: 3em;
+  font-family: $footer-font-family;
+
+  a { color: $white; }
+
+  .faux-block {
+    display: block;
+    padding-bottom: 0.4em;
+  }
+
+  .nav-footer-left,
+  .nav-footer-right,
+  .nav-footer-center {
+    text-align: center;
+    width: 100%;
+    min-height: 2em;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    .nav-footer-left  { text-align: left; }
+    .nav-footer-right { text-align: right; }
+    .nav-footer-left,
+    .nav-footer-right,
+    .nav-footer-center { flex: 1 1 33%; }
+  }
+}
+
+// ---- Two-column layout ("Good Change"): divider between columns -------------
+.columns {
+  .column {
+    &:first-child {
+      border-right: 1px solid #ccc;
+      padding-right: 1rem;
+    }
+    &:last-child {
+      padding-left: 1rem;
+    }
+  }
+}
+
+// ---- Home (about/trestles): smaller portrait on portrait viewports ----------
+@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+  .about-image { width: 60% !important; max-width: 60% !important; }
+}
+@media (orientation: portrait) and (max-width: 767px) {
+  .about-image { width: 60% !important; max-width: 60% !important; }
+}
