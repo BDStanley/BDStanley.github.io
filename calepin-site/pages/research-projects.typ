@@ -16,7 +16,7 @@
 // One entry, formatted exactly like the CV's `timeline` layout: the date sits in
 // a right-aligned left column, separated from the content by a vertical dividing
 // line, with bold title / italic funder / smaller details stacked on the right.
-// Classes are styled in assets/site.css (HTML-only build, so html.elem is safe).
+// Classes are styled in themes/site-theme/css/90_site.css (HTML-only build, so html.elem is safe).
 #let render-projects(entries) = {
   for e in entries {
     html.elem("div", attrs: (class: "proj"))[

@@ -22,7 +22,6 @@ calepin-site/
 ├── index.typ             # home page (portrait + bio, trestles-style)
 ├── 404.typ               # not-found page
 ├── assets/
-│   ├── site.css          # brand overlay: dark-red navbar + footer, Minion 3, links
 │   ├── profile.jpg       # copied from ../assets/images/profile.jpg
 │   └── good-change.png   # copied from ../assets/images/good-change.png
 ├── cv/                   # copied from ../CV/ — the single source of truth (see below)
@@ -37,7 +36,10 @@ calepin-site/
 │   ├── pooling-the-poles.typ # embeds the live Shiny polling app
 │   └── good-change.typ       # two-column book page
 ├── themes/
-│   └── site-theme/       # local copy of the built-in `academic` theme + a footer partial
+│   └── site-theme/       # thin overlay theme: `extends` the built-in `academic`
+│       ├── theme.toml    #   theme, adds the brand CSS, overrides a few partials
+│       ├── css/90_site.css       # brand overlay (loads last; overrides --calepin-* tokens)
+│       └── partials/             # site-head (Jost), theme-init (light pin), footer, nav, prev/next
 └── README.md
 ```
 
@@ -51,7 +53,7 @@ The original Quarto site maps to this almost one-to-one:
 | `pages/media.qmd` + `includes/kultura-liberalna-articles.qmd` | `pages/media.typ` |
 | `pages/pooling-the-poles.qmd`        | `pages/pooling-the-poles.typ`   |
 | `pages/good-change.qmd`              | `pages/good-change.typ`         |
-| `_quarto.yml` navbar/footer/theme    | `calepin.toml` + `assets/site.css` |
+| `_quarto.yml` navbar/footer/theme    | `calepin.toml` + `themes/site-theme/` (overlay) |
 | `CV/` (Typst CV)                     | `cv/` (copied; now also feeds the site) |
 
 ## The CV is the single source of truth
@@ -139,12 +141,24 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
 
 ## Notes, deliberate differences, and things to check
 
-- **Theme.** Uses Calepin's built-in **`academic`** theme (top nav bar + centred
-  reading column), which is the closest match to the original horizontal Quarto
-  navbar. `assets/site.css` layers the brand on top by overriding the public
-  `--calepin-*` tokens: Jost (Google Fonts) throughout, dark-red (`#8B0000`)
-  navbar and footer, red links with pink accents. The theme's previous/next
-  page-nav was removed from `layouts/webpage.html`.
+- **Theme.** A thin **overlay theme** in `themes/site-theme/` that `extends`
+  Calepin's built-in **`academic`** theme (top nav bar + centred reading column),
+  the closest match to the original horizontal Quarto navbar. `extends` makes
+  Calepin load the academic theme first, then layer this theme on top: its CSS
+  **appends** (so `css/90_site.css` loads last and wins the cascade) and its
+  partials **override** the academic ones by filename. `90_site.css` carries the
+  brand by overriding the public `--calepin-*` tokens: Jost (Google Fonts)
+  throughout, dark-red (`#8B0000`) navbar and footer, red links with pink accents.
+  An empty `partials/site-nav-prev-next.html` override suppresses the academic
+  theme's sequential previous/next page-nav (the original site has none).
+
+  > **Calepin 0.0.24 note.** This overlay replaced an older *full theme eject*
+  > after Calepin 0.0.24 changed its config schema (it dropped the top-level
+  > `styles` key — *"customize CSS through a local theme with `extends`"* — renamed
+  > the theme `[shared] styles`/`scripts` keys to `css`/`js`, requires `extends`
+  > in every local theme, and moved the footer from `[[menus.footer]]` to
+  > `[footer]`/`[[footer.item]]`). Keeping the theme thin means it now inherits
+  > upstream `academic` fixes instead of going stale on the next upgrade.
 
 - **Publications & research projects come from the CV** (`cv/cv.yml`), read with
   Typst's `yaml()` — see “The CV is the single source of truth” above. No R is
@@ -167,28 +181,28 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
   in `calepin.toml` — e.g. `{icon:simple-icons:orcid}` instead of
   `{icon:academicons:orcid}`. Browse names at <https://icon-sets.iconify.design/>.
 
-- **Footer.** The built-in `academic` theme has no footer region, so the site
-  uses a **local copy of that theme** in `themes/site-theme/` (ejected with
-  `calepin new theme … --theme academic`) with one addition: a
-  `partials/site-footer.html` partial wired into `layouts/webpage.html` and
-  `layouts/landing.html`. The footer renders the `[menus.footer]` entries from
-  `calepin.toml` (licence line + “Made with Typst and Calepin”), styled dark-red
-  via `assets/site.css`. It is a **sticky footer**: `body` is a flex column with
-  `min-height: 100vh` and the content region (`.academic-page`/`.academic-landing`)
-  grows, so on short pages (e.g. the home page) the footer sits at the bottom of
-  the viewport rather than partway up. To restyle or re-word it, edit those files.
+- **Footer.** Calepin 0.0.24's `academic` theme renders a footer natively, but the
+  overlay theme overrides `partials/site-footer.html` with simpler markup
+  (`.calepin-site-footer-item` spans) that `css/90_site.css` styles dark-red. The
+  footer renders the `[footer]` / `[[footer.item]]` entries from `calepin.toml`
+  (licence line + “Made with Typst and Calepin”). It is a **sticky footer**: `body`
+  is a flex column with `min-height: 100vh` and the content region
+  (`.academic-page`/`.academic-landing`) grows, so on short pages (e.g. the home
+  page) the footer sits at the bottom of the viewport rather than partway up. To
+  restyle or re-word it, edit `site-footer.html`, `css/90_site.css`, or the
+  `[[footer.item]]` entries.
 
 - **Typeface — Jost everywhere.** The whole site is set in **Jost**, loaded from
   Google Fonts via a `<link>` in `themes/site-theme/partials/site-head.html`
-  (an `@import` in `site.css` would be ignored — Calepin bundles all CSS into one
+  (an `@import` in `90_site.css` would be ignored — Calepin bundles all CSS into one
   file, so a mid-bundle `@import` is invalid). The `--calepin-font-body` and
-  `--calepin-font-heading` tokens in `assets/site.css` both point at Jost. Body
+  `--calepin-font-heading` tokens in `css/90_site.css` both point at Jost. Body
   reading text is `0.92rem`; section headings are `h1 1.25rem / h2 1.08rem /
-  h3 0.98rem` (tweak in `assets/site.css`). The CV PDF is also Jost (set in
+  h3 0.98rem` (tweak in `css/90_site.css`). The CV PDF is also Jost (set in
   `cv/cv.yml`), so print and web match.
 
 - **Navbar width.** The `academic` theme caps the top bar at the narrow reading
-  column, which crowded the many links/icons. `assets/site.css` widens the bar to
+  column, which crowded the many links/icons. `css/90_site.css` widens the bar to
   the viewport on desktop (`@media (min-width: 48.01rem)`) and keeps each label on
   one line; the ≤48rem mobile dropdown is deliberately left untouched.
 

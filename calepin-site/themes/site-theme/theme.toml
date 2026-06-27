@@ -1,4 +1,18 @@
+# Thin local overlay on Calepin's built-in `academic` theme.
+#
+# `extends` makes Calepin load the academic theme first, then layer the files in
+# this directory on top:
+#   * css APPENDS — css/90_site.css loads AFTER the academic CSS (the 90_ prefix
+#     keeps it last), so it only has to override the public --calepin-* tokens
+#     plus a few navbar/footer rules to reproduce the benstanley.eu look.
+#   * partials OVERRIDE the academic ones by filename (the five listed below).
+#
+# This replaced an older full theme eject. Keeping it thin means the site keeps
+# inheriting upstream `academic` fixes instead of going stale. (Calepin 0.0.24
+# dropped the old top-level `styles` key and the `[shared] styles`/`scripts`
+# fields; custom CSS now lives in a local theme exactly like this. See README.md.)
+extends = "academic"
+
 [shared]
-partials = ["site-meta.html", "theme-init.html", "styles.html", "scripts.html", "pagefind-modal.html"]
-styles = ["theme.css", "code.css", "widgets.css"]
-scripts = ["language-picker.js", "copy-code.js", "search.js"]
+css = ["90_site.css"]
+partials = ["site-head.html", "theme-init-script.html", "site-footer.html", "site-nav.html", "site-nav-prev-next.html"]

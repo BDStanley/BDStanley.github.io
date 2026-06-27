@@ -1,14 +1,6 @@
     <header class="academic-topbar calepin-site-topbar">
         <nav class="academic-nav calepin-site-nav" aria-label="Site">
-            <a class="academic-brand calepin-site-brand contrast" href="{% if site.home_url %}{{ site.home_url }}{% else %}index.html{% endif %}">
-                {% if site.logo %}
-                <img src="{{ site.logo }}" alt="{% if site.logo_alt %}{{ site.logo_alt }}{% elif site.title %}{{ site.title }}{% endif %}" class="academic-logo calepin-site-logo">
-                {% elif site.title %}
-                <span>{{ site.title }}</span>
-                {% else %}
-                <span>Home</span>
-                {% endif %}
-            </a>
+            {% include "partials/site-brand.html" %}
             <button class="academic-nav-toggle calepin-nav-toggle" type="button" aria-controls="academic-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -16,23 +8,21 @@
             </button>
             <div id="academic-menu" class="academic-menu calepin-site-menu">
                 {% for item in site.menus.main %}
-                {% include "partials/navbar-item.html" %}
+                {% include "partials/site-nav-item.html" %}
                 {% endfor %}
+                {# Full-width spacer before the CV/social cluster; site.css shows it
+                   only in the narrow-landscape range to drop the cluster to its own row. #}
                 <span class="academic-menu-break-social" aria-hidden="true"></span>
                 {% for item in site.menus.social %}
-                {% include "partials/navbar-item.html" %}
+                {% include "partials/site-nav-item.html" %}
+                {# Full-width spacer right after CV; site.css shows it in portrait to
+                   wrap the social icons onto a centred second line. #}
                 {% if item.label == 'CV' %}<span class="academic-menu-break" aria-hidden="true"></span>{% endif %}
                 {% endfor %}
                 {% if site.pagefind %}
                 <pagefind-modal-trigger></pagefind-modal-trigger>
                 {% endif %}
-                {% if site.languages and site.languages | length > 1 %}
-                <select class="academic-language-picker" aria-label="Language" data-calepin-language-picker>
-                    {% for language in site.languages %}
-                    <option value="{{ language.href }}" data-calepin-language-code="{{ language.code }}"{% if language.active %} selected{% endif %}>{{ language.label }}</option>
-                    {% endfor %}
-                </select>
-                {% endif %}
+                {% include "partials/site-language-picker.html" %}
             </div>
         </nav>
     </header>

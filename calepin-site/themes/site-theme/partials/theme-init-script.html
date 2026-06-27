@@ -1,0 +1,9 @@
+    <meta name="color-scheme" content="light">
+    <!-- Light mode only. Pin data-theme=light before first paint so Pico (loaded
+         from the CDN, which otherwise auto-switches via prefers-color-scheme) and
+         the academic theme's dark rules (keyed on html[data-theme="dark"] and
+         html:not([data-theme])) always resolve to the light palette. No system or
+         storage detection and no theme toggle in the navbar = no auto/dark. This
+         overrides the stock academic theme-init script, so theme-init.js is never
+         invoked. -->
+    <script>document.documentElement.dataset.theme = "light";</script>

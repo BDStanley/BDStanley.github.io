@@ -7,7 +7,7 @@
 // No on-page title (#title omitted) so the page shows only the Shiny app.
 // The navbar label still comes from <website-metadata> / calepin.toml, and the
 // browser-tab title from #set document(...). Built HTML-only (pdf = false), so
-// the raw <iframe> renders directly; .embed-frame sizing lives in assets/site.css.
+// the raw <iframe> renders directly; .embed-frame sizing lives in themes/site-theme/css/90_site.css.
 #html.elem("iframe", attrs: (
   src: "https://ben-stanley.shinyapps.io/polish-polls/",
   class: "embed-frame",

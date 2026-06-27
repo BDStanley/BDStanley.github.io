@@ -1,7 +1,7 @@
 #set document(title: [Ben Stanley])
 
 // Home page: portrait beside the bio, bio top-aligned with the photo. The
-// .hero* classes are defined in assets/site.css. Built HTML-only (pdf = false),
+// .hero* classes are defined in themes/site-theme/css/90_site.css. Built HTML-only (pdf = false),
 // so html.elem is safe here.
 
 #html.elem("section", attrs: (class: "hero"))[

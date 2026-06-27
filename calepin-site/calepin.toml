@@ -11,13 +11,13 @@ title       = "Ben Stanley"
 description  = "Associate Professor at the Centre for the Study of Democracy, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
 base_url     = "https://benstanley.eu"
 
-# Local copy of the built-in `academic` theme (a reading-first theme with a top
-# navigation bar, closest in spirit to the original Quarto navbar). It was
-# ejected with `calepin new theme ... --theme academic` and then extended with a
-# footer partial (themes/site-theme/partials/site-footer.html) wired into the
-# webpage/landing layouts. Brand colours/fonts are layered on via assets/site.css.
+# Thin local overlay theme: it `extends` Calepin's built-in `academic` theme and
+# layers the brand on top. Brand colours/fonts live in the theme's own CSS bundle
+# (themes/site-theme/css/90_site.css, loaded last so it overrides the base theme),
+# and four partials are overridden (footer markup, Jost <link>, light-mode pin,
+# navbar spacers). See themes/site-theme/theme.toml and README.md. (Calepin 0.0.24
+# dropped the top-level `styles` key — custom CSS must now live in a local theme.)
 theme  = "themes/site-theme"
-styles = ["assets/site.css"]
 
 # The original site ships HTML only (no per-page PDF twins). Keep it that way so
 # the iframe-based pages and external embeds build cleanly.
@@ -128,16 +128,17 @@ label  = "{icon:academicons:zotero}"
 weight = 110
 
 # -----------------------------------------------------------------------------
-# Footer. NOTE: the built-in `academic` theme does not render a footer region,
-# so these entries are currently inert — kept here so the licence/credit line
-# appears automatically if you switch to a theme that supports a `footer` menu
-# (e.g. a local/ejected theme). See README.md.
+# Footer. Calepin 0.0.24 configures this as a `[footer]` table with `[[footer.item]]`
+# entries (templates still read them as `site.menus.footer`). The overlay theme's
+# themes/site-theme/partials/site-footer.html renders the licence/credit line.
 # -----------------------------------------------------------------------------
-[[menus.footer]]
+[footer]
+
+[[footer.item]]
 target = "https://creativecommons.org/licenses/by/4.0/"
 label  = "© 2026 Ben Stanley · CC BY 4.0"
 
-[[menus.footer]]
+[[footer.item]]
 target = "https://github.com/vincentarelbundock/calepin"
 label  = "Made with Typst and Calepin"
 
