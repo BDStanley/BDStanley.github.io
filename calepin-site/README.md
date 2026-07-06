@@ -86,8 +86,13 @@ publication-type sections there (it picks up keys
 
 ## Prerequisites
 
-1. **Typst ≥ 0.15** — already installed on this machine
-   (`typst` at `/opt/homebrew/bin/typst`).
+1. **Typst ≥ 0.15** — installed via Homebrew (`brew install typst`, currently
+   0.15.0 at `/opt/homebrew/bin/typst`). Calepin shells out to this standalone
+   `typst` to scan/compile pages **and** it builds the CV PDF, so the build fails
+   fast without it (`Calepin requires Typst 0.15.0 or newer` / `typst: command
+   not found`). Quarto bundles its own older `typst` (0.14.2) that Calepin
+   rejects — don't rely on it. If the build can't find `typst`, run
+   `brew install typst`.
 2. **R** (`Rscript` on `PATH`) — needed only for the **Media** page, whose
    Kultura Liberalna list is scraped live at build time and needs the `rvest`
    and `httr` packages (`install.packages(c("rvest","httr"))`). If R is missing
@@ -159,6 +164,14 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
   > in every local theme, and moved the footer from `[[menus.footer]]` to
   > `[footer]`/`[[footer.item]]`). Keeping the theme thin means it now inherits
   > upstream `academic` fixes instead of going stale on the next upgrade.
+  >
+  > **Verified through Calepin 0.0.31 (2026-07).** The 0.0.24 → 0.0.31 upgrade
+  > needed **no** config or theme changes — the thin overlay paid off. The only
+  > difference in the built HTML is additive CSS the site doesn't use (the new
+  > `callout` element and the `academic` theme's optional table-of-contents);
+  > headings stay Jost because `90_site.css` still wins the cascade. Upgrade the
+  > `calepin` binary (`~/.cargo/bin/calepin`) by downloading the release tarball
+  > for your platform, verifying its `.sha256`, and replacing the binary.
 
 - **Publications & research projects come from the CV** (`cv/cv.yml`), read with
   Typst's `yaml()` — see “The CV is the single source of truth” above. No R is
