@@ -239,6 +239,10 @@ body {
 /* ---- Footer (added to the local theme via partials/site-footer.html) ----- */
 .calepin-site-footer {
   flex-shrink: 0;
+  /* The base theme constrains the footer to the page width and adds a top
+     border; undo both so the bar bleeds edge-to-edge like the top nav. */
+  width: 100%;
+  border-top: 0;
   background: #8b0000;
   color: #ffffff;
   margin-top: 3rem;
