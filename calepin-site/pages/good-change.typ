@@ -56,31 +56,22 @@
   [
     #image("/assets/good-change.png")
 
-    *Advance praise*
+    *Reviews*
 
-    “A comprehensive political history of post-1989 Poland that shows in detail
-    how the populist Law and Justice party reshaped the Polish political system
-    with a combination of generous social policies and conservative culture wars.
-    Polish—and European—politics will never be the same.”
+    “This nuanced and data-driven analysis shows how support for the right was
+    undermined by widespread opposition to conservative policies on abortion and
+    other issues, along with Law and Justice's failure to deliver low-inflation
+    growth, benefits for farmers, and smooth relations with the EU. … This is a
+    must-read for all who follow central European politics.”
 
-    —Mitchell A. Orenstein, _University of Pennsylvania_
+    —Andrew Moravcsik, _Foreign Affairs_
 
-    “While many dimensions of the prolonged Polish right-wing populist episode
-    (2015-2023) have been separately analyzed, there has not been a comprehensive
-    portrayal of its deep roots, complex mechanisms, and long-lasting
-    consequences. Stanley Bill and Ben Stanley provide such an account in this
-    superbly researched, carefully reasoned, and lucidly written volume. It
-    should not be missed by anybody interested in populism, Poland, or Central
-    Europe.”
+    “By refusing to write off the dominant Polish political force of the past
+    two decades as an aberration, Stanley Bill and Ben Stanley's _Good Change_
+    helps us to discern how illiberals in countries other than the US have
+    responded to genuine demands from within the liberal mould, changing
+    liberalism in the process.”
 
-    —Jan Kubik, _Rutgers University_
-
-    “With its insightful analysis of democratic erosion as a dynamic,
-    multidirectional process driven yet constrained by popular discontent, _Good
-    Change_ is a timely and thought-provoking contribution to the study of
-    contemporary democracy. An essential read for anyone seeking to understand
-    Poland's recent political evolution.”
-
-    —Lenka Bustikova, _University of Florida_
+    —Piotr H. Kosicki, _Times Literary Supplement_
   ],
 )
