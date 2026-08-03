@@ -7,85 +7,24 @@
 
 = Kultura Liberalna
 
-// LIVE: scrapes https://kulturaliberalna.pl/autor/ben-stanley at build time
-// (port of R/KL_article_scraper.R), newest first. Wrapped in tryCatch with a
-// cached fallback list, so the build never fails if the site is unreachable or
-// rvest/httr are missing.
-#calepin.chunk("r", echo: false, results: "typst")[
-```r
-# --- cached fallback (current snapshot), used if the live scrape yields too little ---
-fallback <- c(
-  r"(- #link("https://kulturaliberalna.pl/2026/05/19/cztery-oblicza-demokracji-jak-ja-widza-polacy-hiszpanie-i-brytyjczycy/")[Cztery oblicza demokracji. Jak ją widzą Polacy, Hiszpanie i Brytyjczycy] (19.05.2026))",
-  r"(- #link("https://kulturaliberalna.pl/2026/04/20/stanley-nie-ten-budapeszt-polska-prawica-bez-orbana/")[Nie ten Budapeszt. Polska prawica bez Orbána] (20.04.2026))",
-  r"(- #link("https://kulturaliberalna.pl/2026/03/24/my-i-oni-czy-rzad-mogl-przekonac-opozycje-do-kontroli-hejtu-w-internecie/")[My i oni – czy rząd mógł przekonać opozycję do kontroli hejtu w internecie?] (24.03.2026))",
-  r"(- #link("https://kulturaliberalna.pl/2026/02/03/czy-polacy-chca-polexitu/")[Czy Polacy chcą polexitu?] (03.02.2026))",
-  r"(- #link("https://kulturaliberalna.pl/2026/01/27/stanley-polska-polityka-podzial-na-prawice-i-lewice-przestaje-mowic-cokolwiek/")[Polska polityka – podział na prawicę i lewicę przestaje mówić cokolwiek] (27.01.2026))",
-  r"(- #link("https://kulturaliberalna.pl/2025/12/30/brytyjczycy-w-przeciwienstwie-do-polakow-ufali-panstwu-niepotrzebnie/")[Brytyjczycy w przeciwieństwie do Polaków ufali państwu. Niepotrzebnie] (30.12.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/12/01/konfederacja-polki-wola-glaskac-psy-niz-rodzic/")[Konfederacja twierdzi, że Polki wolą głaskać psy niż rodzić dzieci] (01.12.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/10/21/migrant-schrodingera-zyje-z-zasilkow-i-zabiera-prace/")[„Migrant Schrödingera” żyje z zasiłków i zabiera pracę] (21.10.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/08/11/stanley-czy-to-prawda-ze-polska-jest-podzielona/")[Czy to prawda, że Polska jest podzielona?] (11.08.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/07/21/stanley-raport-z-zycia-towarzyskiego-pis-wygrywa-tam-gdzie-nasi-znajomi-sa-tacy-sami/")[Raport z życia towarzyskiego: PiS wygrywa tam, gdzie nasi znajomi są tacy sami] (21.07.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/06/24/populizm-przestal-byc-marginesem/")[Populizm przestał być marginesem] (24.06.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/06/03/koalicja-rzadzaca-malzenstwo-z-rozsadku-na-zakrecie/")[Koalicja rządząca – małżeństwo z rozsądku na zakręcie] (03.06.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/05/26/prezydent-trzaskowski-to-koniec-wymowek-dla-rzadu/")[Prezydent Trzaskowski to koniec wymówek dla rządu] (26.05.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/05/16/najwazniejsze-slowa-po-pierwszej-turze-strategia-mobilizacja-transfery/")[Najważniejsze słowa po pierwszej turze: strategia, mobilizacja, transfery] (16.05.2025))",
-  r"(- #link("https://kulturaliberalna.pl/2025/03/11/jak-to-sie-stalo-ze-radykalna-prawica-stala-sie-tak-silna/")[Jak to się stało, że radykalna prawica stała się tak silna?] (11.03.2025))"
-)
-
-# escape the few Typst-special characters that could appear in a scraped title
-esc <- function(s) {
-  for (ch in c("\\", "#", "$", "*", "_", "[", "]", "@", "<", ">")) {
-    s <- gsub(ch, paste0("\\", ch), s, fixed = TRUE)
-  }
-  s
+// The full archive lives in data/kultura-liberalna.yml and is refreshed by
+// scripts/update-kl.py on every build (build.sh). It is NOT scraped from this
+// page, for two reasons:
+//   * Calepin caches chunk output against a fingerprint of the page source, so
+//     the R scraper this replaced only re-ran when media.typ itself changed --
+//     it had been serving a snapshot frozen on 21 June 2026.
+//   * The author page only exposes the 15 most recent pieces (it is a single
+//     `autor` post, not a paginated archive), so a pure scrape can never show
+//     more than 15. The YAML accumulates instead, and only ever grows.
+// To add a piece the scraper missed, or fix a title, edit the YAML by hand --
+// the script keys on url and never overwrites an existing entry.
+#let kl-date(iso) = {
+  let p = iso.split("-")
+  p.at(2) + "." + p.at(1) + "." + p.at(0)
 }
 
-scrape_kl <- function() {
-  if (!requireNamespace("rvest", quietly = TRUE) || !requireNamespace("httr", quietly = TRUE)) {
-    return(character(0))
-  }
-  base <- "https://kulturaliberalna.pl"
-  author <- paste0(base, "/autor/ben-stanley")
-  ua <- "Mozilla/5.0 (compatible; CalepinSiteBuild/1.0)"
-  seen <- character(0); rows <- list()
-  for (page_num in 1:6) {
-    url <- if (page_num == 1) author else paste0(author, "/page/", page_num, "/")
-    resp <- tryCatch(httr::GET(url, httr::add_headers(`User-Agent` = ua), httr::timeout(20)),
-                     error = function(e) NULL)
-    if (is.null(resp) || httr::status_code(resp) != 200) break
-    doc <- rvest::read_html(resp)
-    links <- rvest::html_elements(doc, "a")
-    found <- 0
-    for (a in links) {
-      href <- rvest::html_attr(a, "href")
-      title <- trimws(rvest::html_text2(a))
-      if (is.na(href) || is.na(title) || nchar(title) < 10) next
-      u <- if (startsWith(href, "http")) href else paste0(base, href)
-      # article URLs carry a YYYY/MM/DD path and aren't section/author pages
-      if (!grepl("kulturaliberalna\\.pl/\\d{4}/\\d{2}/\\d{2}/", u)) next
-      if (grepl("/autor/|/tag/|/kategoria/|#", u)) next
-      if (u %in% seen) next
-      seen <- c(seen, u)
-      d <- regmatches(u, regexpr("\\d{4}/\\d{2}/\\d{2}", u))
-      parts <- strsplit(d, "/")[[1]]
-      date_disp <- paste(parts[3], parts[2], parts[1], sep = ".")
-      rows[[length(rows) + 1]] <- list(title = title, url = u, sort = d, date = date_disp)
-      found <- found + 1
-    }
-    if (found == 0) break
-    Sys.sleep(0.2)
-  }
-  if (length(rows) == 0) return(character(0))
-  df <- do.call(rbind, lapply(rows, function(r) data.frame(r, stringsAsFactors = FALSE)))
-  df <- df[order(df$sort, decreasing = TRUE), ]
-  sprintf(r"(- #link("%s")[%s] (%s))", df$url, vapply(df$title, esc, ""), df$date)
-}
-
-items <- tryCatch(scrape_kl(), error = function(e) character(0))
-# use the live result only if it looks complete; otherwise fall back to the snapshot
-if (length(items) < 5) items <- fallback
-cat(paste(items, collapse = "\n"))
-```
+#for a in yaml("/data/kultura-liberalna.yml").articles [
+  - #link(a.url)[#a.title] (#kl-date(a.date))
 ]
 
 = Polityka.pl

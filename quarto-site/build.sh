@@ -24,8 +24,14 @@ typst compile cv/cv.typ cv/cv.pdf
 echo "→ Syncing Teaching pages from the Teaching repo ..."
 python3 "$SRC/scripts/sync-teaching.py"
 
-# 3) Render the site into ./_site (output-dir set in _quarto.yml). The live
-#    Kultura Liberalna scrape runs during this step (pages/media.qmd).
+# 3) Refresh the Kultura Liberalna article list in data/kultura-liberalna.yml
+#    (read by pages/media.qmd). The author page only exposes the 15 most recent
+#    pieces, so the script MERGES new ones into the file rather than replacing
+#    it. Network failures are non-fatal: the build uses the committed list.
+echo "→ Refreshing the Kultura Liberalna article list ..."
+python3 "$SRC/scripts/update-kl.py" || echo "  (skipped: update-kl.py failed; using the committed list)"
+
+# 4) Render the site into ./_site (output-dir set in _quarto.yml).
 echo "→ Rendering site with Quarto into ./_site ..."
 quarto render
 

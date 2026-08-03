@@ -52,6 +52,14 @@ typst compile cv/cv.typ cv/cv.pdf
 echo "→ Syncing Teaching pages from the Teaching repo ..."
 python3 "$SRC/scripts/sync-teaching.py"
 
+# Refresh the Kultura Liberalna article list in data/kultura-liberalna.yml (read
+# by pages/media.typ). The author page only exposes the 15 most recent pieces,
+# so the script MERGES new ones into the file rather than replacing it — the
+# archive keeps growing. Network failures are non-fatal: the build then just
+# uses the list already committed.
+echo "→ Refreshing the Kultura Liberalna article list ..."
+python3 "$SRC/scripts/update-kl.py" || echo "  (skipped: update-kl.py failed; using the committed list)"
+
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 
