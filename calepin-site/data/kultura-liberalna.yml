@@ -9,6 +9,12 @@
 # Hand-edits are fine (fixing a title, adding a piece the scraper missed);
 # entries are keyed by url and the script never overwrites an existing entry.
 articles:
+  - url: "https://kulturaliberalna.pl/2026/08/18/nie-autocenzura-a-wycofanie/"
+    title: "Nie autocenzura, a wycofanie. Kto milczy w debacie politycznej?"
+    date: "2026-08-18"
+  - url: "https://kulturaliberalna.pl/2026/08/10/stanley-weta-nawrockiego-demokratyczny-pat/"
+    title: "Weta Nawrockiego. Demokratyczny pat?"
+    date: "2026-08-10"
   - url: "https://kulturaliberalna.pl/2026/07/27/stanley-morawiecki-bedzie-lowil-w-elektoracie-pis-u/"
     title: "Morawiecki będzie łowił w elektoracie PiS-u"
     date: "2026-07-27"
