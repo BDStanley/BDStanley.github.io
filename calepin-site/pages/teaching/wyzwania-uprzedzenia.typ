@@ -22,11 +22,11 @@
 #heading(level: 2)[#"Ćwiczenia"]
 
 #list(
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-1-exercise", "Ćwiczenie: Stereotypy, uprzedzenia i dyskryminacja") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1", "Ćwiczenie 1: Model treści stereotypów — macierz ciepło × kompetencja") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2", "Ćwiczenie 2: Przetwarzanie automatyczne vs. kontrolowane") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise", "Ćwiczenie: Kształtowanie się uprzedzeń") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise", "Ćwiczenie: Uprzedzenia i wartości, typy osobowości, orientacje polityczne i stany emocjonalne") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise", "Ćwiczenie: Tożsamość społeczna, przynależność do grupy i utrwalanie form uprzedzeń") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-6-exercise", "Ćwiczenie: Dyskryminacja: zrozumienie społecznych konsekwencji uprzedzeń") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-1-exercise", "wyzwania uprzedzenia 1 exercise") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1", "wyzwania uprzedzenia 2 exercise 1") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2", "wyzwania uprzedzenia 2 exercise 2") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise", "wyzwania uprzedzenia 3 exercise") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise", "wyzwania uprzedzenia 4 exercise") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise", "wyzwania uprzedzenia 5 exercise") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-6-exercise", "wyzwania uprzedzenia 6 exercise") },
 )
