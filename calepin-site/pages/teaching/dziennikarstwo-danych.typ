@@ -18,3 +18,12 @@
   { link("https://bdstanley.netlify.app/dziennikarstwo-danych-5-slides", "Wizualizacja danych: zasady, narzędzia") },
   { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-slides", "Krytyka dziennikarstwa danych / Pułapki dziennikarstwa danych") },
 )
+
+#heading(level: 2)[#"Ćwiczenia"]
+
+#list(
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1", "Ćwiczenie 1: Identyfikacja tematów wymagających dziennikarstwa danych") + [#" · "] + link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1-answers", "answers") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-2", "Ćwiczenie 2: Wybór tematu projektu końcowego") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-3-exercise", "Ćwiczenie grupowe: workflow pozyskiwania danych") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-exercise", "Identyfikacja ryzyk projektu") },
+)

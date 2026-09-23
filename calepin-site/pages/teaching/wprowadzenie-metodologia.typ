@@ -24,3 +24,20 @@
   { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-11-slides", "Opis i prezentowanie wyników badań") },
   { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-12-slides", "Seminarium powtórzeniowe") },
 )
+
+#heading(level: 2)[#"Ćwiczenia"]
+
+#list(
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-2-exercise", "Ćwiczenie: Formułowanie pytania badawczego przy użyciu modelu PICO") + [#" · "] + link("https://bdstanley.netlify.app/wprowadzenie-metodologia-2-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-3-exercise", "Ćwiczenie: Dobór odpowiedniej metody badawczej") + [#" · "] + link("https://bdstanley.netlify.app/wprowadzenie-metodologia-3-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-4-exercise", "Ćwiczenie: Planowanie projektu badawczego") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-5-exercise", "Ćwiczenie: Analiza dylematów etycznych w badaniach społecznych") + [#" · "] + link("https://bdstanley.netlify.app/wprowadzenie-metodologia-5-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-6-exercise", "Ćwiczenie: Projektowanie doboru próby") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-7-exercise-1", "Ćwiczenie 1: Korekta kwestionariusza badawczego") + [#" · "] + link("https://bdstanley.netlify.app/wprowadzenie-metodologia-7-exercise-1-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-7-exercise-2", "Ćwiczenie 2: Projektowanie pytań kwestionariuszowych") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-7-exercise-2-notes", "Notatki do prezentacji: Projektowanie pytań kwestionariuszowych") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-8-exercise", "Badania jakościowe - projektowanie scenariusza wywiadu") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-10-exercise", "Analiza danych jakościowych - kodowanie i kategoryzacja") + [#" · "] + link("https://bdstanley.netlify.app/wprowadzenie-metodologia-10-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-11-exercise-1-part-1", "Wpływ korzystania z mediów społecznościowych na samoocenę nastolatków") },
+  { link("https://bdstanley.netlify.app/wprowadzenie-metodologia-11-exercise-1-part-2", "Ćwiczenie: Identyfikacja błędów formatowania") },
+)

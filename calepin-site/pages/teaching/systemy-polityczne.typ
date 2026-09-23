@@ -15,8 +15,9 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-slides", "Niedemokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-slides", "Konstytucja i system polityczny w Polsce. Wartość praworządności.") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-slides", "Państwo prawa. Instytucje, procedury, ochrona praw i wolności. Rola mediów.") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-slides", "Pięć kryzysów demokracji w XXI wieku") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-slides", "Państwo prawa. Instytucje, procedury, ochrona praw i wolności") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-6-slides", "Rola mediów w systemie politycznym") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-7-slides", "Pięć kryzysów demokracji w XXI wieku") },
 )
 
 #heading(level: 2)[#"Materiały"]
@@ -26,8 +27,9 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout", "Niedemokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-handout", "Konstytucja i system polityczny w Polsce. Wartość praworządności") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-handout", "Państwo prawa: instytucje, procedury, ochrona praw i rola mediów") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-handout", "Pięć kryzysów demokracji w XXI wieku") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-handout", "Państwo prawa: instytucje, procedury, ochrona praw i wolności") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-6-handout", "Rola mediów w systemie politycznym") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-7-handout", "Pięć kryzysów demokracji w XXI wieku") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
@@ -38,5 +40,6 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise", "Ćwiczenie: Projektowanie systemu w okresie transformacji") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise", "Ćwiczenie: Przeprojektowanie Konstytucji RP") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-answers", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise", "Ćwiczenie: Audyt praworządności i plan naprawczy") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise", "Ćwiczenie: Pakiet odporności demokratycznej") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise", "Ćwiczenie: Nowy nadawca publiczny") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise", "Ćwiczenie: Pakiet odporności demokratycznej") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise-answers", "answers") },
 )

@@ -12,10 +12,58 @@
 
 #enum(
   { link("https://bdstanley.netlify.app/social-research-methodology-1-slides", "The nature and purpose of social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-2-slides", "Research goals and research questions") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-3-slides", "Hypotheses and research design") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-4-slides", "Research ethics") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-5-slides", "Conducting a literature review") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-6-slides", "Secondary data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-7-slides", "Qualitative approaches to social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-8-slides", "Quantitative approaches and measurement") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-9-slides", "Mixed methods research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-10-slides", "Sampling and participant recruitment") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-11-slides", "Questionnaire design and survey fieldwork") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-12-slides", "Interviews and focus groups") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-13-slides", "Quantitative data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-14-slides", "Qualitative data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-15-slides", "Reporting research and course review") },
 )
 
 #heading(level: 2)[#"Handouts"]
 
 #list(
   { link("https://bdstanley.netlify.app/social-research-methodology-1-handout", "The nature and purpose of social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-2-handout", "Research goals and research questions") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-3-handout", "Hypotheses and research design") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-4-handout", "Research ethics") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-5-handout", "Conducting a literature review") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-6-handout", "Secondary data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-7-handout", "Qualitative approaches to social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-8-handout", "Quantitative approaches and measurement") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-9-handout", "Mixed methods research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-10-handout", "Sampling and participant recruitment") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-11-handout", "Questionnaire design and survey fieldwork") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-12-handout", "Interviews and focus groups") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-13-handout", "Quantitative data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-14-handout", "Qualitative data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-15-handout", "Reporting research and course review") },
+)
+
+#heading(level: 2)[#"Exercises"]
+
+#list(
+  { link("https://bdstanley.netlify.app/social-research-methodology-1-exercise", "Research or not?") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-2-exercise", "From problem to question") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-2-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-3-exercise", "From question to design") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-4-exercise", "Ethics verdicts") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-5-exercise", "Weighing the evidence") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-5-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-6-exercise", "Data scavenger hunt") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-7-exercise", "Reading between the lines") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-8-exercise", "The operationalisation ladder") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-8-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-9-exercise", "Design the study") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-10-exercise", "Who do we ask?") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-10-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-11-exercise", "Rescue this survey") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-11-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-12-exercise", "The interview studio") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-13-exercise", "First look at the data") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-13-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-14-exercise", "Coding the exit interview") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-15-exercise", "The revision circuit") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-15-exercise-answers", "answers") },
 )
