@@ -9,6 +9,9 @@
 # Hand-edits are fine (fixing a title, adding a piece the scraper missed);
 # entries are keyed by url and the script never overwrites an existing entry.
 articles:
+  - url: "https://kulturaliberalna.pl/2026/09/24/stanley-afera-zondacrypto-kto-na-niej-skorzysta/"
+    title: "Afera Zondacrypto. Kto na niej skorzysta?"
+    date: "2026-09-24"
   - url: "https://kulturaliberalna.pl/2026/08/18/nie-autocenzura-a-wycofanie/"
     title: "Nie autocenzura, a wycofanie. Kto milczy w debacie politycznej?"
     date: "2026-08-18"

@@ -147,7 +147,7 @@ sections:
     show: true
     entries:
 
-      - "Stanley, Ben. 2026. 'Democratic Hypocrisy in Practice: A Panel Study of Revealed Preferences for Liberal Democracy in Poland'. *East European Politics*. doi:10.1080/21599165.2026.2656881."
+      - "Stanley, Ben. 2026. 'Democratic Hypocrisy in Practice: A Panel Study of Revealed Preferences for Liberal Democracy in Poland'. *East European Politics* 42(3): 451–70. doi:10.1080/21599165.2026.2656881."
 
       - "Bill, Stanley, and Ben Stanley. 2025. 'Democracy After Illiberalism: A Warning from Poland'. *Journal of Democracy* 36(3): 16–32."
 
@@ -251,12 +251,12 @@ sections:
         end-date: 2029
         description: |
           Principal investigator, WP5 – Economic Dimensions of Enlargement. Funding: €113,850.
-      - institution: National Science Center, OPUS 20
-        title: Plemienność czy obojętność? Badanie rzeczywiście istniejących wartości demokratycznych i ich konsekwencji w Polsce
-        start-date: 2021
+      - institution: SWPS University FRBN grant
+        title: Pilotażowe wdrożenie losowego instrumentu odpowiedzi w polskim sondażu społeczno-politycznym
+        start-date: 2026
         end-date: 2026
         description: |
-          Principal investigator. "Partisan bias or a climate of indifference? An investigation of actually-existing democratic values and their consequences in Poland". Funding: 783,228 zł.
+          Principal investigator. "Pilot implementation of a randomized response instrument in a Polish socio-political survey". Funding: 25,830 zł.
 
   - key: projects_previous
     layout: timeline
@@ -266,6 +266,12 @@ sections:
     title: Previous research projects
     show: true
     entries:
+      - institution: National Science Center, OPUS 20
+        title: Plemienność czy obojętność? Badanie rzeczywiście istniejących wartości demokratycznych i ich konsekwencji w Polsce
+        start-date: 2021
+        end-date: 2026
+        description: |
+          Principal investigator. "Partisan bias or a climate of indifference? An investigation of actually-existing democratic values and their consequences in Poland". Funding: 783,228 zł.
       - institution: HORIZON-CL2-2021-DEMOCRACY-01
         title: AUTHLIB – Neo-Authoritarianisms in Europe and the Liberal Democratic Response
         start-date: 2023
@@ -354,6 +360,12 @@ sections:
     title: Conference papers and invited talks
     show: true
     entries:
+      - title: "Partisan, not positional: The structure and correlates of postliberal attitudes in Poland"
+        institution: EPOP Annual Conference, Liverpool
+        start-date: 2026
+      - title: "Challenges of re-democratisation and conflicting logics of polarisation: The case of Poland's 2025 presidential elections"
+        institution: ECPR General Conference, Kraków
+        start-date: 2026
       - title: "Postliberalism, post-illiberalism: attitudes in Poland after the Good Change"
         institution: 4th Taube Centre Annual Conference, Kraków
         start-date: 2026
@@ -612,7 +624,7 @@ sections:
         title: Systemy polityczne
         translation: Political Systems
         start-date: 2025
-        end-date: 2026
+        end-date: 2027
         description: undergraduate
       - institution: SWPS University
         title: Wprowadzenie do metodologii badań społecznych
@@ -641,7 +653,7 @@ sections:
       - institution: SWPS University
         title: Introduction to Social Research Methodology
         start-date: 2022
-        end-date: 2026
+        end-date: 2027
         description: undergraduate
       - institution: SWPS University
         title: The Psychology of Prejudice
@@ -673,11 +685,7 @@ sections:
       - institution: SWPS University
         title: English in Professional Use
         start-date: 2024
-        end-date: 2025
-        description: postgraduate
-      - institution: SWPS University
-        title: English for Professional Purposes
-        start-date: 2027
+        end-date: 2027
         description: postgraduate
       - institution: SWPS University
         title: Communication in Business
@@ -702,7 +710,7 @@ sections:
         title: Wyzwania życia publicznego - uprzedzenia
         translation: Challenges of Public Life - Prejudice
         start-date: 2022
-        end-date: 2026
+        end-date: 2027
         description: undergraduate
       - institution: SWPS University
         title: Wyzwania życia publicznego - polaryzacja
