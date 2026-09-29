@@ -36,10 +36,10 @@
 
 #list(
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise", "Ćwiczenie: Klasyfikacja i porównanie systemów politycznych") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise", "Ćwiczenie: Zaprojektuj własną demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise", "Ćwiczenie: Projektowanie systemu w okresie transformacji") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise", "Ćwiczenie: Nowolandia — trzy spory o demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise", "Ćwiczenie: Po upadku reżimu — diagnoza i zabezpieczenia") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise", "Ćwiczenie: Przeprojektowanie Konstytucji RP") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise", "Ćwiczenie: Audyt praworządności i plan naprawczy") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise", "Ćwiczenie: Naprawa praworządności w Solanii") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise-answers", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise", "Ćwiczenie: Nowy nadawca publiczny") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise-answers", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise", "Ćwiczenie: Pakiet odporności demokratycznej") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise-answers", "answers") },
 )
