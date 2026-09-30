@@ -69,7 +69,7 @@ Run `Rscript commit.R` from anywhere in the repo, or source it in Positron. It:
 1. runs `git pull --ff-only` (if that fails, it carries on);
 2. runs `calepin-site/build.sh`, rebuilding the CV PDF and the whole site into `docs/`;
 3. stages everything and, if anything has changed, has Claude (Sonnet) check this README against everything changed since the last successful check, and update it if needed. If Claude is unavailable, the check is skipped and catches up on a later run;
-4. commits with the message `Update <timestamp>` and pushes; the site is live a minute or two later. Commits whose README check succeeded end with a `README-reviewed: yes` line. If nothing has changed, it skips the commit;
+4. commits with the message `Update <timestamp>: <summary>`, where Claude Haiku writes the summary and a few bullets from the staged changes (if that fails, the message is just the timestamp), and pushes; the site is live a minute or two later. Commits whose README check succeeded end with a `README-reviewed: yes` line. If nothing has changed, it skips the commit;
 5. mirrors the folder to `iCloud Drive/Website/` with `rsync --delete`, excluding `.git`, `.quarto`, `.calepin` and `_site`.
 
 The iCloud copy is a one-way backup: edits made there are overwritten on the next run. `commit.R` does not build `quarto-site/`.

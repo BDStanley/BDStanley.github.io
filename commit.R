@@ -4,7 +4,9 @@
 #
 #   1. rebuild the CV PDF + the whole site into /docs   (calepin-site/build.sh)
 #   2. have Claude bring README.md up to date (skipped if Claude is unavailable)
-#   3. commit everything and push to GitHub  (-> GitHub Pages -> benstanley.eu)
+#   3. commit everything with a Claude-written message and push to GitHub
+#      (-> GitHub Pages -> benstanley.eu); the message is just the timestamp
+#      if Claude is unavailable
 #   4. mirror the project to the iCloud backup folder
 #
 # This replaces the old Quarto workflow. There is NO quarto::quarto_render() here
@@ -41,6 +43,42 @@ run <- function(cmd, fatal = TRUE) {
   invisible(status)
 }
 
+# --- Claude helpers (for the README check and the commit message) -----------
+claude <- Sys.which("claude")
+if (!nzchar(claude)) claude <- path.expand("~/.npm-global/bin/claude")
+# A nested `claude -p` refuses to start if this runs inside a Claude Code session
+Sys.unsetenv("CLAUDECODE")
+
+# Claude's reply as lines, or character() if Claude is unavailable or fails
+ask_claude <- function(prompt, input, model = "haiku", timeout = 120) {
+  out <- tryCatch(
+    suppressWarnings(system2(
+      claude,
+      c("-p", "--model", model, "--tools", '""', "--no-session-persistence", shQuote(prompt)),
+      input = input, stdout = TRUE, stderr = FALSE, timeout = timeout
+    )),
+    error = function(e) character()
+  )
+  if (!is.null(attr(out, "status"))) return(character())
+  out[cumsum(nzchar(trimws(out))) > 0]
+}
+
+# Staged changes relative to `base` (default HEAD). The built site in docs/ and
+# bulky assets appear in the stat only, not the patch
+staged_diff <- function(base = "") {
+  stat <- system(paste("git diff --cached --stat=160", base), intern = TRUE)
+  if (length(stat) > 300) stat <- c(head(stat, 300), "...", tail(stat, 1))
+  patch <- system(
+    paste(
+      "git diff --cached --no-color", base,
+      "-- . ':(exclude)docs/*' ':(exclude)*.pdf' ':(exclude)*.html' ':(exclude)*.js' ':(exclude)*.css' ':(exclude)*.json' ':(exclude)*.svg' ':(exclude)*.png' ':(exclude)*.jpg'"
+    ),
+    intern = TRUE
+  )
+  patch <- iconv(paste(patch, collapse = "\n"), "UTF-8", "UTF-8", sub = "")
+  c(stat, "", substr(patch, 1, 40000))
+}
+
 # --- 1. stay in sync (non-fatal: a no-op when there's nothing to pull) ------
 run("git pull --ff-only", fatal = FALSE)
 
@@ -56,28 +94,12 @@ run("git add -A")
 changed <- system("git diff --cached --quiet") != 0
 readme_reviewed <- FALSE
 if (changed && file.exists("README.md")) {
-  claude <- Sys.which("claude")
-  if (!nzchar(claude)) claude <- path.expand("~/.npm-global/bin/claude")
-  # A nested `claude -p` refuses to start if this runs inside a Claude Code session
-  Sys.unsetenv("CLAUDECODE")
-
   base <- suppressWarnings(system(
     "git log -1 --format=%H --grep='^README-reviewed: yes$' 2>/dev/null",
     intern = TRUE
   ))
   if (length(base) == 0) base <- suppressWarnings(system("git log -1 --diff-filter=A --format=%H -- README.md 2>/dev/null", intern = TRUE))
   if (length(base) == 0) base <- if (system("git rev-parse -q --verify HEAD", ignore.stdout = TRUE) == 0) "HEAD" else system("git hash-object -t tree /dev/null", intern = TRUE)
-  stat <- system(paste("git diff --cached --stat=160", base), intern = TRUE)
-  if (length(stat) > 300) stat <- c(head(stat, 300), "...", tail(stat, 1))
-  # The built site in docs/ and bulky assets appear in the stat only, not the patch
-  patch <- system(
-    paste(
-      "git diff --cached --no-color", base,
-      "-- . ':(exclude)docs/*' ':(exclude)*.pdf' ':(exclude)*.html' ':(exclude)*.js' ':(exclude)*.css' ':(exclude)*.json' ':(exclude)*.svg' ':(exclude)*.png' ':(exclude)*.jpg'"
-    ),
-    intern = TRUE
-  )
-  patch <- iconv(paste(patch, collapse = "\n"), "UTF-8", "UTF-8", sub = "")
 
   readme <- readLines("README.md", warn = FALSE)
   readme_prompt <- paste(
@@ -93,21 +115,15 @@ if (changed && file.exists("README.md")) {
     "If nothing needs changing, output only NO_CHANGE.",
     "Otherwise output only the complete updated README.md: no preamble, no code fences."
   )
-  ai <- tryCatch(
-    suppressWarnings(system2(
-      claude,
-      c("-p", "--model", "sonnet", "--tools", '""', "--no-session-persistence", shQuote(readme_prompt)),
-      input = c(
-        "=== README.md ===", readme, "",
-        "=== Files in the repository ===", system("git -c core.quotePath=false ls-files", intern = TRUE), "",
-        "=== Changes since the README was last checked ===", stat, "", substr(patch, 1, 40000)
-      ),
-      stdout = TRUE, stderr = FALSE, timeout = 300
-    )),
-    error = function(e) character()
+  ai <- ask_claude(
+    readme_prompt,
+    c(
+      "=== README.md ===", readme, "",
+      "=== Files in the repository ===", system("git -c core.quotePath=false ls-files", intern = TRUE), "",
+      "=== Changes since the README was last checked ===", staged_diff(base)
+    ),
+    model = "sonnet", timeout = 300
   )
-  if (!is.null(attr(ai, "status"))) ai <- character()
-  ai <- ai[cumsum(nzchar(trimws(ai))) > 0]
   if (length(ai) > 0 && startsWith(trimws(ai[1]), "NO_CHANGE")) {
     readme_reviewed <- TRUE
     cat("✓ README.md checked: no change needed\n")
@@ -125,10 +141,28 @@ if (changed && file.exists("README.md")) {
 # --- 4. commit & push, but only if something actually changed ---------------
 if (changed) {
   msg <- sprintf("Update %s", format(Sys.time(), "%Y-%m-%d %H:%M:%S"))
-  trailer <- if (readme_reviewed) sprintf(" -m %s", shQuote("README-reviewed: yes")) else ""
-  run(sprintf("git commit -m %s%s", shQuote(msg), trailer))
+  msg_prompt <- paste(
+    "Write a git commit message for the staged changes below, in Ben Stanley's website repo",
+    "(the source of benstanley.eu: a Calepin site in calepin-site/, built into docs/, with a",
+    "Quarto backup of the same site in quarto-site/).",
+    "Line 1: a summary of at most 60 characters, no trailing full stop.",
+    "Then a blank line, then up to 6 short '- ' bullets, grouped by part of the site",
+    "(e.g. CV, Teaching, Media, theme, build scripts),",
+    "saying what changed in substance (e.g. 'added 2026 article to the CV', 'new course page for POL101'),",
+    "not just which files were touched.",
+    "Do not mention the rebuilt docs/ folder unless nothing else changed.",
+    "If README.md changed only to record the other changes, do not mention it. British English.",
+    "Output only the message: no preamble, no code fences."
+  )
+  ai <- ask_claude(msg_prompt, staged_diff())
+  if (length(ai) > 0) msg <- c(paste0(msg, ": ", trimws(ai[1])), ai[-1])
+  if (readme_reviewed) msg <- c(msg, "", "README-reviewed: yes")
+
+  msg_file <- tempfile(fileext = ".txt")
+  writeLines(msg, msg_file)
+  run(paste("git commit -F", shQuote(msg_file)))
   run("git push")
-  cat(sprintf("\n✓ Deployed: %s  (live in ~1–2 min at https://benstanley.eu)\n", msg))
+  cat(sprintf("\n✓ Deployed: %s  (live in ~1–2 min at https://benstanley.eu)\n", msg[1]))
 } else {
   cat("\n✓ Build is unchanged — nothing to commit.\n")
 }
