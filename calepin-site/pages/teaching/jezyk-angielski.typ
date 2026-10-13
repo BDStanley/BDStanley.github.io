@@ -11,34 +11,34 @@
 #heading(level: 2)[#"Slajdy"]
 
 #enum(
-  { link("https://bdstanley.netlify.app/jezyk-angielski-1-slides", "Wprowadzenie i podstawy biznesu") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-2-slides", "Strategie i struktura") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-3-slides", "Kultura organizacyjna i przywództwo") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-4-slides", "Finanse, ludzie i innowacje") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-5-slides", "Umiejętności pisania zawodowego") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-6-slides", "Umiejętności komunikacji ustnej") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-1-slides-g4edh", "Wprowadzenie i podstawy biznesu") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-2-slides-vgzef", "Strategie i struktura") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-3-slides-6vvwf", "Kultura organizacyjna i przywództwo") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-4-slides-v2cuz", "Finanse, ludzie i innowacje") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-5-slides-q9exp", "Umiejętności pisania zawodowego") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-6-slides-y43vb", "Umiejętności komunikacji ustnej") },
 )
 
 #heading(level: 2)[#"Materiały"]
 
 #list(
-  { link("https://bdstanley.netlify.app/jezyk-angielski-1-handout", "Wprowadzenie i podstawy biznesu") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-2-handout", "Strategia i struktura") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-3-handout", "Kultura organizacyjna i przywództwo") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-4-handout", "Finanse, ludzie i innowacje") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-5-handout", "Umiejętności pisania zawodowego") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-6-handout", "Umiejętności komunikacji ustnej") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-1-handout-s7hz4", "Wprowadzenie i podstawy biznesu") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-2-handout-vxb6c", "Strategia i struktura") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-3-handout-6mpgd", "Kultura organizacyjna i przywództwo") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-4-handout-jh3bg", "Finanse, ludzie i innowacje") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-5-handout-fvgyz", "Umiejętności pisania zawodowego") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-6-handout-h7tpj", "Umiejętności komunikacji ustnej") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
 
 #list(
-  { link("https://bdstanley.netlify.app/jezyk-angielski-1-exercises", "Wprowadzenie i podstawy biznesu") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-2-exercises", "Strategia i struktura") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-3-exercises", "Kultura organizacyjna i przywództwo") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-4-exercises", "Finanse, ludzie i innowacje") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-5-exercises", "Umiejętności pisania zawodowego") + [#" · "] + link("https://bdstanley.netlify.app/jezyk-angielski-5-exercises-answers", "answers") },
-  { link("https://bdstanley.netlify.app/jezyk-angielski-6-exercises", "Umiejętności komunikacji ustnej") + [#" · "] + link("https://bdstanley.netlify.app/jezyk-angielski-6-exercises-answers", "answers") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-1-exercises-4apq4", "Wprowadzenie i podstawy biznesu") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-2-exercises-va5e4", "Strategia i struktura") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-3-exercises-gaw2h", "Kultura organizacyjna i przywództwo") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-4-exercises-p9azj", "Finanse, ludzie i innowacje") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-5-exercises-brf2s", "Umiejętności pisania zawodowego") + [#" · "] + link("https://bdstanley.netlify.app/jezyk-angielski-5-exercises-answers-atmpf", "answers") },
+  { link("https://bdstanley.netlify.app/jezyk-angielski-6-exercises-qn8yy", "Umiejętności komunikacji ustnej") + [#" · "] + link("https://bdstanley.netlify.app/jezyk-angielski-6-exercises-answers-6ctrw", "answers") },
 )
 
 #heading(level: 2)[#"Zaliczenie"]

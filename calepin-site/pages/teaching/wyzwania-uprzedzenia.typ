@@ -7,26 +7,3 @@
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../teaching.html", "← All courses")]
 
 #heading(level: 1)[#"Wyzwania życia publicznego - uprzedzenia"]
-
-#heading(level: 2)[#"Slajdy"]
-
-#enum(
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-1-slides", "Stereotypy, uprzedzenia i dyskryminacja") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-slides", "Stereotypy: jak powstają i jak są przekazywane") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-slides", "Kształtowanie się uprzedzeń") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-slides", "Uprzedzenia i wartości, typy osobowości, orientacje polityczne i stany emocjonalne") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-slides", "Tożsamość społeczna, przynależność do grupy i utrwalanie form uprzedzeń") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-6-slides", "Dyskryminacja: zrozumienie społecznych konsekwencji uprzedzeń") },
-)
-
-#heading(level: 2)[#"Ćwiczenia"]
-
-#list(
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-1-exercise", "Ćwiczenie: Stereotypy, uprzedzenia i dyskryminacja") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1", "Ćwiczenie 1: Model treści stereotypów — macierz ciepło × kompetencja") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-1-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2", "Ćwiczenie 2: Przetwarzanie automatyczne vs. kontrolowane") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-2-exercise-2-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise", "Ćwiczenie: Kształtowanie się uprzedzeń") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-3-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise", "Ćwiczenie: Uprzedzenia i wartości, typy osobowości, orientacje polityczne i stany emocjonalne") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-4-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise", "Ćwiczenie: Tożsamość społeczna, przynależność do grupy i utrwalanie form uprzedzeń") + [#" · "] + link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-5-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/wyzwania-uprzedzenia-6-exercise", "Ćwiczenie: Dyskryminacja: zrozumienie społecznych konsekwencji uprzedzeń") },
-)

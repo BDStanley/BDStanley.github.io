@@ -11,35 +11,20 @@
 #heading(level: 2)[#"Slajdy"]
 
 #enum(
-  { link("https://bdstanley.netlify.app/systemy-polityczne-1-slides", "Systemy polityczne - pojęcia i typy") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides", "Demokratyczne systemy polityczne") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-3-slides", "Niedemokratyczne systemy polityczne") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-4-slides", "Konstytucja i system polityczny w Polsce. Wartość praworządności.") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-slides", "Państwo prawa. Instytucje, procedury, ochrona praw i wolności") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-slides", "Rola mediów w systemie politycznym") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-7-slides", "Pięć kryzysów demokracji w XXI wieku") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-1-slides-8taqg", "Systemy polityczne - pojęcia i typy") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides-apqmg", "Demokratyczne systemy polityczne") },
 )
 
 #heading(level: 2)[#"Materiały"]
 
 #list(
-  { link("https://bdstanley.netlify.app/systemy-polityczne-1-handout", "Systemy polityczne — pojęcia i typy") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout", "Demokratyczne systemy polityczne") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout", "Niedemokratyczne systemy polityczne") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-4-handout", "Konstytucja i system polityczny w Polsce. Wartość praworządności") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-handout", "Państwo prawa: instytucje, procedury, ochrona praw i wolności") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-handout", "Rola mediów w systemie politycznym") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-7-handout", "Pięć kryzysów demokracji w XXI wieku") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-1-handout-te3wa", "Systemy polityczne — pojęcia i typy") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout-d8xuv", "Demokratyczne systemy polityczne") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
 
 #list(
-  { link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise", "Ćwiczenie: Klasyfikacja i porównanie systemów politycznych") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise", "Ćwiczenie: Nowolandia — trzy spory o demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise", "Ćwiczenie: Po upadku reżimu — diagnoza i zabezpieczenia") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise", "Ćwiczenie: Przeprojektowanie Konstytucji RP") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-4-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise", "Ćwiczenie: Naprawa praworządności w Solanii") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-5-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise", "Ćwiczenie: Nowy nadawca publiczny") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-6-exercise-answers", "answers") },
-  { link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise", "Ćwiczenie: Pakiet odporności demokratycznej") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-7-exercise-answers", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-c44w9", "Ćwiczenie: Klasyfikacja i porównanie systemów politycznych") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-answers-frccc", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-yqndz", "Ćwiczenie: Nowolandia — trzy spory o demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers-9xj9f", "answers") },
 )

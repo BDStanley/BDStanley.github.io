@@ -11,19 +11,19 @@
 #heading(level: 2)[#"Slajdy"]
 
 #enum(
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-1-slides", "Czym jest a czym nie jest dziennikarstwo danych") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-slides", "Po co nam kolejny gatunek dziennikarstwa?") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-3-slides", "Skąd brać dane w data journalism?") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-4-slides", "Proces analizy danych i narzędzia") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-5-slides", "Wizualizacja danych: zasady, narzędzia") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-slides", "Krytyka dziennikarstwa danych / Pułapki dziennikarstwa danych") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-1-slides-2ksrb", "Czym jest a czym nie jest dziennikarstwo danych") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-slides-49rah", "Po co nam kolejny gatunek dziennikarstwa?") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-3-slides-vd4zv", "Skąd brać dane w data journalism?") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-4-slides-qqstc", "Proces analizy danych i narzędzia") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-5-slides-xxedd", "Wizualizacja danych: zasady, narzędzia") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-slides-gbkvf", "Krytyka dziennikarstwa danych / Pułapki dziennikarstwa danych") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
 
 #list(
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1", "Ćwiczenie 1: Identyfikacja tematów wymagających dziennikarstwa danych") + [#" · "] + link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1-answers", "answers") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-2", "Ćwiczenie 2: Wybór tematu projektu końcowego") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-3-exercise", "Ćwiczenie grupowe: workflow pozyskiwania danych") },
-  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-exercise", "Identyfikacja ryzyk projektu") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1-b86b4", "Ćwiczenie 1: Identyfikacja tematów wymagających dziennikarstwa danych") + [#" · "] + link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-1-answers-hz55r", "answers") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-2-exercise-2-z7ahc", "Ćwiczenie 2: Wybór tematu projektu końcowego") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-3-exercise-jster", "Ćwiczenie grupowe: workflow pozyskiwania danych") },
+  { link("https://bdstanley.netlify.app/dziennikarstwo-danych-6-exercise-3sbuy", "Identyfikacja ryzyk projektu") },
 )
