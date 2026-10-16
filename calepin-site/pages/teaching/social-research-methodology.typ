@@ -7,3 +7,21 @@
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../teaching.html", "← All courses")]
 
 #heading(level: 1)[#"Introduction to Social Research Methodology"]
+
+#heading(level: 2)[#"Slides"]
+
+#enum(
+  { link("https://bdstanley.netlify.app/social-research-methodology-1-slides-tb7yq", "The nature and purpose of social research") },
+)
+
+#heading(level: 2)[#"Handouts"]
+
+#list(
+  { link("https://bdstanley.netlify.app/social-research-methodology-1-handout-wdrmq", "The nature and purpose of social research") },
+)
+
+#heading(level: 2)[#"Exercises"]
+
+#list(
+  { link("https://bdstanley.netlify.app/social-research-methodology-1-exercise-vahsz", "Research or not?") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-1-exercise-answers-tbrg3", "answers") },
+)

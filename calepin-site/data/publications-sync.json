@@ -1,0 +1,16 @@
+{
+  "_about": "Maintained by scripts/update-publications.py; see that file. 'ignore': DOIs never to add to cv.yml (DOI -> reason). 'managed': entries the script added, and what it wrote, so it can fill in volume/issue/pages later.",
+  "ignore": {
+    "10.1017/s1755048317000712": "Book review in Politics and Religion (2018); left out on purpose.",
+    "10.1017/s1755048318000214": "Erratum to that book review."
+  },
+  "managed": {
+    "10.1080/21599165.2026.2740234": {
+      "section": "journal_articles",
+      "added": "2026-10-16",
+      "year": 2026,
+      "tail": "*East European Politics*. doi:10.1080/21599165.2026.2740234.",
+      "complete": false
+    }
+  }
+}

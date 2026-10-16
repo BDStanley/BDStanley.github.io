@@ -42,6 +42,14 @@ else
   echo "→ Using bundled calepin: $CALEPIN"
 fi
 
+# Add new publications from ORCID/OpenAlex to cv/cv.yml, and fill in volume,
+# issue and pages for the online-first articles it added earlier. It never edits
+# an entry it didn't add (see data/publications-sync.json). Runs before the CV PDF
+# is compiled so the PDF and the Publications page both pick up the changes.
+# Network failures are non-fatal: the build then uses cv.yml as it stands.
+echo "→ Checking ORCID/OpenAlex for new publications ..."
+python3 "$SRC/scripts/update-publications.py" || echo "  (skipped: update-publications.py failed; cv.yml unchanged)"
+
 echo "→ Building CV PDF from cv/cv.yml ..."
 typst compile cv/cv.typ cv/cv.pdf
 

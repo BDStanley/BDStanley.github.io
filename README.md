@@ -2,7 +2,7 @@
 
 The source of [benstanley.eu](https://benstanley.eu), Ben Stanley's academic website: publications, research projects, teaching, media writing, the Pooling the Poles polling tracker, a page for the book *Good Change*, and a downloadable CV. The site is built with [Calepin](https://github.com/vincentarelbundock/calepin), a static-site generator for Typst, and GitHub Pages serves it from the `docs/` folder of the `main` branch.
 
-One file, `calepin-site/cv/cv.yml`, holds every publication and research project. It produces the CV PDF and feeds the Publications and Research projects pages, so each entry is edited in one place.
+One file, `calepin-site/cv/cv.yml`, holds every publication and research project. It produces the CV PDF and feeds the Publications and Research projects pages, so each entry is edited in one place. New journal articles, book chapters and books on Ben's ORCID record are added to it automatically on each build.
 
 ## Layout
 
@@ -23,6 +23,8 @@ Key files:
 | `calepin-site/cv/cv.yml` | All CV data. `cv/cv.typ` turns it into `cv.pdf` with the academicv Typst template. |
 | `calepin-site/scripts/sync-teaching.py` | Generates the Teaching pages from Ben's separate Teaching repository. |
 | `calepin-site/scripts/update-kl.py` | Adds new Kultura Liberalna articles to `data/kultura-liberalna.yml`, the archive the Media page lists. It never changes existing entries. |
+| `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
+| `calepin-site/data/publications-sync.json` | That script's record: DOIs never to add (`ignore`) and the entries it added (`managed`). |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
 | `calepin-site/README.md` | Installing Calepin, and notes on the theme and the CV set-up. |
 
@@ -32,7 +34,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 
 | To change | Edit (in `calepin-site/`) |
 |---|---|
-| Publications, research projects, the CV | `cv/cv.yml` |
+| Publications, research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
 | Home page | `index.typ` |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
@@ -49,14 +51,36 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 
 `build.sh`:
 
-1. compiles `cv/cv.typ` into `cv/cv.pdf` with Typst;
-2. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
-3. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
-4. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME` and an empty `.nojekyll`.
+1. adds new publications to `cv/cv.yml` and completes online-first ones it added earlier (see [New publications](#new-publications)), leaving `cv.yml` as it is if ORCID, OpenAlex or Crossref cannot be reached;
+2. compiles `cv/cv.typ` into `cv/cv.pdf` with Typst;
+3. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
+4. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
+5. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME` and an empty `.nojekyll`.
 
-A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–3 still refresh the CV PDF, the Teaching pages and the Kultura Liberalna list.
+A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–4 still update `cv/cv.yml`, the CV PDF, the Teaching pages and the Kultura Liberalna list.
 
 The build needs Typst 0.15 or newer, Calepin, Python 3 (standard library only) and the Jost font, which the CV uses. `build.sh` uses `calepin` from the `PATH`, or else the copy bundled with the "Calepin for Typst" extension for Positron, VS Code or Cursor. Typst downloads the academicv package on the first compile.
+
+## New publications
+
+`scripts/update-publications.py` runs at the start of every build. It collects the DOIs on Ben's ORCID record (0000-0001-6932-1046) and those OpenAlex links to the same iD, and adds to `cv/cv.yml` any that are not there yet:
+
+- **What it adds:** journal articles, book chapters and books where Crossref lists Ben as an author. It leaves out datasets, book reviews, errata, preprints and the separate chapters of a book already under Monographs. The Datasets section stays hand-maintained.
+- **How it recognises existing entries:** by DOI, or by title for the older entries that have no DOI.
+- **Where new entries go:** each is formatted in `cv.yml`'s style from Crossref's metadata and placed at the top of its year in the right section. The build output shows every addition as a `[publications] +` line.
+- **Online-first articles:** these go in without volume or pages. On later builds, once Crossref has the volume and pages, the script writes them in after the journal name and changes the year to the issue's year. It replaces only the text it wrote, so later fixes to the authors or title are kept. If that part was edited by hand too, it prints the new details as `[publications] needs attention` instead.
+- **Quarto backup:** when `quarto-site/cv/cv.yml` matches `calepin-site/cv/cv.yml`, the script makes the same changes there.
+- **Never touched:** entries the script did not add.
+
+Day-to-day use:
+
+| To | Do |
+|---|---|
+| Fix a new entry's wording | Edit it in `cv.yml`. |
+| Remove an entry it added | Delete it from `cv.yml`. The next build moves its DOI to `ignore` in `data/publications-sync.json`, so it does not come back. |
+| Keep out any other DOI | Add it to `ignore`, with a short reason. |
+| Stop it completing an entry | Delete that entry from `managed`. |
+| Check without changing anything | `python3 calepin-site/scripts/update-publications.py --dry-run` |
 
 ## Deploying
 
