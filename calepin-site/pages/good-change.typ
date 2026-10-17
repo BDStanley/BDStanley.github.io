@@ -79,5 +79,12 @@
     event.”
 
     —Ray Taras, _Slavic Review_
+
+    “_Good Change_ is an exceptional work in the literature on populism and
+    post-communist transformation. Its strength lies in its ability to combine
+    different levels of analysis – empirical, symbolic and historical – into a
+    coherent whole.”
+
+    —Mikołaj Cześnik, _Studia Socjologiczne_
   ],
 )
