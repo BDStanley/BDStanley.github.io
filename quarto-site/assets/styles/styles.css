@@ -1,11 +1,465 @@
 /* =============================================================================
-   Page-specific layouts for the Quarto backup, ported from the Calepin site's
-   assets/site.css (research-projects timeline, Teaching cards, the Pooling-the-
-   Poles embed). Brand colours/fonts come from website_style.scss.
+   Layout for the Quarto backup, ported from the Calepin site's
+   themes/site-theme/css/90_site.css so the two builds look the same: the
+   reading column and type scale, the navbar in each viewport mode, the footer,
+   the home-page hero and the page layouts (Good Change columns, research-
+   projects timeline, Teaching cards, the Pooling-the-Poles embed). Brand
+   colours and fonts come from website_style.scss. Values in rem match the
+   Calepin site's because both sites use a 17px root.
    ============================================================================= */
 
-/* Force a scrollbar so page-to-page navigation doesn't shift the layout. */
-html { overflow-y: scroll; }
+/* Force a scrollbar so page-to-page navigation doesn't shift the layout. The
+   text settings are those of the Calepin site's Pico base, so lines wrap at
+   the same words. */
+html {
+  overflow-y: scroll;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Calepin's Pico base sets a 17px root from 768px up and 16px below it. */
+@media (max-width: 767.98px) {
+  :root { font-size: 16px; }
+}
+
+/* ---- Reading column: the Calepin page box, not Quarto's page grid -------- */
+/* A centred 39rem column, with the Calepin page's padding above and below the
+   text in place of Quarto's margins and grid rows. */
+#quarto-content {
+  display: block;
+}
+#quarto-document-content {
+  width: min(100% - 2rem, 39rem);
+  margin: 0 auto;
+  padding-block: 3.2rem 4rem;
+  font-size: 0.92rem;
+}
+@media (max-width: 48rem) {
+  #quarto-document-content {
+    width: min(100% - 1.25rem, 39rem);
+    padding-block: 2rem 3rem;
+  }
+}
+
+/* ---- Reading text: Calepin's body size and compact heading scale ---------- */
+#quarto-document-content :where(p, li, dd) {
+  line-height: 1.55;
+  color: #373c44;
+}
+#quarto-document-content :is(h1, h2, h3, h4) {
+  font-weight: 700;
+  color: #374151;
+  line-height: 1.2;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+#quarto-document-content h1 { font-size: 1.25rem; margin-bottom: 1.15rem; }
+#quarto-document-content h2 { font-size: 1.08rem; margin-top: 2.8rem; }
+#quarto-document-content h3 { font-size: 0.98rem; margin-top: 2.1rem; }
+#quarto-document-content h4 { font-size: 0.92rem; }
+/* Undo Quarto's 1rem above the first section heading on narrower screens. */
+@media (max-width: 991.98px) {
+  #quarto-content section:first-of-type h2:first-of-type { margin-top: 2.8rem; }
+}
+/* Nothing above the first block. Quarto puts an empty title header first on
+   pages without a title, and wraps each heading in a <section>. */
+#title-block-header:empty {
+  display: none;
+}
+#quarto-document-content > :is(:first-child, #title-block-header + *),
+#quarto-document-content > :is(:first-child, #title-block-header + *) > :first-child {
+  margin-top: 0;
+}
+/* Square bullets and the browser's 40px indent, as on the Calepin site. */
+#quarto-document-content :is(ul, ol) { padding-left: 40px; }
+#quarto-document-content ul li { list-style: square; }
+#quarto-document-content :is(ul, ol) li { margin-bottom: 0.25rem; }
+#quarto-document-content :is(ul, ol) :is(ul, ol) { margin: 0.25rem 0 0; }
+
+/* ---- Top navigation: dark-red bar with white links ------------------------ */
+#quarto-header .navbar {
+  padding: 1rem 0;
+  border-bottom: 1px solid #d8dee6;
+}
+#quarto-header .navbar-brand,
+#quarto-header .navbar-brand .navbar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+#quarto-header .navbar-brand {
+  margin-right: 0;
+  padding-block: 0;
+}
+#quarto-header .nav-link,
+#quarto-header .navbar-brand {
+  color: #ffffff !important;
+}
+#quarto-header .nav-item {
+  margin: 0;
+  padding: 0;
+}
+#quarto-header .nav-link {
+  margin: 0;
+  padding: 0.1rem 0;
+  font-size: 0.92rem;
+}
+#quarto-header .nav-link:hover,
+#quarto-header .nav-link:focus-visible {
+  text-decoration: underline;
+}
+#quarto-header .nav-link.active {
+  font-weight: 600;
+}
+/* Each icon drawn 1.05em high in a 1.05em box, like the Calepin site's
+   .calepin-nav-icon (Iconify's own inline size is overridden). */
+#quarto-header .menu-text:has(> :is(i, iconify-icon)) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05em;
+  height: 1.05em;
+}
+#quarto-header .menu-text > :is(i, iconify-icon) {
+  font-size: 1.05em !important;
+}
+/* The Calepin hamburger: three 2px white lines in a 36px button. */
+#quarto-header .navbar-toggler {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+#quarto-header .navbar-toggler-icon {
+  width: 1.05rem;
+  height: 1.77rem;
+  background: linear-gradient(#ffffff, #ffffff) center / 100% 2px no-repeat;
+  border-block: 2px solid #ffffff;
+}
+.quarto-navbar-tools,
+.navbar-social {
+  display: none;
+}
+
+/* ---- Desktop and tablet (>=768px): one flat row of links ------------------- */
+/* As in the Calepin nav, the page links start right after the brand and the CV
+   + icon cluster follows; the menu's two lists are flattened into the collapse's
+   flex row so the modes below can break it before or after CV. */
+@media (min-width: 768px) {
+  /* The brand sits on the links' baseline, as on the Calepin site (in the
+     portrait column below this also keeps the brand at the left). */
+  #quarto-header .navbar-container {
+    width: min(100% - 3rem, 1400px);
+    min-height: 2.2rem;
+    margin-inline: auto;
+    padding-inline: 0;
+    align-items: baseline;
+  }
+  #quarto-header .navbar-brand-container {
+    flex: none;
+    margin: 0 !important;
+  }
+  #navbarCollapse {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.9rem;
+    margin-left: 2.25rem;
+  }
+  #navbarCollapse > .navbar-nav {
+    display: contents;
+  }
+  /* Link boxes as on the Calepin menu, so wrapped rows are as tall. */
+  #navbarCollapse .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.2rem;
+    border-bottom: 1px solid transparent;
+    white-space: nowrap;
+  }
+  /* Full-width break, shown in the two stacked modes below. */
+  #navbarCollapse::after {
+    content: "";
+    display: none;
+    flex-basis: 100%;
+    height: 0;
+    order: 1;
+  }
+}
+
+/* ---- Wide landscape (desktop / landscape tablet): CV + icons to the right --- */
+@media (min-width: 64.01rem) and (orientation: landscape) {
+  #navbarCollapse .nav-item:has(> .nav-link[href$="cv.pdf"]) {
+    margin-left: auto;
+  }
+}
+
+/* ---- Narrow landscape (a tablet sideways, <=64rem): CV + icons drop below -- */
+/* As on the Calepin site, the menu then no longer fits beside the brand, so it
+   wraps to a row of its own below it, indented as it is after the brand. */
+@media (min-width: 768px) and (max-width: 64rem) and (orientation: landscape) {
+  #quarto-header .navbar-container {
+    flex-wrap: wrap;
+    row-gap: 0.4rem;
+  }
+  #navbarCollapse {
+    flex-basis: 100%;
+    margin-left: 1.25rem;
+  }
+  #navbarCollapse::after {
+    display: block;
+  }
+  #navbarCollapse .navbar-nav.ms-auto > .nav-item {
+    order: 2;
+  }
+}
+
+/* ---- Portrait: brand, then text links + CV, then the icons, centred ------- */
+@media (orientation: portrait) and (min-width: 768px) {
+  #quarto-header .navbar-container {
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 0.45rem;
+  }
+  #navbarCollapse {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+  #navbarCollapse::after {
+    display: block;
+  }
+  #navbarCollapse .navbar-nav.ms-auto > .nav-item:not(:has(> .nav-link[href$="cv.pdf"])) {
+    order: 2;
+  }
+}
+
+/* ---- Phones (<768px): icons in the bar, text links in the dropdown --------- */
+/* The bar holds the brand and the hamburger on one row and the social icons on
+   a second, spread across its width (.navbar-social, a copy made by
+   assets/includes/navbar-social.html), while the dropdown keeps only the page
+   links and CV, as a dark-red pop-over under the bar. */
+@media (max-width: 767.98px) {
+  #quarto-header .navbar {
+    padding-block: 0.6rem;
+  }
+  #quarto-header .navbar-container {
+    position: relative;
+    width: calc(100% - 2rem);
+    margin-inline: auto;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+  }
+  #quarto-header .navbar-brand-container {
+    order: 1;
+    margin: 0 auto 0 0 !important;
+  }
+  #quarto-header .navbar-toggler {
+    order: 2;
+    display: inline-grid;
+    place-items: center;
+  }
+  .navbar-social {
+    order: 3;
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.05rem;
+  }
+  .navbar-social .nav-link {
+    display: inline-flex;
+    align-items: center;
+    height: 1.05em;
+    padding: 0;
+    font-size: inherit !important;
+    line-height: 1;
+  }
+  #navbarCollapse {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    padding: 0.75rem;
+    background: #8b0000;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.25rem;
+    box-shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
+  }
+  /* Open at once, like the Calepin menu, rather than sliding down. */
+  #navbarCollapse.collapsing {
+    transition: none;
+  }
+  /* One grid of links, as the Calepin menu is. */
+  #navbarCollapse.show {
+    display: grid;
+    gap: 0.25rem;
+  }
+  #navbarCollapse > .navbar-nav {
+    display: contents;
+  }
+  #navbarCollapse .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 2.35rem;
+    padding: 0.25rem 0.2rem;
+  }
+  #navbarCollapse .navbar-nav.ms-auto > .nav-item:not(:has(> .nav-link[href$="cv.pdf"])) {
+    display: none;
+  }
+}
+
+/* ---- Navbar: OpenAlex logo --------------------------------------------------
+   No icon font has OpenAlex, so its navbar link has the text label "OpenAlex"
+   (_quarto.yml). Show the logo in its place, painted in the link colour through
+   a mask and sized like the icons beside it; the label is clipped out of view
+   but still read by screen readers. As on the Calepin site. */
+.navbar a.nav-link[href^="https://openalex.org/"] .menu-text {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: -0.15em;
+}
+.navbar a.nav-link[href^="https://openalex.org/"] .menu-text::before {
+  content: "";
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  background-color: currentColor;
+  -webkit-mask: url("../icons/openalex.svg") center / contain no-repeat;
+  mask: url("../icons/openalex.svg") center / contain no-repeat;
+}
+
+/* ---- Sticky footer: keep it pinned to the bottom of the viewport on short
+   pages, while still sitting after the content on long pages. -------------- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Replaces Quarto's own fixed min-height on the content area. */
+#quarto-content {
+  flex: 1 0 auto;
+  min-height: 0 !important;
+}
+
+/* ---- Footer: a slim dark-red bar, its two items at the column's edges ------ */
+footer.footer {
+  flex-shrink: 0;
+  margin-top: 3rem;
+  padding: 0.75rem 1rem;
+  border-top: 0;
+  background: #8b0000;
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+footer.footer .nav-footer {
+  font-size: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  width: min(100% - 2rem, 39rem);
+  min-height: 0;
+  margin-inline: auto;
+  padding: 0;
+  border-top: 0;
+  background: transparent;
+}
+footer.footer .nav-footer-center {
+  display: none;
+}
+footer.footer :is(.nav-footer-left, .nav-footer-right) {
+  flex: none;
+  font-size: inherit;
+  width: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+footer.footer p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+/* Plain white text, underlined only on hover like the navbar links. */
+footer.footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+footer.footer a:hover,
+footer.footer a:focus-visible {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  footer.footer .nav-footer { justify-content: center; text-align: center; }
+}
+
+/* ---- Home-page hero: portrait floated left, the bio wrapping round it ---- */
+/* The bio starts level with the top of the photo and, once past it, runs the
+   full width of the column, so no white space is left under the photo. On
+   narrow screens the photo sits centred above the bio instead. */
+.hero {
+  display: flow-root;        /* contain the float */
+  margin-block: 1rem 2rem;
+}
+.hero-portrait {
+  width: 240px;
+  max-width: 100%;
+  margin: 0 auto 1.5rem;
+}
+@media (min-width: 37.5rem) {
+  .hero-portrait {
+    float: left;
+    margin: 0 2rem 1rem 0;
+  }
+}
+.hero-portrait img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.hero-bio > :first-child { margin-top: 0; }
+
+/* ---- Good Change: two-column book layout with a divider ------------------ */
+/* One column on phones, two from 768px (pages/good-change.qmd). */
+.gc-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+.gc-columns > div {
+  min-width: 0;
+}
+.gc-columns img {
+  max-width: 100%;
+  height: auto;
+}
+/* "Reviews" follows straight on from the cover, as on the Calepin page, where
+   the image isn't wrapped in a paragraph. */
+.gc-columns p:has(> img:only-child) {
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .gc-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gc-columns > div:first-child {
+    border-right: 1px solid #d8dee6;
+    padding-right: 1.5rem;
+  }
+}
 
 /* ---- Research projects — mirrors the CV's `timeline` layout -----------------
    The date sits in a right-aligned left column, a vertical line divides it from
@@ -22,14 +476,14 @@ html { overflow-y: scroll; }
   white-space: nowrap;
 }
 .proj-body {
-  border-left: 1px solid #dee2e6;
+  border-left: 1px solid #d8dee6;
   padding-left: 0.7em;
 }
 .proj-title strong { font-weight: 700; }
 .proj-funder { font-style: italic; }
 .proj-detail {
   font-size: 0.85em;
-  color: #6c757d;
+  color: #5f6b7a;
 }
 
 /* ---- Pooling the Poles embed ------------------------------------------------
@@ -39,6 +493,7 @@ html { overflow-y: scroll; }
   max-width: none;
   height: 1200px;
   border: none;
+  vertical-align: middle;   /* no descender gap below it, as with Pico's iframes */
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -70,7 +525,7 @@ html { overflow-y: scroll; }
 }
 .course-name {
   display: inline-block;
-  font-size: 1.15rem;
+  font-size: 1.08rem;   /* match the h2 section headings on other pages */
   font-weight: 600;
   line-height: 1.25;
   color: #374151 !important;
@@ -80,7 +535,7 @@ html { overflow-y: scroll; }
 .course-name:focus-visible { text-decoration: underline; }
 .course-meta {
   margin-top: 0.15rem;
-  color: #6c757d;
+  color: #5f6b7a;
   font-size: 0.85rem;
 }
 .course-desc {
@@ -109,38 +564,15 @@ html { overflow-y: scroll; }
 
 /* ---- Teaching: per-course pages --------------------------------------------
    "← All courses" back-link above the course title. */
-.teaching-back {
+#quarto-document-content .teaching-back {
   margin-bottom: 0.4rem;
   font-size: 0.85em;
 }
 .teaching-back a {
-  color: #6c757d !important;
+  color: #5f6b7a !important;
   text-decoration: none;
 }
 .teaching-back a:hover {
   color: #8b0000 !important;
   text-decoration: underline;
-}
-
-/* ---- Navbar: OpenAlex logo --------------------------------------------------
-   No icon font has OpenAlex, so its navbar link has the text label "OpenAlex"
-   (_quarto.yml). Show the logo in its place, painted in the link colour through
-   a mask and about the size of the academicons beside it; the label is clipped
-   out of view but still read by screen readers. As on the Calepin site. */
-.navbar a.nav-link[href^="https://openalex.org/"] .menu-text {
-  display: inline-flex;
-  width: 1.05em;
-  height: 1.05em;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: -0.15em;
-}
-.navbar a.nav-link[href^="https://openalex.org/"] .menu-text::before {
-  content: "";
-  flex: none;
-  width: 1.05em;
-  height: 1.05em;
-  background-color: currentColor;
-  -webkit-mask: url("../icons/openalex.svg") center / contain no-repeat;
-  mask: url("../icons/openalex.svg") center / contain no-repeat;
 }

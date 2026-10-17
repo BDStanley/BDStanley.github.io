@@ -323,12 +323,17 @@ def emit_list(kind: str, items) -> str:
 
 
 def emit_course_page(title: str, blocks) -> str:
-    out = ["---", 'title: "%s"' % yaml_str(title), "---", "", GENERATED_NOTE.rstrip(), ""]
+    # As on the Calepin site: no title block; the "← All courses" link comes
+    # first, then the course title as an H2 with its sections as H3s (the HTML
+    # levels Calepin gives them). `pagetitle` sets the tab title.
+    out = ["---", 'pagetitle: "%s"' % yaml_str(title), "---", "", GENERATED_NOTE.rstrip(), ""]
     out.append('<p class="teaching-back"><a href="../teaching.html">← All courses</a></p>')
+    out.append("")
+    out.append("## %s" % smart(title))
     out.append("")
     for b in blocks:
         if b[0] == "heading":
-            level = max(2, b[1])  # the course title is the H1 (title block)
+            level = max(2, b[1]) + 1  # one below the course title above
             out.append("%s %s" % ("#" * level, smart(b[2])))
         else:
             out.append(emit_list(b[0], b[1]))
@@ -339,7 +344,11 @@ def emit_course_page(title: str, blocks) -> str:
 def emit_landing(entries) -> str:
     """Heiss-style landing: a single list of course rows (hexsticker · name ·
     description · one badge per semester taught), emitted as raw HTML."""
-    out = ["---", 'title: "Teaching"', "---", "", GENERATED_NOTE.rstrip(), ""]
+    # No on-page title, as on the Calepin site; `pagetitle` sets the tab title.
+    # The rows are a raw HTML block so Pandoc leaves the markup exactly as the
+    # Calepin page has it (it would otherwise wrap each course link in a <p>).
+    out = ["---", 'pagetitle: "Teaching"', "---", "", GENERATED_NOTE.rstrip(), ""]
+    out.append("```{=html}")
     out.append('<div class="course-list">')
     for e in entries:
         out.append('<div class="course-row">')
@@ -357,6 +366,7 @@ def emit_landing(entries) -> str:
         out.append("</div>")  # course-body
         out.append("</div>")  # course-row
     out.append("</div>")  # course-list
+    out.append("```")
     return "\n".join(out).rstrip() + "\n"
 
 

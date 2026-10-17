@@ -1,7 +1,7 @@
 ---
-title: ""                    # no on-page heading: just the app, as on the Calepin page
+# No on-page heading: just the app, which breaks out of the reading column
+# (.embed-frame in styles.css), as on the Calepin page.
 pagetitle: "Pooling the Poles"
-page-layout: full
 description-meta: "Interactive Polish polling tracker"
 open-graph:
   title: "Pooling the Poles"

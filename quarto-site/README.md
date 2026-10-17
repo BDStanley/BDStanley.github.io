@@ -24,12 +24,16 @@ unaffected.
 quarto-site/
 ├── _quarto.yml          # site config: navbar, footer, theme, output-dir (_site)
 ├── build.sh             # builds the CV PDF + Teaching pages, then renders to _site
-├── index.qmd            # home page (about/trestles: portrait + bio)
+├── index.qmd            # home page (hero: portrait floated beside the bio)
 ├── 404.qmd              # not-found page
 ├── assets/
 │   ├── images/          # profile.jpg, good-change.png (copied)
 │   ├── teaching/        # per-course hexstickers (copied)
-│   └── styles/          # website_style.scss (brand) + styles.css (page layouts)
+│   ├── favicon.*, favicon-32.png, apple-touch-icon.png  # favicons (copied)
+│   ├── includes/        # head.html (PNG favicon links), navbar-social.html (phone icon row)
+│   └── styles/          # website_style.scss (Bootstrap colours/fonts) + styles.css (layout)
+├── filters/
+│   └── plain-spaces.lua # ordinary spaces after "ed."/"eds."/"et al.", as on the Calepin site
 ├── cv/                  # copied from ../calepin-site/cv — the single source of truth
 │   ├── cv.yml           # ALL CV data: publications, research projects, etc.
 │   ├── cv.typ           # academicv document; builds cv/cv.pdf from cv.yml
@@ -38,6 +42,7 @@ quarto-site/
 │   └── cv-helpers.R     # reads cv/cv.yml -> Publications & Research-projects markup
 ├── data/
 │   ├── citations.json   # citation counts, copied from ../calepin-site/data by each Calepin build
+│   ├── publication-citations.json # per-publication OpenAlex counts, copied the same way
 │   └── kultura-liberalna.yml # Kultura Liberalna archive (refreshed by this folder's build.sh)
 ├── scripts/
 │   └── sync-teaching.py # generates the Teaching pages from the Teaching repo (Quarto twin)
@@ -56,7 +61,7 @@ The Calepin site maps to this almost one-to-one:
 
 | Calepin source                          | Quarto source                       |
 | --------------------------------------- | ----------------------------------- |
-| `index.typ` (hero)                      | `index.qmd` (about/trestles)        |
+| `index.typ` (hero)                      | `index.qmd` (hero)                  |
 | `pages/publications.typ` (from cv.yml)  | `pages/publications.qmd` (from cv.yml via R) |
 | `pages/research-projects.typ`           | `pages/research-projects.qmd`       |
 | `pages/media.typ` (KL list from data/)  | `pages/media.qmd` (KL list from data/) |
@@ -64,7 +69,7 @@ The Calepin site maps to this almost one-to-one:
 | `pages/good-change.typ`                 | `pages/good-change.qmd`             |
 | `pages/teaching.typ` + `teaching/*`     | `pages/teaching.qmd` + `teaching/*` |
 | `scripts/sync-teaching.py` (→ .typ)     | `scripts/sync-teaching.py` (→ .qmd) |
-| `calepin.toml` + `assets/site.css`      | `_quarto.yml` + `assets/styles/*`   |
+| `calepin.toml` + `themes/site-theme/`   | `_quarto.yml` + `assets/styles/*` + `assets/includes/*` |
 | `cv/` (Typst CV)                        | `cv/` (copied; same single source)  |
 
 ## The CV is the single source of truth
@@ -116,14 +121,28 @@ and adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`.
 
 ## Notes / deliberate differences from the Calepin site
 
-- **Same look, idiomatic Quarto.** Jost everywhere, dark-red (`#8B0000`) navbar
-  and footer, red links with a pink accent — set in `assets/styles/website_style.scss`.
-  Page-specific layouts (research-projects timeline, Teaching cards, the
-  Pooling-the-Poles embed) are in `assets/styles/styles.css`, ported from the
-  Calepin `site.css`. The Teaching pages show their titles in a Quarto **title
-  block**; the other pages, like the Calepin site's, have no on-page title.
-- **Footer** reads "Made with R and Quarto" (the Calepin site says "Made with
-  Typst and Calepin"). Same licence line.
+- **Same look and layout.** `assets/styles/website_style.scss` sets the
+  Bootstrap colours and fonts (Jost, dark-red `#8B0000` navbar and footer, red
+  links with a pink accent). `assets/styles/styles.css` is a port of the Calepin
+  theme's `css/90_site.css` onto Quarto's markup: the 39rem reading column and
+  type scale (with Calepin's 17px root from 768px up and 16px below it), the
+  navbar in each viewport mode, the slim footer, the home-page hero and the page
+  layouts. Pages built from the same content render at the same sizes, so when
+  the Calepin theme changes, port the change into `styles.css` and compare the
+  two builds side by side.
+- **Navbar.** The hamburger appears below 768px, as on the Calepin site. Above
+  that, `styles.css` flattens Quarto's two link lists into one flex row and
+  breaks it before or after CV for the landscape-tablet and portrait modes. On
+  phones the social icons sit on a second row of the bar and the dropdown keeps
+  only the page links and CV; the icon row is a copy made by
+  `assets/includes/navbar-social.html`, the counterpart of the copy in Calepin's
+  `partials/site-nav.html`. Search is switched off, as it is on the Calepin site.
+- **No on-page titles**, as on the Calepin site: pages set `pagetitle` (the tab
+  title) rather than `title`, so Quarto renders no title block. A course page
+  puts its "← All courses" link first, then the course title as an H2.
+- **Footer** has the Calepin site's two items: the licence line, and a credit
+  that reads "Made with R and Quarto" (the Calepin site says "Made with Typst
+  and Calepin").
 - **Kultura Liberalna list** (`pages/media.qmd`) — rendered from
   `data/kultura-liberalna.yml`, as on the Calepin site. The author page shows only
   the 15 most recent pieces, so `scripts/update-kl.py` (run by `build.sh`) only

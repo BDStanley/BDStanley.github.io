@@ -35,4 +35,8 @@ python3 "$SRC/scripts/update-kl.py" || echo "  (skipped: update-kl.py failed; us
 echo "→ Rendering site with Quarto into ./_site ..."
 quarto render
 
+# Browsers, feed readers and search engines ask for /favicon.ico without reading
+# the page's <link rel="icon">, so put the icon there too (as the Calepin build does).
+cp "$SRC/assets/favicon.ico" "$SRC/_site/favicon.ico"
+
 echo "✓ Built into $SRC/_site. Preview with:  quarto preview   (or open _site/index.html)"

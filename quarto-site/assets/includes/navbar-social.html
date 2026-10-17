@@ -1,0 +1,18 @@
+<script>
+// Phones only: the social icons (everything but CV) again, as a row of the
+// navbar itself, as on the Calepin site (its partials/site-nav.html renders the
+// same copy). styles.css shows this copy below 768px and hides the in-menu one
+// there, so each link is only ever exposed once. Runs straight away (this is
+// included at the end of <body>) so Quarto measures the navbar with the row in.
+(function () {
+  var icons = document.querySelector("#navbarCollapse .navbar-nav.ms-auto");
+  var bar = document.querySelector("#quarto-header .navbar-container");
+  if (!icons || !bar) return;
+  var row = document.createElement("div");
+  row.className = "navbar-social";
+  icons.querySelectorAll(".nav-link").forEach(function (a) {
+    if (!/cv\.pdf$/.test(a.getAttribute("href"))) row.appendChild(a.cloneNode(true));
+  });
+  bar.appendChild(row);
+})();
+</script>

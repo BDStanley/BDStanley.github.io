@@ -39,12 +39,10 @@
     project on EU enlargement (2026–2029).
 
     I hold a PhD in Government from the University of Essex and a habilitation
-    from the Polish Academy of Sciences. I previously worked at the Institute for
-    Public Affairs in Bratislava, Cardinal Stefan Wyszyński University in Warsaw
-    and the University of Sussex, where I was a Marie Curie Fellow. I am deputy
-    editor of the _Polish Sociological Review_, write on Polish politics for
-    _Kultura Liberalna_, and run
-    #link("pages/pooling-the-poles.html")[Pooling the Poles], a Polish polling
-    tracker.
+    in sociology from the Polish Academy of Sciences. I previously worked at the
+    Institute for Public Affairs in Bratislava, Cardinal Stefan Wyszyński
+    University in Warsaw and the University of Sussex, where I was a Marie Curie
+    Fellow. I am deputy editor of the _Polish Sociological Review_ and a regular
+    contributor to _Kultura Liberalna_.
   ]
 ]

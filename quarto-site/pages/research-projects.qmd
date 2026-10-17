@@ -1,5 +1,5 @@
 ---
-title: ""
+pagetitle: "Research projects"
 ---
 
 ```{r}

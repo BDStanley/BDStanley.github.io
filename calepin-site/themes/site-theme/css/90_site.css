@@ -323,8 +323,13 @@ body {
 .calepin-site-footer-inner:has(.calepin-site-footer-item:only-child) {
   justify-content: center;
 }
+/* Plain white text, underlined only on hover like the navbar links. */
 .calepin-site-footer a {
   color: #ffffff;
+  text-decoration: none;
+}
+.calepin-site-footer a:hover,
+.calepin-site-footer a:focus-visible {
   text-decoration: underline;
 }
 @media (max-width: 600px) {
