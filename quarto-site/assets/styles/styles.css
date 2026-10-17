@@ -121,3 +121,26 @@ html { overflow-y: scroll; }
   color: #8b0000 !important;
   text-decoration: underline;
 }
+
+/* ---- Navbar: OpenAlex logo --------------------------------------------------
+   No icon font has OpenAlex, so its navbar link has the text label "OpenAlex"
+   (_quarto.yml). Show the logo in its place, painted in the link colour through
+   a mask and about the size of the academicons beside it; the label is clipped
+   out of view but still read by screen readers. As on the Calepin site. */
+.navbar a.nav-link[href^="https://openalex.org/"] .menu-text {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: -0.15em;
+}
+.navbar a.nav-link[href^="https://openalex.org/"] .menu-text::before {
+  content: "";
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  background-color: currentColor;
+  -webkit-mask: url("../icons/openalex.svg") center / contain no-repeat;
+  mask: url("../icons/openalex.svg") center / contain no-repeat;
+}

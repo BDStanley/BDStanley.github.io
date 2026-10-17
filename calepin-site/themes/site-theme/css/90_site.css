@@ -83,6 +83,28 @@
 .academic-nav.calepin-site-nav a:has(.calepin-nav-icon) {
   align-self: center;
 }
+/* OpenAlex has no Iconify icon, so its social link has the text label
+   "OpenAlex" (calepin.toml). Show the logo in its place, painted in the link
+   colour through a mask and sized like the .calepin-nav-icon icons; the label is
+   clipped out of view but still read by screen readers. The mask sits on a
+   pseudo-element rather than the link so the keyboard focus ring still shows. */
+.academic-nav.calepin-site-nav a[href^="https://openalex.org/"] {
+  display: inline-flex;
+  align-self: center;
+  width: 1.05em;
+  height: 1.05em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.academic-nav.calepin-site-nav a[href^="https://openalex.org/"]::before {
+  content: "";
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  background-color: currentColor;
+  -webkit-mask: url("/assets/icons/openalex.svg") center / contain no-repeat;
+  mask: url("/assets/icons/openalex.svg") center / contain no-repeat;
+}
 
 /* ---- Roomier top nav (desktop only; the <=48rem dropdown is left intact) -- */
 @media (min-width: 48.01rem) {

@@ -1,9 +1,9 @@
 {
-  "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes google_scholar and sage_policy_profiles on every build; see that file. web_of_science is entered by hand: update its numbers and as_of (YYYY-MM) from https://www.webofscience.com/wos/author/record/J-7051-2013.",
-  "web_of_science": {
+  "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes them on every build (Scopus needs its API key in the Keychain); see that file.",
+  "scopus": {
     "as_of": "2026-10",
-    "citations": 1281,
-    "h_index": 11
+    "citations": 1666,
+    "h_index": 13
   },
   "google_scholar": {
     "as_of": "2026-10",
@@ -15,5 +15,11 @@
     "as_of": "2026-10",
     "citations": 64,
     "documents": 52
+  },
+  "openalex": {
+    "as_of": "2026-10",
+    "citations": 2297,
+    "h_index": 14,
+    "i10_index": 20
   }
 }

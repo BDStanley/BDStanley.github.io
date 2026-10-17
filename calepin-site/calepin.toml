@@ -107,10 +107,18 @@ target = "https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en"
 label  = "{icon:simple-icons:googlescholar}"
 weight = 70
 
+# No icon set has OpenAlex, so this link keeps a text label (read by screen
+# readers) and themes/site-theme/css/90_site.css swaps it for the logo in
+# assets/icons/openalex.svg.
 [[menus.social]]
-target = "https://www.webofscience.com/wos/author/record/J-7051-2013"
-label  = "{icon:academicons:clarivate}"
-weight = 80
+target = "https://openalex.org/authors/A5015716464"
+label  = "OpenAlex"
+weight = 73
+
+[[menus.social]]
+target = "https://www.scopus.com/authid/detail.uri?authorId=23493968300"
+label  = "{icon:academicons:scopus}"
+weight = 76
 
 [[menus.social]]
 target = "https://github.com/BDStanley"

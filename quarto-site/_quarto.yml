@@ -78,8 +78,13 @@ website:
       - text: "{{< ai google-scholar >}}"
         href: https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en
 
-      - text: "{{< ai clarivate >}}"
-        href: https://www.webofscience.com/wos/author/record/J-7051-2013
+      # No icon font has OpenAlex: assets/styles/styles.css swaps this text
+      # label for the logo in assets/icons/openalex.svg.
+      - text: "OpenAlex"
+        href: https://openalex.org/authors/A5015716464
+
+      - text: "{{< ai scopus >}}"
+        href: https://www.scopus.com/authid/detail.uri?authorId=23493968300
 
       - text: "{{< iconify bi github size=1.1em title='GitHub' >}}"
         href: https://github.com/BDStanley
@@ -94,6 +99,7 @@ website:
 # sure Quarto copies it into the output even though no .qmd references it.
 resources:
   - cv/cv.pdf
+  - assets/icons/openalex.svg
 
 # Never let R chunk warnings/messages leak onto the rendered pages (the
 # CV-driven and Media pages run R). Code is hidden site-wide; output stays.

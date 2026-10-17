@@ -25,7 +25,7 @@ Key files:
 | `calepin-site/scripts/update-kl.py` | Adds new Kultura Liberalna articles to `data/kultura-liberalna.yml`, the archive the Media page lists. It never changes existing entries. |
 | `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
 | `calepin-site/data/publications-sync.json` | That script's record: DOIs never to add (`ignore`) and the entries it added (`managed`). |
-| `calepin-site/scripts/update-citations.py` | Refreshes the Google Scholar and Sage Policy Profiles numbers in `data/citations.json`. See [Citation counts](#citation-counts). |
+| `calepin-site/scripts/update-citations.py` | Refreshes the Scopus, Google Scholar, OpenAlex and Sage Policy Profiles numbers in `data/citations.json`. See [Citation counts](#citation-counts). |
 | `calepin-site/data/citations.json` | The numbers in the Citations list on the Publications page, each with the month it dates from. |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
 | `calepin-site/README.md` | Installing Calepin, and notes on the theme and the CV set-up. |
@@ -37,7 +37,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | To change | Edit (in `calepin-site/`) |
 |---|---|
 | Publications, research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
-| Citation counts | Nothing for Google Scholar and Sage Policy Profiles: they update on each build. Web of Science: `data/citations.json`; see [Citation counts](#citation-counts). |
+| Citation counts | Nothing: they update on each build (Scopus once its API key is in the Keychain). See [Citation counts](#citation-counts). |
 | Home page | `index.typ` |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
@@ -90,9 +90,12 @@ Day-to-day use:
 
 The Citations list at the top of the Publications page reads its numbers from `calepin-site/data/citations.json`. `scripts/update-citations.py` runs on every build:
 
+- **Scopus:** total citations and h-index, worked out from the citation counts of the documents under author ID 23493968300 in Elsevier's Scopus Search API. (The author profile API has these totals ready-made, but only for subscribing institutions.) It needs a free Elsevier API key from [dev.elsevier.com](https://dev.elsevier.com), which must never go in this public repo: store it in the macOS Keychain with `security add-generic-password -a "$USER" -s scopus-api-key -w` (it prompts for the key, which it calls "password data"), or set `SCOPUS_API_KEY`. Without a key, or if Elsevier refuses it, Scopus is skipped and its last numbers stay.
 - **Google Scholar:** citations, h-index and i10-index (all years), read from the metrics table on the profile page.
+- **OpenAlex:** citations, h-index and i10-index from its author record, looked up by Ben's ORCID iD.
 - **Sage Policy Profiles:** policy citations and the number of policy documents they appear in, read from the data the public profile page loads.
-- **Web of Science:** entered by hand. Its author record shows automated visitors a CAPTCHA, so the script cannot read it. To update, copy the numbers from the profile into `web_of_science` in `citations.json` and set `as_of` to the current month (`YYYY-MM`). Every build prints the current hand-entered numbers and their month as a reminder.
+
+Web of Science is not listed: its author records are shown only to signed-in users, and to automated visitors only after a CAPTCHA.
 
 Each source records the month its numbers date from. The page's "Updated" line shows the latest month, and any older source shows its own month beside its name. A source keeps its previous numbers if it cannot be reached, if its page no longer has the numbers where the script looks (for instance a Google Scholar CAPTCHA), or if any number has fallen by more than a quarter. The last case prints a `[citations] needs attention` line; if the fall is real, enter the new numbers by hand. The script copies the file to `quarto-site/data/` for the Quarto backup. `--dry-run` shows what it would change without writing anything.
 
@@ -120,7 +123,8 @@ The iCloud copy is a one-way backup: edits made there are overwritten on the nex
 
 1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`.
 2. Install Typst (`brew install typst`), Calepin (see `calepin-site/README.md` → Prerequisites), Python 3 and the Jost font.
-3. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`) and Homebrew's `rsync`, which it expects at `/opt/homebrew/bin/rsync`. It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found. The iCloud path in step 5 is hard-coded.
+3. For the Scopus citation count, add the Elsevier API key to the Keychain (see [Citation counts](#citation-counts)); without it the build skips Scopus.
+4. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`) and Homebrew's `rsync`, which it expects at `/opt/homebrew/bin/rsync`. It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found. The iCloud path in step 5 is hard-coded.
 
 ## Working with Claude Code
 

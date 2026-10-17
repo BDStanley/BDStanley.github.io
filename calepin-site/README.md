@@ -189,11 +189,14 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
 
 - **Navbar icons.** Social links use Iconify icon tokens (`{icon:collection:name}`),
   fetched at build time. The mapping mirrors the original
-  (academicons for ORCID / Web of Science / Dataverse / Zotero, Font Awesome
+  (academicons for ORCID / Scopus / Dataverse / Zotero, Font Awesome
   brands for LinkedIn / WhatsApp / Bluesky / GitHub, simple-icons for Google
   Scholar, lucide for e-mail). If any icon fails to download, swap its collection
   in `calepin.toml` — e.g. `{icon:simple-icons:orcid}` instead of
   `{icon:academicons:orcid}`. Browse names at <https://icon-sets.iconify.design/>.
+  OpenAlex is in no icon set, and Calepin escapes HTML in menu labels, so its
+  link has the text label "OpenAlex" and `css/90_site.css` paints the logo from
+  `assets/icons/openalex.svg` over it with a CSS mask.
 
 - **Footer.** Calepin 0.0.24's `academic` theme renders a footer natively, but the
   overlay theme overrides `partials/site-footer.html` with simpler markup
