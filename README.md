@@ -18,6 +18,7 @@ Key files:
 | File | Purpose |
 |---|---|
 | `commit.R` | Build, commit, push and back up in one step. See [Committing and syncing](#committing-and-syncing). |
+| `bio.md` | Ben's canonical academic bio, in the third person, kept in the repo but not published. The home page has the same text in the first person. |
 | `calepin-site/build.sh` | Builds the CV PDF, refreshes the generated content and compiles the site into `docs/`. |
 | `calepin-site/calepin.toml` | Site configuration: title, navigation bar, social links, footer. |
 | `calepin-site/cv/cv.yml` | All CV data. `cv/cv.typ` turns it into `cv.pdf` with the academicv Typst template, leaving out the publications' DOIs, which only the website shows. Datasets keep theirs, their only reference. |
