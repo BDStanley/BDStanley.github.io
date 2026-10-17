@@ -1,43 +1,151 @@
 {
   "_about": "Citation counts per publication, from OpenAlex, shown at the end of each entry on the Publications page. Written by scripts/update-citations.py; see that file.",
   "by_doi": {
-    "10.1515/9781503643697": 10,
-    "10.1007/978-3-031-19246-3": 11,
-    "10.1080/21599165.2026.2740234": 0,
-    "10.1080/21599165.2026.2656881": 1,
-    "10.1353/jod.2025.a964585": 22,
-    "10.1057/s41304-025-00542-8": 10,
-    "10.1177/00104140241259458": 80,
-    "10.1177/08883254231177416": 3,
-    "10.1016/j.electstud.2022.102552": 21,
-    "10.1080/21599165.2021.1876676": 14,
-    "10.1017/s1537592721001924": 197,
-    "10.1177/1354068819863616": 6,
-    "10.1080/21599165.2020.1787161": 126,
-    "10.35757/stp.2019.47.3.01": 0,
-    "10.1177/0888325418783056": 54,
-    "10.30950/jcer.v15i4.1122": 64,
-    "10.35757/sm.2019.72.2.01": 0,
-    "10.1080/13510347.2015.1058782": 81,
-    "10.1177/1354068815615270": 0,
-    "10.1177/1354068814560911": 13,
-    "10.1080/09668136.2014.939522": 22,
-    "10.1016/j.postcomstud.2011.10.005": 156,
-    "10.1080/13569310701822289": 1156,
-    "10.1093/oxfordhb/9780192873149.013.0030": 0,
-    "10.4324/9781003197614-9": 1,
-    "10.1007/978-3-030-32025-6_8": 21,
-    "10.1007/978-3-319-96758-5_5": 66,
-    "10.4324/9781315123851-11": 1,
-    "10.1093/oxfordhb/9780198803560.013.6": 174,
-    "10.3920/978-90-8686-807-0_9": 4,
-    "10.4337/9781782545880.00013": 3,
-    "10.7910/dvn/fnesp1": 0,
-    "10.7910/dvn/yl1bve": 0,
-    "10.7910/dvn/c76jxd": 0
+    "10.1515/9781503643697": {
+      "citations": 10,
+      "openalex": "W4416898503"
+    },
+    "10.1007/978-3-031-19246-3": {
+      "citations": 11,
+      "openalex": "W4311945951"
+    },
+    "10.1080/21599165.2026.2740234": {
+      "citations": 0,
+      "openalex": "W7213268200"
+    },
+    "10.1080/21599165.2026.2656881": {
+      "citations": 1,
+      "openalex": "W7154509113"
+    },
+    "10.1353/jod.2025.a964585": {
+      "citations": 22,
+      "openalex": "W4411964174"
+    },
+    "10.1057/s41304-025-00542-8": {
+      "citations": 10,
+      "openalex": "W4411699291"
+    },
+    "10.1177/00104140241259458": {
+      "citations": 80,
+      "openalex": "W4400961322"
+    },
+    "10.1177/08883254231177416": {
+      "citations": 3,
+      "openalex": "W4384067592"
+    },
+    "10.1016/j.electstud.2022.102552": {
+      "citations": 21,
+      "openalex": "W4311778825"
+    },
+    "10.1080/21599165.2021.1876676": {
+      "citations": 14,
+      "openalex": "W3134042951"
+    },
+    "10.1017/s1537592721001924": {
+      "citations": 197,
+      "openalex": "W3182935039"
+    },
+    "10.1177/1354068819863616": {
+      "citations": 6,
+      "openalex": "W2965389762"
+    },
+    "10.1080/21599165.2020.1787161": {
+      "citations": 126,
+      "openalex": "W3038755807"
+    },
+    "10.35757/stp.2019.47.3.01": {
+      "citations": 0,
+      "openalex": "W3015912027"
+    },
+    "10.1177/0888325418783056": {
+      "citations": 54,
+      "openalex": "W2844791000"
+    },
+    "10.30950/jcer.v15i4.1122": {
+      "citations": 64,
+      "openalex": "W4234624935"
+    },
+    "10.35757/sm.2019.72.2.01": {
+      "citations": 0,
+      "openalex": "W3003892915"
+    },
+    "10.1080/13510347.2015.1058782": {
+      "citations": 81,
+      "openalex": "W1890813277"
+    },
+    "10.1177/1354068815615270": {
+      "citations": 0,
+      "openalex": "W2337091669"
+    },
+    "10.1177/1354068814560911": {
+      "citations": 13,
+      "openalex": "W2050851114"
+    },
+    "10.1080/09668136.2014.939522": {
+      "citations": 22,
+      "openalex": "W2066848328"
+    },
+    "10.1016/j.postcomstud.2011.10.005": {
+      "citations": 156,
+      "openalex": "W1991913317"
+    },
+    "10.1080/13569310701822289": {
+      "citations": 1156,
+      "openalex": "W2057438835"
+    },
+    "10.1093/oxfordhb/9780192873149.013.0030": {
+      "citations": 0,
+      "openalex": "W4417477101"
+    },
+    "10.4324/9781003197614-9": {
+      "citations": 1,
+      "openalex": "W4283830246"
+    },
+    "10.1007/978-3-030-32025-6_8": {
+      "citations": 21,
+      "openalex": "W2991479675"
+    },
+    "10.1007/978-3-319-96758-5_5": {
+      "citations": 66,
+      "openalex": "W2889872408"
+    },
+    "10.4324/9781315123851-11": {
+      "citations": 1,
+      "openalex": "W2958787932"
+    },
+    "10.1093/oxfordhb/9780198803560.013.6": {
+      "citations": 174,
+      "openalex": "W2774435638"
+    },
+    "10.3920/978-90-8686-807-0_9": {
+      "citations": 4,
+      "openalex": "W2495322324"
+    },
+    "10.4337/9781782545880.00013": {
+      "citations": 3,
+      "openalex": "W4252300336"
+    },
+    "10.7910/dvn/fnesp1": {
+      "citations": 0,
+      "openalex": "W7161546299"
+    },
+    "10.7910/dvn/yl1bve": {
+      "citations": 0,
+      "openalex": "W7161591158"
+    },
+    "10.7910/dvn/c76jxd": {
+      "citations": 0,
+      "openalex": "W7161579075"
+    }
   },
   "by_entry": {
-    "Markowski, Radosław, and Ben Stanley. 2016. 'Rozłamy socjopolityczne w Polsce: Iluzja czy rzeczywistość?' *Studia Socjologiczne* 4(223): 17–40.": 5,
-    "Kwiatkowska, Agnieszka, Mikołaj Cześnik, Marta Żerkowska-Balas, and Ben Stanley. 2016. 'Ideologiczna treść wymiaru lewica-prawica w Polsce w latach 1997-2015'. *Studia Socjologiczne* 4(223): 97–129.": 10
+    "Markowski, Radosław, and Ben Stanley. 2016. 'Rozłamy socjopolityczne w Polsce: Iluzja czy rzeczywistość?' *Studia Socjologiczne* 4(223): 17–40.": {
+      "citations": 5,
+      "openalex": "W2613363380"
+    },
+    "Kwiatkowska, Agnieszka, Mikołaj Cześnik, Marta Żerkowska-Balas, and Ben Stanley. 2016. 'Ideologiczna treść wymiaru lewica-prawica w Polsce w latach 1997-2015'. *Studia Socjologiczne* 4(223): 97–129.": {
+      "citations": 10,
+      "openalex": "W2612003034"
+    }
   }
 }

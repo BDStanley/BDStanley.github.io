@@ -65,21 +65,23 @@ _Updated: #month(latest)_
   eval(t, mode: "markup")
 }
 
-// OpenAlex's citation count at the end of each entry, before its full stop:
-// "… doi:10.xxx (12 citations)." From data/publication-citations.json
-// (scripts/update-citations.py), keyed by the entry's DOI, or by the whole entry
-// for those without one. Entries with no citations, or none that OpenAlex knows
-// of, are left as they are.
+// OpenAlex's citation count at the end of each entry, before its full stop and
+// linked to the publication's OpenAlex record: "… doi:10.xxx (12 citations)."
+// From data/publication-citations.json (scripts/update-citations.py), keyed by
+// the entry's DOI, or by the whole entry for those without one. Entries with no
+// citations, or none that OpenAlex knows of, are left as they are.
 #let pub-cites = json("/data/publication-citations.json")
 #let with-count(s) = {
   let m = s.match(regex("doi:(10\.[^\s]+)"))
-  let n = if m != none {
-    pub-cites.by_doi.at(lower(m.captures.at(0).trim(".", at: end)), default: 0)
+  let rec = if m != none {
+    pub-cites.by_doi.at(lower(m.captures.at(0).trim(".", at: end)), default: none)
   } else {
-    pub-cites.by_entry.at(s, default: 0)
+    pub-cites.by_entry.at(s, default: none)
   }
-  if n == 0 { return render-entry(s) }
-  let note = if n == 1 [ (1 citation)] else [ (#num(n) citations)]
+  if rec == none or rec.citations == 0 { return render-entry(s) }
+  let n = rec.citations
+  let label = if n == 1 [1 citation] else [#num(n) citations]
+  let note = [ (#link("https://openalex.org/works/" + rec.openalex, label))]
   if s.ends-with(".") [#render-entry(s.slice(0, -1))#note.] else [#render-entry(s)#note]
 }
 

@@ -30,7 +30,8 @@ the new numbers by hand; later runs carry on from them.
 
 It also writes data/publication-citations.json: OpenAlex's citation count for
 each publication in cv.yml, which the Publications page shows at the end of
-the entry, before its full stop, as "(12 citations)". Entries are matched by DOI or, for those without one, by
+the entry, before its full stop, as "(12 citations)", linked to the
+publication's OpenAlex record. Entries are matched by DOI or, for those without one, by
 title among the works OpenAlex links to Ben's ORCID iD (strictly, as
 update-publications.py matches them). The page looks them up by the entry's
 "doi:" DOI, or by the whole entry when it has none, so they are keyed that way.
@@ -74,7 +75,7 @@ DATA = os.path.abspath(os.path.join(HERE, "..", "data", "citations.json"))
 MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "citations.json"))
 PUB_DATA = os.path.abspath(os.path.join(HERE, "..", "data", "publication-citations.json"))
 PUB_MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "publication-citations.json"))
-OPENALEX_WORKS = "https://api.openalex.org/works?per-page=200&select=doi,title,cited_by_count"
+OPENALEX_WORKS = "https://api.openalex.org/works?per-page=200&select=id,doi,title,cited_by_count"
 # A "doi:" DOI as pages/publications.typ finds it, so both sides key an entry alike.
 PAGE_DOI = re.compile(r"doi:(10\.\S+)")
 
@@ -168,8 +169,12 @@ def scopus():
 
 
 def publication_counts():
-    """{"by_doi": {doi: n}, "by_entry": {entry: n}} for the cv.yml publications
-    OpenAlex knows."""
+    """{"by_doi": {doi: record}, "by_entry": {entry: record}} for the cv.yml
+    publications OpenAlex knows, where a record is {"citations": n, "openalex":
+    work ID} (the page links the count to https://openalex.org/works/<ID>)."""
+    def record(w):
+        return (w["cited_by_count"], w["id"].rsplit("/", 1)[-1])
+
     with open(pubs.DEFAULT_YML, encoding="utf-8") as fh:
         sections = pubs.parse(fh.read().split("\n"))
     entries = [t for key in pubs.PUB_SECTIONS for _, t in sections.get(key, {}).get("items", [])]
@@ -178,7 +183,7 @@ def publication_counts():
     for i in range(0, len(dois), 50):                   # OpenAlex takes up to 100 values per filter
         query = "|".join(urllib.parse.quote(d, safe="/") for d in dois[i:i + 50])
         for w in pubs.fetch_json(OPENALEX_WORKS + "&filter=doi:" + query)["results"]:
-            found[pubs.clean_doi(w["doi"])] = w["cited_by_count"]
+            found[pubs.clean_doi(w["doi"])] = record(w)
     mine = pubs.fetch_json(OPENALEX_WORKS + "&filter=author.orcid:" + pubs.ORCID)["results"]
 
     counts = {"by_doi": {}, "by_entry": {}}
@@ -186,14 +191,15 @@ def publication_counts():
         n = [found[d] for d in pubs.dois_in(t) if d in found]
         if not pubs.dois_in(t):                         # no DOI: match the title instead
             title = pubs.entry_title(t)
-            n = [w["cited_by_count"] for w in mine
+            n = [record(w) for w in mine
                  if title and w.get("title") and pubs.same_title(title, w["title"])]
         if n:
+            citations, work = max(n)                    # the most-cited record, if several match
             m = PAGE_DOI.search(t)
             if m:
-                counts["by_doi"][m.group(1).rstrip(".").lower()] = max(n)
+                counts["by_doi"][m.group(1).rstrip(".").lower()] = {"citations": citations, "openalex": work}
             else:
-                counts["by_entry"][t] = max(n)
+                counts["by_entry"][t] = {"citations": citations, "openalex": work}
     return counts
 
 
