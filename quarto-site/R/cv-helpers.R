@@ -98,16 +98,31 @@ render_entry <- function(s) {
   s
 }
 
+# OpenAlex's citation count after an entry, "(12 citations)", as on the Calepin
+# page: data/publication-citations.json (copied from calepin-site/data by its
+# scripts/update-citations.py) is keyed by the entry's DOI, or by the whole
+# entry for those without one. No note when there are no citations, or none
+# OpenAlex knows of.
+cite_note <- function(s, cites) {
+  m <- regmatches(s, regexec("doi:(10\\.\\S+)", s, perl = TRUE))[[1]]
+  n <- if (length(m) == 2) cites$by_doi[[tolower(sub("\\.+$", "", m[2]))]] else cites$by_entry[[s]]
+  if (is.null(n) || n == 0) return("")
+  if (n == 1) " (1 citation)" else sprintf(" (%s citations)", format(n, big.mark = ","))
+}
+
 # Publications: emit the monographs / journal_articles / book_chapters /
 # datasets sections in CV order, with the CV's own titles, as bullet lists.
 emit_publications <- function(cv = read_cv()) {
   pub_keys <- c("monographs", "journal_articles", "book_chapters", "datasets")
+  root <- getOption("cvsite_root", default = proj_root())
+  cites_file <- file.path(root, "data", "publication-citations.json")
+  cites <- if (file.exists(cites_file)) jsonlite::read_json(cites_file) else list()
   for (sec in cv$sections) {
     if (!is.null(sec$key) && sec$key %in% pub_keys) {
       entries <- sec$entries %||% list()
       if (length(entries) > 0) {
         cat("\n## ", sec$title, "\n\n", sep = "")
-        for (e in entries) cat("- ", render_entry(e), "\n", sep = "")
+        for (e in entries) cat("- ", render_entry(e), cite_note(e, cites), "\n", sep = "")
         cat("\n")
       }
     }

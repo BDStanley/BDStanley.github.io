@@ -65,6 +65,21 @@ _Updated: #month(latest)_
   eval(t, mode: "markup")
 }
 
+// OpenAlex's citation count after each entry, "(12 citations)", from
+// data/publication-citations.json (scripts/update-citations.py). It is keyed by
+// the entry's DOI, or by the whole entry for those without one. Entries with no
+// citations, or none that OpenAlex knows of, get no note.
+#let pub-cites = json("/data/publication-citations.json")
+#let cite-note(s) = {
+  let m = s.match(regex("doi:(10\.[^\s]+)"))
+  let n = if m != none {
+    pub-cites.by_doi.at(lower(m.captures.at(0).trim(".", at: end)), default: 0)
+  } else {
+    pub-cites.by_entry.at(s, default: 0)
+  }
+  if n == 1 [ (1 citation)] else if n > 1 [ (#num(n) citations)]
+}
+
 #{
   let pub-keys = ("monographs", "journal_articles", "book_chapters", "datasets")
   for sec in cv.sections {
@@ -74,7 +89,7 @@ _Updated: #month(latest)_
       if entries == none { entries = () }
       if entries.len() > 0 {
         heading(level: 1, sec.title)
-        list(..entries.map(render-entry))
+        list(..entries.map(e => [#render-entry(e)#cite-note(e)]))
       }
     }
   }

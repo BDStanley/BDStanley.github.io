@@ -26,8 +26,9 @@ Key files:
 | `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
 | `calepin-site/scripts/update-datasets.py` | Keeps the Datasets section of `cv/cv.yml` in step with Ben's Harvard Dataverse collection. See [Datasets](#datasets). |
 | `calepin-site/data/publications-sync.json` | The record those two scripts keep: DOIs never to add (`ignore`), the publications `update-publications.py` added (`managed`) and the Dataverse DOIs `update-datasets.py` last wrote (`datasets`). |
-| `calepin-site/scripts/update-citations.py` | Refreshes the Scopus, Google Scholar, OpenAlex and Sage Policy Profiles numbers in `data/citations.json`. See [Citation counts](#citation-counts). |
+| `calepin-site/scripts/update-citations.py` | Refreshes the Scopus, Google Scholar, OpenAlex and Sage Policy Profiles numbers in `data/citations.json`, and each publication's OpenAlex count in `data/publication-citations.json`. See [Citation counts](#citation-counts). |
 | `calepin-site/data/citations.json` | The numbers in the Citations list on the Publications page, each with the month it dates from. |
+| `calepin-site/data/publication-citations.json` | OpenAlex's citation count for each publication, shown after its entry on the Publications page. |
 | `calepin-site/scripts/make-favicon.py` | Draws the favicon (a white "BS" in bold Jost on the navbar's red) as `assets/favicon.svg`, `assets/favicon-32.png` and `assets/apple-touch-icon.png`. Not part of the build: the icons are committed, so run it only to change the design. |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
 | `calepin-site/README.md` | Installing Calepin, and notes on the theme and the CV set-up. |
@@ -119,6 +120,8 @@ The Citations list at the top of the Publications page reads its numbers from `c
 Web of Science is not listed: its author records are shown only to signed-in users, and to automated visitors only after a CAPTCHA.
 
 Each source records the month its numbers date from. The page's "Updated" line shows the latest month, and any older source shows its own month beside its name. A source keeps its previous numbers if it cannot be reached, if its page no longer has the numbers where the script looks (for instance a Google Scholar CAPTCHA), or if any number has fallen by more than a quarter. The last case prints a `[citations] needs attention` line; if the fall is real, enter the new numbers by hand. The script copies the file to `quarto-site/data/` for the Quarto backup. `--dry-run` shows what it would change without writing anything.
+
+The same script also fetches OpenAlex's citation count for each publication in `cv/cv.yml` into `data/publication-citations.json` (copied to `quarto-site/data/` too). The Publications page shows it after the entry, as "(12 citations)", or "(1 citation)"; entries with no citations, or none OpenAlex knows of, get no note. Entries are matched by DOI, and the few without one by title among the works OpenAlex links to Ben's ORCID iD. The CV PDF does not show these counts. If OpenAlex cannot be reached, or matches more than a quarter fewer publications than last time, the previous counts stay.
 
 ## Deploying
 

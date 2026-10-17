@@ -28,7 +28,16 @@ CAPTCHA), or when any of its numbers has fallen by more than a quarter, which is
 far more likely to be a misread page than a real loss. If a fall is real, enter
 the new numbers by hand; later runs carry on from them.
 
-The file is copied to quarto-site/data/ so the Quarto backup shows the same
+It also writes data/publication-citations.json: OpenAlex's citation count for
+each publication in cv.yml, which the Publications page shows after the entry
+as "(12 citations)". Entries are matched by DOI or, for those without one, by
+title among the works OpenAlex links to Ben's ORCID iD (strictly, as
+update-publications.py matches them). The page looks them up by the entry's
+"doi:" DOI, or by the whole entry when it has none, so they are keyed that way.
+If OpenAlex can't be reached, or matches far fewer publications than last time,
+the previous counts stay.
+
+Both files are copied to quarto-site/data/ so the Quarto backup shows the same
 numbers.
 
 Run by build.sh. Network failures are non-fatal: the build then uses the
@@ -38,6 +47,7 @@ Usage:  python3 scripts/update-citations.py [--dry-run]
 
 import datetime
 import html
+import importlib.util
 import json
 import os
 import re
@@ -46,6 +56,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 SCHOLAR_URL = "https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en"
@@ -61,6 +72,19 @@ MAX_FALL = 0.25
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.abspath(os.path.join(HERE, "..", "data", "citations.json"))
 MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "citations.json"))
+PUB_DATA = os.path.abspath(os.path.join(HERE, "..", "data", "publication-citations.json"))
+PUB_MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "publication-citations.json"))
+OPENALEX_WORKS = "https://api.openalex.org/works?per-page=200&select=doi,title,cited_by_count"
+# A "doi:" DOI as pages/publications.typ finds it, so both sides key an entry alike.
+PAGE_DOI = re.compile(r"doi:(10\.\S+)")
+
+# Reading cv.yml and matching titles come from update-publications.py, so
+# publications are recognised exactly as there. No .pyc: scripts/__pycache__ is
+# not git-ignored.
+sys.dont_write_bytecode = True
+_spec = importlib.util.spec_from_file_location("update_publications", os.path.join(HERE, "update-publications.py"))
+pubs = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(pubs)
 
 SCHOLAR_ROW = re.compile(r'<td class="gsc_rsb_sc1">.*?>([^<>]+)</a></td><td class="gsc_rsb_std">(\d+)</td>', re.S)
 
@@ -143,6 +167,36 @@ def scopus():
     return {"citations": sum(counts), "h_index": sum(1 for i, n in enumerate(counts, 1) if n >= i)}
 
 
+def publication_counts():
+    """{"by_doi": {doi: n}, "by_entry": {entry: n}} for the cv.yml publications
+    OpenAlex knows."""
+    with open(pubs.DEFAULT_YML, encoding="utf-8") as fh:
+        sections = pubs.parse(fh.read().split("\n"))
+    entries = [t for key in pubs.PUB_SECTIONS for _, t in sections.get(key, {}).get("items", [])]
+    dois = sorted({d for t in entries for d in pubs.dois_in(t)})
+    found = {}
+    for i in range(0, len(dois), 50):                   # OpenAlex takes up to 100 values per filter
+        query = "|".join(urllib.parse.quote(d, safe="/") for d in dois[i:i + 50])
+        for w in pubs.fetch_json(OPENALEX_WORKS + "&filter=doi:" + query)["results"]:
+            found[pubs.clean_doi(w["doi"])] = w["cited_by_count"]
+    mine = pubs.fetch_json(OPENALEX_WORKS + "&filter=author.orcid:" + pubs.ORCID)["results"]
+
+    counts = {"by_doi": {}, "by_entry": {}}
+    for t in entries:
+        n = [found[d] for d in pubs.dois_in(t) if d in found]
+        if not pubs.dois_in(t):                         # no DOI: match the title instead
+            title = pubs.entry_title(t)
+            n = [w["cited_by_count"] for w in mine
+                 if title and w.get("title") and pubs.same_title(title, w["title"])]
+        if n:
+            m = PAGE_DOI.search(t)
+            if m:
+                counts["by_doi"][m.group(1).rstrip(".").lower()] = max(n)
+            else:
+                counts["by_entry"][t] = max(n)
+    return counts
+
+
 SOURCES = (("scopus", "Scopus", scopus),
            ("google_scholar", "Google Scholar", google_scholar),
            ("openalex", "OpenAlex", openalex),
@@ -160,6 +214,17 @@ def summary(nums):
 def write(path, content):
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(content)
+
+
+def save(path, mirror, original, content):
+    """Write content to path, and to its quarto-site copy, where they differ."""
+    if content != original:
+        write(path, content)
+    if os.path.isdir(os.path.dirname(mirror)):
+        mirrored = open(mirror, encoding="utf-8").read() if os.path.exists(mirror) else None
+        if mirrored != content:
+            write(mirror, content)
+            print("[citations] copied to quarto-site/data/%s." % os.path.basename(mirror))
 
 
 def main():
@@ -193,17 +258,32 @@ def main():
         else:
             print("[citations] %s: unchanged (%s)" % (label, summary(new)))
 
+    pub_original = open(PUB_DATA, encoding="utf-8").read() if os.path.exists(PUB_DATA) else "{}"
+    pub = json.loads(pub_original)
+    before = len(pub.get("by_doi", {})) + len(pub.get("by_entry", {}))
+    try:
+        counts = publication_counts()
+    except Exception as e:
+        print("[citations] warning: could not read the per-publication counts from OpenAlex"
+              " (%s: %s); keeping the previous ones." % (type(e).__name__, e))
+    else:
+        matched = len(counts["by_doi"]) + len(counts["by_entry"])
+        if matched < (1 - MAX_FALL) * before:
+            print("[citations] needs attention: OpenAlex matched %d publications, down from %d;"
+                  " keeping the previous per-publication counts." % (matched, before))
+        else:
+            pub = dict(_about="Citation counts per publication, from OpenAlex, shown after each entry on"
+                              " the Publications page. Written by scripts/update-citations.py; see that file.",
+                       **counts)
+            print("[citations] OpenAlex counts for %d of the CV's publications." % matched)
+
     content = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    pub_content = json.dumps(pub, indent=2, ensure_ascii=False) + "\n"
     if dry:
         print("[citations] dry run: nothing written.")
         return 0
-    if content != original:
-        write(DATA, content)
-    if os.path.isdir(os.path.dirname(MIRROR)):
-        mirrored = open(MIRROR, encoding="utf-8").read() if os.path.exists(MIRROR) else None
-        if mirrored != content:
-            write(MIRROR, content)
-            print("[citations] copied to quarto-site/data/citations.json.")
+    save(DATA, MIRROR, original, content)
+    save(PUB_DATA, PUB_MIRROR, pub_original, pub_content)
     return 0
 
 
