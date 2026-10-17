@@ -29,7 +29,7 @@ Key files:
 | `calepin-site/scripts/update-citations.py` | Refreshes the Scopus, Google Scholar, OpenAlex and Sage Policy Profiles numbers in `data/citations.json`, and each publication's OpenAlex count in `data/publication-citations.json`. See [Citation counts](#citation-counts). |
 | `calepin-site/data/citations.json` | The numbers in the Citations list on the Publications page, each with the month it dates from. |
 | `calepin-site/data/publication-citations.json` | OpenAlex's citation count for each publication, shown at the end of its entry on the Publications page. |
-| `calepin-site/scripts/make-favicon.py` | Draws the favicon (a white "BS" in bold Jost on the navbar's red) as `assets/favicon.svg`, `assets/favicon-32.png` and `assets/apple-touch-icon.png`. Not part of the build: the icons are committed, so run it only to change the design. |
+| `calepin-site/scripts/make-favicon.py` | Draws the favicon (a white "BS" in bold Jost on the navbar's red) as `assets/favicon.svg`, `assets/favicon-32.png`, `assets/apple-touch-icon.png` and `assets/favicon.ico` (which `build.sh` also copies to the site root). Not part of the build: the icons are committed, so run it only to change the design. |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
 | `calepin-site/README.md` | Installing Calepin, and notes on the theme and the CV set-up. |
 
@@ -48,7 +48,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | Teaching | The Teaching repository. Course descriptions are in `COURSE_DESCRIPTIONS` in `scripts/sync-teaching.py` and icons in `assets/teaching/<slug>.svg`. The generated `pages/teaching.typ` and `pages/teaching/` are not edited by hand. |
 | Navigation bar, social links, footer | `calepin.toml` |
 | Fonts and colours | `themes/site-theme/css/90_site.css` |
-| Favicon | `scripts/make-favicon.py`, then run it. `favicon` in `calepin.toml` points to the SVG; `themes/site-theme/partials/site-head.html` links the PNGs. |
+| Favicon | `scripts/make-favicon.py`, then run it. `favicon` in `calepin.toml` points to the SVG; `themes/site-theme/partials/site-head.html` links the PNGs. Then raise the `?v=` on those links in both files, or browsers go on showing the cached old icon. |
 
 ## Building
 
@@ -65,7 +65,7 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 4. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
 5. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
 6. refreshes the citation counts in `data/citations.json` (see [Citation counts](#citation-counts)), keeping the previous numbers for any source it cannot read;
-7. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME` and an empty `.nojekyll`.
+7. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME`, an empty `.nojekyll` and a copy of the favicon at `/favicon.ico`.
 
 A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–6 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Kultura Liberalna list and the citation counts.
 
@@ -121,7 +121,7 @@ Web of Science is not listed: its author records are shown only to signed-in use
 
 Each source records the month its numbers date from. The page's "Updated" line shows the latest month, and any older source shows its own month beside its name. A source keeps its previous numbers if it cannot be reached, if its page no longer has the numbers where the script looks (for instance a Google Scholar CAPTCHA), or if any number has fallen by more than a quarter. The last case prints a `[citations] needs attention` line; if the fall is real, enter the new numbers by hand. The script copies the file to `quarto-site/data/` for the Quarto backup. `--dry-run` shows what it would change without writing anything.
 
-The same script also fetches OpenAlex's citation count for each publication in `cv/cv.yml` into `data/publication-citations.json` (copied to `quarto-site/data/` too). The Publications page shows it at the end of the entry, before the full stop: "… doi:10.xxx (12 citations)." or "(1 citation)", with the count linking to the publication's record on OpenAlex (`https://openalex.org/works/W…`; the file stores each work's ID alongside its count). Entries with no citations, or none OpenAlex knows of, get no note. Entries are matched by DOI, and the few without one by title among the works OpenAlex links to Ben's ORCID iD. The CV PDF does not show these counts. If OpenAlex cannot be reached, or matches more than a quarter fewer publications than last time, the previous counts stay.
+The same script also fetches OpenAlex's citation count for each publication in `cv/cv.yml` into `data/publication-citations.json` (copied to `quarto-site/data/` too). The Publications page shows it at the end of the entry, before the full stop: "… doi:10.xxx (12 citations)." or "(1 citation)", with the count linking to OpenAlex's list of the works citing that publication (`https://openalex.org/works?filter=cites:W…`; the file stores each work's OpenAlex ID alongside its count). A publication OpenAlex has but nothing cites yet shows "(0 citations)", unlinked; one OpenAlex does not have shows "(no citation count available)". Entries are matched by DOI, and the few without one by title among the works OpenAlex links to Ben's ORCID iD. The CV PDF does not show these counts. If OpenAlex cannot be reached, or matches more than a quarter fewer publications than last time, the previous counts stay.
 
 ## Deploying
 

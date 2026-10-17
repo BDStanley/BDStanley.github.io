@@ -30,8 +30,8 @@ the new numbers by hand; later runs carry on from them.
 
 It also writes data/publication-citations.json: OpenAlex's citation count for
 each publication in cv.yml, which the Publications page shows at the end of
-the entry, before its full stop, as "(12 citations)", linked to the
-publication's OpenAlex record. Entries are matched by DOI or, for those without one, by
+the entry, before its full stop, as "(12 citations)", linked to OpenAlex's
+list of the works citing it. Entries are matched by DOI or, for those without one, by
 title among the works OpenAlex links to Ben's ORCID iD (strictly, as
 update-publications.py matches them). The page looks them up by the entry's
 "doi:" DOI, or by the whole entry when it has none, so they are keyed that way.

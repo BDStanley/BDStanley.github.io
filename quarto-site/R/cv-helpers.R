@@ -98,19 +98,25 @@ render_entry <- function(s) {
   s
 }
 
-# An entry rendered with OpenAlex's citation count before its full stop, linked
-# to the publication's OpenAlex record, as on the Calepin page: "… doi:10.xxx
-# (12 citations)." data/publication-citations.json (copied from
-# calepin-site/data by its scripts/update-citations.py) is keyed by the entry's
-# DOI, or by the whole entry for those without one. Entries with no citations,
-# or none OpenAlex knows of, are rendered as they are.
+# An entry rendered with OpenAlex's citation count before its full stop, as on
+# the Calepin page: "… doi:10.xxx (12 citations).", linked to OpenAlex's list of
+# the works citing it; "(0 citations)", unlinked, when nothing cites it yet; and
+# "(no citation count available)" when OpenAlex doesn't have the publication.
+# data/publication-citations.json (copied from calepin-site/data by its
+# scripts/update-citations.py) is keyed by the entry's DOI, or by the whole
+# entry for those without one.
 render_with_count <- function(s, cites) {
   m <- regmatches(s, regexec("doi:(10\\.\\S+)", s, perl = TRUE))[[1]]
   rec <- if (length(m) == 2) cites$by_doi[[tolower(sub("\\.+$", "", m[2]))]] else cites$by_entry[[s]]
-  if (is.null(rec) || rec$citations == 0) return(render_entry(s))
-  n <- rec$citations
-  label <- if (n == 1) "1 citation" else sprintf("%s citations", format(n, big.mark = ","))
-  note <- sprintf(" ([%s](https://openalex.org/works/%s))", label, rec$openalex)
+  note <- if (is.null(rec)) {
+    " (no citation count available)"
+  } else if (rec$citations == 0) {
+    " (0 citations)"
+  } else {
+    n <- rec$citations
+    label <- if (n == 1) "1 citation" else sprintf("%s citations", format(n, big.mark = ","))
+    sprintf(" ([%s](https://openalex.org/works?filter=cites:%s))", label, rec$openalex)
+  }
   if (endsWith(s, ".")) paste0(render_entry(sub("\\.$", "", s)), note, ".") else paste0(render_entry(s), note)
 }
 

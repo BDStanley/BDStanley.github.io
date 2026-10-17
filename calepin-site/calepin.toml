@@ -12,8 +12,10 @@ description  = "Associate Professor at the Centre for the Study of Democracy, SW
 base_url     = "https://benstanley.eu"
 # White "BS" on the navbar red, made by scripts/make-favicon.py. Absolute, as
 # Calepin writes it into every page's <head> as it stands. The PNG versions for
-# Safari and iOS are linked from themes/site-theme/partials/site-head.html.
-favicon      = "/assets/favicon.svg"
+# Safari and iOS are linked from themes/site-theme/partials/site-head.html. The
+# ?v= makes browsers fetch the icon afresh instead of showing a cached old one;
+# raise it there and here whenever the icon changes.
+favicon      = "/assets/favicon.svg?v=2"
 
 # Thin local overlay theme: it `extends` Calepin's built-in `academic` theme and
 # layers the brand on top. Brand colours/fonts live in the theme's own CSS bundle

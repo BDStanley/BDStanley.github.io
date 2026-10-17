@@ -96,9 +96,12 @@ find "$OUT" -name '*.typ' -delete
 
 # GitHub Pages specifics:
 #  - CNAME keeps the custom domain (benstanley.eu).
-#  - .nojekyll disables Jekyll, so the .calepin/ folder (CSS bundle, favicon)
+#  - .nojekyll disables Jekyll, so the .calepin/ folder (CSS bundle, manifest)
 #    is served rather than skipped as a dot-folder — without this, styling breaks.
 printf 'benstanley.eu\n' > "$OUT/CNAME"
 : > "$OUT/.nojekyll"
+# Browsers, feed readers and search engines ask for /favicon.ico without reading
+# the page's <link rel="icon">, so put the icon there too.
+cp "$SRC/assets/favicon.ico" "$OUT/favicon.ico"
 
-echo "✓ Built into $OUT (pruned, added CNAME + .nojekyll)."
+echo "✓ Built into $OUT (pruned, added CNAME, .nojekyll and favicon.ico)."
