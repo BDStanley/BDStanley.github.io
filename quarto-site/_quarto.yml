@@ -21,6 +21,7 @@ project:
     - index.qmd
     - 404.qmd
     - pages/publications.qmd
+    - pages/citation-reach.qmd   # linked from Publications, not the navbar
     - pages/research-projects.qmd
     - pages/teaching.qmd
     - pages/teaching/*.qmd

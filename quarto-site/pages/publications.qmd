@@ -66,7 +66,7 @@ cat(
           when(scopus), num(scopus$citations), scopus$h_index),
   sprintf("- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en)%s: %s (h-index = %s, i10-index = %s)\n",
           when(gs), num(gs$citations), gs$h_index, gs$i10_index),
-  sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s)\n",
+  sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s; [reach by country and discipline](citation-reach.qmd))\n",
           when(oa), num(oa$citations), oa$h_index, oa$i10_index),
   sprintf("- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley)%s: %s citations across %s policy documents.\n",
           when(sage), num(sage$citations), num(sage$documents)),

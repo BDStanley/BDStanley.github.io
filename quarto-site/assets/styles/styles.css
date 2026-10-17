@@ -563,16 +563,274 @@ footer.footer a:focus-visible {
 }
 
 /* ---- Teaching: per-course pages --------------------------------------------
-   "← All courses" back-link above the course title. */
-#quarto-document-content .teaching-back {
+   "← All courses" back-link above the course title (and "← Publications"
+   above the Citation reach page). */
+#quarto-document-content :is(.teaching-back, .reach-back) {
   margin-bottom: 0.4rem;
   font-size: 0.85em;
 }
-.teaching-back a {
+:is(.teaching-back, .reach-back) a {
   color: #5f6b7a !important;
   text-decoration: none;
 }
-.teaching-back a:hover {
+:is(.teaching-back, .reach-back) a:hover {
   color: #8b0000 !important;
   text-decoration: underline;
+}
+
+/* ---- Citation reach page (pages/citation-reach.qmd) ----------------------- */
+/* Charts built as plain HTML and inline SVG (R/reach-helpers.R) from
+   data/reach.json, which holds every value, colour and hover text. Marks follow the
+   dataviz conventions: bars at most 24px thick with a 4px rounded data end,
+   a 2px white gap between stacked segments, hairline grid, text in ink colours
+   (never the series colour), a legend for each multi-colour chart and a table
+   under each one. Copied from the Calepin theme's css/90_site.css (where the
+   data comes from scripts/update-reach.py); keep the two in step. */
+.reach-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0 0.4rem;
+}
+.reach-kpi-value {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1f2933;
+}
+.reach-kpi-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #5f6b7a;
+}
+@media (max-width: 600px) {
+  .reach-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Map: countries separated by a hairline of white; a hovered country is outlined.
+   (Element-qualified selectors here and on the legend outrank the Calepin
+   theme's own figure and figcaption rules.) */
+figure.reach-map {
+  margin: 1rem 0 1.5rem;
+}
+.reach-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.reach-map-svg path {
+  stroke: #ffffff;
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+.reach-map-svg .reach-map-dot {
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
+.reach-map-svg :is(path, circle):hover {
+  stroke: #1f2933;
+  stroke-width: 1;
+}
+
+/* Legends: a swatch beside each name, in the secondary ink. */
+:is(div, figcaption).reach-legend {
+  display: flex;
+  max-width: none;
+  padding: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.9rem;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #5f6b7a;
+}
+.reach-legend-title {
+  font-weight: 600;
+  color: #373c44;
+}
+.reach-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.reach-swatch {
+  display: inline-block;
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 2px;
+}
+
+/* Horizontal bars: right-aligned labels, then the bar with its value at the tip. */
+.reach-bars {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.9rem 0 0.8rem;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+.reach-bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+.reach-bar-label {
+  text-align: right;
+  color: #373c44;
+}
+.reach-bar-area {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.reach-bar {
+  flex: none;
+  width: calc((100% - 3.5rem) * var(--w));
+  min-width: 2px;
+  height: 12px;
+  border-radius: 0 4px 4px 0;
+}
+.reach-bar-value {
+  font-size: 0.8rem;
+  color: #5f6b7a;
+}
+.reach-bar-row:hover .reach-bar {
+  filter: brightness(1.1);
+}
+@media (max-width: 600px) {
+  .reach-bar-row { grid-template-columns: minmax(0, 1fr); gap: 0.1rem; }
+  .reach-bar-label { text-align: left; }
+}
+
+/* Stacked columns by year, with a hairline grid and the ticks on the left. */
+.reach-years {
+  margin: 0.8rem 0 0.8rem;
+  font-size: 0.75rem;
+  color: #5f6b7a;
+}
+.reach-years-plot {
+  position: relative;
+  height: 13rem;
+  margin: 0.6rem 0 0 2.2rem;
+  border-bottom: 1px solid #c3c2b7;
+}
+.reach-tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #ecebe6;
+}
+.reach-tick span {
+  position: absolute;
+  right: 100%;
+  margin-right: 0.4rem;
+  transform: translateY(-50%);
+  font-variant-numeric: tabular-nums;
+}
+.reach-cols {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+.reach-col {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.reach-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  width: min(24px, 70%);
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+.reach-seg {
+  flex-shrink: 1;
+  flex-basis: 0;
+  min-height: 2px;
+}
+.reach-col:hover .reach-stack {
+  filter: brightness(1.1);
+}
+.reach-years-axis {
+  display: flex;
+  margin: 0.3rem 0 0 2.2rem;
+}
+/* Equal slots under the columns, even where a label is wider than its slot. */
+.reach-year {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 700px) {
+  .reach-year.minor { visibility: hidden; }
+}
+
+/* The table under each chart, collapsed until asked for. */
+.reach-table {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+}
+/* Spelt out rather than left to Pico's details styling, so the Quarto backup
+   can copy it: dark text, a chevron at the right that turns down when open. */
+details.reach-table > summary {
+  display: block;
+  cursor: pointer;
+  list-style: none;
+  line-height: 1rem;
+  color: #373c44;
+}
+details.reach-table > summary::-webkit-details-marker {
+  display: none;
+}
+details.reach-table > summary::after {
+  content: "";
+  display: block;
+  float: right;
+  width: 1rem;
+  height: 1rem;
+  margin-inline-start: 0.5rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") right / 1rem no-repeat;
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease-in-out;
+}
+details.reach-table[open] > summary {
+  margin-bottom: 1rem;
+}
+details.reach-table[open] > summary::after {
+  transform: rotate(0);
+}
+.reach-table-scroll {
+  overflow-x: auto;
+}
+.reach-table table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  margin: 0.6rem 0 0;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.reach-table :is(th, td) {
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid #d8dee6;
+  text-align: left;
+  vertical-align: top;
+}
+.reach-table th {
+  font-weight: 600;
+  color: #374151;
+}
+.reach-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }

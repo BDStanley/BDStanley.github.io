@@ -82,6 +82,13 @@ python3 "$SRC/scripts/update-kl.py" || echo "  (skipped: update-kl.py failed; us
 echo "→ Refreshing citation counts ..."
 python3 "$SRC/scripts/update-citations.py" || echo "  (skipped: update-citations.py failed; using the committed counts)"
 
+# Refresh the Citation reach page's data (data/reach.json): the countries,
+# disciplines and years of the works citing Ben's, from OpenAlex. If OpenAlex
+# can't be read, or finds far fewer citations than last time, the previous data
+# stays; network failures are non-fatal.
+echo "→ Refreshing the citation reach data ..."
+python3 "$SRC/scripts/update-reach.py" || echo "  (skipped: update-reach.py failed; using the committed data)"
+
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 

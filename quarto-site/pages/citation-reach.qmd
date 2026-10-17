@@ -1,0 +1,109 @@
+---
+pagetitle: "Citation reach"
+---
+
+<!-- Not in the navigation bar: the OpenAlex line of the Citations list on the
+     Publications page links here. The Quarto twin of
+     calepin-site/pages/citation-reach.typ: the charts' markup comes from
+     R/reach-helpers.R, the numbers from data/reach.json and the map from
+     data/world-map.json (both copied here by the Calepin build). -->
+
+```{r}
+#| include: false
+root <- Sys.getenv("QUARTO_PROJECT_DIR", ".")
+options(cvsite_root = root)
+source(file.path(root, "R", "reach-helpers.R"))
+t <- reach$totals
+top_countries <- reach$countries[seq_len(min(reach$top_countries, length(reach$countries)))]
+top_subfields <- reach$subfields[seq_len(min(reach$top_subfields, length(reach$subfields)))]
+```
+
+<p class="reach-back"><a href="publications.html">← Publications</a></p>
+
+## Citation reach
+
+*Updated: `r reach_month(reach$as_of)`*
+
+Where, and in which disciplines, my work is cited. The figures come from
+[OpenAlex](https://openalex.org/authors/A5015716464), an open index of
+scholarly works, and cover the works it records as citing my publications.
+
+```{r}
+#| output: asis
+reach_html(reach_kpis())
+```
+
+## Countries
+
+Where the scholars citing my work are based, by the institutions they list on
+the citing works. Hover over a country to see its numbers.
+
+```{r}
+#| output: asis
+reach_html(reach_map())
+```
+
+The `r reach$top_countries` countries with the most citing scholars:
+
+```{r}
+#| output: asis
+reach_html(reach_bars(top_countries, "name", "scholars"))
+reach_html(reach_table(sprintf("All %d countries", t$countries), c("Country", "Citing scholars", "Citing works"),
+                       lapply(reach$countries, function(c) list(c$name, c$scholars, c$works))))
+```
+
+## Disciplines
+
+Citations by the discipline of the citing work: the field of its main topic in
+OpenAlex's classification of research. The colours are those of the chart by
+year below, where the smaller fields are grouped as Other.
+
+```{r}
+#| output: asis
+reach_html(reach_bars(reach$fields, "name", "citations"))
+reach_html(reach_table("As a table", c("Discipline", "Citations", "Share"),
+                       lapply(reach$fields, function(f) list(f$name, f$citations, paste0(f$share, "%")))))
+```
+
+## Subdisciplines
+
+The `r reach$top_subfields` subdisciplines (OpenAlex's subfields) with the most
+citations, coloured by their discipline.
+
+```{r}
+#| output: asis
+reach_html(reach_bars(top_subfields, "name", "citations"))
+reach_html(reach_table(sprintf("All %d subdisciplines", length(reach$subfields)),
+                       c("Subdiscipline", "Discipline", "Citations"),
+                       lapply(reach$subfields, function(s) list(s$name, s$field, s$citations))))
+```
+
+## Citations by year
+
+Citations each year, by the year the citing work was published, divided by
+discipline. Hover over a bar to see its numbers.
+
+```{r}
+#| output: asis
+reach_html(paste(reach_years(), collapse = ""))
+reach_html(reach_year_table())
+```
+
+## About these figures
+
+- OpenAlex links `r t$my_works` works to my ORCID iD. A citation is a work that
+  cites one of them; a work citing two of them counts twice, as in OpenAlex's own
+  totals. `r t$self_citing_works` of the `r reach_num(t$citing_works)` citing works are my own.
+- Disciplines and subdisciplines are the fields and subfields of each citing
+  work's main topic in OpenAlex's classification (domains, fields, subfields and
+  topics). `r reach_num(t$citations_without_topic)` citations come from works OpenAlex has
+  not classified: they are left out of the discipline charts and shown as
+  Unclassified in the chart by year.
+- Citing scholars are the authors of the citing works, other than me, each counted
+  once in each country of the institutions they list. `r reach_num(t$works_without_country)`
+  of the citing works list no institution, so their authors have no country.
+  Countries too small to see on the map are shown as dots.
+- The years run from `r t$first_year`, when my first work appeared; the
+  `r t$citations_before_first_year` citations OpenAlex dates earlier are dating
+  errors and are left out. The latest year is counted to `r reach_month(reach$as_of)`.
+- The figures are refreshed from OpenAlex whenever the site is rebuilt.

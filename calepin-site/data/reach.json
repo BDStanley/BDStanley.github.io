@@ -1,0 +1,1754 @@
+{
+ "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
+ "as_of": "2026-10",
+ "totals": {
+  "citations": 2329,
+  "citing_works": 2030,
+  "scholars": 2152,
+  "countries": 74,
+  "my_works": 48,
+  "first_year": 2008,
+  "self_citing_works": 16,
+  "works_without_country": 484,
+  "citations_without_topic": 99,
+  "citations_before_first_year": 2,
+  "citations_undated": 0,
+  "classified_citations": 2230
+ },
+ "fields": [
+  {
+   "name": "Social Sciences",
+   "citations": 2117,
+   "share": 94.9,
+   "colour": "#2a78d6",
+   "w": 1.0,
+   "tip": "Social Sciences: 2,117 citations (94.9% of classified citations)"
+  },
+  {
+   "name": "Arts and Humanities",
+   "citations": 45,
+   "share": 2.0,
+   "colour": "#eb6834",
+   "w": 0.0213,
+   "tip": "Arts and Humanities: 45 citations (2.0% of classified citations)"
+  },
+  {
+   "name": "Business, Management and Accounting",
+   "citations": 26,
+   "share": 1.2,
+   "colour": "#1baf7a",
+   "w": 0.0123,
+   "tip": "Business, Management and Accounting: 26 citations (1.2% of classified citations)"
+  },
+  {
+   "name": "Economics, Econometrics and Finance",
+   "citations": 17,
+   "share": 0.8,
+   "colour": "#eda100",
+   "w": 0.008,
+   "tip": "Economics, Econometrics and Finance: 17 citations (0.8% of classified citations)"
+  },
+  {
+   "name": "Psychology",
+   "citations": 12,
+   "share": 0.5,
+   "colour": "#e87ba4",
+   "w": 0.0057,
+   "tip": "Psychology: 12 citations (0.5% of classified citations)"
+  },
+  {
+   "name": "Medicine",
+   "citations": 5,
+   "share": 0.2,
+   "colour": "#a9a79f",
+   "w": 0.0024,
+   "tip": "Medicine: 5 citations (0.2% of classified citations)"
+  },
+  {
+   "name": "Decision Sciences",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#a9a79f",
+   "w": 0.0009,
+   "tip": "Decision Sciences: 2 citations (0.1% of classified citations)"
+  },
+  {
+   "name": "Environmental Science",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#a9a79f",
+   "w": 0.0009,
+   "tip": "Environmental Science: 2 citations (0.1% of classified citations)"
+  },
+  {
+   "name": "Agricultural and Biological Sciences",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0005,
+   "tip": "Agricultural and Biological Sciences: 1 citation (0.0% of classified citations)"
+  },
+  {
+   "name": "Computer Science",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0005,
+   "tip": "Computer Science: 1 citation (0.0% of classified citations)"
+  },
+  {
+   "name": "Engineering",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0005,
+   "tip": "Engineering: 1 citation (0.0% of classified citations)"
+  },
+  {
+   "name": "Neuroscience",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0005,
+   "tip": "Neuroscience: 1 citation (0.0% of classified citations)"
+  }
+ ],
+ "other_fields": [
+  "Medicine",
+  "Decision Sciences",
+  "Environmental Science",
+  "Agricultural and Biological Sciences",
+  "Computer Science",
+  "Engineering",
+  "Neuroscience"
+ ],
+ "legend": [
+  {
+   "name": "Social Sciences",
+   "colour": "#2a78d6"
+  },
+  {
+   "name": "Arts and Humanities",
+   "colour": "#eb6834"
+  },
+  {
+   "name": "Business, Management and Accounting",
+   "colour": "#1baf7a"
+  },
+  {
+   "name": "Economics, Econometrics and Finance",
+   "colour": "#eda100"
+  },
+  {
+   "name": "Psychology",
+   "colour": "#e87ba4"
+  },
+  {
+   "name": "Other",
+   "colour": "#a9a79f"
+  },
+  {
+   "name": "Unclassified",
+   "colour": "#d3d1c9"
+  }
+ ],
+ "subfields": [
+  {
+   "name": "Political Science and International Relations",
+   "field": "Social Sciences",
+   "citations": 1774,
+   "share": 79.6,
+   "colour": "#2a78d6",
+   "w": 1.0,
+   "tip": "Political Science and International Relations (Social Sciences): 1,774 citations"
+  },
+  {
+   "name": "Sociology and Political Science",
+   "field": "Social Sciences",
+   "citations": 160,
+   "share": 7.2,
+   "colour": "#2a78d6",
+   "w": 0.0902,
+   "tip": "Sociology and Political Science (Social Sciences): 160 citations"
+  },
+  {
+   "name": "Law",
+   "field": "Social Sciences",
+   "citations": 34,
+   "share": 1.5,
+   "colour": "#2a78d6",
+   "w": 0.0192,
+   "tip": "Law (Social Sciences): 34 citations"
+  },
+  {
+   "name": "Communication",
+   "field": "Social Sciences",
+   "citations": 28,
+   "share": 1.3,
+   "colour": "#2a78d6",
+   "w": 0.0158,
+   "tip": "Communication (Social Sciences): 28 citations"
+  },
+  {
+   "name": "Demography",
+   "field": "Social Sciences",
+   "citations": 27,
+   "share": 1.2,
+   "colour": "#2a78d6",
+   "w": 0.0152,
+   "tip": "Demography (Social Sciences): 27 citations"
+  },
+  {
+   "name": "Linguistics and Language",
+   "field": "Social Sciences",
+   "citations": 23,
+   "share": 1.0,
+   "colour": "#2a78d6",
+   "w": 0.013,
+   "tip": "Linguistics and Language (Social Sciences): 23 citations"
+  },
+  {
+   "name": "Gender Studies",
+   "field": "Social Sciences",
+   "citations": 17,
+   "share": 0.8,
+   "colour": "#2a78d6",
+   "w": 0.0096,
+   "tip": "Gender Studies (Social Sciences): 17 citations"
+  },
+  {
+   "name": "Economics and Econometrics",
+   "field": "Economics, Econometrics and Finance",
+   "citations": 14,
+   "share": 0.6,
+   "colour": "#eda100",
+   "w": 0.0079,
+   "tip": "Economics and Econometrics (Economics, Econometrics and Finance): 14 citations"
+  },
+  {
+   "name": "Language and Linguistics",
+   "field": "Arts and Humanities",
+   "citations": 13,
+   "share": 0.6,
+   "colour": "#eb6834",
+   "w": 0.0073,
+   "tip": "Language and Linguistics (Arts and Humanities): 13 citations"
+  },
+  {
+   "name": "Strategy and Management",
+   "field": "Business, Management and Accounting",
+   "citations": 12,
+   "share": 0.5,
+   "colour": "#1baf7a",
+   "w": 0.0068,
+   "tip": "Strategy and Management (Business, Management and Accounting): 12 citations"
+  },
+  {
+   "name": "Philosophy",
+   "field": "Arts and Humanities",
+   "citations": 10,
+   "share": 0.4,
+   "colour": "#eb6834",
+   "w": 0.0056,
+   "tip": "Philosophy (Arts and Humanities): 10 citations"
+  },
+  {
+   "name": "Urban Studies",
+   "field": "Social Sciences",
+   "citations": 10,
+   "share": 0.4,
+   "colour": "#2a78d6",
+   "w": 0.0056,
+   "tip": "Urban Studies (Social Sciences): 10 citations"
+  },
+  {
+   "name": "Education",
+   "field": "Social Sciences",
+   "citations": 9,
+   "share": 0.4,
+   "colour": "#2a78d6",
+   "w": 0.0051,
+   "tip": "Education (Social Sciences): 9 citations"
+  },
+  {
+   "name": "Public Administration",
+   "field": "Social Sciences",
+   "citations": 8,
+   "share": 0.4,
+   "colour": "#2a78d6",
+   "w": 0.0045,
+   "tip": "Public Administration (Social Sciences): 8 citations"
+  },
+  {
+   "name": "Visual Arts and Performing Arts",
+   "field": "Arts and Humanities",
+   "citations": 8,
+   "share": 0.4,
+   "colour": "#eb6834",
+   "w": 0.0045,
+   "tip": "Visual Arts and Performing Arts (Arts and Humanities): 8 citations"
+  },
+  {
+   "name": "General Social Sciences",
+   "field": "Social Sciences",
+   "citations": 7,
+   "share": 0.3,
+   "colour": "#2a78d6",
+   "w": 0.0039,
+   "tip": "General Social Sciences (Social Sciences): 7 citations"
+  },
+  {
+   "name": "Geography, Planning and Development",
+   "field": "Social Sciences",
+   "citations": 7,
+   "share": 0.3,
+   "colour": "#2a78d6",
+   "w": 0.0039,
+   "tip": "Geography, Planning and Development (Social Sciences): 7 citations"
+  },
+  {
+   "name": "Literature and Literary Theory",
+   "field": "Arts and Humanities",
+   "citations": 7,
+   "share": 0.3,
+   "colour": "#eb6834",
+   "w": 0.0039,
+   "tip": "Literature and Literary Theory (Arts and Humanities): 7 citations"
+  },
+  {
+   "name": "History",
+   "field": "Arts and Humanities",
+   "citations": 6,
+   "share": 0.3,
+   "colour": "#eb6834",
+   "w": 0.0034,
+   "tip": "History (Arts and Humanities): 6 citations"
+  },
+  {
+   "name": "Social Psychology",
+   "field": "Psychology",
+   "citations": 6,
+   "share": 0.3,
+   "colour": "#e87ba4",
+   "w": 0.0034,
+   "tip": "Social Psychology (Psychology): 6 citations"
+  },
+  {
+   "name": "Accounting",
+   "field": "Business, Management and Accounting",
+   "citations": 5,
+   "share": 0.2,
+   "colour": "#1baf7a",
+   "w": 0.0028,
+   "tip": "Accounting (Business, Management and Accounting): 5 citations"
+  },
+  {
+   "name": "Clinical Psychology",
+   "field": "Psychology",
+   "citations": 5,
+   "share": 0.2,
+   "colour": "#e87ba4",
+   "w": 0.0028,
+   "tip": "Clinical Psychology (Psychology): 5 citations"
+  },
+  {
+   "name": "Development",
+   "field": "Social Sciences",
+   "citations": 4,
+   "share": 0.2,
+   "colour": "#2a78d6",
+   "w": 0.0023,
+   "tip": "Development (Social Sciences): 4 citations"
+  },
+  {
+   "name": "Management of Technology and Innovation",
+   "field": "Business, Management and Accounting",
+   "citations": 4,
+   "share": 0.2,
+   "colour": "#1baf7a",
+   "w": 0.0023,
+   "tip": "Management of Technology and Innovation (Business, Management and Accounting): 4 citations"
+  },
+  {
+   "name": "Organizational Behavior and Human Resource Management",
+   "field": "Business, Management and Accounting",
+   "citations": 4,
+   "share": 0.2,
+   "colour": "#1baf7a",
+   "w": 0.0023,
+   "tip": "Organizational Behavior and Human Resource Management (Business, Management and Accounting): 4 citations"
+  },
+  {
+   "name": "Public Health, Environmental and Occupational Health",
+   "field": "Medicine",
+   "citations": 4,
+   "share": 0.2,
+   "colour": "#a9a79f",
+   "w": 0.0023,
+   "tip": "Public Health, Environmental and Occupational Health (Medicine): 4 citations"
+  },
+  {
+   "name": "Anthropology",
+   "field": "Social Sciences",
+   "citations": 3,
+   "share": 0.1,
+   "colour": "#2a78d6",
+   "w": 0.0017,
+   "tip": "Anthropology (Social Sciences): 3 citations"
+  },
+  {
+   "name": "Cultural Studies",
+   "field": "Social Sciences",
+   "citations": 3,
+   "share": 0.1,
+   "colour": "#2a78d6",
+   "w": 0.0017,
+   "tip": "Cultural Studies (Social Sciences): 3 citations"
+  },
+  {
+   "name": "General Economics, Econometrics and Finance",
+   "field": "Economics, Econometrics and Finance",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#eda100",
+   "w": 0.0011,
+   "tip": "General Economics, Econometrics and Finance (Economics, Econometrics and Finance): 2 citations"
+  },
+  {
+   "name": "Global and Planetary Change",
+   "field": "Environmental Science",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#a9a79f",
+   "w": 0.0011,
+   "tip": "Global and Planetary Change (Environmental Science): 2 citations"
+  },
+  {
+   "name": "Management Science and Operations Research",
+   "field": "Decision Sciences",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#a9a79f",
+   "w": 0.0011,
+   "tip": "Management Science and Operations Research (Decision Sciences): 2 citations"
+  },
+  {
+   "name": "Safety Research",
+   "field": "Social Sciences",
+   "citations": 2,
+   "share": 0.1,
+   "colour": "#2a78d6",
+   "w": 0.0011,
+   "tip": "Safety Research (Social Sciences): 2 citations"
+  },
+  {
+   "name": "Archeology",
+   "field": "Arts and Humanities",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#eb6834",
+   "w": 0.0006,
+   "tip": "Archeology (Arts and Humanities): 1 citation"
+  },
+  {
+   "name": "Artificial Intelligence",
+   "field": "Computer Science",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0006,
+   "tip": "Artificial Intelligence (Computer Science): 1 citation"
+  },
+  {
+   "name": "Cognitive Neuroscience",
+   "field": "Neuroscience",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0006,
+   "tip": "Cognitive Neuroscience (Neuroscience): 1 citation"
+  },
+  {
+   "name": "Experimental and Cognitive Psychology",
+   "field": "Psychology",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#e87ba4",
+   "w": 0.0006,
+   "tip": "Experimental and Cognitive Psychology (Psychology): 1 citation"
+  },
+  {
+   "name": "Finance",
+   "field": "Economics, Econometrics and Finance",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#eda100",
+   "w": 0.0006,
+   "tip": "Finance (Economics, Econometrics and Finance): 1 citation"
+  },
+  {
+   "name": "General Agricultural and Biological Sciences",
+   "field": "Agricultural and Biological Sciences",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0006,
+   "tip": "General Agricultural and Biological Sciences (Agricultural and Biological Sciences): 1 citation"
+  },
+  {
+   "name": "Health",
+   "field": "Social Sciences",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#2a78d6",
+   "w": 0.0006,
+   "tip": "Health (Social Sciences): 1 citation"
+  },
+  {
+   "name": "Marketing",
+   "field": "Business, Management and Accounting",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#1baf7a",
+   "w": 0.0006,
+   "tip": "Marketing (Business, Management and Accounting): 1 citation"
+  },
+  {
+   "name": "Psychiatry and Mental health",
+   "field": "Medicine",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0006,
+   "tip": "Psychiatry and Mental health (Medicine): 1 citation"
+  },
+  {
+   "name": "Safety, Risk, Reliability and Quality",
+   "field": "Engineering",
+   "citations": 1,
+   "share": 0.0,
+   "colour": "#a9a79f",
+   "w": 0.0006,
+   "tip": "Safety, Risk, Reliability and Quality (Engineering): 1 citation"
+  }
+ ],
+ "top_subfields": 15,
+ "years": {
+  "axis_max": 400,
+  "ticks": [
+   {
+    "value": 0,
+    "label": "0",
+    "pos": 0.0
+   },
+   {
+    "value": 100,
+    "label": "100",
+    "pos": 0.25
+   },
+   {
+    "value": 200,
+    "label": "200",
+    "pos": 0.5
+   },
+   {
+    "value": 300,
+    "label": "300",
+    "pos": 0.75
+   },
+   {
+    "value": 400,
+    "label": "400",
+    "pos": 1.0
+   }
+  ],
+  "rows": [
+   {
+    "year": 2008,
+    "label": "2008",
+    "citations": 0,
+    "h": 0.0,
+    "minor": true,
+    "tip": "2008: 0 citations",
+    "segments": []
+   },
+   {
+    "year": 2009,
+    "label": "2009",
+    "citations": 2,
+    "h": 0.005,
+    "minor": true,
+    "tip": "2009: 2 citations (Social Sciences 2)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 2,
+      "colour": "#2a78d6",
+      "tip": "2009, Social Sciences: 2 citations"
+     }
+    ]
+   },
+   {
+    "year": 2010,
+    "label": "2010",
+    "citations": 2,
+    "h": 0.005,
+    "minor": false,
+    "tip": "2010: 2 citations (Social Sciences 2)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 2,
+      "colour": "#2a78d6",
+      "tip": "2010, Social Sciences: 2 citations"
+     }
+    ]
+   },
+   {
+    "year": 2011,
+    "label": "2011",
+    "citations": 9,
+    "h": 0.0225,
+    "minor": true,
+    "tip": "2011: 9 citations (Social Sciences 9)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 9,
+      "colour": "#2a78d6",
+      "tip": "2011, Social Sciences: 9 citations"
+     }
+    ]
+   },
+   {
+    "year": 2012,
+    "label": "2012",
+    "citations": 9,
+    "h": 0.0225,
+    "minor": true,
+    "tip": "2012: 9 citations (Social Sciences 9)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 9,
+      "colour": "#2a78d6",
+      "tip": "2012, Social Sciences: 9 citations"
+     }
+    ]
+   },
+   {
+    "year": 2013,
+    "label": "2013",
+    "citations": 16,
+    "h": 0.04,
+    "minor": true,
+    "tip": "2013: 16 citations (Social Sciences 15, Business, Management and Accounting 1)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 15,
+      "colour": "#2a78d6",
+      "tip": "2013, Social Sciences: 15 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 1,
+      "colour": "#1baf7a",
+      "tip": "2013, Business, Management and Accounting: 1 citation"
+     }
+    ]
+   },
+   {
+    "year": 2014,
+    "label": "2014",
+    "citations": 22,
+    "h": 0.055,
+    "minor": true,
+    "tip": "2014: 22 citations (Social Sciences 21, Unclassified 1)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 21,
+      "colour": "#2a78d6",
+      "tip": "2014, Social Sciences: 21 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 1,
+      "colour": "#d3d1c9",
+      "tip": "2014, Unclassified: 1 citation"
+     }
+    ]
+   },
+   {
+    "year": 2015,
+    "label": "2015",
+    "citations": 23,
+    "h": 0.0575,
+    "minor": false,
+    "tip": "2015: 23 citations (Social Sciences 23)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 23,
+      "colour": "#2a78d6",
+      "tip": "2015, Social Sciences: 23 citations"
+     }
+    ]
+   },
+   {
+    "year": 2016,
+    "label": "2016",
+    "citations": 26,
+    "h": 0.065,
+    "minor": true,
+    "tip": "2016: 26 citations (Social Sciences 25, Psychology 1)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 25,
+      "colour": "#2a78d6",
+      "tip": "2016, Social Sciences: 25 citations"
+     },
+     {
+      "name": "Psychology",
+      "citations": 1,
+      "colour": "#e87ba4",
+      "tip": "2016, Psychology: 1 citation"
+     }
+    ]
+   },
+   {
+    "year": 2017,
+    "label": "2017",
+    "citations": 58,
+    "h": 0.145,
+    "minor": true,
+    "tip": "2017: 58 citations (Social Sciences 58)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 58,
+      "colour": "#2a78d6",
+      "tip": "2017, Social Sciences: 58 citations"
+     }
+    ]
+   },
+   {
+    "year": 2018,
+    "label": "2018",
+    "citations": 96,
+    "h": 0.24,
+    "minor": true,
+    "tip": "2018: 96 citations (Social Sciences 94, Business, Management and Accounting 1, Unclassified 1)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 94,
+      "colour": "#2a78d6",
+      "tip": "2018, Social Sciences: 94 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 1,
+      "colour": "#1baf7a",
+      "tip": "2018, Business, Management and Accounting: 1 citation"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 1,
+      "colour": "#d3d1c9",
+      "tip": "2018, Unclassified: 1 citation"
+     }
+    ]
+   },
+   {
+    "year": 2019,
+    "label": "2019",
+    "citations": 251,
+    "h": 0.6275,
+    "minor": true,
+    "tip": "2019: 251 citations (Social Sciences 213, Arts and Humanities 7, Economics, Econometrics and Finance 6, Unclassified 25)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 213,
+      "colour": "#2a78d6",
+      "tip": "2019, Social Sciences: 213 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 7,
+      "colour": "#eb6834",
+      "tip": "2019, Arts and Humanities: 7 citations"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 6,
+      "colour": "#eda100",
+      "tip": "2019, Economics, Econometrics and Finance: 6 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 25,
+      "colour": "#d3d1c9",
+      "tip": "2019, Unclassified: 25 citations"
+     }
+    ]
+   },
+   {
+    "year": 2020,
+    "label": "2020",
+    "citations": 206,
+    "h": 0.515,
+    "minor": false,
+    "tip": "2020: 206 citations (Social Sciences 170, Arts and Humanities 22, Business, Management and Accounting 1, Economics, Econometrics and Finance 2, Psychology 5, Unclassified 6)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 170,
+      "colour": "#2a78d6",
+      "tip": "2020, Social Sciences: 170 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 22,
+      "colour": "#eb6834",
+      "tip": "2020, Arts and Humanities: 22 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 1,
+      "colour": "#1baf7a",
+      "tip": "2020, Business, Management and Accounting: 1 citation"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 2,
+      "colour": "#eda100",
+      "tip": "2020, Economics, Econometrics and Finance: 2 citations"
+     },
+     {
+      "name": "Psychology",
+      "citations": 5,
+      "colour": "#e87ba4",
+      "tip": "2020, Psychology: 5 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 6,
+      "colour": "#d3d1c9",
+      "tip": "2020, Unclassified: 6 citations"
+     }
+    ]
+   },
+   {
+    "year": 2021,
+    "label": "2021",
+    "citations": 231,
+    "h": 0.5775,
+    "minor": true,
+    "tip": "2021: 231 citations (Social Sciences 213, Arts and Humanities 3, Business, Management and Accounting 3, Economics, Econometrics and Finance 5, Other 2, Unclassified 5)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 213,
+      "colour": "#2a78d6",
+      "tip": "2021, Social Sciences: 213 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 3,
+      "colour": "#eb6834",
+      "tip": "2021, Arts and Humanities: 3 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 3,
+      "colour": "#1baf7a",
+      "tip": "2021, Business, Management and Accounting: 3 citations"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 5,
+      "colour": "#eda100",
+      "tip": "2021, Economics, Econometrics and Finance: 5 citations"
+     },
+     {
+      "name": "Other",
+      "citations": 2,
+      "colour": "#a9a79f",
+      "tip": "2021, Other: 2 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 5,
+      "colour": "#d3d1c9",
+      "tip": "2021, Unclassified: 5 citations"
+     }
+    ]
+   },
+   {
+    "year": 2022,
+    "label": "2022",
+    "citations": 234,
+    "h": 0.585,
+    "minor": true,
+    "tip": "2022: 234 citations (Social Sciences 219, Arts and Humanities 2, Business, Management and Accounting 4, Psychology 1, Other 5, Unclassified 3)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 219,
+      "colour": "#2a78d6",
+      "tip": "2022, Social Sciences: 219 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 2,
+      "colour": "#eb6834",
+      "tip": "2022, Arts and Humanities: 2 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 4,
+      "colour": "#1baf7a",
+      "tip": "2022, Business, Management and Accounting: 4 citations"
+     },
+     {
+      "name": "Psychology",
+      "citations": 1,
+      "colour": "#e87ba4",
+      "tip": "2022, Psychology: 1 citation"
+     },
+     {
+      "name": "Other",
+      "citations": 5,
+      "colour": "#a9a79f",
+      "tip": "2022, Other: 5 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 3,
+      "colour": "#d3d1c9",
+      "tip": "2022, Unclassified: 3 citations"
+     }
+    ]
+   },
+   {
+    "year": 2023,
+    "label": "2023",
+    "citations": 292,
+    "h": 0.73,
+    "minor": true,
+    "tip": "2023: 292 citations (Social Sciences 252, Arts and Humanities 8, Business, Management and Accounting 3, Economics, Econometrics and Finance 1, Psychology 3, Other 2, Unclassified 23)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 252,
+      "colour": "#2a78d6",
+      "tip": "2023, Social Sciences: 252 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 8,
+      "colour": "#eb6834",
+      "tip": "2023, Arts and Humanities: 8 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 3,
+      "colour": "#1baf7a",
+      "tip": "2023, Business, Management and Accounting: 3 citations"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 1,
+      "colour": "#eda100",
+      "tip": "2023, Economics, Econometrics and Finance: 1 citation"
+     },
+     {
+      "name": "Psychology",
+      "citations": 3,
+      "colour": "#e87ba4",
+      "tip": "2023, Psychology: 3 citations"
+     },
+     {
+      "name": "Other",
+      "citations": 2,
+      "colour": "#a9a79f",
+      "tip": "2023, Other: 2 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 23,
+      "colour": "#d3d1c9",
+      "tip": "2023, Unclassified: 23 citations"
+     }
+    ]
+   },
+   {
+    "year": 2024,
+    "label": "2024",
+    "citations": 339,
+    "h": 0.8475,
+    "minor": true,
+    "tip": "2024: 339 citations (Social Sciences 315, Arts and Humanities 2, Business, Management and Accounting 4, Psychology 2, Unclassified 16)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 315,
+      "colour": "#2a78d6",
+      "tip": "2024, Social Sciences: 315 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 2,
+      "colour": "#eb6834",
+      "tip": "2024, Arts and Humanities: 2 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 4,
+      "colour": "#1baf7a",
+      "tip": "2024, Business, Management and Accounting: 4 citations"
+     },
+     {
+      "name": "Psychology",
+      "citations": 2,
+      "colour": "#e87ba4",
+      "tip": "2024, Psychology: 2 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 16,
+      "colour": "#d3d1c9",
+      "tip": "2024, Unclassified: 16 citations"
+     }
+    ]
+   },
+   {
+    "year": 2025,
+    "label": "2025",
+    "citations": 265,
+    "h": 0.6625,
+    "minor": false,
+    "tip": "2025: 265 citations (Social Sciences 245, Arts and Humanities 1, Business, Management and Accounting 3, Economics, Econometrics and Finance 1, Other 3, Unclassified 12)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 245,
+      "colour": "#2a78d6",
+      "tip": "2025, Social Sciences: 245 citations"
+     },
+     {
+      "name": "Arts and Humanities",
+      "citations": 1,
+      "colour": "#eb6834",
+      "tip": "2025, Arts and Humanities: 1 citation"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 3,
+      "colour": "#1baf7a",
+      "tip": "2025, Business, Management and Accounting: 3 citations"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 1,
+      "colour": "#eda100",
+      "tip": "2025, Economics, Econometrics and Finance: 1 citation"
+     },
+     {
+      "name": "Other",
+      "citations": 3,
+      "colour": "#a9a79f",
+      "tip": "2025, Other: 3 citations"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 12,
+      "colour": "#d3d1c9",
+      "tip": "2025, Unclassified: 12 citations"
+     }
+    ]
+   },
+   {
+    "year": 2026,
+    "label": "2026 (to October)",
+    "citations": 246,
+    "h": 0.615,
+    "minor": true,
+    "tip": "2026 (to October): 246 citations (Social Sciences 230, Business, Management and Accounting 6, Economics, Econometrics and Finance 2, Other 1, Unclassified 7)",
+    "segments": [
+     {
+      "name": "Social Sciences",
+      "citations": 230,
+      "colour": "#2a78d6",
+      "tip": "2026, Social Sciences: 230 citations"
+     },
+     {
+      "name": "Business, Management and Accounting",
+      "citations": 6,
+      "colour": "#1baf7a",
+      "tip": "2026, Business, Management and Accounting: 6 citations"
+     },
+     {
+      "name": "Economics, Econometrics and Finance",
+      "citations": 2,
+      "colour": "#eda100",
+      "tip": "2026, Economics, Econometrics and Finance: 2 citations"
+     },
+     {
+      "name": "Other",
+      "citations": 1,
+      "colour": "#a9a79f",
+      "tip": "2026, Other: 1 citation"
+     },
+     {
+      "name": "Unclassified",
+      "citations": 7,
+      "colour": "#d3d1c9",
+      "tip": "2026, Unclassified: 7 citations"
+     }
+    ]
+   }
+  ]
+ },
+ "countries": [
+  {
+   "code": "US",
+   "name": "United States",
+   "scholars": 235,
+   "works": 242,
+   "colour": "#8b0000",
+   "tip": "United States: 235 citing scholars, in 242 citing works",
+   "w": 1.0
+  },
+  {
+   "code": "GB",
+   "name": "United Kingdom",
+   "scholars": 231,
+   "works": 245,
+   "colour": "#8b0000",
+   "tip": "United Kingdom: 231 citing scholars, in 245 citing works",
+   "w": 0.983
+  },
+  {
+   "code": "DE",
+   "name": "Germany",
+   "scholars": 221,
+   "works": 209,
+   "colour": "#8b0000",
+   "tip": "Germany: 221 citing scholars, in 209 citing works",
+   "w": 0.9404
+  },
+  {
+   "code": "PL",
+   "name": "Poland",
+   "scholars": 160,
+   "works": 154,
+   "colour": "#8b0000",
+   "tip": "Poland: 160 citing scholars, in 154 citing works",
+   "w": 0.6809
+  },
+  {
+   "code": "IT",
+   "name": "Italy",
+   "scholars": 125,
+   "works": 110,
+   "colour": "#8b0000",
+   "tip": "Italy: 125 citing scholars, in 110 citing works",
+   "w": 0.5319
+  },
+  {
+   "code": "NL",
+   "name": "Netherlands",
+   "scholars": 84,
+   "works": 92,
+   "colour": "#a72219",
+   "tip": "Netherlands: 84 citing scholars, in 92 citing works",
+   "w": 0.3574
+  },
+  {
+   "code": "CZ",
+   "name": "Czechia",
+   "scholars": 83,
+   "works": 74,
+   "colour": "#a72219",
+   "tip": "Czechia: 83 citing scholars, in 74 citing works",
+   "w": 0.3532
+  },
+  {
+   "code": "ES",
+   "name": "Spain",
+   "scholars": 69,
+   "works": 68,
+   "colour": "#a72219",
+   "tip": "Spain: 69 citing scholars, in 68 citing works",
+   "w": 0.2936
+  },
+  {
+   "code": "AT",
+   "name": "Austria",
+   "scholars": 59,
+   "works": 59,
+   "colour": "#a72219",
+   "tip": "Austria: 59 citing scholars, in 59 citing works",
+   "w": 0.2511
+  },
+  {
+   "code": "TR",
+   "name": "Turkey",
+   "scholars": 54,
+   "works": 49,
+   "colour": "#a72219",
+   "tip": "Turkey: 54 citing scholars, in 49 citing works",
+   "w": 0.2298
+  },
+  {
+   "code": "HU",
+   "name": "Hungary",
+   "scholars": 49,
+   "works": 41,
+   "colour": "#c13d30",
+   "tip": "Hungary: 49 citing scholars, in 41 citing works",
+   "w": 0.2085
+  },
+  {
+   "code": "SE",
+   "name": "Sweden",
+   "scholars": 48,
+   "works": 42,
+   "colour": "#c13d30",
+   "tip": "Sweden: 48 citing scholars, in 42 citing works",
+   "w": 0.2043
+  },
+  {
+   "code": "CH",
+   "name": "Switzerland",
+   "scholars": 46,
+   "works": 42,
+   "colour": "#c13d30",
+   "tip": "Switzerland: 46 citing scholars, in 42 citing works",
+   "w": 0.1957
+  },
+  {
+   "code": "FR",
+   "name": "France",
+   "scholars": 40,
+   "works": 65,
+   "colour": "#c13d30",
+   "tip": "France: 40 citing scholars, in 65 citing works",
+   "w": 0.1702
+  },
+  {
+   "code": "AU",
+   "name": "Australia",
+   "scholars": 39,
+   "works": 55,
+   "colour": "#c13d30",
+   "tip": "Australia: 39 citing scholars, in 55 citing works",
+   "w": 0.166
+  },
+  {
+   "code": "CA",
+   "name": "Canada",
+   "scholars": 39,
+   "works": 35,
+   "colour": "#c13d30",
+   "tip": "Canada: 39 citing scholars, in 35 citing works"
+  },
+  {
+   "code": "BR",
+   "name": "Brazil",
+   "scholars": 38,
+   "works": 24,
+   "colour": "#c13d30",
+   "tip": "Brazil: 38 citing scholars, in 24 citing works"
+  },
+  {
+   "code": "BE",
+   "name": "Belgium",
+   "scholars": 36,
+   "works": 46,
+   "colour": "#c13d30",
+   "tip": "Belgium: 36 citing scholars, in 46 citing works"
+  },
+  {
+   "code": "RO",
+   "name": "Romania",
+   "scholars": 28,
+   "works": 20,
+   "colour": "#c13d30",
+   "tip": "Romania: 28 citing scholars, in 20 citing works"
+  },
+  {
+   "code": "DK",
+   "name": "Denmark",
+   "scholars": 27,
+   "works": 23,
+   "colour": "#c13d30",
+   "tip": "Denmark: 27 citing scholars, in 23 citing works"
+  },
+  {
+   "code": "NO",
+   "name": "Norway",
+   "scholars": 27,
+   "works": 29,
+   "colour": "#c13d30",
+   "tip": "Norway: 27 citing scholars, in 29 citing works"
+  },
+  {
+   "code": "SK",
+   "name": "Slovakia",
+   "scholars": 24,
+   "works": 16,
+   "colour": "#d55d4b",
+   "tip": "Slovakia: 24 citing scholars, in 16 citing works"
+  },
+  {
+   "code": "ID",
+   "name": "Indonesia",
+   "scholars": 21,
+   "works": 10,
+   "colour": "#d55d4b",
+   "tip": "Indonesia: 21 citing scholars, in 10 citing works"
+  },
+  {
+   "code": "CL",
+   "name": "Chile",
+   "scholars": 20,
+   "works": 22,
+   "colour": "#d55d4b",
+   "tip": "Chile: 20 citing scholars, in 22 citing works"
+  },
+  {
+   "code": "CN",
+   "name": "China",
+   "scholars": 19,
+   "works": 14,
+   "colour": "#d55d4b",
+   "tip": "China: 19 citing scholars, in 14 citing works"
+  },
+  {
+   "code": "PT",
+   "name": "Portugal",
+   "scholars": 18,
+   "works": 21,
+   "colour": "#d55d4b",
+   "tip": "Portugal: 18 citing scholars, in 21 citing works"
+  },
+  {
+   "code": "HR",
+   "name": "Croatia",
+   "scholars": 16,
+   "works": 11,
+   "colour": "#d55d4b",
+   "tip": "Croatia: 16 citing scholars, in 11 citing works"
+  },
+  {
+   "code": "FI",
+   "name": "Finland",
+   "scholars": 16,
+   "works": 17,
+   "colour": "#d55d4b",
+   "tip": "Finland: 16 citing scholars, in 17 citing works"
+  },
+  {
+   "code": "IE",
+   "name": "Ireland",
+   "scholars": 16,
+   "works": 12,
+   "colour": "#d55d4b",
+   "tip": "Ireland: 16 citing scholars, in 12 citing works"
+  },
+  {
+   "code": "PE",
+   "name": "Peru",
+   "scholars": 16,
+   "works": 1,
+   "colour": "#d55d4b",
+   "tip": "Peru: 16 citing scholars, in 1 citing work"
+  },
+  {
+   "code": "IL",
+   "name": "Israel",
+   "scholars": 15,
+   "works": 20,
+   "colour": "#d55d4b",
+   "tip": "Israel: 15 citing scholars, in 20 citing works"
+  },
+  {
+   "code": "RU",
+   "name": "Russia",
+   "scholars": 14,
+   "works": 13,
+   "colour": "#d55d4b",
+   "tip": "Russia: 14 citing scholars, in 13 citing works"
+  },
+  {
+   "code": "UA",
+   "name": "Ukraine",
+   "scholars": 14,
+   "works": 11,
+   "colour": "#d55d4b",
+   "tip": "Ukraine: 14 citing scholars, in 11 citing works"
+  },
+  {
+   "code": "KR",
+   "name": "South Korea",
+   "scholars": 13,
+   "works": 9,
+   "colour": "#d55d4b",
+   "tip": "South Korea: 13 citing scholars, in 9 citing works"
+  },
+  {
+   "code": "EC",
+   "name": "Ecuador",
+   "scholars": 11,
+   "works": 9,
+   "colour": "#d55d4b",
+   "tip": "Ecuador: 11 citing scholars, in 9 citing works"
+  },
+  {
+   "code": "IN",
+   "name": "India",
+   "scholars": 11,
+   "works": 9,
+   "colour": "#d55d4b",
+   "tip": "India: 11 citing scholars, in 9 citing works"
+  },
+  {
+   "code": "GR",
+   "name": "Greece",
+   "scholars": 10,
+   "works": 8,
+   "colour": "#d55d4b",
+   "tip": "Greece: 10 citing scholars, in 8 citing works"
+  },
+  {
+   "code": "JP",
+   "name": "Japan",
+   "scholars": 10,
+   "works": 9,
+   "colour": "#d55d4b",
+   "tip": "Japan: 10 citing scholars, in 9 citing works"
+  },
+  {
+   "code": "SI",
+   "name": "Slovenia",
+   "scholars": 10,
+   "works": 7,
+   "colour": "#d55d4b",
+   "tip": "Slovenia: 10 citing scholars, in 7 citing works"
+  },
+  {
+   "code": "CO",
+   "name": "Colombia",
+   "scholars": 9,
+   "works": 10,
+   "colour": "#e38070",
+   "tip": "Colombia: 9 citing scholars, in 10 citing works"
+  },
+  {
+   "code": "MX",
+   "name": "Mexico",
+   "scholars": 9,
+   "works": 8,
+   "colour": "#e38070",
+   "tip": "Mexico: 9 citing scholars, in 8 citing works"
+  },
+  {
+   "code": "RS",
+   "name": "Serbia",
+   "scholars": 9,
+   "works": 6,
+   "colour": "#e38070",
+   "tip": "Serbia: 9 citing scholars, in 6 citing works"
+  },
+  {
+   "code": "EE",
+   "name": "Estonia",
+   "scholars": 8,
+   "works": 10,
+   "colour": "#e38070",
+   "tip": "Estonia: 8 citing scholars, in 10 citing works"
+  },
+  {
+   "code": "LV",
+   "name": "Latvia",
+   "scholars": 7,
+   "works": 5,
+   "colour": "#e38070",
+   "tip": "Latvia: 7 citing scholars, in 5 citing works"
+  },
+  {
+   "code": "LT",
+   "name": "Lithuania",
+   "scholars": 7,
+   "works": 8,
+   "colour": "#e38070",
+   "tip": "Lithuania: 7 citing scholars, in 8 citing works"
+  },
+  {
+   "code": "ZA",
+   "name": "South Africa",
+   "scholars": 7,
+   "works": 6,
+   "colour": "#e38070",
+   "tip": "South Africa: 7 citing scholars, in 6 citing works"
+  },
+  {
+   "code": "BG",
+   "name": "Bulgaria",
+   "scholars": 6,
+   "works": 7,
+   "colour": "#e38070",
+   "tip": "Bulgaria: 6 citing scholars, in 7 citing works"
+  },
+  {
+   "code": "HK",
+   "name": "Hong Kong",
+   "scholars": 6,
+   "works": 4,
+   "colour": "#e38070",
+   "tip": "Hong Kong: 6 citing scholars, in 4 citing works"
+  },
+  {
+   "code": "LU",
+   "name": "Luxembourg",
+   "scholars": 5,
+   "works": 15,
+   "colour": "#e38070",
+   "tip": "Luxembourg: 5 citing scholars, in 15 citing works"
+  },
+  {
+   "code": "CR",
+   "name": "Costa Rica",
+   "scholars": 4,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Costa Rica: 4 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "GE",
+   "name": "Georgia",
+   "scholars": 4,
+   "works": 3,
+   "colour": "#eda496",
+   "tip": "Georgia: 4 citing scholars, in 3 citing works"
+  },
+  {
+   "code": "PK",
+   "name": "Pakistan",
+   "scholars": 4,
+   "works": 4,
+   "colour": "#eda496",
+   "tip": "Pakistan: 4 citing scholars, in 4 citing works"
+  },
+  {
+   "code": "PH",
+   "name": "Philippines",
+   "scholars": 4,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Philippines: 4 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "AE",
+   "name": "United Arab Emirates",
+   "scholars": 4,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "United Arab Emirates: 4 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "BD",
+   "name": "Bangladesh",
+   "scholars": 3,
+   "works": 3,
+   "colour": "#eda496",
+   "tip": "Bangladesh: 3 citing scholars, in 3 citing works"
+  },
+  {
+   "code": "CY",
+   "name": "Cyprus",
+   "scholars": 3,
+   "works": 3,
+   "colour": "#eda496",
+   "tip": "Cyprus: 3 citing scholars, in 3 citing works"
+  },
+  {
+   "code": "JO",
+   "name": "Jordan",
+   "scholars": 3,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Jordan: 3 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "KE",
+   "name": "Kenya",
+   "scholars": 3,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Kenya: 3 citing scholars, in 1 citing work"
+  },
+  {
+   "code": "NZ",
+   "name": "New Zealand",
+   "scholars": 3,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "New Zealand: 3 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "NG",
+   "name": "Nigeria",
+   "scholars": 3,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Nigeria: 3 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "UZ",
+   "name": "Uzbekistan",
+   "scholars": 3,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Uzbekistan: 3 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "AL",
+   "name": "Albania",
+   "scholars": 2,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Albania: 2 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "AR",
+   "name": "Argentina",
+   "scholars": 2,
+   "works": 4,
+   "colour": "#eda496",
+   "tip": "Argentina: 2 citing scholars, in 4 citing works"
+  },
+  {
+   "code": "IR",
+   "name": "Iran",
+   "scholars": 2,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Iran: 2 citing scholars, in 1 citing work"
+  },
+  {
+   "code": "PS",
+   "name": "Palestine",
+   "scholars": 2,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Palestine: 2 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "SG",
+   "name": "Singapore",
+   "scholars": 2,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Singapore: 2 citing scholars, in 1 citing work"
+  },
+  {
+   "code": "TW",
+   "name": "Taiwan",
+   "scholars": 2,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Taiwan: 2 citing scholars, in 2 citing works"
+  },
+  {
+   "code": "BA",
+   "name": "Bosnia and Herzegovina",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Bosnia and Herzegovina: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "ME",
+   "name": "Montenegro",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Montenegro: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "MA",
+   "name": "Morocco",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Morocco: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "SA",
+   "name": "Saudi Arabia",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Saudi Arabia: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "TH",
+   "name": "Thailand",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Thailand: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "UY",
+   "name": "Uruguay",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Uruguay: 1 citing scholar, in 1 citing work"
+  },
+  {
+   "code": "VE",
+   "name": "Venezuela",
+   "scholars": 1,
+   "works": 1,
+   "colour": "#eda496",
+   "tip": "Venezuela: 1 citing scholar, in 1 citing work"
+  }
+ ],
+ "top_countries": 15,
+ "bins": [
+  {
+   "label": "1–4",
+   "colour": "#eda496"
+  },
+  {
+   "label": "5–9",
+   "colour": "#e38070"
+  },
+  {
+   "label": "10–24",
+   "colour": "#d55d4b"
+  },
+  {
+   "label": "25–49",
+   "colour": "#c13d30"
+  },
+  {
+   "label": "50–99",
+   "colour": "#a72219"
+  },
+  {
+   "label": "100+",
+   "colour": "#8b0000"
+  }
+ ],
+ "no_scholars_colour": "#e1e0d9"
+}
