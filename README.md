@@ -21,7 +21,7 @@ Key files:
 | `bio.md` | Ben's canonical academic bio, in the third person, kept in the repo but not published. The home page has the same text in the first person. |
 | `calepin-site/build.sh` | Builds the CV PDF, refreshes the generated content and compiles the site into `docs/`. |
 | `calepin-site/calepin.toml` | Site configuration: title, navigation bar, social links, footer. |
-| `calepin-site/cv/cv.yml` | All CV data. `cv/cv.typ` turns it into `cv.pdf` with the academicv Typst template, leaving out the publications' DOIs, which only the website shows. Datasets keep theirs, their only reference. |
+| `calepin-site/cv/cv.yml` | All CV data. `cv/cv.typ` turns it into `cv.pdf` with the academicv Typst template, leaving out the publications' DOIs, which only the website shows. Datasets keep theirs, their only reference. A research project's optional `url:` links its title on the Research projects page; the CV PDF does not show it. |
 | `calepin-site/scripts/sync-teaching.py` | Generates the Teaching pages from Ben's separate Teaching repository. |
 | `calepin-site/scripts/update-kl.py` | Adds new Kultura Liberalna articles to `data/kultura-liberalna.yml`, the archive the Media page lists. It never changes existing entries. |
 | `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
@@ -43,7 +43,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | Publications, research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
 | Datasets | Harvard Dataverse: the Datasets section follows the collection on each build. See [Datasets](#datasets). |
 | Citation counts | Nothing: they update on each build (Scopus once its API key is in the Keychain). See [Citation counts](#citation-counts). |
-| Home page | `index.typ` |
+| Home page | `index.typ`. Its bio is the first-person version of `bio.md` at the repository root; change both. |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
 | Teaching | The Teaching repository. Course descriptions are in `COURSE_DESCRIPTIONS` in `scripts/sync-teaching.py` and icons in `assets/teaching/<slug>.svg`. The generated `pages/teaching.typ` and `pages/teaching/` are not edited by hand. |
