@@ -24,5 +24,13 @@
                 {% endif %}
                 {% include "partials/site-language-picker.html" %}
             </div>
+            {# Phones only: the social icons (everything but CV) again, as a row of
+               the bar itself. site.css shows this copy at <=48rem and hides the
+               in-menu one there, so each link is only ever exposed once. #}
+            <div class="academic-social-bar">
+                {% for item in site.menus.social %}
+                {% if item.label != 'CV' %}{% include "partials/site-nav-item.html" %}{% endif %}
+                {% endfor %}
+            </div>
         </nav>
     </header>

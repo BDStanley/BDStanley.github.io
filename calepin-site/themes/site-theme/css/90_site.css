@@ -245,6 +245,44 @@
   }
 }
 
+/* ---- Phone bar: social icons in the bar, text links in the dropdown ------- */
+/* At <=48rem the bar holds the brand and the hamburger on one row and the
+   social icons on a second, spread across its width, while the pop-over keeps
+   only the page links and CV. The bar's icons are a second copy
+   (.academic-social-bar in partials/site-nav.html), hidden above 48rem where the
+   in-menu icons are used; here the in-menu ones are hidden instead. */
+.academic-social-bar {
+  display: none;
+}
+@media (max-width: 48rem) {
+  .academic-topbar.calepin-site-topbar {
+    padding-block: 0.6rem;
+  }
+  /* Centre the brand on the hamburger (the baseline alignment above is for the
+     desktop row of text links) and let the icon row wrap below them. */
+  .academic-nav.calepin-site-nav {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.6rem;
+  }
+  .academic-social-bar {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.05rem;
+  }
+  #academic-menu a:has(.calepin-nav-icon),
+  #academic-menu a[href^="https://openalex.org/"] {
+    display: none;
+  }
+  /* Drop the pop-over from the bottom of the two-row bar rather than from the
+     theme's one-row offset. */
+  .academic-menu {
+    inset: calc(100% + 0.6rem) 0 auto auto;
+  }
+}
+
 /* ---- Sticky footer: keep it pinned to the bottom of the viewport on short
    pages (e.g. the home page), while still sitting after the content on long
    pages. The body is a flex column; the content region grows to fill. -------- */
@@ -268,7 +306,8 @@ body {
   background: #8b0000;
   color: #ffffff;
   margin-top: 3rem;
-  padding: 1.3rem 1rem;
+  /* Slim bar: about two thirds of the top nav's height on desktop. */
+  padding: 0.75rem 1rem;
   font-family: var(--calepin-font-heading);
   font-size: 0.9rem;
 }
