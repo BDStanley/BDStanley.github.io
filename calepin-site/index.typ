@@ -1,6 +1,6 @@
 #set document(title: [Ben Stanley])
 
-// Home page: portrait beside the bio, bio top-aligned with the photo. The
+// Home page: portrait floated left, the bio wrapping round and under it. The
 // .hero* classes are defined in themes/site-theme/css/90_site.css. Built HTML-only (pdf = false),
 // so html.elem is safe here. The bio is the first-person version of /bio.md at
 // the repository root; change them together.

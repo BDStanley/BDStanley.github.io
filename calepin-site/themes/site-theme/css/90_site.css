@@ -292,28 +292,31 @@ body {
   .calepin-site-footer-inner { justify-content: center; text-align: center; }
 }
 
-/* ---- Home-page hero (trestles-style: portrait beside the bio) ----------- */
+/* ---- Home-page hero: portrait floated left, the bio wrapping round it ---- */
+/* The bio starts level with the top of the photo and, once past it, runs the
+   full width of the column, so no white space is left under the photo. On
+   narrow screens the photo sits centred above the bio instead. */
 .hero {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;   /* bio starts level with the top of the photo */
-  gap: 2rem;
+  display: flow-root;        /* contain the float */
   margin-block: 1rem 2rem;
 }
 .hero-portrait {
-  flex: 0 0 240px;
-  max-width: 240px;
-  margin-inline: auto;
+  width: 240px;
+  max-width: 100%;
+  margin: 0 auto 1.5rem;
+}
+@media (min-width: 37.5rem) {
+  .hero-portrait {
+    float: left;
+    margin: 0 2rem 1rem 0;
+  }
 }
 .hero-portrait img {
   width: 100%;
   height: auto;
   border-radius: 12px;
 }
-.hero-bio {
-  flex: 1 1 320px;
-  min-width: 280px;
-}
+.hero-bio > :first-child { margin-top: 0; }
 
 /* Two-column book layout on the "Good Change" page, with a divider that
    mirrors the original .columns separator. */

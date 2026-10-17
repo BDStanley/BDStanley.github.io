@@ -1,10 +1,10 @@
 # Academic bio
 
-Ben Stanley's canonical academic bio, in the third person. The home page (`calepin-site/index.typ`, and `quarto-site/index.qmd` in the backup) has the same text in the first person, so change all three together. Keep it under 300 words.
+Ben Stanley's canonical academic bio, in the third person: a full version (under 300 words) and a short one (under 150), each in English and Polish. The home page (`calepin-site/index.typ`, and `quarto-site/index.qmd` in the backup) has the full English version in the first person. When the bio changes, change all of them together.
 
 Last updated: 17 October 2026.
 
----
+## Full bio (English)
 
 Ben Stanley is Associate Professor of Social Science at the Centre for the Study of Democracy, SWPS University, Warsaw. A political scientist and sociologist, he studies populism, illiberalism, democratic backsliding and electoral behaviour in Central and Eastern Europe, especially Poland.
 
@@ -13,3 +13,21 @@ His most recent book, *Good Change: The Rise and Fall of Poland's Illiberal Revo
 His current research examines how firmly citizens hold to liberal democracy when partisan polarisation runs high, the rise of postliberal attitudes, and the difficulties of rebuilding democracy after illiberal rule. He led the National Science Centre project "Partisan Bias or a Climate of Indifference?" (2021–2026) and was a co-investigator on AUTHLIB, a Horizon Europe project on neo-authoritarianism in Europe. He now leads the work package on the economic dimensions of enlargement in CitiSense, a Horizon Europe project on EU enlargement (2026–2029).
 
 He holds a PhD in Government from the University of Essex and a habilitation from the Polish Academy of Sciences. He previously worked at the Institute for Public Affairs in Bratislava, Cardinal Stefan Wyszyński University in Warsaw and the University of Sussex, where he was a Marie Curie Fellow. He is deputy editor of the *Polish Sociological Review*, writes on Polish politics for *Kultura Liberalna*, and runs Pooling the Poles, a Polish polling tracker.
+
+## Full bio (Polish)
+
+Dr hab. Ben Stanley, prof. Uniwersytetu SWPS, pracuje w Centrum Studiów nad Demokracją tej uczelni w Warszawie. Jako politolog i socjolog bada populizm, illiberalizm, regres demokracji i zachowania wyborcze w Europie Środkowo-Wschodniej, zwłaszcza w Polsce.
+
+Jego najnowsza książka, *Good Change: The Rise and Fall of Poland's Illiberal Revolution* (Stanford University Press, 2025), napisana wspólnie ze Stanleyem Billem, wyjaśnia, jak Prawo i Sprawiedliwość doszło do władzy i ją utraciło oraz co osiem lat jego rządów mówi o illiberalnym wyzwaniu dla demokracji liberalnej. Jest też współautorem książki *External Voting* (Palgrave Macmillan, 2023) o udziale emigrantów z Europy Środkowej w wyborach w krajach pochodzenia. Jego artykuły ukazały się m.in. w „Comparative Political Studies”, „Perspectives on Politics”, „Journal of Democracy”, „Party Politics” i „East European Politics”, a szeroko cytowany jest zwłaszcza jego tekst *The Thin Ideology of Populism* z 2008 roku.
+
+W swoich obecnych badaniach sprawdza, jak silne jest przywiązanie obywateli do demokracji liberalnej w warunkach głębokiej polaryzacji partyjnej, a także analizuje narastanie postaw postliberalnych i trudności odbudowy demokracji po rządach illiberalnych. Kierował projektem Narodowego Centrum Nauki „Plemienność czy obojętność?” (2021–2026) i był współwykonawcą projektu AUTHLIB, finansowanego z programu Horyzont Europa i poświęconego neoautorytaryzmowi w Europie. Obecnie kieruje pakietem roboczym dotyczącym ekonomicznych wymiarów rozszerzenia w projekcie CitiSense (2026–2029), poświęconym rozszerzeniu Unii Europejskiej i finansowanym z programu Horyzont Europa.
+
+Stopień doktora nauk o polityce uzyskał na University of Essex, a habilitację – w Polskiej Akademii Nauk. Wcześniej pracował w Instytucie Spraw Publicznych (IVO) w Bratysławie, na Uniwersytecie Kardynała Stefana Wyszyńskiego w Warszawie oraz na University of Sussex, gdzie był stypendystą programu Marie Curie. Jest zastępcą redaktora naczelnego „Polish Sociological Review”, pisze o polskiej polityce w „Kulturze Liberalnej” i prowadzi Pooling the Poles – agregator polskich sondaży.
+
+## Short bio (English)
+
+Ben Stanley is Associate Professor of Social Science at the Centre for the Study of Democracy, SWPS University, Warsaw. A political scientist and sociologist, he studies populism, illiberalism, democratic backsliding and electoral behaviour in Central and Eastern Europe, especially Poland. His most recent book, *Good Change: The Rise and Fall of Poland's Illiberal Revolution* (Stanford University Press, 2025), written with Stanley Bill, explains how the Law and Justice government won and lost power. His articles have appeared in *Comparative Political Studies*, *Perspectives on Politics* and the *Journal of Democracy*, and his 2008 article "The Thin Ideology of Populism" is widely cited. His current research examines citizens' commitment to liberal democracy under polarisation, and he leads a work package in CitiSense, a Horizon Europe project on EU enlargement. He holds a PhD in Government from the University of Essex and is deputy editor of the *Polish Sociological Review*.
+
+## Short bio (Polish)
+
+Dr hab. Ben Stanley, prof. Uniwersytetu SWPS, pracuje w Centrum Studiów nad Demokracją tej uczelni w Warszawie. Jako politolog i socjolog bada populizm, illiberalizm, regres demokracji i zachowania wyborcze w Europie Środkowo-Wschodniej, zwłaszcza w Polsce. Jego najnowsza książka, *Good Change: The Rise and Fall of Poland's Illiberal Revolution* (Stanford University Press, 2025), napisana wspólnie ze Stanleyem Billem, wyjaśnia, jak Prawo i Sprawiedliwość doszło do władzy i ją utraciło. Jego artykuły ukazały się m.in. w „Comparative Political Studies”, „Perspectives on Politics” i „Journal of Democracy”, a szeroko cytowany jest zwłaszcza jego tekst *The Thin Ideology of Populism* z 2008 roku. Obecnie bada przywiązanie obywateli do demokracji liberalnej w warunkach polaryzacji i kieruje pakietem roboczym w projekcie CitiSense, poświęconym rozszerzeniu Unii Europejskiej i finansowanym z programu Horyzont Europa. Stopień doktora nauk o polityce uzyskał na University of Essex. Jest zastępcą redaktora naczelnego „Polish Sociological Review”.
