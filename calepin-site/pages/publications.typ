@@ -6,11 +6,33 @@
 
 = Citations
 
-_Updated: March 2026_
+// The counts live in data/citations.json: scripts/update-citations.py refreshes
+// Google Scholar and Sage Policy Profiles on every build, and the Web of Science
+// numbers are entered there by hand. "Updated" is the most recent month; a
+// source whose numbers are older names its own month.
+#let cites = json("/data/citations.json")
+#let wos = cites.web_of_science
+#let gs = cites.google_scholar
+#let sage = cites.sage_policy_profiles
+#let latest = (wos, gs, sage).map(s => s.as_of).sorted().last()
+#let month(ym) = datetime(year: int(ym.slice(0, 4)), month: int(ym.slice(5, 7)), day: 1).display("[month repr:long] [year]")
+#let when(s) = if s.as_of != latest [ (#month(s.as_of))]
+// 4044 -> "4,044"
+#let num(n) = {
+  let s = str(n)
+  let out = ""
+  for (i, c) in s.clusters().enumerate() {
+    if i > 0 and calc.rem(s.len() - i, 3) == 0 { out += "," }
+    out += c
+  }
+  out
+}
 
-- #link("https://www.webofscience.com/wos/author/record/J-7051-2013")[Web of Science]: 1,153 (h-index = 10)
-- #link("https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en")[Google Scholar]: 3,845 (h-index = 18, i10-index = 20)
-- #link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles]: 64 citations across 52 policy documents.
+_Updated: #month(latest)_
+
+- #link("https://www.webofscience.com/wos/author/record/J-7051-2013")[Web of Science]#when(wos): #num(wos.citations) (h-index = #wos.h_index)
+- #link("https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en")[Google Scholar]#when(gs): #num(gs.citations) (h-index = #gs.h_index, i10-index = #gs.i10_index)
+- #link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles]#when(sage): #num(sage.citations) citations across #num(sage.documents) policy documents.
 
 // ============================================================================
 // Single source of truth: the CV. These lists are read straight from

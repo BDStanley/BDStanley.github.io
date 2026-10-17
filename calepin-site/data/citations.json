@@ -1,0 +1,19 @@
+{
+  "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes google_scholar and sage_policy_profiles on every build; see that file. web_of_science is entered by hand: update its numbers and as_of (YYYY-MM) from https://www.webofscience.com/wos/author/record/J-7051-2013.",
+  "web_of_science": {
+    "as_of": "2026-10",
+    "citations": 1281,
+    "h_index": 11
+  },
+  "google_scholar": {
+    "as_of": "2026-10",
+    "citations": 4044,
+    "h_index": 19,
+    "i10_index": 23
+  },
+  "sage_policy_profiles": {
+    "as_of": "2026-10",
+    "citations": 64,
+    "documents": 52
+  }
+}

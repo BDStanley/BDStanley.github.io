@@ -68,6 +68,13 @@ python3 "$SRC/scripts/sync-teaching.py"
 echo "→ Refreshing the Kultura Liberalna article list ..."
 python3 "$SRC/scripts/update-kl.py" || echo "  (skipped: update-kl.py failed; using the committed list)"
 
+# Refresh the citation counts on the Publications page (data/citations.json) from
+# Google Scholar and Sage Policy Profiles. Web of Science shows automated visitors
+# a CAPTCHA, so its numbers are entered in that file by hand. A source that can't
+# be read keeps its previous numbers; network failures are non-fatal.
+echo "→ Refreshing citation counts ..."
+python3 "$SRC/scripts/update-citations.py" || echo "  (skipped: update-citations.py failed; using the committed counts)"
+
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 

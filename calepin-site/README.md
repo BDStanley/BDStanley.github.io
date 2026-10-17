@@ -80,9 +80,10 @@ publication-type sections there (it picks up keys
 
 > The website-only “Recent publications” and “Essays, interviews and reviews”
 > sections from the earlier version were removed so the page mirrors the CV
-> structure. The Web of Science / Google Scholar citation line is kept as a
-> short site-only intro. Say the word if you want “Recent” back (it can be
-> derived from `cv.yml` in Typst).
+> structure. The Citations list is kept as a short site-only intro; its numbers
+> come from `data/citations.json`, which `scripts/update-citations.py` refreshes
+> on every build (see the repository README). Say the word if you want “Recent”
+> back (it can be derived from `cv.yml` in Typst).
 
 ## Prerequisites
 

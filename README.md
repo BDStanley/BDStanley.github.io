@@ -25,6 +25,8 @@ Key files:
 | `calepin-site/scripts/update-kl.py` | Adds new Kultura Liberalna articles to `data/kultura-liberalna.yml`, the archive the Media page lists. It never changes existing entries. |
 | `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
 | `calepin-site/data/publications-sync.json` | That script's record: DOIs never to add (`ignore`) and the entries it added (`managed`). |
+| `calepin-site/scripts/update-citations.py` | Refreshes the Google Scholar and Sage Policy Profiles numbers in `data/citations.json`. See [Citation counts](#citation-counts). |
+| `calepin-site/data/citations.json` | The numbers in the Citations list on the Publications page, each with the month it dates from. |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
 | `calepin-site/README.md` | Installing Calepin, and notes on the theme and the CV set-up. |
 
@@ -35,6 +37,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | To change | Edit (in `calepin-site/`) |
 |---|---|
 | Publications, research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
+| Citation counts | Nothing for Google Scholar and Sage Policy Profiles: they update on each build. Web of Science: `data/citations.json`; see [Citation counts](#citation-counts). |
 | Home page | `index.typ` |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
@@ -55,9 +58,10 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 2. compiles `cv/cv.typ` into `cv/cv.pdf` with Typst;
 3. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
 4. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
-5. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME` and an empty `.nojekyll`.
+5. refreshes the citation counts in `data/citations.json` (see [Citation counts](#citation-counts)), keeping the previous numbers for any source it cannot read;
+6. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME` and an empty `.nojekyll`.
 
-A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–4 still update `cv/cv.yml`, the CV PDF, the Teaching pages and the Kultura Liberalna list.
+A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–5 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Kultura Liberalna list and the citation counts.
 
 The build needs Typst 0.15 or newer, Calepin, Python 3 (standard library only) and the Jost font, which the CV uses. `build.sh` uses `calepin` from the `PATH`, or else the copy bundled with the "Calepin for Typst" extension for Positron, VS Code or Cursor. Typst downloads the academicv package on the first compile.
 
@@ -81,6 +85,16 @@ Day-to-day use:
 | Keep out any other DOI | Add it to `ignore`, with a short reason. |
 | Stop it completing an entry | Delete that entry from `managed`. |
 | Check without changing anything | `python3 calepin-site/scripts/update-publications.py --dry-run` |
+
+## Citation counts
+
+The Citations list at the top of the Publications page reads its numbers from `calepin-site/data/citations.json`. `scripts/update-citations.py` runs on every build:
+
+- **Google Scholar:** citations, h-index and i10-index (all years), read from the metrics table on the profile page.
+- **Sage Policy Profiles:** policy citations and the number of policy documents they appear in, read from the data the public profile page loads.
+- **Web of Science:** entered by hand. Its author record shows automated visitors a CAPTCHA, so the script cannot read it. To update, copy the numbers from the profile into `web_of_science` in `citations.json` and set `as_of` to the current month (`YYYY-MM`). Every build prints the current hand-entered numbers and their month as a reminder.
+
+Each source records the month its numbers date from. The page's "Updated" line shows the latest month, and any older source shows its own month beside its name. A source keeps its previous numbers if it cannot be reached, if its page no longer has the numbers where the script looks (for instance a Google Scholar CAPTCHA), or if any number has fallen by more than a quarter. The last case prints a `[citations] needs attention` line; if the fall is real, enter the new numbers by hand. The script copies the file to `quarto-site/data/` for the Quarto backup. `--dry-run` shows what it would change without writing anything.
 
 ## Deploying
 

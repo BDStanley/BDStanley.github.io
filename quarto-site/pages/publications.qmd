@@ -44,11 +44,32 @@ source(file.path(.root, "R", "cv-helpers.R"))
 
 ## Citations
 
-_Updated: March 2026_
-
-- [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013): 1,153 (h-index = 10)
-- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en): 3,845 (h-index = 18, i10-index = 20)
-- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley): 64 citations across 52 policy documents.
+```{r}
+#| echo: false
+#| output: asis
+# The same counts as the Calepin page: calepin-site/scripts/update-citations.py
+# copies data/citations.json here on every Calepin build. "Updated" is the most
+# recent month; a source whose numbers are older names its own month.
+cites <- jsonlite::read_json(file.path(.root, "data", "citations.json"))
+wos <- cites$web_of_science
+gs <- cites$google_scholar
+sage <- cites$sage_policy_profiles
+latest <- max(wos$as_of, gs$as_of, sage$as_of)
+# month.name, not format(), so the month stays English in any locale
+month <- function(ym) paste(month.name[as.integer(substr(ym, 6, 7))], substr(ym, 1, 4))
+when <- function(s) if (s$as_of != latest) paste0(" (", month(s$as_of), ")") else ""
+num <- function(n) format(n, big.mark = ",")
+cat(
+  sprintf("_Updated: %s_\n\n", month(latest)),
+  sprintf("- [Web of Science](https://www.webofscience.com/wos/author/record/J-7051-2013)%s: %s (h-index = %s)\n",
+          when(wos), num(wos$citations), wos$h_index),
+  sprintf("- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en)%s: %s (h-index = %s, i10-index = %s)\n",
+          when(gs), num(gs$citations), gs$h_index, gs$i10_index),
+  sprintf("- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley)%s: %s citations across %s policy documents.\n",
+          when(sage), num(sage$citations), num(sage$documents)),
+  sep = ""
+)
+```
 
 ```{r}
 #| echo: false
