@@ -129,12 +129,12 @@ The same script also fetches OpenAlex's citation count for each publication in `
 
 ## Citation reach
 
-`pages/citation-reach.html` shows where, and in which disciplines, Ben's work is cited: a world map of the countries the citing scholars are based in, bar charts of citations by discipline and subdiscipline, and a chart of citations by year, each bar divided by discipline. Each chart has a table under it. The page is not in the navigation bar; the OpenAlex line of the Citations list on the Publications page links to it ("reach by country and discipline").
+`pages/citation-reach.html` shows where, and in which disciplines, Ben's work is cited: a world map of the countries the citing scholars are based in, bar charts of citations by discipline and subdiscipline, and a chart of citations by year, each bar divided by subdiscipline. Each chart has a table under it. The page is not in the navigation bar; the OpenAlex line of the Citations list on the Publications page links to it ("reach by country and discipline").
 
 `scripts/update-reach.py` builds its data, `data/reach.json`, from OpenAlex on every build, and copies it to `quarto-site/data/`:
 
 - **Works and citations:** every work OpenAlex links to Ben's ORCID iD, and the works that cite them. A work citing two of his counts twice, as in OpenAlex's own totals.
-- **Disciplines:** each citation counts under the field (discipline) and subfield (subdiscipline) of the citing work's primary topic in OpenAlex's classification. The five largest fields have colours of their own; the rest share a grey as "Other". Citations from works with no topic show as "Unclassified" in the chart by year only.
+- **Disciplines:** each citation counts under the field (discipline) and subfield (subdiscipline) of the citing work's primary topic in OpenAlex's classification. The five largest subfields have colours of their own, shared by the subdiscipline chart and the chart by year; the rest share a grey as "Other". The discipline chart is one series, in the site's red. Citations from works with no topic show as "Unclassified" in the chart by year only.
 - **Years:** by the citing work's year of publication, from the year of Ben's first work. Citations OpenAlex dates earlier are dating errors and are left out.
 - **Countries:** the citing works' authors, other than Ben, each counted once in each country of the institutions they list. About a quarter of citing works list no institution.
 

@@ -51,7 +51,7 @@ quarto-site/
 │   └── sync-teaching.py # generates the Teaching pages from the Teaching repo (Quarto twin)
 ├── pages/
 │   ├── publications.qmd      # Citations (from data/citations.json) + Monographs/Journal/Chapters/Datasets (from cv.yml)
-│   ├── citation-reach.qmd    # map + discipline/year charts (data/reach.json); linked from Publications, not the navbar
+│   ├── citation-reach.qmd    # map + discipline/subdiscipline/year charts (data/reach.json); linked from Publications, not the navbar
 │   ├── research-projects.qmd # Current/Previous research projects (from cv.yml)
 │   ├── media.qmd             # Kultura Liberalna list (data/kultura-liberalna.yml) + static Polityka.pl/Other
 │   ├── pooling-the-poles.qmd # embeds the live Shiny polling app

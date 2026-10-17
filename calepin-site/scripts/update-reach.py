@@ -13,8 +13,9 @@ What is counted:
   * Disciplines: each citation is put under the field and subfield of the
     citing work's primary topic (OpenAlex's domain > field > subfield > topic
     hierarchy). Citations from works with no topic are left out of those
-    charts. The top five fields have colours of their own; the rest are
-    grouped as "Other".
+    charts. The five largest subfields have colours of their own, in the
+    subdiscipline chart and the chart by year; the rest are grouped there as
+    "Other". The discipline chart is a single series, in the site's red.
   * Years: by the citing work's year of publication, from the year of Ben's
     first work to this year. Citations OpenAlex dates earlier are dating
     errors and are left out.
@@ -61,11 +62,13 @@ DATA = os.path.abspath(os.path.join(HERE, "..", "data", "reach.json"))
 MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "reach.json"))
 MAP = os.path.abspath(os.path.join(HERE, "..", "data", "world-map.json"))
 
-# Colours. Fields take the first five slots of the dataviz reference palette in
-# order (validated for colour-blind separation as neighbours in a stack); the
-# rest share a grey. Countries are binned on a one-hue red ramp ending in the
+# Colours. Countries are binned on a one-hue red ramp ending in the
 # site's dark red, light to dark; countries with no citing scholars are grey.
-FIELD_COLOURS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]
+# Subfields take the first five slots of the dataviz reference palette in
+# order (validated for colour-blind separation as neighbours in a stack); the
+# rest share a grey. The fields' bars are one series, in the site's dark red.
+SUBFIELD_COLOURS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]
+FIELD_COLOUR = "#8b0000"
 OTHER_COLOUR = "#a9a79f"
 UNCLASSIFIED_COLOUR = "#d3d1c9"   # citing works with no topic, in the chart by year
 RAMP = ["#eda496", "#e38070", "#d55d4b", "#c13d30", "#a72219", "#8b0000"]
@@ -151,7 +154,7 @@ def analyse(me, mine, citing, names):
         elif year < first_year:
             before += n
         else:
-            by_year[year][field] += n
+            by_year[year][topic["subfield"]["display_name"] if topic else None] += n
         placed = False
         for a in w.get("authorships") or []:
             author = (a.get("author") or {}).get("id")
@@ -167,36 +170,37 @@ def analyse(me, mine, citing, names):
         if not placed:
             no_country += 1
 
-    # Fields: the top five keep a colour each, in order; the rest fold into Other.
-    ranked = [f for f, _ in sorted(fields.items(), key=lambda kv: (-kv[1], kv[0]))]
-    named = ranked[:len(FIELD_COLOURS)]
-    colour = {f: FIELD_COLOURS[i] for i, f in enumerate(named)}
     classified = sum(fields.values())
-    top = max(fields.values()) if fields else 1
 
     def share(n, of):
         return round(100 * n / of, 1) if of else 0
 
+    # Fields: one series, largest first.
+    ranked = [f for f, _ in sorted(fields.items(), key=lambda kv: (-kv[1], kv[0]))]
+    top = max(fields.values()) if fields else 1
     field_rows = [{"name": f, "citations": fields[f], "share": share(fields[f], classified),
-                   "colour": colour.get(f, OTHER_COLOUR), "w": round(fields[f] / top, 4),
+                   "colour": FIELD_COLOUR, "w": round(fields[f] / top, 4),
                    "tip": "%s: %s (%s%% of classified citations)"
                           % (f, plural(fields[f], "citation"), share(fields[f], classified))}
                   for f in ranked]
-    other_members = ranked[len(FIELD_COLOURS):]
-    legend = [{"name": f, "colour": colour[f]} for f in named]
+
+    # Subfields: the top five keep a colour each, in order; the rest fold into Other.
+    sub_ranked = sorted(subfields.items(), key=lambda kv: (-kv[1], kv[0]))
+    named = [s for s, _ in sub_ranked[:len(SUBFIELD_COLOURS)]]
+    colour = {s: SUBFIELD_COLOURS[i] for i, s in enumerate(named)}
+    sub_top = sub_ranked[0][1] if sub_ranked else 1
+    sub_rows = [{"name": s, "field": subfield_of[s], "citations": n, "share": share(n, classified),
+                 "colour": colour.get(s, OTHER_COLOUR), "w": round(n / sub_top, 4),
+                 "tip": "%s (%s): %s" % (s, subfield_of[s], plural(n, "citation"))}
+                for s, n in sub_ranked]
+    other_members = [s for s, _ in sub_ranked[len(SUBFIELD_COLOURS):]]
+    legend = [{"name": s, "colour": colour[s]} for s in named]
     if other_members:
         legend.append({"name": "Other", "colour": OTHER_COLOUR})
     if no_topic:
         legend.append({"name": "Unclassified", "colour": UNCLASSIFIED_COLOUR})
 
-    sub_ranked = sorted(subfields.items(), key=lambda kv: (-kv[1], kv[0]))
-    sub_top = sub_ranked[0][1] if sub_ranked else 1
-    sub_rows = [{"name": s, "field": subfield_of[s], "citations": n, "share": share(n, classified),
-                 "colour": colour.get(subfield_of[s], OTHER_COLOUR), "w": round(n / sub_top, 4),
-                 "tip": "%s (%s): %s" % (s, subfield_of[s], plural(n, "citation"))}
-                for s, n in sub_ranked]
-
-    # Years: one stacked column per year, the named fields bottom-up in rank
+    # Years: one stacked column per year, the named subfields bottom-up in rank
     # order, then Other, then citations whose work has no topic (Unclassified).
     years = list(range(first_year, this_year + 1))
     totals = {y: sum(by_year[y].values()) for y in years}
@@ -250,7 +254,7 @@ def analyse(me, mine, citing, names):
                    "citations_without_topic": no_topic, "citations_before_first_year": before,
                    "citations_undated": undated, "classified_citations": classified},
         "fields": field_rows,
-        "other_fields": other_members,
+        "other_subfields": other_members,
         "legend": legend,
         "subfields": sub_rows,
         "top_subfields": TOP_SUBFIELDS,

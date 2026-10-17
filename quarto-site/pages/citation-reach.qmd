@@ -55,8 +55,7 @@ reach_html(reach_table(sprintf("All %d countries", t$countries), c("Country", "C
 ## Disciplines
 
 Citations by the discipline of the citing work: the field of its main topic in
-OpenAlex's classification of research. The colours are those of the chart by
-year below, where the smaller fields are grouped as Other.
+OpenAlex's classification of research.
 
 ```{r}
 #| output: asis
@@ -68,7 +67,8 @@ reach_html(reach_table("As a table", c("Discipline", "Citations", "Share"),
 ## Subdisciplines
 
 The `r reach$top_subfields` subdisciplines (OpenAlex's subfields) with the most
-citations, coloured by their discipline.
+citations. The colours are those of the chart by year below, where the smaller
+subdisciplines are grouped as Other.
 
 ```{r}
 #| output: asis
@@ -81,7 +81,7 @@ reach_html(reach_table(sprintf("All %d subdisciplines", length(reach$subfields))
 ## Citations by year
 
 Citations each year, by the year the citing work was published, divided by
-discipline. Hover over a bar to see its numbers.
+subdiscipline. Hover over a bar to see its numbers.
 
 ```{r}
 #| output: asis

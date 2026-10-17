@@ -113,8 +113,7 @@ The #reach.top_countries countries with the most citing scholars:
 = Disciplines
 
 Citations by the discipline of the citing work: the field of its main topic in
-OpenAlex's classification of research. The colours are those of the chart by
-year below, where the smaller fields are grouped as Other.
+OpenAlex's classification of research.
 
 #bars(reach.fields, "name", "citations")
 #data-table([As a table], ("Discipline", "Citations", "Share"),
@@ -123,7 +122,8 @@ year below, where the smaller fields are grouped as Other.
 = Subdisciplines
 
 The #reach.top_subfields subdisciplines (OpenAlex's subfields) with the most
-citations, coloured by their discipline.
+citations. The colours are those of the chart by year below, where the smaller
+subdisciplines are grouped as Other.
 
 #bars(reach.subfields.slice(0, calc.min(reach.top_subfields, reach.subfields.len())), "name", "citations")
 #data-table([All #reach.subfields.len() subdisciplines], ("Subdiscipline", "Discipline", "Citations"),
@@ -132,12 +132,12 @@ citations, coloured by their discipline.
 = Citations by year
 
 Citations each year, by the year the citing work was published, divided by
-discipline. Hover over a bar to see its numbers.
+subdiscipline. Hover over a bar to see its numbers.
 
 #let years = reach.years
 #el("div", class: "reach-legend")[#for l in reach.legend { swatch(l.colour, l.name) }]
 #el("div", class: "reach-years", role: "img",
-    aria-label: "Bar chart of citations per year from " + str(years.rows.first().year) + " to " + str(years.rows.last().year) + ", each bar divided by discipline")[
+    aria-label: "Bar chart of citations per year from " + str(years.rows.first().year) + " to " + str(years.rows.last().year) + ", each bar divided by subdiscipline")[
   #el("div", class: "reach-years-plot")[
     #for tk in years.ticks {
       el("div", class: "reach-tick", style: "bottom: " + str(tk.pos * 100) + "%")[#el("span")[#tk.label]]

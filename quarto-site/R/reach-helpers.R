@@ -120,7 +120,7 @@ reach_years <- function() {
   }, "")
   c(el("div", class = "reach-legend", body = vapply(reach$legend, function(l) swatch(l$colour, l$name), "")),
     el("div", class = "reach-years", role = "img",
-       `aria-label` = sprintf("Bar chart of citations per year from %s to %s, each bar divided by discipline",
+       `aria-label` = sprintf("Bar chart of citations per year from %s to %s, each bar divided by subdiscipline",
                               rows[[1]]$year, rows[[length(rows)]]$year),
        body = c(el("div", class = "reach-years-plot", body = c(ticks, el("div", class = "reach-cols", body = cols))),
                 el("div", class = "reach-years-axis", body = axis))))
