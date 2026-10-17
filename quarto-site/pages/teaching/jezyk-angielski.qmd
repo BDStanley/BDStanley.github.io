@@ -9,30 +9,30 @@ title: "Język angielski w zastosowaniu zawodowym"
 
 ## Slajdy
 
-1. [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-slides)
-2. [Strategie i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-slides)
-3. [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-slides)
-4. [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-slides)
-5. [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-slides)
-6. [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-slides)
+1. [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-slides-g4edh)
+2. [Strategie i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-slides-vgzef)
+3. [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-slides-6vvwf)
+4. [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-slides-v2cuz)
+5. [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-slides-q9exp)
+6. [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-slides-y43vb)
 
 ## Materiały
 
-- [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-handout)
-- [Strategia i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-handout)
-- [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-handout)
-- [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-handout)
-- [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-handout)
-- [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-handout)
+- [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-handout-s7hz4)
+- [Strategia i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-handout-vxb6c)
+- [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-handout-6mpgd)
+- [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-handout-jh3bg)
+- [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-handout-fvgyz)
+- [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-handout-h7tpj)
 
 ## Ćwiczenia
 
-- [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-exercises)
-- [Strategia i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-exercises)
-- [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-exercises)
-- [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-exercises)
-- [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-exercises) · [answers](https://bdstanley.netlify.app/jezyk-angielski-5-exercises-answers)
-- [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-exercises) · [answers](https://bdstanley.netlify.app/jezyk-angielski-6-exercises-answers)
+- [Wprowadzenie i podstawy biznesu](https://bdstanley.netlify.app/jezyk-angielski-1-exercises-4apq4)
+- [Strategia i struktura](https://bdstanley.netlify.app/jezyk-angielski-2-exercises-va5e4)
+- [Kultura organizacyjna i przywództwo](https://bdstanley.netlify.app/jezyk-angielski-3-exercises-gaw2h)
+- [Finanse, ludzie i innowacje](https://bdstanley.netlify.app/jezyk-angielski-4-exercises-p9azj)
+- [Umiejętności pisania zawodowego](https://bdstanley.netlify.app/jezyk-angielski-5-exercises-brf2s) · [answers](https://bdstanley.netlify.app/jezyk-angielski-5-exercises-answers-atmpf)
+- [Umiejętności komunikacji ustnej](https://bdstanley.netlify.app/jezyk-angielski-6-exercises-qn8yy) · [answers](https://bdstanley.netlify.app/jezyk-angielski-6-exercises-answers-6ctrw)
 
 ## Zaliczenie
 

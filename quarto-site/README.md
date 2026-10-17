@@ -44,7 +44,7 @@ quarto-site/
 ├── pages/
 │   ├── publications.qmd      # Citations (from data/citations.json) + Monographs/Journal/Chapters/Datasets (from cv.yml)
 │   ├── research-projects.qmd # Current/Previous research projects (from cv.yml)
-│   ├── media.qmd             # LIVE Kultura Liberalna scrape + static Polityka.pl/Other
+│   ├── media.qmd             # Kultura Liberalna list (data/kultura-liberalna.yml) + static Polityka.pl/Other
 │   ├── pooling-the-poles.qmd # embeds the live Shiny polling app
 │   ├── good-change.qmd       # two-column book page
 │   ├── teaching.qmd          # GENERATED Heiss-style course landing
@@ -59,7 +59,7 @@ The Calepin site maps to this almost one-to-one:
 | `index.typ` (hero)                      | `index.qmd` (about/trestles)        |
 | `pages/publications.typ` (from cv.yml)  | `pages/publications.qmd` (from cv.yml via R) |
 | `pages/research-projects.typ`           | `pages/research-projects.qmd`       |
-| `pages/media.typ` (live KL scrape)      | `pages/media.qmd` (live KL scrape)  |
+| `pages/media.typ` (KL list from data/)  | `pages/media.qmd` (KL list from data/) |
 | `pages/pooling-the-poles.typ`           | `pages/pooling-the-poles.qmd`       |
 | `pages/good-change.typ`                 | `pages/good-change.qmd`             |
 | `pages/teaching.typ` + `teaching/*`     | `pages/teaching.qmd` + `teaching/*` |
@@ -88,14 +88,12 @@ CV PDF and both pages update together.**
 All already installed on this machine:
 
 1. **Quarto** (`quarto` on `PATH`) — `quarto --version` ≥ 1.5.
-2. **R** (`Rscript` on `PATH`) with `yaml`, `jsonlite`, `rvest`, `httr`. `yaml` powers the
-   CV-driven pages; `jsonlite` (installed with `rmarkdown`) reads the citation
-   counts; `rvest`/`httr` power the live Media scrape. If `rvest`/`httr`
-   are missing, the Media page falls back to a cached snapshot baked into
-   `pages/media.qmd` and the build still succeeds.
+2. **R** (`Rscript` on `PATH`) with `yaml` and `jsonlite`. `yaml` powers the
+   CV-driven pages and the Media page's Kultura Liberalna list; `jsonlite`
+   (installed with `rmarkdown`) reads the citation counts.
 3. **Typst** (`typst` on `PATH`) ≥ 0.13 — builds `cv/cv.pdf` from `cv/cv.yml`
    via the academicv template (downloaded from Typst Universe on first compile).
-4. **Python 3** — runs `scripts/sync-teaching.py`.
+4. **Python 3** — runs `scripts/sync-teaching.py` and `scripts/update-kl.py`.
 
 ## Build & preview
 
@@ -109,7 +107,7 @@ quarto preview      # live preview (or just open _site/index.html)
 
 `./build.sh` is the command to run after editing `cv/cv.yml` (or any page) — it
 keeps the CV PDF and the CV-driven pages in sync, refreshes the Teaching pages,
-and re-runs the live Kultura Liberalna scrape.
+and adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`.
 
 ## Notes / deliberate differences from the Calepin site
 
@@ -117,16 +115,16 @@ and re-runs the live Kultura Liberalna scrape.
   and footer, red links with a pink accent — set in `assets/styles/website_style.scss`.
   Page-specific layouts (research-projects timeline, Teaching cards, the
   Pooling-the-Poles embed) are in `assets/styles/styles.css`, ported from the
-  Calepin `site.css`. Content pages show a Quarto **title block** (e.g.
-  "Publications"); the Calepin site omits page titles. This is the main visible
-  difference and is the normal Quarto idiom.
+  Calepin `site.css`. The Teaching pages show their titles in a Quarto **title
+  block**; the other pages, like the Calepin site's, have no on-page title.
 - **Footer** reads "Made with R and Quarto" (the Calepin site says "Made with
   Typst and Calepin"). Same licence line.
-- **Live Kultura Liberalna scrape** (`pages/media.qmd`) — a port of the Calepin
-  R chunk: scrapes the author page newest-first on every render, wrapped in
-  `tryCatch` with a cached fallback list, so the build never fails. The
-  `recent_media.lua` filter from the *old* Quarto site is not used (the Calepin
-  site didn't port it either).
+- **Kultura Liberalna list** (`pages/media.qmd`) — rendered from
+  `data/kultura-liberalna.yml`, as on the Calepin site. The author page shows only
+  the 15 most recent pieces, so `scripts/update-kl.py` (run by `build.sh`) only
+  ever adds to the file, which keeps the full archive. The `recent_media.lua`
+  filter from the *old* Quarto site is not used (the Calepin site didn't port it
+  either).
 - **Teaching** (`scripts/sync-teaching.py`) is the Quarto twin of the Calepin
   script: identical parsing/metadata logic, but it emits `.qmd` (raw-HTML
   landing cards + per-course link lists) instead of `.typ`. Links point at the

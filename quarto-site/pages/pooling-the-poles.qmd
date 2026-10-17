@@ -1,5 +1,5 @@
 ---
-title: "Pooling the Poles"
+title: ""                    # no on-page heading: just the app, as on the Calepin page
 pagetitle: "Pooling the Poles"
 page-layout: full
 description-meta: "Interactive Polish polling tracker"

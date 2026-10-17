@@ -50,6 +50,13 @@ fi
 echo "→ Checking ORCID/OpenAlex for new publications ..."
 python3 "$SRC/scripts/update-publications.py" || echo "  (skipped: update-publications.py failed; cv.yml unchanged)"
 
+# Bring the Datasets section of cv/cv.yml in step with the Harvard Dataverse
+# collection: new datasets, renamed ones, ones that have left. Dataverse leads,
+# so dataset titles are fixed there. Entries for datasets elsewhere are kept.
+# Network failures are non-fatal: the build then uses cv.yml as it stands.
+echo "→ Syncing datasets from Harvard Dataverse ..."
+python3 "$SRC/scripts/update-datasets.py" || echo "  (skipped: update-datasets.py failed; cv.yml unchanged)"
+
 echo "→ Building CV PDF from cv/cv.yml ..."
 typst compile cv/cv.typ cv/cv.pdf
 

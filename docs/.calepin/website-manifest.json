@@ -1,7 +1,9 @@
 {
   "outputs": [
-    ".calepin/favicon.svg",
     "404.html",
+    "assets/apple-touch-icon.png",
+    "assets/favicon-32.png",
+    "assets/favicon.svg",
     "assets/good-change.png",
     "assets/icons/openalex.svg",
     "assets/profile.jpg",

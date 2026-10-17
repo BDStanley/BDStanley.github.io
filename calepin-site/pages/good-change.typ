@@ -73,5 +73,11 @@
     liberalism in the process.”
 
     —Piotr H. Kosicki, _Times Literary Supplement_
+
+    “A book as topic-specific and detailed about a particular case study as this
+    one is, and as far-reaching and theoretically complex, is usually a rare
+    event.”
+
+    —Ray Taras, _Slavic Review_
   ],
 )

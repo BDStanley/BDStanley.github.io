@@ -9,34 +9,34 @@ title: "Podstawy dziennikarstwa danych"
 
 ## Slajdy
 
-1. [Wprowadzenie do dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-slides)
-2. [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-slides)
-3. [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-slides)
-4. [Wizualizacja danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-slides)
-5. [Budowanie narracji — od danych do historii](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-slides)
+1. [Wprowadzenie do dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-slides-s8vzt)
+2. [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-slides-aamp3)
+3. [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-slides-fse3y)
+4. [Wizualizacja danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-slides-8c7ga)
+5. [Budowanie narracji — od danych do historii](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-slides-tqxvv)
 
 ## Materiały
 
-- [Wprowadzenie do dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-handout)
-- [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-handout)
-- [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout)
-- [Datawrapper — poradnik do ćwiczenia](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout-datawrapper)
-- [jamovi — poradnik do ćwiczenia](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout-jamovi)
-- [Wizualizacja danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-handout)
+- [Wprowadzenie do dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-handout-gqve8)
+- [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-handout-4m6r2)
+- [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout-w4mf9)
+- [Datawrapper — poradnik do ćwiczenia](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout-datawrapper-anqx2)
+- [jamovi — poradnik do ćwiczenia](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-handout-jamovi-agqhc)
+- [Wizualizacja danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-handout-x9b9t)
 
 ## Ćwiczenia
 
-- [Identyfikacja tematów wymagających dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-exercise)
-- [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-exercise)
-- [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-exercise) · [answers](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-exercise-answers)
-- [Wizualizacja danych waszego projektu](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-exercise)
-- [Ćwiczenie narracyjne — Przykład (UK Housing)](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 1](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 2](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 3](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 4](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 5](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-dokumentacja)
-- [Ćwiczenie narracyjne — Grupa 6](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-plan) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-projekt) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-dokumentacja)
+- [Identyfikacja tematów wymagających dziennikarstwa danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-1-exercise-yvwry)
+- [Źródła i pozyskiwanie danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-2-exercise-9edgm)
+- [Narzędzia i analiza danych](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-exercise-xnud4) · [answers](https://bdstanley.netlify.app/podstawy-dziennikarstwa-3-exercise-answers-ffqwv)
+- [Wizualizacja danych waszego projektu](https://bdstanley.netlify.app/podstawy-dziennikarstwa-4-exercise-sc5kb)
+- [Ćwiczenie narracyjne — Przykład (UK Housing)](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-u8ztq) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-plan-w8f6w) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-projekt-9zv2t) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-0-dokumentacja-pgtey)
+- [Ćwiczenie narracyjne — Grupa 1](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-jj4t6) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-plan-8ztnj) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-projekt-deu7r) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-1-dokumentacja-v8wj9)
+- [Ćwiczenie narracyjne — Grupa 2](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-6v8rx) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-plan-xdr8x) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-projekt-kydcf) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-2-dokumentacja-uaftb)
+- [Ćwiczenie narracyjne — Grupa 3](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-z7anj) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-plan-6xqeh) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-projekt-2fuv6) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-3-dokumentacja-pkrpv)
+- [Ćwiczenie narracyjne — Grupa 4](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-nhnn7) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-plan-pae9z) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-projekt-abh29) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-4-dokumentacja-9y8f7)
+- [Ćwiczenie narracyjne — Grupa 5](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-q5xk3) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-plan-gevmx) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-projekt-cx264) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-5-dokumentacja-try2y)
+- [Ćwiczenie narracyjne — Grupa 6](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-w7dua) · [plan modelowy](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-plan-4qb5b) · [artykuł](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-projekt-xbgkn) · [dokumentacja](https://bdstanley.netlify.app/podstawy-dziennikarstwa-5-exercise-group-6-dokumentacja-qhx8u)
 
 ## Źródła
 

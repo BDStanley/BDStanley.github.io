@@ -1,5 +1,5 @@
 {
-  "_about": "Maintained by scripts/update-publications.py; see that file. 'ignore': DOIs never to add to cv.yml (DOI -> reason). 'managed': entries the script added, and what it wrote, so it can fill in volume/issue/pages later.",
+  "_about": "Maintained by scripts/update-publications.py and scripts/update-datasets.py; see those files. 'ignore': DOIs never to add to cv.yml (DOI -> reason). 'managed': publications update-publications.py added, and what it wrote, so it can fill in volume/issue/pages later. 'datasets': the Harvard Dataverse DOIs update-datasets.py last wrote, so it can tell when one is deleted from cv.yml by hand.",
   "ignore": {
     "10.1017/s1755048317000712": "Book review in Politics and Religion (2018); left out on purpose.",
     "10.1017/s1755048318000214": "Erratum to that book review."
@@ -12,5 +12,15 @@
       "tail": "*East European Politics*. doi:10.1080/21599165.2026.2740234.",
       "complete": false
     }
-  }
+  },
+  "datasets": [
+    "10.7910/dvn/2wsili",
+    "10.7910/dvn/4l5wi7",
+    "10.7910/dvn/c76jxd",
+    "10.7910/dvn/d3927j",
+    "10.7910/dvn/fnesp1",
+    "10.7910/dvn/omwqr0",
+    "10.7910/dvn/tuuhgv",
+    "10.7910/dvn/yl1bve"
+  ]
 }

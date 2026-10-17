@@ -9,8 +9,12 @@ title: "Introduction to Social Research Methodology"
 
 ## Slides
 
-1. [The nature and purpose of social research](https://bdstanley.netlify.app/social-research-methodology-1-slides)
+1. [The nature and purpose of social research](https://bdstanley.netlify.app/social-research-methodology-1-slides-tb7yq)
 
 ## Handouts
 
-- [The nature and purpose of social research](https://bdstanley.netlify.app/social-research-methodology-1-handout)
+- [The nature and purpose of social research](https://bdstanley.netlify.app/social-research-methodology-1-handout-wdrmq)
+
+## Exercises
+
+- [Research or not?](https://bdstanley.netlify.app/social-research-methodology-1-exercise-vahsz) · [answers](https://bdstanley.netlify.app/social-research-methodology-1-exercise-answers-tbrg3)

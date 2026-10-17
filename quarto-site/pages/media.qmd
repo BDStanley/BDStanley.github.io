@@ -15,7 +15,11 @@ title: ""
 # exposes the 15 most recent pieces (it is a single `autor` post, not a
 # paginated archive), so a pure scrape can never show more than 15. The YAML
 # accumulates instead and only ever grows. Mirrors calepin-site/pages/media.typ.
-kl <- yaml::read_yaml(here::here("quarto-site", "data", "kultura-liberalna.yml"))$articles
+# Quarto's project folder (quarto-site/), which is also the working directory
+# (execute-dir: project). Not here::here(): newer versions of `here` stop at
+# _quarto.yml, older ones at the repository root, so the right path differs.
+root <- Sys.getenv("QUARTO_PROJECT_DIR", ".")
+kl <- yaml::read_yaml(file.path(root, "data", "kultura-liberalna.yml"))$articles
 kl <- kl[order(vapply(kl, `[[`, "", "date"), decreasing = TRUE)]
 cat(paste(vapply(kl, function(a) {
   p <- strsplit(a$date, "-")[[1]]

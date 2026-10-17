@@ -1,4 +1,9 @@
 {{ doc.head }}
+{# PNG versions of the favicon (scripts/make-favicon.py) for browsers without SVG
+   icons and for iOS home screens; the SVG one is `favicon` in calepin.toml. The
+   sizes attribute keeps browsers that take SVG on the SVG. #}
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap">
