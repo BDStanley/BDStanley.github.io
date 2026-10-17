@@ -98,16 +98,17 @@ render_entry <- function(s) {
   s
 }
 
-# OpenAlex's citation count after an entry, "(12 citations)", as on the Calepin
-# page: data/publication-citations.json (copied from calepin-site/data by its
-# scripts/update-citations.py) is keyed by the entry's DOI, or by the whole
-# entry for those without one. No note when there are no citations, or none
-# OpenAlex knows of.
-cite_note <- function(s, cites) {
+# An entry rendered with OpenAlex's citation count before its full stop, as on
+# the Calepin page: "… doi:10.xxx (12 citations)." data/publication-citations.json
+# (copied from calepin-site/data by its scripts/update-citations.py) is keyed by
+# the entry's DOI, or by the whole entry for those without one. Entries with no
+# citations, or none OpenAlex knows of, are rendered as they are.
+render_with_count <- function(s, cites) {
   m <- regmatches(s, regexec("doi:(10\\.\\S+)", s, perl = TRUE))[[1]]
   n <- if (length(m) == 2) cites$by_doi[[tolower(sub("\\.+$", "", m[2]))]] else cites$by_entry[[s]]
-  if (is.null(n) || n == 0) return("")
-  if (n == 1) " (1 citation)" else sprintf(" (%s citations)", format(n, big.mark = ","))
+  if (is.null(n) || n == 0) return(render_entry(s))
+  note <- if (n == 1) " (1 citation)" else sprintf(" (%s citations)", format(n, big.mark = ","))
+  if (endsWith(s, ".")) paste0(render_entry(sub("\\.$", "", s)), note, ".") else paste0(render_entry(s), note)
 }
 
 # Publications: emit the monographs / journal_articles / book_chapters /
@@ -122,7 +123,7 @@ emit_publications <- function(cv = read_cv()) {
       entries <- sec$entries %||% list()
       if (length(entries) > 0) {
         cat("\n## ", sec$title, "\n\n", sep = "")
-        for (e in entries) cat("- ", render_entry(e), cite_note(e, cites), "\n", sep = "")
+        for (e in entries) cat("- ", render_with_count(e, cites), "\n", sep = "")
         cat("\n")
       }
     }

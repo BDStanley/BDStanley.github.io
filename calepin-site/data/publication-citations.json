@@ -1,5 +1,5 @@
 {
-  "_about": "Citation counts per publication, from OpenAlex, shown after each entry on the Publications page. Written by scripts/update-citations.py; see that file.",
+  "_about": "Citation counts per publication, from OpenAlex, shown at the end of each entry on the Publications page. Written by scripts/update-citations.py; see that file.",
   "by_doi": {
     "10.1515/9781503643697": 10,
     "10.1007/978-3-031-19246-3": 11,

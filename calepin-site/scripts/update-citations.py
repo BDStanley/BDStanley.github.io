@@ -29,8 +29,8 @@ far more likely to be a misread page than a real loss. If a fall is real, enter
 the new numbers by hand; later runs carry on from them.
 
 It also writes data/publication-citations.json: OpenAlex's citation count for
-each publication in cv.yml, which the Publications page shows after the entry
-as "(12 citations)". Entries are matched by DOI or, for those without one, by
+each publication in cv.yml, which the Publications page shows at the end of
+the entry, before its full stop, as "(12 citations)". Entries are matched by DOI or, for those without one, by
 title among the works OpenAlex links to Ben's ORCID iD (strictly, as
 update-publications.py matches them). The page looks them up by the entry's
 "doi:" DOI, or by the whole entry when it has none, so they are keyed that way.
@@ -272,8 +272,8 @@ def main():
             print("[citations] needs attention: OpenAlex matched %d publications, down from %d;"
                   " keeping the previous per-publication counts." % (matched, before))
         else:
-            pub = dict(_about="Citation counts per publication, from OpenAlex, shown after each entry on"
-                              " the Publications page. Written by scripts/update-citations.py; see that file.",
+            pub = dict(_about="Citation counts per publication, from OpenAlex, shown at the end of each"
+                              " entry on the Publications page. Written by scripts/update-citations.py; see that file.",
                        **counts)
             print("[citations] OpenAlex counts for %d of the CV's publications." % matched)
 
