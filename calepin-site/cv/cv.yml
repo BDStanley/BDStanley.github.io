@@ -137,7 +137,7 @@ sections:
     title: Monographs
     show: true
     entries:
-      - "Bill, Stanley, and Ben Stanley. 2025. *Good Change: The Rise and Fall of Poland's Illiberal Revolution*. Stanford University Press. doi:10.1515/9781503643697."
+      - "Bill, Stanley, and Ben Stanley. 2025. *Good Change: The Rise and Fall of Poland's Illiberal Revolution*. Stanford: Stanford University Press. doi:10.1515/9781503643697."
 
       - "Szulecki, Kacper, Marta Bivand Erdal, and Ben Stanley. 2023. *External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation*. Cham: Palgrave Macmillan. doi:10.1007/978-3-031-19246-3."
 
@@ -198,9 +198,9 @@ sections:
     title: Book chapters
     show: true
     entries:
-      - "Stanley, Ben. 2025. 'Political Parties and Ideological Representation'. In *The Oxford Handbook of Polish Politics*, eds. Katarzyna Walecka, Simona Guerra, and Fernando Casal Bértoa. Oxford University Press, 596–630. doi:10.1093/oxfordhb/9780192873149.013.0030."
+      - "Stanley, Ben. 2025. 'Political Parties and Ideological Representation'. In *The Oxford Handbook of Polish Politics*, eds. Katarzyna Walecka, Simona Guerra, and Fernando Casal Bértoa. Oxford: Oxford University Press, 596–630. doi:10.1093/oxfordhb/9780192873149.013.0030."
 
-      - "Stanley, Ben. 2022. 'Poland: When Populists Must Manage Crisis Instead of Performing It'. In *Populists and the Pandemic: How Populists Around the World Responded to COVID-19*, eds. Nils Ringe and Lucio Rennó. Routledge, 105–16. doi:10.4324/9781003197614-9."
+      - "Stanley, Ben. 2022. 'Poland: When Populists Must Manage Crisis Instead of Performing It'. In *Populists and the Pandemic: How Populists Around the World Responded to COVID-19*, eds. Nils Ringe and Lucio Rennó. London: Routledge, 105–16. doi:10.4324/9781003197614-9."
 
       - "Stanley, Ben. 2020. 'A Comparison of Two Polish Party Leaders: Jarosław Kaczyński and Donald Tusk'. In *Party Leaders in Eastern Europe: Personality, Behavior and Consequences*, ed. Sergiu Gherghina. Cham: Palgrave Macmillan, 171–95. doi:10.1007/978-3-030-32025-6_8."
 
@@ -214,7 +214,7 @@ sections:
 
       - "Stanley, Ben. 2016. 'The Politics of the Past in the Present: Poland's Electoral Geography'. In *More Sex, Lies and the Ballot Box*, eds. Philip Cowley and Robert Ford. London: Biteback Publishing, 233–36."
 
-      - "Stanley, Ben. 2015. 'The Polish Self-Defence Party: From Agrarian Protest to the Politics of Populism, 1991–2007'. In *Rural Protest Groups and Populist Political Parties*, eds. Dirk Strijker, Gerrit Voerman, and Ida Terluin. Wageningen Academic Publishers, 191–216. doi:10.3920/978-90-8686-807-0_9."
+      - "Stanley, Ben. 2015. 'The Polish Self-Defence Party: From Agrarian Protest to the Politics of Populism, 1991–2007'. In *Rural Protest Groups and Populist Political Parties*, eds. Dirk Strijker, Gerrit Voerman, and Ida Terluin. Wageningen: Wageningen Academic Publishers, 191–216. doi:10.3920/978-90-8686-807-0_9."
 
       - "Stanley, Ben. 2015. 'The Post-Populist Non-Crisis in Poland'. In *Populism in the Shadow of the Great Recession*, eds. Hanspeter Kriesi and Takis S. Pappas. Colchester: ECPR Press, 251–69."
 
@@ -257,6 +257,7 @@ sections:
     entries:
       - institution: "HORIZON-CL2-2025-01-DEMOCRACY-03 - Preparing the EU for future enlargement: challenges and opportunities"
         title: "CitiSense: Making Sense of EU Enlargement for, with and by Citizens"
+        url: https://cordis.europa.eu/project/id/101286806
         start-date: 2026
         end-date: 2029
         description: |
@@ -278,12 +279,14 @@ sections:
     entries:
       - institution: National Science Center, OPUS 20
         title: Plemienność czy obojętność? Badanie rzeczywiście istniejących wartości demokratycznych i ich konsekwencji w Polsce
+        url: https://projekty.ncn.gov.pl/en/index.php?projekt_id=500574
         start-date: 2021
         end-date: 2026
         description: |
           Principal investigator. "Partisan bias or a climate of indifference? An investigation of actually-existing democratic values and their consequences in Poland". Funding: 783,228 zł.
       - institution: HORIZON-CL2-2021-DEMOCRACY-01
         title: AUTHLIB – Neo-Authoritarianisms in Europe and the Liberal Democratic Response
+        url: https://authlib.eu
         start-date: 2023
         end-date: 2025
         description: |
@@ -296,6 +299,7 @@ sections:
           Co-investigator. "Political knowledge and preferences of Poles regarding new civilisational threats." Funding: 118,770 zł.
       - institution: Norwegian Research Council, EUROPA (Europe in Transitions) A2–Values Under Pressure
         title: DIASPOlitic - Understanding the Political Dynamics of Émigré Communities in an Era of European Democratic Backsliding
+        url: https://sv.uio.no/isv/english/research/projects/diaspolitic
         start-date: 2019
         end-date: 2021
         description: |
@@ -314,12 +318,14 @@ sections:
           Principal investigator. Funding: 26,876 zł.
       - institution: Marie Curie Intra-European Fellowship, Seventh Framework Programme
         title: The Winner-Loser Divide? A Comparative Analysis of Voting Behaviour and Cleavage Formation in Post-Communist Party Systems (WINLOSE)
+        url: https://cordis.europa.eu/project/id/327413
         start-date: 2013
         end-date: 2015
         description: |
           Principal investigator. Funding: €231,283.
       - institution: ELECDEM Initial Training Network (ref. 238607), Marie Curie Action, Seventh Framework Programme
         title: Integration versus Demarcation? A Comparative Classification of Party Appeals, Voter Preferences and Candidate Attitudes in the European Parliamentary Elections of 2009
+        url: https://cordis.europa.eu/project/id/238607
         start-date: 2010
         end-date: 2010
         description: |

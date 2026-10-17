@@ -4,7 +4,8 @@
 // No on-page title heading; nav label / tab title come from the metadata above.
 // Read straight from cv/cv.yml — the same source as the CV PDF. Editing a
 // project in the CV updates the CV and this page. Sections and order follow the
-// CV (Current research projects, then Previous research projects).
+// CV (Current research projects, then Previous research projects). An entry's
+// optional `url:` links its title here; the CV's timeline layout ignores it.
 #let cv = yaml("/cv/cv.yml")
 
 #let fmt-range(e) = {
@@ -22,7 +23,7 @@
     html.elem("div", attrs: (class: "proj"))[
       #html.elem("div", attrs: (class: "proj-date"))[#fmt-range(e)]
       #html.elem("div", attrs: (class: "proj-body"))[
-        #html.elem("div", attrs: (class: "proj-title"))[#strong(e.title)]
+        #html.elem("div", attrs: (class: "proj-title"))[#if "url" in e { link(e.url, strong(e.title)) } else { strong(e.title) }]
         #html.elem("div", attrs: (class: "proj-funder"))[#emph(e.at("institution", default: ""))]
         #html.elem("div", attrs: (class: "proj-detail"))[#e.at("description", default: "").trim()]
       ]

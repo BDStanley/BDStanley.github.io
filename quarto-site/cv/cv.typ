@@ -3,8 +3,19 @@
 // Or for local development
 // #import "../cv.typ": *
 
-// Import your CV data
-#let cv-data = yaml("cv.yml")
+// Import your CV data. The publication entries end with their DOIs, which the
+// website's Publications page shows; the CV PDF leaves them out, except for the
+// datasets, where the DOI is the only reference.
+#let cv-data = {
+  let data = yaml("cv.yml")
+  data.sections = data.sections.map(section => {
+    if section.at("layout", default: none) == "numbered-list" and section.key != "datasets" and type(section.at("entries", default: none)) == array {
+      section.entries = section.entries.map(e => if type(e) == str { e.replace(regex("\s+doi:\S+"), "") } else { e })
+    }
+    section
+  })
+  data
+}
 
 // Validate that required fields exist in each section
 #for section in cv-data.sections {

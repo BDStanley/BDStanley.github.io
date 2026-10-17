@@ -147,7 +147,8 @@ fmt_range <- function(e) {
 }
 
 # Research projects: emit Current then Previous, each entry as a `.proj` grid
-# (date | bold title / italic funder / smaller detail) styled in styles.css.
+# (date | bold title / italic funder / smaller detail) styled in styles.css. An
+# entry's optional `url:` links its title.
 emit_projects <- function(cv = read_cv()) {
   for (key in c("projects_current", "projects_previous")) {
     sec <- NULL
@@ -157,11 +158,15 @@ emit_projects <- function(cv = read_cv()) {
     if (length(entries) == 0) next
     cat("\n## ", sec$title, "\n\n", sep = "")
     for (e in entries) {
+      title <- paste0("<strong>", html_escape(e$title %||% ""), "</strong>")
+      if (!is.null(e$url)) {
+        title <- paste0('<a href="', html_escape(e$url), '">', title, "</a>")
+      }
       cat(
         '<div class="proj">\n',
         '<div class="proj-date">', fmt_range(e), '</div>\n',
         '<div class="proj-body">\n',
-        '<div class="proj-title"><strong>', html_escape(e$title %||% ""), '</strong></div>\n',
+        '<div class="proj-title">', title, '</div>\n',
         '<div class="proj-funder"><em>', html_escape(e$institution %||% ""), '</em></div>\n',
         '<div class="proj-detail">', html_escape(trimws(e$description %||% "")), '</div>\n',
         '</div>\n',

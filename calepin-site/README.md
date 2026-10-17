@@ -63,14 +63,17 @@ Its `cv.yml` holds every publication and research project, and it now drives
 **three** outputs from that one file:
 
 1. **`cv/cv.pdf`** — the downloadable CV (built by `typst compile cv/cv.typ`,
-   the academicv template, unchanged).
+   the academicv template, unchanged). `cv.typ` drops the `doi:…` at the end
+   of each publication entry, so DOIs appear only on the website. Datasets
+   keep theirs, since the DOI is their only reference.
 2. **`pages/publications.typ`** — reads `cv/cv.yml` with Typst's `yaml()` and
    renders the `monographs`, `journal_articles`, `book_chapters` and `datasets`
    sections, **in the same order and with the same titles as the CV**
    (Monographs first). Entries use the CV's markup (`*…*` → bold); `doi:…` and
    bare URLs are turned into clickable links.
 3. **`pages/research-projects.typ`** — reads `cv/cv.yml` and renders the
-   `projects_current` and `projects_previous` sections.
+   `projects_current` and `projects_previous` sections. A project's optional
+   `url:` links its title on this page; the CV PDF does not show it.
 
 So: **edit a publication or project once in `cv/cv.yml`, run `./build.sh`, and the
 CV PDF and both site pages update together.** To add/rename/reorder a section,

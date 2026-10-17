@@ -73,12 +73,17 @@ The Calepin site maps to this almost one-to-one:
 outputs from that one file (exactly as in the Calepin site):
 
 1. **`cv/cv.pdf`** — the downloadable CV (built by `typst compile cv/cv.typ`).
+   `cv.typ` drops the `doi:…` at the end of each publication entry, so DOIs
+   appear only on the website. Datasets keep theirs, since the DOI is their
+   only reference.
 2. **`pages/publications.qmd`** — an R chunk reads `cv/cv.yml` with the `yaml`
    package and renders the `monographs`, `journal_articles`, `book_chapters` and
    `datasets` sections in CV order, with the CV's titles. Entries use the CV's
    markup (`*…*` → bold); `doi:…` and bare URLs become clickable links.
 3. **`pages/research-projects.qmd`** — reads `cv/cv.yml` and renders
-   `projects_current` and `projects_previous` as the CV's timeline layout.
+   `projects_current` and `projects_previous` as the CV's timeline layout. A
+   project's optional `url:` links its title on this page; the CV PDF does not
+   show it.
 
 So: **edit a publication or project once in `cv/cv.yml`, run `./build.sh`, and the
 CV PDF and both pages update together.**
