@@ -13,6 +13,7 @@
 #enum(
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-slides-8taqg", "Systemy polityczne - pojęcia i typy") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides-apqmg", "Demokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-slides-d8s5t", "Niedemokratyczne systemy polityczne") },
 )
 
 #heading(level: 2)[#"Materiały"]
@@ -20,6 +21,7 @@
 #list(
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-handout-te3wa", "Systemy polityczne — pojęcia i typy") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout-d8xuv", "Demokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout-bpmew", "Niedemokratyczne systemy polityczne") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
@@ -27,4 +29,5 @@
 #list(
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-c44w9", "Ćwiczenie: Klasyfikacja i porównanie systemów politycznych") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-1-exercise-answers-frccc", "answers") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-yqndz", "Ćwiczenie: Nowolandia — trzy spory o demokrację") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-2-exercise-answers-9xj9f", "answers") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-dtc5e", "Ćwiczenie: Po upadku reżimu — diagnoza i zabezpieczenia") + [#" · "] + link("https://bdstanley.netlify.app/systemy-polityczne-3-exercise-answers-kft8w", "answers") },
 )
