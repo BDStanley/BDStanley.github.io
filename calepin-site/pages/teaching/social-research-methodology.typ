@@ -21,10 +21,3 @@
   { link("https://bdstanley.netlify.app/social-research-methodology-1-handout-wdrmq", "The nature and purpose of social research") },
   { link("https://bdstanley.netlify.app/social-research-methodology-2-handout-ycq7u", "Research goals and research questions") },
 )
-
-#heading(level: 2)[#"Exercises"]
-
-#list(
-  { link("https://bdstanley.netlify.app/social-research-methodology-1-exercise-vahsz", "Research or not?") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-1-exercise-answers-tbrg3", "answers") },
-  { link("https://bdstanley.netlify.app/social-research-methodology-2-exercise-yntdh", "From problem to question") + [#" · "] + link("https://bdstanley.netlify.app/social-research-methodology-2-exercise-answers-dszx9", "answers") },
-)
