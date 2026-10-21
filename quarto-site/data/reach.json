@@ -2,9 +2,9 @@
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
  "as_of": "2026-10",
  "totals": {
-  "citations": 2329,
-  "citing_works": 2030,
-  "scholars": 2152,
+  "citations": 2332,
+  "citing_works": 2033,
+  "scholars": 2154,
   "countries": 74,
   "my_works": 48,
   "first_year": 2008,
@@ -13,23 +13,23 @@
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
-  "classified_citations": 2230
+  "classified_citations": 2233
  },
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2117,
+   "citations": 2120,
    "share": 94.9,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,117 citations (94.9% of classified citations)"
+   "tip": "Social Sciences: 2,120 citations (94.9% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
    "citations": 45,
    "share": 2.0,
    "colour": "#8b0000",
-   "w": 0.0213,
+   "w": 0.0212,
    "tip": "Arts and Humanities: 45 citations (2.0% of classified citations)"
   },
   {
@@ -186,11 +186,11 @@
   {
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
-   "citations": 1774,
+   "citations": 1777,
    "share": 79.6,
    "colour": "#2a78d6",
    "w": 1.0,
-   "tip": "Political Science and International Relations (Social Sciences): 1,774 citations"
+   "tip": "Political Science and International Relations (Social Sciences): 1,777 citations"
   },
   {
    "name": "Sociology and Political Science",
@@ -198,7 +198,7 @@
    "citations": 160,
    "share": 7.2,
    "colour": "#eb6834",
-   "w": 0.0902,
+   "w": 0.09,
    "tip": "Sociology and Political Science (Social Sciences): 160 citations"
   },
   {
@@ -207,7 +207,7 @@
    "citations": 34,
    "share": 1.5,
    "colour": "#1baf7a",
-   "w": 0.0192,
+   "w": 0.0191,
    "tip": "Law (Social Sciences): 34 citations"
   },
   {
@@ -234,7 +234,7 @@
    "citations": 23,
    "share": 1.0,
    "colour": "#a9a79f",
-   "w": 0.013,
+   "w": 0.0129,
    "tip": "Linguistics and Language (Social Sciences): 23 citations"
   },
   {
@@ -1255,16 +1255,16 @@
    {
     "year": 2026,
     "label": "2026 (to October)",
-    "citations": 246,
-    "h": 0.615,
+    "citations": 249,
+    "h": 0.6225,
     "minor": true,
-    "tip": "2026 (to October): 246 citations (Political Science and International Relations 186, Sociology and Political Science 20, Law 6, Communication 4, Demography 4, Other 19, Unclassified 7)",
+    "tip": "2026 (to October): 249 citations (Political Science and International Relations 189, Sociology and Political Science 20, Law 6, Communication 4, Demography 4, Other 19, Unclassified 7)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 186,
+      "citations": 189,
       "colour": "#2a78d6",
-      "tip": "2026, Political Science and International Relations: 186 citations"
+      "tip": "2026, Political Science and International Relations: 189 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1310,10 +1310,10 @@
   {
    "code": "US",
    "name": "United States",
-   "scholars": 235,
-   "works": 242,
+   "scholars": 237,
+   "works": 244,
    "colour": "#8b0000",
-   "tip": "United States: 235 citing scholars, in 242 citing works",
+   "tip": "United States: 237 citing scholars, in 244 citing works",
    "w": 1.0
   },
   {
@@ -1323,16 +1323,16 @@
    "works": 245,
    "colour": "#8b0000",
    "tip": "United Kingdom: 231 citing scholars, in 245 citing works",
-   "w": 0.983
+   "w": 0.9747
   },
   {
    "code": "DE",
    "name": "Germany",
    "scholars": 221,
-   "works": 209,
+   "works": 210,
    "colour": "#8b0000",
-   "tip": "Germany: 221 citing scholars, in 209 citing works",
-   "w": 0.9404
+   "tip": "Germany: 221 citing scholars, in 210 citing works",
+   "w": 0.9325
   },
   {
    "code": "PL",
@@ -1341,7 +1341,7 @@
    "works": 154,
    "colour": "#8b0000",
    "tip": "Poland: 160 citing scholars, in 154 citing works",
-   "w": 0.6809
+   "w": 0.6751
   },
   {
    "code": "IT",
@@ -1350,7 +1350,7 @@
    "works": 110,
    "colour": "#8b0000",
    "tip": "Italy: 125 citing scholars, in 110 citing works",
-   "w": 0.5319
+   "w": 0.5274
   },
   {
    "code": "NL",
@@ -1359,7 +1359,7 @@
    "works": 92,
    "colour": "#a72219",
    "tip": "Netherlands: 84 citing scholars, in 92 citing works",
-   "w": 0.3574
+   "w": 0.3544
   },
   {
    "code": "CZ",
@@ -1368,7 +1368,7 @@
    "works": 74,
    "colour": "#a72219",
    "tip": "Czechia: 83 citing scholars, in 74 citing works",
-   "w": 0.3532
+   "w": 0.3502
   },
   {
    "code": "ES",
@@ -1377,7 +1377,7 @@
    "works": 68,
    "colour": "#a72219",
    "tip": "Spain: 69 citing scholars, in 68 citing works",
-   "w": 0.2936
+   "w": 0.2911
   },
   {
    "code": "AT",
@@ -1386,7 +1386,7 @@
    "works": 59,
    "colour": "#a72219",
    "tip": "Austria: 59 citing scholars, in 59 citing works",
-   "w": 0.2511
+   "w": 0.2489
   },
   {
    "code": "TR",
@@ -1395,16 +1395,16 @@
    "works": 49,
    "colour": "#a72219",
    "tip": "Turkey: 54 citing scholars, in 49 citing works",
-   "w": 0.2298
+   "w": 0.2278
   },
   {
    "code": "HU",
    "name": "Hungary",
    "scholars": 49,
-   "works": 41,
+   "works": 42,
    "colour": "#c13d30",
-   "tip": "Hungary: 49 citing scholars, in 41 citing works",
-   "w": 0.2085
+   "tip": "Hungary: 49 citing scholars, in 42 citing works",
+   "w": 0.2068
   },
   {
    "code": "SE",
@@ -1413,7 +1413,7 @@
    "works": 42,
    "colour": "#c13d30",
    "tip": "Sweden: 48 citing scholars, in 42 citing works",
-   "w": 0.2043
+   "w": 0.2025
   },
   {
    "code": "CH",
@@ -1422,7 +1422,7 @@
    "works": 42,
    "colour": "#c13d30",
    "tip": "Switzerland: 46 citing scholars, in 42 citing works",
-   "w": 0.1957
+   "w": 0.1941
   },
   {
    "code": "FR",
@@ -1431,7 +1431,7 @@
    "works": 65,
    "colour": "#c13d30",
    "tip": "France: 40 citing scholars, in 65 citing works",
-   "w": 0.1702
+   "w": 0.1688
   },
   {
    "code": "AU",
@@ -1440,7 +1440,7 @@
    "works": 55,
    "colour": "#c13d30",
    "tip": "Australia: 39 citing scholars, in 55 citing works",
-   "w": 0.166
+   "w": 0.1646
   },
   {
    "code": "CA",
@@ -1715,6 +1715,14 @@
    "tip": "Luxembourg: 5 citing scholars, in 15 citing works"
   },
   {
+   "code": "AE",
+   "name": "United Arab Emirates",
+   "scholars": 5,
+   "works": 3,
+   "colour": "#e38070",
+   "tip": "United Arab Emirates: 5 citing scholars, in 3 citing works"
+  },
+  {
    "code": "CR",
    "name": "Costa Rica",
    "scholars": 4,
@@ -1731,6 +1739,14 @@
    "tip": "Georgia: 4 citing scholars, in 3 citing works"
   },
   {
+   "code": "NZ",
+   "name": "New Zealand",
+   "scholars": 4,
+   "works": 3,
+   "colour": "#eda496",
+   "tip": "New Zealand: 4 citing scholars, in 3 citing works"
+  },
+  {
    "code": "PK",
    "name": "Pakistan",
    "scholars": 4,
@@ -1745,14 +1761,6 @@
    "works": 2,
    "colour": "#eda496",
    "tip": "Philippines: 4 citing scholars, in 2 citing works"
-  },
-  {
-   "code": "AE",
-   "name": "United Arab Emirates",
-   "scholars": 4,
-   "works": 2,
-   "colour": "#eda496",
-   "tip": "United Arab Emirates: 4 citing scholars, in 2 citing works"
   },
   {
    "code": "BD",
@@ -1785,14 +1793,6 @@
    "works": 1,
    "colour": "#eda496",
    "tip": "Kenya: 3 citing scholars, in 1 citing work"
-  },
-  {
-   "code": "NZ",
-   "name": "New Zealand",
-   "scholars": 3,
-   "works": 2,
-   "colour": "#eda496",
-   "tip": "New Zealand: 3 citing scholars, in 2 citing works"
   },
   {
    "code": "NG",
