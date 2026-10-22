@@ -1,5 +1,5 @@
 ---
-pagetitle: "Publications"
+pagetitle: "Research"
 ---
 
 ```{r}
@@ -48,28 +48,42 @@ source(file.path(.root, "R", "cv-helpers.R"))
 #| echo: false
 #| output: asis
 # The same counts as the Calepin page: calepin-site/scripts/update-citations.py
-# copies data/citations.json here on every Calepin build. "Updated" is the most
-# recent month; a source whose numbers are older names its own month.
+# copies data/citations.json here (Academic), and
+# calepin-site/scripts/update-policy-reach.py data/policy-reach.json (Policy)
+# and calepin-site/scripts/update-media-reach.py data/media-reach.json (Media),
+# on every Calepin build. "Updated" is the most recent month; a source whose
+# numbers are older names its own month.
 cites <- jsonlite::read_json(file.path(.root, "data", "citations.json"))
 scopus <- cites$scopus
 gs <- cites$google_scholar
 oa <- cites$openalex
-sage <- cites$sage_policy_profiles
-latest <- max(scopus$as_of, gs$as_of, oa$as_of, sage$as_of)
+pr <- jsonlite::read_json(file.path(.root, "data", "policy-reach.json"))
+policy <- c(list(as_of = max(unlist(pr$as_of))), pr$totals)
+md <- jsonlite::read_json(file.path(.root, "data", "media-reach.json"))
+media <- c(list(as_of = md$as_of), md$totals)
+latest <- max(scopus$as_of, gs$as_of, oa$as_of, policy$as_of, media$as_of)
 # month.name, not format(), so the month stays English in any locale
 month <- function(ym) paste(month.name[as.integer(substr(ym, 6, 7))], substr(ym, 1, 4))
 when <- function(s) if (s$as_of != latest) paste0(" (", month(s$as_of), ")") else ""
 num <- function(n) format(n, big.mark = ",")
 cat(
   sprintf("_Updated: %s_\n\n", month(latest)),
+  "### Academic\n\n",
   sprintf("- [Scopus](https://www.scopus.com/authid/detail.uri?authorId=23493968300)%s: %s (h-index = %s)\n",
           when(scopus), num(scopus$citations), scopus$h_index),
   sprintf("- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en)%s: %s (h-index = %s, i10-index = %s)\n",
           when(gs), num(gs$citations), gs$h_index, gs$i10_index),
   sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s; [reach by country and discipline](citation-reach.qmd))\n",
           when(oa), num(oa$citations), oa$h_index, oa$i10_index),
-  sprintf("- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley)%s: %s citations across %s policy documents ([reach among think tanks and policy organisations](policy-reach.qmd)).\n",
-          when(sage), num(sage$citations), num(sage$documents)),
+  "\n### Policy\n\n",
+  sprintf(paste0("- Think tanks and other policy organisations%s: %s policy documents and %s research works, ",
+                 "from %s organisations in %s countries ([Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley) ",
+                 "and [OpenAlex](https://openalex.org/authors/A5015716464); [reach by organisation and country](policy-reach.qmd))\n"),
+          when(policy), num(policy$documents), num(policy$works), num(policy$organisations), num(policy$countries)),
+  "\n### Media\n\n",
+  sprintf(paste0("- News media%s: %s articles quoting, interviewing or citing me, in %s outlets in %s countries ",
+                 "and %s languages (Google News and Google Alerts; [reach by outlet and country](media-reach.qmd))\n"),
+          when(media), num(media$articles), num(media$outlets), num(media$countries), num(media$languages)),
   sep = ""
 )
 ```

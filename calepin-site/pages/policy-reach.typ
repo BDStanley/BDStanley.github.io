@@ -1,8 +1,8 @@
 #set document(title: [Policy reach])
 #metadata((title: "Policy reach")) <website-metadata>
 
-// Not in the navigation bar: the Sage Policy Profiles line of the Citations
-// list on the Publications page links here. Every number, colour, bar length,
+// Not in the navigation bar: the Policy line of the Citations list on the
+// Research page (pages/publications.typ) links here. Every number, colour, bar length,
 // hover text and list entry comes from data/policy-reach.json
 // (scripts/update-policy-reach.py, run by build.sh) and the map shapes from
 // data/world-map.json; this page only lays them out. It reuses the Citation
@@ -69,7 +69,7 @@
   }]
 ]
 
-#el("p", class: "reach-back")[#link("publications.html")[← Publications]]
+#el("p", class: "reach-back")[#link("publications.html")[← Research]]
 
 = Policy reach
 

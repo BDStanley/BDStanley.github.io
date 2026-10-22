@@ -1,8 +1,8 @@
 # benstanley.eu
 
-The source of [benstanley.eu](https://benstanley.eu), Ben Stanley's academic website: publications, research projects, teaching, media writing, the Pooling the Poles polling tracker, a page for the book *Good Change*, a downloadable CV, an analysis of where and in which disciplines Ben's work is cited, and one of the think tanks and other policy organisations that cite it. The site is built with [Calepin](https://github.com/vincentarelbundock/calepin), a static-site generator for Typst, and GitHub Pages serves it from the `docs/` folder of the `main` branch.
+The source of [benstanley.eu](https://benstanley.eu), Ben Stanley's academic website: publications, research projects, teaching, media writing, the Pooling the Poles polling tracker, a page for the book *Good Change*, a downloadable CV, an analysis of where and in which disciplines Ben's work is cited, one of the think tanks and other policy organisations that cite it, and one of the news coverage that quotes, interviews or cites him. The site is built with [Calepin](https://github.com/vincentarelbundock/calepin), a static-site generator for Typst, and GitHub Pages serves it from the `docs/` folder of the `main` branch.
 
-One file, `calepin-site/cv/cv.yml`, holds every publication and research project. It produces the CV PDF and feeds the Publications and Research projects pages, so each entry is edited in one place. New journal articles, book chapters and books on Ben's ORCID record are added to it automatically on each build, and its Datasets section follows his Harvard Dataverse collection.
+One file, `calepin-site/cv/cv.yml`, holds every publication and research project. It produces the CV PDF and feeds the Research and Research projects pages, so each entry is edited in one place. New journal articles, book chapters and books on Ben's ORCID record are added to it automatically on each build, and its Datasets section follows his Harvard Dataverse collection.
 
 ## Layout
 
@@ -29,10 +29,11 @@ Key files:
 | `calepin-site/scripts/update-reviews.py` | Rewrites the CV's "Peer reviewer for" entry from the peer reviews on Ben's ORCID record, with the number of reviews for each journal. See [Peer reviewing](#peer-reviewing). |
 | `calepin-site/data/publications-sync.json` | The record the publications and datasets scripts keep: DOIs never to add (`ignore`), the publications `update-publications.py` added (`managed`) and the Dataverse DOIs `update-datasets.py` last wrote (`datasets`). |
 | `calepin-site/scripts/update-citations.py` | Refreshes the Scopus, Google Scholar, OpenAlex and Sage Policy Profiles numbers in `data/citations.json`, and each publication's OpenAlex count in `data/publication-citations.json`. See [Citation counts](#citation-counts). |
-| `calepin-site/data/citations.json` | The numbers in the Citations list on the Publications page, each with the month it dates from. |
-| `calepin-site/data/publication-citations.json` | OpenAlex's citation count for each publication, shown at the end of its entry on the Publications page. |
+| `calepin-site/data/citations.json` | The numbers in the Academic part of the Citations list on the Research page, each with the month it dates from. |
+| `calepin-site/data/publication-citations.json` | OpenAlex's citation count for each publication, shown at the end of its entry on the Research page. |
 | `calepin-site/scripts/update-reach.py` | Refreshes `data/reach.json`, the data behind the Citation reach page: the countries, disciplines and years of the works citing Ben's, from OpenAlex. See [Citation reach](#citation-reach). |
 | `calepin-site/scripts/update-policy-reach.py` | Refreshes `data/policy-reach.json`, the data behind the Policy reach page: the policy documents citing Ben's work (Sage Policy Profiles) and the research citing it from think tanks, government bodies and international organisations (OpenAlex). See [Policy reach](#policy-reach). |
+| `calepin-site/scripts/update-media-reach.py` | Adds news articles quoting, interviewing or citing Ben to `data/media-reach.json`, the archive behind the Media reach page, from Google News searches and Google Alerts feeds. Settings (false matches to ignore, alert feeds) are in `data/media-sync.json`. See [Media reach](#media-reach). |
 | `calepin-site/scripts/make-world-map.py` | Draws the Citation reach page's world map as `data/world-map.json` from Natural Earth's country shapes. Not part of the build: the map is committed, so run it only to change it. |
 | `calepin-site/scripts/make-favicon.py` | Draws the favicon (a white "BS" in bold Jost on the navbar's red) as `assets/favicon.svg`, `assets/favicon-32.png`, `assets/apple-touch-icon.png` and `assets/favicon.ico` (which `build.sh` also copies to the site root). Not part of the build: the icons are committed, so run it only to change the design. |
 | `calepin-site/themes/site-theme/` | A thin overlay on Calepin's built-in `academic` theme: the Jost font, a dark-red navigation bar and footer. |
@@ -44,12 +45,13 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 
 | To change | Edit (in `calepin-site/`) |
 |---|---|
-| Publications, research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
+| Publications (the Research page), research projects, the CV | `cv/cv.yml`. New publications arrive on their own; see [New publications](#new-publications). |
 | Datasets | Harvard Dataverse: the Datasets section follows the collection on each build. See [Datasets](#datasets). |
 | Peer reviewing in the CV | Nothing for the counts: they update on each build from ORCID. Journals ORCID lacks, and the spelling of any journal's name, are edited in the entry in `cv/cv.yml`. See [Peer reviewing](#peer-reviewing). |
 | Citation counts | Nothing: they update on each build (Scopus once its API key is in the Keychain). See [Citation counts](#citation-counts). |
 | The Citation reach page | Nothing for the numbers: they update on each build. The layout and text are in `pages/citation-reach.typ`, what is counted in `scripts/update-reach.py`. See [Citation reach](#citation-reach). |
 | The Policy reach page | Nothing for the numbers: they update on each build. The layout and text are in `pages/policy-reach.typ`; what is counted, the key ideas listed first and the organisations left out are in `scripts/update-policy-reach.py`. See [Policy reach](#policy-reach). |
+| The Media reach page | Nothing for the numbers: they update on each build. To drop a false match, add its address under `ignore` in `data/media-sync.json`; to add Google Alerts, paste their feed addresses under `alert_feeds`. The searches are `QUERIES` in `scripts/update-media-reach.py`. See [Media reach](#media-reach). |
 | Home page | `index.typ`. Its bio is the first-person version of the full English bio in `bio.md`; change both. |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
@@ -74,7 +76,7 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 5. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
 6. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
 7. refreshes the citation counts in `data/citations.json` (see [Citation counts](#citation-counts)), keeping the previous numbers for any source it cannot read;
-8. refreshes the data behind the Citation reach and Policy reach pages, `data/reach.json` and `data/policy-reach.json` (see [Citation reach](#citation-reach) and [Policy reach](#policy-reach)), keeping the previous data for any source it cannot read;
+8. refreshes the data behind the Citation reach, Policy reach and Media reach pages, `data/reach.json`, `data/policy-reach.json` and `data/media-reach.json` (see [Citation reach](#citation-reach), [Policy reach](#policy-reach) and [Media reach](#media-reach)), keeping the previous data for any source it cannot read;
 9. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME`, an empty `.nojekyll` and a copy of the favicon at `/favicon.ico`.
 
 A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–8 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Kultura Liberalna list, the citation counts and the reach data.
@@ -138,22 +140,22 @@ Day-to-day use:
 
 ## Citation counts
 
-The Citations list at the top of the Publications page reads its numbers from `calepin-site/data/citations.json`. `scripts/update-citations.py` runs on every build:
+The Citations list at the top of the Research page (`pages/publications.typ`, still at `publications.html`) has two parts. **Academic** reads its numbers from `calepin-site/data/citations.json`. **Policy** is one line, "Think tanks and other policy organisations", with the totals from `data/policy-reach.json` (see [Policy reach](#policy-reach)). **Media** is one line, "News media", with the totals from `data/media-reach.json` (see [Media reach](#media-reach)). `scripts/update-citations.py` runs on every build:
 
 - **Scopus:** total citations and h-index, worked out from the citation counts of the documents under author ID 23493968300 in Elsevier's Scopus Search API. (The author profile API has these totals ready-made, but only for subscribing institutions.) It needs a free Elsevier API key from [dev.elsevier.com](https://dev.elsevier.com), which must never go in this public repo: store it in the macOS Keychain with `security add-generic-password -a "$USER" -s scopus-api-key -w` (it prompts for the key, which it calls "password data"), or set `SCOPUS_API_KEY`. Without a key, or if Elsevier refuses it, Scopus is skipped and its last numbers stay.
 - **Google Scholar:** citations, h-index and i10-index (all years), read from the metrics table on the profile page.
 - **OpenAlex:** citations, h-index and i10-index from its author record, looked up by Ben's ORCID iD.
-- **Sage Policy Profiles:** policy citations and the number of policy documents they appear in, read from the data the public profile page loads.
+- **Sage Policy Profiles:** policy citations and the number of policy documents they appear in, read from the data the public profile page loads. These are still recorded but no longer shown: the Policy line uses the wider Policy reach totals instead.
 
 Web of Science is not listed: its author records are shown only to signed-in users, and to automated visitors only after a CAPTCHA.
 
 Each source records the month its numbers date from. The page's "Updated" line shows the latest month, and any older source shows its own month beside its name. A source keeps its previous numbers if it cannot be reached, if its page no longer has the numbers where the script looks (for instance a Google Scholar CAPTCHA), or if any number has fallen by more than a quarter. The last case prints a `[citations] needs attention` line; if the fall is real, enter the new numbers by hand. The script copies the file to `quarto-site/data/` for the Quarto backup. `--dry-run` shows what it would change without writing anything.
 
-The same script also fetches OpenAlex's citation count for each publication in `cv/cv.yml` into `data/publication-citations.json` (copied to `quarto-site/data/` too). The Publications page shows it at the end of the entry, before the full stop: "… doi:10.xxx (12 citations)." or "(1 citation)", with the count linking to OpenAlex's list of the works citing that publication (`https://openalex.org/works?filter=cites:W…`; the file stores each work's OpenAlex ID alongside its count). A publication OpenAlex has but nothing cites yet shows "(0 citations)", unlinked; one OpenAlex does not have shows "(no citation count available)". Entries are matched by DOI, and the few without one by title among the works OpenAlex links to Ben's ORCID iD. The CV PDF does not show these counts. If OpenAlex cannot be reached, or matches more than a quarter fewer publications than last time, the previous counts stay.
+The same script also fetches OpenAlex's citation count for each publication in `cv/cv.yml` into `data/publication-citations.json` (copied to `quarto-site/data/` too). The Research page shows it at the end of the entry, before the full stop: "… doi:10.xxx (12 citations)." or "(1 citation)", with the count linking to OpenAlex's list of the works citing that publication (`https://openalex.org/works?filter=cites:W…`; the file stores each work's OpenAlex ID alongside its count). A publication OpenAlex has but nothing cites yet shows "(0 citations)", unlinked; one OpenAlex does not have shows "(no citation count available)". Entries are matched by DOI, and the few without one by title among the works OpenAlex links to Ben's ORCID iD. The CV PDF does not show these counts. If OpenAlex cannot be reached, or matches more than a quarter fewer publications than last time, the previous counts stay.
 
 ## Citation reach
 
-`pages/citation-reach.html` shows where, and in which disciplines, Ben's work is cited: a world map of the countries the citing scholars are based in, bar charts of citations by discipline and subdiscipline, and a chart of citations by year, each bar divided by subdiscipline. Each chart has a table under it. The page is not in the navigation bar; the OpenAlex line of the Citations list on the Publications page links to it ("reach by country and discipline").
+`pages/citation-reach.html` shows where, and in which disciplines, Ben's work is cited: a world map of the countries the citing scholars are based in, bar charts of citations by discipline and subdiscipline, and a chart of citations by year, each bar divided by subdiscipline. Each chart has a table under it. The page is not in the navigation bar; the OpenAlex line of the Citations list on the Research page links to it ("reach by country and discipline").
 
 `scripts/update-reach.py` builds its data, `data/reach.json`, from OpenAlex on every build, and copies it to `quarto-site/data/`:
 
@@ -168,7 +170,7 @@ The map's shapes, `data/world-map.json`, come from Natural Earth's 1:110m countr
 
 ## Policy reach
 
-`pages/policy-reach.html` shows how Ben's work is taken up beyond academia. The Sage Policy Profiles line of the Citations list on the Publications page links to it ("reach among think tanks and policy organisations"); it is not in the navigation bar. The page has:
+`pages/policy-reach.html` shows how Ben's work is taken up beyond academia. The Policy line of the Citations list on the Research page links to it ("reach by organisation and country"); it is not in the navigation bar. The page has:
 
 - a map of the countries the citing organisations are based in;
 - charts of the organisations by type (think tank or foundation, government, international organisation) and by year;
@@ -184,12 +186,50 @@ Each chart has a table under it.
   - second copies of the same document;
   - documents citing only works by other authors that Sage attributes to Ben.
 
-  So the page counts fewer documents than the Sage line on the Publications page. Overton's garbled characters and misspelt organisation names (`NAME_FIXES`) are corrected.
+  So it counts fewer documents than Sage's own profile lists. Overton's garbled characters and misspelt organisation names (`NAME_FIXES`) are corrected.
 - **Research works** come from OpenAlex: works citing Ben's, not written by him, whose authors list an institution of OpenAlex's types `nonprofit`, `government` or `other`. Research bodies of those types (academies of sciences, national research councils, CNRS, university presses and the like) are left out by name (`EXCLUDE_NAMES`) or by OpenAlex ID (`EXCLUDE_IDS`). Add to either to drop an organisation.
 
 An organisation found in both sources is counted once: names are matched within a country, allowing for small spelling differences, and the type is Overton's. The key ideas and the works behind them are set in `KEY_IDEAS`. If a source cannot be reached, or finds more than a quarter fewer records than last time, its records from the last run stay. `--dry-run` reports the totals without writing anything.
 
 Only documents and works that cite Ben's publications are counted, so an idea taken up without a citation does not appear. Tracking that, especially in journalism, needs phrase searches of news archives (for example Media Cloud), which the site does not do yet.
+
+## Media reach
+
+`pages/media-reach.html` shows Ben's presence in the news. The Media line of the Citations list on the Research page links to it ("reach by outlet and country"); it is not in the navigation bar. The page has:
+
+- a map of the countries the outlets are based in;
+- charts by outlet, language and year (each year divided into interviews and commentary, ideas, and research in the news);
+- lists of the articles, with links, author and date: by key idea, by year for interviews and commentary, and for research in the news.
+
+`scripts/update-media-reach.py` keeps `data/media-reach.json` and copies it to `quarto-site/data/`. It is an archive: articles once found stay, even after Google stops returning them.
+
+- **Searches:** `QUERIES` covers:
+  - Ben's name with a word tying it to his field, in English, Polish (with the case forms "Bena Stanleya", "Benem Stanleyem", "Benowi Stanleyowi"), German, French, Spanish, Italian, Portuguese, Dutch, Czech, Slovak, Hungarian, Ukrainian and Russian;
+  - the key ideas' phrases in several of those languages;
+  - the joint work with Stanley Bill, and Pooling the Poles.
+
+  Each runs through Google News's RSS search (no key) in the edition of its language. A normal build asks only for the current year. `--backfill` asks again with no dates, then year by year from 2008 for queries with enough results; it was run once to fill the archive and takes about half an hour.
+- **Checks:** each article's address is resolved from Google's link and its page read. It counts only if it names Ben (or uses the idea's phrase, or names the work) as its query requires. Its author and language are taken from the page. An unreadable page (a paywall, say) is kept and marked "not checked". Articles Ben wrote (his columns, listed on the Media page) are left out. Rejected articles are remembered under `dropped`, so they are not fetched again.
+- **False matches** the check misses go under `ignore` in `data/media-sync.json`, with a reason. Then `python3 calepin-site/scripts/update-media-reach.py --offline` recounts without asking Google.
+- **Countries** are the outlets' (`OUTLET_COUNTRIES`, then the web address's country code). Pan-European (.eu) and international outlets are listed but not mapped.
+- **Coverage:** Google News indexes online news, so radio, television and print-only coverage is mostly missing, as is much before about 2015.
+
+### Google Alerts
+
+Alerts catch new articles as they appear, including some Google News misses. To set them up:
+
+1. Run `python3 calepin-site/scripts/update-media-reach.py --alerts`. It prints a table of the searches, each a link that opens Google Alerts with the search filled in.
+2. Open each link while signed in to Google and choose "Show options":
+   - **How often:** at most once a day;
+   - **Sources:** automatic;
+   - **Language:** the search's language;
+   - **Region:** any;
+   - **How many:** all results;
+   - **Deliver to:** RSS feed.
+3. Click "Create alert".
+4. On the Alerts page, copy each alert's feed address (the RSS icon) into the `alert_feeds` list in `data/media-sync.json`.
+
+Every build then reads the feeds and files each new article under the search it came from.
 
 ## Deploying
 

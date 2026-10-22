@@ -104,6 +104,14 @@ python3 "$SRC/scripts/update-reach.py" || echo "  (skipped: update-reach.py fail
 echo "→ Refreshing the policy reach data ..."
 python3 "$SRC/scripts/update-policy-reach.py" || echo "  (skipped: update-policy-reach.py failed; using the committed data)"
 
+# Add this year's news articles quoting, interviewing or citing Ben to the
+# Media reach page's archive (data/media-reach.json), from Google News and the
+# Google Alerts feeds listed in data/media-sync.json. Articles already found
+# stay; network failures are non-fatal. (scripts/update-media-reach.py
+# --backfill searches year by year from 2008.)
+echo "→ Refreshing the media reach data ..."
+python3 "$SRC/scripts/update-media-reach.py" || echo "  (skipped: update-media-reach.py failed; using the committed data)"
+
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"
 

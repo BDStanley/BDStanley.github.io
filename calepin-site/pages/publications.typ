@@ -1,24 +1,31 @@
-#set document(title: [Publications])
-#metadata((title: "Publications")) <website-metadata>
+#set document(title: [Research])
+#metadata((title: "Research")) <website-metadata>
 
 // No on-page title heading (kept off, like the other pages); the nav label and
 // browser-tab title still come from the metadata / #set document above.
 
 = Citations
 
-// The counts live in data/citations.json, which scripts/update-citations.py
-// refreshes from Scopus, Google Scholar, OpenAlex and Sage Policy Profiles on
-// every build. "Updated" is the most recent month; a source whose numbers are
-// older (one the script couldn't read) names its own month. The OpenAlex line
-// links to the Citation reach page (pages/citation-reach.typ) and the Sage
-// line to the Policy reach page (pages/policy-reach.typ), neither of which is
-// in the navigation bar.
+// Academic: the counts in data/citations.json, which scripts/update-citations.py
+// refreshes from Scopus, Google Scholar and OpenAlex on every build. Policy:
+// the totals in data/policy-reach.json (scripts/update-policy-reach.py), the
+// policy documents from Sage Policy Profiles and the research from policy
+// organisations in OpenAlex. Media: the totals in data/media-reach.json
+// (scripts/update-media-reach.py), from Google News and Google Alerts.
+// "Updated" is the most recent month; a source whose numbers are older (one a
+// script couldn't read) names its own month. The OpenAlex line links to the
+// Citation reach page (pages/citation-reach.typ), the Policy line to the Policy
+// reach page (pages/policy-reach.typ) and the Media line to the Media reach
+// page (pages/media-reach.typ); none of them is in the navigation bar.
 #let cites = json("/data/citations.json")
 #let scopus = cites.scopus
 #let gs = cites.google_scholar
 #let oa = cites.openalex
-#let sage = cites.sage_policy_profiles
-#let latest = (scopus, gs, oa, sage).map(s => s.as_of).sorted().last()
+#let pr = json("/data/policy-reach.json")
+#let policy = (as_of: pr.as_of.values().sorted().last(), ..pr.totals)
+#let md = json("/data/media-reach.json")
+#let media = (as_of: md.as_of, ..md.totals)
+#let latest = (scopus, gs, oa, policy, media).map(s => s.as_of).sorted().last()
 #let month(ym) = datetime(year: int(ym.slice(0, 4)), month: int(ym.slice(5, 7)), day: 1).display("[month repr:long] [year]")
 #let when(s) = if s.as_of != latest [ (#month(s.as_of))]
 // 4044 -> "4,044"
@@ -34,10 +41,19 @@
 
 _Updated: #month(latest)_
 
+== Academic
+
 - #link("https://www.scopus.com/authid/detail.uri?authorId=23493968300")[Scopus]#when(scopus): #num(scopus.citations) (h-index = #scopus.h_index)
 - #link("https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en")[Google Scholar]#when(gs): #num(gs.citations) (h-index = #gs.h_index, i10-index = #gs.i10_index)
 - #link("https://openalex.org/authors/A5015716464")[OpenAlex]#when(oa): #num(oa.citations) (h-index = #oa.h_index, i10-index = #oa.i10_index\; #link("citation-reach.html")[reach by country and discipline])
-- #link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles]#when(sage): #num(sage.citations) citations across #num(sage.documents) policy documents (#link("policy-reach.html")[reach among think tanks and policy organisations]).
+
+== Policy
+
+- Think tanks and other policy organisations#when(policy): #num(policy.documents) policy documents and #num(policy.works) research works, from #num(policy.organisations) organisations in #num(policy.countries) countries (#link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles] and #link("https://openalex.org/authors/A5015716464")[OpenAlex]\; #link("policy-reach.html")[reach by organisation and country])
+
+== Media
+
+- News media#when(media): #num(media.articles) articles quoting, interviewing or citing me, in #num(media.outlets) outlets in #num(media.countries) countries and #num(media.languages) languages (Google News and Google Alerts\; #link("media-reach.html")[reach by outlet and country])
 
 // ============================================================================
 // Single source of truth: the CV. These lists are read straight from

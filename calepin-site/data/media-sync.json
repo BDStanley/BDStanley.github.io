@@ -1,0 +1,5 @@
+{
+  "_about": "Settings for scripts/update-media-reach.py. ignore: addresses of articles to leave out (false matches), each with a reason. alert_feeds: the RSS feed addresses of Google Alerts set up with the queries the script prints with --alerts.",
+  "ignore": {},
+  "alert_feeds": []
+}
