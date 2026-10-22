@@ -156,7 +156,7 @@ body {
   }
   .academic-brand {
     white-space: nowrap;
-    font-size: 1.1rem;
+    font-size: 1.6rem;
   }
   /* Re-form the flattened menu into its own flex group that starts right after
      the brand, with each label kept on a single line. (Landscape pushes the
@@ -177,7 +177,7 @@ body {
   /* A slim bar: the theme pads it by 1rem; this leaves the 2.6rem
      --calepin-topbar-height to set its height. */
   .academic-topbar.calepin-site-topbar {
-    padding-block: 0.25rem;
+    padding-block: 0.7rem;
   }
 }
 
@@ -567,7 +567,7 @@ body {
   padding-left: 0.7em;
 }
 .proj-title strong {
-  font-weight: 500;
+  font-weight: 300;
 }
 .proj-funder {
   font-style: italic;
@@ -671,7 +671,7 @@ body {
 .course-name {
   display: inline-block;
   font-size: 1.15rem;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.25;
   color: var(--calepin-color-link) !important;
   text-decoration: none;
