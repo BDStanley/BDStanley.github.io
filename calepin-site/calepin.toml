@@ -71,11 +71,6 @@ label  = "Polish political analyses"
 weight = 45
 
 [[menus.main]]
-target = "pages/pooling-the-poles.typ"
-label  = "Pooling the Poles"
-weight = 50
-
-[[menus.main]]
 target = "pages/good-change.typ"
 label  = "Good Change"
 weight = 60

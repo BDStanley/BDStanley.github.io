@@ -33,7 +33,7 @@ calepin-site/
 │   ├── publications.typ      # reads cv/cv.yml → Monographs/Journal/Chapters/Datasets
 │   ├── research-projects.typ # reads cv/cv.yml → Current/Previous research projects
 │   ├── media.typ            # LIVE: Kultura Liberalna scraped at build; Polityka.pl / Other static
-│   ├── pooling-the-poles.typ # embeds the live Shiny polling app
+│   ├── pooling-the-poles.typ # redirects to the Polling tracker (Shiny app retired)
 │   └── good-change.typ       # two-column book page
 ├── themes/
 │   └── site-theme/       # thin overlay theme: `extends` the built-in `academic`
@@ -232,7 +232,7 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
   `../CV/` is left completely untouched.
 
 - **`pdf = false`.** The site builds HTML only (the original has no per-page PDF
-  twins, and the Pooling-the-Poles page is an `<iframe>` that has no paged form).
+  twins, and the embedded analyses are `<iframe>`s that have no paged form).
   Flip it to `true` in `calepin.toml` if you want PDF versions of the text pages.
   (Note: with PDF on, the R chunks would also need to render to paged output.)
 

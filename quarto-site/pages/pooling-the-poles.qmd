@@ -1,20 +1,11 @@
 ---
-# No on-page heading: just the app, which breaks out of the reading column
-# (.embed-frame in styles.css), as on the Calepin page.
-pagetitle: "Pooling the Poles"
-description-meta: "Interactive Polish polling tracker"
-open-graph:
-  title: "Pooling the Poles"
-  description: "Interactive Polish polling tracker"
-twitter-card:
-  title: "Pooling the Poles"
-  description: "Interactive Polish polling tracker"
-  card-style: summary_large_image
+# The Shiny app this page embedded was retired on 22 October 2026. As on the
+# Calepin page, the page stays, out of the navbar, so that old links land on the
+# Polling tracker (which this backup does not yet mirror).
+title: "Pooling the Poles"
+description-meta: "Pooling the Poles is now the Polling tracker under Polish political analyses"
+include-in-header:
+  text: '<meta http-equiv="refresh" content="0; url=polish-political-analyses/polling-tracker.html">'
 ---
 
-<!-- The Shiny app embedded in a centred, capped-width frame (.embed-frame in
-     styles.css), matching the Calepin site's pages/pooling-the-poles.typ. -->
-<iframe src="https://ben-stanley.shinyapps.io/polish-polls/"
-        class="embed-frame"
-        title="Pooling the Poles — interactive Polish polling tracker"
-        loading="lazy"></iframe>
+Pooling the Poles is now the [Polling tracker](polish-political-analyses/polling-tracker.html), under Polish political analyses.

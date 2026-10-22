@@ -7,8 +7,9 @@
 // The tracker is a standalone page, assets/polling-tracker/index.html (+ app.js),
 // embedded here like the party genealogy. Its data, polls.json and draws.json,
 // comes from Polls/ in the Polish political analyses repo (R/export_web.R, run by
-// PTP.R) and is copied in by scripts/sync-analyses.py on each build. The Shiny
-// version stays on the Pooling the Poles page.
+// PTP.R) and is copied in by scripts/sync-analyses.py on each build. It replaced
+// the Shiny app, retired on 22 October 2026; pages/pooling-the-poles.typ now
+// redirects here.
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
 
@@ -33,4 +34,4 @@ Seats: national shares are spread across the 41 constituencies using each party'
 
 Scenarios: when you edit a vote share or build a joint list, your shares are applied to each of the model's simulated draws for that week (each party's draws are scaled so that their median is the share you entered), the coalition-dynamics penalty is applied draw by draw, and the seat simulation is run again in your browser. Scenarios therefore keep seat ranges and probabilities: they describe what would follow if support stood where you set it, with the same uncertainty as the model. Government options follow fixed compatibility rules (for example, PiS does not govern with KO or Lewica) until you build a joint list, when any lists may combine; the minimum winning coalition is the majority with the fewest parties, then the fewest seats.
 
-Estimates describe voting intention now, not a forecast of election day. They assume pollsters are, on average, unbiased. The original Shiny version of this tracker is on the #link("../pooling-the-poles.html")[Pooling the Poles] page.
+Estimates describe voting intention now, not a forecast of election day. They assume pollsters are, on average, unbiased.

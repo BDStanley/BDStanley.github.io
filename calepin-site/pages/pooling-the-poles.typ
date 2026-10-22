@@ -1,16 +1,14 @@
 #set document(title: [Pooling the Poles])
 #metadata((
   title: "Pooling the Poles",
-  description: "Interactive Polish polling tracker",
+  description: "Pooling the Poles is now the Polling tracker under Polish political analyses",
 )) <website-metadata>
 
-// No on-page title (#title omitted) so the page shows only the Shiny app.
-// The navbar label still comes from <website-metadata> / calepin.toml, and the
-// browser-tab title from #set document(...). Built HTML-only (pdf = false), so
-// the raw <iframe> renders directly; .embed-frame sizing lives in themes/site-theme/css/90_site.css.
-#html.elem("iframe", attrs: (
-  src: "https://ben-stanley.shinyapps.io/polish-polls/",
-  class: "embed-frame",
-  title: "Pooling the Poles — interactive Polish polling tracker",
-  loading: "lazy",
-))[]
+// The Shiny app this page embedded was retired on 22 October 2026 (it is kept in
+// Polls/legacy/shiny-app/ in the Polish political analyses repo). The page stays,
+// out of the navigation bar, so that old links land on the Polling tracker.
+#html.elem("meta", attrs: (http-equiv: "refresh", content: "0; url=polish-political-analyses/polling-tracker.html"))
+
+#heading(level: 1)[Pooling the Poles]
+
+Pooling the Poles is now the #link("polish-political-analyses/polling-tracker.html")[Polling tracker], under Polish political analyses.

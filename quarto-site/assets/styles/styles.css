@@ -3,7 +3,7 @@
    themes/site-theme/css/90_site.css so the two builds look the same: the
    reading column and type scale, the navbar in each viewport mode, the footer,
    the home-page hero and the page layouts (Good Change columns, research-
-   projects timeline, Teaching cards, the Pooling-the-Poles embed). Brand
+   projects timeline, Teaching cards, embedded pages). Brand
    colours and fonts come from website_style.scss. Values in rem match the
    Calepin site's because both sites use a 17px root.
    ============================================================================= */
@@ -532,8 +532,8 @@ footer.footer a:focus-visible {
   color: #5f6b7a;
 }
 
-/* ---- Pooling the Poles embed ------------------------------------------------
-   Break out of the reading column to give the Shiny app more room. */
+/* ---- Embedded pages ---------------------------------------------------------
+   Break out of the reading column to give them more room. */
 .embed-frame {
   width: min(92vw, 900px);
   max-width: none;

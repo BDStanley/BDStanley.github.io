@@ -28,7 +28,7 @@ project:
     - pages/teaching.qmd
     - pages/teaching/*.qmd
     - pages/media.qmd
-    - pages/pooling-the-poles.qmd
+    - pages/pooling-the-poles.qmd  # a redirect, not in the navbar
     - pages/good-change.qmd
 
 website:
@@ -60,8 +60,6 @@ website:
         text: Teaching
       - href: pages/media.qmd
         text: Media
-      - href: pages/pooling-the-poles.qmd
-        text: Pooling the Poles
       - href: pages/good-change.qmd
         text: Good Change
 

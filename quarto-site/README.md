@@ -60,7 +60,7 @@ quarto-site/
 │   ├── media-reach.qmd       # map + outlet/language/year charts + news articles (data/media-reach.json); likewise
 │   ├── research-projects.qmd # Current/Previous research projects (from cv.yml)
 │   ├── media.qmd             # Kultura Liberalna list (data/kultura-liberalna.yml) + static Polityka.pl/Other
-│   ├── pooling-the-poles.qmd # embeds the live Shiny polling app
+│   ├── pooling-the-poles.qmd # redirects to the Polling tracker (Shiny app retired)
 │   ├── good-change.qmd       # two-column book page
 │   ├── teaching.qmd          # GENERATED Heiss-style course landing
 │   └── teaching/<slug>.qmd   # GENERATED per-course pages

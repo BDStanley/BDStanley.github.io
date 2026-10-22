@@ -10,6 +10,9 @@ page; this script copies it beside the page's chart under assets/:
     Polls/web/polls.json                          -> assets/polling-tracker/polls.json
     Polls/web/draws.json                          -> assets/polling-tracker/draws.json
         (written by Polls/R/export_web.R, which PTP.R runs)
+    Party system analysis/web/party_system.json   -> assets/party-system-indicators/party_system.json
+        (written by Party system analysis/analysis/export_web.R, which
+        "Party system analysis.R" runs)
 
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
@@ -42,6 +45,8 @@ FILES = [
      {"meta", "rules", "constituencies", "trend", "polls", "weeks"}),
     ("Polls/web/draws.json", "assets/polling-tracker/draws.json",
      {"nDraws", "categories", "weeks"}),
+    ("Party system analysis/web/party_system.json", "assets/party-system-indicators/party_system.json",
+     {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
 ]
 
 

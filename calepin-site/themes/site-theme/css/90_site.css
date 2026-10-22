@@ -353,7 +353,7 @@ body {
 
 /* ---- "Good Change" page (pages/good-change.typ) ---------------------------- */
 /* On a computer screen the page breaks out of the narrow reading column (as the
-   Pooling the Poles embed does), centred on the viewport and capped at 62rem:
+   embedded analyses do), centred on the viewport and capped at 62rem:
    the cover with the publication details under it beside the description, then
    the reviews in two columns. Below 56rem everything stacks in the reading
    column. The Quarto backup copies this block into its styles.css. */
@@ -449,8 +449,8 @@ body {
   color: var(--calepin-color-muted);
 }
 
-/* "Pooling the Poles" embed — break out of the narrow reading column to give the
-   Shiny app a bit more room (centred on the viewport, capped width). */
+/* Embedded pages — break out of the narrow reading column to give them a bit
+   more room (centred on the viewport, capped width). */
 .embed-frame {
   width: min(92vw, 900px);
   max-width: none;

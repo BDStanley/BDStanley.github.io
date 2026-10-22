@@ -2,7 +2,7 @@
  *
  * Reads polls.json (everything the model publishes for each week) and, when a
  * scenario needs it, draws.json (the model's vote-share draws for every week).
- * The seat rules follow the Shiny app (Polls/R/app.R) and PTP.R's simulation:
+ * The seat rules follow PTP.R's simulation and Polls/R/constants.R:
  * national shares are spread across the 41 constituencies by each party's
  * regional profile, thresholds are national (5% for a party, 8% for a joint
  * list, MN exempt), and seats go by D'Hondt.
@@ -258,7 +258,7 @@ function govFromSim(sim, joint) {
 function govFromWeek(wk) {
   return wk.coalitions.map(c => ({ members: sortParties(c.m), size: c.m.length, s: Math.round(c.s), lo: c.lo, hi: c.hi, p: c.p, pv: c.pv, pc: c.pc }));
 }
-// Deterministic majorities from one set of seat numbers (the Shiny rule).
+// Deterministic majorities from one set of seat numbers.
 function govDet(ents, joint, seats) {
   const lists = govLists(ents, joint, k => seats[k]).sort((a, b) => seats[b] - seats[a]);
   const L = lists.length, out = [];
@@ -827,7 +827,7 @@ function timeHover(id, ev) {
   placeTip($(id + "tip"), $(id + "box"), ev, `<b>${dstr(wd)}</b>` + vals.map(o => `<div class="r"><span><span class="dot" style="background:${o.s.colour}"></span>${esc(o.s.label || o.s.name)}</span><span>${g.opts.fmt(o.p[1])}${o.p[2] != null ? ` <span class="muted">${g.opts.fmt(o.p[2])}–${g.opts.fmt(o.p[3])}</span>` : ""}</span></div>`).join(""));
 }
 let COALTREND = null;
-function coalitionTrend() { // the Shiny app's rule: >=10% in some week, minimal, top six by latest
+function coalitionTrend() { // >=10% in some week, minimal, top six by latest
   if (COALTREND) return COALTREND;
   const byKey = new Map();
   WEEKS.forEach((w, wi) => w.coalitions.forEach(c => {
