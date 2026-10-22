@@ -753,3 +753,31 @@ details.reach-table[open] > summary::after {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
+/* ---- Policy reach page (pages/policy-reach.typ) ---------------------------- */
+/* The charts reuse the .reach-* styles above. These are the collapsed lists of
+   the documents and works citing each publication: title, then date,
+   organisation and kind in the secondary ink. Copied into the Quarto backup's
+   styles.css with the block above. */
+details.policy-details {
+  margin: 0.5rem 0 0.9rem;
+}
+.policy-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.policy-items li {
+  margin: 0 0 0.65rem;
+  padding: 0;
+  line-height: 1.35;
+  list-style: none;
+}
+.policy-item-title {
+  display: block;
+}
+.policy-item-meta {
+  display: block;
+  font-size: 0.8rem;
+  color: #5f6b7a;
+}

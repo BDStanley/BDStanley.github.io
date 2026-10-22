@@ -1,0 +1,3442 @@
+{
+ "_about": "Data behind the Policy reach page, from Sage Policy Profiles and OpenAlex. Written by scripts/update-policy-reach.py; see that file for what is counted and how.",
+ "as_of": {
+  "sage": "2026-10",
+  "openalex": "2026-10"
+ },
+ "totals": {
+  "documents": 41,
+  "works": 29,
+  "organisations": 53,
+  "countries": 18,
+  "first_year": 2013,
+  "cited_works": 12,
+  "my_works": 48,
+  "sage_listed": 52
+ },
+ "types": [
+  {
+   "key": "think_tank",
+   "name": "Think tanks and foundations",
+   "colour": "#2a78d6",
+   "organisations": 38,
+   "records": 55,
+   "tip": "Think tanks and foundations: 38 organisations, behind 55 documents and works",
+   "w": 1.0
+  },
+  {
+   "key": "government",
+   "name": "Government",
+   "colour": "#eb6834",
+   "organisations": 12,
+   "records": 12,
+   "tip": "Government: 12 organisations, behind 12 documents and works",
+   "w": 0.3158
+  },
+  {
+   "key": "international",
+   "name": "International organisations",
+   "colour": "#1baf7a",
+   "organisations": 3,
+   "records": 3,
+   "tip": "International organisations: 3 organisations, behind 3 documents and works",
+   "w": 0.0789
+  }
+ ],
+ "organisations": [
+  {
+   "name": "Friedrich-Ebert-Stiftung e.V.",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 2,
+   "works": 3,
+   "total": 5,
+   "colour": "#2a78d6",
+   "tip": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany): 2 policy documents and 3 research works",
+   "w": 1.0
+  },
+  {
+   "name": "Peace Research Institute Oslo",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Norway",
+   "documents": 1,
+   "works": 4,
+   "total": 5,
+   "colour": "#2a78d6",
+   "tip": "Peace Research Institute Oslo (think tank, Norway): 1 policy document and 4 research works",
+   "w": 1.0
+  },
+  {
+   "name": "Ifo Institute",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 4,
+   "works": 0,
+   "total": 4,
+   "colour": "#2a78d6",
+   "tip": "Ifo Institute (think tank, Germany): 4 policy documents",
+   "w": 0.8
+  },
+  {
+   "name": "Bertelsmann Stiftung",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 3,
+   "works": 0,
+   "total": 3,
+   "colour": "#2a78d6",
+   "tip": "Bertelsmann Stiftung (think tank, Germany): 3 policy documents",
+   "w": 0.6
+  },
+  {
+   "name": "Luxembourg Institute of Socio-Economic Research",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Luxembourg",
+   "documents": 0,
+   "works": 3,
+   "total": 3,
+   "colour": "#2a78d6",
+   "tip": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg): 3 research works",
+   "w": 0.6
+  },
+  {
+   "name": "Hellenic Foundation for European and Foreign Policy",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Greece",
+   "documents": 2,
+   "works": 0,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "Hellenic Foundation for European and Foreign Policy (think tank, Greece): 2 policy documents",
+   "w": 0.4
+  },
+  {
+   "name": "Information Technology and Innovation Foundation",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 1,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "Information Technology and Innovation Foundation (think tank, United States): 1 policy document and 1 research work",
+   "w": 0.4
+  },
+  {
+   "name": "Pew Research",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 2,
+   "works": 0,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "Pew Research (think tank, United States): 2 policy documents",
+   "w": 0.4
+  },
+  {
+   "name": "Publications Office of the European Union",
+   "type": "government",
+   "type_label": "government",
+   "country": "EU institutions",
+   "documents": 2,
+   "works": 0,
+   "total": 2,
+   "colour": "#eb6834",
+   "tip": "Publications Office of the European Union (government, EU institutions): 2 policy documents",
+   "w": 0.4
+  },
+  {
+   "name": "Wilfried Martens Centre for European Studies",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Belgium",
+   "documents": 2,
+   "works": 0,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "Wilfried Martens Centre for European Studies (think tank, Belgium): 2 policy documents",
+   "w": 0.4
+  },
+  {
+   "name": "American Enterprise Institute",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "American Enterprise Institute (think tank, United States): 1 research work",
+   "w": 0.2
+  },
+  {
+   "name": "Applied Research and Communications Fund",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Bulgaria",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Applied Research and Communications Fund (think tank, Bulgaria): 1 research work",
+   "w": 0.2
+  },
+  {
+   "name": "Baltic Studies Centre",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Latvia",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Baltic Studies Centre (think tank, Latvia): 1 research work",
+   "w": 0.2
+  },
+  {
+   "name": "Bank of Finland",
+   "type": "government",
+   "type_label": "government",
+   "country": "Finland",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Bank of Finland (government, Finland): 1 policy document",
+   "w": 0.2
+  },
+  {
+   "name": "Barcelona Centre for International Affairs",
+   "type": "government",
+   "type_label": "government",
+   "country": "Spain",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Barcelona Centre for International Affairs (government, Spain): 1 research work",
+   "w": 0.2
+  },
+  {
+   "name": "Brookings Institution",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Brookings Institution (think tank, United States): 1 policy document"
+  },
+  {
+   "name": "Center for a New American Security",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Center for a New American Security (think tank, United States): 1 policy document"
+  },
+  {
+   "name": "Center for the Study of Democracy",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Bulgaria",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Center for the Study of Democracy (think tank, Bulgaria): 1 research work"
+  },
+  {
+   "name": "Centre d'Etudes Prospectives et d'Informations Internationales",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "France",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Centre d'Etudes Prospectives et d'Informations Internationales (think tank, France): 1 policy document"
+  },
+  {
+   "name": "Centre for Economic Policy Research",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Centre for Economic Policy Research (think tank, United Kingdom): 1 research work"
+  },
+  {
+   "name": "Centre for Liberal Strategies",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Bulgaria",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Centre for Liberal Strategies (think tank, Bulgaria): 1 research work"
+  },
+  {
+   "name": "Centro Alti Studi per la Difesa (CASD)",
+   "type": "government",
+   "type_label": "government",
+   "country": "Italy",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Centro Alti Studi per la Difesa (CASD) (government, Italy): 1 research work"
+  },
+  {
+   "name": "Centro Brasileiro de Análise e Planejamento",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Brazil",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Centro Brasileiro de Análise e Planejamento (think tank, Brazil): 1 research work"
+  },
+  {
+   "name": "Constitution Unit",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Constitution Unit (think tank, United Kingdom): 1 policy document"
+  },
+  {
+   "name": "Counterpoint",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Counterpoint (think tank, United Kingdom): 1 policy document"
+  },
+  {
+   "name": "DIW",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "DIW (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "Dahrendorf Forum",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Dahrendorf Forum (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "European Commission",
+   "type": "government",
+   "type_label": "government",
+   "country": "EU institutions",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "European Commission (government, EU institutions): 1 research work"
+  },
+  {
+   "name": "Federal Institute for Population Research",
+   "type": "government",
+   "type_label": "government",
+   "country": "Germany",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Federal Institute for Population Research (government, Germany): 1 research work"
+  },
+  {
+   "name": "Freedom House",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Freedom House (think tank, United States): 1 policy document"
+  },
+  {
+   "name": "Generalitat de Catalunya",
+   "type": "government",
+   "type_label": "government",
+   "country": "Spain",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Generalitat de Catalunya (government, Spain): 1 policy document"
+  },
+  {
+   "name": "German Marshall Fund",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "German Marshall Fund (think tank, United States): 1 policy document"
+  },
+  {
+   "name": "Global Policy Institute",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Global Policy Institute (think tank, United States): 1 research work"
+  },
+  {
+   "name": "Government of the United States of America",
+   "type": "government",
+   "type_label": "government",
+   "country": "United States",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Government of the United States of America (government, United States): 1 research work"
+  },
+  {
+   "name": "IZA Institute of Labor Economics",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "IZA Institute of Labor Economics (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "Institute for Strategic Dialogue",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Institute for Strategic Dialogue (think tank, United Kingdom): 1 policy document"
+  },
+  {
+   "name": "Institute of World Economy and International Relations",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Russia",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Institute of World Economy and International Relations (think tank, Russia): 1 policy document"
+  },
+  {
+   "name": "International Labour Organization",
+   "type": "international",
+   "type_label": "international organisation",
+   "country": "International organisations",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#1baf7a",
+   "tip": "International Labour Organization (international organisation, International organisations): 1 research work"
+  },
+  {
+   "name": "Istituto Affari Internazionali",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Italy",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Istituto Affari Internazionali (think tank, Italy): 1 research work"
+  },
+  {
+   "name": "Joint Research Centre",
+   "type": "government",
+   "type_label": "government",
+   "country": "EU institutions",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Joint Research Centre (government, EU institutions): 1 research work"
+  },
+  {
+   "name": "Kiel Institute for the World Economy",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Kiel Institute for the World Economy (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "Konrad-Adenauer-Stiftung",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Konrad-Adenauer-Stiftung (think tank, Germany): 1 research work"
+  },
+  {
+   "name": "Norwegian Institute of International Affairs",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Norway",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Norwegian Institute of International Affairs (think tank, Norway): 1 policy document"
+  },
+  {
+   "name": "Peace Institute- Institute for Contemporary Social and Political Studies",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Slovenia",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Peace Institute- Institute for Contemporary Social and Political Studies (think tank, Slovenia): 1 research work"
+  },
+  {
+   "name": "RAND Corporation",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "RAND Corporation (think tank, United States): 1 policy document"
+  },
+  {
+   "name": "Staten-Generaal",
+   "type": "government",
+   "type_label": "government",
+   "country": "Netherlands",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Staten-Generaal (government, Netherlands): 1 policy document"
+  },
+  {
+   "name": "Stiftung Mercator",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Stiftung Mercator (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "Swedish Institute of International Affairs",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Sweden",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Swedish Institute of International Affairs (think tank, Sweden): 1 research work"
+  },
+  {
+   "name": "Tony Blair Institute for Global Change",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Tony Blair Institute for Global Change (think tank, United Kingdom): 1 policy document"
+  },
+  {
+   "name": "UK Parliament Select Committee Publications",
+   "type": "government",
+   "type_label": "government",
+   "country": "United Kingdom",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "UK Parliament Select Committee Publications (government, United Kingdom): 1 policy document"
+  },
+  {
+   "name": "Umwelt Bundesamt",
+   "type": "government",
+   "type_label": "government",
+   "country": "Germany",
+   "documents": 1,
+   "works": 0,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Umwelt Bundesamt (government, Germany): 1 policy document"
+  },
+  {
+   "name": "United Nations",
+   "type": "international",
+   "type_label": "international organisation",
+   "country": "International organisations",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#1baf7a",
+   "tip": "United Nations (international organisation, International organisations): 1 research work"
+  },
+  {
+   "name": "United Nations Economic Commission for Latin America and the Caribbean",
+   "type": "international",
+   "type_label": "international organisation",
+   "country": "International organisations",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#1baf7a",
+   "tip": "United Nations Economic Commission for Latin America and the Caribbean (international organisation, International organisations): 1 research work"
+  }
+ ],
+ "top_organisations": 15,
+ "countries": [
+  {
+   "code": "DE",
+   "name": "Germany",
+   "records": 20,
+   "organisations": 11,
+   "on_map": true,
+   "colour": "#a72219",
+   "tip": "Germany: 20 documents and works, from 11 organisations",
+   "w": 1.0
+  },
+  {
+   "code": "US",
+   "name": "United States",
+   "records": 12,
+   "organisations": 10,
+   "on_map": true,
+   "colour": "#c13d30",
+   "tip": "United States: 12 documents and works, from 10 organisations",
+   "w": 0.6
+  },
+  {
+   "code": "NO",
+   "name": "Norway",
+   "records": 6,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#d55d4b",
+   "tip": "Norway: 6 documents and works, from 2 organisations",
+   "w": 0.3
+  },
+  {
+   "code": "GB",
+   "name": "United Kingdom",
+   "records": 6,
+   "organisations": 6,
+   "on_map": true,
+   "colour": "#d55d4b",
+   "tip": "United Kingdom: 6 documents and works, from 6 organisations",
+   "w": 0.3
+  },
+  {
+   "code": "BG",
+   "name": "Bulgaria",
+   "records": 3,
+   "organisations": 3,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Bulgaria: 3 documents and works, from 3 organisations",
+   "w": 0.15
+  },
+  {
+   "code": "EU",
+   "name": "EU institutions",
+   "records": 3,
+   "organisations": 3,
+   "on_map": false,
+   "colour": "#e38070",
+   "tip": "EU institutions: 3 documents and works, from 3 organisations",
+   "w": 0.15
+  },
+  {
+   "code": "IGO",
+   "name": "International organisations",
+   "records": 3,
+   "organisations": 3,
+   "on_map": false,
+   "colour": "#e38070",
+   "tip": "International organisations: 3 documents and works, from 3 organisations",
+   "w": 0.15
+  },
+  {
+   "code": "LU",
+   "name": "Luxembourg",
+   "records": 3,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Luxembourg: 3 documents and works, from 1 organisation",
+   "w": 0.15
+  },
+  {
+   "code": "BE",
+   "name": "Belgium",
+   "records": 2,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Belgium: 2 documents and works, from 1 organisation",
+   "w": 0.1
+  },
+  {
+   "code": "GR",
+   "name": "Greece",
+   "records": 2,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Greece: 2 documents and works, from 1 organisation",
+   "w": 0.1
+  },
+  {
+   "code": "IT",
+   "name": "Italy",
+   "records": 2,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Italy: 2 documents and works, from 2 organisations",
+   "w": 0.1
+  },
+  {
+   "code": "ES",
+   "name": "Spain",
+   "records": 2,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Spain: 2 documents and works, from 2 organisations",
+   "w": 0.1
+  },
+  {
+   "code": "BR",
+   "name": "Brazil",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Brazil: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "FI",
+   "name": "Finland",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Finland: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "FR",
+   "name": "France",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "France: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "LV",
+   "name": "Latvia",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Latvia: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "NL",
+   "name": "Netherlands",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Netherlands: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "RU",
+   "name": "Russia",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Russia: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "SI",
+   "name": "Slovenia",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Slovenia: 1 document or work, from 1 organisation",
+   "w": 0.05
+  },
+  {
+   "code": "SE",
+   "name": "Sweden",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Sweden: 1 document or work, from 1 organisation",
+   "w": 0.05
+  }
+ ],
+ "bins": [
+  {
+   "label": "1",
+   "colour": "#eda496"
+  },
+  {
+   "label": "2–4",
+   "colour": "#e38070"
+  },
+  {
+   "label": "5–9",
+   "colour": "#d55d4b"
+  },
+  {
+   "label": "10–19",
+   "colour": "#c13d30"
+  },
+  {
+   "label": "20–49",
+   "colour": "#a72219"
+  },
+  {
+   "label": "50+",
+   "colour": "#8b0000"
+  }
+ ],
+ "no_records_colour": "#e1e0d9",
+ "years": {
+  "axis_max": 15,
+  "ticks": [
+   {
+    "value": 0,
+    "label": "0",
+    "pos": 0.0
+   },
+   {
+    "value": 5,
+    "label": "5",
+    "pos": 0.3333
+   },
+   {
+    "value": 10,
+    "label": "10",
+    "pos": 0.6667
+   },
+   {
+    "value": 15,
+    "label": "15",
+    "pos": 1.0
+   }
+  ],
+  "rows": [
+   {
+    "year": 2013,
+    "label": "2013",
+    "count": 3,
+    "h": 0.2,
+    "minor": true,
+    "tip": "2013: 3 documents and works (Think tanks and foundations 3)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 3,
+      "colour": "#2a78d6",
+      "tip": "2013, Think tanks and foundations: 3 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2014,
+    "label": "2014",
+    "count": 0,
+    "h": 0.0,
+    "minor": true,
+    "tip": "2014: 0 documents and works",
+    "segments": []
+   },
+   {
+    "year": 2015,
+    "label": "2015",
+    "count": 1,
+    "h": 0.0667,
+    "minor": false,
+    "tip": "2015: 1 document or work (International organisations 1)",
+    "segments": [
+     {
+      "name": "International organisations",
+      "count": 1,
+      "colour": "#1baf7a",
+      "tip": "2015, International organisations: 1 document or work"
+     }
+    ]
+   },
+   {
+    "year": 2016,
+    "label": "2016",
+    "count": 1,
+    "h": 0.0667,
+    "minor": true,
+    "tip": "2016: 1 document or work (Think tanks and foundations 1)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 1,
+      "colour": "#2a78d6",
+      "tip": "2016, Think tanks and foundations: 1 document or work"
+     }
+    ]
+   },
+   {
+    "year": 2017,
+    "label": "2017",
+    "count": 2,
+    "h": 0.1333,
+    "minor": true,
+    "tip": "2017: 2 documents and works (Think tanks and foundations 1, International organisations 1)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 1,
+      "colour": "#2a78d6",
+      "tip": "2017, Think tanks and foundations: 1 document or work"
+     },
+     {
+      "name": "International organisations",
+      "count": 1,
+      "colour": "#1baf7a",
+      "tip": "2017, International organisations: 1 document or work"
+     }
+    ]
+   },
+   {
+    "year": 2018,
+    "label": "2018",
+    "count": 5,
+    "h": 0.3333,
+    "minor": true,
+    "tip": "2018: 5 documents and works (Think tanks and foundations 4, Government 1)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 4,
+      "colour": "#2a78d6",
+      "tip": "2018, Think tanks and foundations: 4 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 1,
+      "colour": "#eb6834",
+      "tip": "2018, Government: 1 document or work"
+     }
+    ]
+   },
+   {
+    "year": 2019,
+    "label": "2019",
+    "count": 8,
+    "h": 0.5333,
+    "minor": true,
+    "tip": "2019: 8 documents and works (Think tanks and foundations 6, Government 2)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 6,
+      "colour": "#2a78d6",
+      "tip": "2019, Think tanks and foundations: 6 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 2,
+      "colour": "#eb6834",
+      "tip": "2019, Government: 2 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2020,
+    "label": "2020",
+    "count": 9,
+    "h": 0.6,
+    "minor": false,
+    "tip": "2020: 9 documents and works (Think tanks and foundations 9)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 9,
+      "colour": "#2a78d6",
+      "tip": "2020, Think tanks and foundations: 9 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2021,
+    "label": "2021",
+    "count": 11,
+    "h": 0.7333,
+    "minor": true,
+    "tip": "2021: 11 documents and works (Think tanks and foundations 9, Government 2)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 9,
+      "colour": "#2a78d6",
+      "tip": "2021, Think tanks and foundations: 9 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 2,
+      "colour": "#eb6834",
+      "tip": "2021, Government: 2 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2022,
+    "label": "2022",
+    "count": 5,
+    "h": 0.3333,
+    "minor": true,
+    "tip": "2022: 5 documents and works (Think tanks and foundations 5)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 5,
+      "colour": "#2a78d6",
+      "tip": "2022, Think tanks and foundations: 5 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2023,
+    "label": "2023",
+    "count": 2,
+    "h": 0.1333,
+    "minor": true,
+    "tip": "2023: 2 documents and works (Think tanks and foundations 2)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 2,
+      "colour": "#2a78d6",
+      "tip": "2023, Think tanks and foundations: 2 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2024,
+    "label": "2024",
+    "count": 8,
+    "h": 0.5333,
+    "minor": true,
+    "tip": "2024: 8 documents and works (Think tanks and foundations 4, Government 4)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 4,
+      "colour": "#2a78d6",
+      "tip": "2024, Think tanks and foundations: 4 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 4,
+      "colour": "#eb6834",
+      "tip": "2024, Government: 4 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2025,
+    "label": "2025",
+    "count": 9,
+    "h": 0.6,
+    "minor": false,
+    "tip": "2025: 9 documents and works (Think tanks and foundations 6, Government 3)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 6,
+      "colour": "#2a78d6",
+      "tip": "2025, Think tanks and foundations: 6 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 3,
+      "colour": "#eb6834",
+      "tip": "2025, Government: 3 documents and works"
+     }
+    ]
+   },
+   {
+    "year": 2026,
+    "label": "2026 (to October)",
+    "count": 6,
+    "h": 0.4,
+    "minor": true,
+    "tip": "2026 (to October): 6 documents and works (Think tanks and foundations 5, International organisations 1)",
+    "segments": [
+     {
+      "name": "Think tanks and foundations",
+      "count": 5,
+      "colour": "#2a78d6",
+      "tip": "2026, Think tanks and foundations: 5 documents and works"
+     },
+     {
+      "name": "International organisations",
+      "count": 1,
+      "colour": "#1baf7a",
+      "tip": "2026, International organisations: 1 document or work"
+     }
+    ]
+   }
+  ],
+  "legend": [
+   {
+    "name": "Think tanks and foundations",
+    "colour": "#2a78d6"
+   },
+   {
+    "name": "Government",
+    "colour": "#eb6834"
+   },
+   {
+    "name": "International organisations",
+    "colour": "#1baf7a"
+   }
+  ]
+ },
+ "ideas": [
+  {
+   "key": "10.1080/13569310701822289",
+   "idea": "The thin ideology of populism",
+   "title": "The Thin Ideology of Populism",
+   "year": 2008,
+   "documents": 26,
+   "works": 12,
+   "summary": "26 policy documents and 12 research works",
+   "items": [
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Is Friedrich Merz the Leader Germany Needs?",
+     "url": "https://doi.org/10.5817/pc2026-1-4",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Konrad-Adenauer-Stiftung (think tank, Germany)"
+    },
+    {
+     "date": "2025-08-03",
+     "when": "3 August 2025",
+     "title": "Populism and the Skill-Content of Globalization",
+     "url": "https://www.iza.org/publications/dp/18041/populism-and-the-skill-content-of-globalization",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "IZA Institute of Labor Economics (think tank, Germany)"
+    },
+    {
+     "date": "2025-05-20",
+     "when": "20 May 2025",
+     "title": "Populism, Energy Transition, and International Politics",
+     "url": "https://nupi.brage.unit.no/nupi-xmlui/handle/11250/3199483",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Norwegian Institute of International Affairs (think tank, Norway)"
+    },
+    {
+     "date": "2024-01-29",
+     "when": "29 January 2024",
+     "title": "The German Far Right Online: A Longitudinal Study",
+     "url": "https://www.isdglobal.org/isd-publications/the-german-far-right-online-a-longitudinal-study/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Institute for Strategic Dialogue (think tank, United Kingdom)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "The Structural and Temporal Curb of Populism: A Cross-Country Analysis of Authoritarian Populist Influences on Journalism",
+     "url": "https://doi.org/10.1080/1461670x.2024.2407948",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Peace Institute- Institute for Contemporary Social and Political Studies (think tank, Slovenia)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Intertemporal evidence on the strategy of populism in the United States",
+     "url": "https://doi.org/10.1016/j.electstud.2024.102853",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Centre for Economic Policy Research (think tank, United Kingdom); Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "'The People' vs. the Liberal International Order?",
+     "url": "https://doi.org/10.1093/oso/9780198901020.001.0001",
+     "kind": "book",
+     "source": "openalex",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2023-03-10",
+     "when": "10 March 2023",
+     "title": "Populism and the Skill-Content of Globalization: Evidence from the Last 60 Years",
+     "url": "http://www.cepii.fr/CEPII/fr/publications/wp/abstract.asp?NoDoc=13738",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Centre d'Etudes Prospectives et d'Informations Internationales (think tank, France)"
+    },
+    {
+     "date": "2022-11-03",
+     "when": "3 November 2022",
+     "title": "Populism and the Skill-Content of Globalization: Evidence from the Last 60 Years",
+     "url": "https://www.cesifo.org/en/publications/2022/working-paper/populism-and-skill-content-globalization-evidence-last-60-years",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Ifo Institute (think tank, Germany)"
+    },
+    {
+     "date": "2022-11-03",
+     "when": "3 November 2022",
+     "title": "Income Misperception and Populism",
+     "url": "https://www.cesifo.org/en/publications/2022/working-paper/income-misperception-and-populism",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Ifo Institute (think tank, Germany)"
+    },
+    {
+     "date": "2022-10-25",
+     "when": "25 October 2022",
+     "title": "Income Misperception and Populism",
+     "url": "https://www.diw.de/de/diw_01.c.864165.de/publikationen/soeppapers/2022_1177/income_misperception_and_populism.html",
+     "kind": "",
+     "source": "sage",
+     "orgs": "DIW (think tank, Germany)"
+    },
+    {
+     "date": "2021-12-13",
+     "when": "13 December 2021",
+     "title": "Populism and the Economics of Antitrust",
+     "url": "https://itif.org/publications/2021/12/13/populism-and-economics-antitrust",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Information Technology and Innovation Foundation (think tank, United States)"
+    },
+    {
+     "date": "2021-12-06",
+     "when": "6 December 2021",
+     "title": "A Commitment Theory of Populism",
+     "url": "https://www.cesifo.org/en/publications/2021/working-paper/commitment-theory-populism",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Ifo Institute (think tank, Germany)"
+    },
+    {
+     "date": "2021-09-15",
+     "when": "15 September 2021",
+     "title": "Populism and energy transition",
+     "url": "https://www.stiftung-mercator.de/de/publikationen/populismus-und-energiewende/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Stiftung Mercator (think tank, Germany)"
+    },
+    {
+     "date": "2021-05-21",
+     "when": "21 May 2021",
+     "title": "From blockchain to space travel to virtual worlds",
+     "url": "https://www.umweltbundesamt.de/publikationen/von-blockchain-ueber-raumfahrt-bis-virtuellen",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Umwelt Bundesamt (government, Germany)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "The promise of the Maker Movement: policy expectations versus community criticisms",
+     "url": "https://doi.org/10.1093/scipol/scab053",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "European Commission (government, EU institutions); Joint Research Centre (government, EU institutions)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "Populism and the Economics of Antitrust",
+     "url": "https://doi.org/10.1007/978-3-030-80803-7_13",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Information Technology and Innovation Foundation (think tank, United States)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "Populism and COVID-19: How Populist Governments (Mis)Handle the Pandemic",
+     "url": "https://doi.org/10.1561/113.00000043",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2020-10-26",
+     "when": "26 October 2020",
+     "title": "Populist Leaders and the Economy",
+     "url": "https://www.kielinstitut.de/de/publikationen/populist-leaders-and-the-economy-12510/",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Kiel Institute for the World Economy (think tank, Germany)"
+    },
+    {
+     "date": "2020-10-06",
+     "when": "6 October 2020",
+     "title": "Populism Barometer 2020",
+     "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/populism-barometer-2020-all",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Bertelsmann Stiftung (think tank, Germany)"
+    },
+    {
+     "date": "2020-10-01",
+     "when": "1 October 2020",
+     "title": "Report on Conceptualizing the Varieties of Populism – DEMOS project",
+     "url": "https://www.eliamep.gr/en/ekthesi-schetika-me-tis-ennoies-kai-tis-poikilies-tou-laikismou-programma-demos/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Hellenic Foundation for European and Foreign Policy (think tank, Greece)"
+    },
+    {
+     "date": "2020-03-19",
+     "when": "19 March 2020",
+     "title": "Combating Populism",
+     "url": "https://www.cnas.org/publications/reports/combating-populism",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Center for a New American Security (think tank, United States)"
+    },
+    {
+     "date": "2020-03-11",
+     "when": "11 March 2020",
+     "title": "Global Development. Issue 21. The Changing West and its Role in Regulating Global Processes",
+     "url": "https://www.imemo.ru/index.php?page_id=645&id=4746",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Institute of World Economy and International Relations (think tank, Russia)"
+    },
+    {
+     "date": "2020-03-09",
+     "when": "9 March 2020",
+     "title": "Report on Conceptualizing the Varieties of Populism – DEMOS project",
+     "url": "https://www.eliamep.gr/en/publication/%ce%ad%ce%ba%ce%b8%ce%b5%cf%83%ce%b7-%cf%83%cf%87%ce%b5%cf%84%ce%b9%ce%ba%ce%ac-%ce%bc%ce%b5-%cf%84%ce%b9%cf%82-%ce%ad%ce%bd%ce%bd%ce%bf%ce%b9%ce%b5%cf%82-%ce%ba%ce%b1%ce%b9-%cf%84%ce%b9%cf%82-%cf%80/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Hellenic Foundation for European and Foreign Policy (think tank, Greece)"
+    },
+    {
+     "date": "2020",
+     "when": "2020",
+     "title": "The league of leagues: Meta-populism and the ‘chain of equivalence’ in a cross-border Alpine area",
+     "url": "https://doi.org/10.1016/j.polgeo.2020.102207",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2020",
+     "when": "2020",
+     "title": "The Political Economy of Populism",
+     "url": "https://doi.org/10.4324/9780429355691",
+     "kind": "book",
+     "source": "openalex",
+     "orgs": "Centre for Liberal Strategies (think tank, Bulgaria)"
+    },
+    {
+     "date": "2019-10-29",
+     "when": "29 October 2019",
+     "title": "ZDA0038 - Democracy and Digital Technologies",
+     "url": "https://committees.parliament.uk/writtenevidence/388/pdf/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "UK Parliament Select Committee Publications (government, United Kingdom)"
+    },
+    {
+     "date": "2019-06-14",
+     "when": "14 June 2019",
+     "title": "Populism Barometer 2018",
+     "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/populism-barometer-2018",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Bertelsmann Stiftung (think tank, Germany)"
+    },
+    {
+     "date": "2019-05-27",
+     "when": "27 May 2019",
+     "title": "Divide and Obstruct: Populist Parties and EU Foreign Policy",
+     "url": "http://www.gmfus.org/publications/divide-and-obstruct-populist-parties-and-eu-foreign-policy",
+     "kind": "",
+     "source": "sage",
+     "orgs": "German Marshall Fund (think tank, United States)"
+    },
+    {
+     "date": "2019-02-27",
+     "when": "27 February 2019",
+     "title": "Populism and the economy : An ambivalent relationship / Cristóbal Rovira Kaltwasser.",
+     "url": "http://www.fes.de/cgi-bin/gbv.cgi?id=15244&ty=pdf",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2019-02-25",
+     "when": "25 February 2019",
+     "title": "Is There a Populist Wave in Europe?",
+     "url": "https://www.dahrendorf-forum.eu/publications/is-there-a-populist-wave-in-europe/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Dahrendorf Forum (think tank, Germany)"
+    },
+    {
+     "date": "2019",
+     "when": "2019",
+     "title": "The populist political logic and the analysis of the discursive construction of ‘the people’ and ‘the elite’",
+     "url": "https://doi.org/10.1075/dapsac.83.02cle",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Center for the Study of Democracy (think tank, Bulgaria)"
+    },
+    {
+     "date": "2018",
+     "when": "2018",
+     "title": "El populismo como relato y la crisis de la democracia representativa",
+     "url": "https://doi.org/10.24241/rcai.2018.119.2.13",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Barcelona Centre for International Affairs (government, Spain)"
+    },
+    {
+     "date": "2017-07-07",
+     "when": "7 July 2017",
+     "title": "A Populist Moment?",
+     "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/a-populist-moment",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Bertelsmann Stiftung (think tank, Germany)"
+    },
+    {
+     "date": "2017",
+     "when": "2017",
+     "title": "The 2030 United Nations Sustainable Development Agenda and Academic Criminology",
+     "url": "https://doi.org/10.1017/cri.2017.6",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "United Nations (international organisation, International organisations)"
+    },
+    {
+     "date": "2013-07-01",
+     "when": "1 July 2013",
+     "title": "Exposing the Demagogues: Right-wing and National Populist Parties in Europe | Martens Centre",
+     "url": "https://martenscentre.eu/publications/exposing-demagogues-right-wing-and-national-populist-parties-europe",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Wilfried Martens Centre for European Studies (think tank, Belgium)"
+    },
+    {
+     "date": "2013-07-01",
+     "when": "1 July 2013",
+     "title": "Exposing the Demagogues: Right-wing and National Populist Parties in Europe",
+     "url": "https://www.martenscentre.eu/publication/exposing-the-demagogues-right-wing-and-national-populist-parties-in-europe/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Wilfried Martens Centre for European Studies (think tank, Belgium)"
+    },
+    {
+     "date": "2013-01-01",
+     "when": "1 January 2013",
+     "title": "Populist Fantasies: European revolts in context",
+     "url": "http://counterpoint.uk.com/publications/populist-fantasies-european-revolts-in-context/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Counterpoint (think tank, United Kingdom)"
+    }
+   ]
+  },
+  {
+   "key": "10.1017/s1537592721001924",
+   "idea": "Forging, bending and breaking",
+   "title": "Forging, Bending, and Breaking: Enacting the 'Illiberal Playbook' in Hungary and Poland",
+   "year": 2022,
+   "documents": 3,
+   "works": 1,
+   "summary": "3 policy documents and 1 research work",
+   "items": [
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Adjudicating for Democracy? How Ideas About Democratic Backsliding Shape Legal Interpretation",
+     "url": "https://doi.org/10.1177/00207152261443927",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Centro Brasileiro de Análise e Planejamento (think tank, Brazil)"
+    },
+    {
+     "date": "2025-12-17",
+     "when": "17 December 2025",
+     "title": "A ‘shopping list of autocratic actions’: what would-be autocrats do to recede democracy",
+     "url": "https://constitution-unit.com/2025/12/17/a-shopping-list-of-autocratic-actions-what-would-be-autocrats-do-to-recede-democracy/",
+     "kind": "blog post",
+     "source": "sage",
+     "orgs": "Constitution Unit (think tank, United Kingdom)"
+    },
+    {
+     "date": "2025-03-04",
+     "when": "4 March 2025",
+     "title": "First Chamber of the States General",
+     "url": "https://eerstekamer.nl/9370000/1/j4nvi0xeni9vr2l_j9vvkfvj6b325az/vmlsjumn5whb/f=/vmlsjv54mtq9.pdf",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Staten-Generaal (government, Netherlands)"
+    },
+    {
+     "date": "2024-06-05",
+     "when": "5 June 2024",
+     "title": "Statement on defending democracy in Europe",
+     "url": "https://op.europa.eu/en/publication-detail/-/publication/4c190332-232e-11ef-a251-01aa75ed71a1/language-en",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Publications Office of the European Union (government, EU institutions)"
+    }
+   ]
+  },
+  {
+   "key": "10.1353/jod.2025.a964585",
+   "idea": "The post-illiberal trilemma",
+   "title": "Democracy After Illiberalism: A Warning from Poland",
+   "year": 2025,
+   "documents": 0,
+   "works": 0,
+   "summary": "",
+   "items": []
+  }
+ ],
+ "other_publications": [
+  {
+   "key": "10.1093/oxfordhb/9780198803560.013.6",
+   "idea": null,
+   "title": "Populism in Central and Eastern Europe",
+   "year": 2017,
+   "documents": 6,
+   "works": 7,
+   "summary": "6 policy documents and 7 research works",
+   "items": [
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Trade unions and the far right: Workplace geopolitics in Latin America",
+     "url": "https://doi.org/10.1177/00221856261469878",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "International Labour Organization (international organisation, International organisations)"
+    },
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "MAGA & MAGYAR: The strategic use of common sense by Trump and Orbán during their state addresses",
+     "url": "https://doi.org/10.1017/s1475676525100522",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Europe’s Stuttering Transition to Multipolarity Amid Turkey’s Full Embrace",
+     "url": "https://doi.org/10.1007/978-3-032-21745-5_12",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Global Policy Institute (think tank, United States)"
+    },
+    {
+     "date": "2025-05-20",
+     "when": "20 May 2025",
+     "title": "Populism, Energy Transition, and International Politics",
+     "url": "https://nupi.brage.unit.no/nupi-xmlui/handle/11250/3199483",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Norwegian Institute of International Affairs (think tank, Norway)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "'The People' vs. the Liberal International Order?",
+     "url": "https://doi.org/10.1093/oso/9780198901020.001.0001",
+     "kind": "book",
+     "source": "openalex",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2023",
+     "when": "2023",
+     "title": "Technology Assessment in Central and Eastern Europe - Status quo in 2022 and future prospects (ITA-manu:script 22-01)",
+     "url": "https://doi.org/10.1553/ita-ms-22-01",
+     "kind": "report",
+     "source": "openalex",
+     "orgs": "Baltic Studies Centre (think tank, Latvia); Applied Research and Communications Fund (think tank, Bulgaria)"
+    },
+    {
+     "date": "2021-01-01",
+     "when": "1 January 2021",
+     "title": "To vote or not to vote? Migrant electoral (dis)engagement in an enlarged Europe",
+     "url": "https://www.prio.org/Publications/Publication/?x=12812",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "To vote or not to vote? Migrant electoral (dis)engagement in an enlarged Europe",
+     "url": "https://doi.org/10.1093/migration/mnab025",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2020-10-26",
+     "when": "26 October 2020",
+     "title": "Populist Leaders and the Economy",
+     "url": "https://www.kielinstitut.de/de/publikationen/populist-leaders-and-the-economy-12510/",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Kiel Institute for the World Economy (think tank, Germany)"
+    },
+    {
+     "date": "2020",
+     "when": "2020",
+     "title": "The league of leagues: Meta-populism and the ‘chain of equivalence’ in a cross-border Alpine area",
+     "url": "https://doi.org/10.1016/j.polgeo.2020.102207",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2019-12-03",
+     "when": "3 December 2019",
+     "title": "The state of the far right in Greece / Vasiliki Georgiadou.",
+     "url": "http://www.fes.de/cgi-bin/gbv.cgi?id=15846&ty=pdf",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2019-03-28",
+     "when": "28 March 2019",
+     "title": "2017, Europe’s bumper year of elections.",
+     "url": "https://op.europa.eu/en/publication-detail/-/publication/90e9fe70-51e7-11e9-a8ed-01aa75ed71a1/language-en/format-PDF",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Publications Office of the European Union (government, EU institutions)"
+    },
+    {
+     "date": "2018-11-07",
+     "when": "7 November 2018",
+     "title": "Populists in Power Around the World",
+     "url": "http://institute.global/policy/populists-power-around-world",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Tony Blair Institute for Global Change (think tank, United Kingdom)"
+    }
+   ]
+  },
+  {
+   "key": "10.1016/j.postcomstud.2011.10.005",
+   "idea": null,
+   "title": "Populism, Nationalism, or National Populism? An Analysis of Slovak Voting Behaviour at the 2010 Parliamentary Election",
+   "year": 2011,
+   "documents": 5,
+   "works": 1,
+   "summary": "5 policy documents and 1 research work",
+   "items": [
+    {
+     "date": "2024-12-18",
+     "when": "18 December 2024",
+     "title": "Participation and Political Involvement of Catalan Youth",
+     "url": "https://dixit.gencat.cat/web/.content/home/04recursos/02publicacions/01totes_les_publicacions_menys_bsf/06_joventut/l-z/participacio-implicacio-politica-joventut-catalana/participacio-implicacio-politica-joventut-catalana.pdf",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Generalitat de Catalunya (government, Spain)"
+    },
+    {
+     "date": "2021-01-18",
+     "when": "18 January 2021",
+     "title": "Socio-Economic Attitudes in the Era of Social Distancing and Lockdowns",
+     "url": "https://www.cesifo.org/en/publications/2021/working-paper/socio-economic-attitudes-era-social-distancing-and-lockdowns",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Ifo Institute (think tank, Germany)"
+    },
+    {
+     "date": "2020-10-26",
+     "when": "26 October 2020",
+     "title": "Populist Leaders and the Economy",
+     "url": "https://www.kielinstitut.de/de/publikationen/populist-leaders-and-the-economy-12510/",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Kiel Institute for the World Economy (think tank, Germany)"
+    },
+    {
+     "date": "2018-07-12",
+     "when": "12 July 2018",
+     "title": "Western Europe: People Favor Political Parties Based on Ideological Beliefs",
+     "url": "https://www.journalism.org/2018/07/12/in-western-europe-populist-parties-tap-anti-establishment-frustration-but-have-little-appeal-across-ideological-divide/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Pew Research (think tank, United States)"
+    },
+    {
+     "date": "2018-06-27",
+     "when": "27 June 2018",
+     "title": "News Media in Western Europe: Populist Views Divide Public Opinion",
+     "url": "https://www.journalism.org/2018/05/14/in-western-europe-public-attitudes-toward-news-media-more-divided-by-populist-views-than-left-right-ideology/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Pew Research (think tank, United States)"
+    },
+    {
+     "date": "2015",
+     "when": "2015",
+     "title": "Estrategia política y comportamiento electoral. El voto a candidatos populistas en la región andina",
+     "url": "https://doi.org/10.14201/gredos.128138",
+     "kind": "thesis",
+     "source": "openalex",
+     "orgs": "United Nations Economic Commission for Latin America and the Caribbean (international organisation, International organisations)"
+    }
+   ]
+  },
+  {
+   "key": "10.1177/00104140241259458",
+   "idea": null,
+   "title": "Conceptualizing and Measuring Support for Democracy: A New Approach",
+   "year": 2025,
+   "documents": 2,
+   "works": 1,
+   "summary": "2 policy documents and 1 research work",
+   "items": [
+    {
+     "date": "2025-11-26",
+     "when": "26 November 2025",
+     "title": "Russian society, democratic values, and the legacy of the early-1990s economic shock",
+     "url": "https://publications.bof.fi/handle/10024/54288",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Bank of Finland (government, Finland)"
+    },
+    {
+     "date": "2025-10-08",
+     "when": "8 October 2025",
+     "title": "Shaping democracy from the middle: Party grassroots and Ghana's democratic progress",
+     "url": "https://www.brookings.edu/articles/shaping-democracy-from-the-middle-party-grassroots-and-ghanas-democratic-progress/",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Brookings Institution (think tank, United States)"
+    },
+    {
+     "date": "2025",
+     "when": "2025",
+     "title": "Conflict exposure and democratic values: Evidence from wartime Ukraine",
+     "url": "https://doi.org/10.1177/00223433251347769",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    }
+   ]
+  },
+  {
+   "key": "10.1080/13510347.2015.1058782",
+   "idea": null,
+   "title": "Confrontation by Default and Confrontation by Design: Strategic and Institutional Responses to Poland's Populist Coalition Government",
+   "year": 2016,
+   "documents": 2,
+   "works": 1,
+   "summary": "2 policy documents and 1 research work",
+   "items": [
+    {
+     "date": "2020-10-26",
+     "when": "26 October 2020",
+     "title": "Populist Leaders and the Economy",
+     "url": "https://www.kielinstitut.de/de/publikationen/populist-leaders-and-the-economy-12510/",
+     "kind": "working paper",
+     "source": "sage",
+     "orgs": "Kiel Institute for the World Economy (think tank, Germany)"
+    },
+    {
+     "date": "2018-05-10",
+     "when": "10 May 2018",
+     "title": "Hostile Takeover: How Law and Justice Captured Poland’s Courts",
+     "url": "https://freedomhouse.org/report/special-reports/hostile-takeover-how-law-and-justice-captured-poland-s-courts",
+     "kind": "",
+     "source": "sage",
+     "orgs": "Freedom House (think tank, United States)"
+    },
+    {
+     "date": "2016",
+     "when": "2016",
+     "title": "Populism as the problem child of democracy: the AKP’s enduring appeal and the use of meso-level actors",
+     "url": "https://doi.org/10.1080/14683857.2016.1242204",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Istituto Affari Internazionali (think tank, Italy)"
+    }
+   ]
+  },
+  {
+   "key": "10.30950/jcer.v15i4.1122",
+   "idea": null,
+   "title": "Backsliding Away? The Quality of Democracy in Central and Eastern Europe",
+   "year": 2019,
+   "documents": 0,
+   "works": 2,
+   "summary": "2 research works",
+   "items": [
+    {
+     "date": "2022",
+     "when": "2022",
+     "title": "Democracy: Theoretical and Conceptional Challenges",
+     "url": "https://doi.org/10.1007/978-3-031-04822-7_2",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "Transitions, populism, and democratic decline: evidence from Hungary and the Czech Republic",
+     "url": "https://doi.org/10.1080/23745118.2021.1973213",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "American Enterprise Institute (think tank, United States)"
+    }
+   ]
+  },
+  {
+   "key": "10.1016/j.electstud.2022.102552",
+   "idea": null,
+   "title": "Emigrant External Voting in Central-Eastern Europe after EU Enlargement",
+   "year": 2023,
+   "documents": 0,
+   "works": 2,
+   "summary": "2 research works",
+   "items": [
+    {
+     "date": "2025",
+     "when": "2025",
+     "title": "Casting votes or crossing borders? How living abroad reduces mobile Europeans’ likelihood to participate in European elections",
+     "url": "https://doi.org/10.1080/1369183x.2025.2550127",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Federal Institute for Population Research (government, Germany)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Bringing Autocracy Home? How Migration to Autocracies Shapes Migrants' Support for Democracy",
+     "url": "https://doi.org/10.2139/ssrn.4878374",
+     "kind": "preprint",
+     "source": "openalex",
+     "orgs": "Government of the United States of America (government, United States)"
+    }
+   ]
+  },
+  {
+   "key": "10.1007/978-3-319-96758-5_5",
+   "idea": null,
+   "title": "Populism in Poland",
+   "year": 2019,
+   "documents": 0,
+   "works": 2,
+   "summary": "2 research works",
+   "items": [
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Civil society and populism in Europe: outbreak or cure?",
+     "url": "https://doi.org/10.1080/14782804.2024.2341032",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Centro Alti Studi per la Difesa (CASD) (government, Italy)"
+    },
+    {
+     "date": "2020",
+     "when": "2020",
+     "title": "Right‐Wing Populism in Rural Europe. Introduction to the Special Issue",
+     "url": "https://doi.org/10.1111/soru.12306",
+     "kind": "editorial",
+     "source": "openalex",
+     "orgs": "Swedish Institute of International Affairs (think tank, Sweden)"
+    }
+   ]
+  },
+  {
+   "key": "10.1080/21599165.2020.1787161",
+   "idea": null,
+   "title": "Whose Poland Is It to Be? PiS and the Struggle between Monism and Pluralism",
+   "year": 2020,
+   "documents": 1,
+   "works": 1,
+   "summary": "1 policy document and 1 research work",
+   "items": [
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Sacrificing Liberal or Electoral Democracy? Evidence from a Conjoint Experiment in Five European Countries",
+     "url": "https://doi.org/10.2139/ssrn.6049214",
+     "kind": "preprint",
+     "source": "openalex",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
+    {
+     "date": "2022-02-23",
+     "when": "23 February 2022",
+     "title": "Truth Decay in Europe",
+     "url": "https://www.rand.org/pubs/research_reports/RRA112-22.html",
+     "kind": "",
+     "source": "sage",
+     "orgs": "RAND Corporation (think tank, United States)"
+    }
+   ]
+  },
+  {
+   "key": "10.1177/0888325418783056",
+   "idea": null,
+   "title": "A New Populist Divide? Correspondences of Supply and Demand in the 2015 Polish Parliamentary Elections",
+   "year": 2019,
+   "documents": 0,
+   "works": 1,
+   "summary": "1 research work",
+   "items": [
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Civil society and populism in Europe: outbreak or cure?",
+     "url": "https://doi.org/10.1080/14782804.2024.2341032",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Centro Alti Studi per la Difesa (CASD) (government, Italy)"
+    }
+   ]
+  },
+  {
+   "key": "10.1007/978-3-031-19246-3",
+   "idea": null,
+   "title": "External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation",
+   "year": 2023,
+   "documents": 0,
+   "works": 1,
+   "summary": "1 research work",
+   "items": [
+    {
+     "date": "2025",
+     "when": "2025",
+     "title": "Economic, Sociocultural and Political Transnationalism",
+     "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    }
+   ]
+  }
+ ],
+ "records": [
+  {
+   "id": "openalex:W2342751011",
+   "source": "openalex",
+   "title": "Estrategia política y comportamiento electoral. El voto a candidatos populistas en la región andina",
+   "url": "https://doi.org/10.14201/gredos.128138",
+   "date": "",
+   "year": 2015,
+   "kind": "thesis",
+   "orgs": [
+    {
+     "name": "United Nations Economic Commission for Latin America and the Caribbean",
+     "type": "international",
+     "country": "IGO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005"
+   ]
+  },
+  {
+   "id": "openalex:W2529947790",
+   "source": "openalex",
+   "title": "Populism as the problem child of democracy: the AKP’s enduring appeal and the use of meso-level actors",
+   "url": "https://doi.org/10.1080/14683857.2016.1242204",
+   "date": "",
+   "year": 2016,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Istituto Affari Internazionali",
+     "type": "think_tank",
+     "country": "IT",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13510347.2015.1058782"
+   ]
+  },
+  {
+   "id": "openalex:W2793247423",
+   "source": "openalex",
+   "title": "The 2030 United Nations Sustainable Development Agenda and Academic Criminology",
+   "url": "https://doi.org/10.1017/cri.2017.6",
+   "date": "",
+   "year": 2017,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "United Nations",
+     "type": "international",
+     "country": "IGO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W2895248113",
+   "source": "openalex",
+   "title": "El populismo como relato y la crisis de la democracia representativa",
+   "url": "https://doi.org/10.24241/rcai.2018.119.2.13",
+   "date": "",
+   "year": 2018,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Barcelona Centre for International Affairs",
+     "type": "government",
+     "country": "ES",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W2967874114",
+   "source": "openalex",
+   "title": "The populist political logic and the analysis of the discursive construction of ‘the people’ and ‘the elite’",
+   "url": "https://doi.org/10.1075/dapsac.83.02cle",
+   "date": "",
+   "year": 2019,
+   "kind": "book chapter",
+   "orgs": [
+    {
+     "name": "Center for the Study of Democracy",
+     "type": "think_tank",
+     "country": "BG",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W3023125452",
+   "source": "openalex",
+   "title": "Right‐Wing Populism in Rural Europe. Introduction to the Special Issue",
+   "url": "https://doi.org/10.1111/soru.12306",
+   "date": "",
+   "year": 2020,
+   "kind": "editorial",
+   "orgs": [
+    {
+     "name": "Swedish Institute of International Affairs",
+     "type": "think_tank",
+     "country": "SE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-319-96758-5_5"
+   ]
+  },
+  {
+   "id": "openalex:W3034490491",
+   "source": "openalex",
+   "title": "The Political Economy of Populism",
+   "url": "https://doi.org/10.4324/9780429355691",
+   "date": "",
+   "year": 2020,
+   "kind": "book",
+   "orgs": [
+    {
+     "name": "Centre for Liberal Strategies",
+     "type": "think_tank",
+     "country": "BG",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W3043802848",
+   "source": "openalex",
+   "title": "The league of leagues: Meta-populism and the ‘chain of equivalence’ in a cross-border Alpine area",
+   "url": "https://doi.org/10.1016/j.polgeo.2020.102207",
+   "date": "",
+   "year": 2020,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Luxembourg Institute of Socio-Economic Research",
+     "type": "think_tank",
+     "country": "LU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289",
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W3170811428",
+   "source": "openalex",
+   "title": "Populism and COVID-19: How Populist Governments (Mis)Handle the Pandemic",
+   "url": "https://doi.org/10.1561/113.00000043",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Peace Research Institute Oslo",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W3173745210",
+   "source": "openalex",
+   "title": "To vote or not to vote? Migrant electoral (dis)engagement in an enlarged Europe",
+   "url": "https://doi.org/10.1093/migration/mnab025",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Peace Research Institute Oslo",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W3196352134",
+   "source": "openalex",
+   "title": "Transitions, populism, and democratic decline: evidence from Hungary and the Czech Republic",
+   "url": "https://doi.org/10.1080/23745118.2021.1973213",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "American Enterprise Institute",
+     "type": "think_tank",
+     "country": "US",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.30950/jcer.v15i4.1122"
+   ]
+  },
+  {
+   "id": "openalex:W3208482434",
+   "source": "openalex",
+   "title": "The promise of the Maker Movement: policy expectations versus community criticisms",
+   "url": "https://doi.org/10.1093/scipol/scab053",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "European Commission",
+     "type": "government",
+     "country": "EU",
+     "from": "openalex"
+    },
+    {
+     "name": "Joint Research Centre",
+     "type": "government",
+     "country": "EU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W3213907342",
+   "source": "openalex",
+   "title": "Populism and the Economics of Antitrust",
+   "url": "https://doi.org/10.1007/978-3-030-80803-7_13",
+   "date": "",
+   "year": 2021,
+   "kind": "book chapter",
+   "orgs": [
+    {
+     "name": "Information Technology and Innovation Foundation",
+     "type": "think_tank",
+     "country": "US",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W4285742280",
+   "source": "openalex",
+   "title": "Democracy: Theoretical and Conceptional Challenges",
+   "url": "https://doi.org/10.1007/978-3-031-04822-7_2",
+   "date": "",
+   "year": 2022,
+   "kind": "book chapter",
+   "orgs": [
+    {
+     "name": "Friedrich-Ebert-Stiftung e.V.",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.30950/jcer.v15i4.1122"
+   ]
+  },
+  {
+   "id": "openalex:W4323784263",
+   "source": "openalex",
+   "title": "Technology Assessment in Central and Eastern Europe - Status quo in 2022 and future prospects (ITA-manu:script 22-01)",
+   "url": "https://doi.org/10.1553/ita-ms-22-01",
+   "date": "",
+   "year": 2023,
+   "kind": "report",
+   "orgs": [
+    {
+     "name": "Baltic Studies Centre",
+     "type": "think_tank",
+     "country": "LV",
+     "from": "openalex"
+    },
+    {
+     "name": "Applied Research and Communications Fund",
+     "type": "think_tank",
+     "country": "BG",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W4394607011",
+   "source": "openalex",
+   "title": "Civil society and populism in Europe: outbreak or cure?",
+   "url": "https://doi.org/10.1080/14782804.2024.2341032",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Centro Alti Studi per la Difesa (CASD)",
+     "type": "government",
+     "country": "IT",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-319-96758-5_5",
+    "10.1177/0888325418783056"
+   ]
+  },
+  {
+   "id": "openalex:W4400240449",
+   "source": "openalex",
+   "title": "Bringing Autocracy Home? How Migration to Autocracies Shapes Migrants' Support for Democracy",
+   "url": "https://doi.org/10.2139/ssrn.4878374",
+   "date": "",
+   "year": 2024,
+   "kind": "preprint",
+   "orgs": [
+    {
+     "name": "Government of the United States of America",
+     "type": "government",
+     "country": "US",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1016/j.electstud.2022.102552"
+   ]
+  },
+  {
+   "id": "openalex:W4402311772",
+   "source": "openalex",
+   "title": "Intertemporal evidence on the strategy of populism in the United States",
+   "url": "https://doi.org/10.1016/j.electstud.2024.102853",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Centre for Economic Policy Research",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "openalex"
+    },
+    {
+     "name": "Luxembourg Institute of Socio-Economic Research",
+     "type": "think_tank",
+     "country": "LU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W4402873768",
+   "source": "openalex",
+   "title": "The Structural and Temporal Curb of Populism: A Cross-Country Analysis of Authoritarian Populist Influences on Journalism",
+   "url": "https://doi.org/10.1080/1461670x.2024.2407948",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Peace Institute- Institute for Contemporary Social and Political Studies",
+     "type": "think_tank",
+     "country": "SI",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W4406776460",
+   "source": "openalex",
+   "title": "'The People' vs. the Liberal International Order?",
+   "url": "https://doi.org/10.1093/oso/9780198901020.001.0001",
+   "date": "",
+   "year": 2024,
+   "kind": "book",
+   "orgs": [
+    {
+     "name": "Friedrich-Ebert-Stiftung e.V.",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289",
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W4411482782",
+   "source": "openalex",
+   "title": "Economic, Sociocultural and Political Transnationalism",
+   "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
+   "date": "",
+   "year": 2025,
+   "kind": "book chapter",
+   "orgs": [
+    {
+     "name": "Peace Research Institute Oslo",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-031-19246-3"
+   ]
+  },
+  {
+   "id": "openalex:W4413361461",
+   "source": "openalex",
+   "title": "Conflict exposure and democratic values: Evidence from wartime Ukraine",
+   "url": "https://doi.org/10.1177/00223433251347769",
+   "date": "",
+   "year": 2025,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Peace Research Institute Oslo",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1177/00104140241259458"
+   ]
+  },
+  {
+   "id": "openalex:W4414016253",
+   "source": "openalex",
+   "title": "Casting votes or crossing borders? How living abroad reduces mobile Europeans’ likelihood to participate in European elections",
+   "url": "https://doi.org/10.1080/1369183x.2025.2550127",
+   "date": "",
+   "year": 2025,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Federal Institute for Population Research",
+     "type": "government",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1016/j.electstud.2022.102552"
+   ]
+  },
+  {
+   "id": "openalex:W7122665762",
+   "source": "openalex",
+   "title": "Sacrificing Liberal or Electoral Democracy? Evidence from a Conjoint Experiment in Five European Countries",
+   "url": "https://doi.org/10.2139/ssrn.6049214",
+   "date": "",
+   "year": 2026,
+   "kind": "preprint",
+   "orgs": [
+    {
+     "name": "Friedrich-Ebert-Stiftung e.V.",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/21599165.2020.1787161"
+   ]
+  },
+  {
+   "id": "openalex:W7124426932",
+   "source": "openalex",
+   "title": "MAGA & MAGYAR: The strategic use of common sense by Trump and Orbán during their state addresses",
+   "url": "https://doi.org/10.1017/s1475676525100522",
+   "date": "",
+   "year": 2026,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Luxembourg Institute of Socio-Economic Research",
+     "type": "think_tank",
+     "country": "LU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W7131132608",
+   "source": "openalex",
+   "title": "Is Friedrich Merz the Leader Germany Needs?",
+   "url": "https://doi.org/10.5817/pc2026-1-4",
+   "date": "",
+   "year": 2026,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Konrad-Adenauer-Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W7159660923",
+   "source": "openalex",
+   "title": "Adjudicating for Democracy? How Ideas About Democratic Backsliding Shape Legal Interpretation",
+   "url": "https://doi.org/10.1177/00207152261443927",
+   "date": "",
+   "year": 2026,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Centro Brasileiro de Análise e Planejamento",
+     "type": "think_tank",
+     "country": "BR",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1017/s1537592721001924"
+   ]
+  },
+  {
+   "id": "openalex:W7170058876",
+   "source": "openalex",
+   "title": "Trade unions and the far right: Workplace geopolitics in Latin America",
+   "url": "https://doi.org/10.1177/00221856261469878",
+   "date": "",
+   "year": 2026,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "International Labour Organization",
+     "type": "international",
+     "country": "IGO",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W7172136474",
+   "source": "openalex",
+   "title": "Europe’s Stuttering Transition to Multipolarity Amid Turkey’s Full Embrace",
+   "url": "https://doi.org/10.1007/978-3-032-21745-5_12",
+   "date": "",
+   "year": 2026,
+   "kind": "book chapter",
+   "orgs": [
+    {
+     "name": "Global Policy Institute",
+     "type": "think_tank",
+     "country": "US",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:bankoffinland-a06891df64bddbff4838dbb6f77e1482",
+   "source": "sage",
+   "title": "Russian society, democratic values, and the legacy of the early-1990s economic shock",
+   "url": "https://publications.bof.fi/handle/10024/54288",
+   "date": "2025-11-26",
+   "year": 2025,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Bank of Finland",
+     "type": "government",
+     "country": "FI",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1177/00104140241259458"
+   ]
+  },
+  {
+   "id": "sage:bfde-48ec8b1fb958aa810ceeb4a7a713bf49",
+   "source": "sage",
+   "title": "Populism Barometer 2020",
+   "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/populism-barometer-2020-all",
+   "date": "2020-10-06",
+   "year": 2020,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Bertelsmann Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:bfde-aeb3a672cff69e1ceccedde49901481d",
+   "source": "sage",
+   "title": "Populism Barometer 2018",
+   "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/populism-barometer-2018",
+   "date": "2019-06-14",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Bertelsmann Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:bfde-e1bb8a2518851cb0f2b39e876a4674ad",
+   "source": "sage",
+   "title": "A Populist Moment?",
+   "url": "https://www.bertelsmann-stiftung.de/en/publications/publication/did/a-populist-moment",
+   "date": "2017-07-07",
+   "year": 2017,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Bertelsmann Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:brookings-3bdf2c23c5774c915e393a9ff1354931",
+   "source": "sage",
+   "title": "Shaping democracy from the middle: Party grassroots and Ghana's democratic progress",
+   "url": "https://www.brookings.edu/articles/shaping-democracy-from-the-middle-party-grassroots-and-ghanas-democratic-progress/",
+   "date": "2025-10-08",
+   "year": 2025,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Brookings Institution",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1177/00104140241259458"
+   ]
+  },
+  {
+   "id": "sage:centerforanewamericansecurity-ee3bada3db052176ba86e41d8e430855",
+   "source": "sage",
+   "title": "Combating Populism",
+   "url": "https://www.cnas.org/publications/reports/combating-populism",
+   "date": "2020-03-19",
+   "year": 2020,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Center for a New American Security",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:cepii-226603d4cc71c14b25d5541741f3d583",
+   "source": "sage",
+   "title": "Populism and the Skill-Content of Globalization: Evidence from the Last 60 Years",
+   "url": "http://www.cepii.fr/CEPII/fr/publications/wp/abstract.asp?NoDoc=13738",
+   "date": "2023-03-10",
+   "year": 2023,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Centre d'Etudes Prospectives et d'Informations Internationales",
+     "type": "think_tank",
+     "country": "FR",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:constitutionunit-4fe859fafafea22f30118f0cce5a6f9b",
+   "source": "sage",
+   "title": "A ‘shopping list of autocratic actions’: what would-be autocrats do to recede democracy",
+   "url": "https://constitution-unit.com/2025/12/17/a-shopping-list-of-autocratic-actions-what-would-be-autocrats-do-to-recede-democracy/",
+   "date": "2025-12-17",
+   "year": 2025,
+   "kind": "blog post",
+   "orgs": [
+    {
+     "name": "Constitution Unit",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1017/s1537592721001924"
+   ]
+  },
+  {
+   "id": "sage:counterpoint-4ed5cb99543d12e1c3358e749ebcd33d",
+   "source": "sage",
+   "title": "Populist Fantasies: European revolts in context",
+   "url": "http://counterpoint.uk.com/publications/populist-fantasies-european-revolts-in-context/",
+   "date": "2013-01-01",
+   "year": 2013,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Counterpoint",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:dahrendorf-59b68c4156137c5077039abec4cea69b",
+   "source": "sage",
+   "title": "Is There a Populist Wave in Europe?",
+   "url": "https://www.dahrendorf-forum.eu/publications/is-there-a-populist-wave-in-europe/",
+   "date": "2019-02-25",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Dahrendorf Forum",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:diwde-984a208eb41395ff553e409019c011ba",
+   "source": "sage",
+   "title": "Income Misperception and Populism",
+   "url": "https://www.diw.de/de/diw_01.c.864165.de/publikationen/soeppapers/2022_1177/income_misperception_and_populism.html",
+   "date": "2022-10-25",
+   "year": 2022,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "DIW",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:europa-210c20cd075acde55c987eefb1ce57f9",
+   "source": "sage",
+   "title": "Statement on defending democracy in Europe",
+   "url": "https://op.europa.eu/en/publication-detail/-/publication/4c190332-232e-11ef-a251-01aa75ed71a1/language-en",
+   "date": "2024-06-05",
+   "year": 2024,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Publications Office of the European Union",
+     "type": "government",
+     "country": "EU",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1017/s1537592721001924"
+   ]
+  },
+  {
+   "id": "sage:europa-26856b7eac5a6b93ecb42518d7942544",
+   "source": "sage",
+   "title": "2017, Europe’s bumper year of elections.",
+   "url": "https://op.europa.eu/en/publication-detail/-/publication/90e9fe70-51e7-11e9-a8ed-01aa75ed71a1/language-en/format-PDF",
+   "date": "2019-03-28",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Publications Office of the European Union",
+     "type": "government",
+     "country": "EU",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:fes-046f61c76b8c8e45af90a4ff50a3ad78",
+   "source": "sage",
+   "title": "Populism and the economy : An ambivalent relationship / Cristóbal Rovira Kaltwasser.",
+   "url": "http://www.fes.de/cgi-bin/gbv.cgi?id=15244&ty=pdf",
+   "date": "2019-02-27",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Friedrich-Ebert-Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:fes-73481cdc5b4fa503fa93eee69e7dba36",
+   "source": "sage",
+   "title": "The state of the far right in Greece / Vasiliki Georgiadou.",
+   "url": "http://www.fes.de/cgi-bin/gbv.cgi?id=15846&ty=pdf",
+   "date": "2019-12-03",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Friedrich-Ebert-Stiftung",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:freedomhouse-d27155aa2c435b2a019956418d510d4f",
+   "source": "sage",
+   "title": "Hostile Takeover: How Law and Justice Captured Poland’s Courts",
+   "url": "https://freedomhouse.org/report/special-reports/hostile-takeover-how-law-and-justice-captured-poland-s-courts",
+   "date": "2018-05-10",
+   "year": 2018,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Freedom House",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13510347.2015.1058782"
+   ]
+  },
+  {
+   "id": "sage:gmfus-a95998c091639a2abb9a06bec60f3dad",
+   "source": "sage",
+   "title": "Divide and Obstruct: Populist Parties and EU Foreign Policy",
+   "url": "http://www.gmfus.org/publications/divide-and-obstruct-populist-parties-and-eu-foreign-policy",
+   "date": "2019-05-27",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "German Marshall Fund",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:hellenicfoundation-3bc4005422d917d0215170f51179c3f7",
+   "source": "sage",
+   "title": "Report on Conceptualizing the Varieties of Populism – DEMOS project",
+   "url": "https://www.eliamep.gr/en/ekthesi-schetika-me-tis-ennoies-kai-tis-poikilies-tou-laikismou-programma-demos/",
+   "date": "2020-10-01",
+   "year": 2020,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Hellenic Foundation for European and Foreign Policy",
+     "type": "think_tank",
+     "country": "GR",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:hellenicfoundation-40d6dd4f1a1fcd8d7bb3d4fb2c7eeb9c",
+   "source": "sage",
+   "title": "Report on Conceptualizing the Varieties of Populism – DEMOS project",
+   "url": "https://www.eliamep.gr/en/publication/%ce%ad%ce%ba%ce%b8%ce%b5%cf%83%ce%b7-%cf%83%cf%87%ce%b5%cf%84%ce%b9%ce%ba%ce%ac-%ce%bc%ce%b5-%cf%84%ce%b9%cf%82-%ce%ad%ce%bd%ce%bd%ce%bf%ce%b9%ce%b5%cf%82-%ce%ba%ce%b1%ce%b9-%cf%84%ce%b9%cf%82-%cf%80/",
+   "date": "2020-03-09",
+   "year": 2020,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Hellenic Foundation for European and Foreign Policy",
+     "type": "think_tank",
+     "country": "GR",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:ifode-3423f9e5a4d612cd337bcc00e0a08eb7",
+   "source": "sage",
+   "title": "Income Misperception and Populism",
+   "url": "https://www.cesifo.org/en/publications/2022/working-paper/income-misperception-and-populism",
+   "date": "2022-11-03",
+   "year": 2022,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Ifo Institute",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:ifode-7821f726b5ea70ea8e81235f04b0f642",
+   "source": "sage",
+   "title": "Populism and the Skill-Content of Globalization: Evidence from the Last 60 Years",
+   "url": "https://www.cesifo.org/en/publications/2022/working-paper/populism-and-skill-content-globalization-evidence-last-60-years",
+   "date": "2022-11-03",
+   "year": 2022,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Ifo Institute",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:ifode-a1b6b6e227ccafbbfda4a66b93c9dfa2",
+   "source": "sage",
+   "title": "Socio-Economic Attitudes in the Era of Social Distancing and Lockdowns",
+   "url": "https://www.cesifo.org/en/publications/2021/working-paper/socio-economic-attitudes-era-social-distancing-and-lockdowns",
+   "date": "2021-01-18",
+   "year": 2021,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Ifo Institute",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005"
+   ]
+  },
+  {
+   "id": "sage:ifode-e8c0c86ac3c687d62fd73319fc004d57",
+   "source": "sage",
+   "title": "A Commitment Theory of Populism",
+   "url": "https://www.cesifo.org/en/publications/2021/working-paper/commitment-theory-populism",
+   "date": "2021-12-06",
+   "year": 2021,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Ifo Institute",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:imemo-cb81f091f86ad59e9d072470bce75e2a",
+   "source": "sage",
+   "title": "Global Development. Issue 21. The Changing West and its Role in Regulating Global Processes",
+   "url": "https://www.imemo.ru/index.php?page_id=645&id=4746",
+   "date": "2020-03-11",
+   "year": 2020,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Institute of World Economy and International Relations",
+     "type": "think_tank",
+     "country": "RU",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:isdglobal-560f87bccfe15e10e8159afb457d3bb1",
+   "source": "sage",
+   "title": "The German Far Right Online: A Longitudinal Study",
+   "url": "https://www.isdglobal.org/isd-publications/the-german-far-right-online-a-longitudinal-study/",
+   "date": "2024-01-29",
+   "year": 2024,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Institute for Strategic Dialogue",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:itif-54a70a3ac2aeb92d56e61682bc0e8e33",
+   "source": "sage",
+   "title": "Populism and the Economics of Antitrust",
+   "url": "https://itif.org/publications/2021/12/13/populism-and-economics-antitrust",
+   "date": "2021-12-13",
+   "year": 2021,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Information Technology & Innovation Foundation",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:izade-e18a5c43801ee60d48071c40c1e6bdfc",
+   "source": "sage",
+   "title": "Populism and the Skill-Content of Globalization",
+   "url": "https://www.iza.org/publications/dp/18041/populism-and-the-skill-content-of-globalization",
+   "date": "2025-08-03",
+   "year": 2025,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "IZA Institute of Labor Economics",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:kielinstitute-1bf19fa037ca03b19cfecd97d21d4d08",
+   "source": "sage",
+   "title": "Populist Leaders and the Economy",
+   "url": "https://www.kielinstitut.de/de/publikationen/populist-leaders-and-the-economy-12510/",
+   "date": "2020-10-26",
+   "year": 2020,
+   "kind": "working paper",
+   "orgs": [
+    {
+     "name": "Kiel Institute for the World Economy",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289",
+    "10.1093/oxfordhb/9780198803560.013.6",
+    "10.1016/j.postcomstud.2011.10.005",
+    "10.1080/13510347.2015.1058782"
+   ]
+  },
+  {
+   "id": "sage:martenscentre-47867c0ac613d170b088a45b6e9b201f",
+   "source": "sage",
+   "title": "Exposing the Demagogues: Right-wing and National Populist Parties in Europe",
+   "url": "https://www.martenscentre.eu/publication/exposing-the-demagogues-right-wing-and-national-populist-parties-in-europe/",
+   "date": "2013-07-01",
+   "year": 2013,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Wilfried Martens Centre for European Studies",
+     "type": "think_tank",
+     "country": "BE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:martenscentre-e4fbae335c856b8bd6e1d0b1d28c1abb",
+   "source": "sage",
+   "title": "Exposing the Demagogues: Right-wing and National Populist Parties in Europe | Martens Centre",
+   "url": "https://martenscentre.eu/publications/exposing-demagogues-right-wing-and-national-populist-parties-europe",
+   "date": "2013-07-01",
+   "year": 2013,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Wilfried Martens Centre for European Studies",
+     "type": "think_tank",
+     "country": "BE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:mercatorstiftung-9565b522f64a3708200ee0ff79d760bc",
+   "source": "sage",
+   "title": "Populism and energy transition",
+   "url": "https://www.stiftung-mercator.de/de/publikationen/populismus-und-energiewende/",
+   "date": "2021-09-15",
+   "year": 2021,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Stiftung Mercator",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:nupi-4f106f16d3dc6308a4d2eaad814ae4f0",
+   "source": "sage",
+   "title": "Populism, Energy Transition, and International Politics",
+   "url": "https://nupi.brage.unit.no/nupi-xmlui/handle/11250/3199483",
+   "date": "2025-05-20",
+   "year": 2025,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Norwegian Institute of International Affairs",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289",
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:parliamentofnetherlands-89454f0f3ab1612caa4ce07144243947",
+   "source": "sage",
+   "title": "First Chamber of the States General",
+   "url": "https://eerstekamer.nl/9370000/1/j4nvi0xeni9vr2l_j9vvkfvj6b325az/vmlsjumn5whb/f=/vmlsjv54mtq9.pdf",
+   "date": "2025-03-04",
+   "year": 2025,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Staten-Generaal",
+     "type": "government",
+     "country": "NL",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1017/s1537592721001924"
+   ]
+  },
+  {
+   "id": "sage:pewresearch-dd6983711ab68669dca3e05454c401b7",
+   "source": "sage",
+   "title": "Western Europe: People Favor Political Parties Based on Ideological Beliefs",
+   "url": "https://www.journalism.org/2018/07/12/in-western-europe-populist-parties-tap-anti-establishment-frustration-but-have-little-appeal-across-ideological-divide/",
+   "date": "2018-07-12",
+   "year": 2018,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Pew Research",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005"
+   ]
+  },
+  {
+   "id": "sage:pewresearch-f3217e819d4577abf0878f14eaca81f2",
+   "source": "sage",
+   "title": "News Media in Western Europe: Populist Views Divide Public Opinion",
+   "url": "https://www.journalism.org/2018/05/14/in-western-europe-public-attitudes-toward-news-media-more-divided-by-populist-views-than-left-right-ideology/",
+   "date": "2018-06-27",
+   "year": 2018,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Pew Research",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005"
+   ]
+  },
+  {
+   "id": "sage:priono-d56673992be2bd1d62377a413b9c0432",
+   "source": "sage",
+   "title": "To vote or not to vote? Migrant electoral (dis)engagement in an enlarged Europe",
+   "url": "https://www.prio.org/Publications/Publication/?x=12812",
+   "date": "2021-01-01",
+   "year": 2021,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Peace Research Insitute Oslo",
+     "type": "think_tank",
+     "country": "NO",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:randcorporation-fba50732c0866484cd114593d8fdc5bf",
+   "source": "sage",
+   "title": "Truth Decay in Europe",
+   "url": "https://www.rand.org/pubs/research_reports/RRA112-22.html",
+   "date": "2022-02-23",
+   "year": 2022,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "RAND Corporation",
+     "type": "think_tank",
+     "country": "US",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/21599165.2020.1787161"
+   ]
+  },
+  {
+   "id": "sage:stateofcatalunya-5b15da73852699bc6cedc3d4a418e995",
+   "source": "sage",
+   "title": "Participation and Political Involvement of Catalan Youth",
+   "url": "https://dixit.gencat.cat/web/.content/home/04recursos/02publicacions/01totes_les_publicacions_menys_bsf/06_joventut/l-z/participacio-implicacio-politica-joventut-catalana/participacio-implicacio-politica-joventut-catalana.pdf",
+   "date": "2024-12-18",
+   "year": 2024,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Generalitat de Catalunya",
+     "type": "government",
+     "country": "ES",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005"
+   ]
+  },
+  {
+   "id": "sage:tonyblairinstitute-f5bb253cce7ee4146a12116daf4171a5",
+   "source": "sage",
+   "title": "Populists in Power Around the World",
+   "url": "http://institute.global/policy/populists-power-around-world",
+   "date": "2018-11-07",
+   "year": 2018,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Tony Blair Institute for Global Change",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "sage:ukparliament_select-7e63f4926d9d1d90f0a6c86abb255613",
+   "source": "sage",
+   "title": "ZDA0038 - Democracy and Digital Technologies",
+   "url": "https://committees.parliament.uk/writtenevidence/388/pdf/",
+   "date": "2019-10-29",
+   "year": 2019,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "UK Parliament Select Committee Publications",
+     "type": "government",
+     "country": "GB",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "sage:umweltbundesamt-f29165bd73f07ebb872dd1a5d64d2846",
+   "source": "sage",
+   "title": "From blockchain to space travel to virtual worlds",
+   "url": "https://www.umweltbundesamt.de/publikationen/von-blockchain-ueber-raumfahrt-bis-virtuellen",
+   "date": "2021-05-21",
+   "year": 2021,
+   "kind": "publication",
+   "orgs": [
+    {
+     "name": "Umwelt Bundesamt",
+     "type": "government",
+     "country": "DE",
+     "from": "sage"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  }
+ ]
+}

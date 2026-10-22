@@ -834,3 +834,31 @@ details.reach-table[open] > summary::after {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
+/* ---- Policy reach page (pages/policy-reach.qmd) ---------------------------- */
+/* The charts reuse the .reach-* styles above. These are the collapsed lists of
+   the documents and works citing each publication (R/policy-helpers.R): title,
+   then date, organisation and kind in the secondary ink. Copied from the
+   Calepin theme's css/90_site.css; keep the two in step. */
+details.policy-details {
+  margin: 0.5rem 0 0.9rem;
+}
+.policy-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.policy-items li {
+  margin: 0 0 0.65rem;
+  padding: 0;
+  line-height: 1.35;
+  list-style: none;
+}
+.policy-item-title {
+  display: block;
+}
+.policy-item-meta {
+  display: block;
+  font-size: 0.8rem;
+  color: #5f6b7a;
+}

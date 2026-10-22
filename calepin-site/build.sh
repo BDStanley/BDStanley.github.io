@@ -57,6 +57,13 @@ python3 "$SRC/scripts/update-publications.py" || echo "  (skipped: update-public
 echo "→ Syncing datasets from Harvard Dataverse ..."
 python3 "$SRC/scripts/update-datasets.py" || echo "  (skipped: update-datasets.py failed; cv.yml unchanged)"
 
+# Rewrite the "Peer reviewer for" entry of cv/cv.yml from the peer reviews on
+# ORCID (sent there by Web of Science, formerly Publons): journals named from
+# OpenAlex, each with its number of reviews. Journals listed by hand that ORCID
+# lacks are kept. Network failures are non-fatal: cv.yml is then left as it is.
+echo "→ Counting peer reviews on ORCID ..."
+python3 "$SRC/scripts/update-reviews.py" || echo "  (skipped: update-reviews.py failed; cv.yml unchanged)"
+
 echo "→ Building CV PDF from cv/cv.yml ..."
 typst compile cv/cv.typ cv/cv.pdf
 
@@ -88,6 +95,14 @@ python3 "$SRC/scripts/update-citations.py" || echo "  (skipped: update-citations
 # stays; network failures are non-fatal.
 echo "→ Refreshing the citation reach data ..."
 python3 "$SRC/scripts/update-reach.py" || echo "  (skipped: update-reach.py failed; using the committed data)"
+
+# Refresh the Policy reach page's data (data/policy-reach.json): the policy
+# documents citing Ben's work (Sage Policy Profiles) and the research citing it
+# from think tanks, government bodies and international organisations
+# (OpenAlex). A source that can't be read keeps its previous records; network
+# failures are non-fatal.
+echo "→ Refreshing the policy reach data ..."
+python3 "$SRC/scripts/update-policy-reach.py" || echo "  (skipped: update-policy-reach.py failed; using the committed data)"
 
 echo "→ Cleaning previous build at $OUT ..."
 rm -rf "$OUT"

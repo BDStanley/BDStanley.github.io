@@ -1,0 +1,125 @@
+---
+pagetitle: "Policy reach"
+---
+
+<!-- Not in the navigation bar: the Sage Policy Profiles line of the Citations
+     list on the Publications page links here. The Quarto twin of
+     calepin-site/pages/policy-reach.typ: the markup comes from
+     R/policy-helpers.R, the numbers and lists from data/policy-reach.json and
+     the map from data/world-map.json (both copied here by the Calepin build). -->
+
+```{r}
+#| include: false
+root <- Sys.getenv("QUARTO_PROJECT_DIR", ".")
+options(cvsite_root = root)
+source(file.path(root, "R", "policy-helpers.R"))
+t <- pr$totals
+latest <- policy_latest()
+top_orgs <- pr$organisations[seq_len(min(pr$top_organisations, length(pr$organisations)))]
+older <- function(source, label) {
+  if (pr$as_of[[source]] != latest) sprintf(" (those from %s date from %s)", label, reach_month(pr$as_of[[source]])) else ""
+}
+```
+
+<p class="reach-back"><a href="publications.html">← Publications</a></p>
+
+## Policy reach
+
+*Updated: `r reach_month(latest)`*
+
+Where my work is taken up beyond academia: the policy documents that cite it,
+and the research by think tanks, foundations, government bodies and
+international organisations that cites it. The policy documents come from
+[Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley),
+which draws on Overton's index of policy documents; the research from
+[OpenAlex](https://openalex.org/authors/A5015716464), an open index of
+scholarly works.
+
+```{r}
+#| output: asis
+reach_html(policy_kpis())
+```
+
+## Countries
+
+Where the organisations are based. Hover over a country to see its numbers. EU
+institutions and international organisations have no country: they are in the
+chart below the map, but not on it.
+
+```{r}
+#| output: asis
+reach_html(policy_map())
+reach_html(reach_bars(pr$countries, "name", "records"))
+reach_html(reach_table("As a table", c("Country", "Documents and works", "Organisations"),
+                       lapply(pr$countries, function(c) list(c$name, c$records, c$organisations))))
+```
+
+## Organisations
+
+The `r reach_num(t$organisations)` organisations, by type:
+
+```{r}
+#| output: asis
+reach_html(reach_bars(pr$types, "name", "organisations"))
+```
+
+The `r pr$top_organisations` organisations with the most documents and works, by
+type:
+
+```{r}
+#| output: asis
+reach_html(policy_type_legend())
+reach_html(reach_bars(top_orgs, "name", "total"))
+reach_html(reach_table(sprintf("All %s organisations", reach_num(t$organisations)),
+                       c("Organisation", "Type", "Country", "Policy documents", "Research works"),
+                       lapply(pr$organisations, function(o) list(o$name, o$type_label, o$country, o$documents, o$works))))
+```
+
+## By year
+
+Documents and works each year, by the year they were published, divided by the
+type of organisation. Hover over a bar to see its numbers.
+
+```{r}
+#| output: asis
+reach_html(paste(policy_years(), collapse = ""))
+reach_html(policy_year_table())
+```
+
+## Key ideas
+
+```{r}
+#| output: asis
+policy_ideas()
+```
+
+## Other publications
+
+My other publications cited in policy documents or in research from policy
+organisations, the most cited first.
+
+```{r}
+#| output: asis
+policy_others()
+```
+
+## About these figures
+
+- Policy documents are those Sage Policy Profiles finds citing one of my works.
+  Sage lists `r t$sage_listed`, of which `r t$documents` are counted here. Left out are issues
+  of academic journals that Overton files as policy documents, copies of my own
+  works, second copies of the same document, and documents citing only works by
+  other authors that Sage attributes to me.
+- Research works are works in OpenAlex that cite mine and whose authors list a
+  think tank, foundation, government body or international organisation, but
+  not works I wrote myself. Research bodies OpenAlex files the same way, such as
+  academies of sciences and national research councils, are left out.
+- An organisation in both sources is counted once. Its type is Overton's where
+  Sage has it, and otherwise follows OpenAlex. Each document or work counts once
+  in each country of its organisations, and in the chart by year under the type
+  of its first organisation.
+- Only documents and works that cite my publications are counted: an idea taken
+  up without a citation does not appear. Overton takes time to index new
+  documents, so the most recent work is undercounted.
+- The figures are refreshed from Sage Policy Profiles and OpenAlex whenever the
+  site is rebuilt`r older("sage", "Sage Policy Profiles")``r older("openalex", "OpenAlex")`.

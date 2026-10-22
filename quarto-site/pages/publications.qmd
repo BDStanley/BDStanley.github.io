@@ -68,7 +68,7 @@ cat(
           when(gs), num(gs$citations), gs$h_index, gs$i10_index),
   sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s; [reach by country and discipline](citation-reach.qmd))\n",
           when(oa), num(oa$citations), oa$h_index, oa$i10_index),
-  sprintf("- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley)%s: %s citations across %s policy documents.\n",
+  sprintf("- [Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley)%s: %s citations across %s policy documents ([reach among think tanks and policy organisations](policy-reach.qmd)).\n",
           when(sage), num(sage$citations), num(sage$documents)),
   sep = ""
 )

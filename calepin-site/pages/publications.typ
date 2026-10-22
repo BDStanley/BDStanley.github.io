@@ -10,8 +10,9 @@
 // refreshes from Scopus, Google Scholar, OpenAlex and Sage Policy Profiles on
 // every build. "Updated" is the most recent month; a source whose numbers are
 // older (one the script couldn't read) names its own month. The OpenAlex line
-// links to the Citation reach page (pages/citation-reach.typ), which is not in
-// the navigation bar.
+// links to the Citation reach page (pages/citation-reach.typ) and the Sage
+// line to the Policy reach page (pages/policy-reach.typ), neither of which is
+// in the navigation bar.
 #let cites = json("/data/citations.json")
 #let scopus = cites.scopus
 #let gs = cites.google_scholar
@@ -36,7 +37,7 @@ _Updated: #month(latest)_
 - #link("https://www.scopus.com/authid/detail.uri?authorId=23493968300")[Scopus]#when(scopus): #num(scopus.citations) (h-index = #scopus.h_index)
 - #link("https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en")[Google Scholar]#when(gs): #num(gs.citations) (h-index = #gs.h_index, i10-index = #gs.i10_index)
 - #link("https://openalex.org/authors/A5015716464")[OpenAlex]#when(oa): #num(oa.citations) (h-index = #oa.h_index, i10-index = #oa.i10_index\; #link("citation-reach.html")[reach by country and discipline])
-- #link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles]#when(sage): #num(sage.citations) citations across #num(sage.documents) policy documents.
+- #link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles]#when(sage): #num(sage.citations) citations across #num(sage.documents) policy documents (#link("policy-reach.html")[reach among think tanks and policy organisations]).
 
 // ============================================================================
 // Single source of truth: the CV. These lists are read straight from
