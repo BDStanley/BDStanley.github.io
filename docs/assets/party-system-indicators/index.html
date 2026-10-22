@@ -142,6 +142,8 @@ table.sc tr:last-child td,table.sc tr:last-child th{border-bottom:0}
   .sechead h2{font-size:22px}
   .bar{grid-template-columns:118px minmax(0,1fr) 44px}
 }
+/* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
+svg text:not([font-weight]){font-weight:300}
 </style>
 </head>
 <body>
@@ -271,6 +273,7 @@ table.sc tr:last-child td,table.sc tr:last-child th{border-bottom:0}
   </section>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<script src="../chart-export.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

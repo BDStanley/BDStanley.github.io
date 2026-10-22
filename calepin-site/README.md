@@ -218,12 +218,16 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
   file, so a mid-bundle `@import` is invalid). The `--calepin-font-body` and
   `--calepin-font-heading` tokens in `css/90_site.css` both point at Jost. The
   type follows the Polish political analyses: body reading text is `0.92rem` in
-  near-black ink (`#141414`), antialiased, with tabular figures; section headings
-  (h2) are light (300) dark red at `1.55rem`, h3/h4 medium (500) in ink; neutral
-  greys (`#4B4B4B`, `#767676`, `#D5D5D5`, `#ECECEC`) replace the old slate greys;
-  and `.eyebrow` is the small uppercase tracked dark-red label (tweak all of this
-  in `css/90_site.css`). The navbar and footer are unchanged. The CV PDF is also Jost (set in
-  `cv/cv.yml`), so print and web match.
+  near-black ink (`#141414`), antialiased, with tabular figures; every heading is
+  light (300) dark red, h2 at `1.55rem` and h3 at `1.2rem`; neutral greys
+  (`#4B4B4B`, `#767676`, `#D5D5D5`, `#ECECEC`) replace the old slate greys;
+  `.eyebrow` is the small uppercase tracked dark-red label; chart labels are
+  thin (300) Jost; and the navbar (2.6rem high on desktop) and footer are slim,
+  with the brand in the light heading weight. A page's method note ("How this
+  works", "About these figures") is a collapsed `<details class="method">` under
+  its introduction, in smaller soft-ink text, with any sources as "Sources:"
+  over a bulleted list. Tweak all of this in `css/90_site.css`. The CV PDF is
+  also Jost (set in `cv/cv.yml`), so print and web match.
 
 - **Navbar width.** The `academic` theme caps the top bar at the narrow reading
   column, which crowded the many links/icons. `css/90_site.css` widens the bar to

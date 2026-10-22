@@ -13,9 +13,10 @@
       "measure": "Supporters of EU membership, % of those with a view",
       "start": "1990-10-01",
       "last_data": "2026-05-23",
-      "n_readings": 228,
-      "n_surveys": 268,
+      "n_readings": 248,
+      "n_surveys": 245,
       "sources": [
+        "Candidate Countries Eurobarometer",
         "CBOS",
         "Central and Eastern Eurobarometer",
         "Commercial polls",

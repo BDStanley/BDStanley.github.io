@@ -9,21 +9,17 @@
 // "Political attitudes/web/" in the Polish political analyses repo (written by web/build_web.R
 // from each attitude's subfolder) and is copied in by scripts/sync-analyses.py on each build.
 // A new attitude needs no change here: add it to Political attitudes/web/attitudes.csv.
+// The method note (How this works) is a collapsed <details class="method"> under the
+// introduction; its styles are with the other method notes in 90_site.css.
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
 
 #heading(level: 1)[Political attitudes]
 
-How Poles' attitudes have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, education and place of residence. The first attitude is support for Poland's membership of the European Union; more will follow. The method is explained below the chart.
+How Poles' attitudes have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, education and place of residence. The first attitude is support for Poland's membership of the European Union; more will follow.
 
-#html.elem("iframe", attrs: (
-  src: "../../assets/political-attitudes/index.html",
-  class: "embed-frame embed-frame--app",
-  title: "Political attitudes: trends in Polish public opinion since 1990",
-  loading: "lazy",
-))[]
-
-#heading(level: 2)[How this works]
+#html.elem("details", attrs: (class: "method"))[
+#html.elem("summary")[How this works]
 
 No single survey has asked the same question about the European Union from 1990 to today. CBOS has asked whether people support Poland's integration with (since 2004, membership of) the EU since 1994; Eurobarometer, the European Social Survey, the Polish National Election Study, the Polish General Social Survey, the European Election Study and commercial pollsters have asked other questions at other times. The trend combines them all.
 
@@ -31,4 +27,28 @@ Every reading is turned into the share of respondents taking a side who give the
 
 For the breakdowns, each group's line is the national trend plus a deviation that changes slowly over time, estimated from every survey that reports that group. Where surveys report categories that do not match exactly (for example, Eurobarometer's "small or middle-sized town"), the reading is modelled as a mix of the groups it covers. Between the surveys that report a breakdown, a group's line keeps its last known distance from the national trend and its interval widens. Party preference is the party respondents intend to vote for, or voted for at the last Sejm election, followed across elections by party lineage; a party's line is shown while it existed and its voters were surveyed.
 
-The data come from microdata (Central and Eastern Eurobarometer 1990–97, PGSS 1995 and 2005, PGSW 2001 and 2005, ESS 2016–23, Standard Eurobarometer 2022–24, European Election Study 2024) and from published results (CBOS's trend series and its breakdowns by party electorate, Eurobarometer reports and commercial polls). Survey readings are estimates too, and the early 1990s rest on few of them, so the intervals there are wide.
+The data come from survey microdata wherever they are available, and published results fill in the rest. Survey readings are estimates too, and the early 1990s rest on few of them, so the intervals there are wide.
+
+Because CBOS changed the way it interviews in 2020, the line since then sits a few points below CBOS's own published figures: it is read on the scale of the face-to-face question, and the other surveys suggest the mixed-mode question reads somewhat higher.
+
+Sources:
+
+- CBOS's monthly surveys, 1995–2017 (microdata, from the Polish Social Data Archive)
+- Central and Eastern Eurobarometer, 1990–97 (microdata)
+- Candidate Countries Eurobarometer, 2000–04 (microdata)
+- Polish General Social Survey, 1995 and 2005 (microdata)
+- Polish National Election Study, 2001 and 2005 (microdata)
+- European Social Survey, 2016–23 (microdata)
+- Standard Eurobarometer, 2018–24 (microdata)
+- European Election Study, 2024 (microdata)
+- CBOS's published trend series and its breakdowns by party electorate
+- Eurobarometer reports
+- Commercial polls
+]
+
+#html.elem("iframe", attrs: (
+  src: "../../assets/political-attitudes/index.html",
+  class: "embed-frame embed-frame--app",
+  title: "Political attitudes: trends in Polish public opinion since 1990",
+  loading: "lazy",
+))[]

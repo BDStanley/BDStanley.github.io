@@ -942,26 +942,30 @@ function csv() {
 const SEC_TITLES = { fragmentation: "Fragmentation", disproportionality: "Disproportionality", volatility: "Volatility", nationalisation: "Nationalisation", polarisation: "Polarisation", government: "Government" };
 async function png(sec) {
   const svgs = [...$(sec).querySelectorAll("svg[id]")].filter(s => s.viewBox && s.viewBox.baseVal && s.viewBox.baseVal.width && s.closest(".chartbox"));
-  const imgs = await Promise.all(svgs.map(svg => new Promise(res => {
-    const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height, clone = svg.cloneNode(true);
+  // ChartExport (../chart-export.js) keeps the labels in Jost in the images.
+  const imgs = await Promise.all(svgs.map(async svg => {
+    const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height, clone = await ChartExport.clone(svg);
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); clone.setAttribute("width", w); clone.setAttribute("height", h);
     clone.querySelectorAll(".hov").forEach(n => n.remove());
-    const img = new Image(); img.onload = () => res({ img, w, h }); img.onerror = () => res(null);
-    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
-  })));
+    return new Promise(res => {
+      const img = new Image(); img.onload = () => res({ img, w, h }); img.onerror = () => res(null);
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+    });
+  }));
+  await ChartExport.fonts();
   imgs.forEach((im, i) => { if (im) im.title = svgs[i].dataset.title || ""; });
-  const ok = imgs.filter(Boolean), pad = 24, head = 56, foot = 34, th = 22;
+  const ok = imgs.filter(Boolean), pad = 24, head = 62, foot = 34, th = 22;
   const W = Math.max(...ok.map(i => i.w)) + 2 * pad, H = head + foot + sum(ok.map(i => i.h + (i.title ? th : 0))) + pad * (ok.length - 1);
   const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = ACCENT; g.font = "500 18px Jost, sans-serif"; g.fillText(`Party system indicators · ${SEC_TITLES[sec]}`, pad, 30);
-  g.fillStyle = "#4B4B4B"; g.font = "13px Jost, sans-serif"; g.fillText(`Sejm elections ${YEARS[0]}–${YEARS[YEARS.length - 1]}; selected: ${S.e === "polls" ? "polls, " + dstr(POLL.date) : S.e}`, pad, 48);
+  g.fillStyle = ACCENT; g.font = ChartExport.TITLE; g.fillText(`Party system indicators · ${SEC_TITLES[sec]}`, pad, 32);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`Sejm elections ${YEARS[0]}–${YEARS[YEARS.length - 1]}; selected: ${S.e === "polls" ? "polls, " + dstr(POLL.date) : S.e}`, pad, 52);
   let yy = head;
   ok.forEach(i => {
     if (i.title) { g.fillStyle = INK; g.font = "500 13px Jost, sans-serif"; g.fillText(i.title, pad, yy + 14); yy += th; }
     g.drawImage(i.img, pad, yy, i.w, i.h); yy += i.h + pad;
   });
-  g.fillStyle = MUTED; g.font = "12px Jost, sans-serif"; g.fillText(`${D.meta.credit} · benstanley.eu`, pad, H - 12);
+  g.fillStyle = MUTED; g.font = ChartExport.CREDIT; g.fillText(`${D.meta.credit} · benstanley.eu`, pad, H - 12);
   cv.toBlob(b => download(`party-system-${sec}-${S.e}.png`, b), "image/png");
 }
 

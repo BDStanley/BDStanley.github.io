@@ -28,6 +28,28 @@ Where, and in which disciplines, my work is cited. The figures come from
 [OpenAlex](https://openalex.org/authors/A5015716464), an open index of
 scholarly works, and cover the works it records as citing my publications.
 
+<details class="method">
+<summary>About these figures</summary>
+
+- OpenAlex links `r t$my_works` works to my ORCID iD. A citation is a work that
+  cites one of them; a work citing two of them counts twice, as in OpenAlex's own
+  totals. `r t$self_citing_works` of the `r reach_num(t$citing_works)` citing works are my own.
+- Disciplines and subdisciplines are the fields and subfields of each citing
+  work's main topic in OpenAlex's classification (domains, fields, subfields and
+  topics). `r reach_num(t$citations_without_topic)` citations come from works OpenAlex has
+  not classified: they are left out of the discipline charts and shown as
+  Unclassified in the chart by year.
+- Citing scholars are the authors of the citing works, other than me, each counted
+  once in each country of the institutions they list. `r reach_num(t$works_without_country)`
+  of the citing works list no institution, so their authors have no country.
+  Countries too small to see on the map are shown as dots.
+- The years run from `r t$first_year`, when my first work appeared; the
+  `r t$citations_before_first_year` citations OpenAlex dates earlier are dating
+  errors and are left out. The latest year is counted to `r reach_month(reach$as_of)`.
+- The figures are refreshed from OpenAlex whenever the site is rebuilt.
+
+</details>
+
 ```{r}
 #| output: asis
 reach_html(reach_kpis())
@@ -88,22 +110,3 @@ subdiscipline. Hover over a bar to see its numbers.
 reach_html(paste(reach_years(), collapse = ""))
 reach_html(reach_year_table())
 ```
-
-## About these figures
-
-- OpenAlex links `r t$my_works` works to my ORCID iD. A citation is a work that
-  cites one of them; a work citing two of them counts twice, as in OpenAlex's own
-  totals. `r t$self_citing_works` of the `r reach_num(t$citing_works)` citing works are my own.
-- Disciplines and subdisciplines are the fields and subfields of each citing
-  work's main topic in OpenAlex's classification (domains, fields, subfields and
-  topics). `r reach_num(t$citations_without_topic)` citations come from works OpenAlex has
-  not classified: they are left out of the discipline charts and shown as
-  Unclassified in the chart by year.
-- Citing scholars are the authors of the citing works, other than me, each counted
-  once in each country of the institutions they list. `r reach_num(t$works_without_country)`
-  of the citing works list no institution, so their authors have no country.
-  Countries too small to see on the map are shown as dots.
-- The years run from `r t$first_year`, when my first work appeared; the
-  `r t$citations_before_first_year` citations OpenAlex dates earlier are dating
-  errors and are left out. The latest year is counted to `r reach_month(reach$as_of)`.
-- The figures are refreshed from OpenAlex whenever the site is rebuilt.

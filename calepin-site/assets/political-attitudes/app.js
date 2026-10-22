@@ -12,7 +12,7 @@ const BREAKS = [["all", "Everyone"], ["party", "Party"], ["age", "Age"], ["sex",
 const PERIODS = [["all", "All years"], ["2004", "Since 2004"], ["10y", "Last 10 years"]];
 // Colours for the survey readings in the national view, by source family
 const FAMILY_COLOURS = {
-  "CBOS": "#8B0000", "Eurobarometer": "#2C6E8F", "Central and Eastern Eurobarometer": "#5B8DB8",
+  "CBOS": "#8B0000", "Eurobarometer": "#2C6E8F", "Central and Eastern Eurobarometer": "#5B8DB8", "Candidate Countries Eurobarometer": "#7FA7CF",
   "European Social Survey": "#B0416E", "Polish National Election Study (PGSW)": "#D0A020",
   "Polish General Social Survey (PGSS)": "#5E8C31", "European Election Study": "#3B2A5A", "Commercial polls": "#8F8F8F"
 };
@@ -410,19 +410,20 @@ function csv() {
 }
 async function png() {
   const svg = $("chart"), vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
-  const clone = svg.cloneNode(true);
+  const clone = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
   clone.setAttribute("xmlns", NS); clone.setAttribute("width", w); clone.setAttribute("height", h);
   clone.querySelectorAll("#hit,#xhair,#hoverdots").forEach(n => n.remove());
   const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
-  const pad = 24, head = 60, foot = 34, W = w + 2 * pad, H = h + head + foot;
+  await ChartExport.fonts();
+  const pad = 24, head = 64, foot = 34, W = w + 2 * pad, H = h + head + foot;
   const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = ACCENT; g.font = "500 18px Jost, sans-serif";
+  g.fillStyle = ACCENT; g.font = ChartExport.TITLE;
   const bl = BREAKS.find(b => b[0] === S.b)[1];
-  g.fillText(`${D.meta.title}${S.b === "all" ? "" : " by " + bl.toLowerCase()}`, pad, 30);
-  g.fillStyle = "#4B4B4B"; g.font = "13px Jost, sans-serif"; g.fillText(`${D.meta.measure}. Latent trend pooled from several surveys, to ${monthLabel(D.meta.months - 1)}.`, pad, 50);
+  g.fillText(`${D.meta.title}${S.b === "all" ? "" : " by " + bl.toLowerCase()}`, pad, 32);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${D.meta.measure}. Latent trend pooled from several surveys, to ${monthLabel(D.meta.months - 1)}.`, pad, 54);
   g.drawImage(img, pad, head, w, h);
-  g.fillStyle = "#767676"; g.font = "12px Jost, sans-serif"; g.fillText("Ben Stanley, SWPS University · benstanley.eu", pad, H - 12);
+  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText("Ben Stanley, SWPS University · benstanley.eu", pad, H - 12);
   cv.toBlob(b => download(`${D.meta.slug}-${S.b}.png`, b), "image/png");
 }
 

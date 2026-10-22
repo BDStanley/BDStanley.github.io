@@ -969,25 +969,29 @@ function csv() {
 async function png() {
   const ids = { trends: ["trend"], seats: ["hemi", "map"], time: ["seattime", "cointime", "thrtime"], pollsters: ["house"] }[S.view];
   const titles = { trends: "Voting intention", seats: "Seat projection", time: "Over time", pollsters: "House effects" };
-  const imgs = await Promise.all(ids.map(id => new Promise(res => {
+  // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
+  const imgs = await Promise.all(ids.map(async id => {
     const svg = $(id), vb = svg.viewBox.baseVal, w = svg.clientWidth || vb.width, h = w * vb.height / vb.width;
-    const clone = svg.cloneNode(true);
+    const clone = await ChartExport.clone(svg);
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); clone.setAttribute("width", w); clone.setAttribute("height", h);
     clone.querySelectorAll(".hit,#trendhit,#trendhover,.hov").forEach(n => n.remove());
-    const img = new Image(); img.onload = () => res({ img, w, h });
-    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
-  })));
-  const side = S.view === "seats", pad = 24, head = 56, foot = 34;
+    return new Promise(res => {
+      const img = new Image(); img.onload = () => res({ img, w, h });
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+    });
+  }));
+  await ChartExport.fonts();
+  const side = S.view === "seats", pad = 24, head = 62, foot = 34;
   const W = side ? sum(imgs.map(i => i.w)) + pad * (imgs.length + 1) : Math.max(...imgs.map(i => i.w)) + 2 * pad;
   const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = "#8B0000"; g.font = "500 18px Jost, sans-serif"; g.fillText(`Polling tracker · ${titles[S.view]}`, pad, 30);
-  g.fillStyle = "#4B4B4B"; g.font = "13px Jost, sans-serif";
-  g.fillText(S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 48);
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[S.view]}`, pad, 32);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE;
+  g.fillText(S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
-  g.fillStyle = "#767676"; g.font = "12px Jost, sans-serif"; g.fillText(`${R.credit} · benstanley.eu`, pad, H - 12);
+  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText(`${R.credit} · benstanley.eu`, pad, H - 12);
   cv.toBlob(b => download(`polling-tracker-${S.view}-${iso(CUR.wk.date)}.png`, b), "image/png");
 }
 

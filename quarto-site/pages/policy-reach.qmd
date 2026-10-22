@@ -35,6 +35,30 @@ which draws on Overton's index of policy documents; the research from
 [OpenAlex](https://openalex.org/authors/A5015716464), an open index of
 scholarly works.
 
+<details class="method">
+<summary>About these figures</summary>
+
+- Policy documents are those Sage Policy Profiles finds citing one of my works.
+  Sage lists `r t$sage_listed`, of which `r t$documents` are counted here. Left out are issues
+  of academic journals that Overton files as policy documents, copies of my own
+  works, second copies of the same document, and documents citing only works by
+  other authors that Sage attributes to me.
+- Research works are works in OpenAlex that cite mine and whose authors list a
+  think tank, foundation, government body or international organisation, but
+  not works I wrote myself. Research bodies OpenAlex files the same way, such as
+  academies of sciences and national research councils, are left out.
+- An organisation in both sources is counted once. Its type is Overton's where
+  Sage has it, and otherwise follows OpenAlex. Each document or work counts once
+  in each country of its organisations, and in the chart by year under the type
+  of its first organisation.
+- Only documents and works that cite my publications are counted: an idea taken
+  up without a citation does not appear. Overton takes time to index new
+  documents, so the most recent work is undercounted.
+- The figures are refreshed from Sage Policy Profiles and OpenAlex whenever the
+  site is rebuilt`r older("sage", "Sage Policy Profiles")``r older("openalex", "OpenAlex")`.
+
+</details>
+
 ```{r}
 #| output: asis
 reach_html(policy_kpis())
@@ -102,24 +126,3 @@ organisations, the most cited first.
 #| output: asis
 policy_others()
 ```
-
-## About these figures
-
-- Policy documents are those Sage Policy Profiles finds citing one of my works.
-  Sage lists `r t$sage_listed`, of which `r t$documents` are counted here. Left out are issues
-  of academic journals that Overton files as policy documents, copies of my own
-  works, second copies of the same document, and documents citing only works by
-  other authors that Sage attributes to me.
-- Research works are works in OpenAlex that cite mine and whose authors list a
-  think tank, foundation, government body or international organisation, but
-  not works I wrote myself. Research bodies OpenAlex files the same way, such as
-  academies of sciences and national research councils, are left out.
-- An organisation in both sources is counted once. Its type is Overton's where
-  Sage has it, and otherwise follows OpenAlex. Each document or work counts once
-  in each country of its organisations, and in the chart by year under the type
-  of its first organisation.
-- Only documents and works that cite my publications are counted: an idea taken
-  up without a citation does not appear. Overton takes time to index new
-  documents, so the most recent work is undercounted.
-- The figures are refreshed from Sage Policy Profiles and OpenAlex whenever the
-  site is rebuilt`r older("sage", "Sage Policy Profiles")``r older("openalex", "OpenAlex")`.

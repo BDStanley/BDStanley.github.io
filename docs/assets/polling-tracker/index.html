@@ -137,6 +137,8 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
   .prow{grid-template-columns:96px minmax(0,1fr) 58px 70px;gap:6px}
   .jgroup .prow{grid-template-columns:86px minmax(0,1fr) 58px 0}
 }
+/* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
+svg text:not([font-weight]){font-weight:300}
 </style>
 </head>
 <body>
@@ -200,6 +202,7 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<script src="../chart-export.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

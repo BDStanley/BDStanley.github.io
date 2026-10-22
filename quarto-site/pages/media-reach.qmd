@@ -28,6 +28,28 @@ interview me, that take up my ideas, or that report on my research. They were
 found by searching Google News, in sixteen languages, from 2008 onwards, and
 are kept up to date with Google Alerts.
 
+<details class="method">
+<summary>About these figures</summary>
+
+- The articles were found with Google News searches for my name, in the forms
+  the press uses (Polish case endings and Cyrillic included), together with a
+  word that ties it to my field; for the key ideas' phrases; and for my work
+  with Stanley Bill and Pooling the Poles. The searches are in sixteen
+  languages, each in the Google News edition of its language.
+- Each article's page is read to check that it names me, or uses the idea's
+  phrase, before it is counted. `r reach_num(t$unchecked)` articles whose pages could
+  not be read (paywalls, for instance) are counted unchecked. Articles I wrote
+  myself are left out: my columns are on the [Media](media.qmd) page.
+- An outlet's country is where it is based; its language is the article's.
+  An article matching several searches counts once, under an idea first, then
+  research, then interviews and commentary.
+- Google News indexes online news, so radio, television and print-only
+  articles are mostly missing, as is much of the coverage before about 2015.
+- The figures are refreshed whenever the site is rebuilt, from Google News and
+  from Google Alerts set up with the same searches.
+
+</details>
+
 ```{r}
 #| output: asis
 reach_html(media_kpis())
@@ -101,22 +123,3 @@ Pooling the Poles.
 #| output: asis
 media_research()
 ```
-
-## About these figures
-
-- The articles were found with Google News searches for my name, in the forms
-  the press uses (Polish case endings and Cyrillic included), together with a
-  word that ties it to my field; for the key ideas' phrases; and for my work
-  with Stanley Bill and Pooling the Poles. The searches are in sixteen
-  languages, each in the Google News edition of its language.
-- Each article's page is read to check that it names me, or uses the idea's
-  phrase, before it is counted. `r reach_num(t$unchecked)` articles whose pages could
-  not be read (paywalls, for instance) are counted unchecked. Articles I wrote
-  myself are left out: my columns are on the [Media](media.qmd) page.
-- An outlet's country is where it is based; its language is the article's.
-  An article matching several searches counts once, under an idea first, then
-  research, then interviews and commentary.
-- Google News indexes online news, so radio, television and print-only
-  articles are mostly missing, as is much of the coverage before about 2015.
-- The figures are refreshed whenever the site is rebuilt, from Google News and
-  from Google Alerts set up with the same searches.

@@ -702,22 +702,22 @@ function csv() {
     ...ds.map(d => r.v[d]), ...(w === 2024 ? ds.map(d => r.sd ? r.sd[d] : null) : []), r.n])];
   download(`party-positions-${w}-${S.scope}.csv`, new Blob(["\ufeff" + lines.map(l => l.map(q).join(",")).join("\n")], {type: "text/csv;charset=utf-8"}));
 }
-function png() {
+async function png() {
   const id = {map: "map", populism: "pop", systems: "systime", time: "ts-" + TIME_DIMS[0]}[S.view];
   const svg = id && $(id);
   if (!svg || !svg.viewBox.baseVal || !svg.viewBox.baseVal.width) { toast("Nothing to download in this view"); return; }
   const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
-  const c = svg.cloneNode(true);
+  const c = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
   c.setAttribute("xmlns", "http://www.w3.org/2000/svg"); c.setAttribute("width", W); c.setAttribute("height", H);
-  c.setAttribute("font-family", "Jost, Avenir Next, Helvetica, Arial, sans-serif");
+  await ChartExport.fonts();
   const title = {map: `${DIM.get(S.x).label} and ${DIM.get(S.y).label}, ${S.wave}`, populism: `Anti-elite rhetoric and PopuList, ${S.wave}`,
     systems: MEASURE[S.measure].label, time: `Polish parties: ${DIM.get(TIME_DIMS[0]).label}`}[S.view];
   const leg = S.view === "map" && S.colour === "family" ? FAM_GROUPS : (S.view === "map" && S.colour === "none") || S.view === "systems" || S.view === "time" ? [] : POP_CATS;
-  const img = new Image(), sc = 2, top = 34, foot = leg.length ? 42 : 22;
+  const img = new Image(), sc = 2, top = 44, foot = leg.length ? 42 : 22;
   img.onload = () => {
     const cv = document.createElement("canvas"); cv.width = (W + 20) * sc; cv.height = (H + top + foot) * sc;
     const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W + 20, H + top + foot);
-    g.fillStyle = ACCENT; g.font = "500 15px Jost, Helvetica, Arial, sans-serif"; g.fillText(title, 10, 22);
+    g.fillStyle = ACCENT; g.font = ChartExport.TITLE; g.fillText(title, 10, 28);
     g.drawImage(img, 10, top, W, H);
     g.font = "11.5px Jost, Helvetica, Arial, sans-serif";
     let lx = 10;

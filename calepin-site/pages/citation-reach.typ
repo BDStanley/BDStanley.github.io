@@ -66,6 +66,27 @@ Where, and in which disciplines, my work is cited. The figures come from
 #link("https://openalex.org/authors/A5015716464")[OpenAlex], an open index of
 scholarly works, and cover the works it records as citing my publications.
 
+#el("details", class: "method")[
+  #el("summary")[About these figures]
+
+  - OpenAlex links #t.my_works works to my ORCID iD. A citation is a work that
+    cites one of them; a work citing two of them counts twice, as in OpenAlex's own
+    totals. #t.self_citing_works of the #num(t.citing_works) citing works are my own.
+  - Disciplines and subdisciplines are the fields and subfields of each citing
+    work's main topic in OpenAlex's classification (domains, fields, subfields and
+    topics). #num(t.citations_without_topic) citations come from works OpenAlex has
+    not classified: they are left out of the discipline charts and shown as
+    Unclassified in the chart by year.
+  - Citing scholars are the authors of the citing works, other than me, each counted
+    once in each country of the institutions they list. #num(t.works_without_country)
+    of the citing works list no institution, so their authors have no country.
+    Countries too small to see on the map are shown as dots.
+  - The years run from #t.first_year, when my first work appeared; the
+    #t.citations_before_first_year citations OpenAlex dates earlier are dating
+    errors and are left out. The latest year is counted to #month(reach.as_of).
+  - The figures are refreshed from OpenAlex whenever the site is rebuilt.
+]
+
 #el("div", class: "reach-kpis", {
   for (n, label) in ((t.citations, "citations"), (t.citing_works, "citing works"), (t.scholars, "citing scholars"), (t.countries, "countries")) {
     el("div", class: "reach-kpi", {
@@ -163,22 +184,3 @@ subdiscipline. Hover over a bar to see its numbers.
     let s = y.segments.find(s => s.name == l.name)
     if s == none { 0 } else { s.citations }
   }))))
-
-= About these figures
-
-- OpenAlex links #t.my_works works to my ORCID iD. A citation is a work that
-  cites one of them; a work citing two of them counts twice, as in OpenAlex's own
-  totals. #t.self_citing_works of the #num(t.citing_works) citing works are my own.
-- Disciplines and subdisciplines are the fields and subfields of each citing
-  work's main topic in OpenAlex's classification (domains, fields, subfields and
-  topics). #num(t.citations_without_topic) citations come from works OpenAlex has
-  not classified: they are left out of the discipline charts and shown as
-  Unclassified in the chart by year.
-- Citing scholars are the authors of the citing works, other than me, each counted
-  once in each country of the institutions they list. #num(t.works_without_country)
-  of the citing works list no institution, so their authors have no country.
-  Countries too small to see on the map are shown as dots.
-- The years run from #t.first_year, when my first work appeared; the
-  #t.citations_before_first_year citations OpenAlex dates earlier are dating
-  errors and are left out. The latest year is counted to #month(reach.as_of).
-- The figures are refreshed from OpenAlex whenever the site is rebuilt.

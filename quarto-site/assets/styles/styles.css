@@ -45,8 +45,7 @@ html {
 
 /* ---- Reading text: Calepin's body size, ink and heading scale ------------- */
 /* As in the Polish political analyses: thin, crisp Jost in near-black ink,
-   figures that line up in columns, section headings (h2) light and dark red,
-   h3/h4 medium in ink. */
+   figures that line up in columns, and every heading light and dark red. */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,12 +63,11 @@ body {
   padding-bottom: 0;
   border-bottom: 0;
 }
-#quarto-document-content :is(h1, h2) { font-weight: 300; color: #8b0000; }
-#quarto-document-content :is(h3, h4) { font-weight: 500; color: #141414; }
+#quarto-document-content :is(h1, h2, h3, h4) { font-weight: 300; color: #8b0000; }
 #quarto-document-content h1 { font-size: 2.2rem; letter-spacing: -0.015em; margin-bottom: 1.15rem; }
 #quarto-document-content h2 { font-size: 1.55rem; letter-spacing: -0.01em; margin-top: 2.8rem; }
-#quarto-document-content h3 { font-size: 1.05rem; margin-top: 2.1rem; }
-#quarto-document-content h4 { font-size: 0.95rem; }
+#quarto-document-content h3 { font-size: 1.2rem; margin-top: 2.1rem; }
+#quarto-document-content h4 { font-size: 1.05rem; }
 /* Small uppercase tracked label in dark red, set above a heading or block. */
 .eyebrow {
   font-size: 0.65rem;
@@ -99,14 +97,16 @@ body {
 #quarto-document-content :is(ul, ol) :is(ul, ol) { margin: 0.25rem 0 0; }
 
 /* ---- Top navigation: dark-red bar with white links ------------------------ */
+/* A slim bar in light type, like the headings below it (as on the Calepin
+   site: 2.6rem high on desktop). */
 #quarto-header .navbar {
-  padding: 1rem 0;
+  padding: 0.25rem 0;
   border-bottom: 1px solid #d5d5d5;
 }
 #quarto-header .navbar-brand,
 #quarto-header .navbar-brand .navbar-title {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 300;
 }
 #quarto-header .navbar-brand {
   margin-right: 0;
@@ -123,14 +123,14 @@ body {
 #quarto-header .nav-link {
   margin: 0;
   padding: 0.1rem 0;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 #quarto-header .nav-link:hover,
 #quarto-header .nav-link:focus-visible {
   text-decoration: underline;
 }
 #quarto-header .nav-link.active {
-  font-weight: 600;
+  font-weight: 500;
 }
 /* Each icon drawn 1.05em high in a 1.05em box, like the Calepin site's
    .calepin-nav-icon (Iconify's own inline size is overridden). */
@@ -172,7 +172,7 @@ body {
      portrait column below this also keeps the brand at the left). */
   #quarto-header .navbar-container {
     width: min(100% - 3rem, 1400px);
-    min-height: 2.2rem;
+    min-height: 2.1rem;
     margin-inline: auto;
     padding-inline: 0;
     align-items: baseline;
@@ -194,7 +194,7 @@ body {
   #navbarCollapse .nav-link {
     display: inline-flex;
     align-items: center;
-    min-height: 2.2rem;
+    min-height: 0;
     border-bottom: 1px solid transparent;
     white-space: nowrap;
   }
@@ -219,6 +219,9 @@ body {
 /* As on the Calepin site, the menu then no longer fits beside the brand, so it
    wraps to a row of its own below it, indented as it is after the brand. */
 @media (min-width: 768px) and (max-width: 64rem) and (orientation: landscape) {
+  #quarto-header .navbar {
+    padding-block: 0.5rem;   /* the stacked bar needs a little more room */
+  }
   #quarto-header .navbar-container {
     flex-wrap: wrap;
     row-gap: 0.4rem;
@@ -237,6 +240,9 @@ body {
 
 /* ---- Portrait: brand, then text links, then the icons and CV, centred ----- */
 @media (orientation: portrait) and (min-width: 768px) {
+  #quarto-header .navbar {
+    padding-block: 0.5rem;
+  }
   #quarto-header .navbar-container {
     flex-direction: column;
     justify-content: center;
@@ -262,7 +268,7 @@ body {
    links and CV, as a dark-red pop-over under the bar. */
 @media (max-width: 767.98px) {
   #quarto-header .navbar {
-    padding-block: 0.6rem;
+    padding-block: 0.4rem;
   }
   #quarto-header .navbar-container {
     position: relative;
@@ -270,7 +276,7 @@ body {
     margin-inline: auto;
     padding-inline: 0;
     flex-wrap: wrap;
-    row-gap: 0.6rem;
+    row-gap: 0.45rem;
   }
   #quarto-header .navbar-brand-container {
     order: 1;
@@ -299,7 +305,7 @@ body {
   }
   #navbarCollapse {
     position: absolute;
-    top: calc(100% + 0.6rem);
+    top: calc(100% + 0.4rem);
     right: 0;
     width: max-content;
     max-width: calc(100vw - 2rem);
@@ -372,11 +378,11 @@ body {
 footer.footer {
   flex-shrink: 0;
   margin-top: 3rem;
-  padding: 0.75rem 1rem;
+  padding: 0.45rem 1rem;
   border-top: 0;
   background: #8b0000;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 footer.footer .nav-footer {
@@ -725,6 +731,60 @@ footer.footer a:focus-visible {
   text-decoration: underline;
 }
 
+/* ---- Method notes: "How this works", "About these figures" ---------------- */
+/* A collapsed <details class="method"> under a page's introduction: the summary
+   set like an h3 (light dark red) with a chevron after it that turns down when
+   open, the note in smaller soft-ink text, and any sources as "Sources:" over a
+   list. Copied from the Calepin theme's css/90_site.css (whose
+   --pico-accordion-* colours do nothing here); keep the two in step. */
+details.method {
+  --pico-accordion-close-summary-color: #8b0000;
+  --pico-accordion-open-summary-color: #8b0000;
+  --pico-accordion-active-summary-color: #8b0000;
+  margin: 0.4rem 0 1.6rem;
+}
+details.method > summary {
+  display: inline-block;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.3;
+  color: #8b0000;
+}
+details.method > summary::-webkit-details-marker {
+  display: none;
+}
+details.method > summary::after {
+  content: "";
+  display: inline-block;
+  float: none;
+  width: 0.75em;
+  height: 0.75em;
+  margin-inline-start: 0.35em;
+  vertical-align: -0.02em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(139, 0, 0)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") center / contain no-repeat;
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease-in-out;
+}
+details.method[open] > summary {
+  margin-bottom: 0.6rem;
+}
+details.method[open] > summary::after {
+  transform: rotate(0);
+}
+details.method :where(p, li) {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #4b4b4b;
+}
+details.method p:has(+ ul) {
+  margin-bottom: 0.3rem;   /* "Sources:" sits on its list */
+}
+details.method li {
+  margin-bottom: 0.3rem;
+}
+
 /* ---- Citation reach page (pages/citation-reach.qmd) ----------------------- */
 /* Charts built as plain HTML and inline SVG (R/reach-helpers.R) from
    data/reach.json, which holds every value, colour and hover text. Marks follow the
@@ -795,6 +855,7 @@ figure.reach-map {
   gap: 0.35rem 0.9rem;
   margin-top: 0.6rem;
   font-size: 0.8rem;
+  font-weight: 300;   /* chart labels in thin Jost, as in the analyses */
   line-height: 1.4;
   color: #767676;
 }
@@ -821,6 +882,7 @@ figure.reach-map {
   gap: 0.3rem;
   margin: 0.9rem 0 0.8rem;
   font-size: 0.85rem;
+  font-weight: 300;
   line-height: 1.3;
 }
 .reach-bar-row {
@@ -861,6 +923,7 @@ figure.reach-map {
 .reach-years {
   margin: 0.8rem 0 0.8rem;
   font-size: 0.75rem;
+  font-weight: 300;
   color: #767676;
 }
 .reach-years-plot {

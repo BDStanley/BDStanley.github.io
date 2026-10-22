@@ -83,6 +83,29 @@ which draws on Overton's index of policy documents; the research from
 #link("https://openalex.org/authors/A5015716464")[OpenAlex], an open index of
 scholarly works.
 
+#el("details", class: "method")[
+  #el("summary")[About these figures]
+
+  - Policy documents are those Sage Policy Profiles finds citing one of my works.
+    Sage lists #t.sage_listed, of which #t.documents are counted here. Left out are issues
+    of academic journals that Overton files as policy documents, copies of my own
+    works, second copies of the same document, and documents citing only works by
+    other authors that Sage attributes to me.
+  - Research works are works in OpenAlex that cite mine and whose authors list a
+    think tank, foundation, government body or international organisation, but
+    not works I wrote myself. Research bodies OpenAlex files the same way, such as
+    academies of sciences and national research councils, are left out.
+  - An organisation in both sources is counted once. Its type is Overton's where
+    Sage has it, and otherwise follows OpenAlex. Each document or work counts once
+    in each country of its organisations, and in the chart by year under the type
+    of its first organisation.
+  - Only documents and works that cite my publications are counted: an idea taken
+    up without a citation does not appear. Overton takes time to index new
+    documents, so the most recent work is undercounted.
+  - The figures are refreshed from Sage Policy Profiles and OpenAlex whenever the
+    site is rebuilt#if pr.as_of.sage != latest [ (those from Sage Policy Profiles date from #month(pr.as_of.sage))]#if pr.as_of.openalex != latest [ (those from OpenAlex date from #month(pr.as_of.openalex))].
+]
+
 #el("div", class: "reach-kpis", {
   for (n, label) in ((t.documents, "policy documents"), (t.works, "research works"), (t.organisations, "organisations"), (t.countries, "countries")) {
     el("div", class: "reach-kpi", {
@@ -196,24 +219,3 @@ organisations, the most cited first.
 #for g in pr.other_publications {
   items([_#g.title;_ (#g.year): #g.summary], g.items)
 }
-
-= About these figures
-
-- Policy documents are those Sage Policy Profiles finds citing one of my works.
-  Sage lists #t.sage_listed, of which #t.documents are counted here. Left out are issues
-  of academic journals that Overton files as policy documents, copies of my own
-  works, second copies of the same document, and documents citing only works by
-  other authors that Sage attributes to me.
-- Research works are works in OpenAlex that cite mine and whose authors list a
-  think tank, foundation, government body or international organisation, but
-  not works I wrote myself. Research bodies OpenAlex files the same way, such as
-  academies of sciences and national research councils, are left out.
-- An organisation in both sources is counted once. Its type is Overton's where
-  Sage has it, and otherwise follows OpenAlex. Each document or work counts once
-  in each country of its organisations, and in the chart by year under the type
-  of its first organisation.
-- Only documents and works that cite my publications are counted: an idea taken
-  up without a citation does not appear. Overton takes time to index new
-  documents, so the most recent work is undercounted.
-- The figures are refreshed from Sage Policy Profiles and OpenAlex whenever the
-  site is rebuilt#if pr.as_of.sage != latest [ (those from Sage Policy Profiles date from #month(pr.as_of.sage))]#if pr.as_of.openalex != latest [ (those from OpenAlex date from #month(pr.as_of.openalex))].

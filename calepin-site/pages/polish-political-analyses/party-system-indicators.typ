@@ -12,21 +12,17 @@
 // browser from the Polling tracker's ../polling-tracker/polls.json, falling back
 // to the snapshot in party_system.json; app.js's systemStats() mirrors
 // system_stats() in the analysis, so a change to one needs the other.
+// The method note (How these are measured) is a collapsed <details class="method"> under the
+// introduction; its styles are with the other method notes in 90_site.css.
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
 
 #heading(level: 1)[Party system indicators]
 
-The standard measures of a party system for every Sejm election since 1991, and for the current polls: how fragmented the vote and the Sejm are, how disproportionally votes become seats, how much support moves between elections, how evenly parties are supported across the country, how far apart they stand, and how closed competition for government has been. Choose an election in the strip at the top and every section shows the lists, lineages, party positions and cabinets behind its numbers. The polls column follows the latest estimate of the #link("polling-tracker.html")[Polling tracker]. The method is explained below.
+The standard measures of a party system for every Sejm election since 1991, and for the current polls: how fragmented the vote and the Sejm are, how disproportionally votes become seats, how much support moves between elections, how evenly parties are supported across the country, how far apart they stand, and how closed competition for government has been. Choose an election in the strip at the top and every section shows the lists, lineages, party positions and cabinets behind its numbers. The polls column follows the latest estimate of the #link("polling-tracker.html")[Polling tracker].
 
-#html.elem("iframe", attrs: (
-  src: "../../assets/party-system-indicators/index.html",
-  class: "embed-frame embed-frame--app",
-  title: "Party system indicators: Polish Sejm elections since 1991 and the current polls",
-  loading: "lazy",
-))[]
-
-#heading(level: 2)[How these are measured]
+#html.elem("details", attrs: (class: "method"))[
+#html.elem("summary")[How these are measured]
 
 Election results are the PKW's national results by electoral committee (list), as recorded in my Polish party tracker; constituency and gmina results come from the PKW (KBW) files. Each list is linked to the list or lists it continues at the next election through the party tracker's record of parties, splits, mergers and alliances, and each belongs to one of the tracker's 14 party families. The polls column uses the Polling tracker's latest median vote shares (without Other, rescaled to sum to 100%) and its median seat projection; only the measures that need national shares and seats are available for it.
 
@@ -41,3 +37,11 @@ Polarisation is Dalton's index, 10 × √(Σ vᵢ((pᵢ − p̄)/5)²), where p�
 Government: the closure index of Casal Bértoa and Mair scores each change of government on alternation, formula and access, and averages the three over all changes since the first cabinet of the 1991 Sejm, either counting each change once or weighting it by the days the new cabinet was in office. Cabinets that never won a confidence vote are left out.
 
 The CSV button downloads every indicator for every election and the polls in one file.
+]
+
+#html.elem("iframe", attrs: (
+  src: "../../assets/party-system-indicators/index.html",
+  class: "embed-frame embed-frame--app",
+  title: "Party system indicators: Polish Sejm elections since 1991 and the current polls",
+  loading: "lazy",
+))[]
