@@ -12,10 +12,10 @@ How articles are found:
     Italian, Portuguese, Dutch, Czech, Slovak, Hungarian, Ukrainian and
     Russian; the key ideas' phrases in those languages; and his joint work
     with Stanley Bill and Pooling the Poles. Each query runs in the Google
-    News edition of its language. A normal build asks only for this year's
-    articles. `--backfill` asks again with no dates, then year by year from
-    2008 for the queries with enough results to need it (Google returns
-    only its top matches).
+    News edition of its language. A normal build asks only for articles of
+    the last 13 months. `--backfill` asks again with no dates, then year by
+    year from 2008 for the queries with enough results to need it (Google
+    returns only its top matches).
   * Google Alerts: the RSS feeds listed under "alert_feeds" in
     data/media-sync.json, read on every build. `--alerts` prints a link
     that opens Google Alerts with each query filled in.
@@ -31,6 +31,8 @@ What is kept:
   * Articles Ben wrote are dropped too: by their author, OWN_TITLE, OWN_URL,
     or because the Media page lists them (data/kultura-liberalna.yml and the
     links in pages/media.typ). They are not mentions.
+  * Pages on academic publishers' and repositories' sites (NOT_MEDIA) are
+    left out: they are academic citations, which the other pages count.
   * Addresses listed under "ignore" in data/media-sync.json are dropped. Use
     this for false matches the check misses (another Ben Stanley, say).
   * Articles once found stay, even after Google News stops returning them.
@@ -48,6 +50,10 @@ text and list entry is worked out in this script, so the Calepin page and its
 Quarto twin (quarto-site/R/media-helpers.R) show the same thing. The file is
 copied to quarto-site/data/.
 
+It also writes data/media-mentions.csv: the same articles as a spreadsheet
+(date, title, outlet, country or region, language, author, category, key idea,
+whether the page was checked, link). data/ is not published with the site.
+
 Run by build.sh. Network failures are non-fatal: the build then uses the
 committed file. Standard library only.
 `--offline` counts the stored articles again without asking Google, after
@@ -58,6 +64,7 @@ many links in a row, so a backfill may leave some for later).
 Usage:  python3 scripts/update-media-reach.py [--backfill | --resolve | --offline] [--dry-run] [--alerts]
 """
 
+import csv
 import datetime
 import html
 import json
@@ -74,6 +81,7 @@ from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.abspath(os.path.join(HERE, "..", "data", "media-reach.json"))
+CSV = os.path.abspath(os.path.join(HERE, "..", "data", "media-mentions.csv"))
 SYNC = os.path.abspath(os.path.join(HERE, "..", "data", "media-sync.json"))
 MIRROR = os.path.abspath(os.path.join(HERE, "..", "..", "quarto-site", "data", "media-reach.json"))
 MAP = os.path.abspath(os.path.join(HERE, "..", "data", "world-map.json"))
@@ -135,10 +143,10 @@ def own_urls():
 # must contain to count: a list of patterns, all of which must match.
 QUERIES = [
     # Interviews and commentary: Ben named, with a word tying him to his field.
-    ("commentary", None, '"Ben Stanley" (Poland OR Polish OR populism OR populist OR SWPS OR "political scientist")', EN, [BEN]),
+    ("commentary", None, '"Ben Stanley" (Poland OR Polish OR populism OR populist OR SWPS OR "political scientist") -football -footballer -Harambee', EN, [BEN]),
     ("commentary", None, '"Ben Stanley" (PiS OR "Law and Justice" OR Kaczyński OR Tusk OR Duda OR Nawrocki)', EN, [BEN]),
     ("commentary", None, '"Ben Stanley" (politolog OR SWPS OR PiS OR wybory OR sondaż OR populizm OR Sejm)', ["pl"], [BEN]),
-    ("commentary", None, '"Bena Stanleya" OR "Benem Stanleyem" OR "Benowi Stanleyowi"', ["pl"], [BEN]),
+    ("commentary", None, '("Bena Stanleya" OR "Benem Stanleyem" OR "Benowi Stanleyowi") -piłkarz -piłkarza -Harambee', ["pl"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polen OR Politologe OR Populismus)', ["de"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Pologne OR politologue OR populisme)', ["fr"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polonia OR politólogo OR populismo)', ["es"], [BEN]),
@@ -197,8 +205,16 @@ OUTLET_COUNTRIES = {
     "aljazeera.com": "QA", "kyivindependent.com": "UA", "kyivpost.com": "UA", "meduza.io": "LV",
     "themoscowtimes.com": "NL", "jamestown.org": "US", "cepa.org": "US", "brookings.edu": "US",
     "worldpoliticsreview.com": "US", "lemonde.fr": "FR", "elpais.com": "ES", "spiegel.de": "DE",
+    "legrandcontinent.eu": "FR", "lostiempos.com": "BO", "jelen.media": "HU", "theunpopulist.net": "US",
+    "key.aero": "GB", "worldcrunch.com": "FR", "biztimes.com": "US", "pulsesports.co.ke": "KE",
+    "prio.org": "NO", "ecpr.eu": "GB", "lavie-des-idees.fr": "FR", "laviedesidees.fr": "FR",
 }
 TLD_COUNTRY = {"uk": "GB"}
+# Sites Google News indexes that are not media: academic publishers and
+# repositories, whose pages are academic citations (counted elsewhere).
+NOT_MEDIA = {"cambridge.org", "illiberalism.org", "tandfonline.com", "springer.com", "sagepub.com", "wiley.com",
+             "oup.com", "jstor.org", "researchgate.net", "academia.edu", "ssrn.com", "mdpi.com", "frontiersin.org",
+             "doi.org", "scholar.google.com", "semanticscholar.org"}
 NO_COUNTRY = {"EU": "Pan-European outlets", "INT": "International outlets"}
 LANGUAGES = {"pl": "Polish", "en": "English", "de": "German", "fr": "French", "es": "Spanish", "it": "Italian",
              "pt": "Portuguese", "cs": "Czech", "sk": "Slovak", "hu": "Hungarian", "nl": "Dutch", "uk": "Ukrainian",
@@ -317,10 +333,12 @@ def page_text(page):
 
 def article_text(page):
     """The text of the article itself, for the check: the longest <article>
-    (else <main>, else the page), without navigation, sidebars and footers,
-    where lists of an outlet's other pieces, Ben's columns among them, would
-    otherwise make any page "name" him."""
+    (else <main>, else the page), without navigation, sidebars, footers and
+    "read also" links, where an outlet's other pieces, Ben's columns or a story
+    about him among them, would otherwise make any page "name" him."""
     s = re.sub(r"<(script|style|noscript|nav|aside|footer|header|form)\b[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
+    s = re.sub(r"<(p|div|li|h\d)\b[^>]*>(?:\s|<[^>]+>)*(?:Czytaj (?:też|także|więcej)|Zobacz (?:też|także)|Read (?:also|more)"
+               r"|See also|Lesen Sie auch|Lire aussi|Leer también)\b.*?</\1>", " ", s, flags=re.S | re.I)
     for tag in ("article", "main"):
         blocks = re.findall(r"<%s\b[^>]*>(.*?)</%s>" % (tag, tag), s, flags=re.S | re.I)
         if blocks:
@@ -358,6 +376,8 @@ def author_of(page, outlet):
     out = []
     for n in names:
         n = re.sub(r"^\s*(by|autor|author)[:\s]+", "", html.unescape(n), flags=re.I).strip()
+        if re.fullmatch(r"[a-z0-9_.-]+", n):
+            continue                       # a CMS user name ("florent", "ewa_no"), not a byline
         if n and not n.startswith("http") and n.lower() != (outlet or "").lower() and n not in out and len(n) < 80:
             out.append(n)
     return ", ".join(out[:3])
@@ -414,7 +434,9 @@ def gather(backfill, feeds, log):
                         for y in range(FIRST_YEAR, this_year + 1):
                             found += [(c, i) for c in news_search(q, ed, "%d-01-01" % y, "%d-01-01" % (y + 1))]
                 else:
-                    found += [(c, i) for c in news_search(q, ed, "%d-01-01" % this_year, "%d-01-01" % (this_year + 1))]
+                    today = datetime.date.today()
+                    found += [(c, i) for c in news_search(q, ed, (today - datetime.timedelta(days=400)).isoformat(),
+                                                          (today + datetime.timedelta(days=1)).isoformat())]
     except urllib.error.HTTPError as e:
         # Google has started refusing; keep what came before.
         log.append("[media-reach] Google News refused a search (HTTP %d); using the %d results so far." % (e.code, len(found)))
@@ -508,6 +530,10 @@ def process(old, sync, backfill, names, log, offline=False, resolve_only=False):
             rec["key"] = norm_url(rec["url"])
         if rec["key"] in ignore or (rec.get("url") and norm_url(rec["url"]) in ignore):
             continue
+        if base_domain(host(rec["url"] or rec["outlet_url"])) in NOT_MEDIA:
+            continue
+        rec["author"] = ", ".join(a for a in (rec.get("author") or "").split(", ")
+                                  if a and not re.fullmatch(r"[a-z0-9_.-]+", a))
         domain = base_domain(host(rec["url"] or rec["outlet_url"]))
         rec["domain"] = domain
         rec["country"] = country_of(domain, names)
@@ -585,13 +611,15 @@ def analyse(records, names, as_of):
         bins.append({"label": ("%d+" % lo) if hi is None else ("%d" % lo if hi == lo else "%d–%d" % (lo, hi)),
                      "colour": RAMP[i]})
 
-    # Outlets, by domain, named as Google News names them.
-    outlet_name, outlet_country = {}, {}
+    # Outlets, by domain, under the name Google News gives most often (the
+    # shortest among equals: "EL PAÍS", not "El País Brasil").
+    names_of, outlet_country = defaultdict(Counter), {}
     by_o = Counter()
     for r in records:
         by_o[r["domain"]] += 1
-        outlet_name.setdefault(r["domain"], r["outlet"])
+        names_of[r["domain"]][r["outlet"]] += 1
         outlet_country[r["domain"]] = cname(r["country"])
+    outlet_name = {d: min(c, key=lambda n: (-c[n], len(n))) for d, c in names_of.items()}
     outlet_rows = [{"name": outlet_name[d], "domain": d, "country": outlet_country[d], "articles": n, "colour": SERIES,
                     "tip": "%s (%s): %s" % (outlet_name[d], outlet_country[d], plural(n, "article"))}
                    for d, n in sorted(by_o.items(), key=lambda kv: (-kv[1], outlet_name[kv[0]].lower()))]
@@ -679,6 +707,21 @@ def alerts():
               % (label, q.replace("|", "\\|"), urllib.parse.quote(q), ED[eds[0]][3]))
 
 
+def write_csv(records, names):
+    """data/media-mentions.csv: the articles the page shows, newest first, for a
+    spreadsheet. UTF-8 with a byte-order mark, so Excel reads the accents."""
+    idea = dict(KEY_IDEAS)
+    with open(CSV, "w", encoding="utf-8-sig", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["Date", "Title", "Outlet", "Country or region", "Language", "Author", "Category", "Key idea",
+                    "Checked", "Link"])
+        for r in sorted(records, key=lambda r: (r["date"], r["title"]), reverse=True):
+            w.writerow([r["date"], r["title"], r["outlet"], NO_COUNTRY.get(r["country"]) or names.get(r["country"], r["country"]),
+                        r.get("language") or "", r.get("author") or "", CAT_LABEL[r["category"]],
+                        idea.get(r.get("idea"), ""), "yes" if r.get("checked") is True else "no",
+                        r["url"] or r["google_url"]])
+
+
 def main():
     args = sys.argv[1:]
     if "--alerts" in args:
@@ -699,7 +742,9 @@ def main():
         return 0
     for line in log:
         print(line)
-    if len(records) < 0.75 * len(old.get("records", [])):
+    # Articles the checks dropped this run are meant to go; any other fall means trouble.
+    newly_dropped = len(set(dropped) - set(old.get("dropped", {})))
+    if len(records) + newly_dropped < 0.75 * len(old.get("records", [])):
         print("[media-reach] needs attention: %d articles now, down from %d; keeping the previous data."
               % (len(records), len(old.get("records", []))))
         return 0
@@ -714,6 +759,7 @@ def main():
     if dry:
         print("[media-reach] dry run: nothing written.")
         return 0
+    write_csv(records, names)
     if content != original:
         with open(DATA, "w", encoding="utf-8") as fh:
             fh.write(content)

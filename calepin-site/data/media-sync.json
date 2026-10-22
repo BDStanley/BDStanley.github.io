@@ -1,5 +1,26 @@
 {
   "_about": "Settings for scripts/update-media-reach.py. ignore: addresses of articles to leave out (false matches), each with a reason. alert_feeds: the RSS feed addresses of Google Alerts set up with the queries the script prints with --alerts.",
-  "ignore": {},
+  "ignore": {
+    "https://k24.digital/sports/harambee-stars-midfielder-set-for-uefa-champions-league-football-next-season": "another Ben Stanley: a Kenyan footballer playing in Poland",
+    "https://www.pulsesports.co.ke/story/harambee-stars-defender-faces-uncertain-future-at-polish-club-ahead-of-return-from-injury-layoff-2026040607430074630": "another Ben Stanley: a Kenyan footballer playing in Poland",
+    "https://www.key.aero/article/exercise-cobra-warrior-24-2-overview": "another Ben Stanley: aviation",
+    "https://www.key.aero/article/master-globe": "another Ben Stanley: aviation",
+    "https://biztimes.com/basilica-foundation-gets-50000-from-polish-womens-cultural-club/": "another Ben Stanley: unrelated",
+    "https://www.press.pl/tresc/79426,tomasz-borowka-zacznie-prace-w-tvs-przy-serwisie-internetowym": "names Ben only in a “Czytaj też” link to another story",
+    "https://www.press.pl/tresc/79424,samir-shah-nowym-prezesem-bbc": "names Ben only in a “Czytaj też” link to another story",
+    "https://www.press.pl/tresc/79419,czworo-czlonkow-krrit-protestuje-przeciwko-planom-ograniczenia-reklam-w-tvp-i-polskim-radiu": "names Ben only in a “Czytaj też” link to another story",
+    "https://www.prio.org/events/9066": "event page for Ben's own book launch, not media coverage",
+    "https://blogs.lse.ac.uk/europpblog/2017/05/04/is-polands-civic-platform-a-serious-threat-to-the-ruling-party/": "Ben's own blog post",
+    "https://notesfrompoland.com/2024/08/26/video-of-vulgar-song-at-event-linked-with-polands-ruling-coalition-sparks-criticism/": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://www.o2.pl/informacje/smierc-jadwigi-staniszkis-wsrod-wspomnien-kultowe-zdjecie-z-czarzastym-7017299787193248a": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://notesfrompoland.com/2023/07/26/polish-academics-angered-by-changes-in-assessment-system-favouring-theological-journals/": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://notesfrompoland.com/2022/09/27/polish-opposition-seeks-to-restore-state-funding-for-ivf/": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://rozrywka.wprost.pl/10518154/zestaw-maty-w-mcdonalds-internauci-oburzeni.html": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://notesfrompoland.com/2021/10/10/large-anti-polexit-protests-across-poland/": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://notesfrompoland.com/2021/02/12/israel-protests-appointment-of-former-far-right-activist-to-head-polish-state-history-body/": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://polityka.se.pl/wiadomosci/radoslaw-sikorski-obsikane-spodnie-jaroslaw-kaczynski-marynarka-aa-FSJg-2w48-aw6K.html": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://natemat.pl/275653,pereira-oskarzony-o-nazizm-mial-na-sobie-liczbe-88-oznaczajaca-heil-hitler": "a story about one of Ben's posts on X/Twitter, not his research",
+    "https://www.rp.pl/spoleczenstwo/art9561391-100-wielkich-rzeczy-o-polsce-nasz-kraj-oczami-brytyjczyka": "a story about one of Ben's posts on X/Twitter, not his research"
+  },
   "alert_feeds": []
 }
