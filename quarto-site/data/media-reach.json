@@ -2,13 +2,13 @@
  "_about": "Data behind the Media reach page, from Google News search and Google Alerts. Written by scripts/update-media-reach.py; see that file for what is counted and how.",
  "as_of": "2026-10",
  "totals": {
-  "articles": 71,
-  "outlets": 33,
-  "countries": 14,
-  "languages": 8,
-  "first_year": 2018,
-  "unchecked": 5,
-  "commentary": 56,
+  "articles": 79,
+  "outlets": 37,
+  "countries": 17,
+  "languages": 11,
+  "first_year": 2017,
+  "unchecked": 13,
+  "commentary": 64,
   "ideas": 7,
   "research": 8
  },
@@ -17,7 +17,7 @@
    "key": "commentary",
    "name": "Interviews and commentary",
    "colour": "#2a78d6",
-   "articles": 56
+   "articles": 64
   },
   {
    "key": "ideas",
@@ -84,6 +84,16 @@
    "w": 0.3158
   },
   {
+   "code": "NO",
+   "name": "Norway",
+   "articles": 5,
+   "outlets": 2,
+   "on_map": true,
+   "colour": "#d55d4b",
+   "tip": "Norway: 5 articles in 2 outlets",
+   "w": 0.2632
+  },
+  {
    "code": "ES",
    "name": "Spain",
    "articles": 4,
@@ -112,6 +122,16 @@
    "colour": "#e38070",
    "tip": "Serbia: 3 articles in 1 outlet",
    "w": 0.1579
+  },
+  {
+   "code": "EE",
+   "name": "Estonia",
+   "articles": 2,
+   "outlets": 1,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Estonia: 2 articles in 1 outlet",
+   "w": 0.1053
   },
   {
    "code": "DE",
@@ -171,6 +191,16 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Qatar: 1 article in 1 outlet",
+   "w": 0.0526
+  },
+  {
+   "code": "SE",
+   "name": "Sweden",
+   "articles": 1,
+   "outlets": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Sweden: 1 article in 1 outlet",
    "w": 0.0526
   }
  ],
@@ -248,6 +278,15 @@
    "w": 0.4444
   },
   {
+   "name": "Aftenposten",
+   "domain": "aftenposten.no",
+   "country": "Norway",
+   "articles": 3,
+   "colour": "#8b0000",
+   "tip": "Aftenposten (Norway): 3 articles",
+   "w": 0.3333
+  },
+  {
    "name": "Balkan Insight",
    "domain": "balkaninsight.com",
    "country": "Serbia",
@@ -275,12 +314,30 @@
    "w": 0.3333
   },
   {
+   "name": "ERR",
+   "domain": "err.ee",
+   "country": "Estonia",
+   "articles": 2,
+   "colour": "#8b0000",
+   "tip": "ERR (Estonia): 2 articles",
+   "w": 0.2222
+  },
+  {
    "name": "Il Bo Live",
    "domain": "unipd.it",
    "country": "Italy",
    "articles": 2,
    "colour": "#8b0000",
    "tip": "Il Bo Live (Italy): 2 articles",
+   "w": 0.2222
+  },
+  {
+   "name": "VG",
+   "domain": "vg.no",
+   "country": "Norway",
+   "articles": 2,
+   "colour": "#8b0000",
+   "tip": "VG (Norway): 2 articles",
    "w": 0.2222
   },
   {
@@ -316,8 +373,7 @@
    "country": "Netherlands",
    "articles": 1,
    "colour": "#8b0000",
-   "tip": "Bnnvara (Netherlands): 1 article",
-   "w": 0.1111
+   "tip": "Bnnvara (Netherlands): 1 article"
   },
   {
    "name": "commonspace.eu",
@@ -325,8 +381,7 @@
    "country": "Netherlands",
    "articles": 1,
    "colour": "#8b0000",
-   "tip": "commonspace.eu (Netherlands): 1 article",
-   "w": 0.1111
+   "tip": "commonspace.eu (Netherlands): 1 article"
   },
   {
    "name": "DW.com",
@@ -334,8 +389,7 @@
    "country": "Germany",
    "articles": 1,
    "colour": "#8b0000",
-   "tip": "DW.com (Germany): 1 article",
-   "w": 0.1111
+   "tip": "DW.com (Germany): 1 article"
   },
   {
    "name": "European Consortium for Political Research (ECPR)",
@@ -434,6 +488,14 @@
    "tip": "Social Europe (Germany): 1 article"
   },
   {
+   "name": "Sveriges Radio",
+   "domain": "sverigesradio.se",
+   "country": "Sweden",
+   "articles": 1,
+   "colour": "#8b0000",
+   "tip": "Sveriges Radio (Sweden): 1 article"
+  },
+  {
    "name": "The American Prospect",
    "domain": "prospect.org",
    "country": "United States",
@@ -513,6 +575,13 @@
    "w": 0.125
   },
   {
+   "name": "Norwegian",
+   "articles": 5,
+   "colour": "#8b0000",
+   "tip": "Norwegian: 5 articles",
+   "w": 0.125
+  },
+  {
    "name": "Italian",
    "articles": 4,
    "colour": "#8b0000",
@@ -527,6 +596,13 @@
    "w": 0.075
   },
   {
+   "name": "Estonian",
+   "articles": 2,
+   "colour": "#8b0000",
+   "tip": "Estonian: 2 articles",
+   "w": 0.05
+  },
+  {
    "name": "Hungarian",
    "articles": 1,
    "colour": "#8b0000",
@@ -539,10 +615,17 @@
    "colour": "#8b0000",
    "tip": "Portuguese: 1 article",
    "w": 0.025
+  },
+  {
+   "name": "Swedish",
+   "articles": 1,
+   "colour": "#8b0000",
+   "tip": "Swedish: 1 article",
+   "w": 0.025
   }
  ],
  "years": {
-  "axis_max": 20,
+  "axis_max": 30,
   "ticks": [
    {
     "value": 0,
@@ -550,32 +633,43 @@
     "pos": 0.0
    },
    {
-    "value": 5,
-    "label": "5",
-    "pos": 0.25
-   },
-   {
     "value": 10,
     "label": "10",
-    "pos": 0.5
-   },
-   {
-    "value": 15,
-    "label": "15",
-    "pos": 0.75
+    "pos": 0.3333
    },
    {
     "value": 20,
     "label": "20",
+    "pos": 0.6667
+   },
+   {
+    "value": 30,
+    "label": "30",
     "pos": 1.0
    }
   ],
   "rows": [
    {
+    "year": 2017,
+    "label": "2017",
+    "count": 2,
+    "h": 0.0667,
+    "minor": true,
+    "tip": "2017: 2 articles (Interviews and commentary 2)",
+    "segments": [
+     {
+      "name": "Interviews and commentary",
+      "count": 2,
+      "colour": "#2a78d6",
+      "tip": "2017, Interviews and commentary: 2 articles"
+     }
+    ]
+   },
+   {
     "year": 2018,
     "label": "2018",
     "count": 2,
-    "h": 0.1,
+    "h": 0.0667,
     "minor": true,
     "tip": "2018: 2 articles (Interviews and commentary 2)",
     "segments": [
@@ -591,7 +685,7 @@
     "year": 2019,
     "label": "2019",
     "count": 6,
-    "h": 0.3,
+    "h": 0.2,
     "minor": true,
     "tip": "2019: 6 articles (Interviews and commentary 4, Ideas 1, Research in the news 1)",
     "segments": [
@@ -618,16 +712,16 @@
    {
     "year": 2020,
     "label": "2020",
-    "count": 5,
-    "h": 0.25,
+    "count": 6,
+    "h": 0.2,
     "minor": false,
-    "tip": "2020: 5 articles (Interviews and commentary 5)",
+    "tip": "2020: 6 articles (Interviews and commentary 6)",
     "segments": [
      {
       "name": "Interviews and commentary",
-      "count": 5,
+      "count": 6,
       "colour": "#2a78d6",
-      "tip": "2020, Interviews and commentary: 5 articles"
+      "tip": "2020, Interviews and commentary: 6 articles"
      }
     ]
    },
@@ -644,7 +738,7 @@
     "year": 2022,
     "label": "2022",
     "count": 3,
-    "h": 0.15,
+    "h": 0.1,
     "minor": true,
     "tip": "2022: 3 articles (Interviews and commentary 2, Research in the news 1)",
     "segments": [
@@ -665,16 +759,16 @@
    {
     "year": 2023,
     "label": "2023",
-    "count": 18,
-    "h": 0.9,
+    "count": 21,
+    "h": 0.7,
     "minor": true,
-    "tip": "2023: 18 articles (Interviews and commentary 14, Research in the news 4)",
+    "tip": "2023: 21 articles (Interviews and commentary 17, Research in the news 4)",
     "segments": [
      {
       "name": "Interviews and commentary",
-      "count": 14,
+      "count": 17,
       "colour": "#2a78d6",
-      "tip": "2023, Interviews and commentary: 14 articles"
+      "tip": "2023, Interviews and commentary: 17 articles"
      },
      {
       "name": "Research in the news",
@@ -688,7 +782,7 @@
     "year": 2024,
     "label": "2024",
     "count": 1,
-    "h": 0.05,
+    "h": 0.0333,
     "minor": true,
     "tip": "2024: 1 article (Interviews and commentary 1)",
     "segments": [
@@ -703,16 +797,16 @@
    {
     "year": 2025,
     "label": "2025",
-    "count": 19,
-    "h": 0.95,
+    "count": 21,
+    "h": 0.7,
     "minor": false,
-    "tip": "2025: 19 articles (Interviews and commentary 19)",
+    "tip": "2025: 21 articles (Interviews and commentary 21)",
     "segments": [
      {
       "name": "Interviews and commentary",
-      "count": 19,
+      "count": 21,
       "colour": "#2a78d6",
-      "tip": "2025, Interviews and commentary: 19 articles"
+      "tip": "2025, Interviews and commentary: 21 articles"
      }
     ]
    },
@@ -720,7 +814,7 @@
     "year": 2026,
     "label": "2026 (to October)",
     "count": 17,
-    "h": 0.85,
+    "h": 0.5667,
     "minor": true,
     "tip": "2026 (to October): 17 articles (Interviews and commentary 9, Ideas 6, Research in the news 2)",
     "segments": [
@@ -986,7 +1080,7 @@
   },
   {
    "year": 2025,
-   "summary": "2025: 19 articles",
+   "summary": "2025: 21 articles",
    "items": [
     {
      "date": "2025-12-01",
@@ -1011,6 +1105,18 @@
      "language": "English",
      "checked": true,
      "meta": "4 October 2025 · Prospect Magazine (United Kingdom) · Ivan Krastev"
+    },
+    {
+     "date": "2025-08-05",
+     "when": "5 August 2025",
+     "title": "Politico: Poolat ootab ees aastaid kestev poliitiline ummikseis",
+     "url": "https://www.err.ee/1609763304/politico-poolat-ootab-ees-aastaid-kestev-poliitiline-ummikseis",
+     "outlet": "ERR",
+     "country": "Estonia",
+     "author": "",
+     "language": "Estonian",
+     "checked": false,
+     "meta": "5 August 2025 · ERR (Estonia)"
     },
     {
      "date": "2025-08-05",
@@ -1215,6 +1321,18 @@
      "language": "English",
      "checked": true,
      "meta": "17 April 2025 · Balkan Insight (Serbia) · Claudia Ciobanu"
+    },
+    {
+     "date": "2025-01-06",
+     "when": "6 January 2025",
+     "title": "PiS üritab ajaloolase toel kontrolli Poola presidendiameti üle säilitada",
+     "url": "https://www.err.ee/1609568443/pis-uritab-ajaloolase-toel-kontrolli-poola-presidendiameti-ule-sailitada",
+     "outlet": "ERR",
+     "country": "Estonia",
+     "author": "",
+     "language": "Estonian",
+     "checked": false,
+     "meta": "6 January 2025 · ERR (Estonia)"
     }
    ]
   },
@@ -1238,7 +1356,7 @@
   },
   {
    "year": 2023,
-   "summary": "2023: 14 articles",
+   "summary": "2023: 17 articles",
    "items": [
     {
      "date": "2023-12-07",
@@ -1263,6 +1381,30 @@
      "language": "English",
      "checked": true,
      "meta": "5 December 2023 · Notes From Poland (Poland)"
+    },
+    {
+     "date": "2023-10-16",
+     "when": "16 October 2023",
+     "title": "Kan denne mannen gi Polen tilbake frie domstoler og få slutt på heksejakten på kvinner som tar abort?",
+     "url": "https://www.aftenposten.no/verden/nyhetsanalyse/i/wA2XRo/regjeringspartiet-ble-stoerst-men-opposisjonen-kan-faa-makten",
+     "outlet": "Aftenposten",
+     "country": "Norway",
+     "author": "",
+     "language": "Norwegian",
+     "checked": false,
+     "meta": "16 October 2023 · Aftenposten (Norway)"
+    },
+    {
+     "date": "2023-10-15",
+     "when": "15 October 2023",
+     "title": "Valg i Polen: Han hengte ut Polens «LHBT-frie soner». Så haglet søksmålene fra polske myndigheter.",
+     "url": "https://www.aftenposten.no/verden/i/Mo8XmB/valg-i-polen-han-hengte-ut-polens-lhbt-frie-soner-saa-haglet-soeksmaalene-fra-polske-myndigheter",
+     "outlet": "Aftenposten",
+     "country": "Norway",
+     "author": "",
+     "language": "Norwegian",
+     "checked": false,
+     "meta": "15 October 2023 · Aftenposten (Norway)"
     },
     {
      "date": "2023-10-14",
@@ -1397,6 +1539,18 @@
      "meta": "2 April 2023 · Notes From Poland (Poland)"
     },
     {
+     "date": "2023-03-29",
+     "when": "29 March 2023",
+     "title": "Anklagelser mot Johannes Paulus II delar Polen",
+     "url": "https://www.sverigesradio.se/artikel/delat-polen-infor-uppgifterna-att-johannes-paulus-ii-morklade-overgrepp-mot-barn",
+     "outlet": "Sveriges Radio",
+     "country": "Sweden",
+     "author": "",
+     "language": "Swedish",
+     "checked": false,
+     "meta": "29 March 2023 · Sveriges Radio (Sweden)"
+    },
+    {
      "date": "2023-03-15",
      "when": "15 March 2023",
      "title": "Pope John Paul II and pedophile priests becomes Poland’s top political issue",
@@ -1442,7 +1596,7 @@
   },
   {
    "year": 2020,
-   "summary": "2020: 5 articles",
+   "summary": "2020: 6 articles",
    "items": [
     {
      "date": "2020-12-08",
@@ -1467,6 +1621,18 @@
      "language": "Polish",
      "checked": true,
      "meta": "29 October 2020 · Rzeczpospolita (Poland) · Jarosław Myjak"
+    },
+    {
+     "date": "2020-07-12",
+     "when": "12 July 2020",
+     "title": "Rå valgkampinnspurt: Anklager tyskerne for innblanding og appellerer til anti-vaksine-bevegelsen",
+     "url": "https://www.aftenposten.no/verden/nyhetsanalyse/i/6jxJ2r/kandidatene-ligger-helt-likt-paa-meningsmaalingene-paa-tampen-trekkes-en-gammel-erkefiende-inn-i-valgkampen",
+     "outlet": "Aftenposten",
+     "country": "Norway",
+     "author": "",
+     "language": "Norwegian",
+     "checked": false,
+     "meta": "12 July 2020 · Aftenposten (Norway)"
     },
     {
      "date": "2020-07-05",
@@ -1587,6 +1753,36 @@
      "language": "English",
      "checked": true,
      "meta": "20 November 2018 · The Guardian (United Kingdom) · Caelainn Barr, Seán Clarke, Paul Lewis"
+    }
+   ]
+  },
+  {
+   "year": 2017,
+   "summary": "2017: 2 articles",
+   "items": [
+    {
+     "date": "2017-11-28",
+     "when": "28 November 2017",
+     "title": "(+) Patriotiske klær er på moten i Polen",
+     "url": "https://www.vg.no/nyheter/i/wEEk5o/patriotiske-klaer-er-paa-moten-i-polen",
+     "outlet": "VG",
+     "country": "Norway",
+     "author": "",
+     "language": "Norwegian",
+     "checked": false,
+     "meta": "28 November 2017 · VG (Norway)"
+    },
+    {
+     "date": "2017-11-11",
+     "when": "11 November 2017",
+     "title": "Høyreekstreme tar over gatene i Warszawa",
+     "url": "https://www.vg.no/nyheter/i/GvV4J/hoeyreekstreme-tar-over-gatene-i-warszawa",
+     "outlet": "VG",
+     "country": "Norway",
+     "author": "",
+     "language": "Norwegian",
+     "checked": false,
+     "meta": "11 November 2017 · VG (Norway)"
     }
    ]
   }
@@ -2120,6 +2316,27 @@
    "idea": null
   },
   {
+   "gid": "CBMilwFBVV95cUxQTkxxX0Jad3A4eW1TLTZJcUQ1Xy02RTRjb0VMM0dNU3p0ZWhZMWVKbEhFdThteUEtS1ltV1dHWUN0M2lJSzFVWmhpdjJTV3o0LTdjSjlNRkMzR216ZkJMY1JrQjI0ZVVKOGxHd3hJZXBNS21uVVNEZmRFQ2RWdFdWcW9VVW5XSl9Pa3UtUHFZTFlKcmFhU193",
+   "google_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQTkxxX0Jad3A4eW1TLTZJcUQ1Xy02RTRjb0VMM0dNU3p0ZWhZMWVKbEhFdThteUEtS1ltV1dHWUN0M2lJSzFVWmhpdjJTV3o0LTdjSjlNRkMzR216ZkJMY1JrQjI0ZVVKOGxHd3hJZXBNS21uVVNEZmRFQ2RWdFdWcW9VVW5XSl9Pa3UtUHFZTFlKcmFhU193?oc=5",
+   "url": "https://www.err.ee/1609763304/politico-poolat-ootab-ees-aastaid-kestev-poliitiline-ummikseis",
+   "title": "Politico: Poolat ootab ees aastaid kestev poliitiline ummikseis",
+   "outlet": "ERR",
+   "outlet_url": "https://www.err.ee",
+   "date": "2025-08-05",
+   "edition_language": "Estonian",
+   "key": "err.ee/1609763304/politico-poolat-ootab-ees-aastaid-kestev-poliitiline-ummikseis",
+   "queries": [
+    36
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Estonian",
+   "domain": "err.ee",
+   "country": "EE",
+   "category": "commentary",
+   "idea": null
+  },
+  {
    "gid": "CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV",
    "google_url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV?oc=5",
    "url": "https://www.money.pl/gospodarka/politico-strumpowana-polska-fatalna-wiadomosc-dla-tuska-7163691912149760a.html",
@@ -2459,6 +2676,27 @@
    "idea": null
   },
   {
+   "gid": "CBMipAFBVV95cUxPX2xyOVhFZlRWa1NrWERpRjJNTHBRZ2d3YzNuUDd6ZGducS1IU01NT0pqMXhTUktPR2c4UnlWdXB1dnpRVE5Jek1YeHFnYWVwR25JYlVYdENhVE1IWE42dUhyYzEwYjJPMHlrYVo1b1JTUGV0Uy1vSjhRa2tWSGZtakN3MllFWWd3NmE1WUZadDRqM051RWZRaXBoTm1obGtkMVprUQ",
+   "google_url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPX2xyOVhFZlRWa1NrWERpRjJNTHBRZ2d3YzNuUDd6ZGducS1IU01NT0pqMXhTUktPR2c4UnlWdXB1dnpRVE5Jek1YeHFnYWVwR25JYlVYdENhVE1IWE42dUhyYzEwYjJPMHlrYVo1b1JTUGV0Uy1vSjhRa2tWSGZtakN3MllFWWd3NmE1WUZadDRqM051RWZRaXBoTm1obGtkMVprUQ?oc=5",
+   "url": "https://www.err.ee/1609568443/pis-uritab-ajaloolase-toel-kontrolli-poola-presidendiameti-ule-sailitada",
+   "title": "PiS üritab ajaloolase toel kontrolli Poola presidendiameti üle säilitada",
+   "outlet": "ERR",
+   "outlet_url": "https://www.err.ee",
+   "date": "2025-01-06",
+   "edition_language": "Estonian",
+   "key": "err.ee/1609568443/pis-uritab-ajaloolase-toel-kontrolli-poola-presidendiameti-ule-sailitada",
+   "queries": [
+    36
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Estonian",
+   "domain": "err.ee",
+   "country": "EE",
+   "category": "commentary",
+   "idea": null
+  },
+  {
    "gid": "CBMisgFBVV95cUxNMWlETlFFU1JETzRFaEo1R1Ayd3JQZnpOV2dGdUVzYnBjckVZMjAtNG01TGRMWlVaTkhvOUNWb3NBaTVENWFQbXBfVHpRZUt1b29aUGZ2SU96QncxZ1RRVlFnV3pYakNiSTN4Tm9GMTZJWjJSWGdkcE5NaU1qZVlPZWJVQ29IbENWeXRaTU1MdWFieFJTUVpaNFRmTEkteXhqNW9hb3FHbW1UV1REdjU0cFZR",
    "google_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNMWlETlFFU1JETzRFaEo1R1Ayd3JQZnpOV2dGdUVzYnBjckVZMjAtNG01TGRMWlVaTkhvOUNWb3NBaTVENWFQbXBfVHpRZUt1b29aUGZ2SU96QncxZ1RRVlFnV3pYakNiSTN4Tm9GMTZJWjJSWGdkcE5NaU1qZVlPZWJVQ29IbENWeXRaTU1MdWFieFJTUVpaNFRmTEkteXhqNW9hb3FHbW1UV1REdjU0cFZR?oc=5",
    "url": "https://notesfrompoland.com/2024/06/24/international-scrutiny-of-poland-must-continue-under-the-tusk-government/",
@@ -2545,6 +2783,48 @@
    "domain": "notesfrompoland.com",
    "country": "PL",
    "category": "research",
+   "idea": null
+  },
+  {
+   "gid": "CBMiugFBVV95cUxPbUZ1RlhxNVJKY2k4RF9lc1ZtSGxJeWlEbktVMURZbXhRZHhqWXY1MlBhRGhHS252TUxIdm8zcXpzSGRmZTVXX0lESDJKZVl3dzJjd0FaZWUta0ZlaktnTXlsSC1YSlNFMkZIWUJZYy1sX1FUaDBXc3RYYW4wZllVNW9rZTFJbmNIQmlYdTVZRTdCYnNBckZCRUczQ3FvazNlX25yNzhMQ3hNekdyRGwwWEluT0xIV0Z4WlE",
+   "google_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPbUZ1RlhxNVJKY2k4RF9lc1ZtSGxJeWlEbktVMURZbXhRZHhqWXY1MlBhRGhHS252TUxIdm8zcXpzSGRmZTVXX0lESDJKZVl3dzJjd0FaZWUta0ZlaktnTXlsSC1YSlNFMkZIWUJZYy1sX1FUaDBXc3RYYW4wZllVNW9rZTFJbmNIQmlYdTVZRTdCYnNBckZCRUczQ3FvazNlX25yNzhMQ3hNekdyRGwwWEluT0xIV0Z4WlE?oc=5",
+   "url": "https://www.aftenposten.no/verden/nyhetsanalyse/i/wA2XRo/regjeringspartiet-ble-stoerst-men-opposisjonen-kan-faa-makten",
+   "title": "Kan denne mannen gi Polen tilbake frie domstoler og få slutt på heksejakten på kvinner som tar abort?",
+   "outlet": "Aftenposten",
+   "outlet_url": "https://www.aftenposten.no",
+   "date": "2023-10-16",
+   "edition_language": "Norwegian",
+   "key": "aftenposten.no/verden/nyhetsanalyse/i/wA2XRo/regjeringspartiet-ble-stoerst-men-opposisjonen-kan-faa-makten",
+   "queries": [
+    34
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Norwegian",
+   "domain": "aftenposten.no",
+   "country": "NO",
+   "category": "commentary",
+   "idea": null
+  },
+  {
+   "gid": "CBMi1gFBVV95cUxPZG9DbGdXaVBvM3hBb1RCTzEwUktxOVZ5c0hMc0FiVHdaa1l1dU51VTd3NmpVTy1YUnlEYmtOS0ZhbEdYNXNOSjFhQnZERld3MXg5OFlLbnhuRFVUbXBLaUtwUTNfSmZGUWt5MnpSSHZ0SkFrMFlzMHhOdm1naDNJdlJ5S2FZdDRDRzk4QWI1QnRDYVJ5dGJmaFFXbXE2S2FDSk1IcVloV3QtWDJ6blZkZVBKRzlyb1VTeHRMRGpmcWpmNTRHTWdreTR0MzZGT2hLMThPTjFB",
+   "google_url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPZG9DbGdXaVBvM3hBb1RCTzEwUktxOVZ5c0hMc0FiVHdaa1l1dU51VTd3NmpVTy1YUnlEYmtOS0ZhbEdYNXNOSjFhQnZERld3MXg5OFlLbnhuRFVUbXBLaUtwUTNfSmZGUWt5MnpSSHZ0SkFrMFlzMHhOdm1naDNJdlJ5S2FZdDRDRzk4QWI1QnRDYVJ5dGJmaFFXbXE2S2FDSk1IcVloV3QtWDJ6blZkZVBKRzlyb1VTeHRMRGpmcWpmNTRHTWdreTR0MzZGT2hLMThPTjFB?oc=5",
+   "url": "https://www.aftenposten.no/verden/i/Mo8XmB/valg-i-polen-han-hengte-ut-polens-lhbt-frie-soner-saa-haglet-soeksmaalene-fra-polske-myndigheter",
+   "title": "Valg i Polen: Han hengte ut Polens «LHBT-frie soner». Så haglet søksmålene fra polske myndigheter.",
+   "outlet": "Aftenposten",
+   "outlet_url": "https://www.aftenposten.no",
+   "date": "2023-10-15",
+   "edition_language": "Norwegian",
+   "key": "aftenposten.no/verden/i/Mo8XmB/valg-i-polen-han-hengte-ut-polens-lhbt-frie-soner-saa-haglet-soeksmaalene-fra-polske-myndigheter",
+   "queries": [
+    34
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Norwegian",
+   "domain": "aftenposten.no",
+   "country": "NO",
+   "category": "commentary",
    "idea": null
   },
   {
@@ -2850,6 +3130,27 @@
    "idea": null
   },
   {
+   "gid": "CBMiuAFBVV95cUxNd1AwS1BNRTlJc2VWVlVlNFJtOTh2Y1l5Qm45MFE4QXJUM2Q1UzlIQjl2MFB1RWFwZFJmZktNZGwyVUFEQ0N5VHd3dzQ1ZERIbWY3ZXp3UDF3dDFMMEZ6ajFlaTJGMFVkdnNmY2JoOHV0RlpKTTdqR1Q5c2ItX1pqVS1FZFpjOVp6UXpjUjYtNWsxbElWaU9UTzdTQWhwcnZwMmZfalBjSW10bFdaNDJXb0ExRm9BVlht",
+   "google_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNd1AwS1BNRTlJc2VWVlVlNFJtOTh2Y1l5Qm45MFE4QXJUM2Q1UzlIQjl2MFB1RWFwZFJmZktNZGwyVUFEQ0N5VHd3dzQ1ZERIbWY3ZXp3UDF3dDFMMEZ6ajFlaTJGMFVkdnNmY2JoOHV0RlpKTTdqR1Q5c2ItX1pqVS1FZFpjOVp6UXpjUjYtNWsxbElWaU9UTzdTQWhwcnZwMmZfalBjSW10bFdaNDJXb0ExRm9BVlht?oc=5",
+   "url": "https://www.sverigesradio.se/artikel/delat-polen-infor-uppgifterna-att-johannes-paulus-ii-morklade-overgrepp-mot-barn",
+   "title": "Anklagelser mot Johannes Paulus II delar Polen",
+   "outlet": "Sveriges Radio",
+   "outlet_url": "https://www.sverigesradio.se",
+   "date": "2023-03-29",
+   "edition_language": "Swedish",
+   "key": "sverigesradio.se/artikel/delat-polen-infor-uppgifterna-att-johannes-paulus-ii-morklade-overgrepp-mot-barn",
+   "queries": [
+    35
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Swedish",
+   "domain": "sverigesradio.se",
+   "country": "SE",
+   "category": "commentary",
+   "idea": null
+  },
+  {
    "gid": "CBMigAFBVV95cUxNUTNveTdsbFlRMVB5YjVRTTIzU01mVl84cVBwLVliaTNhQnVCRDVOZE92MzNDMXJfc0U0dUJiZTZLTHdkT3ZXdkNBZHpiczVxZVVZUkJtdzFBUlcyZGJCZHVpTld1MnZOTVFXSWRsN0s3cXZnQWU4V3Q0bVVSNWJwVg",
    "google_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNUTNveTdsbFlRMVB5YjVRTTIzU01mVl84cVBwLVliaTNhQnVCRDVOZE92MzNDMXJfc0U0dUJiZTZLTHdkT3ZXdkNBZHpiczVxZVVZUkJtdzFBUlcyZGJCZHVpTld1MnZOTVFXSWRsN0s3cXZnQWU4V3Q0bVVSNWJwVg?oc=5",
    "url": "https://www.politico.eu/article/poland-politics-pope-john-paul-ii-election/",
@@ -2973,6 +3274,27 @@
    "language": "Polish",
    "domain": "rp.pl",
    "country": "PL",
+   "category": "commentary",
+   "idea": null
+  },
+  {
+   "gid": "CBMi9wFBVV95cUxNSEd4M3JVWEJoTGxRMldqZE9aZXlKQ2xhOHhwQUJNTEkxS3QtcWhBUk5BcGVNVGxjQVJySDQtYWxJdUhRUnZ4SGpaZ1JzNkthWkFfbGJMTVhxSFZqTGVZRDhKR0diTm9zOEhWUWtiV1libGloaWlIbElLdmdJLWFOOVJTZ2UweWRhMFVjeWN2dTl2bzg4M2ZvQ281M0hOMkprbFRXUDRiTmYyRTJRSWkyQl9yODZyaVpFRVhoQk54UGlQSFZzbWcxNElyZFVaWjlPbjcwUHJ5TThUWlpGY01Ydy1Ua09PUzJKb0FzUTdrR3gxMnMzYkhJ",
+   "google_url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxNSEd4M3JVWEJoTGxRMldqZE9aZXlKQ2xhOHhwQUJNTEkxS3QtcWhBUk5BcGVNVGxjQVJySDQtYWxJdUhRUnZ4SGpaZ1JzNkthWkFfbGJMTVhxSFZqTGVZRDhKR0diTm9zOEhWUWtiV1libGloaWlIbElLdmdJLWFOOVJTZ2UweWRhMFVjeWN2dTl2bzg4M2ZvQ281M0hOMkprbFRXUDRiTmYyRTJRSWkyQl9yODZyaVpFRVhoQk54UGlQSFZzbWcxNElyZFVaWjlPbjcwUHJ5TThUWlpGY01Ydy1Ua09PUzJKb0FzUTdrR3gxMnMzYkhJ?oc=5",
+   "url": "https://www.aftenposten.no/verden/nyhetsanalyse/i/6jxJ2r/kandidatene-ligger-helt-likt-paa-meningsmaalingene-paa-tampen-trekkes-en-gammel-erkefiende-inn-i-valgkampen",
+   "title": "Rå valgkampinnspurt: Anklager tyskerne for innblanding og appellerer til anti-vaksine-bevegelsen",
+   "outlet": "Aftenposten",
+   "outlet_url": "https://www.aftenposten.no",
+   "date": "2020-07-12",
+   "edition_language": "Norwegian",
+   "key": "aftenposten.no/verden/nyhetsanalyse/i/6jxJ2r/kandidatene-ligger-helt-likt-paa-meningsmaalingene-paa-tampen-trekkes-en-gammel-erkefiende-inn-i-valgkampen",
+   "queries": [
+    34
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Norwegian",
+   "domain": "aftenposten.no",
+   "country": "NO",
    "category": "commentary",
    "idea": null
   },
@@ -3213,6 +3535,48 @@
    "country": "GB",
    "category": "commentary",
    "idea": null
+  },
+  {
+   "gid": "CBMifkFVX3lxTE9RcG5NckFneG1kaGZsU1RqOUFrLVhIZGxXX2xHcG5Nc2ZMX1pWeFpkWWVIUFI0QTM3MG84TWtpcEQ2S1Y4WHpkbXQ1czdYQmhVYTdTdWZPa2VHSE9yWFdDY05LeFRoNFNDeUhMdmdyRGMtS2JCTXV5QUtMQldqdw",
+   "google_url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9RcG5NckFneG1kaGZsU1RqOUFrLVhIZGxXX2xHcG5Nc2ZMX1pWeFpkWWVIUFI0QTM3MG84TWtpcEQ2S1Y4WHpkbXQ1czdYQmhVYTdTdWZPa2VHSE9yWFdDY05LeFRoNFNDeUhMdmdyRGMtS2JCTXV5QUtMQldqdw?oc=5",
+   "url": "https://www.vg.no/nyheter/i/wEEk5o/patriotiske-klaer-er-paa-moten-i-polen",
+   "title": "(+) Patriotiske klær er på moten i Polen",
+   "outlet": "VG",
+   "outlet_url": "https://www.vg.no",
+   "date": "2017-11-28",
+   "edition_language": "Norwegian",
+   "key": "vg.no/nyheter/i/wEEk5o/patriotiske-klaer-er-paa-moten-i-polen",
+   "queries": [
+    34
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Norwegian",
+   "domain": "vg.no",
+   "country": "NO",
+   "category": "commentary",
+   "idea": null
+  },
+  {
+   "gid": "CBMigAFBVV95cUxPcnlxZzJGTFlmMXZ5dkxzb08zWU00a2lOSnZDaWR3T1FmN0RfczV0Z1ZjcE0wSzBtbVRlNW1EY0RzYUY3N3RlODFlNE9YNDI1NGpLaTh3TTdudXhPYThiWGtvZDMxWWZMajYtM0puN2xGMzg1VFBONi1yd0R0Yk5zZg",
+   "google_url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPcnlxZzJGTFlmMXZ5dkxzb08zWU00a2lOSnZDaWR3T1FmN0RfczV0Z1ZjcE0wSzBtbVRlNW1EY0RzYUY3N3RlODFlNE9YNDI1NGpLaTh3TTdudXhPYThiWGtvZDMxWWZMajYtM0puN2xGMzg1VFBONi1yd0R0Yk5zZg?oc=5",
+   "url": "https://www.vg.no/nyheter/i/GvV4J/hoeyreekstreme-tar-over-gatene-i-warszawa",
+   "title": "Høyreekstreme tar over gatene i Warszawa",
+   "outlet": "VG",
+   "outlet_url": "https://www.vg.no",
+   "date": "2017-11-11",
+   "edition_language": "Norwegian",
+   "key": "vg.no/nyheter/i/GvV4J/hoeyreekstreme-tar-over-gatene-i-warszawa",
+   "queries": [
+    34
+   ],
+   "checked": false,
+   "author": "",
+   "language": "Norwegian",
+   "domain": "vg.no",
+   "country": "NO",
+   "category": "commentary",
+   "idea": null
   }
  ],
  "dropped": {
@@ -3301,6 +3665,8 @@
   "gnews:CBMiqwFBVV95cUxOenlpdkRDVDRBZV9RZ1dTT2J4alRQX1RkaWs3Rmw0UEpkUUNaWDdWWlQzRmV6NlZkLTREUHk1dndma0QwX0E4UldNZDlxZmpsTDNnVDE4Mmg3U1dRdUsyZjNSTkVydnZVMVMxVDlYS0ItM1k4LWtiZFVYZkktcEs5N09RTGRYR0ZtN3lGTUczQWc1VEdjeVJ4S3M4UG5USWNELXY0LTlUQmYzQ0E": "written by Ben (his columns are on the Media page): We Went to Memphis to Find a Long Lost New Zealand Funk Album From the 70s",
   "gnews:CBMifkFVX3lxTE5VLWF5ZDlIMHltMERhQUxNVTAyUHBCS1h2SXlySXpqMHRiWTM5NEowMlFrWmJId3FEdURkODNvc1FyV0ZCdlNCdnBIZDhsd3RvRnR3N0VmdmM3c0VmUGJtNjIxOGdPd2ZwSEZhUFhVcWFWcWxoRGxOckw2amRiUQ": "page does not have what the query requires: Polska | Koniec demokracji czy liberalizmu?",
   "gnews:CBMijAFBVV95cUxQOUdvdDhtLUNYRlJKejFqT1J6Mk94Z0d5dl96Y0psTTY1NVVvNzR0ZHh3NkxvWFRob3p1X2hXeE5MY1FwWkpQU1lCU1dCZ2dFaWZEY3RTcktxS1NrVTJsdTdYd29UenFseGJfbUdHVlZmc1JPY20yWDJQSDhVVThpclRJX1p3bVMtd2ZhYw": "page does not have what the query requires: Po pierwsze, nie ufaj nikomu. 5. rocznica katastrofy smoleńskiej",
-  "gnews:CBMihwFBVV95cUxNSmlqNkg5SHQ3M3pCclhGZUE3VWtLTWJrSkxQRGhWbmoyblgxSVJsQTRYZ2JtR1cxb3I3V0tUdkZlbG11bGJMVWNYSnEwWVBCdVJ5b2Y4dExTUEs3VGxmeW5TYnJPMUsydUZzdVhwdmFYSFduVC1yeWZBUjlTYzUyQkQ4VDN5bDQ": "page does not have what the query requires: Riki Ellison: An all-American Kiwi hero"
+  "gnews:CBMihwFBVV95cUxNSmlqNkg5SHQ3M3pCclhGZUE3VWtLTWJrSkxQRGhWbmoyblgxSVJsQTRYZ2JtR1cxb3I3V0tUdkZlbG11bGJMVWNYSnEwWVBCdVJ5b2Y4dExTUEs3VGxmeW5TYnJPMUsydUZzdVhwdmFYSFduVC1yeWZBUjlTYzUyQkQ4VDN5bDQ": "page does not have what the query requires: Riki Ellison: An all-American Kiwi hero",
+  "gnews:CBMia0FVX3lxTE5GbmxUbVJIR2dQUWVQY3JPV3NhaUVfTlRvMDcyY1JTUzdxaExWdWloQmlXMVJrbE5KNUpHdVhramNvV2JIVGJScUJ4Vll1VVlDVlZYeHdrMEhmVFZhTUhtd3UzM0dxRzZxX2xn": "page does not have what the query requires: Raser etter dette",
+  "gnews:CBMickFVX3lxTE1rRUhTWlVjZVRGVEZlRThZM2tSdWxFMXdfeWR1cm0ya3BEQ2cwYVJ1V05UbHFRN1YxaU1QSmFJVlZGWkk1LU83NkRDSFZQbDFNNWtCMDZzcVZvaURzdjNtWG4xc3RDdzFKNnFrLTNWZXY4UQ": "page does not have what the query requires: Isvogn skaper rabalder"
  }
 }

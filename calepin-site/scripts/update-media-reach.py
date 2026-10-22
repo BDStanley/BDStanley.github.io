@@ -9,8 +9,8 @@ How articles are found:
   * Google News search, through its RSS feed (no key needed), with the
     queries in QUERIES. They cover Ben's name with a word tying it to his
     field, in English, Polish (with its case forms), German, French, Spanish,
-    Italian, Portuguese, Dutch, Czech, Slovak, Hungarian, Ukrainian and
-    Russian; the key ideas' phrases in those languages; and his joint work
+    Italian, Portuguese, Dutch, Czech, Slovak, Hungarian, Ukrainian, Russian,
+    Norwegian, Swedish and Estonian; the key ideas' phrases in those languages; and his joint work
     with Stanley Bill and Pooling the Poles. Each query runs in the Google
     News edition of its language. A normal build asks only for articles of
     the last 13 months. `--backfill` asks again with no dates, then year by
@@ -25,8 +25,9 @@ What is kept:
   * Each article's address is resolved from Google's link and its page is
     read, to check that it names Ben (in any of the forms in BEN), uses the
     idea's phrase, or names his work, as its query requires; and to find its
-    author and language. An article whose page can't be read is kept and
-    marked unchecked. One whose page fails the check is dropped and
+    author and language. An article whose page can't be read, or comes back
+    as a short paywall stub (under STUB characters) without his name, is kept
+    and marked unchecked. One whose page fails the check is dropped and
     remembered under "dropped", so it isn't fetched again.
   * Articles Ben wrote are dropped too: by their author, OWN_TITLE, OWN_URL,
     or because the Media page lists them (data/kultura-liberalna.yml and the
@@ -93,6 +94,7 @@ PAUSE = 1.2            # seconds between requests to Google when searching
 RESOLVE_PAUSE = 4      # and when resolving its links to articles
 WINDOW_FROM = 8        # results at which --backfill also asks year by year
 MAX_RESOLVE = {"build": 60, "backfill": 600}   # articles resolved and read per run
+STUB = 5000            # characters of text below which a page is a paywall stub, not the article
 
 # Google News editions: (hl, gl, ceid) and the language they stand for.
 ED = {
@@ -103,6 +105,8 @@ ED = {
     "nl": ("nl", "NL", "NL:nl", "Dutch"), "cs": ("cs", "CZ", "CZ:cs", "Czech"),
     "sk": ("sk", "SK", "SK:sk", "Slovak"), "hu": ("hu", "HU", "HU:hu", "Hungarian"),
     "uk": ("uk", "UA", "UA:uk", "Ukrainian"), "ru": ("ru", "RU", "RU:ru", "Russian"),
+    "no": ("no", "NO", "NO:no", "Norwegian"), "sv": ("sv", "SE", "SE:sv", "Swedish"),
+    "et": ("et", "EE", "EE:et", "Estonian"), "pt-PT": ("pt-PT", "PT", "PT:pt-150", "Portuguese"),
 }
 EN = ["en-GB", "en-US"]
 
@@ -151,7 +155,7 @@ QUERIES = [
     ("commentary", None, '"Ben Stanley" (Pologne OR politologue OR populisme)', ["fr"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polonia OR politólogo OR populismo)', ["es"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polonia OR politologo OR populismo)', ["it"], [BEN]),
-    ("commentary", None, '"Ben Stanley" (Polônia OR Polónia OR "cientista político")', ["pt"], [BEN]),
+    ("commentary", None, '"Ben Stanley" (Polônia OR Polónia OR "cientista político")', ["pt", "pt-PT"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polen OR politicoloog)', ["nl"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Polsko OR politolog)', ["cs"], [BEN]),
     ("commentary", None, '"Ben Stanley" (Poľsko OR politológ)', ["sk"], [BEN]),
@@ -179,6 +183,10 @@ QUERIES = [
     ("research", None, '"Stanley Bill" "Ben Stanley"', EN + ["pl"], [BEN, BILL]),
     ("research", None, '"Good Change" "Stanley Bill"', EN, [re.compile(r"Good Change", re.I), BILL]),
     ("research", None, '"Pooling the Poles"', ["en-GB", "pl"], [re.compile(r"Pooling the Poles", re.I)]),
+    # Added later; new searches go last, as stored articles refer to searches by position.
+    ("commentary", None, '"Ben Stanley" (Polen OR statsviter OR polsk)', ["no"], [BEN]),
+    ("commentary", None, '"Ben Stanley" (Polen OR statsvetare OR polsk)', ["sv"], [BEN]),
+    ("commentary", None, '"Ben Stanley" (Poola OR politoloog)', ["et"], [BEN]),
 ]
 CATEGORIES = [("commentary", "Interviews and commentary", "#2a78d6"),
               ("ideas", "Ideas", "#eb6834"),
@@ -502,6 +510,10 @@ def process(old, sync, backfill, names, log, offline=False, resolve_only=False):
             page, final = fetch(rec["url"], timeout=20)
             rec["url"] = final or rec["url"]
             if not check(rec, article_text(page)):
+                if len(page_text(page)) < STUB:
+                    # A paywall or script-only page: the article isn't there to check.
+                    rec["checked"] = False
+                    continue
                 dropped[rec["key"]] = "page does not have what the query requires: " + rec["title"][:80]
                 records.pop(rec["key"], None)
                 continue

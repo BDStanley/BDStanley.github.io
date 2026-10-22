@@ -75,7 +75,7 @@ _Updated: #month(md.as_of)_
 
 Where my work and expertise appear in the news: articles that quote or
 interview me, that take up my ideas, or that report on my research. They were
-found by searching Google News, in thirteen languages, from 2008 onwards, and
+found by searching Google News, in sixteen languages, from 2008 onwards, and
 are kept up to date with Google Alerts.
 
 #el("div", class: "reach-kpis", {
@@ -199,7 +199,7 @@ Pooling the Poles.
 - The articles were found with Google News searches for my name, in the forms
   the press uses (Polish case endings and Cyrillic included), together with a
   word that ties it to my field; for the key ideas' phrases; and for my work
-  with Stanley Bill and Pooling the Poles. The searches are in thirteen
+  with Stanley Bill and Pooling the Poles. The searches are in sixteen
   languages, each in the Google News edition of its language.
 - Each article's page is read to check that it names me, or uses the idea's
   phrase, before it is counted. #num(t.unchecked) articles whose pages could
