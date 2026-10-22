@@ -7,7 +7,7 @@
 // The chart is a standalone page, assets/party-genealogy/index.html, embedded
 // here like the Pooling the Poles app. Its data, assets/party-genealogy/genealogy.json,
 // comes from the Party tracker in the Polish political analyses repo and is
-// copied in by scripts/sync-genealogy.py on each build. .embed-frame--app
+// copied in by scripts/sync-analyses.py on each build. .embed-frame--app
 // sizing lives in themes/site-theme/css/90_site.css.
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]

@@ -351,13 +351,72 @@ body {
 }
 .hero-bio > :first-child { margin-top: 0; }
 
-/* Two-column book layout on the "Good Change" page, with a divider that
-   mirrors the original .columns separator. */
-.gc-columns { align-items: start; }
-@media (min-width: 768px) {
-  .gc-columns > div:first-child {
-    border-right: 1px solid var(--calepin-color-border);
-    padding-right: 1.5rem;
+/* ---- "Good Change" page (pages/good-change.typ) ---------------------------- */
+/* On a computer screen the page breaks out of the narrow reading column (as the
+   Pooling the Poles embed does), centred on the viewport and capped at 62rem:
+   the cover with the publication details under it beside the description, then
+   the reviews in two columns. Below 56rem everything stacks in the reading
+   column. The Quarto backup copies this block into its styles.css. */
+.gc-book {
+  margin-block: 1rem 2rem;
+}
+.gc-side img {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  height: auto;
+  margin-inline: auto;
+  box-shadow: 0 4px 18px rgba(31, 41, 51, 0.18);
+}
+.gc-side {
+  margin-bottom: 2rem;      /* above the description when stacked */
+}
+.gc-details {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--calepin-color-muted);
+}
+.gc-main > :first-child {
+  margin-top: 0;
+}
+.gc-reviews {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;       /* each rule only as tall as its quote */
+}
+.gc-review {
+  padding-left: 1rem;
+  border-left: 3px solid #8b0000;
+}
+.gc-review p {
+  margin: 0;
+}
+.gc-review p + p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--calepin-color-muted);
+}
+@media (min-width: 56rem) {
+  .gc-book {
+    width: min(100vw - 4rem, 62rem);
+    margin-left: calc(50% - min(50vw - 2rem, 31rem));
+  }
+  .gc-top {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: 3rem;
+    align-items: start;
+  }
+  .gc-side {
+    margin-bottom: 0;
+  }
+  .gc-side img {
+    max-width: none;
+  }
+  .gc-reviews {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 3rem;
   }
 }
 
