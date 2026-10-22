@@ -3,7 +3,8 @@
 // =============================================================================
 // Brand theme for the Quarto backup of benstanley.eu. Mirrors the Calepin
 // site's look: Jost everywhere, dark-red (#8B0000) navbar + footer, red links
-// with a pink primary accent and muted-grey hover. Only Bootstrap variables
+// with a pink primary accent and soft-ink hover, near-black text and light
+// dark-red headings as in the Polish political analyses. Only Bootstrap variables
 // live here; the layout rules ported from the Calepin site's
 // themes/site-theme/css/90_site.css are in styles.css.
 // =============================================================================
@@ -23,19 +24,19 @@ $secondary: $gray-700 !default;
 // ---- Typography: Jost across the whole site ---------------------------------
 $font-family-sans-serif: "Jost" !default;   // body text
 $headings-font-family:   "Jost" !default;
-$headings-font-weight:   700 !default;
-$headings-color:         #374151 !default;  // slate grey, as on the Calepin site
+$headings-font-weight:   300 !default;
+$headings-color:         $red !default;     // dark red, as on the Calepin site
 $navbar-font-family:     "Jost" !default;
 $toc-font-family:        "Jost" !default;
 $footer-font-family:     "Jost" !default;
 $code-font-family:       "Jost" !default;
 
-$body-color: #1f2933 !default;              // the Calepin site's text colour
+$body-color: #141414 !default;              // the Calepin site's near-black ink
 
 // ---- Links ------------------------------------------------------------------
 $link-color:           $red !default;
 $link-decoration:      none !default;
-$link-hover-color:     $gray-700 !default;
+$link-hover-color:     #4B4B4B !default;
 $link-hover-decoration: underline !default;
 
 // ---- Code -------------------------------------------------------------------

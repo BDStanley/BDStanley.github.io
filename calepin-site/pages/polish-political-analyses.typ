@@ -25,12 +25,30 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/political-attitudes.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/political-attitudes.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/political-attitudes.html"))[Political attitudes]
+#html.elem("div", attrs: (class: "course-desc"))[How Poles' attitudes have changed since 1990, each trend pooled from every comparable survey into one monthly estimate, with breakdowns by party preference, age, gender, education and place of residence. First up: support for membership of the European Union.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/party-system-indicators.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/party-system-indicators.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-system-indicators.html"))[Party system indicators]
 #html.elem("div", attrs: (class: "course-desc"))[Fragmentation, disproportionality, volatility, nationalisation, polarisation and the closure of government competition for every Sejm election since 1991 and for the current polls, with the lists, lineages, party positions and cabinets behind each number.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/party-ideology.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/party-ideology.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-ideology.html"))[Party ideology]
+#html.elem("div", attrs: (class: "course-desc"))[Where Polish parties stand on the economy, cultural questions, European integration and democracy, set against parties across Europe in the Chapel Hill Expert Survey since 2002, and how expert ratings of anti-elite rhetoric compare with The PopuList's classification of parties as populist, far right or far left.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[

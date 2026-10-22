@@ -77,9 +77,10 @@ python3 "$SRC/scripts/sync-teaching.py"
 # Copy the data behind the Polish political analyses pages from the sibling
 # Polish political analyses repo (read-only; override with PPA_SRC): the party
 # genealogy (assets/party-genealogy/), the Polling tracker
-# (assets/polling-tracker/) and the Party system indicators
-# (assets/party-system-indicators/). Missing repo or file -> the script warns
-# and keeps the committed copy (doesn't fail the build).
+# (assets/polling-tracker/), the Party system indicators
+# (assets/party-system-indicators/) and Party ideology (assets/party-ideology/).
+# Missing repo or file -> the script warns and keeps the committed copy
+# (doesn't fail the build).
 echo "→ Syncing the Polish political analyses data ..."
 python3 "$SRC/scripts/sync-analyses.py" || echo "  (skipped: sync-analyses.py failed; using the committed data)"
 

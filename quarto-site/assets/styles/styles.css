@@ -43,24 +43,42 @@ html {
   }
 }
 
-/* ---- Reading text: Calepin's body size and compact heading scale ---------- */
+/* ---- Reading text: Calepin's body size, ink and heading scale ------------- */
+/* As in the Polish political analyses: thin, crisp Jost in near-black ink,
+   figures that line up in columns, section headings (h2) light and dark red,
+   h3/h4 medium in ink. */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
+}
 #quarto-document-content :where(p, li, dd) {
   line-height: 1.55;
-  color: #373c44;
+  color: #141414;
 }
+#quarto-document-content :where(strong, b) { font-weight: 600; }
 #quarto-document-content :is(h1, h2, h3, h4) {
-  font-weight: 700;
-  color: #374151;
-  line-height: 1.2;
+  line-height: 1.15;
   margin-top: 2rem;
   margin-bottom: 1rem;
   padding-bottom: 0;
   border-bottom: 0;
 }
-#quarto-document-content h1 { font-size: 1.25rem; margin-bottom: 1.15rem; }
-#quarto-document-content h2 { font-size: 1.08rem; margin-top: 2.8rem; }
-#quarto-document-content h3 { font-size: 0.98rem; margin-top: 2.1rem; }
-#quarto-document-content h4 { font-size: 0.92rem; }
+#quarto-document-content :is(h1, h2) { font-weight: 300; color: #8b0000; }
+#quarto-document-content :is(h3, h4) { font-weight: 500; color: #141414; }
+#quarto-document-content h1 { font-size: 2.2rem; letter-spacing: -0.015em; margin-bottom: 1.15rem; }
+#quarto-document-content h2 { font-size: 1.55rem; letter-spacing: -0.01em; margin-top: 2.8rem; }
+#quarto-document-content h3 { font-size: 1.05rem; margin-top: 2.1rem; }
+#quarto-document-content h4 { font-size: 0.95rem; }
+/* Small uppercase tracked label in dark red, set above a heading or block. */
+.eyebrow {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: #8b0000;
+}
 /* Undo Quarto's 1rem above the first section heading on narrower screens. */
 @media (max-width: 991.98px) {
   #quarto-content section:first-of-type h2:first-of-type { margin-top: 2.8rem; }
@@ -83,7 +101,7 @@ html {
 /* ---- Top navigation: dark-red bar with white links ------------------------ */
 #quarto-header .navbar {
   padding: 1rem 0;
-  border-bottom: 1px solid #d8dee6;
+  border-bottom: 1px solid #d5d5d5;
 }
 #quarto-header .navbar-brand,
 #quarto-header .navbar-brand .navbar-title {
@@ -432,16 +450,17 @@ footer.footer a:focus-visible {
 .hero-bio > :first-child { margin-top: 0; }
 
 /* ---- Good Change (pages/good-change.qmd) ----------------------------------- */
-/* On a computer screen the page breaks out of the narrow reading column,
-   centred and capped at 62rem: the cover with the publication details under
-   it beside the description, then the reviews in two columns. Below 56rem
-   everything stacks. Copied from the Calepin theme's css/90_site.css; keep the
-   two in step. */
+/* On a computer screen the page breaks out of the narrow reading column (as the
+   embedded analyses do), centred on the viewport and capped at 66rem: the cover
+   with the publication details under it beside the title and description, then
+   the reviews in two columns. Below 56rem everything stacks in the reading
+   column. Copied from the Calepin theme's css/90_site.css; keep the two in
+   step. */
 .gc-book {
-  margin-block: 1rem 2rem;
+  margin-block: 1.75rem 3rem;
 }
 .gc-side {
-  margin-bottom: 2rem;      /* above the description when stacked */
+  margin-bottom: 2rem;      /* above the title when stacked */
 }
 /* The cover isn't wrapped in a paragraph on the Calepin page. */
 .gc-side p:has(> img:only-child) {
@@ -450,49 +469,125 @@ footer.footer a:focus-visible {
 .gc-side img {
   display: block;
   width: 100%;
-  max-width: 18rem;
+  max-width: 16rem;
   height: auto;
   margin-inline: auto;
-  box-shadow: 0 4px 18px rgba(31, 41, 51, 0.18);
+  box-shadow: 0 4px 18px rgba(20, 20, 20, 0.16);
 }
-.gc-details {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #5f6b7a;
+.gc-facts-label {
+  margin-top: 1.75rem;
 }
-.gc-details p {
+#quarto-document-content .gc-facts {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+.gc-facts div {
+  display: grid;
+  gap: 0.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #ececec;
+}
+#quarto-document-content .gc-facts dt {
   margin: 0;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #767676;
 }
-.gc-main > :first-child {
-  margin-top: 0;
+#quarto-document-content .gc-facts dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+#quarto-document-content .gc-title {
+  margin: 0.45rem 0 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  color: #8b0000;
+}
+#quarto-document-content .gc-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.3;
+  color: #4b4b4b;
+}
+#quarto-document-content .gc-authors {
+  margin: 0 0 1.75rem;
+  font-weight: 500;
+}
+.gc-authors-label {
+  margin-top: 1.9rem;
+}
+#quarto-document-content .gc-authors-label + p {
+  margin-top: 0.5rem;
+  color: #4b4b4b;
 }
 .gc-reviews {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ececec;
+}
+.gc-review-grid {
   display: grid;
-  gap: 1.5rem;
-  align-items: start;       /* each rule only as tall as its quote */
+  gap: 2.25rem;
+  margin-top: 1.25rem;
+  align-items: start;
 }
-.gc-review {
-  padding-left: 1rem;
-  border-left: 3px solid #8b0000;
-}
-.gc-review p {
+#quarto-document-content .gc-review {
   margin: 0;
+  text-align: left;
 }
-.gc-review p + p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #5f6b7a;
+/* Undo the theme's centred, bordered blockquote. */
+#quarto-document-content .gc-review blockquote {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #141414;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: left;
+  quotes: none;
+}
+#quarto-document-content .gc-review figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  max-width: none;
+  margin-top: 0.75rem;
+  padding: 0;
+  text-align: left;
+}
+.gc-review .gc-who {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8b0000;
+}
+.gc-review .gc-where {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #767676;
 }
 @media (min-width: 56rem) {
   .gc-book {
-    width: min(100vw - 4rem, 62rem);
-    margin-left: calc(50% - min(50vw - 2rem, 31rem));
+    width: min(100vw - 4rem, 66rem);
+    margin-left: calc(50% - min(50vw - 2rem, 33rem));
   }
   .gc-top {
     display: grid;
-    grid-template-columns: 16rem minmax(0, 1fr);
-    gap: 3rem;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 3.5rem;
     align-items: start;
   }
   .gc-side {
@@ -501,9 +596,15 @@ footer.footer a:focus-visible {
   .gc-side img {
     max-width: none;
   }
-  .gc-reviews {
+  #quarto-document-content .gc-title {
+    font-size: 2.7rem;      /* about 46px */
+  }
+  .gc-main p {
+    max-width: 42rem;
+  }
+  .gc-review-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem 3rem;
+    gap: 2.25rem 3.5rem;
   }
 }
 
@@ -522,14 +623,14 @@ footer.footer a:focus-visible {
   white-space: nowrap;
 }
 .proj-body {
-  border-left: 1px solid #d8dee6;
+  border-left: 1px solid #d5d5d5;
   padding-left: 0.7em;
 }
-.proj-title strong { font-weight: 700; }
+.proj-title strong { font-weight: 500; }
 .proj-funder { font-style: italic; }
 .proj-detail {
   font-size: 0.85em;
-  color: #5f6b7a;
+  color: #767676;
 }
 
 /* ---- Embedded pages ---------------------------------------------------------
@@ -571,17 +672,17 @@ footer.footer a:focus-visible {
 }
 .course-name {
   display: inline-block;
-  font-size: 1.08rem;   /* match the h2 section headings on other pages */
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 500;
   line-height: 1.25;
-  color: #374151 !important;
+  color: #8b0000 !important;
   text-decoration: none;
 }
 .course-name:hover,
 .course-name:focus-visible { text-decoration: underline; }
 .course-meta {
   margin-top: 0.15rem;
-  color: #5f6b7a;
+  color: #767676;
   font-size: 0.85rem;
 }
 .course-desc {
@@ -616,7 +717,7 @@ footer.footer a:focus-visible {
   font-size: 0.85em;
 }
 :is(.teaching-back, .reach-back) a {
-  color: #5f6b7a !important;
+  color: #767676 !important;
   text-decoration: none;
 }
 :is(.teaching-back, .reach-back) a:hover {
@@ -628,9 +729,10 @@ footer.footer a:focus-visible {
 /* Charts built as plain HTML and inline SVG (R/reach-helpers.R) from
    data/reach.json, which holds every value, colour and hover text. Marks follow the
    dataviz conventions: bars at most 24px thick with a 4px rounded data end,
-   a 2px white gap between stacked segments, hairline grid, text in ink colours
-   (never the series colour), a legend for each multi-colour chart and a table
-   under each one. Copied from the Calepin theme's css/90_site.css (where the
+   a 2px white gap between stacked segments, hairline grid, text in neutral
+   greys (never the series colour), a legend for each multi-colour chart and a
+   table under each one. The headline figures are set like the analyses' big
+   numbers: light dark red over a small uppercase label. Copied from the Calepin theme's css/90_site.css (where the
    data comes from scripts/update-reach.py); keep the two in step. */
 .reach-kpis {
   display: grid;
@@ -640,15 +742,19 @@ footer.footer a:focus-visible {
 }
 .reach-kpi-value {
   display: block;
-  font-size: 1.45rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #1f2933;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #8b0000;
 }
 .reach-kpi-label {
   display: block;
-  font-size: 0.8rem;
-  color: #5f6b7a;
+  margin-top: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #767676;
 }
 @media (max-width: 600px) {
   .reach-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -675,7 +781,7 @@ figure.reach-map {
   stroke-width: 1.5;
 }
 .reach-map-svg :is(path, circle):hover {
-  stroke: #1f2933;
+  stroke: #141414;
   stroke-width: 1;
 }
 
@@ -690,11 +796,11 @@ figure.reach-map {
   margin-top: 0.6rem;
   font-size: 0.8rem;
   line-height: 1.4;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-legend-title {
-  font-weight: 600;
-  color: #373c44;
+  font-weight: 500;
+  color: #4b4b4b;
 }
 .reach-legend-item {
   display: inline-flex;
@@ -725,7 +831,7 @@ figure.reach-map {
 }
 .reach-bar-label {
   text-align: right;
-  color: #373c44;
+  color: #4b4b4b;
 }
 .reach-bar-area {
   display: flex;
@@ -741,7 +847,7 @@ figure.reach-map {
 }
 .reach-bar-value {
   font-size: 0.8rem;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-bar-row:hover .reach-bar {
   filter: brightness(1.1);
@@ -755,19 +861,19 @@ figure.reach-map {
 .reach-years {
   margin: 0.8rem 0 0.8rem;
   font-size: 0.75rem;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-years-plot {
   position: relative;
   height: 13rem;
   margin: 0.6rem 0 0 2.2rem;
-  border-bottom: 1px solid #c3c2b7;
+  border-bottom: 1px solid #d5d5d5;
 }
 .reach-tick {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid #ecebe6;
+  border-top: 1px solid #ececec;
 }
 .reach-tick span {
   position: absolute;
@@ -826,13 +932,13 @@ figure.reach-map {
   font-size: 0.85rem;
 }
 /* Spelt out rather than left to Pico's details styling, so the Quarto backup
-   can copy it: dark text, a chevron at the right that turns down when open. */
+   can copy it: soft ink, a chevron at the right that turns down when open. */
 details.reach-table > summary {
   display: block;
   cursor: pointer;
   list-style: none;
   line-height: 1rem;
-  color: #373c44;
+  color: #4b4b4b;
 }
 details.reach-table > summary::-webkit-details-marker {
   display: none;
@@ -844,7 +950,7 @@ details.reach-table > summary::after {
   width: 1rem;
   height: 1rem;
   margin-inline-start: 0.5rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") right / 1rem no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(118, 118, 118)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") right / 1rem no-repeat;
   transform: rotate(-90deg);
   transition: transform 0.2s ease-in-out;
 }
@@ -867,13 +973,16 @@ details.reach-table[open] > summary::after {
 }
 .reach-table :is(th, td) {
   padding: 0.3rem 0.6rem;
-  border-bottom: 1px solid #d8dee6;
+  border-bottom: 1px solid #ececec;
   text-align: left;
   vertical-align: top;
 }
 .reach-table th {
-  font-weight: 600;
-  color: #374151;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #767676;
 }
 .reach-table .num {
   text-align: right;
@@ -906,5 +1015,5 @@ details.policy-details {
 .policy-item-meta {
   display: block;
   font-size: 0.8rem;
-  color: #5f6b7a;
+  color: #767676;
 }

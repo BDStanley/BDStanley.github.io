@@ -2,81 +2,81 @@
 pagetitle: "Good Change"
 ---
 
-<!-- The Quarto twin of calepin-site/pages/good-change.typ: on a computer
-     screen the page is wider than the reading column, with the cover and the
-     publication details beside the description, then the reviews in two
-     columns; below 56rem it all stacks. Styles: .gc-* in assets/styles/styles.css. -->
+<!-- The Quarto twin of calepin-site/pages/good-change.typ, set like the Polish
+     political analyses: small uppercase labels, a large light dark-red title.
+     On a computer screen the page is wider than the reading column, with the
+     cover and the publication details beside the title and description, then
+     the reviews in two columns; below 56rem it all stacks. The labels, facts and
+     reviews are raw HTML so that the markup, and so the .gc-* styles in
+     assets/styles/styles.css, match the Calepin page. -->
 
 :::::: gc-book
 ::::: gc-top
 :::: gc-side
 ![](../assets/images/good-change.png){fig-alt="Cover of Good Change: The Rise and Fall of Poland's Illiberal Revolution, by Stanley Bill and Ben Stanley"}
 
-::: gc-details
-September 2025\
-344 pages \| 6x9\
-14 figures\
-Paper\
-\$35.00 (£27.99) SDT 9781503643680\
-Cloth\
-\$140.00 (£110.00) SDT 9781503634565\
-eBook 9781503643697\
-International Affairs
-:::
+```{=html}
+<div class="eyebrow gc-facts-label">Publication details</div>
+<dl class="gc-facts">
+  <div><dt>Published</dt><dd>September 2025</dd></div>
+  <div><dt>Length</dt><dd>344 pages · 6×9 · 14 figures</dd></div>
+  <div><dt>Paper</dt><dd>$35.00 (£27.99) · SDT 9781503643680</dd></div>
+  <div><dt>Cloth</dt><dd>$140.00 (£110.00) · SDT 9781503634565</dd></div>
+  <div><dt>eBook</dt><dd>9781503643697</dd></div>
+  <div><dt>Subject</dt><dd>International Affairs</dd></div>
+</dl>
+```
 ::::
 
 :::: gc-main
-*The Rise and Fall of Poland's Illiberal Revolution*
-
-Stanley Bill and Ben Stanley
-
-Stanford University Press
+```{=html}
+<div class="eyebrow">Book · Stanford University Press</div>
+<h1 class="gc-title">Good Change</h1>
+<p class="gc-subtitle">The Rise and Fall of Poland’s Illiberal Revolution</p>
+<p class="gc-authors">Stanley Bill and Ben Stanley</p>
+```
 
 Few countries serve as a more useful case study for understanding the global tension between liberal and illiberal conceptions of democracy than Poland. Under the populist Law and Justice (PiS)-led government, a large part of the Polish electorate welcomed the party's "Good Change"—as it described its program—despite accusations of democratic backsliding. PiS offered voters neglected by previous governments a combination of economic redistributionism and cultural traditionalism, supplemented with narratives of bolstering Poland's national prestige and sovereignty. Yet, after eight years of success, it was defeated in the October 2023 elections by a "pro-democratic" coalition. The history of PiS shows both the strengths and weaknesses of democratic illiberalism as a challenge to liberal democracy.
 
 Bill and Stanley analyze the course and causes of the party's successes and failures. The authors deftly outline PiS's assault on democratic institutions, its paradigm-changing redistributive programs, cultural backlash agenda, politics of history, and the reasons for its fall from power. Poland's democracy has proven resilient to the specter of autocratization, but its future development under a new government raises fresh questions. This essential book considers what the rise and fall of Poland's illiberal government reveals about the future of liberal democracy and its ongoing transformations in the 21st century.
 
+```{=html}
+<div class="eyebrow gc-authors-label">The authors</div>
+```
+
 **Stanley Bill** is Professor of Polish Studies, University of Cambridge. He is the Chair of the Cambridge Committee for Russian and East European Studies (CamCREES). **Ben Stanley** is Associate Professor at the Centre for the Study of Democracy, SWPS University of Social Sciences and Humanities.
 ::::
 :::::
 
-## Reviews
-
-::::: gc-reviews
-:::: gc-review
-"This nuanced and data-driven analysis shows how support for the right was undermined by widespread opposition to conservative policies on abortion and other issues, along with Law and Justice's failure to deliver low-inflation growth, benefits for farmers, and smooth relations with the EU. … This is a must-read for all who follow central European politics."
-
-—Andrew Moravcsik, *Foreign Affairs*
-::::
-
-:::: gc-review
-"By refusing to write off the dominant Polish political force of the past two decades as an aberration, Stanley Bill and Ben Stanley's *Good Change* helps us to discern how illiberals in countries other than the US have responded to genuine demands from within the liberal mould, changing liberalism in the process."
-
-—Piotr H. Kosicki, *Times Literary Supplement*
-::::
-
-:::: gc-review
-"A book as topic-specific and detailed about a particular case study as this one is, and as far-reaching and theoretically complex, is usually a rare event."
-
-—Ray Taras, *Slavic Review*
-::::
-
-:::: gc-review
-"*Good Change* is an exceptional work in the literature on populism and post-communist transformation. Its strength lies in its ability to combine different levels of analysis – empirical, symbolic and historical – into a coherent whole."
-
-—Mikołaj Cześnik, *Studia Socjologiczne*
-::::
-
-:::: gc-review
-"*Good Change* is admirably comprehensive, compelling, and well-researched, amply backing up its claims with numbers and charts."
-
-—Ana Oppenheim, *Renewal*
-::::
-
-:::: gc-review
-"*Good Change* provides an insightful analysis of recent political developments in Poland, with particular attention to the emergence and subsequent decline of illiberalism and democratic backsliding. Authors Stanley Bill and Ben Stanley adopt a nuanced approach, offering a comprehensive examination of the political, institutional, economic, and societal dynamics underpinning these processes."
-
-—Anna Gwiazda, *Political Science Quarterly*
-::::
-:::::
+```{=html}
+<section class="gc-reviews">
+  <div class="eyebrow">Reviews</div>
+  <div class="gc-review-grid">
+    <figure class="gc-review">
+      <blockquote>“This nuanced and data-driven analysis shows how support for the right was undermined by widespread opposition to conservative policies on abortion and other issues, along with Law and Justice’s failure to deliver low-inflation growth, benefits for farmers, and smooth relations with the EU. … This is a must-read for all who follow central European politics.”</blockquote>
+      <figcaption><span class="gc-who">Andrew Moravcsik</span> <span class="gc-where">Foreign Affairs</span></figcaption>
+    </figure>
+    <figure class="gc-review">
+      <blockquote>“By refusing to write off the dominant Polish political force of the past two decades as an aberration, Stanley Bill and Ben Stanley’s <em>Good Change</em> helps us to discern how illiberals in countries other than the US have responded to genuine demands from within the liberal mould, changing liberalism in the process.”</blockquote>
+      <figcaption><span class="gc-who">Piotr H. Kosicki</span> <span class="gc-where">Times Literary Supplement</span></figcaption>
+    </figure>
+    <figure class="gc-review">
+      <blockquote>“A book as topic-specific and detailed about a particular case study as this one is, and as far-reaching and theoretically complex, is usually a rare event.”</blockquote>
+      <figcaption><span class="gc-who">Ray Taras</span> <span class="gc-where">Slavic Review</span></figcaption>
+    </figure>
+    <figure class="gc-review">
+      <blockquote>“<em>Good Change</em> is an exceptional work in the literature on populism and post-communist transformation. Its strength lies in its ability to combine different levels of analysis – empirical, symbolic and historical – into a coherent whole.”</blockquote>
+      <figcaption><span class="gc-who">Mikołaj Cześnik</span> <span class="gc-where">Studia Socjologiczne</span></figcaption>
+    </figure>
+    <figure class="gc-review">
+      <blockquote>“<em>Good Change</em> is admirably comprehensive, compelling, and well-researched, amply backing up its claims with numbers and charts.”</blockquote>
+      <figcaption><span class="gc-who">Ana Oppenheim</span> <span class="gc-where">Renewal</span></figcaption>
+    </figure>
+    <figure class="gc-review">
+      <blockquote>“<em>Good Change</em> provides an insightful analysis of recent political developments in Poland, with particular attention to the emergence and subsequent decline of illiberalism and democratic backsliding. Authors Stanley Bill and Ben Stanley adopt a nuanced approach, offering a comprehensive examination of the political, institutional, economic, and societal dynamics underpinning these processes.”</blockquote>
+      <figcaption><span class="gc-who">Anna Gwiazda</span> <span class="gc-where">Political Science Quarterly</span></figcaption>
+    </figure>
+  </div>
+</section>
+```
 ::::::

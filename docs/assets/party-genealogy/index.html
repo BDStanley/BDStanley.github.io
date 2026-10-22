@@ -153,6 +153,30 @@ const $ = id => document.getElementById(id);
 let D = null, PER = [], ADJ = null;
 const LIN = new Map();
 const S = {period:0, off:new Set(), kOff:new Set(), q:"", sel:null, hov:null, lin:false};
+// Parties rated in the Chapel Hill Expert Survey, whose records link to the Party ideology page
+// (the keys of ptChes in assets/party-ideology/ideology.json).
+const IDEO = new Set(["aws_party", "knp", "konfederacja", "kukiz15", "lpr", "nowa_lewica", "nowoczesna", "pd", "pis", "po",
+  "polska2050", "polska_razem", "psl", "razem", "samoobrona", "sd", "sdpl", "sld", "solidarna_polska", "twoj_ruch", "up", "uw", "wiosna"]);
+
+// ---- link state: #pt=<Party tracker id> in the parent page's address selects a party ----------
+function hashTarget() { try { if (window.top !== window && window.top.location.host === location.host) return window.top; } catch (e) { /* cross-origin */ } return window; }
+function writeHash() {
+  const t = hashTarget(), s = S.sel !== null ? "pt=" + encodeURIComponent(D.parties[S.sel].id) : "";
+  try { t.history.replaceState(null, "", t.location.pathname + t.location.search + (s ? "#" + s : "")); } catch (e) { /* ignore */ }
+}
+function readHash() {
+  let h = "";
+  try { h = hashTarget().location.hash.slice(1); } catch (e) { h = location.hash.slice(1); }
+  const pt = new URLSearchParams(h).get("pt"), i = pt ? D.parties.findIndex(p => p.id === pt) : -1;
+  if (i < 0) return false;
+  Object.assign(S, {period:0, q:"", sel:i, hov:null, lin:false});
+  S.off.clear(); $("q").value = "";
+  return true;
+}
+function scrollToSel() {
+  const el = S.sel === null ? null : $("chart").querySelector(`text[data-k="p:${S.sel}"]`);
+  if (el) { const sc = $("scroller"); sc.scrollTop = Math.max(0, el.getBBox().y - sc.clientHeight / 3); }
+}
 
 function lineage(i) {
   if (LIN.has(i)) return LIN.get(i);
@@ -167,6 +191,7 @@ function lineage(i) {
 function select(i) {
   if (S.sel === i) { S.sel = null; S.lin = false; } else S.sel = i;
   render();
+  writeHash();
 }
 
 // ---- controls -------------------------------------------------------------------------------
@@ -181,7 +206,7 @@ function buildControls() {
   $("fam-all").onclick = e => { e.preventDefault(); S.off.clear(); S.lin = false; render(); };
   $("fam-none").onclick = e => { e.preventDefault(); FAMS.forEach((f, j) => S.off.add(j)); S.lin = false; render(); };
   $("q").oninput = e => { S.q = e.target.value; S.lin = false; S.hov = null; render(); };
-  $("reset").onclick = () => { Object.assign(S, {period:0, q:"", sel:null, hov:null, lin:false}); S.off.clear(); S.kOff.clear(); $("q").value = ""; render(); };
+  $("reset").onclick = () => { Object.assign(S, {period:0, q:"", sel:null, hov:null, lin:false}); S.off.clear(); S.kOff.clear(); $("q").value = ""; render(); writeHash(); };
 }
 function syncControls() {
   [...$("periods").children].forEach((b, j) => b.setAttribute("aria-pressed", S.period === j));
@@ -315,6 +340,7 @@ function partyCard(i) {
       <button type="button" class="btn1" data-act="sel" data-i="${i}">${isSel ? "Clear selection" : "Select and trace lineage"}</button>
       ${isSel ? `<button type="button" class="btn2" data-act="lin">${S.lin ? "Show all parties" : "Show this lineage only"}</button>` : ""}
     </div>
+    ${IDEO.has(p.id) ? `<a class="linkbtn" style="text-decoration:none" href="../../pages/polish-political-analyses/party-ideology.html#pt=${encodeURIComponent(p.id)}" target="_top">${esc(p.lab)} in Party ideology →</a>` : ""}
     ${p.ev.length ? `<span class="label" style="padding-top:6px">Genealogy events</span>
     <div class="evs">${p.ev.map(e => `<div title="${esc(e.desc)}"><span class="d">${esc(e.d)}</span> · ${esc(e.t)}: ${esc(e.f)}${e.to ? " → " + esc(e.to) : ""}</div>`).join("")}</div>` : ""}`;
 }
@@ -399,7 +425,10 @@ fetch("genealogy.json").then(r => { if (!r.ok) throw new Error(r.status); return
   $("asof").textContent = "Data to " + fmt(D.asOf) + ".";
   if (window.matchMedia("(max-width: 900px)").matches) $("fam-box").open = false;
   buildControls();
+  const fromHash = readHash();
   render();
+  if (fromHash) scrollToSel();
+  try { hashTarget().addEventListener("hashchange", () => { if (readHash()) { render(); scrollToSel(); } }); } catch (e) { /* ignore */ }
   let raf = 0, lastW = $("scroller").clientWidth;
   window.addEventListener("resize", () => {
     cancelAnimationFrame(raf);

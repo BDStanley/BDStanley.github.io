@@ -13,6 +13,12 @@ page; this script copies it beside the page's chart under assets/:
     Party system analysis/web/party_system.json   -> assets/party-system-indicators/party_system.json
         (written by Party system analysis/analysis/export_web.R, which
         "Party system analysis.R" runs)
+    Party ideology/web/ideology.json              -> assets/party-ideology/ideology.json
+        (written by "Party ideology/analysis/Party ideology.R")
+    Political attitudes/web/attitudes.json        -> assets/political-attitudes/attitudes.json
+    Political attitudes/web/<slug>.json           -> assets/political-attitudes/<slug>.json
+        (written by "Political attitudes/web/build_web.R"; attitudes.json lists the
+        attitudes, and each one it lists is copied too)
 
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
@@ -47,6 +53,17 @@ FILES = [
      {"nDraws", "categories", "weeks"}),
     ("Party system analysis/web/party_system.json", "assets/party-system-indicators/party_system.json",
      {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
+    ("Party ideology/web/ideology.json", "assets/party-ideology/ideology.json",
+     {"meta", "countries", "dims", "parties", "rows", "system"}),
+    ("Political attitudes/web/attitudes.json", "assets/political-attitudes/attitudes.json",
+     {"meta", "attitudes"}),
+]
+
+# Files listed inside a synced index: (index in the repo, field with the list, key naming each
+# file, fields each file must have). Each listed file sits beside its index in both places.
+LISTED = [
+    ("Political attitudes/web/attitudes.json", "attitudes", "file",
+     {"meta", "national", "groupings", "items", "readings", "events"}),
 ]
 
 
@@ -75,9 +92,27 @@ def sync(rel_src: str, rel_dest: str, required: set[str]) -> None:
     print(f"  {rel_dest}: updated")
 
 
+def sync_listed(rel_index: str, field: str, key: str, required: set[str]) -> None:
+    index = PPA_SRC / rel_index
+    try:
+        entries = json.loads(index.read_text(encoding="utf-8")).get(field, [])
+    except (OSError, ValueError):
+        return  # sync() has already reported the index
+    dest_dir = next(dest for src, dest, _ in FILES if src == rel_index).rsplit("/", 1)[0]
+    src_dir = rel_index.rsplit("/", 1)[0]
+    for entry in entries:
+        name = entry.get(key) if isinstance(entry, dict) else None
+        if not name or "/" in name or not name.endswith(".json"):
+            print(f"  warning: {index.name} lists an invalid file {name!r}; skipped", file=sys.stderr)
+            continue
+        sync(f"{src_dir}/{name}", f"{dest_dir}/{name}", required)
+
+
 def main() -> int:
     for rel_src, rel_dest, required in FILES:
         sync(rel_src, rel_dest, required)
+    for rel_index, field, key, required in LISTED:
+        sync_listed(rel_index, field, key, required)
     return 0
 
 

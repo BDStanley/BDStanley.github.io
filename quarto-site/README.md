@@ -136,7 +136,8 @@ and adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`.
 
 - **Same look and layout.** `assets/styles/website_style.scss` sets the
   Bootstrap colours and fonts (Jost, dark-red `#8B0000` navbar and footer, red
-  links with a pink accent). `assets/styles/styles.css` is a port of the Calepin
+  links with a pink accent, near-black text and light dark-red headings as in
+  the Polish political analyses). `assets/styles/styles.css` is a port of the Calepin
   theme's `css/90_site.css` onto Quarto's markup: the 39rem reading column and
   type scale (with Calepin's 17px root from 768px up and 16px below it), the
   navbar in each viewport mode, the slim footer, the home-page hero and the page

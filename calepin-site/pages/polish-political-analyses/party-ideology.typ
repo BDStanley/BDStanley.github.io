@@ -1,0 +1,39 @@
+#set document(title: [Party ideology])
+#metadata((
+  title: "Party ideology",
+  description: "Where Polish parties stand in European ideological space, from the Chapel Hill Expert Survey and The PopuList",
+)) <website-metadata>
+
+// The page is a standalone app, assets/party-ideology/index.html (+ app.js),
+// embedded here like the Polling tracker. Its data, ideology.json, comes from
+// Party ideology/ in the Polish political analyses repo (analysis/Party
+// ideology.R) and is copied in by scripts/sync-analyses.py on each build. The
+// app also reads the Polling tracker's polls.json for current polling, and
+// links to the party genealogy (#pt=<Party tracker id>) and the tracker.
+
+#html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
+
+#heading(level: 1)[Party ideology]
+
+Where Polish parties stand on the economy, on cultural questions, on European integration and on democracy, as rated by political scientists in the Chapel Hill Expert Survey, against parties across Europe; and how those ratings compare with the classification of parties as populist, far right or far left in The PopuList. Pick a party to follow it through two decades of surveys. The method is explained below the chart.
+
+#html.elem("iframe", attrs: (
+  src: "../../assets/party-ideology/index.html",
+  class: "embed-frame embed-frame--app",
+  title: "Party ideology: Polish parties in European ideological space",
+  loading: "lazy",
+))[]
+
+#heading(level: 2)[How this works]
+
+Positions come from the Chapel Hill Expert Survey (CHES), which asks political scientists who study each country to place its parties' leaderships on a set of scales. Each position shown is the mean of the experts' ratings. The trend file covers seven waves, from 1999 to 2024; Poland is included from 2002. The latest wave was fielded between October and December 2024, when 609 experts rated 279 parties in 31 countries. For 2024, the spread of the experts' ratings (their standard deviation) is shown for the selected party. Most scales run from 0 to 10; European integration runs from 1 (strongly opposed) to 7 (strongly in favour). Some questions were asked only in some waves, and a wave is labelled by its survey year although its fieldwork can run into the next (the 2019 wave was fielded in February–May 2020).
+
+The Map places parties on any two dimensions. Polish parties are drawn in their own colours, sized by the vote for the list they ran on at the election before each wave, and their paths join their positions at earlier waves. The Profile shows one party on every dimension against a comparison group, with the change since the previous wave. Over time follows the Polish parties wave by wave against the middle half of the parties compared. The closest parties are those with the smallest typical gap on economic left–right, GAL–TAN (libertarian–authoritarian), European integration and, from 2014, anti-elite rhetoric.
+
+The PopuList classifies European parties as populist, far right, far left and Eurosceptic, period by period, on the judgement of country experts; it covers national elections from 1989 to 1 May 2026. Parties whose classification is uncertain, or on which experts disagree, are marked as borderline. The Populism view sets these categories against the experts' CHES ratings of how important anti-elite rhetoric is to each party, and lists the parties on which the two disagree. CHES and PopuList parties are linked through PartyFacts, with corrections by hand.
+
+Party systems compares Poland with other countries. Polarisation is Dalton's index (0–10), the vote-weighted spread of parties around the mean position. Alignment is the vote-weighted correlation between parties' economic and cultural positions: positive where the economic right is also the traditional–authoritarian side, as in most of Western Europe; negative where the economic left is, as in much of Central and Eastern Europe. Polish parties are weighted by the vote for the lists they ran on, from my Polish party tracker; other countries by CHES's vote shares.
+
+CHES rates parties, but Polish elections are fought by lists, so two parties on one list share a list's vote. The 2024 wave rated Konfederacja before KKP left it in 2025, and predates R+.
+
+Sources: Seth Jolly, Ryan Bakker, Liesbet Hooghe, Gary Marks, Jonathan Polk, Jan Rovny, Marco Steenbergen and Milada Anna Vachudova (2022), "Chapel Hill Expert Survey trend file, 1999–2019", Electoral Studies 75: 102420; Jan Rovny, Jonathan Polk, Ryan Bakker, Liesbet Hooghe, Seth Jolly, Gary Marks, Marco Steenbergen and Milada Anna Vachudova (2025), "The 2024 Chapel Hill Expert Survey on political party positioning in Europe: Twenty-five years of party positional data", Electoral Studies 97: 102981 (#link("https://www.chesdata.eu")[chesdata.eu]); Matthijs Rooduijn, Andrea L. P. Pirro, Daphne Halikiopoulou, Caterina Froio, Stijn van Kessel, Sarah L. de Lange, Cas Mudde and Paul Taggart (2024), "The PopuList: A Database of Populist, Far-Left, and Far-Right Parties Using Expert-Informed Qualitative Comparative Classification (EiQCC)", British Journal of Political Science 54(3): 969–978, and The PopuList 4.0 (#link("https://popu-list.org")[popu-list.org]).

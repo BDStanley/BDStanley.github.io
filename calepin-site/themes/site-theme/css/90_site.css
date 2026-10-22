@@ -7,6 +7,9 @@
      - typeface   : Jost across the whole site (loaded from Google Fonts)
      - links/accent: dark red (#8B0000) with pink (#A52C60) highlights
      - top navbar : solid dark-red bar with white links
+   The type follows the Polish political analyses (assets/party-system-indicators
+   and its siblings): near-black ink and neutral greys, light dark-red section
+   headings, and small uppercase tracked labels (.eyebrow).
    ============================================================================= */
 
 /* Jost is used throughout the site (body and headings). It's loaded via a
@@ -19,39 +22,75 @@
   --calepin-font-body: "Jost", system-ui, -apple-system, sans-serif;
   --calepin-font-heading: "Jost", system-ui, -apple-system, sans-serif;
 
+  --calepin-color-text: #141414;          /* near-black ink         */
+  --calepin-color-muted: #767676;         /* neutral grey           */
+  --calepin-color-border: #d5d5d5;        /* faint rule             */
   --calepin-color-accent: #a52c60;        /* pink — primary accent  */
   --calepin-color-accent-hover: #8b0000;  /* dark red on hover      */
   --calepin-color-link: #8b0000;          /* dark-red links         */
-  --calepin-color-link-hover: #495057;    /* muted grey on hover    */
-  --calepin-color-heading: #374151;       /* slate grey — headings  */
-  --calepin-heading-weight: 600;
+  --calepin-color-link-hover: #4b4b4b;    /* soft ink on hover      */
+  --calepin-color-heading: #8b0000;       /* dark red — headings    */
+  --calepin-heading-weight: 300;
+}
+
+/* Thin, crisp Jost as in the analyses, with figures that line up in columns. */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Reading text: bring the body size down so it sits in proportion to the
-   (Jost) nav bar, with a slightly tighter line height. */
+   (Jost) nav bar, with a slightly tighter line height. Pico colours p, li, dl
+   and tables through --pico-color, so the ink is set there as well. */
 .calepin-content {
+  --pico-color: var(--calepin-color-text);
+  --pico-muted-color: var(--calepin-color-muted);
   font-size: 0.92rem;
+  color: var(--calepin-color-text);
 }
 .calepin-content :where(p, li, dd) {
   line-height: 1.55;
 }
+.calepin-content :where(strong, b) {
+  font-weight: 600;
+}
 
-/* Headings: bold and in a slate grey (Jost), compact scale above body. */
+/* Headings: section headings (h2) light and dark red, h3/h4 medium in ink. */
 .calepin-content h1,
 .calepin-content h2,
 .calepin-content h3,
 .calepin-content h4 {
   font-family: var(--calepin-font-heading);
-  font-weight: 700;
-  color: var(--calepin-color-heading);
-  line-height: 1.2;
+  line-height: 1.15;
 }
-.calepin-content h1 { font-size: 1.25rem; }   /* page title (#title) */
-.calepin-content h2 { font-size: 1.08rem; }   /* section headings    */
-.calepin-content h3 { font-size: 0.98rem; }
-.calepin-content h4 { font-size: 0.92rem; }
-/* Home-page name stays a touch larger than section headings. */
-.hero-portrait h1 { font-size: 1.3rem; }
+.calepin-content h1,
+.calepin-content h2 {
+  font-weight: 300;
+  color: var(--calepin-color-heading);
+}
+.calepin-content h1 { font-size: 2.2rem; letter-spacing: -0.015em; }
+.calepin-content h2 {
+  font-size: 1.55rem;   /* about 26px, as in the analyses */
+  letter-spacing: -0.01em;
+}
+.calepin-content h3,
+.calepin-content h4 {
+  font-weight: 500;
+  color: var(--calepin-color-text);
+}
+.calepin-content h3 { font-size: 1.05rem; }
+.calepin-content h4 { font-size: 0.95rem; }
+
+/* Small uppercase tracked label in dark red, set above a heading or block. */
+.eyebrow {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: #8b0000;
+}
 
 /* ---- Top navigation: solid dark-red bar with white text, set in Jost ----- */
 .academic-topbar,
@@ -65,6 +104,10 @@
 .academic-menu a,
 .academic-nav a {
   font-family: "Jost", system-ui, -apple-system, sans-serif;
+}
+/* The theme sets the brand in the (now light) heading weight; keep it semibold. */
+.calepin-site-brand {
+  font-weight: 600;
 }
 /* Sit the larger "Ben Stanley" brand on the same baseline as the smaller nav
    links so their text bottoms are flush, while keeping the whole row centered in
@@ -353,59 +396,138 @@ body {
 
 /* ---- "Good Change" page (pages/good-change.typ) ---------------------------- */
 /* On a computer screen the page breaks out of the narrow reading column (as the
-   embedded analyses do), centred on the viewport and capped at 62rem:
-   the cover with the publication details under it beside the description, then
+   embedded analyses do), centred on the viewport and capped at 66rem: the cover
+   with the publication details under it beside the title and description, then
    the reviews in two columns. Below 56rem everything stacks in the reading
    column. The Quarto backup copies this block into its styles.css. */
 .gc-book {
-  margin-block: 1rem 2rem;
+  margin-block: 1.75rem 3rem;
+}
+.gc-side {
+  margin-bottom: 2rem;      /* above the title when stacked */
 }
 .gc-side img {
   display: block;
   width: 100%;
-  max-width: 18rem;
+  max-width: 16rem;
   height: auto;
   margin-inline: auto;
-  box-shadow: 0 4px 18px rgba(31, 41, 51, 0.18);
+  box-shadow: 0 4px 18px rgba(20, 20, 20, 0.16);
 }
-.gc-side {
-  margin-bottom: 2rem;      /* above the description when stacked */
+.gc-facts-label {
+  margin-top: 1.75rem;
 }
-.gc-details {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.5;
+.calepin-content .gc-facts {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+.gc-facts div {
+  display: grid;
+  gap: 0.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #ececec;
+}
+.calepin-content .gc-facts dt {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--calepin-color-muted);
 }
-.gc-main > :first-child {
-  margin-top: 0;
+.calepin-content .gc-facts dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.calepin-content .gc-title {
+  margin: 0.45rem 0 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  color: #8b0000;
+}
+.calepin-content .gc-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.3;
+  color: #4b4b4b;
+}
+.calepin-content .gc-authors {
+  margin: 0 0 1.75rem;
+  font-weight: 500;
+}
+.gc-authors-label {
+  margin-top: 1.9rem;
+}
+.calepin-content .gc-authors-label + p {
+  margin-top: 0.5rem;
+  color: #4b4b4b;
 }
 .gc-reviews {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #ececec;
+}
+.gc-review-grid {
   display: grid;
-  gap: 1.5rem;
-  align-items: start;       /* each rule only as tall as its quote */
+  gap: 2.25rem;
+  margin-top: 1.25rem;
+  align-items: start;
 }
-.gc-review {
-  padding-left: 1rem;
-  border-left: 3px solid #8b0000;
-}
-.gc-review p {
+.calepin-content .gc-review {
   margin: 0;
+  text-align: left;
 }
-.gc-review p + p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+/* Undo the theme's centred, bordered blockquote. */
+.calepin-content .gc-review blockquote {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--calepin-color-text);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: left;
+  quotes: none;
+}
+.calepin-content .gc-review figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  max-width: none;
+  margin-top: 0.75rem;
+  padding: 0;
+  text-align: left;
+}
+.gc-review .gc-who {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8b0000;
+}
+.gc-review .gc-where {
+  font-size: 0.8rem;
+  font-style: italic;
   color: var(--calepin-color-muted);
 }
 @media (min-width: 56rem) {
   .gc-book {
-    width: min(100vw - 4rem, 62rem);
-    margin-left: calc(50% - min(50vw - 2rem, 31rem));
+    width: min(100vw - 4rem, 66rem);
+    margin-left: calc(50% - min(50vw - 2rem, 33rem));
   }
   .gc-top {
     display: grid;
-    grid-template-columns: 16rem minmax(0, 1fr);
-    gap: 3rem;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 3.5rem;
     align-items: start;
   }
   .gc-side {
@@ -414,9 +536,15 @@ body {
   .gc-side img {
     max-width: none;
   }
-  .gc-reviews {
+  .calepin-content .gc-title {
+    font-size: 2.7rem;      /* about 46px */
+  }
+  .gc-main p {
+    max-width: 42rem;
+  }
+  .gc-review-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem 3rem;
+    gap: 2.25rem 3.5rem;
   }
 }
 
@@ -439,7 +567,7 @@ body {
   padding-left: 0.7em;
 }
 .proj-title strong {
-  font-weight: 700;
+  font-weight: 500;
 }
 .proj-funder {
   font-style: italic;
@@ -520,10 +648,10 @@ body {
 }
 .course-name {
   display: inline-block;
-  font-size: 1.08rem;   /* match the h2 section headings on other pages */
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 500;
   line-height: 1.25;
-  color: var(--calepin-color-heading) !important;
+  color: var(--calepin-color-link) !important;
   text-decoration: none;
 }
 .course-name:hover,
@@ -582,9 +710,10 @@ body {
 /* Charts built as plain HTML and inline SVG from data/reach.json, which holds
    every value, colour and hover text (scripts/update-reach.py). Marks follow the
    dataviz conventions: bars at most 24px thick with a 4px rounded data end,
-   a 2px white gap between stacked segments, hairline grid, text in ink colours
-   (never the series colour), a legend for each multi-colour chart and a table
-   under each one. The Quarto backup copies this block into its styles.css. */
+   a 2px white gap between stacked segments, hairline grid, text in neutral
+   greys (never the series colour), a legend for each multi-colour chart and a
+   table under each one. The headline figures are set like the analyses' big
+   numbers: light dark red over a small uppercase label. The Quarto backup copies this block into its styles.css. */
 .reach-kpis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -593,15 +722,19 @@ body {
 }
 .reach-kpi-value {
   display: block;
-  font-size: 1.45rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #1f2933;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #8b0000;
 }
 .reach-kpi-label {
   display: block;
-  font-size: 0.8rem;
-  color: #5f6b7a;
+  margin-top: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #767676;
 }
 @media (max-width: 600px) {
   .reach-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -628,7 +761,7 @@ figure.reach-map {
   stroke-width: 1.5;
 }
 .reach-map-svg :is(path, circle):hover {
-  stroke: #1f2933;
+  stroke: #141414;
   stroke-width: 1;
 }
 
@@ -643,11 +776,11 @@ figure.reach-map {
   margin-top: 0.6rem;
   font-size: 0.8rem;
   line-height: 1.4;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-legend-title {
-  font-weight: 600;
-  color: #373c44;
+  font-weight: 500;
+  color: #4b4b4b;
 }
 .reach-legend-item {
   display: inline-flex;
@@ -678,7 +811,7 @@ figure.reach-map {
 }
 .reach-bar-label {
   text-align: right;
-  color: #373c44;
+  color: #4b4b4b;
 }
 .reach-bar-area {
   display: flex;
@@ -694,7 +827,7 @@ figure.reach-map {
 }
 .reach-bar-value {
   font-size: 0.8rem;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-bar-row:hover .reach-bar {
   filter: brightness(1.1);
@@ -708,19 +841,19 @@ figure.reach-map {
 .reach-years {
   margin: 0.8rem 0 0.8rem;
   font-size: 0.75rem;
-  color: #5f6b7a;
+  color: #767676;
 }
 .reach-years-plot {
   position: relative;
   height: 13rem;
   margin: 0.6rem 0 0 2.2rem;
-  border-bottom: 1px solid #c3c2b7;
+  border-bottom: 1px solid #d5d5d5;
 }
 .reach-tick {
   position: absolute;
   left: 0;
   right: 0;
-  border-top: 1px solid #ecebe6;
+  border-top: 1px solid #ececec;
 }
 .reach-tick span {
   position: absolute;
@@ -779,13 +912,13 @@ figure.reach-map {
   font-size: 0.85rem;
 }
 /* Spelt out rather than left to Pico's details styling, so the Quarto backup
-   can copy it: dark text, a chevron at the right that turns down when open. */
+   can copy it: soft ink, a chevron at the right that turns down when open. */
 details.reach-table > summary {
   display: block;
   cursor: pointer;
   list-style: none;
   line-height: 1rem;
-  color: #373c44;
+  color: #4b4b4b;
 }
 details.reach-table > summary::-webkit-details-marker {
   display: none;
@@ -797,7 +930,7 @@ details.reach-table > summary::after {
   width: 1rem;
   height: 1rem;
   margin-inline-start: 0.5rem;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(136, 145, 164)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") right / 1rem no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(118, 118, 118)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") right / 1rem no-repeat;
   transform: rotate(-90deg);
   transition: transform 0.2s ease-in-out;
 }
@@ -820,13 +953,16 @@ details.reach-table[open] > summary::after {
 }
 .reach-table :is(th, td) {
   padding: 0.3rem 0.6rem;
-  border-bottom: 1px solid #d8dee6;
+  border-bottom: 1px solid #ececec;
   text-align: left;
   vertical-align: top;
 }
 .reach-table th {
-  font-weight: 600;
-  color: #374151;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #767676;
 }
 .reach-table .num {
   text-align: right;
@@ -859,5 +995,5 @@ details.policy-details {
 .policy-item-meta {
   display: block;
   font-size: 0.8rem;
-  color: #5f6b7a;
+  color: #767676;
 }

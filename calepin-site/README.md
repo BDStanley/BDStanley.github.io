@@ -216,9 +216,13 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
   Google Fonts via a `<link>` in `themes/site-theme/partials/site-head.html`
   (an `@import` in `90_site.css` would be ignored — Calepin bundles all CSS into one
   file, so a mid-bundle `@import` is invalid). The `--calepin-font-body` and
-  `--calepin-font-heading` tokens in `css/90_site.css` both point at Jost. Body
-  reading text is `0.92rem`; section headings are `h1 1.25rem / h2 1.08rem /
-  h3 0.98rem` (tweak in `css/90_site.css`). The CV PDF is also Jost (set in
+  `--calepin-font-heading` tokens in `css/90_site.css` both point at Jost. The
+  type follows the Polish political analyses: body reading text is `0.92rem` in
+  near-black ink (`#141414`), antialiased, with tabular figures; section headings
+  (h2) are light (300) dark red at `1.55rem`, h3/h4 medium (500) in ink; neutral
+  greys (`#4B4B4B`, `#767676`, `#D5D5D5`, `#ECECEC`) replace the old slate greys;
+  and `.eyebrow` is the small uppercase tracked dark-red label (tweak all of this
+  in `css/90_site.css`). The navbar and footer are unchanged. The CV PDF is also Jost (set in
   `cv/cv.yml`), so print and web match.
 
 - **Navbar width.** The `academic` theme caps the top bar at the narrow reading
