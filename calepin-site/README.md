@@ -101,7 +101,7 @@ publication-type sections there (it picks up keys
    Kultura Liberalna list is scraped live at build time and needs the `rvest`
    and `httr` packages (`install.packages(c("rvest","httr"))`). If R is missing
    the Media page falls back to a cached list; the rest of the site (including
-   the CV-driven Research page, pages/publications.typ) builds without R. All present here (R 4.6).
+   the CV-driven Research outputs page, pages/publications.typ) builds without R. All present here (R 4.6).
 3. **Calepin** — provides the `calepin` binary. Two ways to get it:
 
    - **The Calepin editor extension (recommended, since you use Positron).**

@@ -1,5 +1,5 @@
 ---
-pagetitle: "Research"
+pagetitle: "Research outputs"
 ---
 
 ```{r}
@@ -68,19 +68,16 @@ when <- function(s) if (s$as_of != latest) paste0(" (", month(s$as_of), ")") els
 num <- function(n) format(n, big.mark = ",")
 cat(
   sprintf("_Updated: %s_\n\n", month(latest)),
-  "### Academic\n\n",
   sprintf("- [Scopus](https://www.scopus.com/authid/detail.uri?authorId=23493968300)%s: %s (h-index = %s)\n",
           when(scopus), num(scopus$citations), scopus$h_index),
   sprintf("- [Google Scholar](https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en)%s: %s (h-index = %s, i10-index = %s)\n",
           when(gs), num(gs$citations), gs$h_index, gs$i10_index),
   sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s; [reach by country and discipline](citation-reach.qmd))\n",
           when(oa), num(oa$citations), oa$h_index, oa$i10_index),
-  "\n### Policy\n\n",
   sprintf(paste0("- Think tanks and other policy organisations%s: %s policy documents and %s research works, ",
                  "from %s organisations in %s countries ([Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley) ",
                  "and [OpenAlex](https://openalex.org/authors/A5015716464); [reach by organisation and country](policy-reach.qmd))\n"),
           when(policy), num(policy$documents), num(policy$works), num(policy$organisations), num(policy$countries)),
-  "\n### Media\n\n",
   sprintf(paste0("- News media%s: %s articles quoting, interviewing or citing me, in %s outlets in %s countries ",
                  "and %s languages (Google News and Google Alerts; [reach by outlet and country](media-reach.qmd))\n"),
           when(media), num(media$articles), num(media$outlets), num(media$countries), num(media$languages)),

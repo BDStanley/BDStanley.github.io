@@ -3,7 +3,7 @@ pagetitle: "Policy reach"
 ---
 
 <!-- Not in the navigation bar: the Policy line of the Citations list on the
-     Research page (pages/publications.qmd) links here. The Quarto twin of
+     Research outputs page (pages/publications.qmd) links here. The Quarto twin of
      calepin-site/pages/policy-reach.typ: the markup comes from
      R/policy-helpers.R, the numbers and lists from data/policy-reach.json and
      the map from data/world-map.json (both copied here by the Calepin build). -->
@@ -21,7 +21,7 @@ older <- function(source, label) {
 }
 ```
 
-<p class="reach-back"><a href="publications.html">← Research</a></p>
+<p class="reach-back"><a href="publications.html">← Research outputs</a></p>
 
 ## Policy reach
 

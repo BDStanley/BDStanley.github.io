@@ -40,7 +40,7 @@ minify = true
 # links to index.typ, so a separate Home entry would be redundant.
 [[menus.main]]
 target = "pages/publications.typ"
-label  = "Research"
+label  = "Research outputs"
 weight = 20
 
 [[menus.main]]

@@ -2,45 +2,45 @@
  "_about": "Data behind the Media reach page, from Google News search and Google Alerts. Written by scripts/update-media-reach.py; see that file for what is counted and how.",
  "as_of": "2026-10",
  "totals": {
-  "articles": 180,
-  "outlets": 57,
-  "countries": 16,
-  "languages": 9,
+  "articles": 156,
+  "outlets": 52,
+  "countries": 14,
+  "languages": 8,
   "first_year": 2015,
-  "unchecked": 180,
-  "commentary": 155,
-  "ideas": 15,
-  "research": 10
+  "unchecked": 121,
+  "commentary": 134,
+  "ideas": 13,
+  "research": 9
  },
  "categories": [
   {
    "key": "commentary",
    "name": "Interviews and commentary",
    "colour": "#2a78d6",
-   "articles": 155
+   "articles": 134
   },
   {
    "key": "ideas",
    "name": "Ideas",
    "colour": "#eb6834",
-   "articles": 15
+   "articles": 13
   },
   {
    "key": "research",
    "name": "Research in the news",
    "colour": "#1baf7a",
-   "articles": 10
+   "articles": 9
   }
  ],
  "countries": [
   {
    "code": "PL",
    "name": "Poland",
-   "articles": 106,
-   "outlets": 13,
+   "articles": 85,
+   "outlets": 11,
    "on_map": true,
    "colour": "#8b0000",
-   "tip": "Poland: 106 articles in 13 outlets",
+   "tip": "Poland: 85 articles in 11 outlets",
    "w": 1.0
   },
   {
@@ -51,7 +51,7 @@
    "on_map": false,
    "colour": "#c13d30",
    "tip": "International outlets: 18 articles in 15 outlets",
-   "w": 0.1698
+   "w": 0.2118
   },
   {
    "code": "EU",
@@ -61,7 +61,7 @@
    "on_map": false,
    "colour": "#c13d30",
    "tip": "Pan-European outlets: 10 articles in 3 outlets",
-   "w": 0.0943
+   "w": 0.1176
   },
   {
    "code": "BE",
@@ -71,7 +71,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "Belgium: 9 articles in 3 outlets",
-   "w": 0.0849
+   "w": 0.1059
   },
   {
    "code": "GB",
@@ -81,7 +81,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "United Kingdom: 9 articles in 2 outlets",
-   "w": 0.0849
+   "w": 0.1059
   },
   {
    "code": "US",
@@ -91,17 +91,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "United States: 5 articles in 4 outlets",
-   "w": 0.0472
-  },
-  {
-   "code": "NL",
-   "name": "Netherlands",
-   "articles": 4,
-   "outlets": 4,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Netherlands: 4 articles in 4 outlets",
-   "w": 0.0377
+   "w": 0.0588
   },
   {
    "code": "ES",
@@ -111,7 +101,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Spain: 4 articles in 1 outlet",
-   "w": 0.0377
+   "w": 0.0471
   },
   {
    "code": "DE",
@@ -121,7 +111,17 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Germany: 3 articles in 3 outlets",
-   "w": 0.0283
+   "w": 0.0353
+  },
+  {
+   "code": "NL",
+   "name": "Netherlands",
+   "articles": 3,
+   "outlets": 3,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Netherlands: 3 articles in 3 outlets",
+   "w": 0.0353
   },
   {
    "code": "RS",
@@ -131,7 +131,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Serbia: 3 articles in 1 outlet",
-   "w": 0.0283
+   "w": 0.0353
   },
   {
    "code": "IT",
@@ -141,7 +141,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Italy: 2 articles in 1 outlet",
-   "w": 0.0189
+   "w": 0.0235
   },
   {
    "code": "FR",
@@ -151,7 +151,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "France: 1 article in 1 outlet",
-   "w": 0.0094
+   "w": 0.0118
   },
   {
    "code": "KE",
@@ -161,17 +161,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Kenya: 1 article in 1 outlet",
-   "w": 0.0094
-  },
-  {
-   "code": "MD",
-   "name": "Moldova",
-   "articles": 1,
-   "outlets": 1,
-   "on_map": true,
-   "colour": "#eda496",
-   "tip": "Moldova: 1 article in 1 outlet",
-   "w": 0.0094
+   "w": 0.0118
   },
   {
    "code": "ME",
@@ -181,7 +171,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Montenegro: 1 article in 1 outlet",
-   "w": 0.0094
+   "w": 0.0118
   },
   {
    "code": "NZ",
@@ -191,17 +181,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "New Zealand: 1 article in 1 outlet",
-   "w": 0.0094
-  },
-  {
-   "code": "PE",
-   "name": "Peru",
-   "articles": 1,
-   "outlets": 1,
-   "on_map": true,
-   "colour": "#eda496",
-   "tip": "Peru: 1 article in 1 outlet",
-   "w": 0.0094
+   "w": 0.0118
   },
   {
    "code": "QA",
@@ -211,7 +191,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Qatar: 1 article in 1 outlet",
-   "w": 0.0094
+   "w": 0.0118
   }
  ],
  "bins": [
@@ -246,9 +226,9 @@
    "name": "Kultura Liberalna",
    "domain": "kulturaliberalna.pl",
    "country": "Poland",
-   "articles": 60,
+   "articles": 42,
    "colour": "#8b0000",
-   "tip": "Kultura Liberalna (Poland): 60 articles",
+   "tip": "Kultura Liberalna (Poland): 42 articles",
    "w": 1.0
   },
   {
@@ -258,7 +238,7 @@
    "articles": 14,
    "colour": "#8b0000",
    "tip": "Notes From Poland (Poland): 14 articles",
-   "w": 0.2333
+   "w": 0.3333
   },
   {
    "name": "Polityka.pl",
@@ -267,7 +247,7 @@
    "articles": 13,
    "colour": "#8b0000",
    "tip": "Polityka.pl (Poland): 13 articles",
-   "w": 0.2167
+   "w": 0.3095
   },
   {
    "name": "Le Grand Continent",
@@ -276,7 +256,7 @@
    "articles": 8,
    "colour": "#8b0000",
    "tip": "Le Grand Continent (Pan-European outlets): 8 articles",
-   "w": 0.1333
+   "w": 0.1905
   },
   {
    "name": "The Guardian",
@@ -285,7 +265,7 @@
    "articles": 8,
    "colour": "#8b0000",
    "tip": "The Guardian (United Kingdom): 8 articles",
-   "w": 0.1333
+   "w": 0.1905
   },
   {
    "name": "POLITICO.eu",
@@ -294,7 +274,7 @@
    "articles": 7,
    "colour": "#8b0000",
    "tip": "POLITICO.eu (Belgium): 7 articles",
-   "w": 0.1167
+   "w": 0.1667
   },
   {
    "name": "Press.pl",
@@ -303,16 +283,16 @@
    "articles": 6,
    "colour": "#8b0000",
    "tip": "Press.pl (Poland): 6 articles",
-   "w": 0.1
+   "w": 0.1429
   },
   {
-   "name": "El País Brasil",
+   "name": "EL PAÍS",
    "domain": "elpais.com",
    "country": "Spain",
    "articles": 4,
    "colour": "#8b0000",
-   "tip": "El País Brasil (Spain): 4 articles",
-   "w": 0.0667
+   "tip": "EL PAÍS (Spain): 4 articles",
+   "w": 0.0952
   },
   {
    "name": "Balkan Insight",
@@ -321,16 +301,7 @@
    "articles": 3,
    "colour": "#8b0000",
    "tip": "Balkan Insight (Serbia): 3 articles",
-   "w": 0.05
-  },
-  {
-   "name": "Newsweek",
-   "domain": "newsweek.pl",
-   "country": "Poland",
-   "articles": 3,
-   "colour": "#8b0000",
-   "tip": "Newsweek (Poland): 3 articles",
-   "w": 0.05
+   "w": 0.0714
   },
   {
    "name": "Cambridge University Press & Assessment",
@@ -339,7 +310,7 @@
    "articles": 2,
    "colour": "#8b0000",
    "tip": "Cambridge University Press & Assessment (International outlets): 2 articles",
-   "w": 0.0333
+   "w": 0.0476
   },
   {
    "name": "Il Bo Live",
@@ -348,7 +319,7 @@
    "articles": 2,
    "colour": "#8b0000",
    "tip": "Il Bo Live (Italy): 2 articles",
-   "w": 0.0333
+   "w": 0.0476
   },
   {
    "name": "illiberalism.org",
@@ -357,7 +328,7 @@
    "articles": 2,
    "colour": "#8b0000",
    "tip": "illiberalism.org (International outlets): 2 articles",
-   "w": 0.0333
+   "w": 0.0476
   },
   {
    "name": "Key Aero",
@@ -366,7 +337,7 @@
    "articles": 2,
    "colour": "#8b0000",
    "tip": "Key Aero (International outlets): 2 articles",
-   "w": 0.0333
+   "w": 0.0476
   },
   {
    "name": "naTemat.pl",
@@ -375,7 +346,16 @@
    "articles": 2,
    "colour": "#8b0000",
    "tip": "naTemat.pl (Poland): 2 articles",
-   "w": 0.0333
+   "w": 0.0476
+  },
+  {
+   "name": "Newsweek",
+   "domain": "newsweek.pl",
+   "country": "Poland",
+   "articles": 2,
+   "colour": "#8b0000",
+   "tip": "Newsweek (Poland): 2 articles",
+   "w": 0.0476
   },
   {
    "name": "Rzeczpospolita",
@@ -434,28 +414,12 @@
    "tip": "commonspace.eu (Netherlands): 1 article"
   },
   {
-   "name": "De Groene Amsterdammer",
-   "domain": "groene.nl",
-   "country": "Netherlands",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "De Groene Amsterdammer (Netherlands): 1 article"
-  },
-  {
    "name": "DW.com",
    "domain": "dw.com",
    "country": "Germany",
    "articles": 1,
    "colour": "#8b0000",
    "tip": "DW.com (Germany): 1 article"
-  },
-  {
-   "name": "El Montonero",
-   "domain": "elmontonero.pe",
-   "country": "Peru",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "El Montonero (Peru): 1 article"
   },
   {
    "name": "European Consortium for Political Research (ECPR)",
@@ -504,14 +468,6 @@
    "articles": 1,
    "colour": "#8b0000",
    "tip": "La Vie des idées (France): 1 article"
-  },
-  {
-   "name": "logos-pres.md",
-   "domain": "logos-pres.md",
-   "country": "Moldova",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "logos-pres.md (Moldova): 1 article"
   },
   {
    "name": "Los Tiempos",
@@ -584,14 +540,6 @@
    "articles": 1,
    "colour": "#8b0000",
    "tip": "Polityka Super Express (Poland): 1 article"
-  },
-  {
-   "name": "Polskie Radio 24",
-   "domain": "polskieradio24.pl",
-   "country": "Poland",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "Polskie Radio 24 (Poland): 1 article"
   },
   {
    "name": "Public Seminar",
@@ -704,23 +652,15 @@
    "articles": 1,
    "colour": "#8b0000",
    "tip": "Worldcrunch (International outlets): 1 article"
-  },
-  {
-   "name": "Wyborcza.pl",
-   "domain": "wyborcza.pl",
-   "country": "Poland",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "Wyborcza.pl (Poland): 1 article"
   }
  ],
  "top_outlets": 15,
  "languages": [
   {
    "name": "Polish",
-   "articles": 91,
+   "articles": 70,
    "colour": "#8b0000",
-   "tip": "Polish: 91 articles",
+   "tip": "Polish: 70 articles",
    "w": 1.0
   },
   {
@@ -728,56 +668,49 @@
    "articles": 64,
    "colour": "#8b0000",
    "tip": "English: 64 articles",
-   "w": 0.7033
+   "w": 0.9143
   },
   {
    "name": "Spanish",
-   "articles": 8,
+   "articles": 7,
    "colour": "#8b0000",
-   "tip": "Spanish: 8 articles",
-   "w": 0.0879
+   "tip": "Spanish: 7 articles",
+   "w": 0.1
   },
   {
    "name": "French",
    "articles": 5,
    "colour": "#8b0000",
    "tip": "French: 5 articles",
-   "w": 0.0549
-  },
-  {
-   "name": "Dutch",
-   "articles": 4,
-   "colour": "#8b0000",
-   "tip": "Dutch: 4 articles",
-   "w": 0.044
+   "w": 0.0714
   },
   {
    "name": "Italian",
    "articles": 4,
    "colour": "#8b0000",
    "tip": "Italian: 4 articles",
-   "w": 0.044
+   "w": 0.0571
+  },
+  {
+   "name": "Dutch",
+   "articles": 3,
+   "colour": "#8b0000",
+   "tip": "Dutch: 3 articles",
+   "w": 0.0429
   },
   {
    "name": "Portuguese",
    "articles": 2,
    "colour": "#8b0000",
    "tip": "Portuguese: 2 articles",
-   "w": 0.022
+   "w": 0.0286
   },
   {
    "name": "Hungarian",
    "articles": 1,
    "colour": "#8b0000",
    "tip": "Hungarian: 1 article",
-   "w": 0.011
-  },
-  {
-   "name": "Russian",
-   "articles": 1,
-   "colour": "#8b0000",
-   "tip": "Russian: 1 article",
-   "w": 0.011
+   "w": 0.0143
   }
  ],
  "years": {
@@ -1027,50 +960,44 @@
    {
     "year": 2025,
     "label": "2025",
-    "count": 29,
-    "h": 0.725,
+    "count": 19,
+    "h": 0.475,
     "minor": false,
-    "tip": "2025: 29 articles (Interviews and commentary 28, Ideas 1)",
+    "tip": "2025: 19 articles (Interviews and commentary 19)",
     "segments": [
      {
       "name": "Interviews and commentary",
-      "count": 28,
+      "count": 19,
       "colour": "#2a78d6",
-      "tip": "2025, Interviews and commentary: 28 articles"
-     },
-     {
-      "name": "Ideas",
-      "count": 1,
-      "colour": "#eb6834",
-      "tip": "2025, Ideas: 1 article"
+      "tip": "2025, Interviews and commentary: 19 articles"
      }
     ]
    },
    {
     "year": 2026,
     "label": "2026 (to October)",
-    "count": 33,
-    "h": 0.825,
+    "count": 19,
+    "h": 0.475,
     "minor": true,
-    "tip": "2026 (to October): 33 articles (Interviews and commentary 23, Ideas 7, Research in the news 3)",
+    "tip": "2026 (to October): 19 articles (Interviews and commentary 11, Ideas 6, Research in the news 2)",
     "segments": [
      {
       "name": "Interviews and commentary",
-      "count": 23,
+      "count": 11,
       "colour": "#2a78d6",
-      "tip": "2026, Interviews and commentary: 23 articles"
+      "tip": "2026, Interviews and commentary: 11 articles"
      },
      {
       "name": "Ideas",
-      "count": 7,
+      "count": 6,
       "colour": "#eb6834",
-      "tip": "2026, Ideas: 7 articles"
+      "tip": "2026, Ideas: 6 articles"
      },
      {
       "name": "Research in the news",
-      "count": 3,
+      "count": 2,
       "colour": "#1baf7a",
-      "tip": "2026, Research in the news: 3 articles"
+      "tip": "2026, Research in the news: 2 articles"
      }
     ]
    }
@@ -1094,21 +1021,9 @@
   {
    "key": "thin",
    "idea": "The thin ideology of populism",
-   "articles": 6,
-   "summary": "6 articles",
+   "articles": 5,
+   "summary": "5 articles",
    "items": [
-    {
-     "date": "2025-09-24",
-     "when": "24 September 2025",
-     "title": "¿Aspirantes a fascistas? Respuesta a Martín Tanaka",
-     "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNVmtyN09yOUVSb245SkFXcGNaZFEtMjlqTW9kYXB6dW04c3A4aFZWVzhmMFdLRS1BYkg4XzFzbmM2Sy1jeVYwMjAzM2VTWS1wQnJPcXVDZ3ktaFZoZWxnemhYdnhXRWpCN0trdWI1QVZwSC1WYi1YdTZjcjl2cGRBMTR5WnFWSnM?oc=5",
-     "outlet": "El Montonero",
-     "country": "Peru",
-     "author": "",
-     "language": "Spanish",
-     "checked": false,
-     "meta": "24 September 2025 · El Montonero (Peru)"
-    },
     {
      "date": "2024-10-23",
      "when": "23 October 2024",
@@ -1174,38 +1089,38 @@
   {
    "key": "trilemma",
    "idea": "The post-illiberal trilemma",
-   "articles": 7,
-   "summary": "7 articles",
+   "articles": 6,
+   "summary": "6 articles",
    "items": [
     {
      "date": "2026-07-19",
      "when": "19 July 2026",
      "title": "Opinion: Hungary’s Constitutional Overhaul: Democratic Renewal or a Step to Autocracy?",
-     "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOdHlaNWNqbXhvV1h2bk9Zd0dEMExDTEYzV01TYndpOFhyRWllY21EV2Jya2tVdUx0dUtlbW5zeTNNcmpUU2FQMFBqdGpXSy04d2Npdk9kX1FRSjlLNkhEdTM1NFZRZEtoWldXVTJlanFma2VTVThhS3BWdnJZOWRIYk54SkNwV2R5THNpS3E0Y0xxUWxRSDFzWWM5el84RW1wYmNzZExPQm1WUWtzeU43aHFB?oc=5",
+     "url": "https://www.commonspace.eu/opinion/opinion-hungarys-constitutional-overhaul-democratic-renewal-or-step-autocracy",
      "outlet": "commonspace.eu",
      "country": "Netherlands",
      "author": "",
      "language": "English",
-     "checked": false,
+     "checked": true,
      "meta": "19 July 2026 · commonspace.eu (Netherlands)"
     },
     {
      "date": "2026-06-28",
      "when": "28 June 2026",
      "title": "Hungary: Magyar's 'Operation Purgatory' tackles Orban system",
-     "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaW44X1d1QWU2VS16TVc2aHpBZmtlMThIblNyNm83eGlsUk5mR3hQSFRFM1FTbkxnUWI5bWJJUlR2elJxWHE1c2FFbGNaMjUzbzdHVGtnRFpoTy0zckE3MlBhSWR0ZG9FZlNVdjdQOVpiNUxMclFYRmRWN1ZhbEZzcnowamV5a2ZCNU5xeGhyb1JNZFl3UHVXd3ZR0gGaAUFVX3lxTE1ZTU1ZdjRYVjRrYVo5aUVkazhLaTVLMmF2N3NOb3hBbGZiZU1zbkV2aGx0a0FjOUxkbnVmbDlLMF9FbnVXaF9CUUhIaDNlZGlwODZpVHdwTHlReEdHVURndkhhaEF0Z0RhMlpaSWJDSDhQZnZHdGYxV2hRTXJEdE1QMkJEV0xxMTh1cWRaRFFEZ0JGOE1jLWtPbmc?oc=5",
+     "url": "https://www.dw.com/en/magyar-hungary-fight-orban-corruption-system-return-democracy/a-77726207",
      "outlet": "DW.com",
      "country": "Germany",
-     "author": "",
+     "author": "Keno Verseck",
      "language": "English",
-     "checked": false,
-     "meta": "28 June 2026 · DW.com (Germany)"
+     "checked": true,
+     "meta": "28 June 2026 · DW.com (Germany) · Keno Verseck"
     },
     {
      "date": "2026-06-26",
      "when": "26 June 2026",
      "title": "Hungarians are rapidly dismantling Orban's system: Cutting salaries for MPs and ministers...",
-     "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQMloyNWxHa2FiaWlHX3lBRkRxb2ZmUVJCeWdkbHVRU1NiMUxVYVB2Z0JpazJ1SE9JeUhMczM0ZzRtaXVJTUhoRWVpUkJjUUItMm9UN0JHU091WFF2bEpYUHhBOHVISHNSYm51c3NjNk9pUnBpWXNYWHptdUo3QXJ1cGgwZVlHeGRFQjI4aC1fc1VfamRhSTJWcUhFRWRfb19GNFR6QkI3bEFyY01SWTNlaTRWZmx0TmdYWHpXVVRkM2V4U0xZUmNEVTJhRdIBvAFBVV95cUxPVDVselBFeTBXanhRcmlUNzI3RnBzRnNiYjNGaEdIdlAyM0t1M3V4aE9Lak85MGhPRzRhTUk0OFpuTUtPU2N1cnNfdUZneG9pNjRFUHh4LWhsdVEtbUZsRUEtLTZVSm11ZXhfdWc5ekFGdFpJa0tOcnY1NGxnSVpXVWdXMUlaUmJub1NBY0FaTzNOSVhENVpCNU43UjU0YmRBaVk5TzFaWXNOemRZZFhaU0IxOE8yQU5FT09EZg?oc=5",
+     "url": "https://en.vijesti.me/world-a/evropa/815095/Hungary-is-rapidly-dismantling-Orban%27s-system--cutting-salaries-for-MPs-and-ministers",
      "outlet": "vijesti.me",
      "country": "Montenegro",
      "author": "",
@@ -1217,49 +1132,37 @@
      "date": "2026-06-24",
      "when": "24 June 2026",
      "title": "Orbán Is Gone, but His State Machine Remains",
-     "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1ybG9TN0hoM0ZLeW53Rms2YmpuNjdHVGpUemE0YkFqYkF6UC1helMyTFExN3RMc0ZsSFFxZ3dfUGFfRHozOEpSRUpYMGRIOGhwbGxQVEsySWNMVWhBTFVNWVpQSXBaSmNUOWdrX1ZWR3o1c0J1UEFpTlZFcw?oc=5",
+     "url": "https://www.socialeurope.eu/orban-is-gone-but-his-state-machine-remains",
      "outlet": "Social Europe",
      "country": "Germany",
-     "author": "",
+     "author": "Zsuzsanna Szelényi",
      "language": "English",
-     "checked": false,
-     "meta": "24 June 2026 · Social Europe (Germany)"
+     "checked": true,
+     "meta": "24 June 2026 · Social Europe (Germany) · Zsuzsanna Szelényi"
     },
     {
      "date": "2026-06-16",
      "when": "16 June 2026",
      "title": "Het post-illiberale trilemma van Hongarije",
-     "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQakpwbTNvZzRlcFB1WDFFNHl0MEpHSFVQZk9IcXFOeTZYZkVFc2hLVWNxd3h0eG91aVRZX2F6ZzNqX1ZWWTEwWUZVSUNtNi13dUJ1UWE0SFptX0VJVFlJQ2lzZ2I3WXoxUDJISTlrT3I5czZHZTdFU0VyTVFQZVRzdlpjMkhZcWc?oc=5",
+     "url": "https://www.bnnvara.nl/joop/artikelen/het-post-illiberale-trilemma-van-hongarije",
      "outlet": "Bnnvara",
      "country": "Netherlands",
      "author": "",
      "language": "Dutch",
-     "checked": false,
+     "checked": true,
      "meta": "16 June 2026 · Bnnvara (Netherlands)"
     },
     {
      "date": "2026-06-09",
      "when": "9 June 2026",
      "title": "Two Simple Steps Toward De-MAGAfication",
-     "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1jWlhmUWt2UzdMWWNwNVZqV3RYaEF1TW1GS2ltZkM2QlppS05mU0hpTnJscGtOOFRPN3hidmtONlozSWRyQVhQYTNVX0EySzhqc0FyTzhLUkdLb3lXWkJVdm5Gb2NXcE1NSU4ydWIxLXN1RVBmbE5SX0VrY2s?oc=5",
+     "url": "https://prospect.org/2026/06/09/two-simple-steps-toward-de-magafication/",
      "outlet": "The American Prospect",
      "country": "United States",
-     "author": "",
+     "author": "Ryan Cooper",
      "language": "English",
-     "checked": false,
-     "meta": "9 June 2026 · The American Prospect (United States)"
-    },
-    {
-     "date": "2026-04-20",
-     "when": "20 April 2026",
-     "title": "Het verlies van Orbán duiden als het begin van het einde voor uiterst-rechts is verleidelijk, maar voorbarig",
-     "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5lUkRxR2hFMlQxTElpOTdERExtYjhzUTNxUllfdHNwTDRLdlpjYXhRdy00aGM3bjd4eW01cUd5SXdhUTFDWmhtN3FnV0Q0RnJQVTNBZkgtdXJNV216MEphR1lxZkZDTzJJVFdmZFVtdDgzdTdPb2c?oc=5",
-     "outlet": "De Groene Amsterdammer",
-     "country": "Netherlands",
-     "author": "",
-     "language": "Dutch",
-     "checked": false,
-     "meta": "20 April 2026 · De Groene Amsterdammer (Netherlands)"
+     "checked": true,
+     "meta": "9 June 2026 · The American Prospect (United States) · Ryan Cooper"
     }
    ]
   },
@@ -1299,601 +1202,349 @@
  "commentary": [
   {
    "year": 2026,
-   "summary": "2026: 23 articles",
+   "summary": "2026: 11 articles",
    "items": [
-    {
-     "date": "2026-10-04",
-     "when": "4 October 2026",
-     "title": "STANLEY: Co oznacza koniec „grzecznego Tuska”?",
-     "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1BTm9XeEl4azh3eDZmY0d4RGZmX3VqckFDT3RCYWg4MnJfXzJOZWpoNnFPcklaeXpuU0ZYbVFTT241d0VFWWo3bkVBVDlNdGhBZDNnT0JFSXVocG5wVG9OTVYwc0FDWXhVdVZaUHRIeldRN3JOMEcydVAzV2JnNUU?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "4 October 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-09-30",
-     "when": "30 September 2026",
-     "title": "GEBERT: Wybory w Izraelu wygrają Arabowie. A potem zapewne je przegrają",
-     "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOazM5LUFZUzNyTXhTUl9pTzdHcFJuTnVRMXlPcU9mTVdLX1JzR0laYVNWNFJxendwc2dLNG5rcmZUc3hmOTNCaG8zX0I2TGY2anNBblVkSU0ySXMzOXNNWk1BV2JCdWd5Qy1ldTBiaDFwY3dQT3dkZEJxQzh1NkdsaVgzNjliU3dqRUxPdk5uQzdpb1JjeHl0LVlqWnk3LVEyb3hKS0l5VzRqRWJULWc?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "30 September 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-09-24",
-     "when": "24 September 2026",
-     "title": "STANLEY: Na Zondacrypto skorzysta prawica",
-     "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNU1h6WlRwTjRVZEliX2lTcXcwUHQ4TTBlMV81a2JFRVN0VVpyTG1EeVZHV1FWU3RKNERSWi1rYUZrcmJDNU5iV1BtazR3Y0VtZlM5Zk9OdS02c1R5UDBSNWp3UU43TmpNd2syTE1NOTkwZlZlQzhHSjBILVZUY3I3S3B3VHVFdlhiU28zNElUbjE?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "24 September 2026 · Kultura Liberalna (Poland)"
-    },
     {
      "date": "2026-09-08",
      "when": "8 September 2026",
      "title": "Lakner Zoltán: Az esély megvan, a bizonyítási teher Unger Annára és a hivatalra hárul",
-     "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPNVhpRGd6VVlsdlFSUEJaU1N0WDhSM0staWlYdlR6c3hsTnRtbE5YTE94OGpRUXcxb3l0MFNMRzl4ZVNwelhWU1ZBSnd3NHBxcVh2ZlJqNEtfNkpRUkMzMmFwWnA4eWpSNi1OeTFoZklLSXNlRXF4a251aGctWXlqV19tS0VmdXowUERKbDNod3VyeWNyWHU2M0pkSV9hLThjTkpIUVF2UQ?oc=5",
+     "url": "https://jelen.media/lakner-zoltan-az-esely-megvan-a-bizonyitasi-teher-unger-annara-es-a-hivatalra-harul/",
      "outlet": "Jelen",
      "country": "International outlets",
-     "author": "",
+     "author": "Ónody Tamás",
      "language": "Hungarian",
-     "checked": false,
-     "meta": "8 September 2026 · Jelen (International outlets)"
+     "checked": true,
+     "meta": "8 September 2026 · Jelen (International outlets) · Ónody Tamás"
     },
     {
      "date": "2026-08-23",
      "when": "23 August 2026",
      "title": "Los autogoles del Gobierno convidan a un retorno del populismo (I)",
-     "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOZHVHa3FyTmRzX0dtRW9QM3VJVXE4d1BVZjg2c1FQb3Ywb1dZejdLd3E2YkF1eGYwWVcwRWdkckhlaUpjTURnWkdBQzBaVVZsTFROdTJ5VUl5QjBhVi0yaTlHdVVJYl9XaWxnaU5rNnNkUHlLYXh1RGJqR2ZaNldNQkY3TDB4N1ZHS0RzZlBTWmtnVy1Ia3RUajAtTlhteHNqTGpxd20wNGRrSDVTQnhGdXlZeS11UXZRaEE?oc=5",
+     "url": "https://www.lostiempos.com/actualidad/opinion/20260823/columna/autogoles-del-gobierno-convidan-retorno-del-populismo-i",
      "outlet": "Los Tiempos",
      "country": "International outlets",
      "author": "",
      "language": "Spanish",
-     "checked": false,
+     "checked": true,
      "meta": "23 August 2026 · Los Tiempos (International outlets)"
-    },
-    {
-     "date": "2026-08-18",
-     "when": "18 August 2026",
-     "title": "Nie autocenzura, a wycofanie. Kto milczy w debacie politycznej?",
-     "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBpUVRTZVZDeVVqNWF2TUNoNHp2d3ZUcjNJUThyMW84ME5nWDQyT0JHZk9VMXBmYkIyUV91alJRMS1uTGVFRUk2aFJnVzN4eW82blZqTFdXNzRVb01NeWVoamtkQmk2djRHOHNRUW1mSkh0Ml9vN2c?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "18 August 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-07-27",
-     "when": "27 July 2026",
-     "title": "Morawiecki będzie łowił w elektoracie PiS-u",
-     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQNDNNNEtoSzZTVHFsYXg1aGpVQkc2N29hSFdheEthWUdqVVFZVEFpc3c1bmNoRERNV2dOeXJKWF9qU2dSTjZqUzM2VWRRS194NFhkTXl0emluUjBVUjhaQThzdHRVbG41NVBLUEJ3Z2JMT1dhVFN4QWItRFFwcmw4QW5KbkRuTVBjZE9lTjRCdmR4OG00Znc?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "27 July 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-07-13",
-     "when": "13 July 2026",
-     "title": "Upadek Starmera. Trzy lekcje z Wielkiej Brytanii dla Tuska przed wyborami 2027",
-     "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOd0VnalZfYlNvdkdiT1owZHVQMUxLR0tLbk9kSjNDdW9uSkNoZU1xbXdTSWl5OEE1NVpYS2lGN1pJajVFRzduMXdNUVNfczNPeHJIWmZoWG5manRaUkd3aWtkY1kxcDNZb3ZEWERWem5MeUdRc2tZT3BLRlpGUzZ0VDdTVHRYM0ZXYmpZNFZNSmdTLTVjWWVTb3J0RW1hNlpWWGdJUU5UdmE4cklDV2kyZWg1VVFaSDhM?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "13 July 2026 · Kultura Liberalna (Poland)"
     },
     {
      "date": "2026-05-28",
      "when": "28 May 2026",
      "title": "Harambee Stars midfielder set for UEFA Champions League football next season",
-     "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNMHRUc1BMUjh5REV1aGVselU5RVJjRUhXTVpoU2NiVnBESU51QXpfWlA2Xzl1T1N5YlJkNkVRcW9kSHJkQWlHcWIyUjhkeWp3SDE4Z3dFNWV3SGNGSW1Fb2lTYUNpMXRTeFhNQ2tFcmdUZEdUeWFDbEJuVTVTX2Y1TDlwRnBYcXpLdmlZTDVoa1RMa3NEclNnZU10WHJRNktQMVo4aFF3?oc=5",
+     "url": "https://k24.digital/sports/harambee-stars-midfielder-set-for-uefa-champions-league-football-next-season",
      "outlet": "K24 Digital",
      "country": "International outlets",
-     "author": "",
+     "author": "Joel Masibo",
      "language": "English",
-     "checked": false,
-     "meta": "28 May 2026 · K24 Digital (International outlets)"
-    },
-    {
-     "date": "2026-05-19",
-     "when": "19 May 2026",
-     "title": "Cztery oblicza demokracji. Jak ją widzą Polacy, Hiszpanie i Brytyjczycy",
-     "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPMW53UzFDNnFKMEZuWUhkOTNKa2l1ZlMwblNPTUp4SllmYmJtTlFJT0NQbmNKTldkQjB3YnhXZnpKTWw5WEtHTkR4UHdMRF9TTzhlZ00yTC1Ma0g3LW1ZTGxnMG1xd0YtZldjaWdJdUNiczIxMzVDcjdULXBaX214cFNid2Vyd21icnh2a2xJV2E5QUFQUE5jQS14S1NRMHRYeGt1cjI4aG9SR0NWcXc?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "19 May 2026 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "28 May 2026 · K24 Digital (International outlets) · Joel Masibo"
     },
     {
      "date": "2026-05-08",
      "when": "8 May 2026",
      "title": "Péter Magyar moet de Hongaarse democratie restaureren. Hoe doe je dat?",
-     "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPOHNaSFBMS1QwZEVwMG1RTDVvWVFfTUozbU5uM2l4SEJhYWROTFVxcGVLSzM5OVF3OGhvMkFhVW1kTG1NOGpDdEJjcnBPZE8zbHlwanF3cGoxT2J5SXZrWnlhRklvV283S21ONlQyVjFHeGFRQ0tUUEoxS3NZUEZTNjBlM1BMTWJ3bmpLSDZHQ0ozTVQ3bndBT0JfWkthWm5yTk1EYnNPU05VVGYyS2ExZFdGM2E?oc=5",
+     "url": "https://www.nrc.nl/nieuws/2026/05/08/peter-magyar-moet-de-hongaarse-democratie-restaureren-hoe-doe-je-dat-a4927112",
      "outlet": "NRC - Nieuws, achtergronden en onderzoeksjournalistiek",
      "country": "Netherlands",
-     "author": "",
+     "author": "Mark Middel",
      "language": "Dutch",
-     "checked": false,
-     "meta": "8 May 2026 · NRC - Nieuws, achtergronden en onderzoeksjournalistiek (Netherlands)"
+     "checked": true,
+     "meta": "8 May 2026 · NRC - Nieuws, achtergronden en onderzoeksjournalistiek (Netherlands) · Mark Middel"
     },
     {
      "date": "2026-04-15",
      "when": "15 April 2026",
      "title": "El soberanismo vasallo",
-     "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE03SFB6Z0hLRHIwNVVjTEtsTW5qaEw1SzJUMk1XRHluQTlLTDhIQ2JaNHBxT19XdUlJUXNzZUlQZDZPcldlVFZBTVJQTDNySHpySUpqUC1FXzRIaUR0N2JnM3pIRHdYU1pOb19QR3Q5NElBWVXSAYcBQVVfeXFMTTF0SDNMZjVSYlJ0dURoRmx0RUlHYUxIQmRxWERDTkItVnljdWwyUUJUUXhEbUt3ckk5VUJFWlFKLXNQM2JVdHVWeXREaTZ1OWFJVGc2WGJMamJQUWZfbzQ4ZXF6WVVlRnZ2TkpmODBseXVUMnduX19MeEVMZHJYNFBqdmI5RllN?oc=5",
+     "url": "https://elpais.com/opinion/2026-04-16/el-soberanismo-vasallo.html",
      "outlet": "EL PAÍS",
      "country": "Spain",
-     "author": "",
+     "author": "Daniel Gascón",
      "language": "Spanish",
-     "checked": false,
-     "meta": "15 April 2026 · EL PAÍS (Spain)"
+     "checked": true,
+     "meta": "15 April 2026 · EL PAÍS (Spain) · Daniel Gascón"
     },
     {
      "date": "2026-04-14",
      "when": "14 April 2026",
      "title": "Poland’s nationalist right recalibrates after Orbán’s heavy election loss",
-     "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPOWRBb2t2RWh4bmFpczJHZlE2SFZFdFRUcjJYWEhhc3pmemEzcEFRWnA5V0dwZ0ZUeDVNSmNncEZmY1ZzaDV2Yi1XUjJXdjktb1ViZkVhN2haNWg0UUgtTzlhYzlJdGRxUGFOd2pVZzFadTNmcEN3R1BVVEpkM09FS3g1OW5rWEFpb1pOUUVrN3pUR1B0UUZYYV9OajE1ckVCVTJnTi1DUDZFcWtoOUxqd2l2U3o4NXBoWjlJ?oc=5",
+     "url": "https://www.politico.eu/article/poland-donald-tusk-jaroslaw-kaczynski-nationalist-right-recalibrates-viktor-orban-loss/",
      "outlet": "POLITICO.eu",
      "country": "Belgium",
-     "author": "",
+     "author": "Wojciech Kość",
      "language": "English",
-     "checked": false,
-     "meta": "14 April 2026 · POLITICO.eu (Belgium)"
-    },
-    {
-     "date": "2026-04-12",
-     "when": "12 April 2026",
-     "title": "Новый тип демократического перехода: уроки Венгрии и Польши",
-     "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE01NnVlS0lLTHZTZy1tanBMZWgtRXpvVlVxLWhZOWt1dHFCWnV2aWlHczgyQVNVSTVTS2pLZE13UzFVZ1JvQ3JQaWlVbGlVLVFUSEpQLWlPeDd4UVd6anJKSlFzRlA3NnZyNmRMZ1AyeVVHYmxCMGJPbDFR?oc=5",
-     "outlet": "logos-pres.md",
-     "country": "Moldova",
-     "author": "",
-     "language": "Russian",
-     "checked": false,
-     "meta": "12 April 2026 · logos-pres.md (Moldova)"
+     "checked": true,
+     "meta": "14 April 2026 · POLITICO.eu (Belgium) · Wojciech Kość"
     },
     {
      "date": "2026-04-06",
      "when": "6 April 2026",
      "title": "Harambee Stars Defender Faces Uncertain Future at Polish Club Ahead of Return From Injury Layoff",
-     "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNVVB1dlNuQzRIR2laWmo1a2lMTnpDWldUbE1aZUFhOW93aFZaS2hhSnNka0swNGhGZEpnT054eElOUXhXNEhrS0VFRHZJTllaRS1xNFY4QnpEQ3VFQk1DOVQyQUNQR0dRZGllOFE0S1llYU9JQ0pyX3A0YXZzY1RheXVSUDQ2c3BzbDk3UGU5SjRFcFpsRFVzV1VYWDIxNFVGc0xJQkpSbkxUWnNqWEdTN0VYT3UyQWI4aVdhZ0FUUl9TRHdwY015djN2Njh2TW5ZUm1IRzlKVUdPZ2JWNlhjSkE4VDk1Q0E?oc=5",
+     "url": "https://www.pulsesports.co.ke/story/harambee-stars-defender-faces-uncertain-future-at-polish-club-ahead-of-return-from-injury-layoff-2026040607430074630",
      "outlet": "Pulse Sports Kenya",
      "country": "Kenya",
      "author": "",
      "language": "English",
-     "checked": false,
+     "checked": true,
      "meta": "6 April 2026 · Pulse Sports Kenya (Kenya)"
     },
     {
      "date": "2026-03-06",
      "when": "6 March 2026",
      "title": "Battle between Polish president and prime minister deepens over EU defense loans",
-     "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNNTNmT3hYY3dENlFYTEo3LVN0aFlLaDVOeDl2VG9MbWNCQ29ZQkYwTE4tX2l5N1R0b1hzQnJRQTR5RnhDcV9uRlZlX1NuNVpiRHBNSm1Kc29LR05tbTRtRG5Uc0gzNHh3ejJ5eHF0MkFmRWttd0gzZnh2RG1qQVJXdHREMjhNX0dscXVHblhxSk9GX042VWU4YVVLVkd2V0JXaVlPN2QycXZtalI3VEJyYTJn?oc=5",
+     "url": "https://www.politico.eu/article/eu-defense-loans-ignite-political-battle-poland-donald-tusk-safe-karol-nawrocki/",
      "outlet": "POLITICO.eu",
      "country": "Belgium",
-     "author": "",
+     "author": "Wojciech Kość",
      "language": "English",
-     "checked": false,
-     "meta": "6 March 2026 · POLITICO.eu (Belgium)"
+     "checked": true,
+     "meta": "6 March 2026 · POLITICO.eu (Belgium) · Wojciech Kość"
     },
     {
      "date": "2026-02-23",
      "when": "23 February 2026",
      "title": "How to stop a dictator",
-     "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNUEV0eFY5OUtwOGRUZEs5bjJadlhxQmtsSTFPNkVNUmpwdE1SM0I3eVpkOUNaYm04dFM2bS1oVnhHMWo4X0N5MTVvVjQ4eC1uM0lNZ1FueGdZQWpMcERyLWJfYVVDa1ozRzY4MlZtaF9QcElzVkpFUzNaYlE4NnNYZTJXRWpRbXRaMXBYdnAzMllkMFUtMVpxVHE5WmY4dw?oc=5",
+     "url": "https://www.vox.com/politics/479924/democracy-us-brazil-south-korea-poland-backsliding-resilience",
      "outlet": "Vox",
      "country": "United States",
-     "author": "",
+     "author": "Zack Beauchamp",
      "language": "English",
-     "checked": false,
-     "meta": "23 February 2026 · Vox (United States)"
-    },
-    {
-     "date": "2026-02-19",
-     "when": "19 February 2026",
-     "title": "Bangladesz po wyborach. Szansa dla Chin, zimny prysznic dla Indii",
-     "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNcTR3S3VyWjIwYWpCVkN1ZnNvQVhiWk5lQmZaaU9EU0tXcFlzLXlMbUozNDR5Wm9DWEpKdnpDR2lXUnBRTV94aXRQcUNUb0RaY0oyN2w0dmRVbWRUMkhpT01WdkRwQkJrMHRVbnFZVzg0RUk5cGt0Zy1aN3llcms0RlpYZnFCTjg1b3NzU2lLdGg4SDliWEpRWXN3WFFVQnBGYU1RRUdn?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "19 February 2026 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "23 February 2026 · Vox (United States) · Zack Beauchamp"
     },
     {
      "date": "2026-02-16",
      "when": "16 February 2026",
      "title": "Poza termostatem. Poparcie dla polexitu nie rośnie tylko dlatego, że jest teraz nierealny",
-     "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQblZNUVZpcTAxMGNJMjVmaGxWSV9hUVVUZE4wbkZBLUFtNnZ0T25SMmdXQVFCNjh1M09LNzctM2pobEx1R2hRTHZiUldrd3pMMllHZVY2WHpnWE9DS2s2VzBrNkstNWlfc1d0cFVERjZYTV9lRThSQ2x4UjJBZngyMmJMUk11U0FiTGFzeDRLVGltYmhoaXVZX3VBeFAxX0VIcGhmU05takhxTEp0Q3k1a1FtbDFZckdZblI1RE9GSnExUHIxV1dBaTFLa1dvQQ?oc=5",
+     "url": "https://kulturaliberalna.pl/2026/02/16/szwed-poza-termostatem-poparcie-dla-polexitu-nie-rosnie-tylko-dlatego-ze-jest-teraz-nierealny/",
      "outlet": "Kultura Liberalna",
      "country": "Poland",
-     "author": "",
+     "author": "ewa_no",
      "language": "Polish",
-     "checked": false,
-     "meta": "16 February 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-02-15",
-     "when": "15 February 2026",
-     "title": "Sport dostępny dla każdego? Fenomen darta",
-     "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNZnVaRnlLVkRWRXFucjdDdzd4cFNtVTcydEZ6VVMycVMzakVoM0JUZ0NQLVplMUJ2LUY3UGpkVWFKemF5elVsM3ZJN3BudER1VURqQlBHN2VnNWZ2aFgzNzhRMU4wLXZQVVhIcXpFZ0VFSTlibFZIb2hKQ202UzVkcVlkSTlSYjV6NGc?oc=5",
-     "outlet": "Polskie Radio 24",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "15 February 2026 · Polskie Radio 24 (Poland)"
+     "checked": true,
+     "meta": "16 February 2026 · Kultura Liberalna (Poland) · ewa_no"
     },
     {
      "date": "2026-02-03",
      "when": "3 February 2026",
      "title": "Czy grozi nam polexit?",
-     "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE44UUdPekh0RGlzQ2VBX1NCemJhRW1Sa3Y3eV9OeXYzQkgtcGx4dzMyanVuZW1UUWIydmdHdXRwUElPWGZ6WFhBbFpBUDlUUnUxOEU4aXBNSjBZNjlnSUs4cy1IenFiWThWTTJzUDlB?oc=5",
+     "url": "https://kulturaliberalna.pl/2026/02/03/czy-grozi-nam-polexit/",
      "outlet": "Kultura Liberalna",
      "country": "Poland",
-     "author": "",
+     "author": "Aleksandra Braniewska",
      "language": "Polish",
-     "checked": false,
-     "meta": "3 February 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-02-03",
-     "when": "3 February 2026",
-     "title": "Czy Polacy chcą polexitu?",
-     "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE83ZXh3Mml2UEU0STB5c29yTTRaaTRIMzhPeWdCTzBXMUVOMkRtc3FzU3kwY2NVZENEbUs1NlJoOUZkUTlOVHN0eUc1aG1wT05LVVIwLXBSOHV3cjBZdDlIaFFSYngtd2YyT2ZQZEw1U29Cdw?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "3 February 2026 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2026-01-27",
-     "when": "27 January 2026",
-     "title": "Polska polityka – podział na prawicę i lewicę przestaje mówić cokolwiek",
-     "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOcE9RcFM5ZC1QN1pQUjFpSnlsQ003TlVOVmlWVTJydzhZV1EwRnpuZHZmQWI4b2JkaWVVNmpYMzNuandWZFBrblBBVVNnZnpYMlk3VVBTM1JKSlBFTTZFUFNtdzFwQjFadWNqenNtNkFFX0ZXcmpnQlJQVzY1RjU5TnRyQVJzNDhhRmhZVkljZVZFQko2ZjdyNHpaVEFKY2MwVThlMnRpcVpVVl9SSTl6dTVPOFJCWHZ5?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "27 January 2026 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "3 February 2026 · Kultura Liberalna (Poland) · Aleksandra Braniewska"
     }
    ]
   },
   {
    "year": 2025,
-   "summary": "2025: 28 articles",
+   "summary": "2025: 19 articles",
    "items": [
     {
      "date": "2025-12-01",
      "when": "1 December 2025",
      "title": "Old tensions simmer just below surface as Tusk and Merz to meet in Berlin",
-     "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOcG1aV2RoTnUtbkZYZ09NSkRpelBpODQ2enp3U1BrdnVWY2ltaG5NNlR0c0NrT3NJSkhSa1VkZjhwUzcxUDN2Vm1MU1N0YUk1bFgwenktXzQtZ3V3YV94WFBtMWhxa0RON3pNb0pTWUxGaERvX2tNWmdJbnZnbHZmVFh3cmhLMFpzSnFhTHFSZ1Bqdm8?oc=5",
+     "url": "https://www.theguardian.com/world/2025/dec/01/polish-german-leaders-meet-tensions-ukraine",
      "outlet": "The Guardian",
      "country": "United Kingdom",
-     "author": "",
+     "author": "Jakub Krupa",
      "language": "English",
-     "checked": false,
-     "meta": "1 December 2025 · The Guardian (United Kingdom)"
-    },
-    {
-     "date": "2025-10-21",
-     "when": "21 October 2025",
-     "title": "„Migrant Schrödingera” żyje z zasiłków i zabiera pracę",
-     "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNMTZJcFlySFVMVHEzelpQVHFUWmpITll2b0RlNnhjVExjbTdJajBvcjhwYzZSX2ZIU3NMUE44Y0hfTVdfLW5vMGxwc2RVbmx1eGNsN0Z6TkNqOWhfY0VoTHdqUVVkLV9fNDRYZ29xY0hYNFlyNFh1Y0ZuVnpKM2FBTmxCNDRYTWw2emhKVWE4NHFnX2FsWWpR?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "21 October 2025 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2025-09-14",
-     "when": "14 September 2025",
-     "title": "RENIK: Co się dzieje w Nepalu? Rewolucja młodych i premierka z Discorda",
-     "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSElMY2hWSl9aS0NaVWVXX2NTeTF4Vm81RHRIOThCRVFDYW1GdW1Qdk9zMlNZa01tVFFXcU9uelQ4SGRPMWVHU1VoeHloTGY5TXlTdWw4WWJ5SjkzdFFlT0NMcHEzU0tycEgzVlNkVEN5WlRpal94bzgyT0xnVXViaGFMeWxSWTlhNDZEckVKLWRMQmQyd1ZOWlVGZGFubm9x?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "14 September 2025 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2025-08-11",
-     "when": "11 August 2025",
-     "title": "STANLEY: Czy to prawda, że Polska jest podzielona?",
-     "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPWU1iX0xySlZ6ZG5CcDNpN2E5d1FhY0hLZEUwQldyVG82ZXFTVTVyTEZKTGlrRWVyVjR4RlBQaW5MRjNJSUxGN011OGtiaDV1dndYSUMxZWc5aXhzRlZSRXdLVllZdC1jQXJCZnhaaGxIelUzZFhuT240NW5BMFZTdUtkWWF6VnpyMHlqYVg4R24?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "11 August 2025 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "1 December 2025 · The Guardian (United Kingdom) · Jakub Krupa"
     },
     {
      "date": "2025-08-05",
      "when": "5 August 2025",
      "title": "Poland faces years of political deadlock under new president",
-     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOd3FZVVI1c0xMNmFReUQwNGlpQWFvMWRGejMxcUI4M19lMkVzN2tab3ZzdDJjSTFOT2hyYTM5YU5GcldHdjBsR3hNTGw0UldNRHYwNWYwZjhfZVdKdDlqTEQwQmt3dDN4eXN6OXh0Qk9GYk5zVjRZNVIwNk9VbWFkQktnN2xGSk5YM2FUTjl2Vk03cnhDYVE?oc=5",
+     "url": "https://www.politico.eu/article/poland-president-karol-nawrocki-donald-tusk-defense-policy/",
      "outlet": "POLITICO.eu",
      "country": "Belgium",
-     "author": "",
+     "author": "Wojciech Kość",
      "language": "English",
-     "checked": false,
-     "meta": "5 August 2025 · POLITICO.eu (Belgium)"
-    },
-    {
-     "date": "2025-07-21",
-     "when": "21 July 2025",
-     "title": "STANLEY: Raport z życia towarzyskiego: PiS wygrywa tam, gdzie nasi znajomi są tacy sami",
-     "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNX0hqbGdzelFpdldGSGJ1SDJ3OWRFZUJPWXNFUUdTMGJfNkJkLWZEeVJIblJnTFM1bFpBM24yUkpyd0tHSEk1TUE0SnNyQkxtamxyVHJTTk1SMWZCOFREQ0NCMjJ3VHJpN2szRTd2N1c3M3JVYVBKWUV4ZXE3dXpBNDZFbWZJTzkyREllb2c3U09yMmh2Q3poOGo4QTUwdmR0bld5RnI2MS1JZVFwZHpCWGtfTVAzaHNLWHloNklUQzUzUQ?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "21 July 2025 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2025-06-24",
-     "when": "24 June 2025",
-     "title": "Populizm przestał być marginesem",
-     "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9TYmlrbXlhOXlaVF9SRlZzbXphdEJZQWZLdkxqTFpuZThzbHRnUWl0NkNlSVZmZUJBUmZGSTdZTDE2XzlFZzVIcG56SGxtU251WW81XzNNUkZ1TUlLVDRUZ1lMVTRGVmNDUkZaTTVVU21jakREYUJaTXV5SWQ?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "24 June 2025 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2025-06-03",
-     "when": "3 June 2025",
-     "title": "Koalicja rządząca – małżeństwo z rozsądku na zakręcie",
-     "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOVXdCcVk4YnB4ZW90eTNxa0NkcjZOTGtGbWh5RF85QXlxVHV6bVBWMEUxck1GbzVxT3FmdG1udGRVX0ZjZEQ0UjRuekJsUFVucmRMRHlnNDFNZEVGa2RSM280TnhGVzhjTDZVVDB5Z1FLLTlES2Y0Nzc2SUhYWXp4WFhCWEduSWNiSElkMTdGTVRpTW5OWHc?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "3 June 2025 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "5 August 2025 · POLITICO.eu (Belgium) · Wojciech Kość"
     },
     {
      "date": "2025-06-03",
      "when": "3 June 2025",
      "title": "\"Potężny sojusznik\" Trumpa. Politico pisze o Karolu Nawrockim",
-     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV?oc=5",
+     "url": "https://www.money.pl/gospodarka/politico-strumpowana-polska-fatalna-wiadomosc-dla-tuska-7163691912149760a.html",
      "outlet": "Money.pl",
      "country": "Poland",
-     "author": "",
+     "author": "Piotr Bera",
      "language": "Polish",
-     "checked": false,
-     "meta": "3 June 2025 · Money.pl (Poland)"
+     "checked": true,
+     "meta": "3 June 2025 · Money.pl (Poland) · Piotr Bera"
     },
     {
      "date": "2025-06-02",
      "when": "2 June 2025",
      "title": "Élection présidentielle en Pologne : Karol Nawrocki, le candidat du PiS proche de Trump, devient président",
-     "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3?oc=5",
+     "url": "https://legrandcontinent.eu/fr/2025/06/02/en-pologne-karol-nawrocki-le-candidat-du-pis-proche-de-trump-remporte-la-presidentielle/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "Gilles Gressani",
      "language": "French",
-     "checked": false,
-     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets) · Gilles Gressani"
     },
     {
      "date": "2025-06-02",
      "when": "2 June 2025",
      "title": "Poland’s Tusk gets Trumped",
-     "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9qZ1p5UDJQTkE3RzRkUnJWZzJwaWRDbWJEOXBFMUVJTkNRUmd2S195dkpIeTFHcmFiQk1WcXM0b05FUVJKY1pvdl8xMVR6cmV2d2NNbWlmUUpvalg3NjI0S3N2VE5QbUJMM3c?oc=5",
+     "url": "https://www.politico.eu/article/polands-tusk-gets-trumped/",
      "outlet": "POLITICO.eu",
      "country": "Belgium",
-     "author": "",
+     "author": "Wojciech Kość, Jan Cienski",
      "language": "English",
-     "checked": false,
-     "meta": "2 June 2025 · POLITICO.eu (Belgium)"
+     "checked": true,
+     "meta": "2 June 2025 · POLITICO.eu (Belgium) · Wojciech Kość, Jan Cienski"
     },
     {
      "date": "2025-06-02",
      "when": "2 June 2025",
      "title": "In Polonia Karol Nawrocki, il candidato del PiS vicino a Trump, vince le elezioni presidenziali",
-     "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc?oc=5",
+     "url": "https://legrandcontinent.eu/it/2025/06/02/in-polonia-karol-nawrocki-il-candidato-del-pis-vicino-a-trump-vince-le-elezioni-presidenziali/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "Gilles Gressani",
      "language": "Italian",
-     "checked": false,
-     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets) · Gilles Gressani"
     },
     {
      "date": "2025-06-02",
      "when": "2 June 2025",
      "title": "En Polonia, Karol Nawrocki, el candidato del PiS cercano a Trump, gana las elecciones presidenciales",
-     "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ?oc=5",
+     "url": "https://legrandcontinent.eu/es/2025/06/02/en-polonia-karol-nawrocki-el-candidato-del-pis-cercano-a-trump-gana-las-elecciones-presidenciales/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "florent",
      "language": "Spanish",
-     "checked": false,
-     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "2 June 2025 · Le Grand Continent (Pan-European outlets) · florent"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "¿Quién es Karol Nawrocki? Historiador, hooligan y antiaborto: el candidato del PiS será el próximo presidente de Polonia",
-     "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2?oc=5",
+     "url": "https://legrandcontinent.eu/es/2025/06/01/quien-es-karol-nawrocki-historiador-hooligan-y-antiaborto-el-candidato-del-pis-a-las-elecciones-presidenciales-polacas-en-10-frases-clave/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "florent",
      "language": "Spanish",
-     "checked": false,
-     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets) · florent"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "¿Ganará la extrema derecha la elección presidencial en Polonia?",
-     "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw?oc=5",
+     "url": "https://legrandcontinent.eu/es/2025/06/01/ganara-la-extrema-derecha-la-eleccion-presidencial-en-polonia/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "florent",
      "language": "Spanish",
-     "checked": false,
-     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets) · florent"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "Qui est Karol Nawrocki ? Historien, hooligan, anti-avortement : le candidat du PiS sera le prochain président de la Pologne",
-     "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRmdFSVZYSXFLcVZ0MDBSNm9fX3lzXzRhdW54UENrS0lpSDBVcGpGNDRxVEJudjZybHVieWJLbFIwM2J5Y1plcEcwclJRX3ZPTlVQbU1HZkNCNkRUaFlSR0JvTWZERnFEaml6MEVfaDA1WGlWdzBLQkpfaEdvQjFOeWQwWnNJRTJFcmJ4bjE2XzR0eTVMVG9ZX0xGM2pkVkp4UTl4VFpaSkVkV3BZdTFLNzZ3V0xnTHVHVDNTbDdNcWd1MmEzQVFmLU9oY0Fjb2E1Z3ZrV3RaVDZHNU50LVY5SHpUNHVheUpBRUduZXU5WGxzTDBwTnhfQWlQS0oyLUlTRVE?oc=5",
+     "url": "https://legrandcontinent.eu/fr/2025/06/01/qui-est-karol-nawrocki-historien-hooligan-et-anti-avortement-le-candidat-du-pis-a-la-presidentielle-polonaise-en-10-phrases-clefs/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "Matheo Malik",
      "language": "French",
-     "checked": false,
-     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets) · Matheo Malik"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "Poland goes to the polls in second round of close-fought presidential election",
-     "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQZXQwWGZCbjBmM1dzOGtndXN2cVlUb3hUeWxGQzVzOFpKRlI2R2lSbGVBWjhnb09uM3lVZTVCaks1WXVBRUpfQkJBUW45WlJzbnBGRGpUaDBDU3ctcmtpMmxHRE15bW5MWGhyWHlJZ0E0cXVGc2dVREgzaXdVcFpKUlR5RWNlcEVZMHJMNUF3MDN0OUJSRjBNcXJJVVNZelNoSXNPSWx6Ti15MXJDX0szZVllUkc2WjJDeWtCbWZMak52dw?oc=5",
+     "url": "https://www.theguardian.com/world/2025/jun/01/poland-goes-to-the-polls-in-second-round-of-close-fought-presidential-election",
      "outlet": "The Guardian",
      "country": "United Kingdom",
-     "author": "",
+     "author": "Jakub Krupa",
      "language": "English",
-     "checked": false,
-     "meta": "1 June 2025 · The Guardian (United Kingdom)"
+     "checked": true,
+     "meta": "1 June 2025 · The Guardian (United Kingdom) · Jakub Krupa"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "L’extrême-droite remportera-t-elle le scrutin présidentiel en Pologne ?",
-     "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ?oc=5",
+     "url": "https://legrandcontinent.eu/fr/2025/06/01/lextreme-droite-remportera-t-elle-le-scrutin-presidentiel-en-pologne/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "Ramona Bloj",
      "language": "French",
-     "checked": false,
-     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets)"
+     "checked": true,
+     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets) · Ramona Bloj"
     },
     {
      "date": "2025-06-01",
      "when": "1 June 2025",
      "title": "L’estrema destra vincerà le elezioni presidenziali in Polonia?",
-     "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQaTJqTG1SdnJCU1d2bTZxQzFOVUQ1TFYzeGJtOGdhN3dZdS0xcnZtU2QzMU5oMDIzaDNUc1NubTZaWU1xb2pDM29EM1AwVEtZdXFhYVpKOVpDTjE5bXZNZno0VWtSZmwwcHdOaVFURU1VdWFUcUl1RmVBRzF2WF9HNS1YQ0kzZkhacUN3eWNqTXZBS2djMzN2clZPSmhJYW9SRlpGNXdR?oc=5",
+     "url": "https://legrandcontinent.eu/it/2025/06/01/lestrema-destra-vincera-le-elezioni-presidenziali-in-polonia/",
      "outlet": "Le Grand Continent",
      "country": "Pan-European outlets",
-     "author": "",
+     "author": "jechareton",
      "language": "Italian",
-     "checked": false,
-     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets)"
-    },
-    {
-     "date": "2025-05-26",
-     "when": "26 May 2025",
-     "title": "Prezydent Trzaskowski to koniec wymówek dla rządu",
-     "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNV3YtRGxpVWxJV3dLS19vaU5EWjFKNEZWcHZXY1VYdEFROGV0cl9fd1ZpbFF5QnBhME95S0pKOWM3ZEIxRVF2N0pSLVh3ai0tMXdGYnk4OGZKOHl1akxvVjkyNkR0emJKM3dGcXFqY3NpWHJWVWhWYkdNY0tURk1FYzNCY0F4c3Z1cmZSNXM2NURIVFU?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "26 May 2025 · Kultura Liberalna (Poland)"
-    },
-    {
-     "date": "2025-05-24",
-     "when": "24 May 2025",
-     "title": "Polonia może wybrać nam prezydenta. Zacznijmy dyskutować, czy ma do tego prawo",
-     "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOY1ZuVGNqa2l4YW12WmxZNjctQ0pvSEdKZE9IM1N5SGotcDAySHZBZ1Rvb3hYMGVyRExRQVNzeVFRYi1HaU55TkxCYlgwZnJsYmZCZGZQc2xvdEUtZ1VXc3NKR1FhcV9Ya3pKU2ZWSE04TWsycnc5VzNCMWV1aXRabElqVkxjMmhpRnp1WUFwMkt3SmxWS0gwX2JGbExHQmVOSllR?oc=5",
-     "outlet": "Wyborcza.pl",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "24 May 2025 · Wyborcza.pl (Poland)"
-    },
-    {
-     "date": "2025-05-22",
-     "when": "22 May 2025",
-     "title": "SKRZYDŁOWSKA-KALUKIN: Debata, marsze i wyprawa po nową linię podziału",
-     "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOTllDS1p5WjBiT3NPcDdMbjhDYkRxWDg1MWo2MHpaMzhUSVdNemY2UUxSckYxanBPTFgtdDkwbGJzTHVMZEZVYkNiM2IwMVpMbl9jbVRJSmtYMUJ6NzhwdlFITVA2U1RrSlVpM25Ta2RCVWZUcFBTLTZodDZXck9PcDlZakFQYnZrODdiSENtZ1R0LTltcmJMenVVc0xCU2FfUlhZcjV0d3VoZnc?oc=5",
-     "outlet": "Kultura Liberalna",
-     "country": "Poland",
-     "author": "",
-     "language": "Polish",
-     "checked": false,
-     "meta": "22 May 2025 · Kultura Liberalna (Poland)"
+     "checked": true,
+     "meta": "1 June 2025 · Le Grand Continent (Pan-European outlets) · jechareton"
     },
     {
      "date": "2025-05-19",
      "when": "19 May 2025",
      "title": "Centrist Warsaw mayor narrowly ahead in first round of Polish presidential race | Poland",
-     "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQNTF4eHdvTlMyZG9yZ1A0NTFCUHl2Zjhob29ZZ2JTN1pha0pQSF8yajNYeXlwZks5UTUyNHRmd0U1ZUFLOE1tMVl4a2lsU05XRjFUbmV4RWhkYmIzZ3hDVXd1THVLRTlkZTBkcjlQakNjQjdzdnRxM2tqMTBkQ1o0TmVWa1JWR2NYM2s2TU5PcXRvYWNtRFB1bG9jVHhGRU82S3FyQjBwY3lIOWNFTElJZjR3UkdwMk13bWgzaGtCRUxvNjg?oc=5",
+     "url": "https://www.theguardian.com/world/2025/may/18/centrist-warsaw-mayor-narrowly-ahead-in-first-round-of-polish-presidential-race",
      "outlet": "The Guardian",
      "country": "United Kingdom",
-     "author": "",
+     "author": "Jakub Krupa, Ashifa Kassam",
      "language": "English",
-     "checked": false,
-     "meta": "19 May 2025 · The Guardian (United Kingdom)"
+     "checked": true,
+     "meta": "19 May 2025 · The Guardian (United Kingdom) · Jakub Krupa, Ashifa Kassam"
     },
     {
      "date": "2025-05-17",
      "when": "17 May 2025",
      "title": "‘The same faces, swapping places’: Polish candidates aim to break two-party hold on power",
-     "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQVXhTOEwzOVlDU2QzWDFFelRscnpLMmxXcTRLNzNIRG9qOGJhOGhOWXdGNEs1a0R1R01oYzhIWE80VngyZEgyOG5tYXZ5RlBrNTdSRzVmM0EwYjY4WUFTVWZ3cndnTVgxR2xBUU82SkRxeFcwOXA0OTdPckR2djVIQkFvRkh5UWgxMG96YlpaaVZ6c0QtaTUxVE9BQ3h1eDVyM0NHRk5yS2VWWlJIM2RjdmdPQ1NMaW5JcWc?oc=5",
+     "url": "https://www.theguardian.com/world/2025/may/17/poland-presidential-election-candidates-slawomir-mentzen-adrian-zandberg",
      "outlet": "The Guardian",
      "country": "United Kingdom",
-     "author": "",
+     "author": "Jakub Krupa",
      "language": "English",
-     "checked": false,
-     "meta": "17 May 2025 · The Guardian (United Kingdom)"
+     "checked": true,
+     "meta": "17 May 2025 · The Guardian (United Kingdom) · Jakub Krupa"
     },
     {
      "date": "2025-05-16",
      "when": "16 May 2025",
      "title": "Poland presidential election 2025: From migration to EU, what’s at stake?",
-     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOTnZBLWZnbk5XSHhlTURCbnVwM3k1cm9hclZ5M0EzSm5udXg2TGY5Ylozajc1R0IyV3haRks4Q0htNjdDYVlRa005MHA5OC0zdXZrX1RjLWtqZGtXZ3hEbUtId1NmXzllNUlMaDdxcEJqTXFZZUJWUUpvTkRNQW1taEE5M3pFZ01wUFBkaVJqYW4wM3o5eldreXRLVkg0b2Y2djNNR05RMDNUTVpJQ3I00gG0AUFVX3lxTE9qbnpBdDgyelpSdnZSS3d5Yl9aSVBGaXMyNVdPZ1ZLMnhFT2VLZDVNdWZQcFhBR2paSnJKcHBuRlhTaVVvbUxvMFNNZ0RGZmdTNERFaWJUWVJGQk9CbG9XNEtzSVhoNHhWME1vOXFUc1l3al9SODlqLWRsb25sblRPangyanIzaW1oTXFKUXNIeTcwVkY0LWNxTG5rWFRUdFE4cV9NOW1WUC1kVHFCTHJrR3paVA?oc=5",
+     "url": "https://www.aljazeera.com/news/2025/5/16/poland-presidential-election-2025-from-migration-to-eu-whats-at-stake",
      "outlet": "Al Jazeera",
      "country": "Qatar",
-     "author": "",
+     "author": "Agnieszka Pikulicka-Wilczewska",
      "language": "English",
-     "checked": false,
-     "meta": "16 May 2025 · Al Jazeera (Qatar)"
+     "checked": true,
+     "meta": "16 May 2025 · Al Jazeera (Qatar) · Agnieszka Pikulicka-Wilczewska"
     },
     {
      "date": "2025-05-07",
      "when": "7 May 2025",
      "title": "Polish Presidential Candidate Battles Allegations of Lying About Property Deal",
-     "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNaTRNbVlIOVdHcHBiRlRWdWtjZUsyd3dEZ2NWeEh1dFlBLTZxa3F1RjJac3ZGR1hLblgzSHBNSzBoOVI3UW5oRHhBb2c5X1ZVbEFDS2dpYjA4Qk1SNHJHRko2cEhsUU44QWhWM1Juc0hHSTg4d2tQQzc1WkVsMzV1TWJQTFpsN3JMdmlpNTRUSTdxSk5xZGtPX19OT3hETmNBWnBlWFh2OVdhSDBZcUhidGt4M3VZTGlkRjVr?oc=5",
+     "url": "https://balkaninsight.com/2025/05/07/polish-presidential-candidate-battles-allegations-of-lying-about-property-deal/rd/",
      "outlet": "Balkan Insight",
      "country": "Serbia",
-     "author": "",
+     "author": "Claudia Ciobanu",
      "language": "English",
-     "checked": false,
-     "meta": "7 May 2025 · Balkan Insight (Serbia)"
+     "checked": true,
+     "meta": "7 May 2025 · Balkan Insight (Serbia) · Claudia Ciobanu"
     },
     {
      "date": "2025-04-17",
@@ -3231,43 +2882,31 @@
   }
  ],
  "research": {
-  "summary": "10 articles",
+  "summary": "9 articles",
   "items": [
    {
     "date": "2026-07-09",
     "when": "9 July 2026",
     "title": "No, We Do Not Need a ‘Good’ DOGE - by John K. Glenn",
-    "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1VUHExX3RLQ2p6OG9YNFBuRVdnY1MyeVJvSVBaZVVfSmZxTDA4SjBLbVVXS0w2T2lEemVqVWxYN2hYcE5ZNFFscThLa195dVF4VUp3UGIxSEpHd2dyVDVhaGFvaGFDTHAwcXZfTjhB?oc=5",
+    "url": "https://www.theunpopulist.net/p/no-we-do-not-need-a-good-doge",
     "outlet": "The UnPopulist",
     "country": "International outlets",
-    "author": "",
+    "author": "John K. Glenn",
     "language": "English",
-    "checked": false,
-    "meta": "9 July 2026 · The UnPopulist (International outlets)"
+    "checked": true,
+    "meta": "9 July 2026 · The UnPopulist (International outlets) · John K. Glenn"
    },
    {
     "date": "2026-02-24",
     "when": "24 February 2026",
     "title": "You got your democracy back. Now what?",
-    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNbEtpSDkzLTc5WlExY0QzOVRsVWFYVFRnY3cxaXVBcE1wS0hJQmFSVFhaTTFHTTBtY1Njdy1ocTNROGRtWWxkZDFYdlRGd1hkcFM3TV9UWkp3WDM0OTBjTXBWci1pT28tSzVyUDZVZWRwcDE3cEhuU1pyTlhIdXpLVThmUThWR190MUR3?oc=5",
+    "url": "https://www.vox.com/podcasts/480149/poland-democracy-donald-tusk-illiberal-trilemma",
     "outlet": "Vox",
     "country": "United States",
-    "author": "",
+    "author": "Jolie Myers, Noel King",
     "language": "English",
-    "checked": false,
-    "meta": "24 February 2026 · Vox (United States)"
-   },
-   {
-    "date": "2026-02-17",
-    "when": "17 February 2026",
-    "title": "Jak PiS przedobrzyło ze zmianą? \"To był przełomowy moment\"",
-    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQMjFxOS1JdWc3QlA4OVM3RXdBQk0wdEpiQjlWc25JZGZsd29wRm10TllaNU1DazVBaG5pc1JsVVJIOG5ndUNZWFZuXzFfRnIzRG5FUjJmMHFVdXNEdVFpVVNBMkpMSjB6cDZ0aGdTN1hPU2RCN0d5TGZwWWN3NjNyeTRaUXo3dkJ2NFJ3NTAtSVVIZFVQZjdtZTR1UUc4R0hSOEVKYjhaSmhyTkY4WHpiMWs1RjNZZVh5T1ZN?oc=5",
-    "outlet": "Newsweek",
-    "country": "Poland",
-    "author": "",
-    "language": "Polish",
-    "checked": false,
-    "meta": "17 February 2026 · Newsweek (Poland)"
+    "checked": true,
+    "meta": "24 February 2026 · Vox (United States) · Jolie Myers, Noel King"
    },
    {
     "date": "2023-10-18",
@@ -3357,83 +2996,20 @@
  },
  "records": [
   {
-   "gid": "CBMif0FVX3lxTE1BTm9XeEl4azh3eDZmY0d4RGZmX3VqckFDT3RCYWg4MnJfXzJOZWpoNnFPcklaeXpuU0ZYbVFTT241d0VFWWo3bkVBVDlNdGhBZDNnT0JFSXVocG5wVG9OTVYwc0FDWXhVdVZaUHRIeldRN3JOMEcydVAzV2JnNUU",
-   "google_url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1BTm9XeEl4azh3eDZmY0d4RGZmX3VqckFDT3RCYWg4MnJfXzJOZWpoNnFPcklaeXpuU0ZYbVFTT241d0VFWWo3bkVBVDlNdGhBZDNnT0JFSXVocG5wVG9OTVYwc0FDWXhVdVZaUHRIeldRN3JOMEcydVAzV2JnNUU?oc=5",
-   "url": "",
-   "title": "STANLEY: Co oznacza koniec „grzecznego Tuska”?",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-10-04",
-   "edition_language": "Polish",
-   "key": "gnews:CBMif0FVX3lxTE1BTm9XeEl4azh3eDZmY0d4RGZmX3VqckFDT3RCYWg4MnJfXzJOZWpoNnFPcklaeXpuU0ZYbVFTT241d0VFWWo3bkVBVDlNdGhBZDNnT0JFSXVocG5wVG9OTVYwc0FDWXhVdVZaUHRIeldRN3JOMEcydVAzV2JnNUU",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMirgFBVV95cUxOazM5LUFZUzNyTXhTUl9pTzdHcFJuTnVRMXlPcU9mTVdLX1JzR0laYVNWNFJxendwc2dLNG5rcmZUc3hmOTNCaG8zX0I2TGY2anNBblVkSU0ySXMzOXNNWk1BV2JCdWd5Qy1ldTBiaDFwY3dQT3dkZEJxQzh1NkdsaVgzNjliU3dqRUxPdk5uQzdpb1JjeHl0LVlqWnk3LVEyb3hKS0l5VzRqRWJULWc",
-   "google_url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOazM5LUFZUzNyTXhTUl9pTzdHcFJuTnVRMXlPcU9mTVdLX1JzR0laYVNWNFJxendwc2dLNG5rcmZUc3hmOTNCaG8zX0I2TGY2anNBblVkSU0ySXMzOXNNWk1BV2JCdWd5Qy1ldTBiaDFwY3dQT3dkZEJxQzh1NkdsaVgzNjliU3dqRUxPdk5uQzdpb1JjeHl0LVlqWnk3LVEyb3hKS0l5VzRqRWJULWc?oc=5",
-   "url": "",
-   "title": "GEBERT: Wybory w Izraelu wygrają Arabowie. A potem zapewne je przegrają",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-09-30",
-   "edition_language": "Polish",
-   "key": "gnews:CBMirgFBVV95cUxOazM5LUFZUzNyTXhTUl9pTzdHcFJuTnVRMXlPcU9mTVdLX1JzR0laYVNWNFJxendwc2dLNG5rcmZUc3hmOTNCaG8zX0I2TGY2anNBblVkSU0ySXMzOXNNWk1BV2JCdWd5Qy1ldTBiaDFwY3dQT3dkZEJxQzh1NkdsaVgzNjliU3dqRUxPdk5uQzdpb1JjeHl0LVlqWnk3LVEyb3hKS0l5VzRqRWJULWc",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMikAFBVV95cUxNU1h6WlRwTjRVZEliX2lTcXcwUHQ4TTBlMV81a2JFRVN0VVpyTG1EeVZHV1FWU3RKNERSWi1rYUZrcmJDNU5iV1BtazR3Y0VtZlM5Zk9OdS02c1R5UDBSNWp3UU43TmpNd2syTE1NOTkwZlZlQzhHSjBILVZUY3I3S3B3VHVFdlhiU28zNElUbjE",
-   "google_url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNU1h6WlRwTjRVZEliX2lTcXcwUHQ4TTBlMV81a2JFRVN0VVpyTG1EeVZHV1FWU3RKNERSWi1rYUZrcmJDNU5iV1BtazR3Y0VtZlM5Zk9OdS02c1R5UDBSNWp3UU43TmpNd2syTE1NOTkwZlZlQzhHSjBILVZUY3I3S3B3VHVFdlhiU28zNElUbjE?oc=5",
-   "url": "",
-   "title": "STANLEY: Na Zondacrypto skorzysta prawica",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-09-24",
-   "edition_language": "Polish",
-   "key": "gnews:CBMikAFBVV95cUxNU1h6WlRwTjRVZEliX2lTcXcwUHQ4TTBlMV81a2JFRVN0VVpyTG1EeVZHV1FWU3RKNERSWi1rYUZrcmJDNU5iV1BtazR3Y0VtZlM5Zk9OdS02c1R5UDBSNWp3UU43TmpNd2syTE1NOTkwZlZlQzhHSjBILVZUY3I3S3B3VHVFdlhiU28zNElUbjE",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMipwFBVV95cUxPNVhpRGd6VVlsdlFSUEJaU1N0WDhSM0staWlYdlR6c3hsTnRtbE5YTE94OGpRUXcxb3l0MFNMRzl4ZVNwelhWU1ZBSnd3NHBxcVh2ZlJqNEtfNkpRUkMzMmFwWnA4eWpSNi1OeTFoZklLSXNlRXF4a251aGctWXlqV19tS0VmdXowUERKbDNod3VyeWNyWHU2M0pkSV9hLThjTkpIUVF2UQ",
    "google_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPNVhpRGd6VVlsdlFSUEJaU1N0WDhSM0staWlYdlR6c3hsTnRtbE5YTE94OGpRUXcxb3l0MFNMRzl4ZVNwelhWU1ZBSnd3NHBxcVh2ZlJqNEtfNkpRUkMzMmFwWnA4eWpSNi1OeTFoZklLSXNlRXF4a251aGctWXlqV19tS0VmdXowUERKbDNod3VyeWNyWHU2M0pkSV9hLThjTkpIUVF2UQ?oc=5",
-   "url": "",
+   "url": "https://jelen.media/lakner-zoltan-az-esely-megvan-a-bizonyitasi-teher-unger-annara-es-a-hivatalra-harul/",
    "title": "Lakner Zoltán: Az esély megvan, a bizonyítási teher Unger Annára és a hivatalra hárul",
    "outlet": "Jelen",
    "outlet_url": "https://jelen.media",
    "date": "2026-09-08",
    "edition_language": "Hungarian",
-   "key": "gnews:CBMipwFBVV95cUxPNVhpRGd6VVlsdlFSUEJaU1N0WDhSM0staWlYdlR6c3hsTnRtbE5YTE94OGpRUXcxb3l0MFNMRzl4ZVNwelhWU1ZBSnd3NHBxcVh2ZlJqNEtfNkpRUkMzMmFwWnA4eWpSNi1OeTFoZklLSXNlRXF4a251aGctWXlqV19tS0VmdXowUERKbDNod3VyeWNyWHU2M0pkSV9hLThjTkpIUVF2UQ",
+   "key": "jelen.media/lakner-zoltan-az-esely-megvan-a-bizonyitasi-teher-unger-annara-es-a-hivatalra-harul",
    "queries": [
     12
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Ónody Tamás",
    "language": "Hungarian",
    "domain": "jelen.media",
    "country": "INT",
@@ -3443,17 +3019,17 @@
   {
    "gid": "CBMiugFBVV95cUxOZHVHa3FyTmRzX0dtRW9QM3VJVXE4d1BVZjg2c1FQb3Ywb1dZejdLd3E2YkF1eGYwWVcwRWdkckhlaUpjTURnWkdBQzBaVVZsTFROdTJ5VUl5QjBhVi0yaTlHdVVJYl9XaWxnaU5rNnNkUHlLYXh1RGJqR2ZaNldNQkY3TDB4N1ZHS0RzZlBTWmtnVy1Ia3RUajAtTlhteHNqTGpxd20wNGRrSDVTQnhGdXlZeS11UXZRaEE",
    "google_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOZHVHa3FyTmRzX0dtRW9QM3VJVXE4d1BVZjg2c1FQb3Ywb1dZejdLd3E2YkF1eGYwWVcwRWdkckhlaUpjTURnWkdBQzBaVVZsTFROdTJ5VUl5QjBhVi0yaTlHdVVJYl9XaWxnaU5rNnNkUHlLYXh1RGJqR2ZaNldNQkY3TDB4N1ZHS0RzZlBTWmtnVy1Ia3RUajAtTlhteHNqTGpxd20wNGRrSDVTQnhGdXlZeS11UXZRaEE?oc=5",
-   "url": "",
+   "url": "https://www.lostiempos.com/actualidad/opinion/20260823/columna/autogoles-del-gobierno-convidan-retorno-del-populismo-i",
    "title": "Los autogoles del Gobierno convidan a un retorno del populismo (I)",
    "outlet": "Los Tiempos",
    "outlet_url": "https://www.lostiempos.com",
    "date": "2026-08-23",
    "edition_language": "Spanish",
-   "key": "gnews:CBMiugFBVV95cUxOZHVHa3FyTmRzX0dtRW9QM3VJVXE4d1BVZjg2c1FQb3Ywb1dZejdLd3E2YkF1eGYwWVcwRWdkckhlaUpjTURnWkdBQzBaVVZsTFROdTJ5VUl5QjBhVi0yaTlHdVVJYl9XaWxnaU5rNnNkUHlLYXh1RGJqR2ZaNldNQkY3TDB4N1ZHS0RzZlBTWmtnVy1Ia3RUajAtTlhteHNqTGpxd20wNGRrSDVTQnhGdXlZeS11UXZRaEE",
+   "key": "lostiempos.com/actualidad/opinion/20260823/columna/autogoles-del-gobierno-convidan-retorno-del-populismo-i",
    "queries": [
     6
    ],
-   "checked": null,
+   "checked": true,
    "author": "",
    "language": "Spanish",
    "domain": "lostiempos.com",
@@ -3462,61 +3038,19 @@
    "idea": null
   },
   {
-   "gid": "CBMidkFVX3lxTFBpUVRTZVZDeVVqNWF2TUNoNHp2d3ZUcjNJUThyMW84ME5nWDQyT0JHZk9VMXBmYkIyUV91alJRMS1uTGVFRUk2aFJnVzN4eW82blZqTFdXNzRVb01NeWVoamtkQmk2djRHOHNRUW1mSkh0Ml9vN2c",
-   "google_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBpUVRTZVZDeVVqNWF2TUNoNHp2d3ZUcjNJUThyMW84ME5nWDQyT0JHZk9VMXBmYkIyUV91alJRMS1uTGVFRUk2aFJnVzN4eW82blZqTFdXNzRVb01NeWVoamtkQmk2djRHOHNRUW1mSkh0Ml9vN2c?oc=5",
-   "url": "",
-   "title": "Nie autocenzura, a wycofanie. Kto milczy w debacie politycznej?",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-08-18",
-   "edition_language": "Polish",
-   "key": "gnews:CBMidkFVX3lxTFBpUVRTZVZDeVVqNWF2TUNoNHp2d3ZUcjNJUThyMW84ME5nWDQyT0JHZk9VMXBmYkIyUV91alJRMS1uTGVFRUk2aFJnVzN4eW82blZqTFdXNzRVb01NeWVoamtkQmk2djRHOHNRUW1mSkh0Ml9vN2c",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMilgFBVV95cUxQNDNNNEtoSzZTVHFsYXg1aGpVQkc2N29hSFdheEthWUdqVVFZVEFpc3c1bmNoRERNV2dOeXJKWF9qU2dSTjZqUzM2VWRRS194NFhkTXl0emluUjBVUjhaQThzdHRVbG41NVBLUEJ3Z2JMT1dhVFN4QWItRFFwcmw4QW5KbkRuTVBjZE9lTjRCdmR4OG00Znc",
-   "google_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQNDNNNEtoSzZTVHFsYXg1aGpVQkc2N29hSFdheEthWUdqVVFZVEFpc3c1bmNoRERNV2dOeXJKWF9qU2dSTjZqUzM2VWRRS194NFhkTXl0emluUjBVUjhaQThzdHRVbG41NVBLUEJ3Z2JMT1dhVFN4QWItRFFwcmw4QW5KbkRuTVBjZE9lTjRCdmR4OG00Znc?oc=5",
-   "url": "",
-   "title": "Morawiecki będzie łowił w elektoracie PiS-u",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-07-27",
-   "edition_language": "Polish",
-   "key": "gnews:CBMilgFBVV95cUxQNDNNNEtoSzZTVHFsYXg1aGpVQkc2N29hSFdheEthWUdqVVFZVEFpc3c1bmNoRERNV2dOeXJKWF9qU2dSTjZqUzM2VWRRS194NFhkTXl0emluUjBVUjhaQThzdHRVbG41NVBLUEJ3Z2JMT1dhVFN4QWItRFFwcmw4QW5KbkRuTVBjZE9lTjRCdmR4OG00Znc",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMisgFBVV95cUxOdHlaNWNqbXhvV1h2bk9Zd0dEMExDTEYzV01TYndpOFhyRWllY21EV2Jya2tVdUx0dUtlbW5zeTNNcmpUU2FQMFBqdGpXSy04d2Npdk9kX1FRSjlLNkhEdTM1NFZRZEtoWldXVTJlanFma2VTVThhS3BWdnJZOWRIYk54SkNwV2R5THNpS3E0Y0xxUWxRSDFzWWM5el84RW1wYmNzZExPQm1WUWtzeU43aHFB",
    "google_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOdHlaNWNqbXhvV1h2bk9Zd0dEMExDTEYzV01TYndpOFhyRWllY21EV2Jya2tVdUx0dUtlbW5zeTNNcmpUU2FQMFBqdGpXSy04d2Npdk9kX1FRSjlLNkhEdTM1NFZRZEtoWldXVTJlanFma2VTVThhS3BWdnJZOWRIYk54SkNwV2R5THNpS3E0Y0xxUWxRSDFzWWM5el84RW1wYmNzZExPQm1WUWtzeU43aHFB?oc=5",
-   "url": "",
+   "url": "https://www.commonspace.eu/opinion/opinion-hungarys-constitutional-overhaul-democratic-renewal-or-step-autocracy",
    "title": "Opinion: Hungary’s Constitutional Overhaul: Democratic Renewal or a Step to Autocracy?",
    "outlet": "commonspace.eu",
    "outlet_url": "https://www.commonspace.eu",
    "date": "2026-07-19",
    "edition_language": "English",
-   "key": "gnews:CBMisgFBVV95cUxOdHlaNWNqbXhvV1h2bk9Zd0dEMExDTEYzV01TYndpOFhyRWllY21EV2Jya2tVdUx0dUtlbW5zeTNNcmpUU2FQMFBqdGpXSy04d2Npdk9kX1FRSjlLNkhEdTM1NFZRZEtoWldXVTJlanFma2VTVThhS3BWdnJZOWRIYk54SkNwV2R5THNpS3E0Y0xxUWxRSDFzWWM5el84RW1wYmNzZExPQm1WUWtzeU43aHFB",
+   "key": "commonspace.eu/opinion/opinion-hungarys-constitutional-overhaul-democratic-renewal-or-step-autocracy",
    "queries": [
     21
    ],
-   "checked": null,
+   "checked": true,
    "author": "",
    "language": "English",
    "domain": "commonspace.eu",
@@ -3525,42 +3059,21 @@
    "idea": "trilemma"
   },
   {
-   "gid": "CBMiuAFBVV95cUxOd0VnalZfYlNvdkdiT1owZHVQMUxLR0tLbk9kSjNDdW9uSkNoZU1xbXdTSWl5OEE1NVpYS2lGN1pJajVFRzduMXdNUVNfczNPeHJIWmZoWG5manRaUkd3aWtkY1kxcDNZb3ZEWERWem5MeUdRc2tZT3BLRlpGUzZ0VDdTVHRYM0ZXYmpZNFZNSmdTLTVjWWVTb3J0RW1hNlpWWGdJUU5UdmE4cklDV2kyZWg1VVFaSDhM",
-   "google_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOd0VnalZfYlNvdkdiT1owZHVQMUxLR0tLbk9kSjNDdW9uSkNoZU1xbXdTSWl5OEE1NVpYS2lGN1pJajVFRzduMXdNUVNfczNPeHJIWmZoWG5manRaUkd3aWtkY1kxcDNZb3ZEWERWem5MeUdRc2tZT3BLRlpGUzZ0VDdTVHRYM0ZXYmpZNFZNSmdTLTVjWWVTb3J0RW1hNlpWWGdJUU5UdmE4cklDV2kyZWg1VVFaSDhM?oc=5",
-   "url": "",
-   "title": "Upadek Starmera. Trzy lekcje z Wielkiej Brytanii dla Tuska przed wyborami 2027",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-07-13",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiuAFBVV95cUxOd0VnalZfYlNvdkdiT1owZHVQMUxLR0tLbk9kSjNDdW9uSkNoZU1xbXdTSWl5OEE1NVpYS2lGN1pJajVFRzduMXdNUVNfczNPeHJIWmZoWG5manRaUkd3aWtkY1kxcDNZb3ZEWERWem5MeUdRc2tZT3BLRlpGUzZ0VDdTVHRYM0ZXYmpZNFZNSmdTLTVjWWVTb3J0RW1hNlpWWGdJUU5UdmE4cklDV2kyZWg1VVFaSDhM",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMibkFVX3lxTE1VUHExX3RLQ2p6OG9YNFBuRVdnY1MyeVJvSVBaZVVfSmZxTDA4SjBLbVVXS0w2T2lEemVqVWxYN2hYcE5ZNFFscThLa195dVF4VUp3UGIxSEpHd2dyVDVhaGFvaGFDTHAwcXZfTjhB",
    "google_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1VUHExX3RLQ2p6OG9YNFBuRVdnY1MyeVJvSVBaZVVfSmZxTDA4SjBLbVVXS0w2T2lEemVqVWxYN2hYcE5ZNFFscThLa195dVF4VUp3UGIxSEpHd2dyVDVhaGFvaGFDTHAwcXZfTjhB?oc=5",
-   "url": "",
+   "url": "https://www.theunpopulist.net/p/no-we-do-not-need-a-good-doge",
    "title": "No, We Do Not Need a ‘Good’ DOGE - by John K. Glenn",
    "outlet": "The UnPopulist",
    "outlet_url": "https://www.theunpopulist.net",
    "date": "2026-07-09",
    "edition_language": "English",
-   "key": "gnews:CBMibkFVX3lxTE1VUHExX3RLQ2p6OG9YNFBuRVdnY1MyeVJvSVBaZVVfSmZxTDA4SjBLbVVXS0w2T2lEemVqVWxYN2hYcE5ZNFFscThLa195dVF4VUp3UGIxSEpHd2dyVDVhaGFvaGFDTHAwcXZfTjhB",
+   "key": "theunpopulist.net/p/no-we-do-not-need-a-good-doge",
    "queries": [
     0,
     31
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "John K. Glenn",
    "language": "English",
    "domain": "theunpopulist.net",
    "country": "INT",
@@ -3570,18 +3083,18 @@
   {
    "gid": "CBMimgFBVV95cUxQaW44X1d1QWU2VS16TVc2aHpBZmtlMThIblNyNm83eGlsUk5mR3hQSFRFM1FTbkxnUWI5bWJJUlR2elJxWHE1c2FFbGNaMjUzbzdHVGtnRFpoTy0zckE3MlBhSWR0ZG9FZlNVdjdQOVpiNUxMclFYRmRWN1ZhbEZzcnowamV5a2ZCNU5xeGhyb1JNZFl3UHVXd3ZR0gGaAUFVX3lxTE1ZTU1ZdjRYVjRrYVo5aUVkazhLaTVLMmF2N3NOb3hBbGZiZU1zbkV2aGx0a0FjOUxkbnVmbDlLMF9FbnVXaF9CUUhIaDNlZGlwODZpVHdwTHlReEdHVURndkhhaEF0Z0RhMlpaSWJDSDhQZnZHdGYxV2hRTXJEdE1QMkJEV0xxMTh1cWRaRFFEZ0JGOE1jLWtPbmc",
    "google_url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaW44X1d1QWU2VS16TVc2aHpBZmtlMThIblNyNm83eGlsUk5mR3hQSFRFM1FTbkxnUWI5bWJJUlR2elJxWHE1c2FFbGNaMjUzbzdHVGtnRFpoTy0zckE3MlBhSWR0ZG9FZlNVdjdQOVpiNUxMclFYRmRWN1ZhbEZzcnowamV5a2ZCNU5xeGhyb1JNZFl3UHVXd3ZR0gGaAUFVX3lxTE1ZTU1ZdjRYVjRrYVo5aUVkazhLaTVLMmF2N3NOb3hBbGZiZU1zbkV2aGx0a0FjOUxkbnVmbDlLMF9FbnVXaF9CUUhIaDNlZGlwODZpVHdwTHlReEdHVURndkhhaEF0Z0RhMlpaSWJDSDhQZnZHdGYxV2hRTXJEdE1QMkJEV0xxMTh1cWRaRFFEZ0JGOE1jLWtPbmc?oc=5",
-   "url": "",
+   "url": "https://www.dw.com/en/magyar-hungary-fight-orban-corruption-system-return-democracy/a-77726207",
    "title": "Hungary: Magyar's 'Operation Purgatory' tackles Orban system",
    "outlet": "DW.com",
    "outlet_url": "https://www.dw.com",
    "date": "2026-06-28",
    "edition_language": "English",
-   "key": "gnews:CBMimgFBVV95cUxQaW44X1d1QWU2VS16TVc2aHpBZmtlMThIblNyNm83eGlsUk5mR3hQSFRFM1FTbkxnUWI5bWJJUlR2elJxWHE1c2FFbGNaMjUzbzdHVGtnRFpoTy0zckE3MlBhSWR0ZG9FZlNVdjdQOVpiNUxMclFYRmRWN1ZhbEZzcnowamV5a2ZCNU5xeGhyb1JNZFl3UHVXd3ZR0gGaAUFVX3lxTE1ZTU1ZdjRYVjRrYVo5aUVkazhLaTVLMmF2N3NOb3hBbGZiZU1zbkV2aGx0a0FjOUxkbnVmbDlLMF9FbnVXaF9CUUhIaDNlZGlwODZpVHdwTHlReEdHVURndkhhaEF0Z0RhMlpaSWJDSDhQZnZHdGYxV2hRTXJEdE1QMkJEV0xxMTh1cWRaRFFEZ0JGOE1jLWtPbmc",
+   "key": "dw.com/en/magyar-hungary-fight-orban-corruption-system-return-democracy/a-77726207",
    "queries": [
     21
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Keno Verseck",
    "language": "English",
    "domain": "dw.com",
    "country": "DE",
@@ -3591,17 +3104,17 @@
   {
    "gid": "CBMiywFBVV95cUxQMloyNWxHa2FiaWlHX3lBRkRxb2ZmUVJCeWdkbHVRU1NiMUxVYVB2Z0JpazJ1SE9JeUhMczM0ZzRtaXVJTUhoRWVpUkJjUUItMm9UN0JHU091WFF2bEpYUHhBOHVISHNSYm51c3NjNk9pUnBpWXNYWHptdUo3QXJ1cGgwZVlHeGRFQjI4aC1fc1VfamRhSTJWcUhFRWRfb19GNFR6QkI3bEFyY01SWTNlaTRWZmx0TmdYWHpXVVRkM2V4U0xZUmNEVTJhRdIBvAFBVV95cUxPVDVselBFeTBXanhRcmlUNzI3RnBzRnNiYjNGaEdIdlAyM0t1M3V4aE9Lak85MGhPRzRhTUk0OFpuTUtPU2N1cnNfdUZneG9pNjRFUHh4LWhsdVEtbUZsRUEtLTZVSm11ZXhfdWc5ekFGdFpJa0tOcnY1NGxnSVpXVWdXMUlaUmJub1NBY0FaTzNOSVhENVpCNU43UjU0YmRBaVk5TzFaWXNOemRZZFhaU0IxOE8yQU5FT09EZg",
    "google_url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQMloyNWxHa2FiaWlHX3lBRkRxb2ZmUVJCeWdkbHVRU1NiMUxVYVB2Z0JpazJ1SE9JeUhMczM0ZzRtaXVJTUhoRWVpUkJjUUItMm9UN0JHU091WFF2bEpYUHhBOHVISHNSYm51c3NjNk9pUnBpWXNYWHptdUo3QXJ1cGgwZVlHeGRFQjI4aC1fc1VfamRhSTJWcUhFRWRfb19GNFR6QkI3bEFyY01SWTNlaTRWZmx0TmdYWHpXVVRkM2V4U0xZUmNEVTJhRdIBvAFBVV95cUxPVDVselBFeTBXanhRcmlUNzI3RnBzRnNiYjNGaEdIdlAyM0t1M3V4aE9Lak85MGhPRzRhTUk0OFpuTUtPU2N1cnNfdUZneG9pNjRFUHh4LWhsdVEtbUZsRUEtLTZVSm11ZXhfdWc5ekFGdFpJa0tOcnY1NGxnSVpXVWdXMUlaUmJub1NBY0FaTzNOSVhENVpCNU43UjU0YmRBaVk5TzFaWXNOemRZZFhaU0IxOE8yQU5FT09EZg?oc=5",
-   "url": "",
+   "url": "https://en.vijesti.me/world-a/evropa/815095/Hungary-is-rapidly-dismantling-Orban%27s-system--cutting-salaries-for-MPs-and-ministers",
    "title": "Hungarians are rapidly dismantling Orban's system: Cutting salaries for MPs and ministers...",
    "outlet": "vijesti.me",
    "outlet_url": "https://en.vijesti.me",
    "date": "2026-06-26",
    "edition_language": "English",
-   "key": "gnews:CBMiywFBVV95cUxQMloyNWxHa2FiaWlHX3lBRkRxb2ZmUVJCeWdkbHVRU1NiMUxVYVB2Z0JpazJ1SE9JeUhMczM0ZzRtaXVJTUhoRWVpUkJjUUItMm9UN0JHU091WFF2bEpYUHhBOHVISHNSYm51c3NjNk9pUnBpWXNYWHptdUo3QXJ1cGgwZVlHeGRFQjI4aC1fc1VfamRhSTJWcUhFRWRfb19GNFR6QkI3bEFyY01SWTNlaTRWZmx0TmdYWHpXVVRkM2V4U0xZUmNEVTJhRdIBvAFBVV95cUxPVDVselBFeTBXanhRcmlUNzI3RnBzRnNiYjNGaEdIdlAyM0t1M3V4aE9Lak85MGhPRzRhTUk0OFpuTUtPU2N1cnNfdUZneG9pNjRFUHh4LWhsdVEtbUZsRUEtLTZVSm11ZXhfdWc5ekFGdFpJa0tOcnY1NGxnSVpXVWdXMUlaUmJub1NBY0FaTzNOSVhENVpCNU43UjU0YmRBaVk5TzFaWXNOemRZZFhaU0IxOE8yQU5FT09EZg",
+   "key": "en.vijesti.me/world-a/evropa/815095/Hungary-is-rapidly-dismantling-Orban%27s-system--cutting-salaries-for-MPs-and-ministers",
    "queries": [
     21
    ],
-   "checked": null,
+   "checked": false,
    "author": "",
    "language": "English",
    "domain": "vijesti.me",
@@ -3612,18 +3125,18 @@
   {
    "gid": "CBMie0FVX3lxTE1ybG9TN0hoM0ZLeW53Rms2YmpuNjdHVGpUemE0YkFqYkF6UC1helMyTFExN3RMc0ZsSFFxZ3dfUGFfRHozOEpSRUpYMGRIOGhwbGxQVEsySWNMVWhBTFVNWVpQSXBaSmNUOWdrX1ZWR3o1c0J1UEFpTlZFcw",
    "google_url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1ybG9TN0hoM0ZLeW53Rms2YmpuNjdHVGpUemE0YkFqYkF6UC1helMyTFExN3RMc0ZsSFFxZ3dfUGFfRHozOEpSRUpYMGRIOGhwbGxQVEsySWNMVWhBTFVNWVpQSXBaSmNUOWdrX1ZWR3o1c0J1UEFpTlZFcw?oc=5",
-   "url": "",
+   "url": "https://www.socialeurope.eu/orban-is-gone-but-his-state-machine-remains",
    "title": "Orbán Is Gone, but His State Machine Remains",
    "outlet": "Social Europe",
    "outlet_url": "https://www.socialeurope.eu",
    "date": "2026-06-24",
    "edition_language": "English",
-   "key": "gnews:CBMie0FVX3lxTE1ybG9TN0hoM0ZLeW53Rms2YmpuNjdHVGpUemE0YkFqYkF6UC1helMyTFExN3RMc0ZsSFFxZ3dfUGFfRHozOEpSRUpYMGRIOGhwbGxQVEsySWNMVWhBTFVNWVpQSXBaSmNUOWdrX1ZWR3o1c0J1UEFpTlZFcw",
+   "key": "socialeurope.eu/orban-is-gone-but-his-state-machine-remains",
    "queries": [
     21
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Zsuzsanna Szelényi",
    "language": "English",
    "domain": "socialeurope.eu",
    "country": "DE",
@@ -3633,17 +3146,17 @@
   {
    "gid": "CBMihwFBVV95cUxQakpwbTNvZzRlcFB1WDFFNHl0MEpHSFVQZk9IcXFOeTZYZkVFc2hLVWNxd3h0eG91aVRZX2F6ZzNqX1ZWWTEwWUZVSUNtNi13dUJ1UWE0SFptX0VJVFlJQ2lzZ2I3WXoxUDJISTlrT3I5czZHZTdFU0VyTVFQZVRzdlpjMkhZcWc",
    "google_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQakpwbTNvZzRlcFB1WDFFNHl0MEpHSFVQZk9IcXFOeTZYZkVFc2hLVWNxd3h0eG91aVRZX2F6ZzNqX1ZWWTEwWUZVSUNtNi13dUJ1UWE0SFptX0VJVFlJQ2lzZ2I3WXoxUDJISTlrT3I5czZHZTdFU0VyTVFQZVRzdlpjMkhZcWc?oc=5",
-   "url": "",
+   "url": "https://www.bnnvara.nl/joop/artikelen/het-post-illiberale-trilemma-van-hongarije",
    "title": "Het post-illiberale trilemma van Hongarije",
    "outlet": "Bnnvara",
    "outlet_url": "https://www.bnnvara.nl",
    "date": "2026-06-16",
    "edition_language": "Dutch",
-   "key": "gnews:CBMihwFBVV95cUxQakpwbTNvZzRlcFB1WDFFNHl0MEpHSFVQZk9IcXFOeTZYZkVFc2hLVWNxd3h0eG91aVRZX2F6ZzNqX1ZWWTEwWUZVSUNtNi13dUJ1UWE0SFptX0VJVFlJQ2lzZ2I3WXoxUDJISTlrT3I5czZHZTdFU0VyTVFQZVRzdlpjMkhZcWc",
+   "key": "bnnvara.nl/joop/artikelen/het-post-illiberale-trilemma-van-hongarije",
    "queries": [
     23
    ],
-   "checked": null,
+   "checked": true,
    "author": "",
    "language": "Dutch",
    "domain": "bnnvara.nl",
@@ -3654,18 +3167,18 @@
   {
    "gid": "CBMifEFVX3lxTE1jWlhmUWt2UzdMWWNwNVZqV3RYaEF1TW1GS2ltZkM2QlppS05mU0hpTnJscGtOOFRPN3hidmtONlozSWRyQVhQYTNVX0EySzhqc0FyTzhLUkdLb3lXWkJVdm5Gb2NXcE1NSU4ydWIxLXN1RVBmbE5SX0VrY2s",
    "google_url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1jWlhmUWt2UzdMWWNwNVZqV3RYaEF1TW1GS2ltZkM2QlppS05mU0hpTnJscGtOOFRPN3hidmtONlozSWRyQVhQYTNVX0EySzhqc0FyTzhLUkdLb3lXWkJVdm5Gb2NXcE1NSU4ydWIxLXN1RVBmbE5SX0VrY2s?oc=5",
-   "url": "",
+   "url": "https://prospect.org/2026/06/09/two-simple-steps-toward-de-magafication/",
    "title": "Two Simple Steps Toward De-MAGAfication",
    "outlet": "The American Prospect",
    "outlet_url": "https://prospect.org",
    "date": "2026-06-09",
    "edition_language": "English",
-   "key": "gnews:CBMifEFVX3lxTE1jWlhmUWt2UzdMWWNwNVZqV3RYaEF1TW1GS2ltZkM2QlppS05mU0hpTnJscGtOOFRPN3hidmtONlozSWRyQVhQYTNVX0EySzhqc0FyTzhLUkdLb3lXWkJVdm5Gb2NXcE1NSU4ydWIxLXN1RVBmbE5SX0VrY2s",
+   "key": "prospect.org/2026/06/09/two-simple-steps-toward-de-magafication",
    "queries": [
     21
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Ryan Cooper",
    "language": "English",
    "domain": "prospect.org",
    "country": "US",
@@ -3675,18 +3188,18 @@
   {
    "gid": "CBMipgFBVV95cUxNMHRUc1BMUjh5REV1aGVselU5RVJjRUhXTVpoU2NiVnBESU51QXpfWlA2Xzl1T1N5YlJkNkVRcW9kSHJkQWlHcWIyUjhkeWp3SDE4Z3dFNWV3SGNGSW1Fb2lTYUNpMXRTeFhNQ2tFcmdUZEdUeWFDbEJuVTVTX2Y1TDlwRnBYcXpLdmlZTDVoa1RMa3NEclNnZU10WHJRNktQMVo4aFF3",
    "google_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNMHRUc1BMUjh5REV1aGVselU5RVJjRUhXTVpoU2NiVnBESU51QXpfWlA2Xzl1T1N5YlJkNkVRcW9kSHJkQWlHcWIyUjhkeWp3SDE4Z3dFNWV3SGNGSW1Fb2lTYUNpMXRTeFhNQ2tFcmdUZEdUeWFDbEJuVTVTX2Y1TDlwRnBYcXpLdmlZTDVoa1RMa3NEclNnZU10WHJRNktQMVo4aFF3?oc=5",
-   "url": "",
+   "url": "https://k24.digital/sports/harambee-stars-midfielder-set-for-uefa-champions-league-football-next-season",
    "title": "Harambee Stars midfielder set for UEFA Champions League football next season",
    "outlet": "K24 Digital",
    "outlet_url": "https://k24.digital",
    "date": "2026-05-28",
    "edition_language": "English",
-   "key": "gnews:CBMipgFBVV95cUxNMHRUc1BMUjh5REV1aGVselU5RVJjRUhXTVpoU2NiVnBESU51QXpfWlA2Xzl1T1N5YlJkNkVRcW9kSHJkQWlHcWIyUjhkeWp3SDE4Z3dFNWV3SGNGSW1Fb2lTYUNpMXRTeFhNQ2tFcmdUZEdUeWFDbEJuVTVTX2Y1TDlwRnBYcXpLdmlZTDVoa1RMa3NEclNnZU10WHJRNktQMVo4aFF3",
+   "key": "k24.digital/sports/harambee-stars-midfielder-set-for-uefa-champions-league-football-next-season",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Joel Masibo",
    "language": "English",
    "domain": "k24.digital",
    "country": "INT",
@@ -3694,41 +3207,20 @@
    "idea": null
   },
   {
-   "gid": "CBMirgFBVV95cUxPMW53UzFDNnFKMEZuWUhkOTNKa2l1ZlMwblNPTUp4SllmYmJtTlFJT0NQbmNKTldkQjB3YnhXZnpKTWw5WEtHTkR4UHdMRF9TTzhlZ00yTC1Ma0g3LW1ZTGxnMG1xd0YtZldjaWdJdUNiczIxMzVDcjdULXBaX214cFNid2Vyd21icnh2a2xJV2E5QUFQUE5jQS14S1NRMHRYeGt1cjI4aG9SR0NWcXc",
-   "google_url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPMW53UzFDNnFKMEZuWUhkOTNKa2l1ZlMwblNPTUp4SllmYmJtTlFJT0NQbmNKTldkQjB3YnhXZnpKTWw5WEtHTkR4UHdMRF9TTzhlZ00yTC1Ma0g3LW1ZTGxnMG1xd0YtZldjaWdJdUNiczIxMzVDcjdULXBaX214cFNid2Vyd21icnh2a2xJV2E5QUFQUE5jQS14S1NRMHRYeGt1cjI4aG9SR0NWcXc?oc=5",
-   "url": "",
-   "title": "Cztery oblicza demokracji. Jak ją widzą Polacy, Hiszpanie i Brytyjczycy",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-05-19",
-   "edition_language": "Polish",
-   "key": "gnews:CBMirgFBVV95cUxPMW53UzFDNnFKMEZuWUhkOTNKa2l1ZlMwblNPTUp4SllmYmJtTlFJT0NQbmNKTldkQjB3YnhXZnpKTWw5WEtHTkR4UHdMRF9TTzhlZ00yTC1Ma0g3LW1ZTGxnMG1xd0YtZldjaWdJdUNiczIxMzVDcjdULXBaX214cFNid2Vyd21icnh2a2xJV2E5QUFQUE5jQS14S1NRMHRYeGt1cjI4aG9SR0NWcXc",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMitAFBVV95cUxPOHNaSFBMS1QwZEVwMG1RTDVvWVFfTUozbU5uM2l4SEJhYWROTFVxcGVLSzM5OVF3OGhvMkFhVW1kTG1NOGpDdEJjcnBPZE8zbHlwanF3cGoxT2J5SXZrWnlhRklvV283S21ONlQyVjFHeGFRQ0tUUEoxS3NZUEZTNjBlM1BMTWJ3bmpLSDZHQ0ozTVQ3bndBT0JfWkthWm5yTk1EYnNPU05VVGYyS2ExZFdGM2E",
    "google_url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPOHNaSFBMS1QwZEVwMG1RTDVvWVFfTUozbU5uM2l4SEJhYWROTFVxcGVLSzM5OVF3OGhvMkFhVW1kTG1NOGpDdEJjcnBPZE8zbHlwanF3cGoxT2J5SXZrWnlhRklvV283S21ONlQyVjFHeGFRQ0tUUEoxS3NZUEZTNjBlM1BMTWJ3bmpLSDZHQ0ozTVQ3bndBT0JfWkthWm5yTk1EYnNPU05VVGYyS2ExZFdGM2E?oc=5",
-   "url": "",
+   "url": "https://www.nrc.nl/nieuws/2026/05/08/peter-magyar-moet-de-hongaarse-democratie-restaureren-hoe-doe-je-dat-a4927112",
    "title": "Péter Magyar moet de Hongaarse democratie restaureren. Hoe doe je dat?",
    "outlet": "NRC - Nieuws, achtergronden en onderzoeksjournalistiek",
    "outlet_url": "https://www.nrc.nl",
    "date": "2026-05-08",
    "edition_language": "Dutch",
-   "key": "gnews:CBMitAFBVV95cUxPOHNaSFBMS1QwZEVwMG1RTDVvWVFfTUozbU5uM2l4SEJhYWROTFVxcGVLSzM5OVF3OGhvMkFhVW1kTG1NOGpDdEJjcnBPZE8zbHlwanF3cGoxT2J5SXZrWnlhRklvV283S21ONlQyVjFHeGFRQ0tUUEoxS3NZUEZTNjBlM1BMTWJ3bmpLSDZHQ0ozTVQ3bndBT0JfWkthWm5yTk1EYnNPU05VVGYyS2ExZFdGM2E",
+   "key": "nrc.nl/nieuws/2026/05/08/peter-magyar-moet-de-hongaarse-democratie-restaureren-hoe-doe-je-dat-a4927112",
    "queries": [
     9
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Mark Middel",
    "language": "Dutch",
    "domain": "nrc.nl",
    "country": "NL",
@@ -3736,41 +3228,20 @@
    "idea": null
   },
   {
-   "gid": "CBMidkFVX3lxTE5lUkRxR2hFMlQxTElpOTdERExtYjhzUTNxUllfdHNwTDRLdlpjYXhRdy00aGM3bjd4eW01cUd5SXdhUTFDWmhtN3FnV0Q0RnJQVTNBZkgtdXJNV216MEphR1lxZkZDTzJJVFdmZFVtdDgzdTdPb2c",
-   "google_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5lUkRxR2hFMlQxTElpOTdERExtYjhzUTNxUllfdHNwTDRLdlpjYXhRdy00aGM3bjd4eW01cUd5SXdhUTFDWmhtN3FnV0Q0RnJQVTNBZkgtdXJNV216MEphR1lxZkZDTzJJVFdmZFVtdDgzdTdPb2c?oc=5",
-   "url": "",
-   "title": "Het verlies van Orbán duiden als het begin van het einde voor uiterst-rechts is verleidelijk, maar voorbarig",
-   "outlet": "De Groene Amsterdammer",
-   "outlet_url": "https://www.groene.nl",
-   "date": "2026-04-20",
-   "edition_language": "Dutch",
-   "key": "gnews:CBMidkFVX3lxTE5lUkRxR2hFMlQxTElpOTdERExtYjhzUTNxUllfdHNwTDRLdlpjYXhRdy00aGM3bjd4eW01cUd5SXdhUTFDWmhtN3FnV0Q0RnJQVTNBZkgtdXJNV216MEphR1lxZkZDTzJJVFdmZFVtdDgzdTdPb2c",
-   "queries": [
-    23
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Dutch",
-   "domain": "groene.nl",
-   "country": "NL",
-   "category": "ideas",
-   "idea": "trilemma"
-  },
-  {
    "gid": "CBMic0FVX3lxTE03SFB6Z0hLRHIwNVVjTEtsTW5qaEw1SzJUMk1XRHluQTlLTDhIQ2JaNHBxT19XdUlJUXNzZUlQZDZPcldlVFZBTVJQTDNySHpySUpqUC1FXzRIaUR0N2JnM3pIRHdYU1pOb19QR3Q5NElBWVXSAYcBQVVfeXFMTTF0SDNMZjVSYlJ0dURoRmx0RUlHYUxIQmRxWERDTkItVnljdWwyUUJUUXhEbUt3ckk5VUJFWlFKLXNQM2JVdHVWeXREaTZ1OWFJVGc2WGJMamJQUWZfbzQ4ZXF6WVVlRnZ2TkpmODBseXVUMnduX19MeEVMZHJYNFBqdmI5RllN",
    "google_url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE03SFB6Z0hLRHIwNVVjTEtsTW5qaEw1SzJUMk1XRHluQTlLTDhIQ2JaNHBxT19XdUlJUXNzZUlQZDZPcldlVFZBTVJQTDNySHpySUpqUC1FXzRIaUR0N2JnM3pIRHdYU1pOb19QR3Q5NElBWVXSAYcBQVVfeXFMTTF0SDNMZjVSYlJ0dURoRmx0RUlHYUxIQmRxWERDTkItVnljdWwyUUJUUXhEbUt3ckk5VUJFWlFKLXNQM2JVdHVWeXREaTZ1OWFJVGc2WGJMamJQUWZfbzQ4ZXF6WVVlRnZ2TkpmODBseXVUMnduX19MeEVMZHJYNFBqdmI5RllN?oc=5",
-   "url": "",
+   "url": "https://elpais.com/opinion/2026-04-16/el-soberanismo-vasallo.html",
    "title": "El soberanismo vasallo",
    "outlet": "EL PAÍS",
    "outlet_url": "https://elpais.com",
    "date": "2026-04-15",
    "edition_language": "Spanish",
-   "key": "gnews:CBMic0FVX3lxTE03SFB6Z0hLRHIwNVVjTEtsTW5qaEw1SzJUMk1XRHluQTlLTDhIQ2JaNHBxT19XdUlJUXNzZUlQZDZPcldlVFZBTVJQTDNySHpySUpqUC1FXzRIaUR0N2JnM3pIRHdYU1pOb19QR3Q5NElBWVXSAYcBQVVfeXFMTTF0SDNMZjVSYlJ0dURoRmx0RUlHYUxIQmRxWERDTkItVnljdWwyUUJUUXhEbUt3ckk5VUJFWlFKLXNQM2JVdHVWeXREaTZ1OWFJVGc2WGJMamJQUWZfbzQ4ZXF6WVVlRnZ2TkpmODBseXVUMnduX19MeEVMZHJYNFBqdmI5RllN",
+   "key": "elpais.com/opinion/2026-04-16/el-soberanismo-vasallo.html",
    "queries": [
     6
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Daniel Gascón",
    "language": "Spanish",
    "domain": "elpais.com",
    "country": "ES",
@@ -3780,18 +3251,18 @@
   {
    "gid": "CBMiuwFBVV95cUxPOWRBb2t2RWh4bmFpczJHZlE2SFZFdFRUcjJYWEhhc3pmemEzcEFRWnA5V0dwZ0ZUeDVNSmNncEZmY1ZzaDV2Yi1XUjJXdjktb1ViZkVhN2haNWg0UUgtTzlhYzlJdGRxUGFOd2pVZzFadTNmcEN3R1BVVEpkM09FS3g1OW5rWEFpb1pOUUVrN3pUR1B0UUZYYV9OajE1ckVCVTJnTi1DUDZFcWtoOUxqd2l2U3o4NXBoWjlJ",
    "google_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPOWRBb2t2RWh4bmFpczJHZlE2SFZFdFRUcjJYWEhhc3pmemEzcEFRWnA5V0dwZ0ZUeDVNSmNncEZmY1ZzaDV2Yi1XUjJXdjktb1ViZkVhN2haNWg0UUgtTzlhYzlJdGRxUGFOd2pVZzFadTNmcEN3R1BVVEpkM09FS3g1OW5rWEFpb1pOUUVrN3pUR1B0UUZYYV9OajE1ckVCVTJnTi1DUDZFcWtoOUxqd2l2U3o4NXBoWjlJ?oc=5",
-   "url": "",
+   "url": "https://www.politico.eu/article/poland-donald-tusk-jaroslaw-kaczynski-nationalist-right-recalibrates-viktor-orban-loss/",
    "title": "Poland’s nationalist right recalibrates after Orbán’s heavy election loss",
    "outlet": "POLITICO.eu",
    "outlet_url": "https://www.politico.eu",
    "date": "2026-04-14",
    "edition_language": "English",
-   "key": "gnews:CBMiuwFBVV95cUxPOWRBb2t2RWh4bmFpczJHZlE2SFZFdFRUcjJYWEhhc3pmemEzcEFRWnA5V0dwZ0ZUeDVNSmNncEZmY1ZzaDV2Yi1XUjJXdjktb1ViZkVhN2haNWg0UUgtTzlhYzlJdGRxUGFOd2pVZzFadTNmcEN3R1BVVEpkM09FS3g1OW5rWEFpb1pOUUVrN3pUR1B0UUZYYV9OajE1ckVCVTJnTi1DUDZFcWtoOUxqd2l2U3o4NXBoWjlJ",
+   "key": "politico.eu/article/poland-donald-tusk-jaroslaw-kaczynski-nationalist-right-recalibrates-viktor-orban-loss",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Wojciech Kość",
    "language": "English",
    "domain": "politico.eu",
    "country": "BE",
@@ -3799,40 +3270,19 @@
    "idea": null
   },
   {
-   "gid": "CBMiekFVX3lxTE01NnVlS0lLTHZTZy1tanBMZWgtRXpvVlVxLWhZOWt1dHFCWnV2aWlHczgyQVNVSTVTS2pLZE13UzFVZ1JvQ3JQaWlVbGlVLVFUSEpQLWlPeDd4UVd6anJKSlFzRlA3NnZyNmRMZ1AyeVVHYmxCMGJPbDFR",
-   "google_url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE01NnVlS0lLTHZTZy1tanBMZWgtRXpvVlVxLWhZOWt1dHFCWnV2aWlHczgyQVNVSTVTS2pLZE13UzFVZ1JvQ3JQaWlVbGlVLVFUSEpQLWlPeDd4UVd6anJKSlFzRlA3NnZyNmRMZ1AyeVVHYmxCMGJPbDFR?oc=5",
-   "url": "",
-   "title": "Новый тип демократического перехода: уроки Венгрии и Польши",
-   "outlet": "logos-pres.md",
-   "outlet_url": "https://logos-pres.md",
-   "date": "2026-04-12",
-   "edition_language": "Russian",
-   "key": "gnews:CBMiekFVX3lxTE01NnVlS0lLTHZTZy1tanBMZWgtRXpvVlVxLWhZOWt1dHFCWnV2aWlHczgyQVNVSTVTS2pLZE13UzFVZ1JvQ3JQaWlVbGlVLVFUSEpQLWlPeDd4UVd6anJKSlFzRlA3NnZyNmRMZ1AyeVVHYmxCMGJPbDFR",
-   "queries": [
-    14
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Russian",
-   "domain": "logos-pres.md",
-   "country": "MD",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMi5wFBVV95cUxNVVB1dlNuQzRIR2laWmo1a2lMTnpDWldUbE1aZUFhOW93aFZaS2hhSnNka0swNGhGZEpnT054eElOUXhXNEhrS0VFRHZJTllaRS1xNFY4QnpEQ3VFQk1DOVQyQUNQR0dRZGllOFE0S1llYU9JQ0pyX3A0YXZzY1RheXVSUDQ2c3BzbDk3UGU5SjRFcFpsRFVzV1VYWDIxNFVGc0xJQkpSbkxUWnNqWEdTN0VYT3UyQWI4aVdhZ0FUUl9TRHdwY015djN2Njh2TW5ZUm1IRzlKVUdPZ2JWNlhjSkE4VDk1Q0E",
    "google_url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxNVVB1dlNuQzRIR2laWmo1a2lMTnpDWldUbE1aZUFhOW93aFZaS2hhSnNka0swNGhGZEpnT054eElOUXhXNEhrS0VFRHZJTllaRS1xNFY4QnpEQ3VFQk1DOVQyQUNQR0dRZGllOFE0S1llYU9JQ0pyX3A0YXZzY1RheXVSUDQ2c3BzbDk3UGU5SjRFcFpsRFVzV1VYWDIxNFVGc0xJQkpSbkxUWnNqWEdTN0VYT3UyQWI4aVdhZ0FUUl9TRHdwY015djN2Njh2TW5ZUm1IRzlKVUdPZ2JWNlhjSkE4VDk1Q0E?oc=5",
-   "url": "",
+   "url": "https://www.pulsesports.co.ke/story/harambee-stars-defender-faces-uncertain-future-at-polish-club-ahead-of-return-from-injury-layoff-2026040607430074630",
    "title": "Harambee Stars Defender Faces Uncertain Future at Polish Club Ahead of Return From Injury Layoff",
    "outlet": "Pulse Sports Kenya",
    "outlet_url": "https://www.pulsesports.co.ke",
    "date": "2026-04-06",
    "edition_language": "English",
-   "key": "gnews:CBMi5wFBVV95cUxNVVB1dlNuQzRIR2laWmo1a2lMTnpDWldUbE1aZUFhOW93aFZaS2hhSnNka0swNGhGZEpnT054eElOUXhXNEhrS0VFRHZJTllaRS1xNFY4QnpEQ3VFQk1DOVQyQUNQR0dRZGllOFE0S1llYU9JQ0pyX3A0YXZzY1RheXVSUDQ2c3BzbDk3UGU5SjRFcFpsRFVzV1VYWDIxNFVGc0xJQkpSbkxUWnNqWEdTN0VYT3UyQWI4aVdhZ0FUUl9TRHdwY015djN2Njh2TW5ZUm1IRzlKVUdPZ2JWNlhjSkE4VDk1Q0E",
+   "key": "pulsesports.co.ke/story/harambee-stars-defender-faces-uncertain-future-at-polish-club-ahead-of-return-from-injury-layoff-2026040607430074630",
    "queries": [
     0
    ],
-   "checked": null,
+   "checked": true,
    "author": "",
    "language": "English",
    "domain": "pulsesports.co.ke",
@@ -3843,19 +3293,19 @@
   {
    "gid": "CBMisgFBVV95cUxNNTNmT3hYY3dENlFYTEo3LVN0aFlLaDVOeDl2VG9MbWNCQ29ZQkYwTE4tX2l5N1R0b1hzQnJRQTR5RnhDcV9uRlZlX1NuNVpiRHBNSm1Kc29LR05tbTRtRG5Uc0gzNHh3ejJ5eHF0MkFmRWttd0gzZnh2RG1qQVJXdHREMjhNX0dscXVHblhxSk9GX042VWU4YVVLVkd2V0JXaVlPN2QycXZtalI3VEJyYTJn",
    "google_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNNTNmT3hYY3dENlFYTEo3LVN0aFlLaDVOeDl2VG9MbWNCQ29ZQkYwTE4tX2l5N1R0b1hzQnJRQTR5RnhDcV9uRlZlX1NuNVpiRHBNSm1Kc29LR05tbTRtRG5Uc0gzNHh3ejJ5eHF0MkFmRWttd0gzZnh2RG1qQVJXdHREMjhNX0dscXVHblhxSk9GX042VWU4YVVLVkd2V0JXaVlPN2QycXZtalI3VEJyYTJn?oc=5",
-   "url": "",
+   "url": "https://www.politico.eu/article/eu-defense-loans-ignite-political-battle-poland-donald-tusk-safe-karol-nawrocki/",
    "title": "Battle between Polish president and prime minister deepens over EU defense loans",
    "outlet": "POLITICO.eu",
    "outlet_url": "https://www.politico.eu",
    "date": "2026-03-06",
    "edition_language": "English",
-   "key": "gnews:CBMisgFBVV95cUxNNTNmT3hYY3dENlFYTEo3LVN0aFlLaDVOeDl2VG9MbWNCQ29ZQkYwTE4tX2l5N1R0b1hzQnJRQTR5RnhDcV9uRlZlX1NuNVpiRHBNSm1Kc29LR05tbTRtRG5Uc0gzNHh3ejJ5eHF0MkFmRWttd0gzZnh2RG1qQVJXdHREMjhNX0dscXVHblhxSk9GX042VWU4YVVLVkd2V0JXaVlPN2QycXZtalI3VEJyYTJn",
+   "key": "politico.eu/article/eu-defense-loans-ignite-political-battle-poland-donald-tusk-safe-karol-nawrocki",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Wojciech Kość",
    "language": "English",
    "domain": "politico.eu",
    "country": "BE",
@@ -3865,20 +3315,20 @@
   {
    "gid": "CBMiiwFBVV95cUxNbEtpSDkzLTc5WlExY0QzOVRsVWFYVFRnY3cxaXVBcE1wS0hJQmFSVFhaTTFHTTBtY1Njdy1ocTNROGRtWWxkZDFYdlRGd1hkcFM3TV9UWkp3WDM0OTBjTXBWci1pT28tSzVyUDZVZWRwcDE3cEhuU1pyTlhIdXpLVThmUThWR190MUR3",
    "google_url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNbEtpSDkzLTc5WlExY0QzOVRsVWFYVFRnY3cxaXVBcE1wS0hJQmFSVFhaTTFHTTBtY1Njdy1ocTNROGRtWWxkZDFYdlRGd1hkcFM3TV9UWkp3WDM0OTBjTXBWci1pT28tSzVyUDZVZWRwcDE3cEhuU1pyTlhIdXpLVThmUThWR190MUR3?oc=5",
-   "url": "",
+   "url": "https://www.vox.com/podcasts/480149/poland-democracy-donald-tusk-illiberal-trilemma",
    "title": "You got your democracy back. Now what?",
    "outlet": "Vox",
    "outlet_url": "https://www.vox.com",
    "date": "2026-02-24",
    "edition_language": "English",
-   "key": "gnews:CBMiiwFBVV95cUxNbEtpSDkzLTc5WlExY0QzOVRsVWFYVFRnY3cxaXVBcE1wS0hJQmFSVFhaTTFHTTBtY1Njdy1ocTNROGRtWWxkZDFYdlRGd1hkcFM3TV9UWkp3WDM0OTBjTXBWci1pT28tSzVyUDZVZWRwcDE3cEhuU1pyTlhIdXpLVThmUThWR190MUR3",
+   "key": "vox.com/podcasts/480149/poland-democracy-donald-tusk-illiberal-trilemma",
    "queries": [
     0,
     1,
     32
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Jolie Myers, Noel King",
    "language": "English",
    "domain": "vox.com",
    "country": "US",
@@ -3888,18 +3338,18 @@
   {
    "gid": "CBMingFBVV95cUxNUEV0eFY5OUtwOGRUZEs5bjJadlhxQmtsSTFPNkVNUmpwdE1SM0I3eVpkOUNaYm04dFM2bS1oVnhHMWo4X0N5MTVvVjQ4eC1uM0lNZ1FueGdZQWpMcERyLWJfYVVDa1ozRzY4MlZtaF9QcElzVkpFUzNaYlE4NnNYZTJXRWpRbXRaMXBYdnAzMllkMFUtMVpxVHE5WmY4dw",
    "google_url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNUEV0eFY5OUtwOGRUZEs5bjJadlhxQmtsSTFPNkVNUmpwdE1SM0I3eVpkOUNaYm04dFM2bS1oVnhHMWo4X0N5MTVvVjQ4eC1uM0lNZ1FueGdZQWpMcERyLWJfYVVDa1ozRzY4MlZtaF9QcElzVkpFUzNaYlE4NnNYZTJXRWpRbXRaMXBYdnAzMllkMFUtMVpxVHE5WmY4dw?oc=5",
-   "url": "",
+   "url": "https://www.vox.com/politics/479924/democracy-us-brazil-south-korea-poland-backsliding-resilience",
    "title": "How to stop a dictator",
    "outlet": "Vox",
    "outlet_url": "https://www.vox.com",
    "date": "2026-02-23",
    "edition_language": "English",
-   "key": "gnews:CBMingFBVV95cUxNUEV0eFY5OUtwOGRUZEs5bjJadlhxQmtsSTFPNkVNUmpwdE1SM0I3eVpkOUNaYm04dFM2bS1oVnhHMWo4X0N5MTVvVjQ4eC1uM0lNZ1FueGdZQWpMcERyLWJfYVVDa1ozRzY4MlZtaF9QcElzVkpFUzNaYlE4NnNYZTJXRWpRbXRaMXBYdnAzMllkMFUtMVpxVHE5WmY4dw",
+   "key": "vox.com/politics/479924/democracy-us-brazil-south-korea-poland-backsliding-resilience",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Zack Beauchamp",
    "language": "English",
    "domain": "vox.com",
    "country": "US",
@@ -3907,105 +3357,20 @@
    "idea": null
   },
   {
-   "gid": "CBMipgFBVV95cUxNcTR3S3VyWjIwYWpCVkN1ZnNvQVhiWk5lQmZaaU9EU0tXcFlzLXlMbUozNDR5Wm9DWEpKdnpDR2lXUnBRTV94aXRQcUNUb0RaY0oyN2w0dmRVbWRUMkhpT01WdkRwQkJrMHRVbnFZVzg0RUk5cGt0Zy1aN3llcms0RlpYZnFCTjg1b3NzU2lLdGg4SDliWEpRWXN3WFFVQnBGYU1RRUdn",
-   "google_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNcTR3S3VyWjIwYWpCVkN1ZnNvQVhiWk5lQmZaaU9EU0tXcFlzLXlMbUozNDR5Wm9DWEpKdnpDR2lXUnBRTV94aXRQcUNUb0RaY0oyN2w0dmRVbWRUMkhpT01WdkRwQkJrMHRVbnFZVzg0RUk5cGt0Zy1aN3llcms0RlpYZnFCTjg1b3NzU2lLdGg4SDliWEpRWXN3WFFVQnBGYU1RRUdn?oc=5",
-   "url": "",
-   "title": "Bangladesz po wyborach. Szansa dla Chin, zimny prysznic dla Indii",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-02-19",
-   "edition_language": "Polish",
-   "key": "gnews:CBMipgFBVV95cUxNcTR3S3VyWjIwYWpCVkN1ZnNvQVhiWk5lQmZaaU9EU0tXcFlzLXlMbUozNDR5Wm9DWEpKdnpDR2lXUnBRTV94aXRQcUNUb0RaY0oyN2w0dmRVbWRUMkhpT01WdkRwQkJrMHRVbnFZVzg0RUk5cGt0Zy1aN3llcms0RlpYZnFCTjg1b3NzU2lLdGg4SDliWEpRWXN3WFFVQnBGYU1RRUdn",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMiuwFBVV95cUxQMjFxOS1JdWc3QlA4OVM3RXdBQk0wdEpiQjlWc25JZGZsd29wRm10TllaNU1DazVBaG5pc1JsVVJIOG5ndUNZWFZuXzFfRnIzRG5FUjJmMHFVdXNEdVFpVVNBMkpMSjB6cDZ0aGdTN1hPU2RCN0d5TGZwWWN3NjNyeTRaUXo3dkJ2NFJ3NTAtSVVIZFVQZjdtZTR1UUc4R0hSOEVKYjhaSmhyTkY4WHpiMWs1RjNZZVh5T1ZN",
-   "google_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQMjFxOS1JdWc3QlA4OVM3RXdBQk0wdEpiQjlWc25JZGZsd29wRm10TllaNU1DazVBaG5pc1JsVVJIOG5ndUNZWFZuXzFfRnIzRG5FUjJmMHFVdXNEdVFpVVNBMkpMSjB6cDZ0aGdTN1hPU2RCN0d5TGZwWWN3NjNyeTRaUXo3dkJ2NFJ3NTAtSVVIZFVQZjdtZTR1UUc4R0hSOEVKYjhaSmhyTkY4WHpiMWs1RjNZZVh5T1ZN?oc=5",
-   "url": "",
-   "title": "Jak PiS przedobrzyło ze zmianą? \"To był przełomowy moment\"",
-   "outlet": "Newsweek",
-   "outlet_url": "https://www.newsweek.pl",
-   "date": "2026-02-17",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiuwFBVV95cUxQMjFxOS1JdWc3QlA4OVM3RXdBQk0wdEpiQjlWc25JZGZsd29wRm10TllaNU1DazVBaG5pc1JsVVJIOG5ndUNZWFZuXzFfRnIzRG5FUjJmMHFVdXNEdVFpVVNBMkpMSjB6cDZ0aGdTN1hPU2RCN0d5TGZwWWN3NjNyeTRaUXo3dkJ2NFJ3NTAtSVVIZFVQZjdtZTR1UUc4R0hSOEVKYjhaSmhyTkY4WHpiMWs1RjNZZVh5T1ZN",
-   "queries": [
-    2,
-    31
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "newsweek.pl",
-   "country": "PL",
-   "category": "research",
-   "idea": null
-  },
-  {
    "gid": "CBMizgFBVV95cUxQblZNUVZpcTAxMGNJMjVmaGxWSV9hUVVUZE4wbkZBLUFtNnZ0T25SMmdXQVFCNjh1M09LNzctM2pobEx1R2hRTHZiUldrd3pMMllHZVY2WHpnWE9DS2s2VzBrNkstNWlfc1d0cFVERjZYTV9lRThSQ2x4UjJBZngyMmJMUk11U0FiTGFzeDRLVGltYmhoaXVZX3VBeFAxX0VIcGhmU05takhxTEp0Q3k1a1FtbDFZckdZblI1RE9GSnExUHIxV1dBaTFLa1dvQQ",
    "google_url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQblZNUVZpcTAxMGNJMjVmaGxWSV9hUVVUZE4wbkZBLUFtNnZ0T25SMmdXQVFCNjh1M09LNzctM2pobEx1R2hRTHZiUldrd3pMMllHZVY2WHpnWE9DS2s2VzBrNkstNWlfc1d0cFVERjZYTV9lRThSQ2x4UjJBZngyMmJMUk11U0FiTGFzeDRLVGltYmhoaXVZX3VBeFAxX0VIcGhmU05takhxTEp0Q3k1a1FtbDFZckdZblI1RE9GSnExUHIxV1dBaTFLa1dvQQ?oc=5",
-   "url": "",
+   "url": "https://kulturaliberalna.pl/2026/02/16/szwed-poza-termostatem-poparcie-dla-polexitu-nie-rosnie-tylko-dlatego-ze-jest-teraz-nierealny/",
    "title": "Poza termostatem. Poparcie dla polexitu nie rośnie tylko dlatego, że jest teraz nierealny",
    "outlet": "Kultura Liberalna",
    "outlet_url": "https://kulturaliberalna.pl",
    "date": "2026-02-16",
    "edition_language": "Polish",
-   "key": "gnews:CBMizgFBVV95cUxQblZNUVZpcTAxMGNJMjVmaGxWSV9hUVVUZE4wbkZBLUFtNnZ0T25SMmdXQVFCNjh1M09LNzctM2pobEx1R2hRTHZiUldrd3pMMllHZVY2WHpnWE9DS2s2VzBrNkstNWlfc1d0cFVERjZYTV9lRThSQ2x4UjJBZngyMmJMUk11U0FiTGFzeDRLVGltYmhoaXVZX3VBeFAxX0VIcGhmU05takhxTEp0Q3k1a1FtbDFZckdZblI1RE9GSnExUHIxV1dBaTFLa1dvQQ",
+   "key": "kulturaliberalna.pl/2026/02/16/szwed-poza-termostatem-poparcie-dla-polexitu-nie-rosnie-tylko-dlatego-ze-jest-teraz-nierealny",
    "queries": [
     3
    ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMiigFBVV95cUxNZnVaRnlLVkRWRXFucjdDdzd4cFNtVTcydEZ6VVMycVMzakVoM0JUZ0NQLVplMUJ2LUY3UGpkVWFKemF5elVsM3ZJN3BudER1VURqQlBHN2VnNWZ2aFgzNzhRMU4wLXZQVVhIcXpFZ0VFSTlibFZIb2hKQ202UzVkcVlkSTlSYjV6NGc",
-   "google_url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNZnVaRnlLVkRWRXFucjdDdzd4cFNtVTcydEZ6VVMycVMzakVoM0JUZ0NQLVplMUJ2LUY3UGpkVWFKemF5elVsM3ZJN3BudER1VURqQlBHN2VnNWZ2aFgzNzhRMU4wLXZQVVhIcXpFZ0VFSTlibFZIb2hKQ202UzVkcVlkSTlSYjV6NGc?oc=5",
-   "url": "",
-   "title": "Sport dostępny dla każdego? Fenomen darta",
-   "outlet": "Polskie Radio 24",
-   "outlet_url": "https://polskieradio24.pl",
-   "date": "2026-02-15",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiigFBVV95cUxNZnVaRnlLVkRWRXFucjdDdzd4cFNtVTcydEZ6VVMycVMzakVoM0JUZ0NQLVplMUJ2LUY3UGpkVWFKemF5elVsM3ZJN3BudER1VURqQlBHN2VnNWZ2aFgzNzhRMU4wLXZQVVhIcXpFZ0VFSTlibFZIb2hKQ202UzVkcVlkSTlSYjV6NGc",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "polskieradio24.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMickFVX3lxTE83ZXh3Mml2UEU0STB5c29yTTRaaTRIMzhPeWdCTzBXMUVOMkRtc3FzU3kwY2NVZENEbUs1NlJoOUZkUTlOVHN0eUc1aG1wT05LVVIwLXBSOHV3cjBZdDlIaFFSYngtd2YyT2ZQZEw1U29Cdw",
-   "google_url": "https://news.google.com/rss/articles/CBMickFVX3lxTE83ZXh3Mml2UEU0STB5c29yTTRaaTRIMzhPeWdCTzBXMUVOMkRtc3FzU3kwY2NVZENEbUs1NlJoOUZkUTlOVHN0eUc1aG1wT05LVVIwLXBSOHV3cjBZdDlIaFFSYngtd2YyT2ZQZEw1U29Cdw?oc=5",
-   "url": "",
-   "title": "Czy Polacy chcą polexitu?",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-02-03",
-   "edition_language": "Polish",
-   "key": "gnews:CBMickFVX3lxTE83ZXh3Mml2UEU0STB5c29yTTRaaTRIMzhPeWdCTzBXMUVOMkRtc3FzU3kwY2NVZENEbUs1NlJoOUZkUTlOVHN0eUc1aG1wT05LVVIwLXBSOHV3cjBZdDlIaFFSYngtd2YyT2ZQZEw1U29Cdw",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "ewa_no",
    "language": "Polish",
    "domain": "kulturaliberalna.pl",
    "country": "PL",
@@ -4015,39 +3380,18 @@
   {
    "gid": "CBMibkFVX3lxTE44UUdPekh0RGlzQ2VBX1NCemJhRW1Sa3Y3eV9OeXYzQkgtcGx4dzMyanVuZW1UUWIydmdHdXRwUElPWGZ6WFhBbFpBUDlUUnUxOEU4aXBNSjBZNjlnSUs4cy1IenFiWThWTTJzUDlB",
    "google_url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE44UUdPekh0RGlzQ2VBX1NCemJhRW1Sa3Y3eV9OeXYzQkgtcGx4dzMyanVuZW1UUWIydmdHdXRwUElPWGZ6WFhBbFpBUDlUUnUxOEU4aXBNSjBZNjlnSUs4cy1IenFiWThWTTJzUDlB?oc=5",
-   "url": "",
+   "url": "https://kulturaliberalna.pl/2026/02/03/czy-grozi-nam-polexit/",
    "title": "Czy grozi nam polexit?",
    "outlet": "Kultura Liberalna",
    "outlet_url": "https://kulturaliberalna.pl",
    "date": "2026-02-03",
    "edition_language": "Polish",
-   "key": "gnews:CBMibkFVX3lxTE44UUdPekh0RGlzQ2VBX1NCemJhRW1Sa3Y3eV9OeXYzQkgtcGx4dzMyanVuZW1UUWIydmdHdXRwUElPWGZ6WFhBbFpBUDlUUnUxOEU4aXBNSjBZNjlnSUs4cy1IenFiWThWTTJzUDlB",
+   "key": "kulturaliberalna.pl/2026/02/03/czy-grozi-nam-polexit",
    "queries": [
     2
    ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMiuAFBVV95cUxOcE9RcFM5ZC1QN1pQUjFpSnlsQ003TlVOVmlWVTJydzhZV1EwRnpuZHZmQWI4b2JkaWVVNmpYMzNuandWZFBrblBBVVNnZnpYMlk3VVBTM1JKSlBFTTZFUFNtdzFwQjFadWNqenNtNkFFX0ZXcmpnQlJQVzY1RjU5TnRyQVJzNDhhRmhZVkljZVZFQko2ZjdyNHpaVEFKY2MwVThlMnRpcVpVVl9SSTl6dTVPOFJCWHZ5",
-   "google_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOcE9RcFM5ZC1QN1pQUjFpSnlsQ003TlVOVmlWVTJydzhZV1EwRnpuZHZmQWI4b2JkaWVVNmpYMzNuandWZFBrblBBVVNnZnpYMlk3VVBTM1JKSlBFTTZFUFNtdzFwQjFadWNqenNtNkFFX0ZXcmpnQlJQVzY1RjU5TnRyQVJzNDhhRmhZVkljZVZFQko2ZjdyNHpaVEFKY2MwVThlMnRpcVpVVl9SSTl6dTVPOFJCWHZ5?oc=5",
-   "url": "",
-   "title": "Polska polityka – podział na prawicę i lewicę przestaje mówić cokolwiek",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2026-01-27",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiuAFBVV95cUxOcE9RcFM5ZC1QN1pQUjFpSnlsQ003TlVOVmlWVTJydzhZV1EwRnpuZHZmQWI4b2JkaWVVNmpYMzNuandWZFBrblBBVVNnZnpYMlk3VVBTM1JKSlBFTTZFUFNtdzFwQjFadWNqenNtNkFFX0ZXcmpnQlJQVzY1RjU5TnRyQVJzNDhhRmhZVkljZVZFQko2ZjdyNHpaVEFKY2MwVThlMnRpcVpVVl9SSTl6dTVPOFJCWHZ5",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Aleksandra Braniewska",
    "language": "Polish",
    "domain": "kulturaliberalna.pl",
    "country": "PL",
@@ -4057,19 +3401,19 @@
   {
    "gid": "CBMikwFBVV95cUxOcG1aV2RoTnUtbkZYZ09NSkRpelBpODQ2enp3U1BrdnVWY2ltaG5NNlR0c0NrT3NJSkhSa1VkZjhwUzcxUDN2Vm1MU1N0YUk1bFgwenktXzQtZ3V3YV94WFBtMWhxa0RON3pNb0pTWUxGaERvX2tNWmdJbnZnbHZmVFh3cmhLMFpzSnFhTHFSZ1Bqdm8",
    "google_url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOcG1aV2RoTnUtbkZYZ09NSkRpelBpODQ2enp3U1BrdnVWY2ltaG5NNlR0c0NrT3NJSkhSa1VkZjhwUzcxUDN2Vm1MU1N0YUk1bFgwenktXzQtZ3V3YV94WFBtMWhxa0RON3pNb0pTWUxGaERvX2tNWmdJbnZnbHZmVFh3cmhLMFpzSnFhTHFSZ1Bqdm8?oc=5",
-   "url": "",
+   "url": "https://www.theguardian.com/world/2025/dec/01/polish-german-leaders-meet-tensions-ukraine",
    "title": "Old tensions simmer just below surface as Tusk and Merz to meet in Berlin",
    "outlet": "The Guardian",
    "outlet_url": "https://www.theguardian.com",
    "date": "2025-12-01",
    "edition_language": "English",
-   "key": "gnews:CBMikwFBVV95cUxOcG1aV2RoTnUtbkZYZ09NSkRpelBpODQ2enp3U1BrdnVWY2ltaG5NNlR0c0NrT3NJSkhSa1VkZjhwUzcxUDN2Vm1MU1N0YUk1bFgwenktXzQtZ3V3YV94WFBtMWhxa0RON3pNb0pTWUxGaERvX2tNWmdJbnZnbHZmVFh3cmhLMFpzSnFhTHFSZ1Bqdm8",
+   "key": "theguardian.com/world/2025/dec/01/polish-german-leaders-meet-tensions-ukraine",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Jakub Krupa",
    "language": "English",
    "domain": "theguardian.com",
    "country": "GB",
@@ -4077,105 +3421,21 @@
    "idea": null
   },
   {
-   "gid": "CBMilwFBVV95cUxNMTZJcFlySFVMVHEzelpQVHFUWmpITll2b0RlNnhjVExjbTdJajBvcjhwYzZSX2ZIU3NMUE44Y0hfTVdfLW5vMGxwc2RVbmx1eGNsN0Z6TkNqOWhfY0VoTHdqUVVkLV9fNDRYZ29xY0hYNFlyNFh1Y0ZuVnpKM2FBTmxCNDRYTWw2emhKVWE4NHFnX2FsWWpR",
-   "google_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNMTZJcFlySFVMVHEzelpQVHFUWmpITll2b0RlNnhjVExjbTdJajBvcjhwYzZSX2ZIU3NMUE44Y0hfTVdfLW5vMGxwc2RVbmx1eGNsN0Z6TkNqOWhfY0VoTHdqUVVkLV9fNDRYZ29xY0hYNFlyNFh1Y0ZuVnpKM2FBTmxCNDRYTWw2emhKVWE4NHFnX2FsWWpR?oc=5",
-   "url": "",
-   "title": "„Migrant Schrödingera” żyje z zasiłków i zabiera pracę",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-10-21",
-   "edition_language": "Polish",
-   "key": "gnews:CBMilwFBVV95cUxNMTZJcFlySFVMVHEzelpQVHFUWmpITll2b0RlNnhjVExjbTdJajBvcjhwYzZSX2ZIU3NMUE44Y0hfTVdfLW5vMGxwc2RVbmx1eGNsN0Z6TkNqOWhfY0VoTHdqUVVkLV9fNDRYZ29xY0hYNFlyNFh1Y0ZuVnpKM2FBTmxCNDRYTWw2emhKVWE4NHFnX2FsWWpR",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMihwFBVV95cUxNVmtyN09yOUVSb245SkFXcGNaZFEtMjlqTW9kYXB6dW04c3A4aFZWVzhmMFdLRS1BYkg4XzFzbmM2Sy1jeVYwMjAzM2VTWS1wQnJPcXVDZ3ktaFZoZWxnemhYdnhXRWpCN0trdWI1QVZwSC1WYi1YdTZjcjl2cGRBMTR5WnFWSnM",
-   "google_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNVmtyN09yOUVSb245SkFXcGNaZFEtMjlqTW9kYXB6dW04c3A4aFZWVzhmMFdLRS1BYkg4XzFzbmM2Sy1jeVYwMjAzM2VTWS1wQnJPcXVDZ3ktaFZoZWxnemhYdnhXRWpCN0trdWI1QVZwSC1WYi1YdTZjcjl2cGRBMTR5WnFWSnM?oc=5",
-   "url": "",
-   "title": "¿Aspirantes a fascistas? Respuesta a Martín Tanaka",
-   "outlet": "El Montonero",
-   "outlet_url": "https://elmontonero.pe",
-   "date": "2025-09-24",
-   "edition_language": "Spanish",
-   "key": "gnews:CBMihwFBVV95cUxNVmtyN09yOUVSb245SkFXcGNaZFEtMjlqTW9kYXB6dW04c3A4aFZWVzhmMFdLRS1BYkg4XzFzbmM2Sy1jeVYwMjAzM2VTWS1wQnJPcXVDZ3ktaFZoZWxnemhYdnhXRWpCN0trdWI1QVZwSC1WYi1YdTZjcjl2cGRBMTR5WnFWSnM",
-   "queries": [
-    20
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Spanish",
-   "domain": "elmontonero.pe",
-   "country": "PE",
-   "category": "ideas",
-   "idea": "thin"
-  },
-  {
-   "gid": "CBMioAFBVV95cUxNSElMY2hWSl9aS0NaVWVXX2NTeTF4Vm81RHRIOThCRVFDYW1GdW1Qdk9zMlNZa01tVFFXcU9uelQ4SGRPMWVHU1VoeHloTGY5TXlTdWw4WWJ5SjkzdFFlT0NMcHEzU0tycEgzVlNkVEN5WlRpal94bzgyT0xnVXViaGFMeWxSWTlhNDZEckVKLWRMQmQyd1ZOWlVGZGFubm9x",
-   "google_url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNSElMY2hWSl9aS0NaVWVXX2NTeTF4Vm81RHRIOThCRVFDYW1GdW1Qdk9zMlNZa01tVFFXcU9uelQ4SGRPMWVHU1VoeHloTGY5TXlTdWw4WWJ5SjkzdFFlT0NMcHEzU0tycEgzVlNkVEN5WlRpal94bzgyT0xnVXViaGFMeWxSWTlhNDZEckVKLWRMQmQyd1ZOWlVGZGFubm9x?oc=5",
-   "url": "",
-   "title": "RENIK: Co się dzieje w Nepalu? Rewolucja młodych i premierka z Discorda",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-09-14",
-   "edition_language": "Polish",
-   "key": "gnews:CBMioAFBVV95cUxNSElMY2hWSl9aS0NaVWVXX2NTeTF4Vm81RHRIOThCRVFDYW1GdW1Qdk9zMlNZa01tVFFXcU9uelQ4SGRPMWVHU1VoeHloTGY5TXlTdWw4WWJ5SjkzdFFlT0NMcHEzU0tycEgzVlNkVEN5WlRpal94bzgyT0xnVXViaGFMeWxSWTlhNDZEckVKLWRMQmQyd1ZOWlVGZGFubm9x",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMikAFBVV95cUxPWU1iX0xySlZ6ZG5CcDNpN2E5d1FhY0hLZEUwQldyVG82ZXFTVTVyTEZKTGlrRWVyVjR4RlBQaW5MRjNJSUxGN011OGtiaDV1dndYSUMxZWc5aXhzRlZSRXdLVllZdC1jQXJCZnhaaGxIelUzZFhuT240NW5BMFZTdUtkWWF6VnpyMHlqYVg4R24",
-   "google_url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPWU1iX0xySlZ6ZG5CcDNpN2E5d1FhY0hLZEUwQldyVG82ZXFTVTVyTEZKTGlrRWVyVjR4RlBQaW5MRjNJSUxGN011OGtiaDV1dndYSUMxZWc5aXhzRlZSRXdLVllZdC1jQXJCZnhaaGxIelUzZFhuT240NW5BMFZTdUtkWWF6VnpyMHlqYVg4R24?oc=5",
-   "url": "",
-   "title": "STANLEY: Czy to prawda, że Polska jest podzielona?",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-08-11",
-   "edition_language": "Polish",
-   "key": "gnews:CBMikAFBVV95cUxPWU1iX0xySlZ6ZG5CcDNpN2E5d1FhY0hLZEUwQldyVG82ZXFTVTVyTEZKTGlrRWVyVjR4RlBQaW5MRjNJSUxGN011OGtiaDV1dndYSUMxZWc5aXhzRlZSRXdLVllZdC1jQXJCZnhaaGxIelUzZFhuT240NW5BMFZTdUtkWWF6VnpyMHlqYVg4R24",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMilgFBVV95cUxOd3FZVVI1c0xMNmFReUQwNGlpQWFvMWRGejMxcUI4M19lMkVzN2tab3ZzdDJjSTFOT2hyYTM5YU5GcldHdjBsR3hNTGw0UldNRHYwNWYwZjhfZVdKdDlqTEQwQmt3dDN4eXN6OXh0Qk9GYk5zVjRZNVIwNk9VbWFkQktnN2xGSk5YM2FUTjl2Vk03cnhDYVE",
    "google_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOd3FZVVI1c0xMNmFReUQwNGlpQWFvMWRGejMxcUI4M19lMkVzN2tab3ZzdDJjSTFOT2hyYTM5YU5GcldHdjBsR3hNTGw0UldNRHYwNWYwZjhfZVdKdDlqTEQwQmt3dDN4eXN6OXh0Qk9GYk5zVjRZNVIwNk9VbWFkQktnN2xGSk5YM2FUTjl2Vk03cnhDYVE?oc=5",
-   "url": "",
+   "url": "https://www.politico.eu/article/poland-president-karol-nawrocki-donald-tusk-defense-policy/",
    "title": "Poland faces years of political deadlock under new president",
    "outlet": "POLITICO.eu",
    "outlet_url": "https://www.politico.eu",
    "date": "2025-08-05",
    "edition_language": "English",
-   "key": "gnews:CBMilgFBVV95cUxOd3FZVVI1c0xMNmFReUQwNGlpQWFvMWRGejMxcUI4M19lMkVzN2tab3ZzdDJjSTFOT2hyYTM5YU5GcldHdjBsR3hNTGw0UldNRHYwNWYwZjhfZVdKdDlqTEQwQmt3dDN4eXN6OXh0Qk9GYk5zVjRZNVIwNk9VbWFkQktnN2xGSk5YM2FUTjl2Vk03cnhDYVE",
+   "key": "politico.eu/article/poland-president-karol-nawrocki-donald-tusk-defense-policy",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Wojciech Kość",
    "language": "English",
    "domain": "politico.eu",
    "country": "BE",
@@ -4183,62 +3443,20 @@
    "idea": null
   },
   {
-   "gid": "CBMiwgFBVV95cUxNX0hqbGdzelFpdldGSGJ1SDJ3OWRFZUJPWXNFUUdTMGJfNkJkLWZEeVJIblJnTFM1bFpBM24yUkpyd0tHSEk1TUE0SnNyQkxtamxyVHJTTk1SMWZCOFREQ0NCMjJ3VHJpN2szRTd2N1c3M3JVYVBKWUV4ZXE3dXpBNDZFbWZJTzkyREllb2c3U09yMmh2Q3poOGo4QTUwdmR0bld5RnI2MS1JZVFwZHpCWGtfTVAzaHNLWHloNklUQzUzUQ",
-   "google_url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNX0hqbGdzelFpdldGSGJ1SDJ3OWRFZUJPWXNFUUdTMGJfNkJkLWZEeVJIblJnTFM1bFpBM24yUkpyd0tHSEk1TUE0SnNyQkxtamxyVHJTTk1SMWZCOFREQ0NCMjJ3VHJpN2szRTd2N1c3M3JVYVBKWUV4ZXE3dXpBNDZFbWZJTzkyREllb2c3U09yMmh2Q3poOGo4QTUwdmR0bld5RnI2MS1JZVFwZHpCWGtfTVAzaHNLWHloNklUQzUzUQ?oc=5",
-   "url": "",
-   "title": "STANLEY: Raport z życia towarzyskiego: PiS wygrywa tam, gdzie nasi znajomi są tacy sami",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-07-21",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiwgFBVV95cUxNX0hqbGdzelFpdldGSGJ1SDJ3OWRFZUJPWXNFUUdTMGJfNkJkLWZEeVJIblJnTFM1bFpBM24yUkpyd0tHSEk1TUE0SnNyQkxtamxyVHJTTk1SMWZCOFREQ0NCMjJ3VHJpN2szRTd2N1c3M3JVYVBKWUV4ZXE3dXpBNDZFbWZJTzkyREllb2c3U09yMmh2Q3poOGo4QTUwdmR0bld5RnI2MS1JZVFwZHpCWGtfTVAzaHNLWHloNklUQzUzUQ",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMifEFVX3lxTE9TYmlrbXlhOXlaVF9SRlZzbXphdEJZQWZLdkxqTFpuZThzbHRnUWl0NkNlSVZmZUJBUmZGSTdZTDE2XzlFZzVIcG56SGxtU251WW81XzNNUkZ1TUlLVDRUZ1lMVTRGVmNDUkZaTTVVU21jakREYUJaTXV5SWQ",
-   "google_url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9TYmlrbXlhOXlaVF9SRlZzbXphdEJZQWZLdkxqTFpuZThzbHRnUWl0NkNlSVZmZUJBUmZGSTdZTDE2XzlFZzVIcG56SGxtU251WW81XzNNUkZ1TUlLVDRUZ1lMVTRGVmNDUkZaTTVVU21jakREYUJaTXV5SWQ?oc=5",
-   "url": "",
-   "title": "Populizm przestał być marginesem",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-06-24",
-   "edition_language": "Polish",
-   "key": "gnews:CBMifEFVX3lxTE9TYmlrbXlhOXlaVF9SRlZzbXphdEJZQWZLdkxqTFpuZThzbHRnUWl0NkNlSVZmZUJBUmZGSTdZTDE2XzlFZzVIcG56SGxtU251WW81XzNNUkZ1TUlLVDRUZ1lMVTRGVmNDUkZaTTVVU21jakREYUJaTXV5SWQ",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV",
    "google_url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV?oc=5",
-   "url": "",
+   "url": "https://www.money.pl/gospodarka/politico-strumpowana-polska-fatalna-wiadomosc-dla-tuska-7163691912149760a.html",
    "title": "\"Potężny sojusznik\" Trumpa. Politico pisze o Karolu Nawrockim",
    "outlet": "Money.pl",
    "outlet_url": "https://www.money.pl",
    "date": "2025-06-03",
    "edition_language": "Polish",
-   "key": "gnews:CBMirwFBVV95cUxPbnRkMEllWFdEVV9OaWRaZ25RdTFHTTZIUEFxUW9ydzJvQlVtbFhGUy1oLXlhbExXWmRnTlM2S2hlOTluUUtORXBCMTdrZ3pzUXB0bXJyRjJCUmE4SzRla3hZOF9uVUdlQ2YxUmNwOGhBLU5qU3ctVU9vWDN0NUEyeHBfejl0c0IyMnZxNG9HS0RyR0RvWm1scERwbUd5OHM4bWx2VFpyMVFfVDRMb0RV",
+   "key": "money.pl/gospodarka/politico-strumpowana-polska-fatalna-wiadomosc-dla-tuska-7163691912149760a.html",
    "queries": [
     2
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Piotr Bera",
    "language": "Polish",
    "domain": "money.pl",
    "country": "PL",
@@ -4246,63 +3464,21 @@
    "idea": null
   },
   {
-   "gid": "CBMilgFBVV95cUxOVXdCcVk4YnB4ZW90eTNxa0NkcjZOTGtGbWh5RF85QXlxVHV6bVBWMEUxck1GbzVxT3FmdG1udGRVX0ZjZEQ0UjRuekJsUFVucmRMRHlnNDFNZEVGa2RSM280TnhGVzhjTDZVVDB5Z1FLLTlES2Y0Nzc2SUhYWXp4WFhCWEduSWNiSElkMTdGTVRpTW5OWHc",
-   "google_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOVXdCcVk4YnB4ZW90eTNxa0NkcjZOTGtGbWh5RF85QXlxVHV6bVBWMEUxck1GbzVxT3FmdG1udGRVX0ZjZEQ0UjRuekJsUFVucmRMRHlnNDFNZEVGa2RSM280TnhGVzhjTDZVVDB5Z1FLLTlES2Y0Nzc2SUhYWXp4WFhCWEduSWNiSElkMTdGTVRpTW5OWHc?oc=5",
-   "url": "",
-   "title": "Koalicja rządząca – małżeństwo z rozsądku na zakręcie",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-06-03",
-   "edition_language": "Polish",
-   "key": "gnews:CBMilgFBVV95cUxOVXdCcVk4YnB4ZW90eTNxa0NkcjZOTGtGbWh5RF85QXlxVHV6bVBWMEUxck1GbzVxT3FmdG1udGRVX0ZjZEQ0UjRuekJsUFVucmRMRHlnNDFNZEVGa2RSM280TnhGVzhjTDZVVDB5Z1FLLTlES2Y0Nzc2SUhYWXp4WFhCWEduSWNiSElkMTdGTVRpTW5OWHc",
-   "queries": [
-    2
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3",
-   "google_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3?oc=5",
-   "url": "",
-   "title": "Élection présidentielle en Pologne : Karol Nawrocki, le candidat du PiS proche de Trump, devient président",
-   "outlet": "Le Grand Continent",
-   "outlet_url": "https://legrandcontinent.eu",
-   "date": "2025-06-02",
-   "edition_language": "French",
-   "key": "gnews:CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3",
-   "queries": [
-    5
-   ],
-   "checked": null,
-   "author": "",
-   "language": "French",
-   "domain": "legrandcontinent.eu",
-   "country": "EU",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMiakFVX3lxTE9qZ1p5UDJQTkE3RzRkUnJWZzJwaWRDbWJEOXBFMUVJTkNRUmd2S195dkpIeTFHcmFiQk1WcXM0b05FUVJKY1pvdl8xMVR6cmV2d2NNbWlmUUpvalg3NjI0S3N2VE5QbUJMM3c",
    "google_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9qZ1p5UDJQTkE3RzRkUnJWZzJwaWRDbWJEOXBFMUVJTkNRUmd2S195dkpIeTFHcmFiQk1WcXM0b05FUVJKY1pvdl8xMVR6cmV2d2NNbWlmUUpvalg3NjI0S3N2VE5QbUJMM3c?oc=5",
-   "url": "",
+   "url": "https://www.politico.eu/article/polands-tusk-gets-trumped/",
    "title": "Poland’s Tusk gets Trumped",
    "outlet": "POLITICO.eu",
    "outlet_url": "https://www.politico.eu",
    "date": "2025-06-02",
    "edition_language": "English",
-   "key": "gnews:CBMiakFVX3lxTE9qZ1p5UDJQTkE3RzRkUnJWZzJwaWRDbWJEOXBFMUVJTkNRUmd2S195dkpIeTFHcmFiQk1WcXM0b05FUVJKY1pvdl8xMVR6cmV2d2NNbWlmUUpvalg3NjI0S3N2VE5QbUJMM3c",
+   "key": "politico.eu/article/polands-tusk-gets-trumped",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Wojciech Kość, Jan Cienski",
    "language": "English",
    "domain": "politico.eu",
    "country": "BE",
@@ -4310,42 +3486,63 @@
    "idea": null
   },
   {
-   "gid": "CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ",
-   "google_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ?oc=5",
-   "url": "",
-   "title": "En Polonia, Karol Nawrocki, el candidato del PiS cercano a Trump, gana las elecciones presidenciales",
+   "gid": "CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc",
+   "google_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc?oc=5",
+   "url": "https://legrandcontinent.eu/it/2025/06/02/in-polonia-karol-nawrocki-il-candidato-del-pis-vicino-a-trump-vince-le-elezioni-presidenziali/",
+   "title": "In Polonia Karol Nawrocki, il candidato del PiS vicino a Trump, vince le elezioni presidenziali",
    "outlet": "Le Grand Continent",
    "outlet_url": "https://legrandcontinent.eu",
    "date": "2025-06-02",
-   "edition_language": "Spanish",
-   "key": "gnews:CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ",
+   "edition_language": "Italian",
+   "key": "legrandcontinent.eu/it/2025/06/02/in-polonia-karol-nawrocki-il-candidato-del-pis-vicino-a-trump-vince-le-elezioni-presidenziali",
    "queries": [
-    6
+    7
    ],
-   "checked": null,
-   "author": "",
-   "language": "Spanish",
+   "checked": true,
+   "author": "Gilles Gressani",
+   "language": "Italian",
    "domain": "legrandcontinent.eu",
    "country": "EU",
    "category": "commentary",
    "idea": null
   },
   {
-   "gid": "CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc",
-   "google_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc?oc=5",
-   "url": "",
-   "title": "In Polonia Karol Nawrocki, il candidato del PiS vicino a Trump, vince le elezioni presidenziali",
+   "gid": "CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3",
+   "google_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdEVia0ZyaVc5eWtyMVIzSEtnb1o5WG1Fa2xNamk5ZEFnRTBRUVBCQmNaUTFKWHhjZGZxSnVuZjQ0UDFDV1N1a3pibjY2bm85M0ItdTVHNzJLQklTZm1SWGR5VFpaYS1lMy1MUzlHcDNQNld1cjZvaENfYzdzcVZLa1U1dGk0SEZ3Tm8zUHJpWU1sV0FoNHMydmlrNEYzYzd0Z3VIdjJUWDVsZGx2YVZwQ09nR0NKektDb2JxMjNLOWw4MW1PNUVNemN3?oc=5",
+   "url": "https://legrandcontinent.eu/fr/2025/06/02/en-pologne-karol-nawrocki-le-candidat-du-pis-proche-de-trump-remporte-la-presidentielle/",
+   "title": "Élection présidentielle en Pologne : Karol Nawrocki, le candidat du PiS proche de Trump, devient président",
    "outlet": "Le Grand Continent",
    "outlet_url": "https://legrandcontinent.eu",
    "date": "2025-06-02",
-   "edition_language": "Italian",
-   "key": "gnews:CBMi0gFBVV95cUxQSDUyTWxqMmhNLUktcXI5a3FSRURkVlJyNndwZ1VaMDlubjRLV0VoY3dGdlBLT0tCMktMZGtIeXJZNHA5R3BPZDB0aU42RXJIT3FuUjJveFN2NGR2NDdhQ0VHbGt3eGh4Q2t1ei1CaUo2ME5YNkN0elhMRUFsU2g1ak9wbE03SWdXaEctVWx5Z1NpaEdFX1NQdGwtYk5obmR2TGUzbWpSZ1V1b2JZVk5hZWZrR3RZeDl6MHRCSzFTdGhOd0hCZWI1cUpBbXo2V2IxOGc",
+   "edition_language": "French",
+   "key": "legrandcontinent.eu/fr/2025/06/02/en-pologne-karol-nawrocki-le-candidat-du-pis-proche-de-trump-remporte-la-presidentielle",
    "queries": [
-    7
+    5
    ],
-   "checked": null,
-   "author": "",
-   "language": "Italian",
+   "checked": true,
+   "author": "Gilles Gressani",
+   "language": "French",
+   "domain": "legrandcontinent.eu",
+   "country": "EU",
+   "category": "commentary",
+   "idea": null
+  },
+  {
+   "gid": "CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ",
+   "google_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNZnZyS2N2di0zOTZYRVB5Q2hvVjNYc3ZROXVtajF4OXhFZnc0NFlpLUxMeHFVemRfdjY0SzBHMHBsSFRlZ0ZmQ2VqdHJSXzJaMW5FbjV3YWVmTDYyclFFaExQdlFEUVo5U2dETU05OFZPWmxZYjZaQk9wdUg4VTVvWGNmY2R3ZEZQQkJsdVFENFV0c0FneWx2RFJTOHNvNXIwWHZtaUNZRUpGMVhjcjhUbXhSVVNvb2Iyc2JuVWcxcXJGSElaeGJnbkdJSlhONW1pMXZoQ1JaRQ?oc=5",
+   "url": "https://legrandcontinent.eu/es/2025/06/02/en-polonia-karol-nawrocki-el-candidato-del-pis-cercano-a-trump-gana-las-elecciones-presidenciales/",
+   "title": "En Polonia, Karol Nawrocki, el candidato del PiS cercano a Trump, gana las elecciones presidenciales",
+   "outlet": "Le Grand Continent",
+   "outlet_url": "https://legrandcontinent.eu",
+   "date": "2025-06-02",
+   "edition_language": "Spanish",
+   "key": "legrandcontinent.eu/es/2025/06/02/en-polonia-karol-nawrocki-el-candidato-del-pis-cercano-a-trump-gana-las-elecciones-presidenciales",
+   "queries": [
+    6
+   ],
+   "checked": true,
+   "author": "florent",
+   "language": "Spanish",
    "domain": "legrandcontinent.eu",
    "country": "EU",
    "category": "commentary",
@@ -4354,19 +3551,19 @@
   {
    "gid": "CBMiwgFBVV95cUxQZXQwWGZCbjBmM1dzOGtndXN2cVlUb3hUeWxGQzVzOFpKRlI2R2lSbGVBWjhnb09uM3lVZTVCaks1WXVBRUpfQkJBUW45WlJzbnBGRGpUaDBDU3ctcmtpMmxHRE15bW5MWGhyWHlJZ0E0cXVGc2dVREgzaXdVcFpKUlR5RWNlcEVZMHJMNUF3MDN0OUJSRjBNcXJJVVNZelNoSXNPSWx6Ti15MXJDX0szZVllUkc2WjJDeWtCbWZMak52dw",
    "google_url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQZXQwWGZCbjBmM1dzOGtndXN2cVlUb3hUeWxGQzVzOFpKRlI2R2lSbGVBWjhnb09uM3lVZTVCaks1WXVBRUpfQkJBUW45WlJzbnBGRGpUaDBDU3ctcmtpMmxHRE15bW5MWGhyWHlJZ0E0cXVGc2dVREgzaXdVcFpKUlR5RWNlcEVZMHJMNUF3MDN0OUJSRjBNcXJJVVNZelNoSXNPSWx6Ti15MXJDX0szZVllUkc2WjJDeWtCbWZMak52dw?oc=5",
-   "url": "",
+   "url": "https://www.theguardian.com/world/2025/jun/01/poland-goes-to-the-polls-in-second-round-of-close-fought-presidential-election",
    "title": "Poland goes to the polls in second round of close-fought presidential election",
    "outlet": "The Guardian",
    "outlet_url": "https://www.theguardian.com",
    "date": "2025-06-01",
    "edition_language": "English",
-   "key": "gnews:CBMiwgFBVV95cUxQZXQwWGZCbjBmM1dzOGtndXN2cVlUb3hUeWxGQzVzOFpKRlI2R2lSbGVBWjhnb09uM3lVZTVCaks1WXVBRUpfQkJBUW45WlJzbnBGRGpUaDBDU3ctcmtpMmxHRE15bW5MWGhyWHlJZ0E0cXVGc2dVREgzaXdVcFpKUlR5RWNlcEVZMHJMNUF3MDN0OUJSRjBNcXJJVVNZelNoSXNPSWx6Ti15MXJDX0szZVllUkc2WjJDeWtCbWZMak52dw",
+   "key": "theguardian.com/world/2025/jun/01/poland-goes-to-the-polls-in-second-round-of-close-fought-presidential-election",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Jakub Krupa",
    "language": "English",
    "domain": "theguardian.com",
    "country": "GB",
@@ -4374,84 +3571,21 @@
    "idea": null
   },
   {
-   "gid": "CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ",
-   "google_url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ?oc=5",
-   "url": "",
-   "title": "L’extrême-droite remportera-t-elle le scrutin présidentiel en Pologne ?",
-   "outlet": "Le Grand Continent",
-   "outlet_url": "https://legrandcontinent.eu",
-   "date": "2025-06-01",
-   "edition_language": "French",
-   "key": "gnews:CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ",
-   "queries": [
-    5
-   ],
-   "checked": null,
-   "author": "",
-   "language": "French",
-   "domain": "legrandcontinent.eu",
-   "country": "EU",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw",
-   "google_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw?oc=5",
-   "url": "",
-   "title": "¿Ganará la extrema derecha la elección presidencial en Polonia?",
-   "outlet": "Le Grand Continent",
-   "outlet_url": "https://legrandcontinent.eu",
-   "date": "2025-06-01",
-   "edition_language": "Spanish",
-   "key": "gnews:CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw",
-   "queries": [
-    6
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Spanish",
-   "domain": "legrandcontinent.eu",
-   "country": "EU",
-   "category": "commentary",
-   "idea": null
-  },
-  {
    "gid": "CBMipgFBVV95cUxQaTJqTG1SdnJCU1d2bTZxQzFOVUQ1TFYzeGJtOGdhN3dZdS0xcnZtU2QzMU5oMDIzaDNUc1NubTZaWU1xb2pDM29EM1AwVEtZdXFhYVpKOVpDTjE5bXZNZno0VWtSZmwwcHdOaVFURU1VdWFUcUl1RmVBRzF2WF9HNS1YQ0kzZkhacUN3eWNqTXZBS2djMzN2clZPSmhJYW9SRlpGNXdR",
    "google_url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQaTJqTG1SdnJCU1d2bTZxQzFOVUQ1TFYzeGJtOGdhN3dZdS0xcnZtU2QzMU5oMDIzaDNUc1NubTZaWU1xb2pDM29EM1AwVEtZdXFhYVpKOVpDTjE5bXZNZno0VWtSZmwwcHdOaVFURU1VdWFUcUl1RmVBRzF2WF9HNS1YQ0kzZkhacUN3eWNqTXZBS2djMzN2clZPSmhJYW9SRlpGNXdR?oc=5",
-   "url": "",
+   "url": "https://legrandcontinent.eu/it/2025/06/01/lestrema-destra-vincera-le-elezioni-presidenziali-in-polonia/",
    "title": "L’estrema destra vincerà le elezioni presidenziali in Polonia?",
    "outlet": "Le Grand Continent",
    "outlet_url": "https://legrandcontinent.eu",
    "date": "2025-06-01",
    "edition_language": "Italian",
-   "key": "gnews:CBMipgFBVV95cUxQaTJqTG1SdnJCU1d2bTZxQzFOVUQ1TFYzeGJtOGdhN3dZdS0xcnZtU2QzMU5oMDIzaDNUc1NubTZaWU1xb2pDM29EM1AwVEtZdXFhYVpKOVpDTjE5bXZNZno0VWtSZmwwcHdOaVFURU1VdWFUcUl1RmVBRzF2WF9HNS1YQ0kzZkhacUN3eWNqTXZBS2djMzN2clZPSmhJYW9SRlpGNXdR",
+   "key": "legrandcontinent.eu/it/2025/06/01/lestrema-destra-vincera-le-elezioni-presidenziali-in-polonia",
    "queries": [
     7
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "jechareton",
    "language": "Italian",
-   "domain": "legrandcontinent.eu",
-   "country": "EU",
-   "category": "commentary",
-   "idea": null
-  },
-  {
-   "gid": "CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2",
-   "google_url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2?oc=5",
-   "url": "",
-   "title": "¿Quién es Karol Nawrocki? Historiador, hooligan y antiaborto: el candidato del PiS será el próximo presidente de Polonia",
-   "outlet": "Le Grand Continent",
-   "outlet_url": "https://legrandcontinent.eu",
-   "date": "2025-06-01",
-   "edition_language": "Spanish",
-   "key": "gnews:CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2",
-   "queries": [
-    6
-   ],
-   "checked": null,
-   "author": "",
-   "language": "Spanish",
    "domain": "legrandcontinent.eu",
    "country": "EU",
    "category": "commentary",
@@ -4460,18 +3594,18 @@
   {
    "gid": "CBMiggJBVV95cUxNRmdFSVZYSXFLcVZ0MDBSNm9fX3lzXzRhdW54UENrS0lpSDBVcGpGNDRxVEJudjZybHVieWJLbFIwM2J5Y1plcEcwclJRX3ZPTlVQbU1HZkNCNkRUaFlSR0JvTWZERnFEaml6MEVfaDA1WGlWdzBLQkpfaEdvQjFOeWQwWnNJRTJFcmJ4bjE2XzR0eTVMVG9ZX0xGM2pkVkp4UTl4VFpaSkVkV3BZdTFLNzZ3V0xnTHVHVDNTbDdNcWd1MmEzQVFmLU9oY0Fjb2E1Z3ZrV3RaVDZHNU50LVY5SHpUNHVheUpBRUduZXU5WGxzTDBwTnhfQWlQS0oyLUlTRVE",
    "google_url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxNRmdFSVZYSXFLcVZ0MDBSNm9fX3lzXzRhdW54UENrS0lpSDBVcGpGNDRxVEJudjZybHVieWJLbFIwM2J5Y1plcEcwclJRX3ZPTlVQbU1HZkNCNkRUaFlSR0JvTWZERnFEaml6MEVfaDA1WGlWdzBLQkpfaEdvQjFOeWQwWnNJRTJFcmJ4bjE2XzR0eTVMVG9ZX0xGM2pkVkp4UTl4VFpaSkVkV3BZdTFLNzZ3V0xnTHVHVDNTbDdNcWd1MmEzQVFmLU9oY0Fjb2E1Z3ZrV3RaVDZHNU50LVY5SHpUNHVheUpBRUduZXU5WGxzTDBwTnhfQWlQS0oyLUlTRVE?oc=5",
-   "url": "",
+   "url": "https://legrandcontinent.eu/fr/2025/06/01/qui-est-karol-nawrocki-historien-hooligan-et-anti-avortement-le-candidat-du-pis-a-la-presidentielle-polonaise-en-10-phrases-clefs/",
    "title": "Qui est Karol Nawrocki ? Historien, hooligan, anti-avortement : le candidat du PiS sera le prochain président de la Pologne",
    "outlet": "Le Grand Continent",
    "outlet_url": "https://legrandcontinent.eu",
    "date": "2025-06-01",
    "edition_language": "French",
-   "key": "gnews:CBMiggJBVV95cUxNRmdFSVZYSXFLcVZ0MDBSNm9fX3lzXzRhdW54UENrS0lpSDBVcGpGNDRxVEJudjZybHVieWJLbFIwM2J5Y1plcEcwclJRX3ZPTlVQbU1HZkNCNkRUaFlSR0JvTWZERnFEaml6MEVfaDA1WGlWdzBLQkpfaEdvQjFOeWQwWnNJRTJFcmJ4bjE2XzR0eTVMVG9ZX0xGM2pkVkp4UTl4VFpaSkVkV3BZdTFLNzZ3V0xnTHVHVDNTbDdNcWd1MmEzQVFmLU9oY0Fjb2E1Z3ZrV3RaVDZHNU50LVY5SHpUNHVheUpBRUduZXU5WGxzTDBwTnhfQWlQS0oyLUlTRVE",
+   "key": "legrandcontinent.eu/fr/2025/06/01/qui-est-karol-nawrocki-historien-hooligan-et-anti-avortement-le-candidat-du-pis-a-la-presidentielle-polonaise-en-10-phrases-clefs",
    "queries": [
     5
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Matheo Malik",
    "language": "French",
    "domain": "legrandcontinent.eu",
    "country": "EU",
@@ -4479,83 +3613,83 @@
    "idea": null
   },
   {
-   "gid": "CBMikwFBVV95cUxNV3YtRGxpVWxJV3dLS19vaU5EWjFKNEZWcHZXY1VYdEFROGV0cl9fd1ZpbFF5QnBhME95S0pKOWM3ZEIxRVF2N0pSLVh3ai0tMXdGYnk4OGZKOHl1akxvVjkyNkR0emJKM3dGcXFqY3NpWHJWVWhWYkdNY0tURk1FYzNCY0F4c3Z1cmZSNXM2NURIVFU",
-   "google_url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNV3YtRGxpVWxJV3dLS19vaU5EWjFKNEZWcHZXY1VYdEFROGV0cl9fd1ZpbFF5QnBhME95S0pKOWM3ZEIxRVF2N0pSLVh3ai0tMXdGYnk4OGZKOHl1akxvVjkyNkR0emJKM3dGcXFqY3NpWHJWVWhWYkdNY0tURk1FYzNCY0F4c3Z1cmZSNXM2NURIVFU?oc=5",
-   "url": "",
-   "title": "Prezydent Trzaskowski to koniec wymówek dla rządu",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-05-26",
-   "edition_language": "Polish",
-   "key": "gnews:CBMikwFBVV95cUxNV3YtRGxpVWxJV3dLS19vaU5EWjFKNEZWcHZXY1VYdEFROGV0cl9fd1ZpbFF5QnBhME95S0pKOWM3ZEIxRVF2N0pSLVh3ai0tMXdGYnk4OGZKOHl1akxvVjkyNkR0emJKM3dGcXFqY3NpWHJWVWhWYkdNY0tURk1FYzNCY0F4c3Z1cmZSNXM2NURIVFU",
+   "gid": "CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ",
+   "google_url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdThob2ZjWmhlcXVwd1NJMDR6aV9LZWRibUVkVEF4TWo1VXhudzZNcWlsY09tLTN3R1NOeUdoenIzam0xQUdGYW9vTjlMWEtjc3R6NEVZMVlGZ0tnMnVVaHZBeHRKNmEtYkVSa0tXWkxWaUpCR3NYVnNlWXZlNy1BSTE2TmwwSWN4NE9jRExVaEZsQlRqZG1sRjZrYUo5MnN0ZFpSTzUtRnlGNFRnVzRYaQ?oc=5",
+   "url": "https://legrandcontinent.eu/fr/2025/06/01/lextreme-droite-remportera-t-elle-le-scrutin-presidentiel-en-pologne/",
+   "title": "L’extrême-droite remportera-t-elle le scrutin présidentiel en Pologne ?",
+   "outlet": "Le Grand Continent",
+   "outlet_url": "https://legrandcontinent.eu",
+   "date": "2025-06-01",
+   "edition_language": "French",
+   "key": "legrandcontinent.eu/fr/2025/06/01/lextreme-droite-remportera-t-elle-le-scrutin-presidentiel-en-pologne",
    "queries": [
-    2
+    5
    ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
+   "checked": true,
+   "author": "Ramona Bloj",
+   "language": "French",
+   "domain": "legrandcontinent.eu",
+   "country": "EU",
    "category": "commentary",
    "idea": null
   },
   {
-   "gid": "CBMiowFBVV95cUxOY1ZuVGNqa2l4YW12WmxZNjctQ0pvSEdKZE9IM1N5SGotcDAySHZBZ1Rvb3hYMGVyRExRQVNzeVFRYi1HaU55TkxCYlgwZnJsYmZCZGZQc2xvdEUtZ1VXc3NKR1FhcV9Ya3pKU2ZWSE04TWsycnc5VzNCMWV1aXRabElqVkxjMmhpRnp1WUFwMkt3SmxWS0gwX2JGbExHQmVOSllR",
-   "google_url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOY1ZuVGNqa2l4YW12WmxZNjctQ0pvSEdKZE9IM1N5SGotcDAySHZBZ1Rvb3hYMGVyRExRQVNzeVFRYi1HaU55TkxCYlgwZnJsYmZCZGZQc2xvdEUtZ1VXc3NKR1FhcV9Ya3pKU2ZWSE04TWsycnc5VzNCMWV1aXRabElqVkxjMmhpRnp1WUFwMkt3SmxWS0gwX2JGbExHQmVOSllR?oc=5",
-   "url": "",
-   "title": "Polonia może wybrać nam prezydenta. Zacznijmy dyskutować, czy ma do tego prawo",
-   "outlet": "Wyborcza.pl",
-   "outlet_url": "https://wyborcza.pl",
-   "date": "2025-05-24",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiowFBVV95cUxOY1ZuVGNqa2l4YW12WmxZNjctQ0pvSEdKZE9IM1N5SGotcDAySHZBZ1Rvb3hYMGVyRExRQVNzeVFRYi1HaU55TkxCYlgwZnJsYmZCZGZQc2xvdEUtZ1VXc3NKR1FhcV9Ya3pKU2ZWSE04TWsycnc5VzNCMWV1aXRabElqVkxjMmhpRnp1WUFwMkt3SmxWS0gwX2JGbExHQmVOSllR",
+   "gid": "CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2",
+   "google_url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxOTXhreWk5M2lqVzZ6YnhKS2RQUWs5UXEzR01iNDJJSUoxYVJFSGE5Q1JEazRLSTJXM0U1azA1ZHh1c2pTMk5jeXpqdGJxSjhkdmRtczhXQmJDVlAwbExWZjU3bGZJeGxZeGQ4d1NKX2Mta0R3Q1hfazVXdFQ3RUgzb1Z6bDF2VXZwQUFPVjFGaEtJaGdueGM2d1hEWTg0ZjBicFZnSHRCUS11dEZpVE5kSmJSdUJjcUVRRVFaZkdMOXE3YnNDaGdZc2dhaVdGYTljS0JzNU96UEdCcG10SDFDVGlpS3ZUYVI5c0ZrSFpMQ0kwOXQwMU1GbUQwZG92MG1IblBTN0QtVjk4eFl2?oc=5",
+   "url": "https://legrandcontinent.eu/es/2025/06/01/quien-es-karol-nawrocki-historiador-hooligan-y-antiaborto-el-candidato-del-pis-a-las-elecciones-presidenciales-polacas-en-10-frases-clave/",
+   "title": "¿Quién es Karol Nawrocki? Historiador, hooligan y antiaborto: el candidato del PiS será el próximo presidente de Polonia",
+   "outlet": "Le Grand Continent",
+   "outlet_url": "https://legrandcontinent.eu",
+   "date": "2025-06-01",
+   "edition_language": "Spanish",
+   "key": "legrandcontinent.eu/es/2025/06/01/quien-es-karol-nawrocki-historiador-hooligan-y-antiaborto-el-candidato-del-pis-a-las-elecciones-presidenciales-polacas-en-10-frases-clave",
    "queries": [
-    2
+    6
    ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "wyborcza.pl",
-   "country": "PL",
+   "checked": true,
+   "author": "florent",
+   "language": "Spanish",
+   "domain": "legrandcontinent.eu",
+   "country": "EU",
    "category": "commentary",
    "idea": null
   },
   {
-   "gid": "CBMiqwFBVV95cUxOTllDS1p5WjBiT3NPcDdMbjhDYkRxWDg1MWo2MHpaMzhUSVdNemY2UUxSckYxanBPTFgtdDkwbGJzTHVMZEZVYkNiM2IwMVpMbl9jbVRJSmtYMUJ6NzhwdlFITVA2U1RrSlVpM25Ta2RCVWZUcFBTLTZodDZXck9PcDlZakFQYnZrODdiSENtZ1R0LTltcmJMenVVc0xCU2FfUlhZcjV0d3VoZnc",
-   "google_url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOTllDS1p5WjBiT3NPcDdMbjhDYkRxWDg1MWo2MHpaMzhUSVdNemY2UUxSckYxanBPTFgtdDkwbGJzTHVMZEZVYkNiM2IwMVpMbl9jbVRJSmtYMUJ6NzhwdlFITVA2U1RrSlVpM25Ta2RCVWZUcFBTLTZodDZXck9PcDlZakFQYnZrODdiSENtZ1R0LTltcmJMenVVc0xCU2FfUlhZcjV0d3VoZnc?oc=5",
-   "url": "",
-   "title": "SKRZYDŁOWSKA-KALUKIN: Debata, marsze i wyprawa po nową linię podziału",
-   "outlet": "Kultura Liberalna",
-   "outlet_url": "https://kulturaliberalna.pl",
-   "date": "2025-05-22",
-   "edition_language": "Polish",
-   "key": "gnews:CBMiqwFBVV95cUxOTllDS1p5WjBiT3NPcDdMbjhDYkRxWDg1MWo2MHpaMzhUSVdNemY2UUxSckYxanBPTFgtdDkwbGJzTHVMZEZVYkNiM2IwMVpMbl9jbVRJSmtYMUJ6NzhwdlFITVA2U1RrSlVpM25Ta2RCVWZUcFBTLTZodDZXck9PcDlZakFQYnZrODdiSENtZ1R0LTltcmJMenVVc0xCU2FfUlhZcjV0d3VoZnc",
+   "gid": "CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw",
+   "google_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZEZkMHl3REJNWXRMYW1qcHJKaWNKMlVmUGtQMWwxS3gtNDRQMWd4QkdtTlF3TWh0N0lrYUU5bW82TDQ5YTI2Ymt5ZVFxRUxqcllsVDFfY0phaUc2TVZpNFBzT2w1VFNpUFRyX1RDMTd1b3pjdU9pSmtiZTgwNEM1T1VZQ2JubWJ0Mkp3VmNNN05GVWJWWUpkWkdjejcwQmU5bnd5LXVxZw?oc=5",
+   "url": "https://legrandcontinent.eu/es/2025/06/01/ganara-la-extrema-derecha-la-eleccion-presidencial-en-polonia/",
+   "title": "¿Ganará la extrema derecha la elección presidencial en Polonia?",
+   "outlet": "Le Grand Continent",
+   "outlet_url": "https://legrandcontinent.eu",
+   "date": "2025-06-01",
+   "edition_language": "Spanish",
+   "key": "legrandcontinent.eu/es/2025/06/01/ganara-la-extrema-derecha-la-eleccion-presidencial-en-polonia",
    "queries": [
-    2
+    6
    ],
-   "checked": null,
-   "author": "",
-   "language": "Polish",
-   "domain": "kulturaliberalna.pl",
-   "country": "PL",
+   "checked": true,
+   "author": "florent",
+   "language": "Spanish",
+   "domain": "legrandcontinent.eu",
+   "country": "EU",
    "category": "commentary",
    "idea": null
   },
   {
    "gid": "CBMiwwFBVV95cUxQNTF4eHdvTlMyZG9yZ1A0NTFCUHl2Zjhob29ZZ2JTN1pha0pQSF8yajNYeXlwZks5UTUyNHRmd0U1ZUFLOE1tMVl4a2lsU05XRjFUbmV4RWhkYmIzZ3hDVXd1THVLRTlkZTBkcjlQakNjQjdzdnRxM2tqMTBkQ1o0TmVWa1JWR2NYM2s2TU5PcXRvYWNtRFB1bG9jVHhGRU82S3FyQjBwY3lIOWNFTElJZjR3UkdwMk13bWgzaGtCRUxvNjg",
    "google_url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQNTF4eHdvTlMyZG9yZ1A0NTFCUHl2Zjhob29ZZ2JTN1pha0pQSF8yajNYeXlwZks5UTUyNHRmd0U1ZUFLOE1tMVl4a2lsU05XRjFUbmV4RWhkYmIzZ3hDVXd1THVLRTlkZTBkcjlQakNjQjdzdnRxM2tqMTBkQ1o0TmVWa1JWR2NYM2s2TU5PcXRvYWNtRFB1bG9jVHhGRU82S3FyQjBwY3lIOWNFTElJZjR3UkdwMk13bWgzaGtCRUxvNjg?oc=5",
-   "url": "",
+   "url": "https://www.theguardian.com/world/2025/may/18/centrist-warsaw-mayor-narrowly-ahead-in-first-round-of-polish-presidential-race",
    "title": "Centrist Warsaw mayor narrowly ahead in first round of Polish presidential race | Poland",
    "outlet": "The Guardian",
    "outlet_url": "https://www.theguardian.com",
    "date": "2025-05-19",
    "edition_language": "English",
-   "key": "gnews:CBMiwwFBVV95cUxQNTF4eHdvTlMyZG9yZ1A0NTFCUHl2Zjhob29ZZ2JTN1pha0pQSF8yajNYeXlwZks5UTUyNHRmd0U1ZUFLOE1tMVl4a2lsU05XRjFUbmV4RWhkYmIzZ3hDVXd1THVLRTlkZTBkcjlQakNjQjdzdnRxM2tqMTBkQ1o0TmVWa1JWR2NYM2s2TU5PcXRvYWNtRFB1bG9jVHhGRU82S3FyQjBwY3lIOWNFTElJZjR3UkdwMk13bWgzaGtCRUxvNjg",
+   "key": "theguardian.com/world/2025/may/18/centrist-warsaw-mayor-narrowly-ahead-in-first-round-of-polish-presidential-race",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Jakub Krupa, Ashifa Kassam",
    "language": "English",
    "domain": "theguardian.com",
    "country": "GB",
@@ -4565,18 +3699,18 @@
   {
    "gid": "CBMiugFBVV95cUxQVXhTOEwzOVlDU2QzWDFFelRscnpLMmxXcTRLNzNIRG9qOGJhOGhOWXdGNEs1a0R1R01oYzhIWE80VngyZEgyOG5tYXZ5RlBrNTdSRzVmM0EwYjY4WUFTVWZ3cndnTVgxR2xBUU82SkRxeFcwOXA0OTdPckR2djVIQkFvRkh5UWgxMG96YlpaaVZ6c0QtaTUxVE9BQ3h1eDVyM0NHRk5yS2VWWlJIM2RjdmdPQ1NMaW5JcWc",
    "google_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQVXhTOEwzOVlDU2QzWDFFelRscnpLMmxXcTRLNzNIRG9qOGJhOGhOWXdGNEs1a0R1R01oYzhIWE80VngyZEgyOG5tYXZ5RlBrNTdSRzVmM0EwYjY4WUFTVWZ3cndnTVgxR2xBUU82SkRxeFcwOXA0OTdPckR2djVIQkFvRkh5UWgxMG96YlpaaVZ6c0QtaTUxVE9BQ3h1eDVyM0NHRk5yS2VWWlJIM2RjdmdPQ1NMaW5JcWc?oc=5",
-   "url": "",
+   "url": "https://www.theguardian.com/world/2025/may/17/poland-presidential-election-candidates-slawomir-mentzen-adrian-zandberg",
    "title": "‘The same faces, swapping places’: Polish candidates aim to break two-party hold on power",
    "outlet": "The Guardian",
    "outlet_url": "https://www.theguardian.com",
    "date": "2025-05-17",
    "edition_language": "English",
-   "key": "gnews:CBMiugFBVV95cUxQVXhTOEwzOVlDU2QzWDFFelRscnpLMmxXcTRLNzNIRG9qOGJhOGhOWXdGNEs1a0R1R01oYzhIWE80VngyZEgyOG5tYXZ5RlBrNTdSRzVmM0EwYjY4WUFTVWZ3cndnTVgxR2xBUU82SkRxeFcwOXA0OTdPckR2djVIQkFvRkh5UWgxMG96YlpaaVZ6c0QtaTUxVE9BQ3h1eDVyM0NHRk5yS2VWWlJIM2RjdmdPQ1NMaW5JcWc",
+   "key": "theguardian.com/world/2025/may/17/poland-presidential-election-candidates-slawomir-mentzen-adrian-zandberg",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Jakub Krupa",
    "language": "English",
    "domain": "theguardian.com",
    "country": "GB",
@@ -4586,18 +3720,18 @@
   {
    "gid": "CBMirwFBVV95cUxOTnZBLWZnbk5XSHhlTURCbnVwM3k1cm9hclZ5M0EzSm5udXg2TGY5Ylozajc1R0IyV3haRks4Q0htNjdDYVlRa005MHA5OC0zdXZrX1RjLWtqZGtXZ3hEbUtId1NmXzllNUlMaDdxcEJqTXFZZUJWUUpvTkRNQW1taEE5M3pFZ01wUFBkaVJqYW4wM3o5eldreXRLVkg0b2Y2djNNR05RMDNUTVpJQ3I00gG0AUFVX3lxTE9qbnpBdDgyelpSdnZSS3d5Yl9aSVBGaXMyNVdPZ1ZLMnhFT2VLZDVNdWZQcFhBR2paSnJKcHBuRlhTaVVvbUxvMFNNZ0RGZmdTNERFaWJUWVJGQk9CbG9XNEtzSVhoNHhWME1vOXFUc1l3al9SODlqLWRsb25sblRPangyanIzaW1oTXFKUXNIeTcwVkY0LWNxTG5rWFRUdFE4cV9NOW1WUC1kVHFCTHJrR3paVA",
    "google_url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOTnZBLWZnbk5XSHhlTURCbnVwM3k1cm9hclZ5M0EzSm5udXg2TGY5Ylozajc1R0IyV3haRks4Q0htNjdDYVlRa005MHA5OC0zdXZrX1RjLWtqZGtXZ3hEbUtId1NmXzllNUlMaDdxcEJqTXFZZUJWUUpvTkRNQW1taEE5M3pFZ01wUFBkaVJqYW4wM3o5eldreXRLVkg0b2Y2djNNR05RMDNUTVpJQ3I00gG0AUFVX3lxTE9qbnpBdDgyelpSdnZSS3d5Yl9aSVBGaXMyNVdPZ1ZLMnhFT2VLZDVNdWZQcFhBR2paSnJKcHBuRlhTaVVvbUxvMFNNZ0RGZmdTNERFaWJUWVJGQk9CbG9XNEtzSVhoNHhWME1vOXFUc1l3al9SODlqLWRsb25sblRPangyanIzaW1oTXFKUXNIeTcwVkY0LWNxTG5rWFRUdFE4cV9NOW1WUC1kVHFCTHJrR3paVA?oc=5",
-   "url": "",
+   "url": "https://www.aljazeera.com/news/2025/5/16/poland-presidential-election-2025-from-migration-to-eu-whats-at-stake",
    "title": "Poland presidential election 2025: From migration to EU, what’s at stake?",
    "outlet": "Al Jazeera",
    "outlet_url": "https://www.aljazeera.com",
    "date": "2025-05-16",
    "edition_language": "English",
-   "key": "gnews:CBMirwFBVV95cUxOTnZBLWZnbk5XSHhlTURCbnVwM3k1cm9hclZ5M0EzSm5udXg2TGY5Ylozajc1R0IyV3haRks4Q0htNjdDYVlRa005MHA5OC0zdXZrX1RjLWtqZGtXZ3hEbUtId1NmXzllNUlMaDdxcEJqTXFZZUJWUUpvTkRNQW1taEE5M3pFZ01wUFBkaVJqYW4wM3o5eldreXRLVkg0b2Y2djNNR05RMDNUTVpJQ3I00gG0AUFVX3lxTE9qbnpBdDgyelpSdnZSS3d5Yl9aSVBGaXMyNVdPZ1ZLMnhFT2VLZDVNdWZQcFhBR2paSnJKcHBuRlhTaVVvbUxvMFNNZ0RGZmdTNERFaWJUWVJGQk9CbG9XNEtzSVhoNHhWME1vOXFUc1l3al9SODlqLWRsb25sblRPangyanIzaW1oTXFKUXNIeTcwVkY0LWNxTG5rWFRUdFE4cV9NOW1WUC1kVHFCTHJrR3paVA",
+   "key": "aljazeera.com/news/2025/5/16/poland-presidential-election-2025-from-migration-to-eu-whats-at-stake",
    "queries": [
     0
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Agnieszka Pikulicka-Wilczewska",
    "language": "English",
    "domain": "aljazeera.com",
    "country": "QA",
@@ -4607,19 +3741,19 @@
   {
    "gid": "CBMiuwFBVV95cUxNaTRNbVlIOVdHcHBiRlRWdWtjZUsyd3dEZ2NWeEh1dFlBLTZxa3F1RjJac3ZGR1hLblgzSHBNSzBoOVI3UW5oRHhBb2c5X1ZVbEFDS2dpYjA4Qk1SNHJHRko2cEhsUU44QWhWM1Juc0hHSTg4d2tQQzc1WkVsMzV1TWJQTFpsN3JMdmlpNTRUSTdxSk5xZGtPX19OT3hETmNBWnBlWFh2OVdhSDBZcUhidGt4M3VZTGlkRjVr",
    "google_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNaTRNbVlIOVdHcHBiRlRWdWtjZUsyd3dEZ2NWeEh1dFlBLTZxa3F1RjJac3ZGR1hLblgzSHBNSzBoOVI3UW5oRHhBb2c5X1ZVbEFDS2dpYjA4Qk1SNHJHRko2cEhsUU44QWhWM1Juc0hHSTg4d2tQQzc1WkVsMzV1TWJQTFpsN3JMdmlpNTRUSTdxSk5xZGtPX19OT3hETmNBWnBlWFh2OVdhSDBZcUhidGt4M3VZTGlkRjVr?oc=5",
-   "url": "",
+   "url": "https://balkaninsight.com/2025/05/07/polish-presidential-candidate-battles-allegations-of-lying-about-property-deal/rd/",
    "title": "Polish Presidential Candidate Battles Allegations of Lying About Property Deal",
    "outlet": "Balkan Insight",
    "outlet_url": "https://balkaninsight.com",
    "date": "2025-05-07",
    "edition_language": "English",
-   "key": "gnews:CBMiuwFBVV95cUxNaTRNbVlIOVdHcHBiRlRWdWtjZUsyd3dEZ2NWeEh1dFlBLTZxa3F1RjJac3ZGR1hLblgzSHBNSzBoOVI3UW5oRHhBb2c5X1ZVbEFDS2dpYjA4Qk1SNHJHRko2cEhsUU44QWhWM1Juc0hHSTg4d2tQQzc1WkVsMzV1TWJQTFpsN3JMdmlpNTRUSTdxSk5xZGtPX19OT3hETmNBWnBlWFh2OVdhSDBZcUhidGt4M3VZTGlkRjVr",
+   "key": "balkaninsight.com/2025/05/07/polish-presidential-candidate-battles-allegations-of-lying-about-property-deal/rd",
    "queries": [
     0,
     1
    ],
-   "checked": null,
-   "author": "",
+   "checked": true,
+   "author": "Claudia Ciobanu",
    "language": "English",
    "domain": "balkaninsight.com",
    "country": "RS",
@@ -7171,5 +6305,30 @@
    "idea": null
   }
  ],
- "dropped": {}
+ "dropped": {
+  "gnews:CBMif0FVX3lxTE1BTm9XeEl4azh3eDZmY0d4RGZmX3VqckFDT3RCYWg4MnJfXzJOZWpoNnFPcklaeXpuU0ZYbVFTT241d0VFWWo3bkVBVDlNdGhBZDNnT0JFSXVocG5wVG9OTVYwc0FDWXhVdVZaUHRIeldRN3JOMEcydVAzV2JnNUU": "written by Ben (his columns are on the Media page): STANLEY: Co oznacza koniec „grzecznego Tuska”?",
+  "gnews:CBMirgFBVV95cUxOazM5LUFZUzNyTXhTUl9pTzdHcFJuTnVRMXlPcU9mTVdLX1JzR0laYVNWNFJxendwc2dLNG5rcmZUc3hmOTNCaG8zX0I2TGY2anNBblVkSU0ySXMzOXNNWk1BV2JCdWd5Qy1ldTBiaDFwY3dQT3dkZEJxQzh1NkdsaVgzNjliU3dqRUxPdk5uQzdpb1JjeHl0LVlqWnk3LVEyb3hKS0l5VzRqRWJULWc": "page does not have what the query requires: GEBERT: Wybory w Izraelu wygrają Arabowie. A potem zapewne je przegrają",
+  "gnews:CBMikAFBVV95cUxNU1h6WlRwTjRVZEliX2lTcXcwUHQ4TTBlMV81a2JFRVN0VVpyTG1EeVZHV1FWU3RKNERSWi1rYUZrcmJDNU5iV1BtazR3Y0VtZlM5Zk9OdS02c1R5UDBSNWp3UU43TmpNd2syTE1NOTkwZlZlQzhHSjBILVZUY3I3S3B3VHVFdlhiU28zNElUbjE": "written by Ben (his columns are on the Media page): STANLEY: Na Zondacrypto skorzysta prawica",
+  "gnews:CBMidkFVX3lxTFBpUVRTZVZDeVVqNWF2TUNoNHp2d3ZUcjNJUThyMW84ME5nWDQyT0JHZk9VMXBmYkIyUV91alJRMS1uTGVFRUk2aFJnVzN4eW82blZqTFdXNzRVb01NeWVoamtkQmk2djRHOHNRUW1mSkh0Ml9vN2c": "written by Ben (his columns are on the Media page): Nie autocenzura, a wycofanie. Kto milczy w debacie politycznej?",
+  "gnews:CBMilgFBVV95cUxQNDNNNEtoSzZTVHFsYXg1aGpVQkc2N29hSFdheEthWUdqVVFZVEFpc3c1bmNoRERNV2dOeXJKWF9qU2dSTjZqUzM2VWRRS194NFhkTXl0emluUjBVUjhaQThzdHRVbG41NVBLUEJ3Z2JMT1dhVFN4QWItRFFwcmw4QW5KbkRuTVBjZE9lTjRCdmR4OG00Znc": "written by Ben (his columns are on the Media page): Morawiecki będzie łowił w elektoracie PiS-u",
+  "gnews:CBMiuAFBVV95cUxOd0VnalZfYlNvdkdiT1owZHVQMUxLR0tLbk9kSjNDdW9uSkNoZU1xbXdTSWl5OEE1NVpYS2lGN1pJajVFRzduMXdNUVNfczNPeHJIWmZoWG5manRaUkd3aWtkY1kxcDNZb3ZEWERWem5MeUdRc2tZT3BLRlpGUzZ0VDdTVHRYM0ZXYmpZNFZNSmdTLTVjWWVTb3J0RW1hNlpWWGdJUU5UdmE4cklDV2kyZWg1VVFaSDhM": "written by Ben (his columns are on the Media page): Upadek Starmera. Trzy lekcje z Wielkiej Brytanii dla Tuska przed wyborami 2027",
+  "gnews:CBMirgFBVV95cUxPMW53UzFDNnFKMEZuWUhkOTNKa2l1ZlMwblNPTUp4SllmYmJtTlFJT0NQbmNKTldkQjB3YnhXZnpKTWw5WEtHTkR4UHdMRF9TTzhlZ00yTC1Ma0g3LW1ZTGxnMG1xd0YtZldjaWdJdUNiczIxMzVDcjdULXBaX214cFNid2Vyd21icnh2a2xJV2E5QUFQUE5jQS14S1NRMHRYeGt1cjI4aG9SR0NWcXc": "written by Ben (his columns are on the Media page): Cztery oblicza demokracji. Jak ją widzą Polacy, Hiszpanie i Brytyjczycy",
+  "gnews:CBMidkFVX3lxTE5lUkRxR2hFMlQxTElpOTdERExtYjhzUTNxUllfdHNwTDRLdlpjYXhRdy00aGM3bjd4eW01cUd5SXdhUTFDWmhtN3FnV0Q0RnJQVTNBZkgtdXJNV216MEphR1lxZkZDTzJJVFdmZFVtdDgzdTdPb2c": "page does not have what the query requires: Het verlies van Orbán duiden als het begin van het einde voor uiterst-rechts is ",
+  "gnews:CBMiekFVX3lxTE01NnVlS0lLTHZTZy1tanBMZWgtRXpvVlVxLWhZOWt1dHFCWnV2aWlHczgyQVNVSTVTS2pLZE13UzFVZ1JvQ3JQaWlVbGlVLVFUSEpQLWlPeDd4UVd6anJKSlFzRlA3NnZyNmRMZ1AyeVVHYmxCMGJPbDFR": "page does not have what the query requires: Новый тип демократического перехода: уроки Венгрии и Польши",
+  "gnews:CBMipgFBVV95cUxNcTR3S3VyWjIwYWpCVkN1ZnNvQVhiWk5lQmZaaU9EU0tXcFlzLXlMbUozNDR5Wm9DWEpKdnpDR2lXUnBRTV94aXRQcUNUb0RaY0oyN2w0dmRVbWRUMkhpT01WdkRwQkJrMHRVbnFZVzg0RUk5cGt0Zy1aN3llcms0RlpYZnFCTjg1b3NzU2lLdGg4SDliWEpRWXN3WFFVQnBGYU1RRUdn": "page does not have what the query requires: Bangladesz po wyborach. Szansa dla Chin, zimny prysznic dla Indii",
+  "gnews:CBMiuwFBVV95cUxQMjFxOS1JdWc3QlA4OVM3RXdBQk0wdEpiQjlWc25JZGZsd29wRm10TllaNU1DazVBaG5pc1JsVVJIOG5ndUNZWFZuXzFfRnIzRG5FUjJmMHFVdXNEdVFpVVNBMkpMSjB6cDZ0aGdTN1hPU2RCN0d5TGZwWWN3NjNyeTRaUXo3dkJ2NFJ3NTAtSVVIZFVQZjdtZTR1UUc4R0hSOEVKYjhaSmhyTkY4WHpiMWs1RjNZZVh5T1ZN": "written by Ben (his columns are on the Media page): Jak PiS przedobrzyło ze zmianą? \"To był przełomowy moment\"",
+  "gnews:CBMiigFBVV95cUxNZnVaRnlLVkRWRXFucjdDdzd4cFNtVTcydEZ6VVMycVMzakVoM0JUZ0NQLVplMUJ2LUY3UGpkVWFKemF5elVsM3ZJN3BudER1VURqQlBHN2VnNWZ2aFgzNzhRMU4wLXZQVVhIcXpFZ0VFSTlibFZIb2hKQ202UzVkcVlkSTlSYjV6NGc": "page does not have what the query requires: Sport dostępny dla każdego? Fenomen darta",
+  "gnews:CBMickFVX3lxTE83ZXh3Mml2UEU0STB5c29yTTRaaTRIMzhPeWdCTzBXMUVOMkRtc3FzU3kwY2NVZENEbUs1NlJoOUZkUTlOVHN0eUc1aG1wT05LVVIwLXBSOHV3cjBZdDlIaFFSYngtd2YyT2ZQZEw1U29Cdw": "written by Ben (his columns are on the Media page): Czy Polacy chcą polexitu?",
+  "gnews:CBMiuAFBVV95cUxOcE9RcFM5ZC1QN1pQUjFpSnlsQ003TlVOVmlWVTJydzhZV1EwRnpuZHZmQWI4b2JkaWVVNmpYMzNuandWZFBrblBBVVNnZnpYMlk3VVBTM1JKSlBFTTZFUFNtdzFwQjFadWNqenNtNkFFX0ZXcmpnQlJQVzY1RjU5TnRyQVJzNDhhRmhZVkljZVZFQko2ZjdyNHpaVEFKY2MwVThlMnRpcVpVVl9SSTl6dTVPOFJCWHZ5": "written by Ben (his columns are on the Media page): Polska polityka – podział na prawicę i lewicę przestaje mówić cokolwiek",
+  "gnews:CBMilwFBVV95cUxNMTZJcFlySFVMVHEzelpQVHFUWmpITll2b0RlNnhjVExjbTdJajBvcjhwYzZSX2ZIU3NMUE44Y0hfTVdfLW5vMGxwc2RVbmx1eGNsN0Z6TkNqOWhfY0VoTHdqUVVkLV9fNDRYZ29xY0hYNFlyNFh1Y0ZuVnpKM2FBTmxCNDRYTWw2emhKVWE4NHFnX2FsWWpR": "written by Ben (his columns are on the Media page): „Migrant Schrödingera” żyje z zasiłków i zabiera pracę",
+  "gnews:CBMihwFBVV95cUxNVmtyN09yOUVSb245SkFXcGNaZFEtMjlqTW9kYXB6dW04c3A4aFZWVzhmMFdLRS1BYkg4XzFzbmM2Sy1jeVYwMjAzM2VTWS1wQnJPcXVDZ3ktaFZoZWxnemhYdnhXRWpCN0trdWI1QVZwSC1WYi1YdTZjcjl2cGRBMTR5WnFWSnM": "page does not have what the query requires: ¿Aspirantes a fascistas? Respuesta a Martín Tanaka",
+  "gnews:CBMioAFBVV95cUxNSElMY2hWSl9aS0NaVWVXX2NTeTF4Vm81RHRIOThCRVFDYW1GdW1Qdk9zMlNZa01tVFFXcU9uelQ4SGRPMWVHU1VoeHloTGY5TXlTdWw4WWJ5SjkzdFFlT0NMcHEzU0tycEgzVlNkVEN5WlRpal94bzgyT0xnVXViaGFMeWxSWTlhNDZEckVKLWRMQmQyd1ZOWlVGZGFubm9x": "page does not have what the query requires: RENIK: Co się dzieje w Nepalu? Rewolucja młodych i premierka z Discorda",
+  "gnews:CBMikAFBVV95cUxPWU1iX0xySlZ6ZG5CcDNpN2E5d1FhY0hLZEUwQldyVG82ZXFTVTVyTEZKTGlrRWVyVjR4RlBQaW5MRjNJSUxGN011OGtiaDV1dndYSUMxZWc5aXhzRlZSRXdLVllZdC1jQXJCZnhaaGxIelUzZFhuT240NW5BMFZTdUtkWWF6VnpyMHlqYVg4R24": "written by Ben (his columns are on the Media page): STANLEY: Czy to prawda, że Polska jest podzielona?",
+  "gnews:CBMiwgFBVV95cUxNX0hqbGdzelFpdldGSGJ1SDJ3OWRFZUJPWXNFUUdTMGJfNkJkLWZEeVJIblJnTFM1bFpBM24yUkpyd0tHSEk1TUE0SnNyQkxtamxyVHJTTk1SMWZCOFREQ0NCMjJ3VHJpN2szRTd2N1c3M3JVYVBKWUV4ZXE3dXpBNDZFbWZJTzkyREllb2c3U09yMmh2Q3poOGo4QTUwdmR0bld5RnI2MS1JZVFwZHpCWGtfTVAzaHNLWHloNklUQzUzUQ": "written by Ben (his columns are on the Media page): STANLEY: Raport z życia towarzyskiego: PiS wygrywa tam, gdzie nasi znajomi są ta",
+  "gnews:CBMifEFVX3lxTE9TYmlrbXlhOXlaVF9SRlZzbXphdEJZQWZLdkxqTFpuZThzbHRnUWl0NkNlSVZmZUJBUmZGSTdZTDE2XzlFZzVIcG56SGxtU251WW81XzNNUkZ1TUlLVDRUZ1lMVTRGVmNDUkZaTTVVU21jakREYUJaTXV5SWQ": "written by Ben (his columns are on the Media page): Populizm przestał być marginesem",
+  "gnews:CBMilgFBVV95cUxOVXdCcVk4YnB4ZW90eTNxa0NkcjZOTGtGbWh5RF85QXlxVHV6bVBWMEUxck1GbzVxT3FmdG1udGRVX0ZjZEQ0UjRuekJsUFVucmRMRHlnNDFNZEVGa2RSM280TnhGVzhjTDZVVDB5Z1FLLTlES2Y0Nzc2SUhYWXp4WFhCWEduSWNiSElkMTdGTVRpTW5OWHc": "written by Ben (his columns are on the Media page): Koalicja rządząca – małżeństwo z rozsądku na zakręcie",
+  "gnews:CBMikwFBVV95cUxNV3YtRGxpVWxJV3dLS19vaU5EWjFKNEZWcHZXY1VYdEFROGV0cl9fd1ZpbFF5QnBhME95S0pKOWM3ZEIxRVF2N0pSLVh3ai0tMXdGYnk4OGZKOHl1akxvVjkyNkR0emJKM3dGcXFqY3NpWHJWVWhWYkdNY0tURk1FYzNCY0F4c3Z1cmZSNXM2NURIVFU": "written by Ben (his columns are on the Media page): Prezydent Trzaskowski to koniec wymówek dla rządu",
+  "gnews:CBMiowFBVV95cUxOY1ZuVGNqa2l4YW12WmxZNjctQ0pvSEdKZE9IM1N5SGotcDAySHZBZ1Rvb3hYMGVyRExRQVNzeVFRYi1HaU55TkxCYlgwZnJsYmZCZGZQc2xvdEUtZ1VXc3NKR1FhcV9Ya3pKU2ZWSE04TWsycnc5VzNCMWV1aXRabElqVkxjMmhpRnp1WUFwMkt3SmxWS0gwX2JGbExHQmVOSllR": "page does not have what the query requires: Polonia może wybrać nam prezydenta. Zacznijmy dyskutować, czy ma do tego prawo",
+  "gnews:CBMiqwFBVV95cUxOTllDS1p5WjBiT3NPcDdMbjhDYkRxWDg1MWo2MHpaMzhUSVdNemY2UUxSckYxanBPTFgtdDkwbGJzTHVMZEZVYkNiM2IwMVpMbl9jbVRJSmtYMUJ6NzhwdlFITVA2U1RrSlVpM25Ta2RCVWZUcFBTLTZodDZXck9PcDlZakFQYnZrODdiSENtZ1R0LTltcmJMenVVc0xCU2FfUlhZcjV0d3VoZnc": "page does not have what the query requires: SKRZYDŁOWSKA-KALUKIN: Debata, marsze i wyprawa po nową linię podziału"
+ }
 }

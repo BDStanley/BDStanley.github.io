@@ -9,7 +9,7 @@
 # functionality. See README.md.
 #
 # Single source of truth: cv/cv.yml builds the CV PDF *and* feeds the
-# Research (publications.qmd) and Research projects pages (read with the R `yaml` package),
+# Research outputs (publications.qmd) and Research projects pages (read with the R `yaml` package),
 # exactly as the Calepin site does.
 # =============================================================================
 
@@ -21,7 +21,7 @@ project:
     - index.qmd
     - 404.qmd
     - pages/publications.qmd
-    - pages/citation-reach.qmd   # linked from Research (publications.qmd), not the navbar
+    - pages/citation-reach.qmd   # linked from Research outputs (publications.qmd), not the navbar
     - pages/policy-reach.qmd     # likewise
     - pages/media-reach.qmd      # likewise
     - pages/research-projects.qmd
@@ -53,7 +53,7 @@ website:
     # Calepin site — there is no separate "Home" entry.
     left:
       - href: pages/publications.qmd
-        text: Research
+        text: Research outputs
       - href: pages/research-projects.qmd
         text: Research projects
       - href: pages/teaching.qmd

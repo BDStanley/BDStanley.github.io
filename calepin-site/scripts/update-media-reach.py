@@ -291,7 +291,9 @@ def alert_feed(url):
 
 def resolve(gid):
     """The publisher's address behind a Google News article ID, or None."""
-    page = google("https://news.google.com/articles/" + gid)
+    # The /rss/articles/ page carries the same signature as /articles/, and
+    # Google rate-limits it separately (and less readily).
+    page = google("https://news.google.com/rss/articles/" + gid)
     sig, ts = re.search(r'data-n-a-sg="([^"]+)"', page), re.search(r'data-n-a-ts="([^"]+)"', page)
     if not (sig and ts):
         return None
@@ -311,6 +313,20 @@ def resolve(gid):
 def page_text(page):
     s = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
     return html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", s)))
+
+
+def article_text(page):
+    """The text of the article itself, for the check: the longest <article>
+    (else <main>, else the page), without navigation, sidebars and footers,
+    where lists of an outlet's other pieces, Ben's columns among them, would
+    otherwise make any page "name" him."""
+    s = re.sub(r"<(script|style|noscript|nav|aside|footer|header|form)\b[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
+    for tag in ("article", "main"):
+        blocks = re.findall(r"<%s\b[^>]*>(.*?)</%s>" % (tag, tag), s, flags=re.S | re.I)
+        if blocks:
+            s = max(blocks, key=len)
+            break
+    return page_text(s)
 
 
 def author_of(page, outlet):
@@ -463,7 +479,7 @@ def process(old, sync, backfill, names, log, offline=False, resolve_only=False):
                 continue
             page, final = fetch(rec["url"], timeout=20)
             rec["url"] = final or rec["url"]
-            if not check(rec, page_text(page)):
+            if not check(rec, article_text(page)):
                 dropped[rec["key"]] = "page does not have what the query requires: " + rec["title"][:80]
                 records.pop(rec["key"], None)
                 continue
