@@ -104,5 +104,14 @@
       “_Good Change_ is admirably comprehensive, compelling, and well-researched,
       amply backing up its claims with numbers and charts.”
     ][Ana Oppenheim, _Renewal_]
+
+    #review[
+      “_Good Change_ provides an insightful analysis of recent political
+      developments in Poland, with particular attention to the emergence and
+      subsequent decline of illiberalism and democratic backsliding. Authors
+      Stanley Bill and Ben Stanley adopt a nuanced approach, offering a
+      comprehensive examination of the political, institutional, economic, and
+      societal dynamics underpinning these processes.”
+    ][Anna Gwiazda, _Political Science Quarterly_]
   ]
 ]
