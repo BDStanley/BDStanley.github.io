@@ -192,7 +192,7 @@ cache, `_site/`, and `cv/cv.pdf` are all git-ignored (see `.gitignore`).
 
 - **Navbar icons.** Social links use Iconify icon tokens (`{icon:collection:name}`),
   fetched at build time. The mapping mirrors the original
-  (academicons for ORCID / Scopus / Dataverse / Zotero, Font Awesome
+  (academicons for ORCID / Scopus / Dataverse, Font Awesome
   brands for LinkedIn / WhatsApp / Bluesky / GitHub, simple-icons for Google
   Scholar, lucide for e-mail). If any icon fails to download, swap its collection
   in `calepin.toml` — e.g. `{icon:simple-icons:orcid}` instead of

@@ -63,6 +63,13 @@ target = "pages/media.typ"
 label  = "Media"
 weight = 40
 
+# Landing page for the interactive analyses built from the Polish political
+# analyses repo; each analysis is a page in pages/polish-political-analyses/.
+[[menus.main]]
+target = "pages/polish-political-analyses.typ"
+label  = "Polish political analyses"
+weight = 45
+
 [[menus.main]]
 target = "pages/pooling-the-poles.typ"
 label  = "Pooling the Poles"
@@ -74,20 +81,11 @@ label  = "Good Change"
 weight = 60
 
 # -----------------------------------------------------------------------------
-# Top navigation — right-hand icon/links (mirror of the Quarto navbar `right:`)
-# Icons use Iconify collections (fetched at build time). If a name 404s, swap it
-# for another collection — see README.md.
+# Top navigation — right-hand icon/links (mirror of the Quarto navbar `right:`),
+# in weight order: the icons, then CV last. Icons use Iconify collections
+# (fetched at build time). If a name 404s, swap it for another collection — see
+# README.md.
 # -----------------------------------------------------------------------------
-[[menus.social]]
-target = "cv/cv.pdf"
-label  = "CV"
-weight = 10
-
-[[menus.social]]
-target = "https://www.linkedin.com/in/ben-stanley-0452803b8"
-label  = "{icon:fa6-brands:linkedin}"
-weight = 20
-
 [[menus.social]]
 target = "tel:+48798814801"
 label  = "{icon:fa6-brands:whatsapp}"
@@ -102,6 +100,11 @@ weight = 40
 target = "https://bsky.app/profile/benstanley.eu"
 label  = "{icon:fa6-brands:bluesky}"
 weight = 50
+
+[[menus.social]]
+target = "https://www.linkedin.com/in/ben-stanley-0452803b8"
+label  = "{icon:fa6-brands:linkedin}"
+weight = 55
 
 [[menus.social]]
 target = "https://orcid.org/0000-0001-6932-1046"
@@ -137,8 +140,8 @@ label  = "{icon:academicons:dataverse}"
 weight = 100
 
 [[menus.social]]
-target = "https://www.zotero.org/benstanleypl/library"
-label  = "{icon:academicons:zotero}"
+target = "cv/cv.pdf"
+label  = "CV"
 weight = 110
 
 # -----------------------------------------------------------------------------

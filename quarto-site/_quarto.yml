@@ -66,12 +66,6 @@ website:
         text: Good Change
 
     right:
-      - href: cv/cv.pdf
-        text: CV
-
-      - text: "{{< fa brands linkedin >}}"
-        href: https://www.linkedin.com/in/ben-stanley-0452803b8
-
       - text: "{{< fa brands whatsapp >}}"
         href: "tel:+48798814801"
 
@@ -80,6 +74,9 @@ website:
 
       - text: "{{< iconify fa6-brands bluesky title='Bluesky' >}}"
         href: https://bsky.app/profile/benstanley.eu
+
+      - text: "{{< fa brands linkedin >}}"
+        href: https://www.linkedin.com/in/ben-stanley-0452803b8
 
       - text: "{{< ai orcid >}}"
         href: https://orcid.org/0000-0001-6932-1046
@@ -101,8 +98,9 @@ website:
       - text: "{{< ai dataverse >}}"
         href: https://dataverse.harvard.edu/dataverse/bdstanley
 
-      - text: "{{< ai zotero >}}"
-        href: https://www.zotero.org/benstanleypl/library
+      # CV last, after the icons, as on the Calepin site.
+      - href: cv/cv.pdf
+        text: CV
 
 # The CV PDF (built from cv/cv.yml by build.sh) is linked from the navbar; make
 # sure Quarto copies it into the output even though no .qmd references it.

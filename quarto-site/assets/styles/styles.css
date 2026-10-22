@@ -146,9 +146,9 @@ html {
 }
 
 /* ---- Desktop and tablet (>=768px): one flat row of links ------------------- */
-/* As in the Calepin nav, the page links start right after the brand and the CV
-   + icon cluster follows; the menu's two lists are flattened into the collapse's
-   flex row so the modes below can break it before or after CV. */
+/* As in the Calepin nav, the page links start right after the brand and the
+   icon + CV cluster follows; the menu's two lists are flattened into the
+   collapse's flex row so the modes below can break it before the cluster. */
 @media (min-width: 768px) {
   /* The brand sits on the links' baseline, as on the Calepin site (in the
      portrait column below this also keeps the brand at the left). */
@@ -190,14 +190,14 @@ html {
   }
 }
 
-/* ---- Wide landscape (desktop / landscape tablet): CV + icons to the right --- */
+/* ---- Wide landscape (desktop / landscape tablet): icons + CV to the right --- */
 @media (min-width: 64.01rem) and (orientation: landscape) {
-  #navbarCollapse .nav-item:has(> .nav-link[href$="cv.pdf"]) {
+  #navbarCollapse .navbar-nav.ms-auto > .nav-item:first-child {
     margin-left: auto;
   }
 }
 
-/* ---- Narrow landscape (a tablet sideways, <=64rem): CV + icons drop below -- */
+/* ---- Narrow landscape (a tablet sideways, <=64rem): icons + CV drop below -- */
 /* As on the Calepin site, the menu then no longer fits beside the brand, so it
    wraps to a row of its own below it, indented as it is after the brand. */
 @media (min-width: 768px) and (max-width: 64rem) and (orientation: landscape) {
@@ -217,7 +217,7 @@ html {
   }
 }
 
-/* ---- Portrait: brand, then text links + CV, then the icons, centred ------- */
+/* ---- Portrait: brand, then text links, then the icons and CV, centred ----- */
 @media (orientation: portrait) and (min-width: 768px) {
   #quarto-header .navbar-container {
     flex-direction: column;
@@ -232,7 +232,7 @@ html {
   #navbarCollapse::after {
     display: block;
   }
-  #navbarCollapse .navbar-nav.ms-auto > .nav-item:not(:has(> .nav-link[href$="cv.pdf"])) {
+  #navbarCollapse .navbar-nav.ms-auto > .nav-item {
     order: 2;
   }
 }

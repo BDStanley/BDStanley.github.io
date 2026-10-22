@@ -1,6 +1,6 @@
 # benstanley.eu
 
-The source of [benstanley.eu](https://benstanley.eu), Ben Stanley's academic website: publications, research projects, teaching, media writing, the Pooling the Poles polling tracker, a page for the book *Good Change*, a downloadable CV, an analysis of where and in which disciplines Ben's work is cited, one of the think tanks and other policy organisations that cite it, and one of the news coverage that quotes, interviews or cites him. The site is built with [Calepin](https://github.com/vincentarelbundock/calepin), a static-site generator for Typst, and GitHub Pages serves it from the `docs/` folder of the `main` branch.
+The source of [benstanley.eu](https://benstanley.eu), Ben Stanley's academic website: publications, research projects, teaching, media writing, the Pooling the Poles polling tracker, a page for the book *Good Change*, interactive analyses of Polish politics, a downloadable CV, an analysis of where and in which disciplines Ben's work is cited, one of the think tanks and other policy organisations that cite it, and one of the news coverage that quotes, interviews or cites him. The site is built with [Calepin](https://github.com/vincentarelbundock/calepin), a static-site generator for Typst, and GitHub Pages serves it from the `docs/` folder of the `main` branch.
 
 One file, `calepin-site/cv/cv.yml`, holds every publication and research project. It produces the CV PDF and feeds the Research outputs and Research projects pages, so each entry is edited in one place. New journal articles, book chapters and books on Ben's ORCID record are added to it automatically on each build, and its Datasets section follows his Harvard Dataverse collection.
 
@@ -23,6 +23,8 @@ Key files:
 | `calepin-site/calepin.toml` | Site configuration: title, navigation bar, social links, footer. |
 | `calepin-site/cv/cv.yml` | All CV data. `cv/cv.typ` turns it into `cv.pdf` with the academicv Typst template, leaving out the publications' DOIs, which only the website shows. Datasets keep theirs, their only reference. A research project's optional `url:` links its title on the Research projects page; the CV PDF does not show it. |
 | `calepin-site/scripts/sync-teaching.py` | Generates the Teaching pages from Ben's separate Teaching repository. |
+| `calepin-site/scripts/sync-genealogy.py` | Copies the party genealogy data from the Polish political analyses repository into `assets/party-genealogy/`. See [Polish political analyses](#polish-political-analyses). |
+| `calepin-site/assets/party-genealogy/` | The interactive party genealogy: `index.html`, a standalone page in plain HTML, CSS and JavaScript, and `genealogy.json`, its data. |
 | `calepin-site/scripts/update-kl.py` | Adds new Kultura Liberalna articles to `data/kultura-liberalna.yml`, the archive the Media page lists. It never changes existing entries. |
 | `calepin-site/scripts/update-publications.py` | Adds new publications from ORCID and OpenAlex to `cv/cv.yml`, formatted from Crossref's metadata, and later fills in volume, issue and pages for the online-first articles it added. It never changes entries it did not add. See [New publications](#new-publications). |
 | `calepin-site/scripts/update-datasets.py` | Keeps the Datasets section of `cv/cv.yml` in step with Ben's Harvard Dataverse collection. See [Datasets](#datasets). |
@@ -55,6 +57,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | Home page | `index.typ`. Its bio is the first-person version of the full English bio in `bio.md`; change both. |
 | Media, Pooling the Poles, Good Change | `pages/media.typ`, `pages/pooling-the-poles.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
+| Polish political analyses | The landing page is `pages/polish-political-analyses.typ` and each analysis a page in `pages/polish-political-analyses/`. The party genealogy's data comes from the Polish political analyses repository; its chart is `assets/party-genealogy/index.html`. See [Polish political analyses](#polish-political-analyses). |
 | Teaching | The Teaching repository. Course descriptions are in `COURSE_DESCRIPTIONS` in `scripts/sync-teaching.py` and icons in `assets/teaching/<slug>.svg`. The generated `pages/teaching.typ` and `pages/teaching/` are not edited by hand. |
 | Navigation bar, social links, footer | `calepin.toml` |
 | Fonts and colours | `themes/site-theme/css/90_site.css` |
@@ -74,10 +77,11 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 3. rewrites the peer reviewing entry of `cv/cv.yml` from the reviews on ORCID (see [Peer reviewing](#peer-reviewing)), leaving it as it is if ORCID or OpenAlex cannot be reached;
 4. compiles `cv/cv.typ` into `cv/cv.pdf` with Typst;
 5. regenerates the Teaching pages from a `Teaching` folder next to this repository (set `TEACHING_SRC` to use another path). If the folder is missing, it warns and keeps the pages already generated;
-6. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
-7. refreshes the citation counts in `data/citations.json` (see [Citation counts](#citation-counts)), keeping the previous numbers for any source it cannot read;
-8. refreshes the data behind the Citation reach, Policy reach and Media reach pages, `data/reach.json`, `data/policy-reach.json` and `data/media-reach.json` (see [Citation reach](#citation-reach), [Policy reach](#policy-reach) and [Media reach](#media-reach)), keeping the previous data for any source it cannot read;
-9. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME`, an empty `.nojekyll` and a copy of the favicon at `/favicon.ico`.
+6. copies the party genealogy data from the Polish political analyses repository into `assets/party-genealogy/` (see [Polish political analyses](#polish-political-analyses)), keeping the committed copy if the repository is missing;
+7. adds any new Kultura Liberalna articles to `data/kultura-liberalna.yml`, falling back to the committed list if the site cannot be reached;
+8. refreshes the citation counts in `data/citations.json` (see [Citation counts](#citation-counts)), keeping the previous numbers for any source it cannot read;
+9. refreshes the data behind the Citation reach, Policy reach and Media reach pages, `data/reach.json`, `data/policy-reach.json` and `data/media-reach.json` (see [Citation reach](#citation-reach), [Policy reach](#policy-reach) and [Media reach](#media-reach)), keeping the previous data for any source it cannot read;
+10. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME`, an empty `.nojekyll` and a copy of the favicon at `/favicon.ico`.
 
 A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–8 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Kultura Liberalna list, the citation counts and the reach data.
 
@@ -231,6 +235,16 @@ Alerts catch new articles as they appear, including some Google News misses. To 
 
 Every build then reads the feeds and files each new article under the search it came from.
 
+## Polish political analyses
+
+The Polish political analyses menu item leads to `pages/polish-political-analyses.typ`, a list of analyses styled like the Teaching list, each with a 480 × 300 px thumbnail in `assets/analyses/`. Each analysis has its own page in `pages/polish-political-analyses/`.
+
+The first is the party genealogy (`party-genealogy.typ`). The page embeds the chart, `assets/party-genealogy/index.html`, in an iframe, the way Pooling the Poles embeds its app. The chart is a standalone page in plain HTML, CSS and JavaScript, with no libraries, in the site's colours and Jost, and it can be opened on its own. It reads `genealogy.json` beside it.
+
+That data comes from the Party tracker in the Polish political analyses repository (`../Polish political analyses`, next to this one; set `PPA_SRC` to use another path). `Party tracker/R/63_export_genealogy_json.R`, which its `run_all.R` runs with the other figures, writes `Party tracker/output/figures/genealogy.json`, and on every build `scripts/sync-genealogy.py` copies it here if it has changed. If the repository or the file is missing, or the file lacks the chart's fields, the build keeps the committed copy. To update the chart: re-run the Party tracker, then `commit.R` here.
+
+To add an analysis: a page in `pages/polish-political-analyses/`, a thumbnail in `assets/analyses/`, and a row for it in `pages/polish-political-analyses.typ`.
+
 ## Deploying
 
 GitHub Pages publishes the `docs/` folder of `main` to benstanley.eu, with HTTPS enforced, so deploying means pushing a commit that changes `docs/`. `docs/CNAME` keeps the custom domain. `docs/.nojekyll` turns off Jekyll, which would otherwise skip the `.calepin/` folder (favicon and site manifest). `build.sh` writes both on every build; don't delete them.
@@ -253,7 +267,7 @@ The iCloud copy is a one-way backup: edits made there are overwritten on the nex
 
 ## Setting up on a new machine
 
-1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`.
+1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`; for the party genealogy, the Polish political analyses repository in a folder named `Polish political analyses`.
 2. Install Typst (`brew install typst`), Calepin (see `calepin-site/README.md` → Prerequisites), Python 3 and the Jost font.
 3. For the Scopus citation count, add the Elsevier API key to the Keychain (see [Citation counts](#citation-counts)); without it the build skips Scopus.
 4. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`) and Homebrew's `rsync`, which it expects at `/opt/homebrew/bin/rsync`. It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found. The iCloud path in step 5 is hard-coded.

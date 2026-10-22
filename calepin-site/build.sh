@@ -74,6 +74,14 @@ typst compile cv/cv.typ cv/cv.pdf
 echo "→ Syncing Teaching pages from the Teaching repo ..."
 python3 "$SRC/scripts/sync-teaching.py"
 
+# Copy the party genealogy data (genealogy.json) from the Party tracker in the
+# sibling Polish political analyses repo (read-only; override with PPA_SRC) into
+# assets/party-genealogy/, where the interactive chart on the Polish political
+# analyses › Party genealogy page reads it. Missing repo or file -> the script
+# warns and keeps the committed copy (doesn't fail the build).
+echo "→ Syncing the party genealogy data from the Polish political analyses repo ..."
+python3 "$SRC/scripts/sync-genealogy.py" || echo "  (skipped: sync-genealogy.py failed; using the committed data)"
+
 # Refresh the Kultura Liberalna article list in data/kultura-liberalna.yml (read
 # by pages/media.typ). The author page only exposes the 15 most recent pieces,
 # so the script MERGES new ones into the file rather than replacing it — the

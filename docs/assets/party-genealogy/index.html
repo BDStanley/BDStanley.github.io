@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polish parties in the Sejm, 1989–2026: genealogy</title>
+<meta name="theme-color" content="#8B0000">
+<!--
+  Interactive genealogy of Polish parties in the Sejm. Embedded in
+  pages/polish-political-analyses/party-genealogy.typ; works on its own too.
+  Data: genealogy.json beside this file, written by Party tracker/R/63_export_genealogy_json.R
+  in the Polish political analyses repo and copied here by scripts/sync-genealogy.py on each build.
+  Plain HTML/CSS/JS, no libraries.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#141414; --soft:#4B4B4B; --muted:#767676; --faint:#D5D5D5; --rule:#ECECEC;
+  --chip:#F3F3F1; --accent:#8B0000; --accent-hover:#495057; --tint:color-mix(in srgb,#8B0000 9%,#FFFFFF);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-weight:400;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:14px}
+button,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{height:100vh;display:flex;flex-direction:column;gap:12px;padding:14px 16px 12px}
+.label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
+.controls{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-end}
+.group{display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--chip);border-radius:999px}
+.seg button{border:0;border-radius:999px;padding:0 13px;height:32px;font-size:13.5px;font-weight:500;cursor:pointer;
+  background:transparent;color:var(--soft)}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+input[type=search]{width:250px;max-width:100%;height:38px;padding:0 14px;border:1px solid var(--faint);border-radius:12px;
+  font-size:14px;color:var(--ink);background:#fff}
+input[type=search]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,0,0,.14)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:flex;align-items:center;gap:7px;height:30px;padding:0 11px;border-radius:999px;border:1px solid var(--faint);
+  background:#fff;color:var(--ink);font-size:12.5px;cursor:pointer}
+.chip[aria-pressed="false"]{background:var(--chip);opacity:.5}
+.chip:hover{border-color:var(--accent)}
+.sw{width:10px;height:10px;border-radius:3px;flex:none}
+.ln{width:16px;height:0;border-top:2px solid;flex:none}
+.btn2{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--faint);background:transparent;color:var(--ink);
+  font-size:13.5px;font-weight:500;letter-spacing:.02em;cursor:pointer}
+.btn2:hover{border-color:var(--accent);color:var(--accent)}
+.btn1{height:38px;padding:0 16px;border-radius:999px;border:0;background:var(--accent);color:#fff;font-size:13px;
+  font-weight:500;letter-spacing:.02em;cursor:pointer}
+.btn1:hover{background:#6f0000}
+.linkbtn{border:0;background:transparent;padding:0;font-size:12.5px;color:var(--accent);cursor:pointer}
+.linkbtn:hover{color:var(--accent-hover)}
+details.group summary{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;cursor:pointer;list-style:none;margin-bottom:6px}
+details.group summary::-webkit-details-marker{display:none}
+details.group summary .label::after{content:" ▾";color:var(--muted)}
+details.group:not([open]) summary .label::after{content:" ▸"}
+.main{flex:1;min-height:0;display:flex;gap:18px}
+.chartbox{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.status{font-size:12.5px;color:var(--muted)}
+.scroller{flex:1;min-height:0;overflow:auto;border:1px solid var(--rule);border-radius:14px}
+svg{display:block;font-family:inherit}
+.panel{width:310px;flex:none;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-right:2px}
+.card{border:1px solid var(--faint);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px}
+.card.key{border-color:var(--rule)}
+.card p{margin:0;line-height:1.5;color:var(--soft)}
+.big{font-size:25px;font-weight:500;line-height:1.15}
+.rows{display:flex;flex-direction:column;gap:4px;padding-top:6px;border-top:1px solid var(--rule)}
+.row{display:flex;gap:12px;font-size:13px;line-height:1.4}
+.row span:first-child{width:96px;flex:none;color:var(--muted)}
+.evs{display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.4}
+.evs .d{color:var(--muted)}
+.note{font-size:11.5px;line-height:1.5;color:var(--muted)}
+.lane-lab{cursor:pointer}
+.lane-lab:focus{outline:none}
+.lane-lab:focus-visible{text-decoration:underline}
+@media (max-width:900px){
+  .app{height:auto}
+  .main{flex-direction:column}
+  .scroller{flex:none;height:72vh}
+  .panel{width:auto;overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="controls">
+    <div class="group"><span class="label" id="per-lab">Period</span><div class="seg" id="periods" role="group" aria-labelledby="per-lab"></div></div>
+    <div class="group"><label class="label" for="q">Find a party</label>
+      <input id="q" type="search" placeholder="e.g. PiS, Unia Wolności, Samoobrona" autocomplete="off"></div>
+    <div class="group"><span class="label" id="kind-lab">Genealogy links</span><div class="chips" id="kinds" role="group" aria-labelledby="kind-lab"></div></div>
+    <button class="btn2" id="reset" type="button">Reset view</button>
+  </div>
+  <details class="group" id="fam-box" open>
+    <summary><span class="label" id="fam-lab">Party families</span>
+      <button class="linkbtn" id="fam-all" type="button">All</button><button class="linkbtn" id="fam-none" type="button">None</button></summary>
+    <div class="chips" id="fams" role="group" aria-labelledby="fam-lab"></div>
+  </details>
+  <div class="main">
+    <div class="chartbox">
+      <div class="status" id="status" aria-live="polite">Loading the party data…</div>
+      <div class="scroller" id="scroller"><svg id="chart" role="img" aria-label="Genealogy of Polish parties in the Sejm, 1989–2026"></svg></div>
+    </div>
+    <aside class="panel">
+      <div class="card" id="record" aria-live="polite"></div>
+      <div class="card key">
+        <span class="label">Key</span>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c"></span>In government</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c;opacity:.7"></span>External support</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c;opacity:.32"></span>Opposition</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--soft)">Ribbon height:
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:3px;background:#767676"></span>10</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:7px;background:#767676"></span>50</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:10px;background:#767676"></span>120</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:15px;background:#767676"></span>240 seats</span>
+        </div>
+        <div class="note">Thin line: organisational lifespan; a tick at its end means the end date is not documented. Thick line without a ribbon: the party sat inside another party's club. Dotted verticals: Sejm elections.</div>
+        <div class="note">Seats are exact for clubs; a club's seats are attributed to its lead party (e.g. Solidarna Polska and Porozumienie MPs inside the PiS-led ZP club count as PiS). 1997–2026 from Sejm API roll calls; 1989–97 reconstructed from the Sejm archive and Wikipedia. Government status from cabinet composition (Mazowiecki cabinet incl. PZPR). <span id="asof"></span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+<script>
+"use strict";
+const FAMS = [["Post-communist left","#cc0000"],["Social-democratic / new left","#d81b60"],["Liberal centre","#e87722"],
+  ["Christian-democratic / conservative","#5f9ea0"],["Solidarity movement / union","#2AA6B8"],["National-conservative","#1f4e9c"],
+  ["Radical / nationalist right","#191970"],["Libertarian right","#A08A4A"],["Anti-establishment populist","#333333"],
+  ["Agrarian","#2e7d32"],["Agrarian populist","#7d1f1f"],["Communist-era allied party","#C994A7"],
+  ["Minority / regional","#bdb76b"],["Other","#9E9E9E"]];
+const KINDS = [["split","Split","#D95F02",""],["merger","Merger / absorption","#2C7FB8",""],
+  ["transform","Transformation / rename","#555555",""],["alliance","Joined an alliance","#8A8A8A","4 3"]];
+const KC = Object.fromEntries(KINDS.map(k => [k[0], k]));
+const KLONG = {split:"Split (parent → splinter)", merger:"Merger / absorption", transform:"Transformation / rename / refoundation", alliance:"Joined an electoral alliance"};
+const STATUS = {g:"In government", e:"External support", o:"Opposition", p:"Partner in a joint club"};
+const ALPHA = {g:1, e:0.7, o:0.32, p:0.32};
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const GUT = 136, TOP = 30, LH = 16, MIN_PW = 720;
+let PW = 920, W = GUT + PW + 14;   // plot width follows the chart box (render), never below MIN_PW
+const day = (y, m, d) => Math.round(Date.UTC(y, m - 1, d) / 864e5);
+const yearOf = d => new Date(d * 864e5).getUTCFullYear();
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function fmt(d, prec) {
+  const t = new Date(d * 864e5);
+  if (prec === "year") return String(t.getUTCFullYear());
+  if (prec === "month") return MON[t.getUTCMonth()] + " " + t.getUTCFullYear();
+  return t.getUTCDate() + " " + MON[t.getUTCMonth()] + " " + t.getUTCFullYear();
+}
+const $ = id => document.getElementById(id);
+
+let D = null, PER = [], ADJ = null;
+const LIN = new Map();
+const S = {period:0, off:new Set(), kOff:new Set(), q:"", sel:null, hov:null, lin:false};
+
+function lineage(i) {
+  if (LIN.has(i)) return LIN.get(i);
+  const seen = new Set([i]);
+  for (const adj of [ADJ.out, ADJ.inn]) {
+    const st = [i];
+    while (st.length) { const n = st.pop(); for (const m of adj[n]) if (!seen.has(m)) { seen.add(m); st.push(m); } }
+  }
+  LIN.set(i, seen);
+  return seen;
+}
+function select(i) {
+  if (S.sel === i) { S.sel = null; S.lin = false; } else S.sel = i;
+  render();
+}
+
+// ---- controls -------------------------------------------------------------------------------
+function buildControls() {
+  $("periods").innerHTML = PER.map((p, j) => `<button type="button" data-j="${j}">${p[0]}</button>`).join("");
+  $("periods").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.period = +b.dataset.j; S.hov = null; render(); };
+  $("kinds").innerHTML = KINDS.map(k => `<button type="button" class="chip" data-k="${k[0]}"><span class="ln" style="border-top:2px ${k[3] ? "dashed" : "solid"} ${k[2]}"></span>${k[1]}</button>`).join("");
+  $("kinds").onclick = e => { const b = e.target.closest("button"); if (!b) return; const k = b.dataset.k; S.kOff.has(k) ? S.kOff.delete(k) : S.kOff.add(k); render(); };
+  $("fams").innerHTML = FAMS.map((f, j) => `<button type="button" class="chip" data-j="${j}"><span class="sw" style="background:${f[1]}"></span>${f[0]}</button>`).join("");
+  $("fams").onclick = e => { const b = e.target.closest("button"); if (!b) return; const j = +b.dataset.j; S.off.has(j) ? S.off.delete(j) : S.off.add(j); S.lin = false; S.hov = null; render(); };
+  // inside <summary>: preventDefault keeps the buttons from also opening or closing the list
+  $("fam-all").onclick = e => { e.preventDefault(); S.off.clear(); S.lin = false; render(); };
+  $("fam-none").onclick = e => { e.preventDefault(); FAMS.forEach((f, j) => S.off.add(j)); S.lin = false; render(); };
+  $("q").oninput = e => { S.q = e.target.value; S.lin = false; S.hov = null; render(); };
+  $("reset").onclick = () => { Object.assign(S, {period:0, q:"", sel:null, hov:null, lin:false}); S.off.clear(); S.kOff.clear(); $("q").value = ""; render(); };
+}
+function syncControls() {
+  [...$("periods").children].forEach((b, j) => b.setAttribute("aria-pressed", S.period === j));
+  [...$("kinds").children].forEach(b => b.setAttribute("aria-pressed", !S.kOff.has(b.dataset.k)));
+  [...$("fams").children].forEach(b => b.setAttribute("aria-pressed", !S.off.has(+b.dataset.j)));
+}
+
+// ---- chart ----------------------------------------------------------------------------------
+function render() {
+  syncControls();
+  PW = Math.max(MIN_PW, Math.floor($("scroller").clientWidth - GUT - 16));
+  W = GUT + PW + 14;
+  const P = D.parties, per = PER[S.period], a = per[1], b = per[2];
+  const x = d => (d - a) / (b - a) * PW;
+  const selOk = S.sel !== null;
+  let vis;
+  if (S.lin && selOk) { const L = lineage(S.sel); vis = P.filter(p => L.has(p.i)); }
+  else {
+    const q = S.q.trim().toLowerCase();
+    vis = P.filter(p => !S.off.has(p.fam) && (!q || (p.lab + " " + p.pl + " " + p.en).toLowerCase().includes(q)));
+  }
+  vis = vis.filter(p => p.to >= a && p.from <= b);
+  const Y = {};
+  vis.forEach((p, k) => { Y[p.i] = TOP + k * LH + LH / 2; });
+  const plotH = TOP + vis.length * LH + 8, H = plotH + 28;
+
+  let focus = null;
+  if (selOk) focus = lineage(S.sel);
+  else if (S.hov) focus = new Set(S.hov.parties);
+  const dim = i => (focus && !focus.has(i) ? 0.12 : 1);
+  const o = [];
+
+  o.push(`<defs><clipPath id="plotclip"><rect x="${GUT}" y="0" width="${PW}" height="${plotH}"></rect></clipPath></defs>`);
+  // lane hit bands
+  o.push(`<g clip-path="url(#plotclip)">`);
+  for (const p of vis) {
+    const sel = selOk && S.sel === p.i;
+    o.push(`<rect data-k="p:${p.i}" x="${GUT}" y="${Y[p.i] - LH / 2}" width="${PW}" height="${LH}" fill="${sel ? "rgba(139,0,0,0.07)" : "transparent"}" style="cursor:pointer"></rect>`);
+  }
+  // year grid + elections
+  const span = (b - a) / 365.25, step = span > 16 ? 2 : 1, ticks = [];
+  for (let y = yearOf(a) + 1; y <= yearOf(b); y++) {
+    if (y % step) continue;
+    const tx = x(day(y, 1, 1));
+    if (tx < 0 || tx > PW) continue;
+    ticks.push([tx, y]);
+    o.push(`<line x1="${GUT + tx}" x2="${GUT + tx}" y1="26" y2="${plotH}" stroke="#F0F0EE" pointer-events="none"></line>`);
+  }
+  for (const d of D.elections) {
+    if (d < a || d > b) continue;
+    const ex = GUT + x(d);
+    o.push(`<line x1="${ex}" x2="${ex}" y1="22" y2="${plotH}" stroke="#BDBDBD" stroke-dasharray="3 3" pointer-events="none"></line>`);
+    const anchor = ex < GUT + 16 ? "start" : ex > GUT + PW - 16 ? "end" : "middle";
+    o.push(`<text x="${anchor === "start" ? Math.max(ex, GUT + 2) : ex}" y="14" text-anchor="${anchor}" font-size="11" fill="#4B4B4B" pointer-events="none">${yearOf(d)}</text>`);
+  }
+  // lifespans and undocumented-end ticks
+  for (const p of vis) {
+    const yc = Y[p.i], col = FAMS[p.fam][1], x0 = Math.max(0, x(p.from)), x1 = Math.min(PW, x(p.to)), op = 0.55 * dim(p.i);
+    o.push(`<line x1="${GUT + x0}" x2="${GUT + Math.max(x0 + 1, x1)}" y1="${yc}" y2="${yc}" stroke="${col}" stroke-opacity="${op}" pointer-events="none"></line>`);
+    if (!p.endKnown && p.to <= b) o.push(`<line x1="${GUT + x(p.to)}" x2="${GUT + x(p.to)}" y1="${yc - 4}" y2="${yc + 4}" stroke="${col}" stroke-opacity="${op}" pointer-events="none"></line>`);
+  }
+  // partner-in-club segments
+  for (const r of D.pres) {
+    const yc = Y[r[0]];
+    if (yc === undefined || r[2] <= a || r[1] >= b) continue;
+    const x0 = Math.max(0, x(r[1])), x1 = Math.min(PW, x(r[2]));
+    o.push(`<rect x="${GUT + x0}" y="${yc - 1.5}" width="${Math.max(1, x1 - x0)}" height="3" fill="${FAMS[P[r[0]].fam][1]}" fill-opacity="${(r[3] === "g" ? 1 : 0.4) * dim(r[0])}" pointer-events="none"></rect>`);
+  }
+  // seat ribbons
+  D.runs.forEach((r, k) => {
+    const yc = Y[r[0]];
+    if (yc === undefined || r[2] <= a || r[1] >= b) return;
+    const x0 = Math.max(0, x(r[1])), x1 = Math.min(PW, x(r[2]));
+    const hh = Math.max(0.5, 0.46 * LH * Math.sqrt(Math.min(r[3], 240) / 240));
+    o.push(`<rect data-k="r:${k}" x="${GUT + x0}" y="${yc - hh}" width="${Math.max(0.8, x1 - x0)}" height="${2 * hh}" fill="${FAMS[P[r[0]].fam][1]}" fill-opacity="${ALPHA[r[4]] * dim(r[0])}" shape-rendering="crispEdges" style="cursor:pointer"></rect>`);
+  });
+  // genealogy links
+  let nLinks = 0;
+  D.conn.forEach((c, k) => {
+    if (S.kOff.has(c.k)) return;
+    const yf = Y[c.f], yt = Y[c.to];
+    if (yf === undefined || yt === undefined || c.d < a || c.d > b) return;
+    nLinks++;
+    const cx = GUT + x(c.d), kc = KC[c.k], down = yt > yf;
+    const hot = S.hov && S.hov.kind === "c" && S.hov.i === k;
+    const op = hot ? 1 : focus ? (focus.has(c.f) && focus.has(c.to) ? 1 : 0.08) : 0.85;
+    const tipBase = down ? yt - 6 : yt + 6;
+    o.push(`<g opacity="${op}" pointer-events="none">`
+      + `<line x1="${cx}" x2="${cx}" y1="${yf}" y2="${tipBase}" stroke="${kc[2]}" stroke-width="${hot ? 2.2 : 1.4}"${kc[3] ? ` stroke-dasharray="${kc[3]}"` : ""}></line>`
+      + `<path d="M${cx - 3.5} ${tipBase} L${cx + 3.5} ${tipBase} L${cx} ${yt} Z" fill="${kc[2]}"></path>`
+      + `<circle cx="${cx}" cy="${yf}" r="2.3" fill="${kc[2]}"></circle></g>`);
+    o.push(`<line data-k="c:${k}" x1="${cx}" x2="${cx}" y1="${Math.min(yf, yt)}" y2="${Math.max(yf, yt)}" stroke="transparent" stroke-width="9"></line>`);
+  });
+  o.push(`</g>`);
+  // lane labels (keyboard-focusable)
+  for (const p of vis) {
+    const sel = selOk && S.sel === p.i, lab = p.lab.length > 19 ? p.lab.slice(0, 18) + "…" : p.lab;
+    o.push(`<text class="lane-lab" data-k="p:${p.i}" tabindex="0" role="button" aria-label="${esc(p.lab + ": " + p.pl)}" x="${GUT - 8}" y="${Y[p.i] + 4}" text-anchor="end" font-size="12" font-weight="${sel ? 700 : 500}" fill="${FAMS[p.fam][1]}" fill-opacity="${dim(p.i)}"><title>${esc(p.pl)}</title>${esc(lab)}</text>`);
+  }
+  for (const [tx, y] of ticks) {
+    const anchor = tx > PW - 16 ? "end" : tx < 16 ? "start" : "middle";
+    o.push(`<text x="${GUT + (anchor === "end" ? Math.min(tx, PW) : tx)}" y="${plotH + 18}" text-anchor="${anchor}" font-size="11" fill="#767676">${y}</text>`);
+  }
+  if (!vis.length) o.push(`<text x="${GUT + 24}" y="60" font-size="15" fill="#767676">No parties match these filters.</text>`);
+
+  const svg = $("chart");
+  svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.innerHTML = o.join("");
+
+  let st = vis.length + (vis.length === 1 ? " party" : " parties") + " · " + nLinks + " genealogy links";
+  if (S.lin && selOk) st = "Lineage of " + P[S.sel].lab + ": " + st;
+  else if (selOk) st = "Selected: " + P[S.sel].lab + ", with its predecessors and successors highlighted · " + st;
+  $("status").textContent = st;
+  renderRecord();
+}
+
+// ---- record panel ---------------------------------------------------------------------------
+function partyCard(i) {
+  const p = D.parties[i], col = FAMS[p.fam][1], isSel = S.sel === i;
+  const rows = [["Founded", p.founded || "not documented"],
+    ["Ended", p.ended ? p.ended + (p.endType ? " (" + p.endType.replace(/_/g, " ") + ")" : "") : (p.endType === "active" ? "active" : "not documented")],
+    ["In the Sejm", p.s0 === p.s1 ? p.s0 : p.s0 + "–" + p.s1], ["Peak seats", p.max]];
+  if (p.now > 0) rows.push(["Seats now", p.now]);
+  if (p.gov > 0) rows.push(["In government", p.gov + " years"]);
+  return `<div style="display:flex;align-items:center;gap:8px"><span class="sw" style="background:${col}"></span><span class="label" style="color:var(--muted);letter-spacing:.14em">${esc(FAMS[p.fam][0])}</span></div>
+    <div class="big" style="color:${col}">${esc(p.lab)}</div>
+    <div style="font-size:15px;line-height:1.35">${esc(p.pl)}</div>
+    ${p.en ? `<div style="font-style:italic;color:var(--soft)">${esc(p.en)}</div>` : ""}
+    <div class="rows">${rows.map(r => `<div class="row"><span>${r[0]}</span><span>${esc(r[1])}</span></div>`).join("")}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:4px">
+      <button type="button" class="btn1" data-act="sel" data-i="${i}">${isSel ? "Clear selection" : "Select and trace lineage"}</button>
+      ${isSel ? `<button type="button" class="btn2" data-act="lin">${S.lin ? "Show all parties" : "Show this lineage only"}</button>` : ""}
+    </div>
+    ${p.ev.length ? `<span class="label" style="padding-top:6px">Genealogy events</span>
+    <div class="evs">${p.ev.map(e => `<div title="${esc(e.desc)}"><span class="d">${esc(e.d)}</span> · ${esc(e.t)}: ${esc(e.f)}${e.to ? " → " + esc(e.to) : ""}</div>`).join("")}</div>` : ""}`;
+}
+function renderRecord() {
+  const h = S.hov, P = D.parties;
+  let html;
+  if (h && h.kind === "r") {
+    const r = D.runs[h.i], p = P[r[0]];
+    html = `<span class="label">Seats in this period</span>
+      <div class="big" style="color:${FAMS[p.fam][1]}">${esc(p.lab)}</div>
+      <div style="color:var(--soft)">${fmt(r[1])} – ${fmt(r[2] - 1)}</div>
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:36px;font-weight:300">${r[3]}</span><span style="color:var(--soft)">seats · ${STATUS[r[4]]}</span></div>
+      ${r[5] >= 0 ? `<div style="font-size:13px"><span style="color:var(--muted)">Cabinet </span>${esc(D.cabNames[r[5]])}</div>` : ""}
+      <div style="font-size:13px;line-height:1.4"><span style="color:var(--muted)">Club </span>${r[6] >= 0 ? esc(D.clubNames[r[6]]) : "—"}</div>`;
+  } else if (h && h.kind === "c") {
+    const c = D.conn[h.i], kc = KC[c.k];
+    html = `<div style="display:flex;align-items:center;gap:8px"><span class="ln" style="border-top:2px ${kc[3] ? "dashed" : "solid"} ${kc[2]}"></span><span class="label" style="color:var(--muted);letter-spacing:.14em">${KLONG[c.k]}</span></div>
+      <div class="big" style="font-size:22px">${esc(P[c.f].lab)} → ${esc(P[c.to].lab)}</div>
+      <div style="color:var(--soft)">${fmt(c.d, c.prec)}</div>
+      <div style="line-height:1.5">${esc(c.desc)}</div>`;
+  } else if (h && h.kind === "p") html = partyCard(h.i);
+  else if (S.sel !== null) html = partyCard(S.sel);
+  else html = `<span class="label">Party record</span>
+      <p>Hover a party name, lane or seat ribbon to see its record here, or an arrow for the genealogy event. Click a party to select it: its predecessors and successors stay highlighted, and you can show its lineage on its own.</p>`;
+  $("record").innerHTML = html;
+}
+$("record").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]");
+  if (!b) return;
+  if (b.dataset.act === "sel") select(+b.dataset.i);
+  else { S.lin = !S.lin; S.hov = null; render(); }
+});
+
+// ---- chart events ---------------------------------------------------------------------------
+function keyOf(t) { const el = t.closest && t.closest("[data-k]"); return el ? el.dataset.k : null; }
+function hovFromKey(k) {
+  if (!k) return null;
+  const [kind, n] = k.split(":"), i = +n;
+  if (kind === "p") return {kind, i, parties:[i]};
+  if (kind === "r") return {kind, i, parties:[D.runs[i][0]]};
+  return {kind, i, parties:[D.conn[i].f, D.conn[i].to]};
+}
+let lastKey = null;
+const chart = $("chart");
+chart.addEventListener("mouseover", e => {
+  const k = keyOf(e.target);
+  if (k === lastKey) return;
+  lastKey = k; S.hov = hovFromKey(k); render();
+});
+chart.addEventListener("mouseleave", () => { lastKey = null; if (S.hov) { S.hov = null; render(); } });
+chart.addEventListener("click", e => {
+  const h = hovFromKey(keyOf(e.target));
+  if (!h) return;
+  if (h.kind === "c") { S.hov = h; renderRecord(); return; }
+  select(h.parties[0]);
+});
+chart.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const h = hovFromKey(keyOf(e.target));
+  if (!h) return;
+  e.preventDefault();
+  const i = h.parties[0];
+  select(i);
+  const again = chart.querySelector(`text[data-k="p:${i}"]`);
+  if (again) again.focus();
+});
+chart.addEventListener("focusin", e => {
+  const h = hovFromKey(keyOf(e.target));
+  if (h && S.sel === null) { S.hov = h; renderRecord(); }
+});
+
+// ---- load -----------------------------------------------------------------------------------
+fetch("genealogy.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
+  D = data;
+  D.parties.forEach((p, i) => { p.i = i; });
+  ADJ = {out: D.parties.map(() => []), inn: D.parties.map(() => [])};
+  D.conn.forEach(c => { ADJ.out[c.f].push(c.to); ADJ.inn[c.to].push(c.f); });
+  const end = D.asOf + 50;
+  PER = [["1989–" + yearOf(D.asOf), day(1989, 4, 15), end], ["1989–1997", day(1989, 4, 1), day(1998, 1, 1)],
+    ["1997–2005", day(1997, 6, 1), day(2006, 1, 1)], ["2005–2015", day(2005, 6, 1), day(2016, 1, 1)],
+    ["2015–" + yearOf(D.asOf), day(2015, 6, 1), end]];
+  $("asof").textContent = "Data to " + fmt(D.asOf) + ".";
+  if (window.matchMedia("(max-width: 900px)").matches) $("fam-box").open = false;
+  buildControls();
+  render();
+  let raf = 0, lastW = $("scroller").clientWidth;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { const w = $("scroller").clientWidth; if (w !== lastW) { lastW = w; render(); } });
+  });
+}).catch(() => { $("status").textContent = "Could not load the party data."; });
+</script>
+</body>
+</html>
