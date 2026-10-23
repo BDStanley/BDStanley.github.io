@@ -150,6 +150,7 @@ svg text:not([font-weight]){font-weight:300}
       <button type="button" role="tab" data-v="profile">Profile</button>
       <button type="button" role="tab" data-v="populism">Populism</button>
       <button type="button" role="tab" data-v="time">Over time</button>
+      <button type="button" role="tab" data-v="voters">Parties and voters</button>
       <button type="button" role="tab" data-v="systems">Party systems</button>
     </div>
     <span class="ctl">Wave <span class="seg small" id="waves" aria-label="CHES wave"></span></span>
@@ -203,6 +204,15 @@ svg text:not([font-weight]){font-weight:300}
         <p class="help">Polish parties at each CHES wave. The grey band is the middle half of the parties compared, the grey line their median. Hover for values; click a line to select its party.</p>
         <div class="two" id="timegrid"></div>
         <div class="legend" id="timelegend"></div>
+      </section>
+      <section class="view" id="v-voters" aria-label="Polish parties and their voters" hidden>
+        <div class="toolbar">
+          <span class="ctl">Issue <span class="seg small" id="vdims"></span></span>
+        </div>
+        <p class="notice" id="vnotice" hidden></p>
+        <div class="chartbox" id="vbox"><svg id="vt" role="img" aria-label="Polish parties' positions beside their own voters'"></svg><div class="tip" id="vtip" hidden></div></div>
+        <div class="legend" id="vlegend"></div>
+        <p class="help" id="vhelp"></p>
       </section>
       <section class="view" id="v-systems" aria-label="Party systems compared" hidden>
         <div class="toolbar">

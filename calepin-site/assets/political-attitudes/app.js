@@ -2,7 +2,10 @@
 // Reads attitudes.json (the index) and one <slug>.json per attitude, both written by
 // "Political attitudes/web/build_web.R" in the Polish political analyses repo. Each attitude's
 // file holds a monthly latent trend (median and bands), the same for every group of each
-// breakdown, the survey readings behind it and a few events. No libraries.
+// breakdown, the survey readings behind it and a few events. An attitude is a percentage (a share
+// of those taking a side) unless its meta.scale says it is an average position on a scale (left-
+// right self-placement, 0-10), which gets its own axis, a centre line and no percent signs.
+// No libraries.
 "use strict";
 
 const $ = id => document.getElementById(id);
@@ -21,6 +24,12 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 const MON = MONTHS.map(m => m.slice(0, 3));
 
 let IDX = null, D = null, CACHE = {};
+// The current attitude's scale: a percentage, or an average position (meta.scale)
+let SC = {type: "share"};
+const isMean = () => SC.type === "mean";
+const val = v => v == null ? "–" : isMean() ? (Math.round(v * 10 ** SC.dp) / 10 ** SC.dp).toFixed(SC.dp) : fmt0(v) + "%";
+const valRaw = v => v == null ? "–" : isMean() ? v.toFixed(2) : fmt(v) + "%";
+const change = ch => (ch > 0 ? "+" : "") + (isMean() ? ch.toFixed(2) : fmt(ch));
 const S = { a: null, b: "all", p: "all", pts: true, ev: true, hide: new Set() };
 let GEO = null; // geometry of the last drawn chart, for hover
 
@@ -66,6 +75,8 @@ async function loadAttitude(slug) {
     CACHE[slug] = d;
   }
   D = CACHE[slug];
+  SC = D.meta.scale || {type: "share"};
+  if (isMean() && SC.dp == null) SC.dp = 1;
   const [y, m] = D.meta.start.split("-").map(Number); Y0 = y; M0 = m - 1;
 }
 
@@ -138,13 +149,16 @@ function draw() {
   const i0 = clamp(yearToMonth(x0) - 1, 0, D.meta.months - 1), i1 = D.meta.months - 1;
   const readings = !S.pts ? [] : D.rd.filter(r => r.x >= x0 && r.x <= x1 && (S.b === "all" ? r.g === "all" : r.g === S.b && !hiddenReading(r)));
   // y domain from what is visible
-  let lo = 100, hi = 0;
+  const dmin = isMean() ? SC.min : 0, dmax = isMean() ? SC.max : 100;
+  let lo = dmax, hi = dmin;
   series.forEach(s => { for (let i = i0; i <= i1; i++) { const a = s.lo80[i], b = s.hi80[i]; if (a != null) lo = Math.min(lo, a); if (b != null) hi = Math.max(hi, b); } });
   if (S.b !== "all") for (let i = i0; i <= i1; i++) { const v = D.national.median[i]; if (v != null) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }
   readings.forEach(r => { lo = Math.min(lo, r.adj); hi = Math.max(hi, r.adj); });
-  if (lo > hi) { lo = 0; hi = 100; }
-  const yStep = hi - lo > 40 ? 10 : 5;
-  lo = Math.max(0, Math.floor((lo - 2) / yStep) * yStep); hi = Math.min(100, Math.ceil((hi + 1) / yStep) * yStep);
+  if (lo > hi) { lo = dmin; hi = dmax; }
+  const yStep = isMean() ? (hi - lo > 4 ? 1 : hi - lo > 1.5 ? 0.5 : 0.25) : (hi - lo > 40 ? 10 : 5);
+  const pad = isMean() ? 0.1 : 2;
+  lo = Math.max(dmin, Math.floor((lo - pad) / yStep) * yStep); hi = Math.min(dmax, Math.ceil((hi + pad / 2) / yStep) * yStep);
+  if (isMean()) { lo = Math.min(lo, SC.mid); hi = Math.max(hi, SC.mid); }
   const X = x => m.l + (x - x0) / (x1 - x0) * (W - m.l - m.r);
   const Y = y => m.t + (hi - y) / (hi - lo) * (H - m.t - m.b);
   GEO = { W, H, m, x0, x1, X, Y, lo, hi, series, readings, i0, i1 };
@@ -152,7 +166,15 @@ function draw() {
   const gGrid = el("g", {}, svg);
   for (let v = lo; v <= hi + 1e-9; v += yStep) {
     el("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v), stroke: v === lo ? "#D5D5D5" : "#ECECEC", "stroke-width": 1 }, gGrid);
-    const t = el("text", { x: m.l - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#767676" }, gGrid); t.textContent = v + (v === hi ? "%" : "");
+    const t = el("text", { x: m.l - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#767676" }, gGrid); t.textContent = isMean() ? +v.toFixed(2) : v + (v === hi ? "%" : "");
+  }
+  // a scale's centre, and which way is which
+  if (isMean()) {
+    el("line", { x1: m.l, x2: W - m.r, y1: Y(SC.mid), y2: Y(SC.mid), stroke: "#B5B5B5", "stroke-width": 1, "stroke-dasharray": "3 3" }, gGrid);
+    const halo = { stroke: "#fff", "stroke-width": 3, "paint-order": "stroke" };
+    const up = el("text", { x: m.l + 6, y: m.t + 12, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); up.textContent = `↑ ${SC.hi}`;
+    const dn = el("text", { x: m.l + 6, y: H - m.b - 6, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); dn.textContent = `↓ ${SC.lo}`;
+    const ce = el("text", { x: m.l + 6, y: Y(SC.mid) - 5, "font-size": 11, fill: "#767676", ...halo }, gGrid); ce.textContent = "Centre";
   }
   const span = x1 - x0, step = niceStep(span) * (narrow && span > 12 ? 2 : 1);
   for (let y = Math.ceil(x0 / step) * step; y <= x1; y += step) {
@@ -211,7 +233,7 @@ function draw() {
     if (over > 0) right.forEach(l => { l.y -= over; });
     right.forEach(l => {
       const t = el("text", { x: X(monthYear(i1)) + 6, y: l.y + 4, "font-size": 12, fill: l.s.colour, "font-weight": 500 }, svg);
-      t.textContent = `${l.s.name} ${fmt0(l.s.median[l.i])}%`;
+      t.textContent = `${l.s.name} ${val(l.s.median[l.i])}`;
     });
     early.forEach(l => {
       const t = el("text", { x: X(monthYear(l.i)) + 5, y: l.y + 4, "font-size": 11.5, fill: l.s.colour, "font-weight": 500, "paint-order": "stroke", stroke: "#fff", "stroke-width": 3 }, svg);
@@ -266,9 +288,9 @@ function hover(ev) {
   rows.forEach(s => el("circle", { cx: X(monthYear(i)), cy: Y(s.median[i]), r: 3.5, fill: s.colour, stroke: "#fff", "stroke-width": 1.5 }, dots));
   let h = `<b>${monthLabel(i)}</b>`;
   rows.forEach(s => {
-    h += `<div class="r"><span><span class="dot" style="background:${s.colour}"></span> ${esc(s.name)}</span><span><b>${fmt0(s.median[i])}%</b> <span class="s">${fmt0(s.lo80[i])}–${fmt0(s.hi80[i])}</span></span></div>`;
+    h += `<div class="r"><span><span class="dot" style="background:${s.colour}"></span> ${esc(s.name)}</span><span><b>${val(s.median[i])}</b> <span class="s">${val(s.lo80[i])}–${val(s.hi80[i])}</span></span></div>`;
   });
-  if (S.b !== "all" && D.national.median[i] != null) h += `<div class="r s"><span>Everyone</span><span>${fmt0(D.national.median[i])}%</span></div>`;
+  if (S.b !== "all" && D.national.median[i] != null) h += `<div class="r s"><span>Everyone</span><span>${val(D.national.median[i])}</span></div>`;
   if (!rows.length) h += `<div class="s">No estimate shown for this month</div>`;
   else h += `<div class="s">Median, with 80% credible interval</div>`;
   showTip(px, py, h, sc);
@@ -278,8 +300,10 @@ function readingTip(r) {
   const who = r.g === "all" ? "" : ` · ${esc(r.k)}`;
   return `<b>${esc(it.family || r.i)}</b>${who}<div class="s">${esc(r.s)} · ${dateLabel(r.d)}</div>` +
     `<div style="margin:4px 0">${esc(it.wording || "")}</div>` +
-    `<div class="r"><span>${esc(it.pro || "Pro")} among those taking a side</span><span><b>${fmt(r.raw)}%</b></span></div>` +
-    `<div class="r"><span>On the trend's scale</span><span>${fmt(r.adj)}%</span></div>` +
+    (isMean()
+      ? `<div class="r"><span>${esc(SC.value || "Average")} (0 ${esc(SC.lo.toLowerCase())}, 10 ${esc(SC.hi.toLowerCase())})</span><span><b>${valRaw(r.raw)}</b></span></div>`
+      : `<div class="r"><span>${esc(it.pro || "Pro")} among those taking a side</span><span><b>${fmt(r.raw)}%</b></span></div>`) +
+    `<div class="r"><span>On the trend's scale</span><span>${valRaw(r.adj)}</span></div>` +
     `<div class="s">Effective sample ${r.n}</div>`;
 }
 function showTip(px, py, h, sc) {
@@ -332,8 +356,8 @@ function renderLatest() {
     const s = series[0], i = last;
     const a = at(s, i - 12), b5 = at(s, i - 60);
     $("latesthead").textContent = `Latest estimate · ${monthLabel(i)}`;
-    box.innerHTML = `<div class="big">${fmt0(s.median[i])}%</div>
-      <p class="help">80% credible interval ${fmt0(s.lo80[i])}–${fmt0(s.hi80[i])}%. A year earlier ${fmt0(a)}%; five years earlier ${fmt0(b5)}%.</p>
+    box.innerHTML = `<div class="big">${val(s.median[i])}</div>
+      <p class="help">${isMean() ? `On a scale from 0 (${esc(SC.lo.toLowerCase())}) to 10 (${esc(SC.hi.toLowerCase())}). ` : ""}80% credible interval ${val(s.lo80[i])}–${val(s.hi80[i])}. A year earlier ${val(a)}; five years earlier ${val(b5)}.</p>
       <table class="t"><tr><th>Period</th><th>Low</th><th>High</th></tr>${periodsTable(s)}</table>`;
     return;
   }
@@ -345,8 +369,9 @@ function renderLatest() {
     if (i < 0) return;
     const prev = at(s, i - 12), ch = prev == null ? null : s.median[i] - prev;
     const when = i === last ? "" : `<br><small>${monthShort(i)}</small>`;
-    t.innerHTML += `<tr><td class="l"><span class="dot" style="background:${s.colour}"></span> ${esc(s.name)}${when}</td><td><b>${fmt0(s.median[i])}%</b></td><td>${fmt0(s.lo80[i])}–${fmt0(s.hi80[i])}</td>` +
-      `<td class="${ch == null ? "" : ch > 0.5 ? "pos" : ch < -0.5 ? "neg" : ""}">${ch == null ? "–" : (ch > 0 ? "+" : "") + fmt(ch)}</td></tr>`;
+    const tiny = isMean() ? 0.05 : 0.5;
+    t.innerHTML += `<tr><td class="l"><span class="dot" style="background:${s.colour}"></span> ${esc(s.name)}${when}</td><td><b>${val(s.median[i])}</b></td><td>${val(s.lo80[i])}–${val(s.hi80[i])}</td>` +
+      `<td class="${ch == null ? "" : ch > tiny ? "pos" : ch < -tiny ? "neg" : ""}">${ch == null ? "–" : change(ch)}</td></tr>`;
   });
   box.appendChild(t);
   box.appendChild(html("p", { class: "help" }, "Groups whose lines end earlier show their last month with an estimate."));
@@ -362,7 +387,7 @@ function periodsTable(s) {
     a = clamp(a, 0, D.meta.months - 1); b = clamp(b, 0, D.meta.months - 1);
     let lo = null, hi = null, il = a, ih = a;
     for (let i = a; i <= b; i++) { const v = s.median[i]; if (v == null) continue; if (lo == null || v < lo) { lo = v; il = i; } if (hi == null || v > hi) { hi = v; ih = i; } }
-    return `<tr><td class="l">${lab}</td><td>${fmt0(lo)}% <small>${monthShort(il)}</small></td><td>${fmt0(hi)}% <small>${monthShort(ih)}</small></td></tr>`;
+    return `<tr><td class="l">${lab}</td><td>${val(lo)} <small>${monthShort(il)}</small></td><td>${val(hi)} <small>${monthShort(ih)}</small></td></tr>`;
   }).join("");
 }
 function renderItems() {
