@@ -32,8 +32,8 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 #html.elem("img", attrs: (src: "../assets/analyses/political-attitudes.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
 #html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/political-attitudes.html"))[Political attitudes]
-#html.elem("div", attrs: (class: "course-desc"))[How Poles' attitudes have changed since 1990, each trend pooled from every comparable survey into one monthly estimate, with breakdowns by party preference, age, gender, education and place of residence. So far: support for membership of the European Union, and where Poles place themselves between left and right.]
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/political-attitudes.html"))[Social and political trends]
+#html.elem("div", attrs: (class: "course-desc"))[How Poles' attitudes, values and lives have changed since 1990, each trend pooled from every comparable survey into one monthly estimate, with breakdowns by party preference, age, gender, education and place of residence. So far: support for membership of the European Union, and where Poles place themselves between left and right.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[

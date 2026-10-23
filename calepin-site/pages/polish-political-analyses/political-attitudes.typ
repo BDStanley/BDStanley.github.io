@@ -1,10 +1,11 @@
-#set document(title: [Political attitudes])
+#set document(title: [Social and political trends])
 #metadata((
-  title: "Political attitudes",
-  description: "Long-run trends in Polish public opinion since 1990, pooled from many surveys: support for EU membership and left–right self-placement, with breakdowns by party, age, gender, education and place of residence",
+  title: "Social and political trends",
+  description: "Long-run trends in Polish society and public opinion since 1990, pooled from many surveys: support for EU membership and left–right self-placement, with breakdowns by party, age, gender, education and place of residence",
 )) <website-metadata>
 
-// The chart is a standalone page, assets/political-attitudes/index.html (+ app.js), embedded
+// The page was called Political attitudes until 23 October 2026; its file names, the asset folder
+// and the repo folder keep that name. The chart is a standalone page, assets/political-attitudes/index.html (+ app.js), embedded
 // like the Polling tracker. Its data, attitudes.json and one <slug>.json per attitude, comes from
 // "Political attitudes/web/" in the Polish political analyses repo (written by web/build_web.R
 // from each attitude's subfolder) and is copied in by scripts/sync-analyses.py on each build.
@@ -14,9 +15,9 @@
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
 
-#heading(level: 1)[Political attitudes]
+#heading(level: 1)[Social and political trends]
 
-How Poles' attitudes have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, age and gender together, education and place of residence. There are two attitudes so far: support for Poland's membership of the European Union, and where Poles place themselves between left and right. More will follow.
+How Poles' attitudes, values and lives have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, age and gender together, education and place of residence. There are two attitudes so far: support for Poland's membership of the European Union, and where Poles place themselves between left and right. More will follow.
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]
@@ -66,6 +67,6 @@ Sources for left–right self-placement:
 #html.elem("iframe", attrs: (
   src: "../../assets/political-attitudes/index.html",
   class: "embed-frame embed-frame--app",
-  title: "Political attitudes: trends in Polish public opinion since 1990",
+  title: "Social and political trends: Polish society and public opinion since 1990",
   loading: "lazy",
 ))[]

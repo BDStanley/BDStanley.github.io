@@ -19,6 +19,11 @@ page; this script copies it beside the page's chart under assets/:
     Political attitudes/web/<slug>.json           -> assets/political-attitudes/<slug>.json
         (written by "Political attitudes/web/build_web.R"; attitudes.json lists the
         attitudes, and each one it lists is copied too)
+    Election results/web/elections.json           -> assets/election-results/elections.json
+    Election results/web/<file>.json              -> assets/election-results/<file>.json
+        (written by "Election results/analysis/90_export.R"; elections.json's `files`
+        lists the others: geo.json, covariates.json, one file per election and one
+        profiles file per voivodeship)
 
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
@@ -57,6 +62,8 @@ FILES = [
      {"meta", "countries", "dims", "parties", "rows", "system"}),
     ("Political attitudes/web/attitudes.json", "assets/political-attitudes/attitudes.json",
      {"meta", "attitudes"}),
+    ("Election results/web/elections.json", "assets/election-results/elections.json",
+     {"meta", "elections", "contests", "labels", "files"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each
@@ -64,6 +71,20 @@ FILES = [
 LISTED = [
     ("Political attitudes/web/attitudes.json", "attitudes", "file",
      {"meta", "national", "groupings", "items", "readings", "events"}),
+]
+
+
+# Indexes whose `files` field is a plain list of file names beside them: (index in the repo,
+# field, [(name prefix, fields a file with that prefix must have)], the first prefix that
+# matches applying).
+LISTED_NAMES = [
+    ("Election results/web/elections.json", "files", [
+        ("geo.json", {"meta", "gminas", "sets", "inset", "partitions"}),
+        ("covariates.json", {"meta", "vars", "years", "values", "zones"}),
+        ("transfers.json", {"meta", "elections"}),
+        ("profiles-", {"units"}),
+        ("", {"facts", "results", "units"}),
+    ]),
 ]
 
 
@@ -108,11 +129,29 @@ def sync_listed(rel_index: str, field: str, key: str, required: set[str]) -> Non
         sync(f"{src_dir}/{name}", f"{dest_dir}/{name}", required)
 
 
+def sync_named(rel_index: str, field: str, rules: list[tuple[str, set[str]]]) -> None:
+    index = PPA_SRC / rel_index
+    try:
+        names = json.loads(index.read_text(encoding="utf-8")).get(field, [])
+    except (OSError, ValueError):
+        return  # sync() has already reported the index
+    dest_dir = next(dest for src, dest, _ in FILES if src == rel_index).rsplit("/", 1)[0]
+    src_dir = rel_index.rsplit("/", 1)[0]
+    for name in names:
+        if not isinstance(name, str) or "/" in name or not name.endswith(".json"):
+            print(f"  warning: {index.name} lists an invalid file {name!r}; skipped", file=sys.stderr)
+            continue
+        required = next(req for prefix, req in rules if name.startswith(prefix))
+        sync(f"{src_dir}/{name}", f"{dest_dir}/{name}", required)
+
+
 def main() -> int:
     for rel_src, rel_dest, required in FILES:
         sync(rel_src, rel_dest, required)
     for rel_index, field, key, required in LISTED:
         sync_listed(rel_index, field, key, required)
+    for rel_index, field, rules in LISTED_NAMES:
+        sync_named(rel_index, field, rules)
     return 0
 
 

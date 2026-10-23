@@ -3,10 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Political attitudes: Polish public opinion since 1990</title>
+<title>Social and political trends in Poland since 1990</title>
 <meta name="theme-color" content="#8B0000">
 <!--
-  Long-run trends in Poles' political attitudes, each estimated from several survey sources at
+  Social and political trends (formerly Political attitudes): long-run trends in Poles' attitudes,
+  values and lives, each estimated from several survey sources at
   once, with breakdowns by party, age, gender, education and place of residence. Embedded in
   pages/polish-political-analyses/political-attitudes.typ; works on its own too.
   Data: attitudes.json (the index) and one <slug>.json per attitude beside this file, written by
@@ -42,6 +43,9 @@ a:hover{color:var(--accent-hover)}
 .seg button:disabled{opacity:.4;cursor:default}
 .seg.small button{height:28px;font-size:12.5px;padding:0 10px}
 .ctl{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--soft)}
+button,input,select{font-family:inherit}
+select.sel{height:32px;border:1px solid var(--faint);border-radius:8px;padding:0 8px;background:#fff;color:var(--ink);font-size:13.5px;max-width:min(330px,100%)}
+select.sel:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,0,0,.14)}
 .switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none;color:var(--soft)}
 .switch input{appearance:none;width:34px;height:20px;border-radius:999px;background:var(--faint);position:relative;cursor:pointer;margin:0;transition:background .15s}
 .switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
@@ -96,11 +100,11 @@ svg text:not([font-weight]){font-weight:300}
   <div id="ui" hidden>
     <div class="head">
       <div>
-        <div class="label">Political attitudes in Poland</div>
+        <div class="label">Social and political trends in Poland</div>
         <h2 id="title"></h2>
         <p class="asof" id="measure"></p>
       </div>
-      <div class="seg" id="attitudes" role="group" aria-label="Attitude"></div>
+      <label class="ctl">Attitude <select class="sel" id="attitudes"></select></label>
     </div>
     <div class="toolbar" style="margin-top:12px">
       <div class="seg" id="breaks" role="group" aria-label="Breakdown"></div>

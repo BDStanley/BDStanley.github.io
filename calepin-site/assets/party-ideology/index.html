@@ -170,11 +170,12 @@ svg text:not([font-weight]){font-weight:300}
           <label class="ctl">Across <select class="sel" id="xdim"></select></label>
           <label class="ctl">Up <select class="sel" id="ydim"></select></label>
           <span class="ctl">Colour by <span class="seg small" id="colourby">
-            <button type="button" data-c="populist">PopuList</button>
             <button type="button" data-c="family">Party family</button>
+            <button type="button" data-c="populist">PopuList</button>
             <button type="button" data-c="none">None</button>
           </span></span>
           <label class="switch"><input type="checkbox" id="trails"> Paths of Polish parties</label>
+          <label class="switch"><input type="checkbox" id="fitlines"> Fit lines</label>
           <label class="switch" id="mapvoterswitch"><input type="checkbox" id="mapvoters"> Party voters</label>
         </div>
         <p class="notice" id="mapnotice" hidden></p>
@@ -197,11 +198,13 @@ svg text:not([font-weight]){font-weight:300}
       <section class="view" id="v-populism" aria-label="Populism" hidden>
         <div class="toolbar">
           <label class="ctl">Up <select class="sel" id="popy"></select></label>
+          <label class="switch"><input type="checkbox" id="popfit"> Fit lines</label>
           <span class="help">Across: the salience of anti-elite rhetoric for the party, as experts rate it. Colour: PopuList's classification.</span>
         </div>
         <p class="notice" id="popnotice" hidden></p>
         <div class="chartbox" id="popbox"><svg id="pop" role="img" aria-label="Anti-elite rhetoric against PopuList classification"></svg><div class="tip" id="poptip" hidden></div></div>
         <div class="legend" id="poplegend"></div>
+        <p class="help" id="popfitnote"></p>
         <div class="three" id="popcards"></div>
       </section>
       <section class="view" id="v-time" aria-label="Polish parties over time" hidden>
@@ -211,7 +214,7 @@ svg text:not([font-weight]){font-weight:300}
       </section>
       <section class="view" id="v-voters" aria-label="Polish parties and their voters" hidden>
         <div class="toolbar">
-          <span class="ctl">Issue <span class="seg small" id="vdims"></span></span>
+          <label class="ctl">Issue <select class="sel" id="vdims"></select></label>
         </div>
         <p class="notice" id="vnotice" hidden></p>
         <div class="chartbox" id="vbox"><svg id="vt" role="img" aria-label="Polish parties' positions beside their own voters'"></svg><div class="tip" id="vtip" hidden></div></div>

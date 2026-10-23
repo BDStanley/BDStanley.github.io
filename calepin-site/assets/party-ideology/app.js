@@ -11,7 +11,7 @@
  * Views: Map (any two dimensions), Profile (one party on every dimension
  * against a comparison group), Populism (anti-elite rhetoric against PopuList),
  * Over time (Polish parties at each wave), Parties and voters (each Polish
- * party beside its own voters, from the Political attitudes trends in
+ * party beside its own voters, from the Social and political trends in
  * ideology.json's voters) and Party systems (polarisation and alignment by
  * country). The panel follows the selected party. State goes into
  * the parent page's URL hash, as in the Polling tracker; #pt=<Party tracker id>
@@ -141,7 +141,7 @@ function neighbours(r, pool, k) {
 }
 
 // ---- state ----------------------------------------------------------------------------------
-const S = {view: "map", wave: 2024, scope: "eu", x: "lrecon", y: "galtan", colour: "populist", trails: true, voters: false,
+const S = {view: "map", wave: 2024, scope: "eu", x: "lrecon", y: "galtan", colour: "family", trails: true, voters: false, fit: true,
   sel: 2605, group: "scope", prev: true, popY: "galtan", measure: "galtan", vdim: "lrgen"};
 const VIEWS = ["map", "profile", "populism", "time", "voters", "systems"];
 
@@ -154,9 +154,10 @@ function stateString() {
   if (S.scope !== "eu") q.set("s", S.scope);
   if (S.x !== "lrecon") q.set("x", S.x);
   if (S.y !== "galtan") q.set("y", S.y);
-  if (S.colour !== "populist") q.set("c", S.colour);
+  if (S.colour !== "family") q.set("c", S.colour);
   if (!S.trails) q.set("t", "0");
   if (S.voters) q.set("vo", "1");
+  if (!S.fit) q.set("fl", "0");
   if (S.group !== "scope") q.set("g", S.group);
   if (S.popY !== "galtan") q.set("py", S.popY);
   if (S.measure !== "galtan") q.set("m", S.measure);
@@ -188,6 +189,7 @@ function restoreHash() {
   if (["populist", "family", "none"].includes(q.get("c"))) S.colour = q.get("c");
   if (q.get("t") === "0") S.trails = false;
   if (q.get("vo") === "1") S.voters = true;
+  if (q.get("fl") === "0") S.fit = false;
   if (["scope", "family", "pop"].includes(q.get("g"))) S.group = q.get("g");
   if (DIM.has(q.get("py"))) S.popY = q.get("py");
   if (["lrgen", "lrecon", "galtan", "align"].includes(q.get("m"))) S.measure = q.get("m");
@@ -225,7 +227,7 @@ function rowTip(r, dims) {
 
 // ---- controls -------------------------------------------------------------------------------
 function dimOptions(sel, current, w, filter) {
-  const groups = [...new Set(D.dims.map(d => d.group))];
+  const groups = [...new Set(D.dims.filter(d => !filter || filter(d)).map(d => d.group))];
   sel.innerHTML = groups.map(g => `<optgroup label="${esc(g)}">` + D.dims.filter(d => d.group === g && (!filter || filter(d))).map(d =>
     `<option value="${d.id}"${d.id === current ? " selected" : ""}${d.waves.includes(w) ? "" : " disabled"}>${esc(d.label)}${d.waves.includes(w) ? "" : " (not asked in " + w + ")"}</option>`).join("") + "</optgroup>").join("");
 }
@@ -236,12 +238,12 @@ function renderControls() {
   document.querySelectorAll("#colourby button").forEach(b => b.setAttribute("aria-pressed", b.dataset.c === S.colour));
   document.querySelectorAll("#groups button").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === S.group));
   document.querySelectorAll("#measures button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === S.measure));
-  $("vdims").innerHTML = (D.voters ? D.voters.dims : []).map(d => `<button type="button" data-vd="${d.id}" aria-pressed="${d.id === S.vdim}">${esc(DIM.get(d.id).label)}</button>`).join("");
-  $("trails").checked = S.trails; $("prev").checked = S.prev;
+  if (D.voters) dimOptions($("vdims"), (D.voters.dims.find(d => d.id === S.vdim) || D.voters.dims[0]).id, S.wave, d => voterDims().includes(d.id));
+  $("trails").checked = S.trails; $("prev").checked = S.prev; $("fitlines").checked = S.fit; $("popfit").checked = S.fit;
   const vok = mapHasVoters(), vsw = $("mapvoterswitch");
   $("mapvoters").checked = S.voters && vok; $("mapvoters").disabled = !vok;
   vsw.hidden = !D.voters; vsw.classList.toggle("off", !vok);
-  vsw.title = vok ? "Each Polish party's own voters, from the Political attitudes trends" : `Shown when both axes have a voters' measure: ${voterDims().map(id => DIM.get(id).label).join(", ")}`;
+  vsw.title = vok ? "Each Polish party's own voters, from the Social and political trends" : "Shown when both axes have a voters' measure (the issues under Parties and voters)";
   dimOptions($("xdim"), S.x, S.wave); dimOptions($("ydim"), S.y, S.wave);
   dimOptions($("popy"), S.popY, S.wave, d => d.id !== "antielite_salience");
   VIEWS.forEach(v => { $("v-" + v).hidden = v !== S.view; });
@@ -251,9 +253,41 @@ function renderControls() {
 // The map can add each Polish party's own voters where both axes have a voters' measure
 // (D.voters, on 0-10; European integration's 1-7 axis takes them rescaled)
 const voterDims = () => D.voters ? D.voters.dims.map(d => d.id) : [];
+const voterDim = id => D.voters ? D.voters.dims.find(d => d.id === id) : null;
 const mapHasVoters = () => S.x !== S.y && voterDims().includes(S.x) && voterDims().includes(S.y);
 const onAxis = (d, v) => d.min + v / 10 * (d.max - d.min);
 let MAPV = [], MAPVALL = null;
+// Smoothed fit of y on x: local linear regression with tricube weights over the nearest span × n
+// points (LOESS, as R's loess(degree = 1)), evaluated across the range of x. Under 20 points the
+// window is all of them (span 1), as narrower local fits through a handful of parties swing wildly;
+// a straight line for three or four points, none for fewer
+function smoothFit(pts, span = 0.75, k = 48) {
+  const n = pts.length;
+  if (n < 3) return null;
+  const x0 = Math.min(...pts.map(p => p.x)), x1 = Math.max(...pts.map(p => p.x));
+  if (x1 - x0 < 1e-9) return null;
+  const wls = (w, g) => {
+    let sw = 0, sx = 0, sy = 0, sxx = 0, sxy = 0;
+    pts.forEach((p, i) => { sw += w[i]; sx += w[i] * p.x; sy += w[i] * p.y; sxx += w[i] * p.x * p.x; sxy += w[i] * p.x * p.y; });
+    const den = sw * sxx - sx * sx;
+    if (sw <= 0) return null;
+    if (Math.abs(den) < 1e-12) return sy / sw;
+    const b = (sw * sxy - sx * sy) / den;
+    return (sy - b * sx) / sw + b * g;
+  };
+  if (n < 5) return [x0, x1].map(g => ({x: g, y: wls(pts.map(() => 1), g)}));
+  const q = n < 20 ? n : Math.max(3, Math.floor(span * n));
+  const out = [];
+  for (let i = 0; i < k; i++) {
+    const g = x0 + (x1 - x0) * i / (k - 1);
+    const d = pts.map(p => Math.abs(p.x - g)), h = Math.max([...d].sort((a, b) => a - b)[q - 1], 1e-9) * 1.0001;
+    const y = wls(d.map(v => v < h ? (1 - (v / h) ** 3) ** 3 : 0), g);
+    if (isNum(y)) out.push({x: g, y});
+  }
+  return out.length > 1 ? out : null;
+}
+const FIT_PL = INK, FIT_OTHER = "#8F8F8F";
+let FITN = {pl: 0, other: 0};
 function axisTicks(d) { const t = []; for (let v = d.min; v <= d.max + 1e-9; v += (d.max - d.min > 6 ? 2 : 1)) t.push(v); return t; }
 function scatter(svgId, boxId, xd, yd, w, opts) {
   const box = $(boxId), svg = $(svgId);
@@ -286,6 +320,19 @@ function scatter(svgId, boxId, xd, yd, w, opts) {
   for (const r of back) {
     const c = opts.colour(r), pc = popCat(r.pop), hollow = opts.hollow && pc.bl;
     o.push(`<circle data-k="r:${r.i}" cx="${sx(r.v[xd.id]).toFixed(1)}" cy="${sy(r.v[yd.id]).toFixed(1)}" r="${rad(r.vote).toFixed(1)}" fill="${hollow ? "#fff" : c}" fill-opacity="${hollow ? 1 : fill}" stroke="${hollow ? c : "#fff"}" stroke-width="${hollow ? 1.6 : 0.8}"></circle>`);
+  }
+  // smoothed fits: one through the Polish parties, one through the other parties compared
+  if (opts.fit) FITN = {pl: 0, other: 0};
+  if (opts.fit && xd.id !== yd.id) {
+    const sets = [["pl", rows.filter(r => r.p.pl), FIT_PL, ""], ["other", S.scope === "pl" ? [] : back.concat(sel && !sel.pl && inScope(sel) ? rows.filter(r => r.p === sel) : []), FIT_OTHER, ' stroke-dasharray="7 4"']];
+    for (const [k, set, col, dash] of sets) {
+      const f = smoothFit(set.map(r => ({x: r.v[xd.id], y: r.v[yd.id]})));
+      if (!f) continue;
+      FITN[k] = set.length;
+      const d = f.map((p, i) => (i ? "L" : "M") + sx(p.x).toFixed(1) + "," + sy(clamp(p.y, yd.min, yd.max)).toFixed(1)).join("");
+      o.push(`<path d="${d}" fill="none" stroke="#fff" stroke-width="5.5" stroke-opacity=".85" stroke-linejoin="round" pointer-events="none"></path>`);
+      o.push(`<path d="${d}" fill="none" stroke="${col}" stroke-width="2.4"${dash} stroke-linejoin="round" stroke-linecap="round" pointer-events="none"></path>`);
+    }
   }
   // trails of Polish parties: earlier waves joined to this one
   if (opts.trails) {
@@ -388,17 +435,33 @@ function renderMap() {
     n.innerHTML = miss.map(d => `${esc(d.label)} was not asked in ${w}; it was asked in ${d.waves.join(", ")}.`).join(" ") + " Pick another dimension or wave.";
   } else n.hidden = true;
   const voters = S.voters && mapHasVoters() && !miss.length;
-  const rows = scatter("map", "mapbox", xd, yd, w, {colour: r => partyColour(r.p, r), hollow: S.colour === "populist", trails: S.trails, spread: true, voters});
+  const rows = scatter("map", "mapbox", xd, yd, w, {colour: r => partyColour(r.p, r), hollow: S.colour === "populist", trails: S.trails, spread: true, voters, fit: S.fit});
   $("maplegend").innerHTML = legendHtml(S.colour, true) + `<span><span class="dot" style="background:${INK}"></span>Polish parties in their own colours</span>`
-    + (voters ? `<span><span class="diam" style="border-color:${INK}"></span>Its voters</span><span><span class="diam" style="border-color:#8F8F8F;background:#8F8F8F"></span>All voters</span>` : "");
-  const pa = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Political attitudes</a>`;
+    + (voters ? `<span><span class="diam" style="border-color:${INK}"></span>Its voters</span><span><span class="diam" style="border-color:#8F8F8F;background:#8F8F8F"></span>All voters</span>` : "")
+    + fitLegend();
+  const pa = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Social and political trends</a>`;
   const shown = rows.filter(r => inScope(r.p)).length;
   $("mapnote").innerHTML = `${shown} parties rated in the ${w} wave (fieldwork ${esc(D.meta.fieldwork[w])})${S.scope !== "pl" ? ", sized by vote" : ""}; Polish parties are sized by the vote for the list they ran on. `
     + (w === 2024 ? "The whiskers on the selected party show the spread (one SD) of the experts' ratings. " : "")
     + (S.trails ? "Paths join each Polish party's positions at earlier waves (labelled by year). " : "")
-    + (voters ? `Diamonds are each Polish party's own voters at the wave's fieldwork month, from my ${pa} trends, joined to the party by a dashed line (with 80% intervals for the selected party); grey is all voters. ${MAPV.length ? "" : "No Polish party rated in " + w + " has a voter estimate on both axes. "}The voters' scales are survey measures placed on 0–10${[xd, yd].some(d => d.id === "eu_position") ? " (support for EU membership is a share of those with a view, divided by 10 and set on the 1–7 axis)" : ""}, not the experts' scale: read direction and order, not exact distances. `
-      : S.voters && !mapHasVoters() ? `Party voters can be shown when both axes are among ${voterDims().map(id => esc(DIM.get(id).label)).join(", ")}. ` : "")
+    + fitNote(xd, yd)
+    + (voters ? `Diamonds are each Polish party's own voters at the wave's fieldwork month, from my ${pa}, joined to the party by a dashed line (with 80% intervals for the selected party); grey is all voters. ${MAPV.length ? "" : "No Polish party rated in " + w + " has a voter estimate on both axes. "}The voters' scales are survey measures placed on 0–10${[xd, yd].some(d => d.id === "eu_position" && voterDim(d.id).share) ? " (support for EU membership is a share of those with a view, divided by 10 and set on the 1–7 axis)" : ""}, not the experts' scale: read direction and order, not exact distances. `
+      : S.voters && !mapHasVoters() ? `Party voters can be shown when both axes are among the issues under Parties and voters. ` : "")
     + "Hover over a party for its ratings; click to select it.";
+}
+
+// The fit lines' legend entries and note, from the last scatter drawn (FITN)
+const comparedName = () => S.scope === "cee" ? "other parties in Central and Eastern Europe" : "other parties across Europe";
+function fitLegend() {
+  if (!S.fit) return "";
+  const sw = (c, dash) => `<svg width="24" height="8" aria-hidden="true"><line x1="0" x2="24" y1="4" y2="4" stroke="${c}" stroke-width="2.4"${dash ? ' stroke-dasharray="7 4"' : ""}/></svg>`;
+  return (FITN.pl ? `<span>${sw(FIT_PL)}Fit: Polish parties</span>` : "") + (FITN.other ? `<span>${sw(FIT_OTHER, true)}Fit: ${comparedName()}</span>` : "");
+}
+function fitNote(xd, yd) {
+  if (!S.fit || !(FITN.pl || FITN.other)) return S.fit && xd.id !== yd.id ? "Too few parties are rated on both axes for a fit line. " : "";
+  const parts = [FITN.pl ? `a solid line through the ${FITN.pl} Polish parties${FITN.pl < 5 ? " (a straight line, as there are fewer than five)" : ""}` : "",
+    FITN.other ? `a dashed grey line through the ${FITN.other} ${comparedName()}` : ""].filter(Boolean);
+  return `Fit lines show how ${esc(yd.label)} varies with ${esc(xd.label)}: ${parts.join(" and ")}. They are smoothed (LOESS: local linear with tricube weights, over the nearest three-quarters of the parties, or over all of them where fewer than 20 are rated, as in Poland), with each party counting once whatever its vote. `;
 }
 
 // ---- profile --------------------------------------------------------------------------------
@@ -483,8 +546,9 @@ function renderPopulism() {
   }
   n.hidden = !(!yd.waves.includes(w));
   if (!yd.waves.includes(w)) n.innerHTML = `${esc(yd.label)} was not asked in ${w}. Pick another dimension.`;
-  scatter("pop", "popbox", xd, yd, w, {colour: r => POPC[popCat(r.pop).k].col, hollow: true, trails: false, spread: true});
-  $("poplegend").innerHTML = legendHtml("populist", true) + `<span><span class="dot" style="background:${INK}"></span>Polish parties in their own colours</span>`;
+  scatter("pop", "popbox", xd, yd, w, {colour: r => POPC[popCat(r.pop).k].col, hollow: true, trails: false, spread: true, fit: S.fit});
+  $("poplegend").innerHTML = legendHtml("populist", true) + `<span><span class="dot" style="background:${INK}"></span>Polish parties in their own colours</span>` + fitLegend();
+  $("popfitnote").innerHTML = fitNote(xd, yd);
   const rows = (BYW.get(w) || []).filter(r => inScope(r.p) && isNum(r.v.antielite_salience));
   const pos = rows.filter(r => st(r.pop, "populist") === 2).map(r => r.v.antielite_salience);
   const neg = rows.filter(r => st(r.pop, "populist") === 0).map(r => r.v.antielite_salience);
@@ -561,9 +625,9 @@ function renderTime() {
 
 // ---- parties and voters ---------------------------------------------------------------------
 // Each Polish party as CHES experts place it (filled dot) beside its own voters (ring, with an 80%
-// interval) and all voters (dashed line, grey band), on one 0–10 scale (CHES left-right, economic
-// left-right and GAL-TAN are already on it): European integration is
-// rescaled from 1–7, and support for EU membership (a share of those with a view) divided by 10.
+// interval) and all voters (dashed line, grey band), on one 0–10 scale (every CHES scale but
+// European integration is already on it): European integration is rescaled from 1–7, and support
+// for EU membership (a share of those with a view, share: true) divided by 10.
 let VROWS = [], VALL = null;
 function renderVoters() {
   const V = D.voters, box = $("vbox"), svg = $("vt"), notice = $("vnotice");
@@ -609,13 +673,16 @@ function renderVoters() {
     `<span><span class="ring" style="border-color:${INK}"></span>Its voters, with 80% interval</span>` +
     `<span><svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="#8F8F8F" stroke-width="1.5" stroke-dasharray="5 4"/></svg>All voters</span>`;
   const month = V.month[w] ? MON[+V.month[w].slice(5, 7) - 1] + " " + V.month[w].slice(0, 4) : String(w);
-  const link = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Political attitudes</a>`;
-  const pooled = (what, issues, ends) => `${what} as CHES experts rated each party in ${w}, beside the average position of the party's own voters on ${issues} (${ends}), from my ${link} trends for ${month}. The voters' scale pools survey questions placed on 0–10; it is not the experts' scale, so read the order and the gaps, not equal numbers as agreement. `;
-  $("vhelp").innerHTML = ({
-    eu_position: `European integration as CHES experts rated each party in ${w}, rescaled from 1–7 to 0–10, beside support for EU membership among the party's own voters with a view, divided by 10 (8 means 80% support), from my ${link} trends for ${month}. The two are different kinds of measure, a position on a scale and a share, so read the order and the gaps, not equal numbers as agreement. `,
-    lrecon: pooled("Economic left–right", "questions about redistribution, state and market, taxes and welfare", "0 left, 10 right"),
-    galtan: pooled("GAL–TAN", "questions about abortion, gay and lesbian rights, the Church and the state, immigration and nationalism", "0 libertarian, 10 traditional")
-  }[dv.id] || `Left–right overall as CHES experts rated each party in ${w}, beside the average left–right self-placement of the party's own voters (0 left, 10 right), from my ${link} trends for ${month}. Experts place parties and voters place themselves; voters bunch towards the centre, so a party further out than its voters is not necessarily out of step with them. `)
+  const link = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Social and political trends</a>`;
+  const pooled = (what, issues, ends) => `${what} as CHES experts rated each party in ${w}, beside the average position of the party's own voters on ${issues} (${ends}), from my ${link} for ${month}. The voters' scale pools survey questions placed on 0–10; it is not the experts' scale, so read the order and the gaps, not equal numbers as agreement. `;
+  const ends = `0 ${d.lo.toLowerCase()}, 10 ${d.hi.toLowerCase()}`;
+  $("vhelp").innerHTML = (dv.share
+    ? `European integration as CHES experts rated each party in ${w}, rescaled from 1–7 to 0–10, beside support for EU membership among the party's own voters with a view, divided by 10 (8 means 80% support), from my ${link} for ${month}. The two are different kinds of measure, a position on a scale and a share, so read the order and the gaps, not equal numbers as agreement. `
+    : {
+      lrgen: `Left–right overall as CHES experts rated each party in ${w}, beside the average left–right self-placement of the party's own voters (0 left, 10 right), from my ${link} for ${month}. Experts place parties and voters place themselves; voters bunch towards the centre, so a party further out than its voters is not necessarily out of step with them. `,
+      lrecon: pooled("Economic left–right", "questions about redistribution, state and market, taxes and welfare", "0 left, 10 right"),
+      galtan: pooled("GAL–TAN", "questions about abortion, gay and lesbian rights, the Church and the state, immigration, the environment and nationalism", "0 libertarian, 10 traditional")
+    }[dv.id] || pooled(d.label + (d.max !== 10 ? `, rescaled from ${d.min}–${d.max} to 0–10,` : ""), `questions on ${dv.attitude.toLowerCase()}`, ends))
     + `A party's voters are those who intended to vote for it, or voted for it at the last Sejm election, followed across elections by lineage (PO with KO, SLD with Nowa Lewica); parties whose voters no survey reports apart are left out. Hover for values; click a party to select it.`;
 }
 function votersTip(k) {
@@ -861,7 +928,7 @@ async function png() {
       g.fillStyle = SOFT; g.fillText(c.label, lx + 14, H + top + 15); lx += 24 + g.measureText(c.label).width;
     }
     g.fillStyle = MUTED; g.font = "11px Jost, Helvetica, Arial, sans-serif";
-    const src = S.view === "voters" ? "Parties: Chapel Hill Expert Survey. Voters: Political attitudes, benstanley.eu." : "Chapel Hill Expert Survey 1999–2024; The PopuList 4.0. Polish parties in their own colours.";
+    const src = S.view === "voters" ? "Parties: Chapel Hill Expert Survey. Voters: Social and political trends, benstanley.eu." : "Chapel Hill Expert Survey 1999–2024; The PopuList 4.0. Polish parties in their own colours.";
     g.fillText(`${src} ${D.meta.credit}`, 10, H + top + (leg.length ? 35 : 15));
     cv.toBlob(b => download(`party-ideology-${S.view}-${S.wave}.png`, b), "image/png");
   };
@@ -906,11 +973,12 @@ function wire() {
   $("colourby").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.colour = b.dataset.c; render(); });
   $("groups").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.group = b.dataset.g; render(); });
   $("measures").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.measure = b.dataset.m; render(); });
-  $("vdims").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.vdim = b.dataset.vd; render(); });
+  $("vdims").addEventListener("change", e => { S.vdim = e.target.value; render(); });
   $("xdim").addEventListener("change", e => { S.x = e.target.value; render(); });
   $("ydim").addEventListener("change", e => { S.y = e.target.value; render(); });
   $("popy").addEventListener("change", e => { S.popY = e.target.value; render(); });
   $("trails").addEventListener("change", e => { S.trails = e.target.checked; render(); });
+  for (const id of ["fitlines", "popfit"]) $(id).addEventListener("change", e => { S.fit = e.target.checked; render(); });
   $("mapvoters").addEventListener("change", e => { S.voters = e.target.checked; render(); });
   $("prev").addEventListener("change", e => { S.prev = e.target.checked; render(); });
   const rowHtml = dims => k => { const [kind, v] = k.split(":"); return kind === "r" ? rowTip(ROWS[+v], dims()) : kind === "v" || kind === "va" ? mapVoterTip(kind, +v) : null; };

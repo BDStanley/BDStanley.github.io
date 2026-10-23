@@ -1,12 +1,14 @@
-// Political attitudes: long-run trends in Polish public opinion.
+// Social and political trends (formerly Political attitudes): long-run trends in Polish society and
+// public opinion.
 // Reads attitudes.json (the index) and one <slug>.json per attitude, both written by
 // "Political attitudes/web/build_web.R" in the Polish political analyses repo. Each attitude's
 // file holds a monthly latent trend (median and bands), the same for every group of each
 // breakdown, the survey readings behind it and a few events. An attitude is a percentage (a share
 // of those taking a side) unless its meta.scale says it is an average position on a scale (left-
 // right self-placement, 0-10), which gets its own axis, a centre line and no percent signs. An
-// attitude pooled from several issues (economic left-right, GAL-TAN) has no anchor question; its
-// issues' own trends come as one more breakdown, "issue", offered only where it exists.
+// attitude pooled from many questions has no anchor question and reads on the scale of an average
+// one; one pooled from several issues (economic left-right, GAL-TAN) has its issues' own trends as
+// one more breakdown, "issue", offered only where it exists.
 // No libraries.
 "use strict";
 
@@ -20,7 +22,9 @@ const FAMILY_COLOURS = {
   "CBOS": "#8B0000", "Eurobarometer": "#2C6E8F", "Central and Eastern Eurobarometer": "#5B8DB8", "Candidate Countries Eurobarometer": "#7FA7CF",
   "European Social Survey": "#B0416E", "Polish National Election Study (PGSW)": "#D0A020",
   "Polish General Social Survey (PGSS)": "#5E8C31", "European Election Study": "#3B2A5A", "Commercial polls": "#8F8F8F",
-  "Consolidation of Democracy in CEE": "#9C7A3C", "SWPS online panels": "#6F6F6F"
+  "Consolidation of Democracy in CEE": "#9C7A3C", "SWPS online panels": "#6F6F6F",
+  "Flash Eurobarometer": "#A9C4DE", "European Values Study": "#1B7F79", "World Values Survey": "#56B4A9",
+  "Pew Global Attitudes": "#E08A00", "Polish Panel Survey (POLPAN)": "#7A4F9A", "Other surveys": "#B5A27A"
 };
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const MON = MONTHS.map(m => m.slice(0, 3));
@@ -108,8 +112,25 @@ function buildSeg(id, opts, cur, onPick, disabled = new Set()) {
     box.appendChild(b);
   });
 }
+// The attitudes, in the index's order, under their group headings (attitudes.csv's group)
+function buildAttitudes() {
+  const sel = $("attitudes"); sel.innerHTML = "";
+  let og = null, last;
+  IDX.attitudes.forEach(a => {
+    if (a.group && a.group !== last) { og = html("optgroup", { label: a.group }); sel.appendChild(og); last = a.group; }
+    const o = html("option", { value: a.slug }, a.title);
+    if (a.slug === S.a) o.selected = true;
+    (a.group ? og : sel).appendChild(o);
+  });
+}
+async function pickAttitude(v) {
+  if (v === S.a) return;
+  S.a = v; S.hide.clear(); await loadAttitude(v);
+  if (!D.groupings.some(g => g.id === S.b)) S.b = "all";
+  render();
+}
 function renderControls() {
-  buildSeg("attitudes", IDX.attitudes.map(a => [a.slug, a.short]), S.a, async v => { if (v === S.a) return; S.a = v; S.hide.clear(); await loadAttitude(v); if (!D.groupings.some(g => g.id === S.b)) S.b = "all"; render(); });
+  buildAttitudes();
   const have = new Set(["all", ...D.groupings.map(g => g.id)]);
   const breaks = BREAKS.filter(b => b[0] !== "issue" || have.has("issue"));
   buildSeg("breaks", breaks, S.b, v => { S.b = v; S.hide.clear(); render(); }, new Set(breaks.map(b => b[0]).filter(b => !have.has(b))));
@@ -339,11 +360,11 @@ function renderLegend() {
     const [x0, x1] = periodRange();
     D.events.forEach((e, k) => { const x = dateToYear(e.d); if (x >= x0 && x <= x1) lg.innerHTML += `<span class="muted">${k + 1}. ${esc(e.label)}</span>`; });
   }
-  const pooled = D.groupings.some(g => g.id === "issue");
+  const pooled = D.groupings.some(g => g.id === "issue"), anchored = D.items.some(it => it.role === "anchor");
   const notes = {
-    all: pooled
-      ? "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from an average question on its issue, and for how far its issue stood from the others that month. Hover over the chart for the month's estimate, or over a dot for the survey."
-      : "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from CBOS's question. Hover over the chart for the month's estimate, or over a dot for the survey.",
+    all: "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from " +
+      (pooled ? "an average question on its issue, and for how far its issue stood from the others that month" : anchored ? "CBOS's question" : "an average question") +
+      ". Hover over the chart for the month's estimate, or over a dot for the survey.",
     issue: "Each issue's trend pools the questions that ask about it, read on the scale of an average question on that issue; the national line is the average of the issue trends, each issue counting equally. Each dot is one survey's reading of a question on that issue. An issue no survey asked about for a while moves in parallel with the others.",
     party: "Party preference is the party respondents intend to vote for or voted for at the last Sejm election, followed across elections by party lineage (SLD to Lewica, PO to KO and so on). Lines are shown while a party existed and its voters were surveyed.",
     age: "Age at the time of the survey.",
@@ -353,7 +374,8 @@ function renderLegend() {
     residence: "Size of the respondent's town or city. Sources that ask people to describe where they live (Eurobarometer, ESS) count as a mix of the two town groups."
   };
   const base = S.b === "all" || S.b === "issue" ? "" : "Between surveys that report this breakdown, each group's line follows the national trend at its last known distance from it, and its interval widens. "
-    + (pooled ? "Each group has its own distance on each issue, and its line is the average over the issues, so it does not swing with whichever issue happens to be asked. " : "");
+    + (pooled ? "Each group has its own distance on each issue, and its line is the average over the issues, so it does not swing with whichever issue happens to be asked. " : "")
+    + (S.b === "party" && D.meta.government_term ? "Because this attitude depends on who governs, each party's line also shifts when its party enters or leaves government, by an amount estimated from earlier changes of government; after a change that no survey has yet covered, the line rests on that estimate. " : "");
   $("note").textContent = (base + (notes[S.b] || "")).trim();
 }
 
@@ -411,7 +433,8 @@ function renderItems() {
   });
   const issues = (D.groupings.find(g => g.id === "issue") || {groups: []}).groups.length;
   $("srcnote").textContent = `${D.items.length} questions from ${D.meta.sources.length} kinds of source. Each question has its own level and sensitivity, estimated from where its readings overlap with others; ` +
-    (issues ? `the questions are grouped into ${issues} issues, and the trend is the average of the issue trends, read on the scale of an average question.` : `the trend is read on the scale of the anchor question.`);
+    (issues ? `the questions are grouped into ${issues} issues, and the trend is the average of the issue trends, read on the scale of an average question.`
+      : D.items.some(it => it.role === "anchor") ? `the trend is read on the scale of the anchor question.` : `the trend is read on the scale of an average question.`);
 }
 
 // ---- share, downloads ---------------------------------------------------------------------
@@ -486,6 +509,7 @@ async function init() {
     $("loading").textContent = "The data could not be loaded. Please try again later."; console.error(e); return;
   }
   $("loading").hidden = true; $("ui").hidden = false;
+  $("attitudes").onchange = e => pickAttitude(e.target.value);
   $("pts").onchange = e => { S.pts = e.target.checked; render(); };
   $("evs").onchange = e => { S.ev = e.target.checked; render(); };
   $("dlcsv").onclick = csv; $("dlpng").onclick = png;
