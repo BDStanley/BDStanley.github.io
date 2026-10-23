@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality of democracy: Poland in V-Dem, 1990–2025</title>
+<meta name="theme-color" content="#8B0000">
+<!--
+  Quality of democracy: the state of Polish democracy since 1990 in V-Dem's expert-coded
+  indicators, against the other EU member states and the United Kingdom. Embedded in
+  pages/polish-political-analyses/quality-of-democracy.typ; works on its own too.
+  Data: democracy.json, political-context.json and democracy-countries.json (loaded only when a
+  comparison needs it) beside this file, written by "Quality of democracy/analysis/export_web.R"
+  in the Polish political analyses repo and copied here by scripts/sync-analyses.py on each
+  build. Logic in app.js; no libraries.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#141414; --soft:#4B4B4B; --muted:#767676; --faint:#D5D5D5; --rule:#ECECEC;
+  --chip:#F3F3F1; --accent:#8B0000; --accent-hover:#495057; --tint:#F6EBEB; --warn:#8A5A00;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-weight:400;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:14px}
+button,input,select{font-family:inherit;font-size:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-hover)}
+.app{height:100vh;display:flex;flex-direction:column;gap:10px;padding:12px 16px}
+.asof{font-size:12.5px;color:var(--muted);line-height:1.45}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--chip);border-radius:999px}
+.seg button{border:0;border-radius:999px;padding:0 13px;height:32px;font-size:13.5px;font-weight:500;cursor:pointer;background:transparent;color:var(--soft)}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg.small button{height:28px;font-size:12.5px;padding:0 10px}
+.ctl{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--soft)}
+select.sel{height:30px;border:1px solid var(--faint);border-radius:8px;padding:0 6px;background:#fff;color:var(--ink);font-size:13px;max-width:260px}
+select.sel:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,0,0,.14)}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none}
+.switch input{appearance:none;width:34px;height:20px;border-radius:999px;background:var(--faint);position:relative;cursor:pointer;margin:0;transition:background .15s}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{left:16px}
+.chips{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 6px 0 10px;border-radius:999px;border:1px solid var(--faint);background:#fff;color:var(--ink);font-size:12.5px}
+.chip button{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:0 4px;border-radius:999px}
+.chip button:hover{color:var(--accent)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.btn2{height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--faint);background:transparent;color:var(--ink);font-size:13px;font-weight:500;cursor:pointer}
+.btn2:hover{border-color:var(--accent);color:var(--accent)}
+.spacer{flex:1}
+.stage{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:2px}
+.view{display:flex;flex-direction:column;gap:10px}
+.view[hidden]{display:none}
+.help{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0;max-width:980px}
+.lead{font-size:13.5px;color:var(--soft);line-height:1.5;margin:0;max-width:980px}
+.notice{font-size:13px;color:var(--warn);line-height:1.45;margin:0;padding:8px 12px;border-radius:10px;background:#FBF4E6}
+.chartbox{position:relative;border:1px solid var(--rule);border-radius:14px;padding:10px 12px 6px}
+.chartbox svg{display:block;width:100%;height:auto;font-family:Jost,"Avenir Next",sans-serif;overflow:visible;user-select:none;touch-action:pan-y}
+.chartbox svg:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:6px}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;
+  font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:5;min-width:170px;max-width:320px}
+.tip b{font-weight:600}
+.tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.tip .r span:last-child{white-space:nowrap}
+.tip .s{color:var(--muted);font-size:11.5px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:20px;height:10px;border-radius:2px;flex:none}
+.sw.line{height:0;border-top:2.6px solid;border-radius:0}
+.sw.dash{height:0;border-top:2px dashed #4B4B4B;border-radius:0}
+.sw.dots{height:0;border-top:2px dotted #4B4B4B;border-radius:0}
+.sw.band{background:rgba(161,29,29,.16)}
+.sw.iqr{background:rgba(0,0,0,.07);border:1px solid var(--faint)}
+.sw.ghost{height:0;border-top:1px solid rgba(0,0,0,.25);border-radius:0}
+.evcard{border:1px solid var(--faint);border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.45;display:flex;flex-direction:column;gap:4px;max-width:760px}
+.evcard .s{color:var(--muted);font-size:12px}
+.evcard .links{display:flex;flex-wrap:wrap;gap:4px 16px}
+.evcard .x{align-self:flex-end;margin-top:-6px;border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:12px}
+.tscroll{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:13px}
+table.t th{font-weight:500;color:var(--muted);text-align:right;padding:4px 8px;border-bottom:1px solid var(--rule);font-size:12px;vertical-align:bottom}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t td{padding:5px 8px;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.t td:first-child{white-space:normal}
+table.t.left th,table.t.left td{text-align:left}
+table.t td .s,table.t th .s{color:var(--muted);font-size:11.5px;font-weight:400}
+table.t tr.pl td{background:var(--tint)}
+table.t tr[data-c]{cursor:pointer}
+table.t tr[data-c]:hover td{background:#FAF5F5}
+table.t tr.on td:first-child{font-weight:500}
+.id{font-size:11px;color:var(--muted);font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.within{color:var(--muted);font-size:11.5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.card{border:1px solid var(--faint);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.card h3{margin:0;font-size:14px;font-weight:500;display:flex;align-items:center;gap:7px}
+.card .kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px}
+.card .kv span:nth-child(odd){color:var(--soft)}
+.card .kv span:nth-child(even){text-align:right;font-weight:500}
+.methods{max-width:900px;display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.55;color:var(--ink)}
+.methods h3{font-size:15px;font-weight:500;margin:8px 0 0;color:var(--accent)}
+.methods p{margin:0}
+.methods ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+.toast.on{opacity:1}
+.loading{padding:40px;color:var(--muted);font-size:15px}
+@media (max-width:960px){ .app{height:auto} .stage{overflow:visible} }
+/* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
+svg text:not([font-weight]){font-weight:300}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="asof" id="asof">Loading the V-Dem data…</div>
+  <div class="toolbar" id="ui" hidden>
+    <div class="seg" id="views" role="tablist" aria-label="View">
+      <button type="button" role="tab" data-v="overview">Overview</button>
+      <button type="button" role="tab" data-v="explain">Explain the score</button>
+      <button type="button" role="tab" data-v="context">Poland in context</button>
+      <button type="button" role="tab" data-v="polarisation">Polarisation</button>
+      <button type="button" role="tab" data-v="methods">Methods and data</button>
+    </div>
+    <span class="ctl">Years <select class="sel" id="from" aria-label="First year"></select>–<select class="sel" id="to" aria-label="Last year"></select></span>
+    <span class="ctl">Compare with <span class="seg small" id="regions" aria-label="Comparison"></span></span>
+    <span class="ctl"><select class="sel" id="addc" aria-label="Add a country to compare"></select><span class="chips" id="chips"></span></span>
+    <label class="switch"><input type="checkbox" id="u" checked> 68% intervals</label>
+    <label class="switch"><input type="checkbox" id="ctx" checked> Context</label>
+    <span class="spacer"></span>
+    <button type="button" class="btn2" id="share">Copy link</button>
+    <button type="button" class="btn2" id="dlcsv">CSV</button>
+    <button type="button" class="btn2" id="dlpng">PNG</button>
+  </div>
+  <div class="stage" id="stage">
+    <section class="view" id="v-overview" aria-label="Overview" hidden>
+      <p class="lead" id="ovlead"></p>
+      <div class="chartbox"><svg id="fig-overview" role="img" aria-label="Five democracy indices for Poland"></svg><div class="tip" id="tip-overview" hidden></div></div>
+      <div class="legend" id="leg-overview"></div>
+      <div id="card-overview"></div>
+      <div class="tscroll" id="read-overview"></div>
+    </section>
+    <section class="view" id="v-explain" aria-label="Explain the score" hidden>
+      <div class="toolbar"><div class="seg small" id="lenses" role="tablist" aria-label="Lens"></div></div>
+      <p class="lead" id="lenslead"></p>
+      <div class="chartbox"><svg id="fig-explain" role="img" aria-label="The measures in the selected lens"></svg><div class="tip" id="tip-explain" hidden></div></div>
+      <div class="legend" id="leg-explain"></div>
+      <div id="card-explain"></div>
+      <div class="tscroll" id="read-explain"></div>
+    </section>
+    <section class="view" id="v-context" aria-label="Poland in context" hidden>
+      <div class="toolbar">
+        <label class="ctl">Measure <select class="sel" id="measure"></select></label>
+        <span class="ctl">Show <span class="seg small" id="cmode">
+          <button type="button" data-cm="region">Region</button>
+          <button type="button" data-cm="countries">Countries</button>
+        </span></span>
+      </div>
+      <p class="help" id="cxhelp"></p>
+      <div class="chartbox"><svg id="fig-context" role="img" aria-label="Poland against the other countries"></svg><div class="tip" id="tip-context" hidden></div></div>
+      <div class="legend" id="leg-context"></div>
+      <div id="card-context"></div>
+      <div class="cards" id="ccards"></div>
+      <div class="toolbar"><span class="ctl">Order by <span class="seg small" id="csort">
+        <button type="button" data-so="level">Score in the selected year</button>
+        <button type="button" data-so="change">Change since the first year</button>
+      </span></span><span class="help">Click a country to add it to the comparison, or remove it.</span></div>
+      <div class="tscroll" id="ranks"></div>
+    </section>
+    <section class="view" id="v-polarisation" aria-label="Polarisation" hidden>
+      <p class="lead" id="pzlead"></p>
+      <div class="chartbox"><svg id="fig-polarisation" role="img" aria-label="Polarisation in V-Dem and in Sejm roll calls"></svg><div class="tip" id="tip-polarisation" hidden></div></div>
+      <div class="legend" id="leg-polarisation"></div>
+      <div id="card-polarisation"></div>
+      <p class="help" id="pzlinks"></p>
+      <div class="tscroll" id="read-polarisation"></div>
+    </section>
+    <section class="view" id="v-methods" aria-label="Methods and data" hidden>
+      <div class="methods" id="methods"></div>
+    </section>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../chart-export.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

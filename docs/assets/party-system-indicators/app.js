@@ -740,7 +740,7 @@ function renderNatPanel() {
   p.innerHTML = `<h3>Each list in <b>${e}</b></h3>
     <div class="kpis"><span>System score <b>${f3(E["psns_" + lv])}</b></span><span>${lv === "gmina" ? "gminas" : "constituencies"} <b>${int(E["units_" + lv])}</b></span><span>ENP inflation <b>${pct(E.enp_inflation)}</b></span></div>
     <div class="chartbox plain" id="nsbox"><svg id="ns" role="img" aria-label="Each list's nationalisation score against its vote share"></svg><div class="tip" hidden></div></div>
-    <p class="note">Filled dots won seats; the dashed line is the system score, the vote-weighted mean of those lists. The vote axis is logarithmic. Regional lists, above all the German minority, sit at the bottom.${e === 1991 ? " The KBW files for 1991 omit 64 small lists (3% of the vote), so 1991 covers only the lists in them." : ""}</p>`;
+    <p class="note">Filled dots won seats; the dashed line is the system score, the vote-weighted mean of those lists. The vote axis is logarithmic. Regional lists, above all the German minority, sit at the bottom.${e === 1991 ? " The KBW files for 1991 omit 64 small lists (3% of the vote), so 1991 covers only the lists in them." : ""} Click a list to map its vote on <a href="../../pages/polish-political-analyses/election-results.html#e=sejm-${e}" target="_top">Election results</a>.</p>`;
   bindChart("ns");
   const W = frameW("nsbox"), H = Math.round(clamp(W * 0.8, 250, 360)), m = { l: 36, r: 12, t: 10, b: 32 };
   const vmin = 0.0005, vmax = 0.6, L = v => Math.log10(Math.max(v, vmin));
@@ -755,7 +755,7 @@ function renderNatPanel() {
   const named = new Set([...rows].filter(r => r.v >= 0.05).sort((a, b) => b.v - a.v).slice(0, 6).map(r => r.id));
   const labs = [];
   rows.forEach((r, i) => {
-    o.push(`<circle data-i="${i}" cx="${X(r.v)}" cy="${Y(r.spns)}" r="${r.seats > 0 ? 5 : 3.5}" fill="${r.seats > 0 ? r.col : "#fff"}" stroke="${r.col}" stroke-width="1.4" style="cursor:default"/>`);
+    o.push(`<circle data-i="${i}" cx="${X(r.v)}" cy="${Y(r.spns)}" r="${r.seats > 0 ? 5 : 3.5}" fill="${r.seats > 0 ? r.col : "#fff"}" stroke="${r.col}" stroke-width="1.4" style="cursor:pointer"/>`);
     if (named.has(r.id) || (r.seats > 0 && r.spns < 0.5)) labs.push({ text: shortList(r.list), x: X(r.v) + 7, y: Y(r.spns) });
   });
   declutter(labs).forEach(l => o.push(`<text x="${Math.min(l.x, W - l.w - 2)}" y="${l.y + 4}" font-size="11" font-weight="500" fill="${INK}" pointer-events="none">${esc(l.text)}</text>`));
@@ -765,7 +765,13 @@ function renderNatPanel() {
     move(mx, my, ev) {
       const c = ev.target.closest("[data-i]"); if (!c) return null;
       const r = rows[+c.dataset.i];
-      return tipHead(r.list, r.name !== r.list ? esc(r.name) : "") + tipRow(r.col, "Nationalisation", f3(r.spns)) + tipRow(null, "Vote", pct(r.v, 2)) + tipRow(null, "Seats", int(r.seats)) + (r.coverage < 0.999 ? `<div class="sub">Files hold ${pct(r.coverage)} of its vote</div>` : "");
+      return tipHead(r.list, r.name !== r.list ? esc(r.name) : "") + tipRow(r.col, "Nationalisation", f3(r.spns)) + tipRow(null, "Vote", pct(r.v, 2)) + tipRow(null, "Seats", int(r.seats)) + (r.coverage < 0.999 ? `<div class="sub">Files hold ${pct(r.coverage)} of its vote</div>` : "") + `<div class="sub">Click to map it on Election results</div>`;
+    },
+    // Election results maps the list by its committee id (it=), by gmina or constituency as here
+    click(mx, my, ev) {
+      const c = ev.target.closest("[data-i]"); if (!c) return;
+      const r = rows[+c.dataset.i];
+      hashTarget().location.href = `../../pages/polish-political-analyses/election-results.html#e=sejm-${e}&m=share&it=${encodeURIComponent(r.id)}${lv === "constituency" ? "&l=c" : ""}`;
     }
   };
 }
