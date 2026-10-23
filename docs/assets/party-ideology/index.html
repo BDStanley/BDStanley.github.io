@@ -48,6 +48,9 @@ select.sel:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rg
 .switch input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
 .switch input:checked{background:var(--accent)}
 .switch input:checked::after{left:16px}
+.switch.off{opacity:.45;cursor:default}
+.switch.off input{cursor:default}
+.diam{width:8px;height:8px;flex:none;display:inline-block;background:#fff;border:2px solid;transform:rotate(45deg);margin:0 3px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--faint);background:#fff;color:var(--ink);font-size:12.5px;cursor:pointer}
 .chip[aria-pressed="true"]{border-color:var(--accent);background:var(--tint);color:var(--accent)}
@@ -172,6 +175,7 @@ svg text:not([font-weight]){font-weight:300}
             <button type="button" data-c="none">None</button>
           </span></span>
           <label class="switch"><input type="checkbox" id="trails"> Paths of Polish parties</label>
+          <label class="switch" id="mapvoterswitch"><input type="checkbox" id="mapvoters"> Party voters</label>
         </div>
         <p class="notice" id="mapnotice" hidden></p>
         <div class="chartbox" id="mapbox"><svg id="map" role="img" aria-label="Parties placed on two ideological dimensions"></svg><div class="tip" id="maptip" hidden></div></div>

@@ -141,7 +141,7 @@ function neighbours(r, pool, k) {
 }
 
 // ---- state ----------------------------------------------------------------------------------
-const S = {view: "map", wave: 2024, scope: "eu", x: "lrecon", y: "galtan", colour: "populist", trails: true,
+const S = {view: "map", wave: 2024, scope: "eu", x: "lrecon", y: "galtan", colour: "populist", trails: true, voters: false,
   sel: 2605, group: "scope", prev: true, popY: "galtan", measure: "galtan", vdim: "lrgen"};
 const VIEWS = ["map", "profile", "populism", "time", "voters", "systems"];
 
@@ -156,6 +156,7 @@ function stateString() {
   if (S.y !== "galtan") q.set("y", S.y);
   if (S.colour !== "populist") q.set("c", S.colour);
   if (!S.trails) q.set("t", "0");
+  if (S.voters) q.set("vo", "1");
   if (S.group !== "scope") q.set("g", S.group);
   if (S.popY !== "galtan") q.set("py", S.popY);
   if (S.measure !== "galtan") q.set("m", S.measure);
@@ -186,6 +187,7 @@ function restoreHash() {
   if (DIM.has(q.get("y"))) S.y = q.get("y");
   if (["populist", "family", "none"].includes(q.get("c"))) S.colour = q.get("c");
   if (q.get("t") === "0") S.trails = false;
+  if (q.get("vo") === "1") S.voters = true;
   if (["scope", "family", "pop"].includes(q.get("g"))) S.group = q.get("g");
   if (DIM.has(q.get("py"))) S.popY = q.get("py");
   if (["lrgen", "lrecon", "galtan", "align"].includes(q.get("m"))) S.measure = q.get("m");
@@ -236,12 +238,22 @@ function renderControls() {
   document.querySelectorAll("#measures button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === S.measure));
   $("vdims").innerHTML = (D.voters ? D.voters.dims : []).map(d => `<button type="button" data-vd="${d.id}" aria-pressed="${d.id === S.vdim}">${esc(DIM.get(d.id).label)}</button>`).join("");
   $("trails").checked = S.trails; $("prev").checked = S.prev;
+  const vok = mapHasVoters(), vsw = $("mapvoterswitch");
+  $("mapvoters").checked = S.voters && vok; $("mapvoters").disabled = !vok;
+  vsw.hidden = !D.voters; vsw.classList.toggle("off", !vok);
+  vsw.title = vok ? "Each Polish party's own voters, from the Political attitudes trends" : `Shown when both axes have a voters' measure: ${voterDims().map(id => DIM.get(id).label).join(", ")}`;
   dimOptions($("xdim"), S.x, S.wave); dimOptions($("ydim"), S.y, S.wave);
   dimOptions($("popy"), S.popY, S.wave, d => d.id !== "antielite_salience");
   VIEWS.forEach(v => { $("v-" + v).hidden = v !== S.view; });
 }
 
 // ---- scatter (map and populism) -------------------------------------------------------------
+// The map can add each Polish party's own voters where both axes have a voters' measure
+// (D.voters, on 0-10; European integration's 1-7 axis takes them rescaled)
+const voterDims = () => D.voters ? D.voters.dims.map(d => d.id) : [];
+const mapHasVoters = () => S.x !== S.y && voterDims().includes(S.x) && voterDims().includes(S.y);
+const onAxis = (d, v) => d.min + v / 10 * (d.max - d.min);
+let MAPV = [], MAPVALL = null;
 function axisTicks(d) { const t = []; for (let v = d.min; v <= d.max + 1e-9; v += (d.max - d.min > 6 ? 2 : 1)) t.push(v); return t; }
 function scatter(svgId, boxId, xd, yd, w, opts) {
   const box = $(boxId), svg = $(svgId);
@@ -285,6 +297,32 @@ function scatter(svgId, boxId, xd, yd, w, opts) {
       for (const r of pts.slice(0, -1)) o.push(`<circle data-k="r:${r.i}" cx="${sx(r.v[xd.id]).toFixed(1)}" cy="${sy(r.v[yd.id]).toFixed(1)}" r="3.2" fill="#fff" stroke="${p.col}" stroke-width="1.5"></circle><text x="${(sx(r.v[xd.id]) + 5).toFixed(1)}" y="${(sy(r.v[yd.id]) - 4).toFixed(1)}" font-size="9.5" fill="${MUTED}" pointer-events="none">${String(r.w).slice(2)}</text>`);
     }
   }
+  // each Polish party's own voters: a diamond joined to the party by a dashed line, all voters in grey
+  const vobs = [];
+  if (svgId === "map") { MAPV = []; MAPVALL = null; }
+  if (opts.voters) {
+    const V = D.voters, at = (d, pid) => V.parties.find(q => q.d === d && q.w === w && q.p === pid);
+    MAPV = rows.filter(r => r.p.pl && inScope(r.p)).map(r => ({r, a: at(xd.id, r.p.id), b: at(yd.id, r.p.id)})).filter(x => x.a && x.b);
+    const ax = V.all.find(q => q.d === xd.id && q.w === w), ay = V.all.find(q => q.d === yd.id && q.w === w);
+    MAPVALL = ax && ay ? {a: ax, b: ay} : null;
+    const diamond = (x, y, s) => `M${x.toFixed(1)},${(y - s).toFixed(1)}L${(x + s).toFixed(1)},${y.toFixed(1)}L${x.toFixed(1)},${(y + s).toFixed(1)}L${(x - s).toFixed(1)},${y.toFixed(1)}Z`;
+    if (MAPVALL) {
+      const x = sx(onAxis(xd, MAPVALL.a.m)), y = sy(onAxis(yd, MAPVALL.b.m));
+      o.push(`<path data-k="va:0" d="${diamond(x, y, 6.5)}" fill="#8F8F8F" stroke="#fff" stroke-width="1.5"></path>`);
+      o.push(`<text x="${(x + 9).toFixed(1)}" y="${(y + 4).toFixed(1)}" font-size="11" fill="${SOFT}" stroke="#fff" stroke-width="3" paint-order="stroke" pointer-events="none">All voters</text>`);
+      vobs.push({x1: x - 7, x2: x + 66, y1: y - 9, y2: y + 7});
+    }
+    MAPV.forEach((v, i) => {
+      const r = v.r, px = sx(r.v[xd.id]), py = sy(r.v[yd.id]), x = sx(onAxis(xd, v.a.m)), y = sy(onAxis(yd, v.b.m)), on = r.p === sel;
+      o.push(`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${r.p.col}" stroke-width="${on ? 1.8 : 1.3}" stroke-opacity="${on ? 0.8 : 0.55}" stroke-dasharray="4 3" pointer-events="none"></line>`);
+      if (on) {
+        o.push(`<line x1="${sx(onAxis(xd, v.a.lo)).toFixed(1)}" x2="${sx(onAxis(xd, v.a.hi)).toFixed(1)}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${r.p.col}" stroke-width="1.5" stroke-opacity=".6"></line>`);
+        o.push(`<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${sy(onAxis(yd, v.b.lo)).toFixed(1)}" y2="${sy(onAxis(yd, v.b.hi)).toFixed(1)}" stroke="${r.p.col}" stroke-width="1.5" stroke-opacity=".6"></line>`);
+      }
+      o.push(`<path data-k="v:${i}" d="${diamond(x, y, on ? 7 : 6)}" fill="#fff" stroke="${r.p.col}" stroke-width="2.2" style="cursor:pointer"></path>`);
+      vobs.push({x1: x - 7, x2: x + 7, y1: y - 7, y2: y + 7});
+    });
+  }
   // Polish parties, and the selected party wherever it is from
   const front = rows.filter(r => (r.p.pl && inScope(r.p)) || r.p === sel);
   if (opts.spread && w === 2024) for (const r of front) {
@@ -303,7 +341,7 @@ function scatter(svgId, boxId, xd, yd, w, opts) {
     labels.push({x, y, r: rr + (on ? 4 : 0), t: r.p.pl ? nameOf(r.p) : `${r.p.abbr} (${r.p.ctry.iso})`, on, i: r.i});
   }
   o.push(yPoles);
-  o.push(placeLabels(labels, W, H, m, [...labels.map(l => ({x1: l.x - l.r, x2: l.x + l.r, y1: l.y - l.r, y2: l.y + l.r})),
+  o.push(placeLabels(labels, W, H, m, [...labels.map(l => ({x1: l.x - l.r, x2: l.x + l.r, y1: l.y - l.r, y2: l.y + l.r})), ...vobs,
     {x1: m.l, x2: m.l + 10 + yd.hi.length * 6.4, y1: m.t, y2: m.t + 16}, {x1: m.l, x2: m.l + 10 + yd.lo.length * 6.4, y1: H - m.b - 18, y2: H - m.b}]));
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.innerHTML = o.join("");
@@ -349,12 +387,17 @@ function renderMap() {
     n.hidden = false;
     n.innerHTML = miss.map(d => `${esc(d.label)} was not asked in ${w}; it was asked in ${d.waves.join(", ")}.`).join(" ") + " Pick another dimension or wave.";
   } else n.hidden = true;
-  const rows = scatter("map", "mapbox", xd, yd, w, {colour: r => partyColour(r.p, r), hollow: S.colour === "populist", trails: S.trails, spread: true});
-  $("maplegend").innerHTML = legendHtml(S.colour, true) + `<span><span class="dot" style="background:${INK}"></span>Polish parties in their own colours</span>`;
+  const voters = S.voters && mapHasVoters() && !miss.length;
+  const rows = scatter("map", "mapbox", xd, yd, w, {colour: r => partyColour(r.p, r), hollow: S.colour === "populist", trails: S.trails, spread: true, voters});
+  $("maplegend").innerHTML = legendHtml(S.colour, true) + `<span><span class="dot" style="background:${INK}"></span>Polish parties in their own colours</span>`
+    + (voters ? `<span><span class="diam" style="border-color:${INK}"></span>Its voters</span><span><span class="diam" style="border-color:#8F8F8F;background:#8F8F8F"></span>All voters</span>` : "");
+  const pa = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Political attitudes</a>`;
   const shown = rows.filter(r => inScope(r.p)).length;
   $("mapnote").innerHTML = `${shown} parties rated in the ${w} wave (fieldwork ${esc(D.meta.fieldwork[w])})${S.scope !== "pl" ? ", sized by vote" : ""}; Polish parties are sized by the vote for the list they ran on. `
     + (w === 2024 ? "The whiskers on the selected party show the spread (one SD) of the experts' ratings. " : "")
     + (S.trails ? "Paths join each Polish party's positions at earlier waves (labelled by year). " : "")
+    + (voters ? `Diamonds are each Polish party's own voters at the wave's fieldwork month, from my ${pa} trends, joined to the party by a dashed line (with 80% intervals for the selected party); grey is all voters. ${MAPV.length ? "" : "No Polish party rated in " + w + " has a voter estimate on both axes. "}The voters' scales are survey measures placed on 0–10${[xd, yd].some(d => d.id === "eu_position") ? " (support for EU membership is a share of those with a view, divided by 10 and set on the 1–7 axis)" : ""}, not the experts' scale: read direction and order, not exact distances. `
+      : S.voters && !mapHasVoters() ? `Party voters can be shown when both axes are among ${voterDims().map(id => esc(DIM.get(id).label)).join(", ")}. ` : "")
     + "Hover over a party for its ratings; click to select it.";
 }
 
@@ -518,7 +561,8 @@ function renderTime() {
 
 // ---- parties and voters ---------------------------------------------------------------------
 // Each Polish party as CHES experts place it (filled dot) beside its own voters (ring, with an 80%
-// interval) and all voters (dashed line, grey band), on one 0–10 scale: European integration is
+// interval) and all voters (dashed line, grey band), on one 0–10 scale (CHES left-right, economic
+// left-right and GAL-TAN are already on it): European integration is
 // rescaled from 1–7, and support for EU membership (a share of those with a view) divided by 10.
 let VROWS = [], VALL = null;
 function renderVoters() {
@@ -566,9 +610,12 @@ function renderVoters() {
     `<span><svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="#8F8F8F" stroke-width="1.5" stroke-dasharray="5 4"/></svg>All voters</span>`;
   const month = V.month[w] ? MON[+V.month[w].slice(5, 7) - 1] + " " + V.month[w].slice(0, 4) : String(w);
   const link = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Political attitudes</a>`;
-  $("vhelp").innerHTML = (dv.id === "eu_position"
-    ? `European integration as CHES experts rated each party in ${w}, rescaled from 1–7 to 0–10, beside support for EU membership among the party's own voters with a view, divided by 10 (8 means 80% support), from my ${link} trends for ${month}. The two are different kinds of measure, a position on a scale and a share, so read the order and the gaps, not equal numbers as agreement. `
-    : `Left–right overall as CHES experts rated each party in ${w}, beside the average left–right self-placement of the party's own voters (0 left, 10 right), from my ${link} trends for ${month}. Experts place parties and voters place themselves; voters bunch towards the centre, so a party further out than its voters is not necessarily out of step with them. `)
+  const pooled = (what, issues, ends) => `${what} as CHES experts rated each party in ${w}, beside the average position of the party's own voters on ${issues} (${ends}), from my ${link} trends for ${month}. The voters' scale pools survey questions placed on 0–10; it is not the experts' scale, so read the order and the gaps, not equal numbers as agreement. `;
+  $("vhelp").innerHTML = ({
+    eu_position: `European integration as CHES experts rated each party in ${w}, rescaled from 1–7 to 0–10, beside support for EU membership among the party's own voters with a view, divided by 10 (8 means 80% support), from my ${link} trends for ${month}. The two are different kinds of measure, a position on a scale and a share, so read the order and the gaps, not equal numbers as agreement. `,
+    lrecon: pooled("Economic left–right", "questions about redistribution, state and market, taxes and welfare", "0 left, 10 right"),
+    galtan: pooled("GAL–TAN", "questions about abortion, gay and lesbian rights, the Church and the state, immigration and nationalism", "0 libertarian, 10 traditional")
+  }[dv.id] || `Left–right overall as CHES experts rated each party in ${w}, beside the average left–right self-placement of the party's own voters (0 left, 10 right), from my ${link} trends for ${month}. Experts place parties and voters place themselves; voters bunch towards the centre, so a party further out than its voters is not necessarily out of step with them. `)
     + `A party's voters are those who intended to vote for it, or voted for it at the last Sejm election, followed across elections by lineage (PO with KO, SLD with Nowa Lewica); parties whose voters no survey reports apart are left out. Hover for values; click a party to select it.`;
 }
 function votersTip(k) {
@@ -580,6 +627,15 @@ function votersTip(k) {
   const voters = `<div class="r"><span>${esc(x.v.g)} voters</span><span>${fmt(x.v.m)} <span class="s">(${fmt(x.v.lo)}–${fmt(x.v.hi)})</span></span></div>`;
   const all = VALL ? `<div class="r s"><span>All voters</span><span>${fmt(VALL.m)}</span></div>` : "";
   return `<b>${esc(nameOf(x.p))}</b> <span class="s">${S.wave}</span>${party}${voters}${all}<div class="s">Voters: ${esc(dv.measure)}; 80% interval in brackets.</div>`;
+}
+// The map's electorates: the party's own voters (or all voters) on both axes, beside the experts' rating
+function mapVoterTip(kind, i) {
+  const xd = DIM.get(S.x), yd = DIM.get(S.y), dv = id => D.voters.dims.find(d => d.id === id);
+  const row = (d, q, party) => `<div class="r"><span>${esc(d.label)}</span><span>${fmt(q.m)} <span class="s">(${fmt(q.lo)}–${fmt(q.hi)})</span>${isNum(party) ? ` <span class="s">· party ${fmt(norm10(d, party))}</span>` : ""}</span></div>`;
+  if (kind === "va") return MAPVALL ? `<b>All voters</b> <span class="s">${S.wave}</span>${row(xd, MAPVALL.a)}${row(yd, MAPVALL.b)}<div class="s">On 0–10, 80% interval in brackets. ${esc(dv(xd.id).measure)}; ${esc(dv(yd.id).measure).replace(/^./, c => c.toLowerCase())}.</div>` : null;
+  const v = MAPV[i]; if (!v) return null;
+  return `<b>${esc(nameOf(v.r.p))} voters</b> <span class="s">${S.wave} · ${esc(v.a.g)}</span>${row(xd, v.a, v.r.v[xd.id])}${row(yd, v.b, v.r.v[yd.id])}` +
+    `<div class="s">Voters on 0–10, 80% interval in brackets, beside the party as experts rate it (also on 0–10). ${esc(dv(xd.id).measure)}; ${esc(dv(yd.id).measure).replace(/^./, c => c.toLowerCase())}.</div>`;
 }
 
 // ---- party systems --------------------------------------------------------------------------
@@ -855,8 +911,9 @@ function wire() {
   $("ydim").addEventListener("change", e => { S.y = e.target.value; render(); });
   $("popy").addEventListener("change", e => { S.popY = e.target.value; render(); });
   $("trails").addEventListener("change", e => { S.trails = e.target.checked; render(); });
+  $("mapvoters").addEventListener("change", e => { S.voters = e.target.checked; render(); });
   $("prev").addEventListener("change", e => { S.prev = e.target.checked; render(); });
-  const rowHtml = dims => k => { const [kind, v] = k.split(":"); return kind === "r" ? rowTip(ROWS[+v], dims()) : null; };
+  const rowHtml = dims => k => { const [kind, v] = k.split(":"); return kind === "r" ? rowTip(ROWS[+v], dims()) : kind === "v" || kind === "va" ? mapVoterTip(kind, +v) : null; };
   hoverChart("map", "mapbox", "maptip", rowHtml(() => [S.x, S.y]));
   hoverChart("pop", "popbox", "poptip", rowHtml(() => ["antielite_salience", S.popY]));
   const sysTip = k => {
@@ -869,7 +926,7 @@ function wire() {
   $("vt").addEventListener("click", e => { const t = e.target.closest("[data-k]"); if (!t) return; const x = VROWS[+t.dataset.k.split(":")[1]]; if (x) select(x.p.id); });
   hoverChart("systime", "systimebox", "systimetip", sysTip);
   hoverChart("sysrank", "sysrankbox", "sysranktip", sysTip);
-  const clickRow = e => { const t = e.target.closest("[data-k]"); if (!t) return; const [kind, v] = t.dataset.k.split(":"); if (kind === "r") select(ROWS[+v].p.id); };
+  const clickRow = e => { const t = e.target.closest("[data-k]"); if (!t) return; const [kind, v] = t.dataset.k.split(":"); if (kind === "r") select(ROWS[+v].p.id); else if (kind === "v" && MAPV[+v]) select(MAPV[+v].r.p.id); };
   $("map").addEventListener("click", clickRow);
   $("pop").addEventListener("click", clickRow);
   document.addEventListener("click", e => {

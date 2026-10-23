@@ -9,7 +9,7 @@
   "my_works": 49,
   "first_year": 2008,
   "self_citing_works": 16,
-  "works_without_country": 484,
+  "works_without_country": 485,
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
@@ -1338,9 +1338,9 @@
    "code": "PL",
    "name": "Poland",
    "scholars": 160,
-   "works": 154,
+   "works": 153,
    "colour": "#8b0000",
-   "tip": "Poland: 160 citing scholars, in 154 citing works",
+   "tip": "Poland: 160 citing scholars, in 153 citing works",
    "w": 0.6751
   },
   {

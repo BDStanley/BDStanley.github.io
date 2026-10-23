@@ -4,14 +4,16 @@
 // file holds a monthly latent trend (median and bands), the same for every group of each
 // breakdown, the survey readings behind it and a few events. An attitude is a percentage (a share
 // of those taking a side) unless its meta.scale says it is an average position on a scale (left-
-// right self-placement, 0-10), which gets its own axis, a centre line and no percent signs.
+// right self-placement, 0-10), which gets its own axis, a centre line and no percent signs. An
+// attitude pooled from several issues (economic left-right, GAL-TAN) has no anchor question; its
+// issues' own trends come as one more breakdown, "issue", offered only where it exists.
 // No libraries.
 "use strict";
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
 const ACCENT = "#8B0000";
-const BREAKS = [["all", "Everyone"], ["party", "Party"], ["age", "Age"], ["sex", "Gender"], ["age_sex", "Age and gender"], ["educ", "Education"], ["residence", "Place of residence"]];
+const BREAKS = [["all", "Everyone"], ["issue", "Issue"], ["party", "Party"], ["age", "Age"], ["sex", "Gender"], ["age_sex", "Age and gender"], ["educ", "Education"], ["residence", "Place of residence"]];
 const PERIODS = [["all", "All years"], ["2004", "Since 2004"], ["10y", "Last 10 years"]];
 // Colours for the survey readings in the national view, by source family
 const FAMILY_COLOURS = {
@@ -109,7 +111,8 @@ function buildSeg(id, opts, cur, onPick, disabled = new Set()) {
 function renderControls() {
   buildSeg("attitudes", IDX.attitudes.map(a => [a.slug, a.short]), S.a, async v => { if (v === S.a) return; S.a = v; S.hide.clear(); await loadAttitude(v); if (!D.groupings.some(g => g.id === S.b)) S.b = "all"; render(); });
   const have = new Set(["all", ...D.groupings.map(g => g.id)]);
-  buildSeg("breaks", BREAKS, S.b, v => { S.b = v; S.hide.clear(); render(); }, new Set(BREAKS.map(b => b[0]).filter(b => !have.has(b))));
+  const breaks = BREAKS.filter(b => b[0] !== "issue" || have.has("issue"));
+  buildSeg("breaks", breaks, S.b, v => { S.b = v; S.hide.clear(); render(); }, new Set(breaks.map(b => b[0]).filter(b => !have.has(b))));
   buildSeg("periods", PERIODS, S.p, v => { S.p = v; render(); });
   $("pts").checked = S.pts; $("evs").checked = S.ev;
   $("title").textContent = D.meta.title;
@@ -174,7 +177,9 @@ function draw() {
     const halo = { stroke: "#fff", "stroke-width": 3, "paint-order": "stroke" };
     const up = el("text", { x: m.l + 6, y: m.t + 12, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); up.textContent = `↑ ${SC.hi}`;
     const dn = el("text", { x: m.l + 6, y: H - m.b - 6, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); dn.textContent = `↓ ${SC.lo}`;
-    const ce = el("text", { x: m.l + 6, y: Y(SC.mid) - 5, "font-size": 11, fill: "#767676", ...halo }, gGrid); ce.textContent = "Centre";
+    // at the right-hand end when the centre line runs along the top or bottom, clear of the arrows
+    const edge = Y(SC.mid) < m.t + 22 || Y(SC.mid) > H - m.b - 22;
+    const ce = el("text", { x: edge ? W - m.r - 6 : m.l + 6, y: Y(SC.mid) + (Y(SC.mid) < m.t + 22 ? 13 : -5), "text-anchor": edge ? "end" : "start", "font-size": 11, fill: "#767676", ...halo }, gGrid); ce.textContent = "Centre";
   }
   const span = x1 - x0, step = niceStep(span) * (narrow && span > 12 ? 2 : 1);
   for (let y = Math.ceil(x0 / step) * step; y <= x1; y += step) {
@@ -299,7 +304,7 @@ function readingTip(r) {
   const it = D.itemById[r.i] || {};
   const who = r.g === "all" ? "" : ` · ${esc(r.k)}`;
   return `<b>${esc(it.family || r.i)}</b>${who}<div class="s">${esc(r.s)} · ${dateLabel(r.d)}</div>` +
-    `<div style="margin:4px 0">${esc(it.wording || "")}</div>` +
+    `<div style="margin:4px 0">${it.issue && r.g !== "issue" ? `<span class="s">${esc(it.issue)}:</span> ` : ""}${esc(it.wording || "")}</div>` +
     (isMean()
       ? `<div class="r"><span>${esc(SC.value || "Average")} (0 ${esc(SC.lo.toLowerCase())}, 10 ${esc(SC.hi.toLowerCase())})</span><span><b>${valRaw(r.raw)}</b></span></div>`
       : `<div class="r"><span>${esc(it.pro || "Pro")} among those taking a side</span><span><b>${fmt(r.raw)}%</b></span></div>`) +
@@ -334,8 +339,12 @@ function renderLegend() {
     const [x0, x1] = periodRange();
     D.events.forEach((e, k) => { const x = dateToYear(e.d); if (x >= x0 && x <= x1) lg.innerHTML += `<span class="muted">${k + 1}. ${esc(e.label)}</span>`; });
   }
+  const pooled = D.groupings.some(g => g.id === "issue");
   const notes = {
-    all: "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from CBOS's question. Hover over the chart for the month's estimate, or over a dot for the survey.",
+    all: pooled
+      ? "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from an average question on its issue, and for how far its issue stood from the others that month. Hover over the chart for the month's estimate, or over a dot for the survey."
+      : "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from CBOS's question. Hover over the chart for the month's estimate, or over a dot for the survey.",
+    issue: "Each issue's trend pools the questions that ask about it, read on the scale of an average question on that issue; the national line is the average of the issue trends, each issue counting equally. Each dot is one survey's reading of a question on that issue. An issue no survey asked about for a while moves in parallel with the others.",
     party: "Party preference is the party respondents intend to vote for or voted for at the last Sejm election, followed across elections by party lineage (SLD to Lewica, PO to KO and so on). Lines are shown while a party existed and its voters were surveyed.",
     age: "Age at the time of the survey.",
     sex: "",
@@ -343,7 +352,8 @@ function renderLegend() {
     educ: "Highest completed education: primary (including lower secondary), secondary (including basic vocational), higher.",
     residence: "Size of the respondent's town or city. Sources that ask people to describe where they live (Eurobarometer, ESS) count as a mix of the two town groups."
   };
-  const base = S.b === "all" ? "" : "Between surveys that report this breakdown, each group's line follows the national trend at its last known distance from it, and its interval widens. ";
+  const base = S.b === "all" || S.b === "issue" ? "" : "Between surveys that report this breakdown, each group's line follows the national trend at its last known distance from it, and its interval widens. "
+    + (pooled ? "Each group has its own distance on each issue, and its line is the average over the issues, so it does not swing with whichever issue happens to be asked. " : "");
   $("note").textContent = (base + (notes[S.b] || "")).trim();
 }
 
@@ -396,10 +406,12 @@ function renderItems() {
   const items = D.items.slice().sort((a, b) => (b.n + b.n_sub) - (a.n + a.n_sub));
   items.forEach(it => {
     const yrs = it.first.slice(0, 4) === it.last.slice(0, 4) ? it.first.slice(0, 4) : `${it.first.slice(0, 4)}–${it.last.slice(0, 4)}`;
-    t.innerHTML += `<tr><td class="l"><b style="font-weight:500">${esc(it.family)}</b>${it.role === "anchor" ? " <small>(anchor)</small>" : ""}<br><small>${esc(it.wording)}</small></td>` +
+    t.innerHTML += `<tr><td class="l"><b style="font-weight:500">${esc(it.family)}</b>${it.role === "anchor" ? " <small>(anchor)</small>" : ""}${it.issue ? ` <small>· ${esc(it.issue)}</small>` : ""}<br><small>${esc(it.wording)}</small></td>` +
       `<td>${it.n}${it.n_sub ? `<br><small>+${it.n_sub} by group</small>` : ""}</td><td>${yrs}</td></tr>`;
   });
-  $("srcnote").textContent = `${D.items.length} questions from ${D.meta.sources.length} kinds of source. Each question has its own level and sensitivity, estimated from where its readings overlap with others; the trend is read on the scale of the anchor question.`;
+  const issues = (D.groupings.find(g => g.id === "issue") || {groups: []}).groups.length;
+  $("srcnote").textContent = `${D.items.length} questions from ${D.meta.sources.length} kinds of source. Each question has its own level and sensitivity, estimated from where its readings overlap with others; ` +
+    (issues ? `the questions are grouped into ${issues} issues, and the trend is the average of the issue trends, read on the scale of an average question.` : `the trend is read on the scale of the anchor question.`);
 }
 
 // ---- share, downloads ---------------------------------------------------------------------
