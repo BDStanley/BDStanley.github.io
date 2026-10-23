@@ -27,7 +27,7 @@
         "Polish National Election Study (PGSW)"
       ],
       "updated": "2026-10-23",
-      "breakdowns": ["party", "age", "sex", "educ", "residence"]
+      "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     }
   ]
 }

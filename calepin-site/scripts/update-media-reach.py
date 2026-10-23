@@ -17,8 +17,14 @@ How articles are found:
     year from 2008 for the queries with enough results to need it (Google
     returns only its top matches).
   * Google Alerts: the RSS feeds listed under "alert_feeds" in
-    data/media-sync.json, read on every build. `--alerts` prints a link
+    data/media-sync.json, read with the searches. `--alerts` prints a link
     that opens Google Alerts with each query filled in.
+
+A normal build searches only on its first run of the month. The date of the
+last search is kept under "searched"; later builds that month count the
+stored articles again and read any still waiting, without asking Google for
+new ones. `--search` searches anyway. Only a search Google answers in full is
+recorded, so one it refuses partway is tried again on the next build.
 
 What is kept:
 
@@ -62,7 +68,7 @@ editing data/media-sync.json for instance. `--resolve` doesn't search either,
 but resolves and reads the articles still waiting (Google refuses to resolve
 many links in a row, so a backfill may leave some for later).
 
-Usage:  python3 scripts/update-media-reach.py [--backfill | --resolve | --offline] [--dry-run] [--alerts]
+Usage:  python3 scripts/update-media-reach.py [--backfill | --search | --resolve | --offline] [--dry-run] [--alerts]
 """
 
 import csv
@@ -429,8 +435,9 @@ def country_of(domain, names):
 # --- gathering -------------------------------------------------------------------
 
 def gather(backfill, feeds, log):
-    """[(candidate, query index)] from Google News and the alert feeds."""
-    found = []
+    """[(candidate, query index)] from Google News and the alert feeds, and
+    whether Google answered every search."""
+    found, complete = [], True
     this_year = datetime.date.today().year
     try:
         for i, (_, _, q, eds, _) in enumerate(QUERIES):
@@ -447,6 +454,7 @@ def gather(backfill, feeds, log):
                                                           (today + datetime.timedelta(days=1)).isoformat())]
     except urllib.error.HTTPError as e:
         # Google has started refusing; keep what came before.
+        complete = False
         log.append("[media-reach] Google News refused a search (HTTP %d); using the %d results so far." % (e.code, len(found)))
     for url in feeds:
         try:
@@ -458,7 +466,7 @@ def gather(backfill, feeds, log):
             # Filed under the query the alert was set up with, else as commentary.
             i = next((k for k, qq in enumerate(QUERIES) if qq[2] == c["alert"]), 0)
             found.append((c, i))
-    return found
+    return found, complete
 
 
 def check(rec, page_txt):
@@ -472,14 +480,14 @@ def file_under(rec):
     rec["category"], rec["idea"] = QUERIES[best][0], QUERIES[best][1]
 
 
-def process(old, sync, backfill, names, log, offline=False, resolve_only=False):
+def process(old, sync, backfill, names, log, offline=False, resolve_only=False, search=True):
     records = {r["key"]: r for r in old.get("records", [])}
     dropped = dict(old.get("dropped", {}))
     ignore = set(norm_url(u) for u in sync.get("ignore", {}))
     by_gid = {r["gid"]: r for r in records.values() if r.get("gid")}
     own = own_urls()
-    found = [] if offline or resolve_only else gather(backfill, sync.get("alert_feeds", []), log)
-    if not (offline or resolve_only):
+    found, searched = gather(backfill, sync.get("alert_feeds", []), log) if search else ([], False)
+    if search:
         log.append("[media-reach] %d results from Google." % len(found))
 
     for c, i in found:
@@ -560,7 +568,7 @@ def process(old, sync, backfill, names, log, offline=False, resolve_only=False):
         if k not in seen:
             seen.add(k)
             unique.append(rec)
-    return unique, dropped
+    return unique, dropped, searched
 
 
 # --- analysis ----------------------------------------------------------------------
@@ -745,9 +753,20 @@ def main():
     old = json.loads(original) if original else {}
     sync = json.load(open(SYNC, encoding="utf-8")) if os.path.exists(SYNC) else {}
     names = json.load(open(MAP, encoding="utf-8"))["names"]
+    today = datetime.date.today()
+    if backfill or "--search" in args:
+        search = True
+    elif offline or resolve_only:
+        search = False
+    else:
+        # A normal build searches on its first run of the month only.
+        search = old.get("searched", "")[:7] != today.strftime("%Y-%m")
+        if not search:
+            print("[media-reach] searched already this month (%s); next search in %s (--search to search now)."
+                  % (old["searched"], (today.replace(day=28) + datetime.timedelta(days=4)).strftime("%B")))
     log = []
     try:
-        records, dropped = process(old, sync, backfill, names, log, offline, resolve_only)
+        records, dropped, searched = process(old, sync, backfill, names, log, offline, resolve_only, search)
     except Exception as e:
         print("[media-reach] warning: could not read Google News (%s: %s); %s."
               % (type(e).__name__, e, "keeping the previous data" if old else "no data to show yet"))
@@ -760,7 +779,10 @@ def main():
         print("[media-reach] needs attention: %d articles now, down from %d; keeping the previous data."
               % (len(records), len(old.get("records", []))))
         return 0
-    data = analyse(records, names, datetime.date.today().strftime("%Y-%m"))
+    data = analyse(records, names, today.strftime("%Y-%m"))
+    last_search = today.isoformat() if searched else old.get("searched")
+    if last_search:
+        data["searched"] = last_search
     data["records"] = sorted(records, key=lambda r: (r["date"], r["key"]), reverse=True)
     data["dropped"] = dropped
     t = data["totals"]

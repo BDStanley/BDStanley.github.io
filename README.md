@@ -57,7 +57,7 @@ Edit the sources in `calepin-site/`, then rebuild. Never edit `docs/`.
 | Citation counts | Nothing: they update on each build (Scopus once its API key is in the Keychain). See [Citation counts](#citation-counts). |
 | The Citation reach page | Nothing for the numbers: they update on each build. The layout and text are in `pages/citation-reach.typ`, what is counted in `scripts/update-reach.py`. See [Citation reach](#citation-reach). |
 | The Policy reach page | Nothing for the numbers: they update on each build. The layout and text are in `pages/policy-reach.typ`; what is counted, the key ideas listed first and the organisations left out are in `scripts/update-policy-reach.py`. See [Policy reach](#policy-reach). |
-| The Media reach page | Nothing for the numbers: they update on each build. To drop a false match, add its address under `ignore` in `data/media-sync.json`; to add Google Alerts, paste their feed addresses under `alert_feeds`. The searches are `QUERIES` in `scripts/update-media-reach.py`. See [Media reach](#media-reach). |
+| The Media reach page | Nothing for the numbers: new articles are searched for on the first build of each month (`--search` to search sooner). To drop a false match, add its address under `ignore` in `data/media-sync.json`; to add Google Alerts, paste their feed addresses under `alert_feeds`. The searches are `QUERIES` in `scripts/update-media-reach.py`. See [Media reach](#media-reach). |
 | Home page | `index.typ`. Its bio is the first-person version of the full English bio in `bio.md`; change both. |
 | Media, Good Change | `pages/media.typ`, `pages/good-change.typ` |
 | The Kultura Liberalna list | Nothing: it updates on each build. To fix a title or add a missed piece, edit `data/kultura-liberalna.yml`; hand edits are kept. |
@@ -87,7 +87,7 @@ cd calepin-site && ./build.sh _site && calepin serve _site --open   # local prev
 9. refreshes the data behind the Citation reach, Policy reach and Media reach pages, `data/reach.json`, `data/policy-reach.json` and `data/media-reach.json` (see [Citation reach](#citation-reach), [Policy reach](#policy-reach) and [Media reach](#media-reach)), keeping the previous data for any source it cannot read;
 10. deletes the output folder and compiles the site into it, removes the theme and `.typ` sources Calepin copies across, and writes `CNAME`, an empty `.nojekyll` and a copy of the favicon at `/favicon.ico`.
 
-A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–8 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Kultura Liberalna list, the citation counts and the reach data.
+A preview build into `_site/` (git-ignored) leaves `docs/` alone, but steps 1–9 still update `cv/cv.yml`, the CV PDF, the Teaching pages, the Polish political analyses data, the Kultura Liberalna list, the citation counts and the reach data.
 
 The build needs Typst 0.15 or newer, Calepin, Python 3 (standard library only) and the Jost font, which the CV uses. `build.sh` uses `calepin` from the `PATH`, or else the copy bundled with the "Calepin for Typst" extension for Positron, VS Code or Cursor. Typst downloads the academicv package on the first compile.
 
@@ -216,7 +216,7 @@ Only documents and works that cite Ben's publications are counted, so an idea ta
   - the key ideas' phrases in several of those languages;
   - the joint work with Stanley Bill, and Pooling the Poles.
 
-  Each runs through Google News's RSS search (no key) in the edition of its language. A normal build asks only for the last 13 months. `--backfill` asks again with no dates, then year by year from 2008 for queries with enough results; it was run once to fill the archive and takes about half an hour.
+  Each runs through Google News's RSS search (no key) in the edition of its language. A normal build asks only for the last 13 months, and searches only on the first build of each month: the date of the last search is kept under `searched` in `data/media-reach.json`, and later builds that month recount the archive and read any articles still waiting without searching. A search Google refuses partway is not recorded, so the next build tries again. `--search` searches anyway. `--backfill` asks again with no dates, then year by year from 2008 for queries with enough results; it was run once to fill the archive and takes about half an hour.
 - **Checks:** each article's address is resolved from Google's link and its page read. It counts only if it names Ben (or uses the idea's phrase, or names the work) as its query requires. Its author and language are taken from the page. An unreadable page, or one that comes back as a short paywall stub without his name (as VG and Aftenposten serve automated readers), is kept and marked "not checked". Articles Ben wrote (his columns, listed on the Media page) are left out, as are pages on academic publishers' sites (`NOT_MEDIA`), which are academic citations. Rejected articles are remembered under `dropped`, so they are not fetched again. Google refuses to resolve many links in a row; any left over wait for later builds (up to 60 a build) or `--resolve`, which resolves and checks without searching.
 - **False matches** the check misses go under `ignore` in `data/media-sync.json`, with a reason. Then `python3 calepin-site/scripts/update-media-reach.py --offline` recounts without asking Google.
 - **Countries** are the outlets' (`OUTLET_COUNTRIES`, then the web address's country code). Pan-European (.eu) and international outlets are listed but not mapped.
@@ -237,7 +237,7 @@ Alerts catch new articles as they appear, including some Google News misses. To 
 3. Click "Create alert".
 4. On the Alerts page, copy each alert's feed address (the RSS icon) into the `alert_feeds` list in `data/media-sync.json`.
 
-Every build then reads the feeds and files each new article under the search it came from.
+The first build of each month then reads the feeds with the searches and files each new article under the search it came from.
 
 ## Polish political analyses
 
@@ -281,7 +281,7 @@ The iCloud copy is a one-way backup: edits made there are overwritten on the nex
 
 ## Setting up on a new machine
 
-1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`; for the party genealogy, the Polling tracker, the Party system indicators and Party ideology, the Polish political analyses repository in a folder named `Polish political analyses`.
+1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`; for the party genealogy, the Polling tracker, the Party system indicators, Party ideology and Political attitudes, the Polish political analyses repository in a folder named `Polish political analyses`.
 2. Install Typst (`brew install typst`), Calepin (see `calepin-site/README.md` → Prerequisites), Python 3 and the Jost font.
 3. For the Scopus citation count, add the Elsevier API key to the Keychain (see [Citation counts](#citation-counts)); without it the build skips Scopus.
 4. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`) and Homebrew's `rsync`, which it expects at `/opt/homebrew/bin/rsync`. It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found. The iCloud path in step 5 is hard-coded.
