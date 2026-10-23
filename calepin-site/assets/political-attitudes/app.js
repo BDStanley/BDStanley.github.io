@@ -8,13 +8,14 @@
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
 const ACCENT = "#8B0000";
-const BREAKS = [["all", "Everyone"], ["party", "Party"], ["age", "Age"], ["sex", "Gender"], ["educ", "Education"], ["residence", "Place of residence"]];
+const BREAKS = [["all", "Everyone"], ["party", "Party"], ["age", "Age"], ["sex", "Gender"], ["age_sex", "Age and gender"], ["educ", "Education"], ["residence", "Place of residence"]];
 const PERIODS = [["all", "All years"], ["2004", "Since 2004"], ["10y", "Last 10 years"]];
 // Colours for the survey readings in the national view, by source family
 const FAMILY_COLOURS = {
   "CBOS": "#8B0000", "Eurobarometer": "#2C6E8F", "Central and Eastern Eurobarometer": "#5B8DB8", "Candidate Countries Eurobarometer": "#7FA7CF",
   "European Social Survey": "#B0416E", "Polish National Election Study (PGSW)": "#D0A020",
-  "Polish General Social Survey (PGSS)": "#5E8C31", "European Election Study": "#3B2A5A", "Commercial polls": "#8F8F8F"
+  "Polish General Social Survey (PGSS)": "#5E8C31", "European Election Study": "#3B2A5A", "Commercial polls": "#8F8F8F",
+  "Consolidation of Democracy in CEE": "#9C7A3C", "SWPS online panels": "#6F6F6F"
 };
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const MON = MONTHS.map(m => m.slice(0, 3));
@@ -314,6 +315,7 @@ function renderLegend() {
     party: "Party preference is the party respondents intend to vote for or voted for at the last Sejm election, followed across elections by party lineage (SLD to Lewica, PO to KO and so on). Lines are shown while a party existed and its voters were surveyed.",
     age: "Age at the time of the survey.",
     sex: "",
+    age_sex: "Age at the time of the survey, for men and women separately.",
     educ: "Highest completed education: primary (including lower secondary), secondary (including basic vocational), higher.",
     residence: "Size of the respondent's town or city. Sources that ask people to describe where they live (Eurobarometer, ESS) count as a mix of the two town groups."
   };
@@ -350,8 +352,12 @@ function renderLatest() {
   box.appendChild(html("p", { class: "help" }, "Groups whose lines end earlier show their last month with an estimate."));
 }
 function periodsTable(s) {
-  // the lowest and highest month in a few eras
-  const eras = [["Before accession (to April 2004)", 0, yearToMonth(2004.25) - 1], ["2004–2015", yearToMonth(2004.34), yearToMonth(2015.9)], ["Since November 2015", yearToMonth(2015.9) + 1, D.meta.months - 1]];
+  // the lowest and highest month in a few eras, from the attitude's meta.eras (an open end runs to
+  // the latest month); exports without them get the EU membership eras
+  const dateToMonth = s => { const [y, m] = s.split("-").map(Number); return (y - Y0) * 12 + m - 1 - M0; };
+  const eras = D.meta.eras
+    ? D.meta.eras.map(e => [e.label, dateToMonth(e.from), e.to ? dateToMonth(e.to) : D.meta.months - 1])
+    : [["Before accession (to April 2004)", 0, yearToMonth(2004.25) - 1], ["2004–2015", yearToMonth(2004.34), yearToMonth(2015.9)], ["Since November 2015", yearToMonth(2015.9) + 1, D.meta.months - 1]];
   return eras.map(([lab, a, b]) => {
     a = clamp(a, 0, D.meta.months - 1); b = clamp(b, 0, D.meta.months - 1);
     let lo = null, hi = null, il = a, ih = a;
