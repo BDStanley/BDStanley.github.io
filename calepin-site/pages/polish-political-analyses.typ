@@ -64,6 +64,15 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/quality-of-democracy.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/quality-of-democracy.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/quality-of-democracy.html"))[Quality of democracy]
+#html.elem("div", attrs: (class: "course-desc"))[How Polish democracy has fared since 1990 in the V-Dem project's expert ratings of elections, courts, media, civil society and polarisation, set against Central and Eastern and Western Europe, with the elections, governments and events around them and the polarisation of the Sejm's roll calls.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/party-genealogy.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/party-genealogy.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]

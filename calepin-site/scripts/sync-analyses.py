@@ -24,6 +24,13 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Election results/analysis/90_export.R"; elections.json's `files`
         lists the others: geo.json, covariates.json, one file per election and one
         profiles file per voivodeship)
+    Quality of democracy/web/democracy.json       -> assets/quality-of-democracy/democracy.json
+    Quality of democracy/web/democracy-countries.json
+                                                  -> assets/quality-of-democracy/democracy-countries.json
+    Quality of democracy/web/political-context.json
+                                                  -> assets/quality-of-democracy/political-context.json
+        (written by "Quality of democracy/analysis/export_web.R", which
+        "Quality of democracy.R" runs)
 
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
@@ -64,6 +71,12 @@ FILES = [
      {"meta", "attitudes"}),
     ("Election results/web/elections.json", "assets/election-results/elections.json",
      {"meta", "elections", "contests", "labels", "files"}),
+    ("Quality of democracy/web/democracy.json", "assets/quality-of-democracy/democracy.json",
+     {"meta", "regions", "measures", "years", "poland", "regional", "regime", "countries", "rollcall"}),
+    ("Quality of democracy/web/democracy-countries.json", "assets/quality-of-democracy/democracy-countries.json",
+     {"meta", "years", "countries"}),
+    ("Quality of democracy/web/political-context.json", "assets/quality-of-democracy/political-context.json",
+     {"meta", "elections", "cabinets", "presidents", "events"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each
