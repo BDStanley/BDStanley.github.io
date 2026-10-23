@@ -38,8 +38,8 @@
       "measure": "Average self-placement, from 0 (left) to 10 (right)",
       "start": "1990-10-01",
       "last_data": "2026-05-15",
-      "n_readings": 165,
-      "n_surveys": 165,
+      "n_readings": 378,
+      "n_surveys": 378,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",

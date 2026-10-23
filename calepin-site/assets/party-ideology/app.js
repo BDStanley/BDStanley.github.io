@@ -38,13 +38,15 @@ function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add
 const lc = s => s.replace(/^[A-Z][a-z]/, m => m === "Ch" ? m : m.toLowerCase());
 
 // ---- categories and colours -----------------------------------------------------------------
-// PopuList categories (a validated categorical palette; grey recedes for "none")
+// PopuList categories in the colours of right and left: blue for the far right and red for the far
+// left, darker when the party is also populist, purple for populist parties on neither flank; grey
+// recedes for "none". Checked for colour-blind separation between every pair.
 const POP_CATS = [
-  {k: "pfr", label: "Populist and far right", col: "#D55E00"},
-  {k: "fr", label: "Far right", col: "#E69F00"},
-  {k: "pop", label: "Populist", col: "#CC79A7"},
-  {k: "pfl", label: "Populist and far left", col: "#0072B2"},
-  {k: "fl", label: "Far left", col: "#56B4E9"},
+  {k: "pfr", label: "Populist and far right", col: "#3644A0"},
+  {k: "fr", label: "Far right", col: "#4BAEED"},
+  {k: "pop", label: "Populist", col: "#865FC1"},
+  {k: "pfl", label: "Populist and far left", col: "#9E122F"},
+  {k: "fl", label: "Far left", col: "#D86353"},
   {k: "none", label: "None of these", col: "#B8B8B8"},
 ];
 const POPC = Object.fromEntries(POP_CATS.map(c => [c.k, c]));
