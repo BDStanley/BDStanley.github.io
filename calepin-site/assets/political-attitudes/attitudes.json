@@ -1,7 +1,7 @@
 {
   "meta": {
     "updated": "2026-10-23",
-    "n": 1
+    "n": 2
   },
   "attitudes": [
     {
@@ -25,6 +25,32 @@
         "European Social Survey",
         "Polish General Social Survey (PGSS)",
         "Polish National Election Study (PGSW)"
+      ],
+      "updated": "2026-10-23",
+      "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
+    },
+    {
+      "slug": "left-right",
+      "file": "left-right.json",
+      "title": "Left–right self-placement",
+      "short": "Left–right",
+      "question": "Do Poles place themselves on the left or on the right?",
+      "measure": "Placing themselves on the right, % of those leaning left or right",
+      "start": "1990-10-01",
+      "last_data": "2026-05-15",
+      "n_readings": 165,
+      "n_surveys": 165,
+      "sources": [
+        "Candidate Countries Eurobarometer",
+        "CBOS",
+        "Central and Eastern Eurobarometer",
+        "Consolidation of Democracy in CEE",
+        "Eurobarometer",
+        "European Election Study",
+        "European Social Survey",
+        "Polish General Social Survey (PGSS)",
+        "Polish National Election Study (PGSW)",
+        "SWPS online panels"
       ],
       "updated": "2026-10-23",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]

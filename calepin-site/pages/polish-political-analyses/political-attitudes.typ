@@ -1,7 +1,7 @@
 #set document(title: [Political attitudes])
 #metadata((
   title: "Political attitudes",
-  description: "Long-run trends in Polish public opinion since 1990, pooled from many surveys, with breakdowns by party, age, gender, education and place of residence",
+  description: "Long-run trends in Polish public opinion since 1990, pooled from many surveys: support for EU membership and left–right self-placement, with breakdowns by party, age, gender, education and place of residence",
 )) <website-metadata>
 
 // The chart is a standalone page, assets/political-attitudes/index.html (+ app.js), embedded
@@ -16,22 +16,22 @@
 
 #heading(level: 1)[Political attitudes]
 
-How Poles' attitudes have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, education and place of residence. The first attitude is support for Poland's membership of the European Union; more will follow.
+How Poles' attitudes have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, age and gender together, education and place of residence. There are two attitudes so far: support for Poland's membership of the European Union, and where Poles place themselves between left and right. More will follow.
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]
 
-No single survey has asked the same question about the European Union from 1990 to today. CBOS has asked whether people support Poland's integration with (since 2004, membership of) the EU since 1994; Eurobarometer, the European Social Survey, the Polish National Election Study, the Polish General Social Survey, the European Election Study and commercial pollsters have asked other questions at other times. The trend combines them all.
+No single survey has asked the same question from 1990 to today. Each trend therefore combines every survey that asked about the attitude, in its own words: CBOS's monthly surveys, the Eurobarometers, the European Social Survey, the Polish National Election Study, the Polish General Social Survey, the European Election Study and others.
 
-Every reading is turned into the share of respondents taking a side who give the pro-EU answer (those who say "don't know", or choose a neutral middle option, are set aside). A Bayesian measurement model (Stan) then treats each question as a noisy measure of one underlying level of support that changes from month to month. Each question has its own level and its own sensitivity to that underlying support, estimated from the periods in which it overlaps with other questions, and its own allowance for error beyond sampling error, which absorbs differences of wording, fieldwork organisation and mode. The underlying support follows a random walk, so it is smooth when little happens but can move quickly when many surveys show a change. The line is expressed on the scale of CBOS's question in its face-to-face surveys (up to April 2020): it reads as the share of supporters among those with a view who would have been recorded by that question. CBOS's surveys since May 2020, which mix face-to-face, telephone and online interviews, are treated as a separate question, because the change of mode may have shifted answers. Dots show each reading placed on the same scale, after allowing for its question's level and sensitivity. Bands are 80% and 95% credible intervals.
+Every reading is turned into a share: of the respondents who take a side, the share who give the answer the trend follows (support for EU membership, or a position on the right). Those who say "don't know", or choose a neutral middle option, are set aside. A Bayesian measurement model (Stan) then treats each question as a noisy measure of one underlying level that changes from month to month. Each question has its own level and its own sensitivity to that underlying level, estimated from the periods in which it overlaps with other questions, and its own allowance for error beyond sampling error, which absorbs differences of wording, fieldwork organisation and mode. The underlying level follows a random walk, so it is smooth when little happens but can move quickly when many surveys show a change. Each trend is expressed on the scale of one anchor question, CBOS's in its face-to-face surveys: it reads as the share that question would have recorded. Dots show each reading placed on the same scale, after allowing for its question's level and sensitivity. Bands are 80% and 95% credible intervals.
 
-For the breakdowns, each group's line is the national trend plus a deviation that changes slowly over time, estimated from every survey that reports that group. Where surveys report categories that do not match exactly (for example, Eurobarometer's "small or middle-sized town"), the reading is modelled as a mix of the groups it covers. Between the surveys that report a breakdown, a group's line keeps its last known distance from the national trend and its interval widens. Party preference is the party respondents intend to vote for, or voted for at the last Sejm election, followed across elections by party lineage; a party's line is shown while it existed and its voters were surveyed.
+For the breakdowns, each group's line is the national trend plus a deviation that changes slowly over time, estimated from every survey that reports that group. Where surveys report categories that do not match exactly (for example, Eurobarometer's "small or middle-sized town"), the reading is modelled as a mix of the groups it covers. Between the surveys that report a breakdown, a group's line keeps its last known distance from the national trend and its interval widens. Party preference is the party respondents intend to vote for, or voted for at the last Sejm election, followed across elections by party lineage; a party's line is shown while it existed and its voters were surveyed. Age and gender splits each age group into men and women.
 
 The data come from survey microdata wherever they are available, and published results fill in the rest. Survey readings are estimates too, and the early 1990s rest on few of them, so the intervals there are wide.
 
-Because CBOS changed the way it interviews in 2020, the line since then sits a few points below CBOS's own published figures: it is read on the scale of the face-to-face question, and the other surveys suggest the mixed-mode question reads somewhat higher.
+*Support for EU membership.* CBOS has asked whether people support Poland's integration with (since 2004, membership of) the EU since 1994; the other surveys and commercial pollsters have asked other questions at other times, about membership, a referendum or whether Poland would be better off outside the EU. The line is the share of supporters among those with a view, on the scale of CBOS's question in its face-to-face surveys up to April 2020. CBOS's surveys since May 2020, which mix face-to-face, telephone and online interviews, are treated as a separate question, because the change of mode may have shifted answers. That is why the line since then sits a few points below CBOS's own published figures: the other surveys suggest the mixed-mode question reads somewhat higher.
 
-Sources:
+Sources for support for EU membership:
 
 - CBOS's monthly surveys, 1995–2017 (microdata, from the Polish Social Data Archive)
 - Central and Eastern Eurobarometer, 1990–97 (microdata)
@@ -44,6 +44,23 @@ Sources:
 - CBOS's published trend series and its breakdowns by party electorate
 - Eurobarometer reports
 - Commercial polls
+
+*Left–right self-placement.* Most surveys ask people where they would place their own political views on a scale from left to right: CBOS on a line of seven points, from left-wing (1) to right-wing (7); the European Social Survey, the Polish National Election Study and the European Election Study from 0 to 10; the Eurobarometers and the Polish General Social Survey from 1 to 10. The line is the share placing themselves on the right among those who lean one way or the other. The midpoint of a scale is set aside along with "don't know", so the line shows the balance between right and left, not how many people place themselves in the centre. It is read on the scale of CBOS's question in its face-to-face monthly surveys, on which 5–7 count as right and 1–3 as left.
+
+Ten-point scales have no midpoint, so the many people who choose 5 as the middle count as left, and those questions read lower than the others; each question's own level absorbs this. The share giving no position at all also varies, between surveys and over time: in the Eurobarometer it fell from about a quarter of Polish respondents in 2018–19 to a few per cent from 2020, so the waves before and after are treated as separate questions. CBOS's monthly microdata end in 2017, apart from a survey in April 2021 that mixed interview modes and is treated as a separate question. Since 2018 the line therefore rests on the European Social Survey, the Eurobarometer, the Polish National Election Study, the European Election Study and online surveys run at SWPS University, each series of which is a question of its own.
+
+Sources for left–right self-placement:
+
+- CBOS's monthly surveys, 1994–2017 (microdata, from the Polish Social Data Archive), and its survey of April 2021 (microdata)
+- Central and Eastern Eurobarometer, 1990–92 (microdata)
+- Consolidation of Democracy in Central and Eastern Europe, 1991 and 2000 (microdata)
+- Polish General Social Survey, 1992–2010 (microdata)
+- Polish National Election Study, 1997–2025 (microdata)
+- European Social Survey, 2002–23 (microdata)
+- Candidate Countries Eurobarometer, 2004 (microdata)
+- Standard Eurobarometer, 2018–25 (microdata)
+- European Election Study, 2024 (microdata)
+- SWPS University's online surveys: the COVID tracker, 2020–21; the NCN Opus panel, 2023–24; FNW SWPS surveys, 2025–26 (microdata)
 ]
 
 #html.elem("iframe", attrs: (

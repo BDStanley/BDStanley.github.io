@@ -730,7 +730,7 @@ body {
 
 /* ---- Method notes: "How this works", "About these figures" ---------------- */
 /* A collapsed <details class="method"> under a page's introduction: the summary
-   set like an h3 (light dark red) with a chevron after it that turns down when
+   set a little smaller than an h3 (light dark red) with a chevron after it that turns down when
    open, the note in smaller soft-ink text, and any sources as "Sources:" over a
    list. Spelt out rather than left to Pico's details styling, so the Quarto
    backup can copy it; the --pico-accordion-* colours keep Pico's open and focus
@@ -745,7 +745,7 @@ details.method > summary {
   display: inline-block;
   cursor: pointer;
   list-style: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 300;
   line-height: 1.3;
   color: #8b0000;
