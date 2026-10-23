@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-10-22",
+    "updated": "2026-10-23",
     "n": 1
   },
   "attitudes": [
@@ -26,7 +26,7 @@
         "Polish General Social Survey (PGSS)",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-22",
+      "updated": "2026-10-23",
       "breakdowns": ["party", "age", "sex", "educ", "residence"]
     }
   ]
