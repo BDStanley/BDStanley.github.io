@@ -28,6 +28,15 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/election-results.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/election-results.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/election-results.html"))[Election results]
+#html.elem("div", attrs: (class: "course-desc"))[Every presidential, Sejm, European Parliament and referendum vote since 1990: the facts and results of each, maps of every gmina and constituency, the change between any two elections, the partitions of 1914, each gmina's history, and how the results line up with the make-up of the gminas.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/political-attitudes.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/political-attitudes.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]

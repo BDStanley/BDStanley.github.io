@@ -81,7 +81,6 @@ LISTED_NAMES = [
     ("Election results/web/elections.json", "files", [
         ("geo.json", {"meta", "gminas", "sets", "inset", "partitions"}),
         ("covariates.json", {"meta", "vars", "years", "values", "zones"}),
-        ("transfers.json", {"meta", "elections"}),
         ("profiles-", {"units"}),
         ("", {"facts", "results", "units"}),
     ]),

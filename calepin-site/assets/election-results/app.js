@@ -62,8 +62,8 @@ const FONT = "Jost, 'Avenir Next', -apple-system, sans-serif";
 // the repo uses for series that are not parties
 const TURNOUT = ["#440154", "#3b528b", "#21918c", "#5ec962", "#fde725"];
 const ANSWER = { yes: "#00796b", no: "#9c2d74" };
-const TYPES = { sejm: "Sejm", presidential: "Presidential", ep: "European Parliament", referendum: "Referendum" };
-const TYPE_SHORT = { sejm: "Sejm", presidential: "President", ep: "EP", referendum: "Referendum" };
+const TYPES = { sejm: "Sejm", presidential: "Presidential", ep: "European Parliament", referendum: "Referendum", polls: "Polls" };
+const TYPE_SHORT = { sejm: "Sejm", presidential: "President", ep: "EP", referendum: "Referendum", polls: "Polls now" };
 const PAGES = "../../pages/polish-political-analyses/";
 // Change maps: gains in the party's colour, losses in a dark olive that no party uses; turnout
 // gains in viridis's teal
@@ -77,6 +77,11 @@ const CACHE = new Map();
 const S = { type: "all", e: null, p: 0, m: null, i: 0, j: 1, l: "g", b: "o", v: "m", sel: null,
   cc: null, ck: null, cx: null, z: false, pc: null, cv: "higher_ed" };   // change: compared contest, mode, item; zabory; profile camp
 let ELECTIONS = [], CONTEST = {}, OWN_ALL = {};
+// "Polls now": the Polling tracker's latest estimate (../polling-tracker/polls.json), shown as an
+// election of its own: national shares and the model's median seats, with each party's share spread
+// across today's 41 constituencies by its regional profile and the seats allocated there, as the
+// tracker's own constituency map does
+let POLLS = null, POLLS_EL = null;
 
 function prep() {
   ELECTIONS = [...E.elections].sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : (a.type < b.type ? -1 : 1));
@@ -91,14 +96,15 @@ function prep() {
   });
 }
 const campCol = (camp, election, itemId) => (OWN_ALL[election] || {})[itemId] || ANSWER[camp] || E.labels[camp] || E.labels.Other;
-const elOf = id => E.elections.find(e => e.id === id);
+const elOf = id => id === "polls" ? POLLS_EL : E.elections.find(e => e.id === id);
+const isPolls = () => !!EL && EL.type === "polls";
 const partOf = () => CUR && !CUR.facts.facts_only ? CUR.facts.parts[S.p] : null;
 const resOf = () => CUR.results[S.p].items;
 const unitsOf = () => CUR.units[S.p];
 const itemById = id => resOf().find(r => r.id === id);
 // The items the map can show: those stored separately in the unit counts
 const mapItems = () => {
-  const its = unitsOf().gmina.items.filter(id => id !== "other").map(id => itemById(id)).filter(Boolean);
+  const U = unitsOf(), its = (U.gmina || U.okreg41).items.filter(id => id !== "other").map(id => itemById(id)).filter(Boolean);
   return EL.type === "referendum" ? its.sort((a, b) => (a.id === "yes" ? -1 : 1) - (b.id === "yes" ? -1 : 1)) : its;
 };
 // Any other two items drawn against each other in the same colour take the same two colours
@@ -119,7 +125,49 @@ function nameOf(item, long = false) {
   if (EL.type === "presidential") return item.short || item.name;
   return long ? item.name : (item.short || item.name);
 }
-const itemLabel = () => ({ sejm: "List", ep: "List", presidential: "Candidate", referendum: "Answer" }[EL.type]);
+const itemLabel = () => ({ sejm: "List", ep: "List", presidential: "Candidate", referendum: "Answer", polls: "Party" }[EL.type]);
+const dayIso = n => new Date(n * 864e5).toISOString().slice(0, 10);
+function pollsEntry() {
+  const wk = POLLS.weeks[POLLS.weeks.length - 1], d = dayIso(wk.date);
+  return { id: "polls", type: "polls", year: +d.slice(0, 4), date: d, name_en: "The polls now", name_pl: "Pooling the Poles: the Polling tracker's latest estimate",
+    early: false, facts_only: false, set: "sejm2001", parts: [{ id: "", contest_id: "polls", set: "sejm2001", date: d }], overview: {} };
+}
+function buildPolls() {
+  const D = POLLS, R = D.rules, wk = D.weeks[D.weeks.length - 1], C = D.constituencies, SP = R.seatParties;
+  const share = (p, k) => p === "MN" ? R.mnNational2023 / 100 : isNum(wk.vote[k]) ? wk.vote[k] / 100 : 0;
+  const coef = (p, c) => p === "MN" ? (c.okreg === R.mnOkreg ? 100 * R.mnOpoleShare / R.mnNational2023 : 0) : c[R.coef[p]];
+  const col = p => E.palette[p] || E.palette.Other;
+  const items = SP.map((p, k) => ({ id: p, name: p, short: p, label: p, colour: col(p), pct: share(p, k),
+    lo: isNum(wk.voteLo[k]) ? wk.voteLo[k] / 100 : null, hi: isNum(wk.voteHi[k]) ? wk.voteHi[k] / 100 : null,
+    seats: wk.seats[k] || 0, seats_lo: wk.seatsLo[k], seats_hi: wk.seatsHi[k], p_thr: wk.pThr[k], votes: null }))
+    .filter(it => it.pct > 0).sort((a, b) => b.pct - a.pct);
+  const set = G.sets.sejm2001, cs = set.okreg.map(o => C.find(c => c.okreg === o));
+  const votes = items.map(it => cs.map(c => Math.round(c.validvotes * coef(it.id, c) * it.pct)));
+  const valid = cs.map(c => c.validvotes), none = valid.map(() => null);
+  const A = { items: items.map(it => it.id), electorate: none, voters: none, valid, invalid: none, votes, set: "sejm2001" };
+  // A single D'Hondt allocation at the median shares, with the 5% threshold (the German minority exempt)
+  const rows = [];
+  cs.forEach((c, u) => {
+    const active = items.map((it, k) => it.id === "MN" || it.pct >= R.thresholdParty ? votes[k][u] : 0), got = items.map(() => 0);
+    for (let n = 0; n < c.magnitude; n++) {
+      let best = -1, bq = 0;
+      active.forEach((v, k) => { const q = v / (got[k] + 1); if (v > 0 && q > bq) { bq = q; best = k; } });
+      if (best < 0) break;
+      got[best]++;
+    }
+    got.forEach((g, k) => { if (g > 0) rows.push({ item: items[k].id, okreg: c.okreg, seats: g }); });
+  });
+  return {
+    facts: { id: "polls", type: "polls", year: POLLS_EL.year, name_en: "The polls now", name_pl: POLLS_EL.name_pl, date: POLLS_EL.date, early: false, facts_only: false,
+      rules: { seats: 460, constituencies: 41, formula: "D'Hondt in each constituency", threshold_list: "5%", threshold_coalition: "8%" },
+      sources: [{ label: "Pooling the Poles: the Polling tracker", url: PAGES + "polling-tracker.html" }],
+      parts: [{ id: "", contest_id: "polls", date: POLLS_EL.date, totals: {}, voivodeships: null }],
+      seats_by_okreg: { set: "sejm2001", rows, national_list: [] },
+      polls: { n: D.meta.nPolls, pollsters: D.meta.pollsterCount, run: D.meta.runTime, last: dayIso(D.meta.lastFieldwork) } },
+    results: [{ part: "polls", items }],
+    units: [{ part: "polls", turnout_basis: null, gmina: null, okreg: A, okreg41: A }]
+  };
+}
 
 // ---- chart plumbing -------------------------------------------------------------------------
 function placeTip(tip, box, ev, html) {
@@ -143,7 +191,8 @@ function renderStrip() {
     `<button type="button" data-t="${t}" aria-pressed="${S.type === t}">${t === "all" ? "All" : `<span class="tdot ${t}"></span>${TYPES[t]}`}</button>`).join("");
   const shown = ELECTIONS.filter(e => S.type === "all" || e.type === S.type);
   $("elections").innerHTML = shown.map(e =>
-    `<button type="button" data-e="${e.id}" aria-pressed="${e.id === S.e}" title="${esc(e.name_en)}, ${e.date2 && e.type === "presidential" ? dlong(e.date) + " and " + dlong(e.date2) : dlong(e.date)}${e.early ? " (early)" : ""}"><span class="tdot ${e.type}"></span>${e.year}${S.type === "all" ? ` ${TYPE_SHORT[e.type]}` : ""}</button>`).join("");
+    `<button type="button" data-e="${e.id}" aria-pressed="${e.id === S.e}" title="${esc(e.name_en)}, ${e.date2 && e.type === "presidential" ? dlong(e.date) + " and " + dlong(e.date2) : dlong(e.date)}${e.early ? " (early)" : ""}"><span class="tdot ${e.type}"></span>${e.year}${S.type === "all" ? ` ${TYPE_SHORT[e.type]}` : ""}</button>`).join("") +
+    (POLLS_EL && (S.type === "all" || S.type === "sejm") ? `<button type="button" data-e="polls" class="polls" aria-pressed="${S.e === "polls"}" title="The Polling tracker's estimate for ${dlong(POLLS_EL.date)}">Polls now</button>` : "");
   const b = $("elections").querySelector('[aria-pressed="true"]');
   if (b) { const seg = $("elections"); seg.scrollLeft = Math.max(0, b.offsetLeft - seg.clientWidth / 2); }
   const parts = EL && !EL.facts_only ? EL.parts : [];
@@ -158,8 +207,9 @@ function stateString() {
   if (S.e !== last) q.set("e", S.e);
   if (S.p) q.set("p", S.p + 1);
   if (S.m && S.m !== defaultMeasure()) q.set("m", S.m);
-  if (S.i) q.set("i", S.i);
-  if (S.m === "h2h" && S.j !== 1) q.set("j", S.j);
+  const its = partOf() ? mapItems() : [];
+  if (S.i && its[S.i]) q.set("it", its[S.i].id);
+  if (S.m === "h2h" && S.j !== 1 && its[S.j]) q.set("jt", its[S.j].id);
   if (S.l !== "g") q.set("l", S.l);
   if (S.b !== "o") q.set("b", S.b);
   if (S.v !== "m") q.set("v", S.v);
@@ -170,6 +220,7 @@ function stateString() {
   }
   if (S.z) q.set("z", 1);
   if (S.cv !== "higher_ed") q.set("cv", S.cv);
+  if (S.sel && MAPV && S.sel.l === S.l + S.b + S.v) q.set("u", MAPV.L.kind === "g" ? G.gminas.teryt[S.sel.u] : "c" + G.sets[MAPV.L.set].okreg[S.sel.u]);
   return q.toString();
 }
 const saveHash = debounce(() => {
@@ -180,11 +231,14 @@ function restoreHash() {
   let h = "";
   try { h = hashTarget().location.hash.slice(1); } catch (e) { h = location.hash.slice(1); }
   const q = new URLSearchParams(h);
-  S.e = elOf(q.get("e")) ? q.get("e") : ELECTIONS[ELECTIONS.length - 1].id;
+  S.e = q.get("e") === "polls" ? (POLLS_EL ? "polls" : ELECTIONS[ELECTIONS.length - 1].id) : elOf(q.get("e")) ? q.get("e") : ELECTIONS[ELECTIONS.length - 1].id;
   S.p = Math.max(0, (+q.get("p") || 1) - 1);
   S.m = ["share", "leader", "h2h", "turnout", "chg"].includes(q.get("m")) ? q.get("m") : null;
   S.i = Math.max(0, +q.get("i") || 0);
   S.j = q.has("j") ? Math.max(0, +q.get("j")) : 1;
+  // links name a list or candidate by id (it, jt) and a gmina (TERYT) or one of today's 41
+  // constituencies (c<number>) by u; they are applied once the election has loaded
+  S.it = q.get("it"); S.jt = q.get("jt"); S.u = q.get("u");
   if (["g", "c"].includes(q.get("l"))) S.l = q.get("l");
   if (["o", "t"].includes(q.get("b"))) S.b = q.get("b");
   if (["m", "c"].includes(q.get("v"))) S.v = q.get("v");
@@ -205,12 +259,34 @@ async function loadElection(id) {
   }
   return CACHE.get(id);
 }
+function applyLinks() {
+  const its = mapItems();
+  if (S.it) { const k = its.findIndex(it => it.id === S.it); if (k >= 0) { S.i = k; if (!S.m || S.m === "leader") S.m = "share"; } }
+  if (S.jt) { const k = its.findIndex(it => it.id === S.jt); if (k >= 0) S.j = k; }
+  if (S.u) {
+    if (/^c\d+$/.test(S.u)) {
+      S.l = "c"; if (!isPolls() && unitsOf().okreg.set !== "sejm2001") S.b = "t";
+      const k = G.sets.sejm2001.okreg.indexOf(+S.u.slice(1));
+      if (k >= 0) S.sel = { u: k, l: S.l + S.b + S.v };
+    } else {
+      const k = G.gminas.teryt.indexOf(S.u);
+      if (k >= 0) { S.l = "g"; S.sel = { u: k, l: S.l + S.b + S.v }; }
+    }
+  }
+  S.it = S.jt = S.u = null;
+}
 async function setElection(id, keepPart = false) {
   S.e = id; EL = elOf(id);
-  try { CUR = await loadElection(id); } catch (err) { console.error(err); toast("Could not load that election"); return; }
+  if (id === "polls") CUR = CACHE.get("polls") || (CACHE.set("polls", buildPolls()), CACHE.get("polls"));
+  else {
+    if (!CACHE.has(id)) toast("Loading the election…");
+    try { CUR = await loadElection(id); } catch (err) { console.error(err); toast("Could not load that election"); return; }
+  }
   if (!keepPart) { S.p = 0; S.m = null; S.i = 0; S.j = 1; S.sel = null; S.cc = null; S.ck = null; S.cx = null; }
+  if (isPolls()) { if (!["leader", "share", "h2h"].includes(S.m)) S.m = null; S.l = "c"; }
   if (!CUR.facts.facts_only) {
     S.p = clamp(S.p, 0, CUR.facts.parts.length - 1);
+    applyLinks();
     const n = mapItems().length;
     S.i = clamp(S.i, 0, Math.max(0, n - 1)); S.j = clamp(S.j, 0, Math.max(0, n - 1));
     if (S.j === S.i) S.j = S.i === 0 ? 1 : 0;
@@ -229,13 +305,14 @@ const measure = () => S.m || defaultMeasure();
 function renderGlance() {
   const f = CUR.facts;
   $("glancetype").textContent = TYPES[EL.type] + (EL.early ? " · early" : "");
-  $("h-glance").textContent = `${f.name_en}, ${f.year}`;
+  $("h-glance").textContent = isPolls() ? f.name_en : `${f.name_en}, ${f.year}`;
   $("glancesub").textContent = f.name_pl;
   renderFacts();
   const box = $("glancechart");
   $("glancenote").textContent = "";
   if (f.facts_only) { $("glancetitle").textContent = "Seats in the Sejm"; box.innerHTML = seats1989(); return; }
-  if (EL.type === "sejm" || EL.type === "ep") { $("glancetitle").textContent = EL.type === "sejm" ? "Seats in the Sejm" : "Seats in the European Parliament"; box.innerHTML = hemicycle(); }
+  if (isPolls()) { $("glancetitle").textContent = "Seats in the Sejm: the tracker's projection"; box.innerHTML = hemicycle(); }
+  else if (EL.type === "sejm" || EL.type === "ep") { $("glancetitle").textContent = EL.type === "sejm" ? "Seats in the Sejm" : "Seats in the European Parliament"; box.innerHTML = hemicycle(); }
   else if (EL.type === "presidential") { $("glancetitle").textContent = CUR.facts.parts.length > 1 ? "Both rounds" : "First round"; box.innerHTML = presBars(); }
   else { $("glancetitle").textContent = CUR.facts.parts.length > 1 ? "Every question" : "The result"; box.innerHTML = refBars(); }
 }
@@ -259,8 +336,8 @@ function hemiLayout(n, rows) {
 }
 // Seats from left to right by the palette's camps (R/party_colours.R), then by votes
 function seatOrder(items) {
-  const camp = it => E.camp_order.indexOf(E.label_camps[it.label] || "Other");
-  return items.filter(it => it.seats > 0).sort((a, b) => camp(a) - camp(b) || b.votes - a.votes);
+  const camp = it => E.camp_order.indexOf(E.label_camps[it.label] || E.palette_camps[it.label] || "Other");
+  return items.filter(it => it.seats > 0).sort((a, b) => camp(a) - camp(b) || (b.votes || b.pct) - (a.votes || a.pct));
 }
 function hemicycle() {
   const items = seatOrder(resOf()), total = sum(items.map(i => i.seats));
@@ -269,12 +346,13 @@ function hemicycle() {
   const o = [];
   let k = 0;
   items.forEach(it => { for (let j = 0; j < it.seats; j++, k++) { const p = pts[k]; o.push(`<circle cx="${p.x.toFixed(3)}" cy="${(-p.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${colOf(it)}" data-id="${esc(it.id)}"/>`); } });
-  const maj = Math.floor(total / 2) + 1, top = items.slice().sort((a, b) => b.seats - a.seats)[0];
-  if (EL.type === "sejm") o.push(`<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" font-size="0.085" fill="#4B4B4B">${maj}</text>`);
+  const maj = Math.floor(((CUR.facts.rules && CUR.facts.rules.seats) || total) / 2) + 1, top = items.slice().sort((a, b) => b.seats - a.seats)[0];
+  if (EL.type === "sejm" || isPolls()) o.push(`<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" font-size="0.085" fill="#4B4B4B">${maj}</text>`);
   o.push(`<text x="0" y="-0.36" text-anchor="middle" font-size="0.2" fill="#141414">${total} seats</text>`);
-  if (top) o.push(`<text x="0" y="-0.14" text-anchor="middle" font-size="0.085" fill="#767676">largest: ${esc(nameOf(top))}, ${top.seats}${EL.type === "sejm" ? (top.seats >= maj ? " (a majority)" : " (no majority)") : ""}</text>`);
+  if (top) o.push(`<text x="0" y="-0.14" text-anchor="middle" font-size="0.085" fill="#767676">largest: ${esc(nameOf(top))}, ${top.seats}${EL.type === "sejm" || isPolls() ? (top.seats >= maj ? " (a majority)" : " (no majority)") : ""}</text>`);
   const legend = items.map(it => `<span><span class="dot" style="background:${colOf(it)}"></span>${esc(nameOf(it))} <b>${it.seats}</b></span>`).join("");
-  $("glancenote").textContent = EL.type === "sejm" ? "Seats from left to right by camp (as in the site's party colours), then by votes." : "Seats from left to right by camp, then by votes.";
+  $("glancenote").textContent = isPolls() ? `The model's median seats (${total} in all: medians need not add up to 460), from left to right by camp. Hover over the table below for the 80% ranges.`
+    : EL.type === "sejm" ? "Seats from left to right by camp (as in the site's party colours), then by votes." : "Seats from left to right by camp, then by votes.";
   return `<svg id="glancesvg" viewBox="-2.2 -2.3 4.4 2.38" role="img" aria-label="Seats won by each list" font-family="${FONT}">${o.join("")}</svg><div class="legend" style="margin:4px 8px 4px">${legend}</div>`;
 }
 function seats1989() {
@@ -333,7 +411,16 @@ function refBars() {
   }).join("");
 }
 
+function pollsFacts() {
+  const f = CUR.facts, pl = f.polls;
+  $("facts").innerHTML = `<span class="label">Facts</span>
+    <div style="font-size:13px">The estimate for the week of ${dlong(f.date)}</div>
+    <p class="note">Not an election: Pooling the Poles, my Bayesian average of ${n0(pl.n)} polls by ${pl.pollsters} pollsters since January 2025 (the latest fieldwork ${dlong(pl.last)}). Seats are the model's medians from simulated elections, with 80% ranges.</p>
+    <dl class="facts"><dt>Seats</dt><dd>460 in 41 constituencies, by D'Hondt</dd><dt>Thresholds</dt><dd>5% for parties, 8% for coalitions; the German minority exempt</dd></dl>
+    <p class="note"><a href="${PAGES}polling-tracker.html" target="_top">The trends, scenarios and coalitions on the Polling tracker →</a></p>`;
+}
 function renderFacts() {
+  if (isPolls()) return pollsFacts();
   const f = CUR.facts, p = partOf(), o = [];
   const dates = f.date2 ? (EL.type === "referendum" ? `${dday(f.date)} and ${dday(f.date2)}` : `${dday(f.date)}; round 2 ${dday(f.date2)}`) : dday(f.date);
   o.push(`<span class="label">Facts</span><div style="font-size:13px">${esc(dates)}${f.early ? '<span class="badge">Early</span>' : ""}</div>`);
@@ -426,7 +513,17 @@ function partyLinks(ids) {
     return ideo.has(id) ? `${a} <a href="${PAGES}party-ideology.html#pt=${encodeURIComponent(id)}" target="_top" title="${full} in Party ideology" style="font-size:10.5px">ideology</a>` : a;
   }).join(", ");
 }
+function pollsResults() {
+  const items = resOf();
+  $("restable").innerHTML = `<thead><tr><th class="l">Party</th><th>Share</th><th>80% range</th><th>Chance of 5%</th><th>Seats</th><th>80% range</th></tr></thead>
+    <tbody>${items.map(it => `<tr class="${mapItems()[S.i] && mapItems()[S.i].id === it.id ? "sel" : ""}"><td class="name"><button type="button" class="tbtn" data-id="${esc(it.id)}"><span class="dot" style="background:${colOf(it)};margin-right:6px"></span>${esc(it.name)}</button></td>
+      <td>${pct(it.pct)}</td><td>${it.id === "MN" ? '<span class="na">2023 share</span>' : `${pct(it.lo)}–${pct(it.hi)}`}</td><td>${isNum(it.p_thr) ? pct(it.p_thr, 0) : '<span class="na">exempt</span>'}</td>
+      <td>${it.seats}</td><td>${isNum(it.seats_lo) ? `${it.seats_lo}–${it.seats_hi}` : ""}</td></tr>`).join("")}</tbody>`;
+  $("resultslede").textContent = "The Polling tracker's estimate for the latest week: each party's share with its 80% range, its chance of clearing 5%, and the model's median seats with their 80% range. The German minority enters at its 2023 share. Click a party to map it.";
+  renderExtras();
+}
 function renderResults() {
+  if (isPolls()) return pollsResults();
   if (CUR.facts.facts_only) { $("restable").innerHTML = ""; $("resultslede").textContent = "The semi-free election of 1989 is not on the PKW portal; its seats are in the table above."; $("extras").innerHTML = ""; return; }
   const items = resOf().slice().sort((a, b) => b.votes - a.votes), T = partOf().totals, typ = EL.type;
   const cols = [];
@@ -483,9 +580,9 @@ const cls = (s, v) => `<span class="${v > 0 ? "up" : v < 0 ? "down" : ""}">${s}<
 const chg = (v, p) => isNum(p) ? cls(signedPts(v - p), v - p) : '<span class="na">–</span>';
 
 function renderExtras() {
-  const p = partOf(), wv = p.voivodeships, items = wv.items.map(id => id === "other" ? { id: "other", short: "Other", colour: "#BDBDBD" } : itemById(id));
+  const p = partOf(), wv = p.voivodeships, items = wv ? wv.items.map(id => id === "other" ? { id: "other", short: "Other", colour: "#BDBDBD" } : itemById(id)) : [];
   const out = [];
-  out.push(`<details><summary>By voivodeship (${wv.era === "49" ? "the 49 voivodeships of 1975–98" : "the 16 voivodeships"})</summary><div class="scroll" style="margin-top:8px"><table class="t">
+  if (wv) out.push(`<details><summary>By voivodeship (${wv.era === "49" ? "the 49 voivodeships of 1975–98" : "the 16 voivodeships"})</summary><div class="scroll" style="margin-top:8px"><table class="t">
     <thead><tr><th class="l">Voivodeship</th><th>Turnout</th>${items.map(it => `<th>${esc(it.id === "other" ? "Others" : nameOf(it))}</th>`).join("")}</tr></thead>
     <tbody>${wv.rows.map(r => `<tr><td class="l">${esc(r.name)}</td><td>${pct(r.turnout)}</td>${r.votes.map((v, k) => `<td${wv.items[k] === r.leader ? ' style="font-weight:600"' : ""}>${isNum(v) ? pct(v / r.valid) : '<span class="na">–</span>'}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
     <p class="note" style="margin-top:4px">Added up from the gmina files, without votes abroad and on ships; the leader in each voivodeship is in bold.</p></details>`);
@@ -501,7 +598,7 @@ function renderExtras() {
       <thead><tr><th class="l">Constituency</th><th>Seats</th>${lists.map(it => `<th><span class="dot" style="background:${colOf(it)}"></span> ${esc(nameOf(it))}</th>`).join("")}</tr></thead>
       <tbody>${set.okreg.map((k, i) => { const v = lists.map(it => at[k + "|" + it.id] || 0); return `<tr><td class="l">${k}. ${esc(set.name[i])}</td><td>${sum(v)}</td>${v.map(x => `<td>${x || '<span class="na">·</span>'}</td>`).join("")}</tr>`; }).join("")}
       ${sb.national_list.length ? `<tr class="tot"><td class="l">National lists</td><td>${sum(sb.national_list.map(r => r.seats))}</td>${lists.map(it => { const r = sb.national_list.find(x => x.item === it.id); return `<td>${r ? r.seats : '<span class="na">·</span>'}</td>`; }).join("")}</tr>` : ""}</tbody></table></div>
-      <p class="note" style="margin-top:4px">From PKW's lists of the candidates elected. An allocation under the year's rules reproduces every constituency${EL.year === 1991 ? " from 1993; 1991's files lack 64 lists, so it is not checked" : ""}.</p></details>`);
+      <p class="note" style="margin-top:4px">${isPolls() ? "A single D'Hondt allocation at the median shares, as on the Polling tracker's map, so the totals can differ from the model's medians." : `From PKW's lists of the candidates elected. An allocation under the year's rules reproduces every constituency${EL.year === 1991 ? " from 1993; 1991's files lack 64 lists, so it is not checked" : ""}.`}</p></details>`);
   }
   $("extras").innerHTML = out.join("");
 }
@@ -509,6 +606,7 @@ function renderExtras() {
 // ---- map ------------------------------------------------------------------------------------
 function levelData() {
   const U = unitsOf();
+  if (isPolls()) { S.l = "c"; return { kind: "c", A: U.okreg41, set: "sejm2001", n: U.okreg41.valid.length }; }
   if (S.l === "g") return { kind: "g", A: U.gmina, set: null, n: G.gminas.teryt.length };
   const A = S.b === "t" || measure() === "chg" ? U.okreg41 : U.okreg;
   return { kind: "c", A, set: A.set, n: A.valid.length };
@@ -566,7 +664,7 @@ function scaleFor(vals) {
 let MAPV = null;
 function renderMapControls() {
   const its = mapItems(), m = measure(), typ = EL.type;
-  const ms = [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"], ["turnout", "Turnout"], ["chg", "Change"]];
+  const ms = isPolls() ? [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"]] : [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"], ["turnout", "Turnout"], ["chg", "Change"]];
   $("measures").innerHTML = ms.map(([k, l]) => `<button type="button" data-m="${k}" aria-pressed="${m === k}">${l}</button>`).join("");
   $("itemlab").textContent = itemLabel();
   if (m === "chg") {
@@ -582,9 +680,9 @@ function renderMapControls() {
   $("itemctrl").hidden = !(m === "share" || m === "h2h" || m === "chg");
   $("item2ctrl").hidden = m !== "h2h";
   $("cmpctrl").hidden = m !== "chg"; $("modectrl").hidden = m !== "chg";
-  $("levels").innerHTML = [["g", "Gminas"], ["c", "Constituencies"]].map(([k, l]) => `<button type="button" data-l="${k}" aria-pressed="${S.l === k}">${l}</button>`).join("");
+  $("levels").innerHTML = [["g", "Gminas"], ["c", "Constituencies"]].map(([k, l]) => `<button type="button" data-l="${k}" aria-pressed="${S.l === k}"${k === "g" && isPolls() ? ' disabled title="The polls are projected by constituency only"' : ""}>${l}</button>`).join("");
   const own = unitsOf().okreg.set;
-  $("bndctrl").hidden = S.l !== "c" || m === "chg";
+  $("bndctrl").hidden = S.l !== "c" || m === "chg" || isPolls();
   $("bounds").innerHTML = [["o", own === "sejm2001" && typ === "sejm" ? "PKW's (with abroad)" : G.sets[own].label.replace(/^(Sejm|EP) constituencies, /, "$1 ")], ["t", "Today's 41"]]
     .map(([k, l]) => `<button type="button" data-b="${k}" aria-pressed="${S.b === k}">${esc(l)}</button>`).join("");
   $("shapectrl").hidden = S.l !== "c";
@@ -619,13 +717,13 @@ function renderMap() {
     const s = G.sets[L.set], cv = s.circle_view;
     svg.classList.add("cons");
     svg.setAttribute("viewBox", cv.join(" "));
-    html = s.circles.map((c, u) => `<circle class="u" cx="${c[0]}" cy="${c[1]}" r="${Math.max(1, c[2] - 1.2)}" fill="${fill(u)}" stroke="#fff" stroke-width="1.6" data-u="${u}"/>` +
+    html = s.circles.map((c, u) => `<circle class="u" cx="${c[0]}" cy="${c[1]}" r="${Math.max(1, c[2] - 1.2)}" fill="${fill(u)}" stroke="#fff" stroke-width="1.6" data-u="${u}" tabindex="0" role="button" aria-label="${esc(unitName("c", L.set, u).title)}"/>` +
       (c[2] > 22 ? `<text x="${c[0]}" y="${c[1] + 4}" text-anchor="middle" font-size="${clamp(c[2] * 0.42, 9, 16)}" fill="#141414" pointer-events="none">${s.okreg[u]}</text>` : "")).join("");
   } else {
     const s = G.sets[L.set];
     svg.classList.add("cons");
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    html = s.d.map((d, u) => `<path class="u" d="${d}" fill="${fill(u)}" data-u="${u}"/>`).join("");
+    html = s.d.map((d, u) => `<path class="u" d="${d}" fill="${fill(u)}" data-u="${u}" tabindex="0" role="button" aria-label="${esc(unitName("c", L.set, u).title)}"/>`).join("");
   }
   // "Widać zabory!": the 1914 borders, heavier than any other line
   if (S.z && !(L.kind === "c" && S.v === "c")) html += G.partitions.lines.map(l => `<path d="${l.d}" fill="none" stroke="#141414" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`).join("");
@@ -644,13 +742,14 @@ function renderMap() {
   renderZones(vals);
   const notes = [];
   if (measure() === "chg") notes.push(changeNote(vals.C, L));
-  if (measure() === "chg") { /* the change note covers the level */ }
+  if (isPolls()) notes.push("The Polling tracker's projection: each party's national share spread across today's 41 constituencies by its regional profile from 2023 (R+ takes PiS's; KKP and Razem those of Braun and Zandberg in the 2025 presidential election), as on the tracker.");
+  else if (measure() === "chg") { /* the change note covers the level */ }
   else if (L.kind === "g") notes.push("Gminas as they are today (2022 boundaries; Warsaw as one). Earlier results are mapped onto them: where a 1990s gmina later split, its result covers all of its successors, and the tooltip says so.");
   else if (S.b === "t") notes.push("Every election's gmina results added up by today's 41 Sejm constituencies, without votes abroad and on ships, so that any two elections compare like for like.");
   else if (EL.type === "sejm" || EL.type === "ep") notes.push("PKW's constituency results, which count votes abroad and on ships in the constituencies PKW assigns them to (Warsaw, and the seaports for ships).");
   else notes.push(`${G.sets[L.set].label}, in force at the time: the gmina results added up, without votes abroad and on ships.`);
   if (S.l === "c" && S.v === "c") notes.push("Circles are sized by electorate.");
-  if (measure() !== "turnout" && unitsOf().gmina.items.includes("other")) notes.push("Lists and candidates under 0.5% nationally with no seat are counted together as others.");
+  if (measure() !== "turnout" && unitsOf().gmina && unitsOf().gmina.items.includes("other")) notes.push("Lists and candidates under 0.5% nationally with no seat are counted together as others.");
   $("mapnote").textContent = notes.join(" ");
   drawHighlight();
 }
@@ -683,12 +782,12 @@ function unitHtml(u, full = false) {
   const grp = L.kind === "g" && A.group && A.group[u] >= 0 ? A.groups[A.group[u]] : null;
   if (grp) html += `<div class="sub" style="color:#8B0000">Reported jointly with ${esc(grp.filter(x => x !== u).map(x => G.gminas.name[x]).join(", "))}: the figures are the whole unit's</div>`;
   if (measure() === "chg" && vals.C && vals.C.opt) html += `<div class="r" style="margin-top:4px"><span><b>${esc(vals.C.opt.name)}</b>, since ${esc(contestName(vals.C.cmp))}</span><span><b>${isNum(vals.v[u]) ? signedPts(vals.v[u]) + " points" : NA}</b></span></div>`;
-  html += `<div class="r" style="margin-top:4px"><span>Turnout</span><span>${pct(A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null)}</span></div>`;
+  if (!isPolls()) html += `<div class="r" style="margin-top:4px"><span>Turnout</span><span>${pct(A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null)}</span></div>`;
   const shown = full ? rows : rows.slice(0, 6);
   shown.forEach(r => { const it = r.id === "other" ? null : itemById(r.id); html += tipRow(it ? colOf(it) : "#BDBDBD", it ? nameOf(it) : "Others", pct(r.v / valid), full ? n0(r.v) : ""); });
   if (!full && rows.length > shown.length) html += `<div class="sub">and ${rows.length - shown.length} more</div>`;
-  if (full) html += `<div class="r" style="margin-top:4px"><span class="muted">Electorate</span><span>${n0(A.electorate[u])}</span></div><div class="r"><span class="muted">Valid votes</span><span>${n0(valid)}</span></div>`;
-  if (full && L.kind === "c" && S.b === "o" && CUR.facts.seats_by_okreg) {
+  if (full && !isPolls()) html += `<div class="r" style="margin-top:4px"><span class="muted">Electorate</span><span>${n0(A.electorate[u])}</span></div><div class="r"><span class="muted">Valid votes</span><span>${n0(valid)}</span></div>`;
+  if (full && L.kind === "c" && (S.b === "o" || isPolls()) && CUR.facts.seats_by_okreg) {
     const okr = G.sets[L.set].okreg[u], seats = CUR.facts.seats_by_okreg.rows.filter(r => r.okreg === okr && r.seats > 0).sort((a, b) => b.seats - a.seats);
     if (seats.length) html += `<div class="label" style="margin-top:8px">Seats</div>` + seats.map(r => { const it = itemById(r.item); return tipRow(colOf(it), nameOf(it), r.seats); }).join("");
   }
@@ -716,6 +815,10 @@ function bindMap() {
       placeTip(tip, box, ev, unitHtml(+t.dataset.u));
     });
     svgEl.addEventListener("mouseleave", () => { box.querySelector(".tip").hidden = true; });
+    svgEl.addEventListener("keydown", ev => {
+      const t = ev.target.closest("[data-u]");
+      if (t && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); t.dispatchEvent(new MouseEvent("click", { bubbles: true })); }
+    });
     svgEl.addEventListener("click", ev => {
       const t = ev.target.closest("[data-u]"); if (!t) return;
       const u = +t.dataset.u;
@@ -837,7 +940,7 @@ function zoneSums(A) { // each unit, or a 1990s joint unit once, in its first gm
 }
 function renderZones() {
   const box = $("zonetable");
-  if (!S.z || (S.l === "c" && S.v === "c")) { box.innerHTML = ""; return; }
+  if (!S.z || (S.l === "c" && S.v === "c") || isPolls()) { box.innerHTML = ""; return; }
   const A = unitsOf().gmina, Z = zoneSums(A), m = measure(), its = mapItems();
   const sh = (z, ids, AA = A) => { let v = 0; ids.forEach(id => { const k = AA.items.indexOf(id); if (k >= 0) v += z.votes[k]; }); return z.valid > 0 ? v / z.valid : null; };
   let head, cell;
@@ -871,7 +974,7 @@ async function loadProfile(file) {
   return PROF.get(file);
 }
 function profileTarget() {
-  if (!S.sel || !MAPV || S.sel.l !== S.l + S.b + S.v) return null;
+  if (isPolls() || !S.sel || !MAPV || S.sel.l !== S.l + S.b + S.v) return null;
   const L = MAPV.L;
   if (L.kind === "g") return { kind: "g", u: S.sel.u, woj: G.gminas.voivodeship[S.sel.u] };
   if (L.set !== "sejm2001") return { kind: "none" };
@@ -919,7 +1022,7 @@ function profileHtml(entry, t) {
     ${profileChart(rows, col)}
     <div class="legend"><span><span class="dot" style="background:${col}"></span>here</span><span><span class="dot" style="background:#fff;border:1.5px solid #767676"></span>Poland</span><span class="muted">lines: Sejm (solid), presidential round 1 (dashed), EP (dotted)</span></div>
     <div class="proftable"><table class="t"><thead><tr><th class="l">Election</th><th>Turnout</th><th class="l">Leader</th><th>${esc(camp)}</th></tr></thead><tbody>
-    ${rows.slice().reverse().map(r => `<tr data-c="${r.c.id}" style="cursor:pointer"><td class="l${r.joint ? " j" : ""}" title="${r.joint ? "reported jointly with a neighbour in this election" : ""}">${esc(contestName(r.c.id))}${r.joint ? " *" : ""}</td>
+    ${rows.slice().reverse().map(r => `<tr data-c="${r.c.id}" style="cursor:pointer"><td class="l${r.joint ? " j" : ""}" title="${r.joint ? "reported jointly with a neighbour in this election" : ""}"><button type="button" class="tbtn">${esc(contestName(r.c.id))}</button>${r.joint ? " *" : ""}</td>
       <td>${pct(r.t)} <span class="muted">${pct(r.nt, 0)}</span></td>
       <td class="l">${r.lead ? `<span class="dot" style="background:${r.lead.col}"></span> ${esc(r.lead.name)}` : NA}</td>
       <td>${r.sh != null ? pct(r.sh) : '<span class="na">–</span>'} <span class="muted">${r.nat != null ? pct(r.nat, 0) : ""}</span></td></tr>`).join("")}
@@ -1044,7 +1147,7 @@ function scatterY() {
 }
 async function renderScatter() {
   const card = $("scatcard"), svg = $("scat");
-  if (CUR.facts.facts_only) { $("whosec").hidden = true; return; }
+  if (CUR.facts.facts_only || isPolls()) { $("whosec").hidden = true; return; }
   $("whosec").hidden = false;
   try { await loadCov(); } catch (e) { card.innerHTML = `<p class="note">Could not load the gminas' characteristics.</p>`; return; }
   const cid = partOf().contest_id, years = COV.years[cid] || {};
@@ -1125,7 +1228,7 @@ function renderAllElections() {
       const o = e.overview || {};
       const res = e.facts_only ? '<span class="na">seats only</span>' : e.type === "referendum" ? `yes ${pct(o.yes_pct)}${e.parts.length > 1 ? " (question 1)" : ""}` : `<span class="dot" style="background:${winnerCol(e)}"></span> ${esc(o.winner || "")}`;
       return `<tr data-e="${e.id}" class="${e.id === S.e ? "sel" : ""}" style="cursor:pointer"><td class="l">${dlong(e.date)}${e.date2 && e.type === "presidential" ? `<br><span class="muted">${dlong(e.date2)}</span>` : ""}</td>
-        <td class="l"><span class="tdot ${e.type}"></span> ${TYPES[e.type]}${e.early ? ' <span class="muted">(early)</span>' : ""}</td>
+        <td class="l"><button type="button" class="tbtn"><span class="tdot ${e.type}"></span> ${TYPES[e.type]}</button>${e.early ? ' <span class="muted">(early)</span>' : ""}</td>
         <td>${pct(o.turnout)}${isNum(o.turnout2) ? `<br><span class="muted">${pct(o.turnout2)}</span>` : ""}</td>
         <td class="l">${res}</td><td>${e.type === "referendum" || e.facts_only ? "" : pct(o.winner_pct)}</td>
         <td>${isNum(o.margin_pp) ? o.margin_pp.toFixed(1) : ""}</td><td>${isNum(o.enp) ? o.enp.toFixed(2) : ""}</td></tr>`;
@@ -1191,10 +1294,11 @@ function bindAll() {
 // ---- sources and citation -------------------------------------------------------------------
 function renderData() {
   const f = CUR.facts, src = (f.sources || []).map(s => `<li>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a>` : esc(s.label)}</li>`);
-  if (!f.facts_only) src.push(`<li>Gmina boundaries: PRG 2022 (GUGiK), simplified; the 1990s gminas mapped to today's through a crosswalk built for this page</li>`);
+  if (!f.facts_only && !isPolls()) src.push(`<li>Gmina boundaries: PRG 2022 (GUGiK), simplified; the 1990s gminas mapped to today's through a crosswalk built for this page</li>`);
   $("sources").innerHTML = src.join("");
   $("citation").innerHTML = `${esc(E.meta.citation)} <span class="muted">Permalink:</span> <a href="${esc(shareUrl())}" target="_top">this view</a>.`;
-  $("csvnote").textContent = f.facts_only ? "No files for 1989." : `Gmina results are on today's boundaries; constituency results are ${S.b === "t" ? "on today's 41 constituencies" : "on the constituencies of the time"} (as on the map).`;
+  $("csvgmina").disabled = !!f.facts_only || isPolls();
+  $("csvnote").textContent = f.facts_only ? "No files for 1989." : isPolls() ? "The parties' shares and seats, and the projection by constituency." : `Gmina results are on today's boundaries; constituency results are ${S.b === "t" ? "on today's 41 constituencies" : "on the constituencies of the time"} (as on the map).`;
 }
 
 // ---- downloads ------------------------------------------------------------------------------
@@ -1207,6 +1311,11 @@ const csvBlob = rows => new Blob([rows.map(r => r.map(q).join(",")).join("\n") +
 const fileStem = () => partOf() ? partOf().contest_id : S.e;
 function csvNational() {
   if (CUR.facts.facts_only) return;
+  if (isPolls()) {
+    const head = ["week", "party", "share", "share_lo80", "share_hi80", "p_threshold", "seats", "seats_lo80", "seats_hi80"];
+    download(`polls-${CUR.facts.date}.csv`, csvBlob([head, ...resOf().map(it => [CUR.facts.date, it.id, it.pct, it.lo, it.hi, it.p_thr, it.seats, it.seats_lo, it.seats_hi])]));
+    return;
+  }
   const head = ["contest", "item", "name", "short", "label", "party_ids", "votes", "share", "seats"];
   download(`${fileStem()}-national.csv`, csvBlob([head, ...resOf().map(it => [fileStem(), it.id, it.name, it.short, it.label, it.party_ids, it.votes, it.pct, it.seats])]));
 }
@@ -1256,6 +1365,7 @@ function header() {
 function renderAll() {
   const fo = CUR.facts.facts_only;
   $("mapsec").hidden = fo; $("results").hidden = fo;
+  $("profilecard").hidden = true;
   document.querySelectorAll("#data .card")[0].hidden = fo;
   renderStrip(); renderGlance(); renderResults(); renderMap(); renderUnitCard(); renderScatter(); renderAllElections(); renderData();
   saveHash();
@@ -1316,8 +1426,11 @@ function bind() {
 // ---- load -----------------------------------------------------------------------------------
 Promise.all([
   fetch("elections.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-  fetch("geo.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-]).then(async ([e, g]) => {
-  E = e; G = g; prep(); restoreHash(); header(); bind();
+  fetch("geo.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+  fetch("../polling-tracker/polls.json").then(r => r.ok ? r.json() : null).catch(() => null)
+]).then(async ([e, g, pj]) => {
+  E = e; G = g; prep();
+  try { if (pj && pj.weeks && pj.weeks.length && pj.constituencies) { POLLS = pj; POLLS_EL = pollsEntry(); } } catch (err) { console.warn("Polling tracker data unusable:", err); POLLS = null; }
+  restoreHash(); header(); bind();
   await setElection(S.e, true);
 }).catch(err => { $("asof").textContent = "Could not load the election results."; console.error(err); });

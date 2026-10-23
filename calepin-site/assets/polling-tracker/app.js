@@ -768,7 +768,8 @@ function renderConstCard() {
   card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="label">Constituency ${c.okreg}</span><button type="button" class="linkbtn" id="constclose">Close</button></div>
     <div style="font-size:20px">${esc(c.name)} <span class="muted" style="font-size:13px">${c.magnitude} seats</span></div>
     <table class="t"><tr><th>List</th><th>Seats</th>${anyRg ? "<th>80% of simulations</th>" : ""}</tr>
-    ${rows.map(r => `<tr><td><span class="dot" style="background:${r.e.colour};margin-right:6px"></span>${esc(r.e.name)}</td><td>${r.s}</td>${anyRg ? `<td>${r.rg ? r.rg[0] + "–" + r.rg[1] : "–"}</td>` : ""}</tr>`).join("")}</table>`;
+    ${rows.map(r => `<tr><td><span class="dot" style="background:${r.e.colour};margin-right:6px"></span>${esc(r.e.name)}</td><td>${r.s}</td>${anyRg ? `<td>${r.rg ? r.rg[0] + "–" + r.rg[1] : "–"}</td>` : ""}</tr>`).join("")}</table>
+    <a class="linkbtn" style="text-decoration:none" href="../../pages/polish-political-analyses/election-results.html#l=c&amp;u=c${c.okreg}" target="_top">${esc(c.name)} in every election since 1990 →</a>`;
 }
 function render2023() {
   const cur = CUR;
