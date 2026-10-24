@@ -77,8 +77,8 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 #html.elem("img", attrs: (src: "../assets/analyses/party-genealogy.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
 #html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-genealogy.html"))[Polish parties in the Sejm, 1989–2026]
-#html.elem("div", attrs: (class: "course-desc"))[The lifespans, Sejm seats, government status and genealogy of every party that has sat in the Sejm since 1989: the splits, mergers, renames and alliances that link them. Trace any party's predecessors and successors.]
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-genealogy.html"))[Parties in the Sejm]
+#html.elem("div", attrs: (class: "course-desc"))[The lifespans, Sejm seats, government status and genealogy of every party that has sat in the Sejm since 1989: the splits, mergers, renames and alliances that link them. Trace any party's predecessors and successors, follow the seat strength of each party and party family day by day, and see every MP who changed clubs: who, when, and from which party to which.]
 ]
 ]
 ]

@@ -12,7 +12,7 @@
 - [Policy reach](https://benstanley.eu/pages/policy-reach.html): Updated:
 - [Polish political analyses](https://benstanley.eu/pages/polish-political-analyses.html): Interactive analyses of Polish politics: parties, elections and public opinion
 - [Election results](https://benstanley.eu/pages/polish-political-analyses/election-results.html): Every presidential, Sejm, European Parliament and referendum vote in Poland since 1990: facts, results and maps of every gmina and constituency
-- [Polish parties in the Sejm, 1989–2026](https://benstanley.eu/pages/polish-political-analyses/party-genealogy.html): Interactive genealogy of Polish parties in the Sejm: lifespans, seats, government status, splits and mergers
+- [Parties in the Sejm](https://benstanley.eu/pages/polish-political-analyses/party-genealogy.html): Polish parties in the Sejm since 1989: their genealogy, the seat strength of each party and party family day by day, and MPs' defections between clubs
 - [Party ideology](https://benstanley.eu/pages/polish-political-analyses/party-ideology.html): Where Polish parties stand in European ideological space, from the Chapel Hill Expert Survey and The PopuList
 - [Party system indicators](https://benstanley.eu/pages/polish-political-analyses/party-system-indicators.html): Fragmentation, disproportionality, volatility, nationalisation, polarisation and government closure in the Polish party system, 1991 to the current polls
 - [Social and political trends](https://benstanley.eu/pages/polish-political-analyses/political-attitudes.html): Long-run trends in Polish society and public opinion since 1990, pooled from many surveys: support for EU membership and left–right self-placement, with breakdowns by party, age, gender, education and place of residence

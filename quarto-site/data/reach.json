@@ -2,9 +2,9 @@
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
  "as_of": "2026-10",
  "totals": {
-  "citations": 2332,
-  "citing_works": 2033,
-  "scholars": 2154,
+  "citations": 2333,
+  "citing_works": 2034,
+  "scholars": 2155,
   "countries": 74,
   "my_works": 49,
   "first_year": 2008,
@@ -13,16 +13,16 @@
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
-  "classified_citations": 2233
+  "classified_citations": 2234
  },
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2120,
+   "citations": 2121,
    "share": 94.9,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,120 citations (94.9% of classified citations)"
+   "tip": "Social Sciences: 2,121 citations (94.9% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
@@ -187,7 +187,7 @@
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
    "citations": 1777,
-   "share": 79.6,
+   "share": 79.5,
    "colour": "#2a78d6",
    "w": 1.0,
    "tip": "Political Science and International Relations (Social Sciences): 1,777 citations"
@@ -222,11 +222,11 @@
   {
    "name": "Demography",
    "field": "Social Sciences",
-   "citations": 27,
-   "share": 1.2,
+   "citations": 28,
+   "share": 1.3,
    "colour": "#e87ba4",
-   "w": 0.0152,
-   "tip": "Demography (Social Sciences): 27 citations"
+   "w": 0.0158,
+   "tip": "Demography (Social Sciences): 28 citations"
   },
   {
    "name": "Linguistics and Language",
@@ -1255,10 +1255,10 @@
    {
     "year": 2026,
     "label": "2026 (to October)",
-    "citations": 249,
-    "h": 0.6225,
+    "citations": 250,
+    "h": 0.625,
     "minor": true,
-    "tip": "2026 (to October): 249 citations (Political Science and International Relations 189, Sociology and Political Science 20, Law 6, Communication 4, Demography 4, Other 19, Unclassified 7)",
+    "tip": "2026 (to October): 250 citations (Political Science and International Relations 189, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 19, Unclassified 7)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1286,9 +1286,9 @@
      },
      {
       "name": "Demography",
-      "citations": 4,
+      "citations": 5,
       "colour": "#e87ba4",
-      "tip": "2026, Demography: 4 citations"
+      "tip": "2026, Demography: 5 citations"
      },
      {
       "name": "Other",
@@ -1347,9 +1347,9 @@
    "code": "IT",
    "name": "Italy",
    "scholars": 125,
-   "works": 110,
+   "works": 111,
    "colour": "#8b0000",
-   "tip": "Italy: 125 citing scholars, in 110 citing works",
+   "tip": "Italy: 125 citing scholars, in 111 citing works",
    "w": 0.5274
   },
   {
@@ -1374,9 +1374,9 @@
    "code": "ES",
    "name": "Spain",
    "scholars": 69,
-   "works": 68,
+   "works": 69,
    "colour": "#a72219",
-   "tip": "Spain: 69 citing scholars, in 68 citing works",
+   "tip": "Spain: 69 citing scholars, in 69 citing works",
    "w": 0.2911
   },
   {
@@ -1461,10 +1461,10 @@
   {
    "code": "BE",
    "name": "Belgium",
-   "scholars": 36,
-   "works": 46,
+   "scholars": 37,
+   "works": 47,
    "colour": "#c13d30",
-   "tip": "Belgium: 36 citing scholars, in 46 citing works"
+   "tip": "Belgium: 37 citing scholars, in 47 citing works"
   },
   {
    "code": "RO",
@@ -1662,9 +1662,9 @@
    "code": "EE",
    "name": "Estonia",
    "scholars": 8,
-   "works": 10,
+   "works": 11,
    "colour": "#e38070",
-   "tip": "Estonia: 8 citing scholars, in 10 citing works"
+   "tip": "Estonia: 8 citing scholars, in 11 citing works"
   },
   {
    "code": "LV",

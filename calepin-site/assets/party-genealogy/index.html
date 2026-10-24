@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Polish parties in the Sejm, 1989–2026: genealogy</title>
+<title>Parties in the Sejm: Polish parties, 1989–2026</title>
 <meta name="theme-color" content="#8B0000">
 <!--
-  Interactive genealogy of Polish parties in the Sejm. Embedded in
+  Parties in the Sejm (called Party genealogy until 24 October 2026, whose name its files keep): the genealogy
+  of Polish parties in the Sejm, their seat strength on each day and MPs' defections between clubs. Embedded in
   pages/polish-political-analyses/party-genealogy.typ; works on its own too.
-  Data: genealogy.json beside this file, written by Party tracker/R/63_export_genealogy_json.R
-  in the Polish political analyses repo and copied here by scripts/sync-analyses.py on each build.
+  Data: genealogy.json and defections.json beside this file, written by Party tracker/R/63_export_genealogy_json.R
+  and 64_export_defections_json.R in the Polish political analyses repo and copied here by
+  scripts/sync-analyses.py on each build.
   Plain HTML/CSS/JS, no libraries.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,10 +77,99 @@ svg{display:block;font-family:inherit}
 .lane-lab{cursor:pointer}
 .lane-lab:focus{outline:none}
 .lane-lab:focus-visible{text-decoration:underline}
+.app:not([data-view="gen"]) .gen-only,.app:not([data-view="seats"]) .seats-only,.app:not([data-view="def"]) .def-only{display:none !important}
+/* ---- seat strength ---- */
+.seatbox{flex:1;min-height:0;position:relative;border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+.seatbox svg{position:absolute;left:0;top:0}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;
+  font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:5;min-width:170px;max-width:290px}
+.tip b{font-weight:600}
+.tip .r{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.tip .r span:first-child{display:flex;align-items:center;gap:6px}
+.tip .r span:last-child{white-space:nowrap}
+.tip .s{color:var(--muted);font-size:11.5px}
+.tip hr{border:0;border-top:1px solid var(--rule);margin:5px 0}
+.ltree{display:flex;flex-direction:column;gap:1px}
+.lrow{display:flex;align-items:center;gap:2px}
+.tw{width:20px;height:26px;flex:none;border:0;padding:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer}
+.tw:hover{color:var(--accent)}
+.tw:disabled{cursor:default;color:var(--faint)}
+.lb{flex:1;min-width:0;display:flex;align-items:center;gap:7px;height:26px;padding:0 8px;border-radius:8px;border:1px solid transparent;
+  background:transparent;color:var(--ink);font-size:13px;text-align:left;cursor:pointer}
+.lb:hover{border-color:var(--faint)}
+.lb[aria-pressed="true"]{border-color:var(--accent);background:var(--tint);color:var(--accent)}
+.lb.hot{background:var(--chip)}
+.lb .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb .n{flex:none;color:var(--soft)}
+.lb.zero .nm,.lb.zero .n{color:var(--muted)}
+.kids{display:flex;flex-direction:column;gap:1px;padding-left:22px}
+.kids .lb{font-size:12.5px;height:24px}
+.lsep{border-top:1px solid var(--rule);margin:4px 0}
+.ltot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--soft);padding:4px 8px 0 30px}
+.basebox{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-radius:10px;background:var(--tint)}
+.basebox .nm{font-size:15px;font-weight:500;line-height:1.3}
+/* ---- defections ---- */
+.defbox{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:2px}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px;align-items:start}
+.dcard{position:relative;border:1px solid var(--rule);border-radius:14px;padding:10px 12px 8px;display:flex;flex-direction:column;gap:6px}
+.dcard svg{width:100%;height:auto;overflow:visible}
+.dhead{display:flex;align-items:baseline;justify-content:space-between;gap:6px 12px;flex-wrap:wrap}
+.dtitle{font-size:13.5px;font-weight:500}
+.d-s{color:var(--muted);font-size:11.5px}
+.dtypes .chip{height:26px;font-size:12px;padding:0 9px}
+.dtypes .chip[aria-pressed="false"]{background:#fff;opacity:1}
+.dtypes .chip[aria-pressed="true"]{border-color:var(--accent);background:var(--tint);color:var(--accent)}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--soft);cursor:pointer;user-select:none}
+.switch input{appearance:none;width:30px;height:18px;border-radius:999px;background:var(--faint);position:relative;cursor:pointer;margin:0;transition:background .15s}
+.switch input::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{left:14px}
+.dbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+.dbar b{font-weight:600;color:var(--ink)}
+.fchip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 11px;border-radius:999px;border:0;background:var(--tint);
+  color:var(--accent);font-size:12.5px;cursor:pointer}
+.fchip::after{content:"×";font-size:15px;line-height:1}
+.fchip:hover{background:color-mix(in srgb,#8B0000 16%,#FFFFFF)}
+table.dt{border-collapse:collapse;width:100%;font-size:13px}
+table.dt th{position:sticky;top:0;z-index:1;background:#fff;text-align:left;font-weight:500;font-size:12px;color:var(--muted);
+  padding:6px 8px;border-bottom:1px solid var(--faint);white-space:nowrap}
+table.dt th button{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer}
+table.dt th button:hover{color:var(--accent)}
+table.dt td{padding:5px 8px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.35}
+table.dt tbody tr{cursor:pointer}
+table.dt tbody tr:hover{background:#FAFAF8}
+table.dt tbody tr.on{background:var(--tint)}
+table.dt td.nw{white-space:nowrap}
+.pl,.pl0{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left}
+.pl{cursor:pointer}
+.pl:hover{color:var(--accent);text-decoration:underline}
+.tl{display:flex;flex-direction:column;gap:5px;font-size:13px;line-height:1.4}
+.tl .th{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:6px}
+.tl .sp{display:flex;flex-direction:column;gap:1px}
+.tl .sp > span{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tl .mv{margin-left:4px;padding:5px 0 5px 10px;border-left:2px solid var(--faint);display:flex;flex-direction:column;gap:3px}
+.tl .mv.on{border-left-color:var(--accent)}
+.tl .mv .k{display:flex;align-items:center;gap:7px;font-weight:500}
+.tl a{color:var(--accent);text-decoration:none}
+.tl a:hover{text-decoration:underline}
+.movers{display:flex;flex-direction:column;gap:1px}
+.movers button{display:flex;justify-content:space-between;gap:10px;border:0;background:transparent;padding:4px 6px;border-radius:8px;
+  font:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left}
+.movers button:hover{background:var(--chip);color:var(--accent)}
+.mk{display:none}
+@media (max-width:1150px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+/* on a phone the kind of move goes under the MP's name */
+@media (max-width:640px){
+  table.dt th:nth-child(5),table.dt td:nth-child(5){display:none}
+  table.dt th,table.dt td{padding:5px 4px}
+  .mk{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);padding-top:2px}
+}
 @media (max-width:900px){
   .app{height:auto}
   .main{flex-direction:column}
   .scroller{flex:none;height:72vh}
+  .seatbox{flex:none;height:64vh}
+  .defbox{overflow:visible}
   .panel{width:auto;overflow:visible}
 }
 /* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
@@ -86,15 +177,21 @@ svg text:not([font-weight]){font-weight:300}
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="app" data-view="gen">
   <div class="controls">
+    <div class="group"><span class="label" id="view-lab">View</span>
+      <div class="seg" id="views" role="tablist" aria-labelledby="view-lab">
+        <button type="button" role="tab" data-v="gen">Genealogy</button>
+        <button type="button" role="tab" data-v="seats">Seat strength</button>
+        <button type="button" role="tab" data-v="def">Defections</button>
+      </div></div>
     <div class="group"><span class="label" id="per-lab">Period</span><div class="seg" id="periods" role="group" aria-labelledby="per-lab"></div></div>
-    <div class="group"><label class="label" for="q">Find a party</label>
+    <div class="group"><label class="label" for="q" id="q-lab">Find a party</label>
       <input id="q" type="search" placeholder="e.g. PiS, Unia Wolności, Samoobrona" autocomplete="off"></div>
-    <div class="group"><span class="label" id="kind-lab">Genealogy links</span><div class="chips" id="kinds" role="group" aria-labelledby="kind-lab"></div></div>
+    <div class="group gen-only"><span class="label" id="kind-lab">Genealogy links</span><div class="chips" id="kinds" role="group" aria-labelledby="kind-lab"></div></div>
     <button class="btn2" id="reset" type="button">Reset view</button>
   </div>
-  <details class="group" id="fam-box" open>
+  <details class="group gen-only" id="fam-box" open>
     <summary><span class="label" id="fam-lab">Party families</span>
       <button class="linkbtn" id="fam-all" type="button">All</button><button class="linkbtn" id="fam-none" type="button">None</button></summary>
     <div class="chips" id="fams" role="group" aria-labelledby="fam-lab"></div>
@@ -102,11 +199,54 @@ svg text:not([font-weight]){font-weight:300}
   <div class="main">
     <div class="chartbox">
       <div class="status" id="status" aria-live="polite">Loading the party data…</div>
-      <div class="scroller" id="scroller"><svg id="chart" role="img" aria-label="Genealogy of Polish parties in the Sejm, 1989–2026"></svg></div>
+      <div class="scroller gen-only" id="scroller"><svg id="chart" role="img" aria-label="Genealogy of Polish parties in the Sejm, 1989–2026"></svg></div>
+      <div class="seatbox seats-only" id="seatbox"><svg id="seats" role="img" aria-label="Seats in the Sejm by party on each day, 1989–2026"></svg><div class="tip" id="seattip" hidden></div></div>
+      <div class="defbox def-only" id="defbox">
+        <div class="dgrid">
+          <section class="dcard" id="dterms-card" aria-label="Moves by Sejm term">
+            <div class="dhead"><span class="dtitle">Moves by Sejm term</span><span class="d-s">Click a bar or a term to list its moves</span></div>
+            <svg id="dterms" role="img" aria-label="MPs' moves between clubs by Sejm term and kind of move"></svg>
+            <div class="chips dtypes" id="dtypes" role="group" aria-label="Kinds of move"></div>
+            <div class="tip" id="dtip1" hidden></div>
+          </section>
+          <section class="dcard" id="dflows-card" aria-label="Largest flows">
+            <div class="dhead"><span class="dtitle">Largest flows: origin → destination</span>
+              <label class="switch"><input type="checkbox" id="djr"> Follow MPs through unaffiliated status</label></div>
+            <svg id="dflows" role="img" aria-label="The largest flows of MPs between parties and clubs"></svg>
+            <div class="tip" id="dtip2" hidden></div>
+          </section>
+        </div>
+        <div class="dbar" id="dbar" aria-live="polite"></div>
+        <table class="dt">
+          <thead><tr><th><button type="button" data-sort="date">Date</button></th><th><button type="button" data-sort="mp">MP</button></th>
+            <th>Left</th><th>Joined</th><th>Kind of move</th></tr></thead>
+          <tbody id="drows"></tbody>
+        </table>
+      </div>
     </div>
     <aside class="panel">
-      <div class="card" id="record" aria-live="polite"></div>
-      <div class="card key">
+      <div class="card def-only" id="drecord" aria-live="polite"></div>
+      <div class="card key def-only">
+        <span class="label">About the data</span>
+        <div class="note">A defection is a move between clubs that the MP made: founding a splinter club, moving to another club, leaving a club to sit as unaffiliated, joining a club from unaffiliated status, or being expelled. Club renames, mergers and dissolutions are not counted. A move through unaffiliated status counts as two moves, unless the flows follow MPs through it.</div>
+        <div class="note">Parties are the lead parties of the clubs on either side; a small club that no party leads is shown by its abbreviation. ≈ marks a date that is not documented: from 1997 the day of the MP's first roll-call vote in the new club, before 1997 a date imputed from the evidence, which the MP's record gives.</div>
+        <div class="note">1997–2026 from Sejm API roll calls (the club at each vote); 1989–97 reconstructed from the Sejm archive and Wikipedia, with some intermediate moves missed. <span class="asof"></span></div>
+      </div>
+      <div class="card seats-only" id="slegend"></div>
+      <div class="card key seats-only">
+        <span class="label">Key</span>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c"></span>In government</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c;opacity:.75"></span>External support</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c;opacity:.5"></span>Opposition</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#BDBDBD;opacity:.5"></span>Small groups without a party link</div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#D9D9D9;opacity:.5;outline:1px solid #ECECEC"></span>Unaffiliated MPs</div>
+        </div>
+        <div class="note">Each band is a party's seats on each day, stacked from left to right by party family. White lines: Sejm elections; dashed line: a majority of 231. A party moved to the base keeps a dark line along its top, so its seats can be read off the axis.</div>
+        <div class="note">Seats are exact for clubs; a club's seats are attributed to its lead party (e.g. Solidarna Polska and Porozumienie MPs inside the PiS-led ZP club count as PiS). 1997–2026 from Sejm API roll calls; 1989–97 reconstructed from the Sejm archive and Wikipedia. <span class="asof"></span></div>
+      </div>
+      <div class="card gen-only" id="record" aria-live="polite"></div>
+      <div class="card key gen-only">
         <span class="label">Key</span>
         <div style="display:flex;flex-direction:column;gap:5px;font-size:13px">
           <div style="display:flex;align-items:center;gap:8px"><span style="width:26px;height:9px;background:#1f4e9c"></span>In government</div>
@@ -120,18 +260,21 @@ svg text:not([font-weight]){font-weight:300}
           <span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:15px;background:#767676"></span>240 seats</span>
         </div>
         <div class="note">Thin line: organisational lifespan; a tick at its end means the end date is not documented. Thick line without a ribbon: the party sat inside another party's club. Dotted verticals: Sejm elections.</div>
-        <div class="note">Seats are exact for clubs; a club's seats are attributed to its lead party (e.g. Solidarna Polska and Porozumienie MPs inside the PiS-led ZP club count as PiS). 1997–2026 from Sejm API roll calls; 1989–97 reconstructed from the Sejm archive and Wikipedia. Government status from cabinet composition (Mazowiecki cabinet incl. PZPR). <span id="asof"></span></div>
+        <div class="note">Seats are exact for clubs; a club's seats are attributed to its lead party (e.g. Solidarna Polska and Porozumienie MPs inside the PiS-led ZP club count as PiS). 1997–2026 from Sejm API roll calls; 1989–97 reconstructed from the Sejm archive and Wikipedia. Government status from cabinet composition (Mazowiecki cabinet incl. PZPR). <span class="asof"></span></div>
       </div>
     </aside>
   </div>
 </div>
 <script>
 "use strict";
-const FAMS = [["Post-communist left","#cc0000"],["Social-democratic / new left","#d81b60"],["Liberal centre","#e87722"],
-  ["Christian-democratic / conservative","#5f9ea0"],["Solidarity movement / union","#2AA6B8"],["National-conservative","#1f4e9c"],
-  ["Radical / nationalist right","#191970"],["Libertarian right","#A08A4A"],["Anti-establishment populist","#333333"],
-  ["Agrarian","#2e7d32"],["Agrarian populist","#7d1f1f"],["Communist-era allied party","#C994A7"],
-  ["Minority / regional","#bdb76b"],["Other","#9E9E9E"]];
+// [label, colour, slug]: in FAMILY_ORDER (Party tracker/R/60_fig_data.R), whose position is each party's `fam`
+const FAMS = [["Post-communist left","#cc0000","post_communist_left"],["Social-democratic / new left","#d81b60","social_democratic_new_left"],
+  ["Liberal centre","#e87722","liberal_centre"],["Christian-democratic / conservative","#5f9ea0","christian_democratic_conservative"],
+  ["Solidarity movement / union","#2AA6B8","solidarity_trade_union"],["National-conservative","#1f4e9c","national_conservative"],
+  ["Radical / nationalist right","#191970","radical_nationalist_right"],["Libertarian right","#A08A4A","libertarian_right"],
+  ["Anti-establishment populist","#333333","anti_establishment_populist"],["Agrarian","#2e7d32","agrarian"],
+  ["Agrarian populist","#7d1f1f","agrarian_populist"],["Communist-era allied party","#C994A7","satellite_communist_era"],
+  ["Minority / regional","#bdb76b","minority_regional"],["Other","#9E9E9E","other"]];
 const KINDS = [["split","Split","#D95F02",""],["merger","Merger / absorption","#2C7FB8",""],
   ["transform","Transformation / rename","#555555",""],["alliance","Joined an alliance","#8A8A8A","4 3"]];
 const KC = Object.fromEntries(KINDS.map(k => [k[0], k]));
@@ -154,25 +297,51 @@ const $ = id => document.getElementById(id);
 
 let D = null, PER = [], ADJ = null;
 const LIN = new Map();
-const S = {period:0, off:new Set(), kOff:new Set(), q:"", sel:null, hov:null, lin:false};
+// view: "gen", "seats" or "def"; base: the seat view's keys stacked first ("f:<family>", "p:<party>", "o:<seat group>");
+// open: families listed with their parties in the seat view's legend; mp, dparty, dterm, dtype, dflow: the
+// defections' selected MP (person id) and filters (party id, term, kind of move, flow); jr: follow MPs through
+// unaffiliated status in the flows; dsort, ddesc: the order of the list of moves
+const S = {period:0, off:new Set(), kOff:new Set(), q:"", sel:null, hov:null, lin:false, view:"gen", base:[], open:new Set(),
+  mp:null, dparty:null, dterm:null, dtype:null, dflow:null, jr:false, dsort:"date", ddesc:false};
 // Parties rated in the Chapel Hill Expert Survey, whose records link to the Party ideology page
 // (the keys of ptChes in assets/party-ideology/ideology.json).
 const IDEO = new Set(["aws_party", "knp", "konfederacja", "kukiz15", "lpr", "nowa_lewica", "nowoczesna", "pd", "pis", "po",
   "polska2050", "polska_razem", "psl", "razem", "samoobrona", "sd", "sdpl", "sld", "solidarna_polska", "twoj_ruch", "up", "uw", "wiosna"]);
 
 // ---- link state: #pt=<Party tracker id> in the parent page's address selects a party ----------
+// v=seats opens the seat view, b=<slug,…> its base (f-<family slug>, a party id, unlinked or unaffiliated);
+// v=def opens the defections, with mp=<person id>, p=<party id> and t=<term>
 function hashTarget() { try { if (window.top !== window && window.top.location.host === location.host) return window.top; } catch (e) { /* cross-origin */ } return window; }
 function writeHash() {
-  const t = hashTarget(), s = S.sel !== null ? "pt=" + encodeURIComponent(D.parties[S.sel].id) : "";
-  try { t.history.replaceState(null, "", t.location.pathname + t.location.search + (s ? "#" + s : "")); } catch (e) { /* ignore */ }
+  const t = hashTarget(), q = [];
+  if (S.sel !== null) q.push("pt=" + encodeURIComponent(D.parties[S.sel].id));
+  if (S.view === "seats") {
+    q.push("v=seats");
+    if (S.base.length) q.push("b=" + S.base.map(k => encodeURIComponent(baseSlug(k))).join(","));
+  }
+  if (S.view === "def") {
+    q.push("v=def");
+    if (S.mp) q.push("mp=" + encodeURIComponent(S.mp));
+    if (S.dparty) q.push("p=" + encodeURIComponent(S.dparty));
+    if (S.dterm !== null) q.push("t=" + S.dterm);
+  }
+  try { t.history.replaceState(null, "", t.location.pathname + t.location.search + (q.length ? "#" + q.join("&") : "")); } catch (e) { /* ignore */ }
 }
 function readHash() {
   let h = "";
   try { h = hashTarget().location.hash.slice(1); } catch (e) { h = location.hash.slice(1); }
-  const pt = new URLSearchParams(h).get("pt"), i = pt ? D.parties.findIndex(p => p.id === pt) : -1;
-  if (i < 0) return false;
-  Object.assign(S, {period:0, q:"", sel:i, hov:null, lin:false});
-  S.off.clear(); $("q").value = "";
+  const u = new URLSearchParams(h), pt = u.get("pt"), v = u.get("v"), i = pt ? D.parties.findIndex(p => p.id === pt) : -1;
+  if (i < 0 && v !== "seats" && v !== "def") return false;
+  if (i >= 0) {
+    Object.assign(S, {period:0, q:"", sel:i, hov:null, lin:false});
+    S.off.clear(); $("q").value = "";
+  }
+  S.view = v === "seats" || v === "def" ? v : "gen";
+  if (S.view === "seats") {
+    S.base = (u.get("b") || "").split(",").map(slugBase).filter(k => k);
+    S.base.forEach(openFor);
+  }
+  if (S.view === "def") Object.assign(S, {mp:u.get("mp"), dparty:u.get("p"), dterm:u.has("t") ? +u.get("t") : null, dtype:null, dflow:null});
   return true;
 }
 function scrollToSel() {
@@ -198,6 +367,13 @@ function select(i) {
 
 // ---- controls -------------------------------------------------------------------------------
 function buildControls() {
+  $("views").onclick = e => {
+    const b = e.target.closest("button");
+    if (!b || b.dataset.v === S.view) return;
+    S.view = b.dataset.v; S.hov = null;
+    render(); writeHash();
+    if (S.view === "gen") scrollToSel();
+  };
   $("periods").innerHTML = PER.map((p, j) => `<button type="button" data-j="${j}">${p[0]}</button>`).join("");
   $("periods").onclick = e => { const b = e.target.closest("button"); if (!b) return; S.period = +b.dataset.j; S.hov = null; render(); };
   $("kinds").innerHTML = KINDS.map(k => `<button type="button" class="chip" data-k="${k[0]}"><span class="ln" style="border-top:2px ${k[3] ? "dashed" : "solid"} ${k[2]}"></span>${k[1]}</button>`).join("");
@@ -208,17 +384,28 @@ function buildControls() {
   $("fam-all").onclick = e => { e.preventDefault(); S.off.clear(); S.lin = false; render(); };
   $("fam-none").onclick = e => { e.preventDefault(); FAMS.forEach((f, j) => S.off.add(j)); S.lin = false; render(); };
   $("q").oninput = e => { S.q = e.target.value; S.lin = false; S.hov = null; render(); };
-  $("reset").onclick = () => { Object.assign(S, {period:0, q:"", sel:null, hov:null, lin:false}); S.off.clear(); S.kOff.clear(); $("q").value = ""; render(); writeHash(); };
+  $("reset").onclick = () => {
+    Object.assign(S, {period:0, q:"", sel:null, hov:null, lin:false, base:[], mp:null, dparty:null, dterm:null, dtype:null, dflow:null, jr:false});
+    S.off.clear(); S.kOff.clear(); S.open.clear(); $("q").value = "";
+    render(); writeHash();
+  };
 }
 function syncControls() {
+  [...$("views").children].forEach(b => { const on = b.dataset.v === S.view; b.setAttribute("aria-pressed", on); b.setAttribute("aria-selected", on); });
+  $("q-lab").textContent = S.view === "def" ? "Find a party or MP" : "Find a party";
+  $("q").placeholder = S.view === "def" ? "e.g. PiS, Samoobrona, Ludwik Dorn" : "e.g. PiS, Unia Wolności, Samoobrona";
   [...$("periods").children].forEach((b, j) => b.setAttribute("aria-pressed", S.period === j));
   [...$("kinds").children].forEach(b => b.setAttribute("aria-pressed", !S.kOff.has(b.dataset.k)));
   [...$("fams").children].forEach(b => b.setAttribute("aria-pressed", !S.off.has(+b.dataset.j)));
 }
 
 // ---- chart ----------------------------------------------------------------------------------
-function render() {
+function render(anim) {
   syncControls();
+  $("app").dataset.view = S.view;
+  if (S.view === "seats") { renderSeats(anim === true); return; }
+  $("seattip").hidden = true;
+  if (S.view === "def") { renderDef(); return; }
   PW = Math.max(MIN_PW, Math.floor($("scroller").clientWidth - GUT - 16));
   W = GUT + PW + 14;
   const P = D.parties, per = PER[S.period], a = per[1], b = per[2];
@@ -343,6 +530,7 @@ function partyCard(i) {
       ${isSel ? `<button type="button" class="btn2" data-act="lin">${S.lin ? "Show all parties" : "Show this lineage only"}</button>` : ""}
     </div>
     ${IDEO.has(p.id) ? `<a class="linkbtn" style="text-decoration:none" href="../../pages/polish-political-analyses/party-ideology.html#pt=${encodeURIComponent(p.id)}" target="_top">${esc(p.lab)} in Party ideology →</a>` : ""}
+    ${defCount(p.id) ? `<button type="button" class="linkbtn" style="align-self:flex-start" data-act="def" data-id="${esc(p.id)}">MPs' moves in and out of ${esc(p.lab)}: ${defCount(p.id)} →</button>` : ""}
     ${p.ev.length ? `<span class="label" style="padding-top:6px">Genealogy events</span>
     <div class="evs">${p.ev.map(e => `<div title="${esc(e.desc)}"><span class="d">${esc(e.d)}</span> · ${esc(e.t)}: ${esc(e.f)}${e.to ? " → " + esc(e.to) : ""}</div>`).join("")}</div>` : ""}`;
 }
@@ -373,7 +561,10 @@ $("record").addEventListener("click", e => {
   const b = e.target.closest("button[data-act]");
   if (!b) return;
   if (b.dataset.act === "sel") select(+b.dataset.i);
-  else { S.lin = !S.lin; S.hov = null; render(); }
+  else if (b.dataset.act === "def") {
+    Object.assign(S, {view:"def", dparty:b.dataset.id, dterm:null, dtype:null, dflow:null, mp:null, hov:null});
+    render(); writeHash();
+  } else { S.lin = !S.lin; S.hov = null; render(); }
 });
 
 // ---- chart events ---------------------------------------------------------------------------
@@ -414,6 +605,675 @@ chart.addEventListener("focusin", e => {
   if (h && S.sel === null) { S.hov = h; renderRecord(); }
 });
 
+// ---- seat strength --------------------------------------------------------------------------
+// Every party's seats on each day, stacked in party order (families left to right) as in
+// fig_seat_strength.png, from seatRuns: [group, from, to (exclusive), seats, status, cabinet, club, partners],
+// where group is a position in parties or parties.length + k for seatGroups[k]. The base is stacked first.
+const SALPHA = {g:1, e:0.75, o:0.5, p:0.5};
+const SG = [["#BDBDBD", "unlinked"], ["#D9D9D9", "unaffiliated"]];   // [colour, hash slug] for each seat group
+const SEATS = 460, MAJ = 231;
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let NP = 0, SB = null, SV = null;   // SB: day breakpoints and the runs in force between them; SV: the drawn chart
+
+function prepSeats() {
+  NP = D.parties.length;
+  const T = [...new Set(D.seatRuns.flatMap(r => [r[1], r[2]]))].sort((p, q) => p - q);
+  const at = new Map(T.map((t, k) => [t, k])), runs = T.slice(1).map(() => []);
+  D.seatRuns.forEach((r, n) => { for (let k = at.get(r[1]); k < at.get(r[2]); k++) runs[k].push(n); });
+  SB = {T, runs};
+}
+function intervalAt(d) {   // k with T[k] <= d < T[k + 1], clamped to the data
+  const T = SB.T;
+  let lo = 0, hi = T.length - 2;
+  while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (T[mid] <= d) lo = mid; else hi = mid - 1; }
+  return lo;
+}
+const gCol = g => g < NP ? FAMS[D.parties[g].fam][1] : SG[g - NP][0];
+const gLab = g => g < NP ? D.parties[g].lab : D.seatGroups[g - NP];
+const gKey = g => g < NP ? "p:" + g : "o:" + (g - NP);
+function members(key) {
+  const n = +key.slice(2);
+  if (key[0] === "f") return D.parties.filter(p => p.fam === n).map(p => p.i);
+  return [key[0] === "p" ? n : NP + n];
+}
+const baseGroups = () => new Set(S.base.flatMap(members));
+const baseName = () => S.base.map(k => k[0] === "f" ? FAMS[+k.slice(2)][0] : gLab(members(k)[0])).join(" + ");
+function baseSlug(k) { const n = +k.slice(2); return k[0] === "f" ? "f-" + FAMS[n][2] : k[0] === "p" ? D.parties[n].id : SG[n][1]; }
+function slugBase(s) {
+  if (s.startsWith("f-")) { const j = FAMS.findIndex(f => f[2] === s.slice(2)); return j < 0 ? null : "f:" + j; }
+  const k = SG.findIndex(g => g[1] === s);
+  if (k >= 0) return "o:" + k;
+  const i = D.parties.findIndex(p => p.id === s);
+  return i < 0 ? null : "p:" + i;
+}
+function openFor(key) { if (key[0] === "f") S.open.add(+key.slice(2)); else if (key[0] === "p") S.open.add(D.parties[+key.slice(2)].fam); }
+// a plain click puts one family or party at the base (or takes it off); Shift-click (or Ctrl/⌘) adds or removes
+// one. On a Mac, Ctrl-click opens the context menu instead, so the page offers Shift-click.
+function toggleBase(key, add) {
+  const has = S.base.includes(key);
+  if (add) S.base = has ? S.base.filter(k => k !== key) : S.base.concat(key);
+  else S.base = has && S.base.length === 1 ? [] : [key];
+  if (S.base.includes(key)) openFor(key);
+  render(true);
+  writeHash();
+}
+function seatRank() {
+  const order = [], seen = new Set(), ng = NP + D.seatGroups.length;
+  for (const k of S.base) for (const g of members(k)) if (!seen.has(g)) { seen.add(g); order.push(g); }
+  for (let g = 0; g < ng; g++) if (!seen.has(g)) order.push(g);
+  const rank = [];
+  order.forEach((g, j) => { rank[g] = j; });
+  return rank;
+}
+const MC = document.createElement("canvas").getContext("2d"), TW = new Map();
+function textW(s, px = 11, wt = 500) {
+  const k = wt + " " + px + " " + s;
+  if (!TW.has(k)) { MC.font = `${wt} ${px}px Jost, "Avenir Next", sans-serif`; TW.set(k, MC.measureText(s).width); }
+  return TW.get(k);
+}
+const f1 = v => Math.round(v * 10) / 10;
+
+function renderSeats(anim) {
+  const box = $("seatbox"), svg = $("seats"), Wd = box.clientWidth, Ht = Math.max(300, box.clientHeight);
+  if (SV && SV.raf) cancelAnimationFrame(SV.raf);
+  const T = SB.T, per = PER[S.period], a = Math.max(per[1], T[0]), b = Math.min(per[2], T[T.length - 1]);
+  const m = {l:52, r:12, t:22, b:24}, pw = Wd - m.l - m.r, ph = Ht - m.t - m.b;
+  const x = d => m.l + (d - a) / (b - a) * pw, ys = s => m.t + ph * (1 - s / SEATS);
+  const k0 = intervalAt(a), k1 = intervalAt(b - 1), nc = k1 - k0 + 1;
+  const rank = seatRank(), bg = baseGroups();
+  // one column per stretch of days with no change; each column stacked bottom-up in rank order
+  const stk = [], cmap = [], xa = [], xb = [];
+  for (let j = 0; j < nc; j++) {
+    const k = k0 + j;
+    xa.push(x(Math.max(T[k], a))); xb.push(x(Math.min(T[k + 1], b)));
+    let c = 0;
+    const es = SB.runs[k].map(n => D.seatRuns[n]).sort((p, q) => rank[p[0]] - rank[q[0]])
+      .map(r => { const e = {g:r[0], lo:c, hi:c + r[3], r}; c += r[3]; return e; });
+    stk.push(es); cmap.push(new Map(es.map(e => [e.g, e])));
+  }
+  // pieces: a group's consecutive columns with one status, the same whatever the stacking order
+  const pieces = [], open = new Map();
+  stk.forEach((es, j) => es.forEach(e => {
+    let p = open.get(e.g);
+    if (!p || p.st !== e.r[4] || p.j1 !== j - 1) { p = {g:e.g, st:e.r[4], j0:j, j1:j}; pieces.push(p); open.set(e.g, p); }
+    p.j1 = j;
+  }));
+  const path = (p, lo, hi) => {   // lo, hi: column → y in pixels
+    let y = hi(p.j0), s = `M${f1(xa[p.j0])} ${f1(y)}`;
+    for (let j = p.j0 + 1; j <= p.j1; j++) { const v = hi(j); if (v !== y) { s += `H${f1(xa[j])}V${f1(v)}`; y = v; } }
+    y = lo(p.j1); s += `H${f1(xb[p.j1])}V${f1(y)}`;
+    for (let j = p.j1 - 1; j >= p.j0; j--) { const v = lo(j); if (v !== y) { s += `H${f1(xb[j])}V${f1(v)}`; y = v; } }
+    return s + `H${f1(xa[p.j0])}Z`;
+  };
+  const fin = p => path(p, j => ys(cmap[j].get(p.g).lo), j => ys(cmap[j].get(p.g).hi));
+  const faded = g => bg.size > 0 && !bg.has(g);
+
+  const o = [`<g id="sbands" stroke="#fff" stroke-width="0.5" stroke-linejoin="round">`];
+  pieces.forEach(p => o.push(`<path d="${fin(p)}" fill="${gCol(p.g)}" fill-opacity="${SALPHA[p.st] * (faded(p.g) ? 0.35 : 1)}"></path>`));
+  o.push(`</g><g pointer-events="none">`);
+  for (let s = 0; s <= 450; s += 50) {
+    const yy = f1(ys(s));
+    o.push(`<line x1="${m.l}" x2="${m.l + pw}" y1="${yy}" y2="${yy}" stroke="#141414" stroke-opacity="${s ? 0.07 : 0.3}"></line>`,
+      `<text x="${m.l - 6}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#767676">${s}</text>`);
+  }
+  o.push(`<text transform="translate(13 ${f1(m.t + ph / 2)}) rotate(-90)" text-anchor="middle" font-size="11" fill="#767676">Seats (of ${SEATS})</text>`);
+  let lastEx = -Infinity;
+  for (const d of D.elections) {
+    if (d < a || d > b) continue;
+    const ex = f1(x(d)), anchor = ex < m.l + 16 ? "start" : ex > m.l + pw - 16 ? "end" : "middle";
+    o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t}" y2="${m.t + ph}" stroke="#fff" stroke-width="1.3"></line>`);
+    if (ex - lastEx < 32) continue;   // two elections close together (2005 and 2007) on a narrow screen
+    o.push(`<text x="${ex}" y="14" text-anchor="${anchor}" font-size="11" fill="#4B4B4B">${yearOf(d)}</text>`);
+    lastEx = ex;
+  }
+  const span = (b - a) / 365.25, step = [1, 2, 5, 10].find(n => pw / span * n >= 44) || 10;
+  for (let yr = yearOf(a) + 1; yr <= yearOf(b); yr++) {
+    if (yr % step) continue;
+    const tx = x(day(yr, 1, 1));
+    if (tx < m.l || tx > m.l + pw) continue;
+    const anchor = tx > m.l + pw - 16 ? "end" : "middle";
+    o.push(`<line x1="${f1(tx)}" x2="${f1(tx)}" y1="${m.t + ph}" y2="${m.t + ph + 4}" stroke="#BDBDBD"></line>`,
+      `<text x="${f1(tx)}" y="${m.t + ph + 17}" text-anchor="${anchor}" font-size="11" fill="#767676">${yr}</text>`);
+  }
+  const ym = f1(ys(MAJ));
+  o.push(`<line x1="${m.l}" x2="${m.l + pw}" y1="${ym}" y2="${ym}" stroke="#141414" stroke-dasharray="4 3"></line>`,
+    `<text x="${m.l + 6}" y="${ym - 4}" font-size="11" fill="#141414" stroke="#fff" stroke-width="3" stroke-linejoin="round" paint-order="stroke">Majority (${MAJ})</text>`);
+  // the base's total: a dark line along its top, and its peak in this period
+  let peak = null;
+  if (bg.size) {
+    let d = "", on = false, py = null;
+    for (let j = 0; j < nc; j++) {
+      let t = 0;
+      for (const e of stk[j]) if (bg.has(e.g)) t = Math.max(t, e.hi);
+      if (t && (!peak || t > peak.n)) peak = {n:t, d:Math.max(T[k0 + j], a)};
+      if (!t) { if (on) { d += `H${f1(xb[j - 1])}`; on = false; } continue; }
+      const yy = f1(ys(t));
+      if (!on) d += `M${f1(xa[j])} ${yy}`; else if (yy !== py) d += `H${f1(xa[j])}V${yy}`;
+      on = true; py = yy;
+    }
+    if (on) d += `H${f1(xb[nc - 1])}`;
+    if (d) o.push(`<g id="sbase"><path d="${d}" fill="none" stroke="#fff" stroke-width="3.6" stroke-opacity=".8"></path><path d="${d}" fill="none" stroke="#141414" stroke-width="1.6"></path></g>`);
+  }
+  // direct labels: one in each of a party's stretches within a term (election to election), where the band
+  // leaves most room for it: the middle of the longest run of label-wide windows at least 85% as tall as the tallest
+  o.push(`<g id="slabs">`);
+  const seg = new Map(), term = j => D.elections.filter(d => d <= T[k0 + j]).length;
+  stk.forEach((es, j) => {
+    const tj = term(j);
+    es.forEach(e => {
+      if (e.g >= NP) return;
+      if (!seg.has(e.g)) seg.set(e.g, []);
+      const L = seg.get(e.g), last = L[L.length - 1];
+      if (last && last[1] === j - 1 && last[2] === tj) last[1] = j; else L.push([j, j, tj]);
+    });
+  });
+  for (const [g, L] of seg) for (const [j0, j1] of L) {
+    const lab = D.parties[g].lab, tw = textW(lab) + 8;
+    if (xb[j1] - xa[j0] < tw) continue;
+    const win = [];   // [left x, top y, bottom y, column under the label's middle], every 3 px
+    for (let lx = xa[j0], s = j0, e = j0; lx <= xb[j1] - tw + 1e-6; lx += 3) {
+      while (s < j1 && xb[s] <= lx) s++;
+      if (e < s) e = s;
+      while (e < j1 && xa[e + 1] < lx + tw) e++;
+      let top = -Infinity, bot = Infinity, mid = s;
+      for (let j = s; j <= e; j++) {
+        const c = cmap[j].get(g);
+        top = Math.max(top, ys(c.hi)); bot = Math.min(bot, ys(c.lo));
+        if (xa[j] <= lx + tw / 2) mid = j;
+      }
+      win.push([lx, top, bot, mid]);
+    }
+    const tall = win.reduce((h, w) => Math.max(h, w[2] - w[1]), 0);
+    if (tall < 13) continue;
+    let best = null, cur = null;
+    win.forEach((w, n) => {
+      if (w[2] - w[1] < Math.max(13, 0.85 * tall)) { cur = null; return; }
+      if (!cur) cur = [n, n];
+      cur[1] = n;
+      if (!best || cur[1] - cur[0] > best[1] - best[0]) best = cur.slice();
+    });
+    const w = win[(best[0] + best[1]) >> 1], cx = w[0] + tw / 2, yc = (w[1] + w[2]) / 2;
+    const dim = faded(g), white = cmap[w[3]].get(g).r[4] === "g" && !dim;
+    o.push(`<text x="${f1(cx)}" y="${f1(yc + 4)}" text-anchor="middle" font-size="11" font-weight="500" fill="${white ? "#fff" : "#141414"}"${dim ? ` fill-opacity=".45"` : ""}>${esc(lab)}</text>`);
+  }
+  o.push(`</g></g><g id="sov" pointer-events="none"></g>`);
+
+  const prev = anim && !calm && SV && SV.a === a && SV.b === b && SV.Wd === Wd && SV.Ht === Ht ? SV : null;
+  const present = [...new Set(stk.flatMap(es => es.map(e => e.g)))].sort((p, q) => p - q);
+  const q = S.q.trim().toLowerCase();
+  const found = q ? present.filter(g => g < NP && (D.parties[g].lab + " " + D.parties[g].pl + " " + D.parties[g].en).toLowerCase().includes(q)) : [];
+  SV = {a, b, m, pw, ph, Wd, Ht, k0, nc, x, stk, cmap, pieces, fin, present, peak, found, hov:null, hk:"", legHot:null, raf:0};
+  svg.setAttribute("width", Wd); svg.setAttribute("height", Ht); svg.setAttribute("viewBox", `0 0 ${Wd} ${Ht}`);
+  svg.innerHTML = o.join("");
+  $("seattip").hidden = true;
+  if (found.length) drawSeatOverlay(null, null);
+  if (prev) {   // slide each band from its old place in the stack to its new one
+    const els = $("sbands").children, hide = [$("slabs"), $("sbase")].filter(Boolean), t0 = performance.now();
+    hide.forEach(el => { el.style.visibility = "hidden"; });
+    const frame = now => {
+      const t = Math.min(1, (now - t0) / 450), w = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(2 - 2 * t, 3) / 2;
+      pieces.forEach((p, n) => {
+        const at = (j, f) => { const A = prev.cmap[j].get(p.g), B = cmap[j].get(p.g); return ys(A ? A[f] + (B[f] - A[f]) * w : B[f]); };
+        els[n].setAttribute("d", path(p, j => at(j, "lo"), j => at(j, "hi")));
+      });
+      if (t < 1) SV.raf = requestAnimationFrame(frame);
+      else { SV.raf = 0; hide.forEach(el => { el.style.visibility = ""; }); }
+    };
+    frame(t0);
+  }
+  let st = "Seats in the Sejm on each day, " + fmt(a) + " – " + fmt(b - 1);
+  if (S.base.length) st += " · At the base: " + baseName();
+  $("status").textContent = st;
+  renderLegend();
+}
+
+function seatHit(ev) {
+  const V = SV, r = $("seats").getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+  if (mx < V.m.l || mx > V.m.l + V.pw || my < V.m.t - 6 || my > V.m.t + V.ph) return null;
+  const d = Math.min(V.b - 1, Math.floor(V.a + (mx - V.m.l) / V.pw * (V.b - V.a)));
+  const k = intervalAt(d), j = k - V.k0, col = V.stk[j] || [], s = (V.m.t + V.ph - my) / V.ph * SEATS;
+  return {d, k, j, s, total: col.length ? col[col.length - 1].hi : 0, e: col.find(e => s >= e.lo && s < e.hi) || null};
+}
+function seatTip(h) {
+  const T = SB.T, col = SV.stk[h.j];
+  if (!col.length) return `<b>No Sejm in office</b><div class="s">${fmt(T[h.k])} – ${fmt(T[h.k + 1] - 1)}</div>`;
+  if (!h.e) return h.total < SEATS ? `<b>${fmt(h.d)}</b><div class="r"><span>Vacant seats</span><span>${SEATS - h.total}</span></div>` : "";
+  const r = h.e.r, g = r[0], p = g < NP ? D.parties[g] : null, bg = baseGroups();
+  let s = `<div class="r"><span><span class="sw" style="background:${gCol(g)}"></span><b>${esc(gLab(g))}</b></span><span><b>${r[3]}</b> ${r[3] === 1 ? "seat" : "seats"}</span></div>`;
+  if (p && p.pl !== p.lab) s += `<div class="s">${esc(p.pl)}</div>`;
+  s += `<div>${fmt(h.d)}${p ? " · " + STATUS[r[4]] : ""}</div>`;
+  if (p && r[5] >= 0 && r[4] !== "o") s += `<div class="s">${esc(D.cabNames[r[5]])}</div>`;
+  if (r[6] >= 0) s += `<div class="s">${g === NP ? "Clubs" : "Club"}: ${esc(D.clubNames[r[6]])}</div>`;
+  if (r[7] >= 0) s += `<div class="s">Includes MPs of ${esc(D.partnerNames[r[7]])} in its club</div>`;
+  const tot = [];
+  const famOnly = p && S.base.length === 1 && S.base[0] === "f:" + p.fam;
+  if (p && !famOnly) {
+    const fam = col.filter(e => e.g < NP && D.parties[e.g].fam === p.fam);
+    if (fam.length > 1) tot.push([FAMS[p.fam][0], fam.reduce((n, e) => n + e.r[3], 0)]);
+  }
+  if (bg.size && !(bg.size === 1 && bg.has(g))) tot.push(["At the base: " + baseName(), col.filter(e => bg.has(e.g)).reduce((n, e) => n + e.r[3], 0)]);
+  if (tot.length) s += `<hr>` + tot.map(t => `<div class="r"><span>${esc(t[0])}</span><span>${t[1]}</span></div>`).join("");
+  return s + `<div class="s" style="margin-top:4px">Click to ${S.base.includes(gKey(g)) ? "take it off" : "move it to"} the base</div>`;
+}
+// outlines the hovered party, or the groups given, or else the parties matching the search
+function drawSeatOverlay(h, groups) {
+  const V = SV, o = [], gs = new Set(groups || (h && h.e ? [h.e.g] : V.found));
+  if (h) { const hx = f1(V.x(h.d + 0.5)); o.push(`<line x1="${hx}" x2="${hx}" y1="${V.m.t}" y2="${V.m.t + V.ph}" stroke="#141414" stroke-opacity=".45"></line>`); }
+  for (const p of V.pieces) if (gs.has(p.g)) o.push(`<path d="${V.fin(p)}" fill="none" stroke="#141414" stroke-width="1.4"></path>`);
+  $("sov").innerHTML = o.join("");
+}
+function seatMove(ev) {
+  if (!SV || SV.raf) return;
+  const h = seatHit(ev), tip = $("seattip"), hk = h ? h.j + ":" + (h.e ? h.e.g : "") : "";
+  SV.hov = h;
+  drawSeatOverlay(h);
+  if (hk !== SV.hk) { SV.hk = hk; renderLegend(); }
+  $("seats").style.cursor = h && h.e ? "pointer" : "";
+  const html = h ? seatTip(h) : "";
+  if (!html) { tip.hidden = true; return; }
+  tip.innerHTML = html; tip.hidden = false;
+  const br = $("seatbox").getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let lx = ev.clientX - br.left + 14, ly = ev.clientY - br.top + 14;
+  if (lx + tw > br.width - 4) lx = ev.clientX - br.left - tw - 14;
+  if (ly + th > br.height - 4) ly = Math.max(4, ev.clientY - br.top - th - 14);
+  tip.style.left = Math.max(4, lx) + "px"; tip.style.top = ly + "px";
+}
+function seatLeave() {
+  if (!SV) return;
+  SV.hov = null; SV.hk = "";
+  $("seattip").hidden = true; $("seats").style.cursor = "";
+  drawSeatOverlay(null, SV.legHot);
+  renderLegend();
+}
+
+// the legend: every family and seat group in the period, with its parties when opened, and their
+// seats on the day under the pointer (or the last day of the period); a click moves one to the base
+function renderLegend() {
+  const V = SV, h = V.hov, j = h ? h.j : V.nc - 1, d = h ? h.d : V.b - 1, col = V.stk[j] || [];
+  const seats = new Map(col.map(e => [e.g, e.r[3]])), hot = h && h.e ? h.e.g : -1;
+  const q = S.q.trim(), sum = gs => gs.reduce((n, g) => n + (seats.get(g) || 0), 0);
+  const btn = (key, colour, name, n, title, isHot) =>
+    `<button type="button" class="lb${n ? "" : " zero"}${isHot ? " hot" : ""}" data-key="${key}" aria-pressed="${S.base.includes(key)}" title="${esc(title)}">`
+    + `<span class="sw" style="background:${colour}"></span><span class="nm">${esc(name)}</span><span class="n">${n || "–"}</span></button>`;
+  const o = [`<span class="label">${col.length ? "Seats on " + fmt(d) : "No Sejm in office on " + fmt(d)}</span>`];
+  if (S.base.length) {
+    const n = sum([...baseGroups()]);
+    o.push(`<div class="basebox"><span class="label" style="color:var(--muted)">At the base</span><span class="nm">${esc(baseName())}</span>`
+      + `<span><span style="font-size:24px;font-weight:300">${col.length ? n : "–"}</span> ${n === 1 ? "seat" : "seats"} on ${fmt(d)}</span>`
+      + (V.peak ? `<span class="note">Most in this period: ${V.peak.n}, on ${fmt(V.peak.d)}</span>` : `<span class="note">No seats in this period</span>`)
+      + `<button type="button" class="linkbtn" data-act="clear" style="align-self:flex-start">Clear the base</button></div>`);
+  } else o.push(`<p class="note">Click a family or party, here or in the chart, to move it to the base of the chart; Shift-click to add another.</p>`);
+  const rows = [];
+  FAMS.forEach((f, fj) => {
+    const all = V.present.filter(g => g < NP && D.parties[g].fam === fj), kids = q ? all.filter(g => V.found.includes(g)) : all;
+    if (!kids.length) return;
+    const isOpen = !!q || S.open.has(fj);
+    rows.push(`<div class="lrow"><button type="button" class="tw" data-open="${fj}" aria-expanded="${isOpen}"${q ? " disabled" : ""} aria-label="${isOpen ? "Hide" : "Show"} the parties in ${esc(f[0])}">${isOpen ? "▾" : "▸"}</button>`
+      + btn("f:" + fj, f[1], f[0], sum(all), f[0], !isOpen && all.includes(hot)) + `</div>`);
+    if (isOpen) rows.push(`<div class="kids">${kids.map(g => btn("p:" + g, f[1], D.parties[g].lab, seats.get(g), D.parties[g].pl, g === hot)).join("")}</div>`);
+  });
+  const extra = q ? [] : V.present.filter(g => g >= NP);
+  if (extra.length) rows.push(`<div class="lsep"></div>` + extra.map(g => `<div class="lrow"><span class="tw"></span>${btn(gKey(g), SG[g - NP][0], gLab(g), seats.get(g), gLab(g), g === hot)}</div>`).join(""));
+  if (!rows.length) rows.push(`<p class="note">No party with seats in this period matches “${esc(q)}”.</p>`);
+  o.push(`<div class="ltree">${rows.join("")}</div>`);
+  if (col.length && !q) o.push(`<div class="ltot"><span>All MPs</span><span>${col[col.length - 1].hi} of ${SEATS}</span></div>`);
+  $("slegend").innerHTML = o.join("");
+}
+$("slegend").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  let again = null;
+  if (b.dataset.act === "clear") { S.base = []; render(true); writeHash(); return; }
+  if (b.dataset.open !== undefined) {
+    const fj = +b.dataset.open;
+    S.open.has(fj) ? S.open.delete(fj) : S.open.add(fj);
+    renderLegend();
+    again = `[data-open="${fj}"]`;
+  } else if (b.dataset.key) {
+    toggleBase(b.dataset.key, e.metaKey || e.ctrlKey || e.shiftKey);
+    again = `[data-key="${b.dataset.key}"]`;
+  }
+  const nb = again && $("slegend").querySelector(again);
+  if (nb) nb.focus();
+});
+$("slegend").addEventListener("mouseover", e => {
+  if (!SV || SV.raf || SV.hov) return;
+  const b = e.target.closest("button[data-key]"), gs = b ? members(b.dataset.key) : null;
+  if (String(gs) === String(SV.legHot)) return;
+  SV.legHot = gs;
+  drawSeatOverlay(null, gs);
+});
+$("slegend").addEventListener("mouseleave", () => { if (SV && SV.legHot) { SV.legHot = null; drawSeatOverlay(null, null); } });
+$("seats").addEventListener("pointermove", seatMove);
+$("seats").addEventListener("pointerleave", seatLeave);
+$("seats").addEventListener("click", e => {
+  const h = seatHit(e);
+  if (h && h.e) toggleBase(gKey(h.e.g), e.metaKey || e.ctrlKey || e.shiftKey);
+});
+
+// ---- defections -----------------------------------------------------------------------------
+// MPs' moves between clubs, from defections.json (loaded after genealogy.json). moves: [person, term, date,
+// precision, earliest, latest, rule, from club, to club, from party, to party, type, collective, group, last vote
+// in the old club, first vote in the new club, formal date, note, source]; spells: [person, term, club, party,
+// start, end, entry, exit]. The counts by term and the flows are those of fig_defections.png, from the same moves.
+let DF = null, DFfail = false, DFL = [];
+const RULE_NOTE = {
+  "first observation in new club": "the day of the MP's first roll-call vote in the new club",
+  "imputed: destination_club_founding": "date not documented; set to the founding of the new club",
+  "imputed: bracket_midpoint": "date not documented; set to the middle of the possible window",
+  "imputed: month_precision_rule": "only the month is documented",
+  "imputed: year_precision_rule": "only the year is documented",
+  "imputed: origin_club_end": "date not documented; set to the end of the old club",
+  "imputed: exact": "date imputed from the evidence below"};
+const ENTRY = {replacement:"entered as a replacement"}, EXIT = {mandate_expired:"left the Sejm", death:"died", club_ended:"club dissolved"};
+const norm = s => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[łŁ]/g, "l").toLowerCase();
+
+function prepDef(X) {
+  const P = X.parties, C = X.clubs, side = (party, club) => party >= 0 ? P[party][1] : C[club][2] === "u" ? "unaffiliated" : C[club][0] + " (club)";
+  X.T = new Map(X.terms.map(t => [t[0], t]));
+  X.mv = X.moves.map((r, n) => {
+    const m = {n, p:r[0], term:r[1], d:r[2], prec:r[3], d0:r[4], d1:r[5], rule:X.rules[r[6]], fc:r[7], tc:r[8], fp:r[9], tp:r[10],
+      type:r[11], grp:r[13], lastOld:r[14], firstNew:r[15], formal:r[16], note:r[17], src:r[18]};
+    Object.assign(m, {def:X.types[m.type][3], fl:side(m.fp, m.fc), tl:side(m.tp, m.tc),
+      fpId:m.fp >= 0 ? P[m.fp][0] : null, tpId:m.tp >= 0 ? P[m.tp][0] : null});
+    m.txt = norm([X.people[m.p][1], m.fl, m.tl, C[m.fc][0], C[m.fc][1], C[m.tc][0], C[m.tc][1]].join(" "));
+    return m;
+  });
+  X.def = X.mv.filter(m => m.def);
+  X.byP = X.people.map(() => []); X.mv.forEach(m => X.byP[m.p].push(m));
+  X.spByP = X.people.map(() => []); X.spells.forEach(s => X.spByP[s[0]].push(s));
+  X.pid = new Map(X.people.map((pe, i) => [pe[0], i]));
+  // surname first, for sorting: the last word of the name
+  X.sortName = X.people.map(pe => { const w = pe[1].split(" "); return norm(w[w.length - 1] + " " + w.slice(0, -1).join(" ")); });
+  // journeys: a move to unaffiliated status joined to the same MP's next move, out of it, in the same term
+  X.jr = [];
+  const seq = new Map();
+  X.def.forEach(m => { const k = m.p + ":" + m.term; if (!seq.has(k)) seq.set(k, []); seq.get(k).push(m); });
+  for (const ms of seq.values()) for (let i = 0; i < ms.length; i++) {
+    const m = ms[i], nx = ms[i + 1];
+    if (C[m.tc][2] === "u" && nx && C[nx.fc][2] === "u") { X.jr.push({ms:[m, nx], fl:m.fl, tl:nx.tl, term:m.term, via:true}); i++; }
+    else X.jr.push({ms:[m], fl:m.fl, tl:m.tl, term:m.term, via:false});
+  }
+  DF = X;
+}
+const defCount = id => DF ? DF.def.filter(m => m.fpId === id || m.tpId === id).length : 0;
+const termLab = t => DF.T.get(t)[1];
+const termShort = t => (termLab(t).match(/\(([^)]+)\)$/) || [, termLab(t)])[1];
+const partyLab = id => { const p = DF.parties.find(x => x[0] === id) || D.parties.find(x => x.id === id); return p ? (p.lab || p[1]) : id; };
+const moveDate = m => fmt(m.d, m.prec === "m" ? "month" : m.prec === "y" ? "year" : null);
+const undocumented = m => m.rule !== "documented date";
+const approx = m => undocumented(m) && m.prec !== "m" && m.prec !== "y" ? "≈ " : "";   // a month or a year shows its own uncertainty
+const flowKey = u => u.fl + " → " + u.tl;
+function niceStep(max, n) {
+  const raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+}
+function defBase() {   // moves in the period that match the search and the party
+  const per = PER[S.period], q = norm(S.q.trim());
+  return DF.def.filter(m => m.d >= per[1] && m.d < per[2] && (!q || m.txt.includes(q))
+    && (S.dparty === null || m.fpId === S.dparty || m.tpId === S.dparty));
+}
+function defUnits(ms) {   // the moves, or MPs' journeys through unaffiliated status that include any of them
+  if (!S.jr) return ms.map(m => ({ms:[m], fl:m.fl, tl:m.tl, term:m.term, via:false}));
+  const keep = new Set(ms);
+  return DF.jr.filter(u => u.ms.some(m => keep.has(m)));
+}
+const flowSet = base => S.dflow ? new Set(defUnits(base).filter(u => flowKey(u) === S.dflow).flatMap(u => u.ms)) : null;
+
+function renderDef() {
+  if (!DF) { $("status").textContent = DFfail ? "Could not load the defections." : "Loading the defections…"; return; }
+  const base = defBase(), pass = m => (S.dterm === null || m.term === S.dterm) && (S.dtype === null || m.type === S.dtype);
+  // each chart is filtered by the other's selection, the list by both
+  const inFlow = flowSet(base), flowMs = base.filter(pass), rows = inFlow ? flowMs.filter(m => inFlow.has(m)) : flowMs;
+  drawTerms(base, inFlow ? base.filter(m => inFlow.has(m)) : base);
+  drawFlows(flowMs);
+  drawDefBar(rows);
+  drawTable(rows);
+  renderMP(rows);
+  const per = PER[S.period];
+  $("status").textContent = "MPs' moves between clubs, " + fmt(Math.max(per[1], DF.terms[0][2])) + " – " + fmt(Math.min(per[2] - 1, DF.asOf));
+  $("djr").checked = S.jr;
+}
+
+function drawTerms(base, ms) {
+  const W = Math.max(280, $("dterms-card").clientWidth - 24), NT = DF.types.length;
+  const terms = [...new Set(base.map(m => m.term))].sort((p, q) => p - q), cnt = new Map(terms.map(t => [t, new Array(NT).fill(0)]));
+  ms.forEach(m => cnt.get(m.term)[m.type]++);
+  const tot = t => cnt.get(t).reduce((s, v) => s + v, 0), max = Math.max(1, ...terms.map(tot));
+  const gut = Math.ceil(Math.max(40, ...terms.map(t => textW(termLab(t), 12, 300)))) + 12, rh = 24, pw = W - gut - 34;
+  const step = niceStep(max, 4), xmax = Math.ceil(max / step) * step, x = v => gut + v / xmax * pw, H = 4 + terms.length * rh + 22;
+  const o = [];
+  for (let v = 0; v <= xmax; v += step) {
+    const gx = f1(x(v));
+    o.push(`<line x1="${gx}" x2="${gx}" y1="2" y2="${H - 20}" stroke="#141414" stroke-opacity="${v ? 0.07 : 0.25}"></line>`,
+      `<text x="${gx}" y="${H - 6}" text-anchor="middle" font-size="11" fill="#767676">${v}</text>`);
+  }
+  terms.forEach((t, j) => {
+    const y = 4 + j * rh, c = cnt.get(t), on = S.dterm === null || S.dterm === t;
+    o.push(`<text data-t="${t}" x="${gut - 8}" y="${y + rh / 2 + 4}" text-anchor="end" font-size="12" fill="${on ? "#141414" : "#9A9A9A"}"${S.dterm === t ? ` font-weight="500"` : ""} style="cursor:pointer">${esc(termLab(t))}</text>`);
+    let acc = 0;
+    DF.types.forEach((ty, k) => {
+      if (!c[k]) return;
+      const x0 = x(acc), x1 = x(acc + c[k]), lit = on && (S.dtype === null || S.dtype === k);
+      acc += c[k];
+      o.push(`<rect data-b="${t}:${k}" data-n="${c[k]}" x="${f1(x0)}" y="${y + 4.5}" width="${f1(Math.max(0.6, x1 - x0))}" height="15" fill="${ty[2]}" fill-opacity="${lit ? 1 : 0.22}" style="cursor:pointer"></rect>`);
+    });
+    if (acc) o.push(`<text x="${f1(x(acc) + 5)}" y="${y + rh / 2 + 4}" font-size="11.5" fill="#4B4B4B">${acc}</text>`);
+  });
+  if (!terms.length) o.push(`<text x="${gut}" y="20" font-size="13" fill="#767676">No moves match these filters.</text>`);
+  const svg = $("dterms");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = o.join("");
+  $("dtypes").innerHTML = DF.types.map((ty, k) => ty[3] ? `<button type="button" class="chip" data-k="${k}" aria-pressed="${S.dtype === k}"><span class="sw" style="background:${ty[2]}"></span>${esc(ty[1])}</button>` : "").join("");
+}
+
+function drawFlows(ms) {
+  const W = Math.max(280, $("dflows-card").clientWidth - 24), g = new Map();
+  for (const u of defUnits(ms)) {
+    const k = flowKey(u);
+    if (!g.has(k)) g.set(k, {k, fl:u.fl, tl:u.tl, n:0, via:0, terms:new Set()});
+    const f = g.get(k);
+    f.n++; f.terms.add(u.term);
+    if (u.via) f.via++;
+  }
+  const top = [...g.values()].sort((p, q) => q.n - p.n || p.k.localeCompare(q.k)).slice(0, 20);
+  if (S.dflow && !top.some(f => f.k === S.dflow) && g.has(S.dflow)) top.push(g.get(S.dflow));
+  DFL = top;
+  const gut = Math.min(W * 0.55, Math.ceil(Math.max(60, ...top.map(f => textW(f.k, 12, 300)))) + 12), rh = 19, pw = W - gut - 30;
+  const max = Math.max(1, ...top.map(f => f.n)), step = niceStep(max, 4), xmax = Math.ceil(max / step) * step;
+  const x = v => gut + v / xmax * pw, H = 4 + Math.max(1, top.length) * rh + 22, o = [];
+  for (let v = 0; v <= xmax; v += step) {
+    const gx = f1(x(v));
+    o.push(`<line x1="${gx}" x2="${gx}" y1="2" y2="${H - 20}" stroke="#141414" stroke-opacity="${v ? 0.07 : 0.25}"></line>`,
+      `<text x="${gx}" y="${H - 6}" text-anchor="middle" font-size="11" fill="#767676">${v}</text>`);
+  }
+  top.forEach((f, j) => {
+    const y = 4 + j * rh + rh / 2, on = !S.dflow || S.dflow === f.k, col = f.fl === "unaffiliated" || f.tl === "unaffiliated" ? "#8C8C8C" : "#D95F02";
+    o.push(`<g opacity="${on ? 1 : 0.3}" pointer-events="none">`
+      + `<text x="${gut - 8}" y="${y + 4}" text-anchor="end" font-size="12" fill="#141414"${S.dflow === f.k ? ` font-weight="500"` : ""}>${esc(f.k)}</text>`
+      + `<line x1="${f1(x(0))}" x2="${f1(x(f.n))}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="1.6"></line>`
+      + `<circle cx="${f1(x(f.n))}" cy="${y}" r="4" fill="${col}"></circle>`
+      + `<text x="${f1(x(f.n) + 8)}" y="${y + 4}" font-size="11.5" fill="#4B4B4B">${f.n}</text></g>`,
+      `<rect data-f="${j}" x="0" y="${y - rh / 2}" width="${W}" height="${rh}" fill="transparent" style="cursor:pointer"></rect>`);
+  });
+  if (!top.length) o.push(`<text x="8" y="20" font-size="13" fill="#767676">No moves match these filters.</text>`);
+  const svg = $("dflows");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = o.join("");
+}
+
+function drawDefBar(rows) {
+  const n = rows.length, nmp = new Set(rows.map(m => m.p)).size, ch = [];
+  if (S.dparty) ch.push(["party", "Moves in and out of " + partyLab(S.dparty)]);
+  if (S.dterm !== null) ch.push(["term", "Term " + termLab(S.dterm)]);
+  if (S.dtype !== null) ch.push(["type", DF.types[S.dtype][1]]);
+  if (S.dflow) ch.push(["flow", S.dflow + (S.jr ? " (through unaffiliated status)" : "")]);
+  if (S.q.trim()) ch.push(["q", "“" + S.q.trim() + "”"]);
+  $("dbar").innerHTML = `<span><b>${n}</b> ${n === 1 ? "move" : "moves"} by <b>${nmp}</b> ${nmp === 1 ? "MP" : "MPs"}</span>`
+    + ch.map(c => `<button type="button" class="fchip" data-clear="${c[0]}" title="Remove this filter">${esc(c[1])}</button>`).join("")
+    + (ch.length > 1 ? `<button type="button" class="linkbtn" data-clear="all">Clear all</button>` : "");
+}
+
+function sideCell(m, w) {
+  const party = w === "f" ? m.fp : m.tp, club = DF.clubs[w === "f" ? m.fc : m.tc];
+  if (party >= 0) {
+    const P = DF.parties[party];
+    return `<button type="button" class="pl" data-pt="${esc(P[0])}" title="${esc(club[1])}: click to list the moves in and out of ${esc(P[1])}"><span class="sw" style="background:${FAMS[P[2]][1]}"></span>${esc(P[1])}</button>`;
+  }
+  return `<span class="pl0" title="${esc(club[1])}"><span class="sw" style="background:${club[2] === "u" ? "#D9D9D9" : "#BDBDBD"}"></span>${esc(w === "f" ? m.fl : m.tl)}</span>`;
+}
+function drawTable(rows) {
+  const dir = S.ddesc ? -1 : 1, nm = DF.sortName;
+  const rs = rows.slice().sort((a, b) => dir * (S.dsort === "mp" ? nm[a.p].localeCompare(nm[b.p]) || a.d - b.d : a.d - b.d || nm[a.p].localeCompare(nm[b.p])));
+  const sel = S.mp ? DF.pid.get(S.mp) : -1;
+  $("drows").innerHTML = rs.map(m => {
+    const ty = DF.types[m.type];
+    return `<tr data-n="${m.n}"${m.p === sel ? ` class="on"` : ""}>`
+      + `<td class="nw"${undocumented(m) ? ` title="${esc(RULE_NOTE[m.rule] || m.rule)}"` : ""}>${approx(m)}${moveDate(m)}</td>`
+      + `<td>${esc(DF.people[m.p][1])}<span class="mk"><span class="sw" style="background:${ty[2]}"></span>${esc(ty[1])}</span></td><td>${sideCell(m, "f")}</td><td>${sideCell(m, "t")}</td>`
+      + `<td><span class="pl0"><span class="sw" style="background:${ty[2]}"></span>${esc(ty[1])}</span>${m.grp >= 3 ? ` <span class="d-s">· with ${m.grp - 1} others</span>` : ""}</td></tr>`;
+  }).join("") || `<tr><td colspan="5" class="d-s">No moves match these filters.</td></tr>`;
+  document.querySelectorAll("table.dt th button").forEach(b => {
+    const on = b.dataset.sort === S.dsort;
+    b.textContent = (b.dataset.sort === "mp" ? "MP" : "Date") + (on ? (S.ddesc ? " ↓" : " ↑") : "");
+    b.closest("th").setAttribute("aria-sort", on ? (S.ddesc ? "descending" : "ascending") : "none");
+  });
+}
+
+function srcLinks(i) {
+  if (i < 0) return "";
+  return DF.sources[i].split(";").map(u => {
+    let host = "";
+    try { host = new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; }
+    const lab = host === "api.sejm.gov.pl" ? "Sejm API" : host.endsWith("wikipedia.org") ? "Wikipedia"
+      : host.includes("isppan") ? "ISP PAN" : host === "sejm.gov.pl" ? "Sejm archive" : host;
+    return `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(lab)}</a>`;
+  }).filter(Boolean).join(" · ");
+}
+function mpCard(pi) {
+  const pe = DF.people[pi], ms = DF.byP[pi], sp = DF.spByP[pi], nd = ms.filter(m => m.def).length, C = DF.clubs;
+  const terms = [...new Set(sp.map(s => s[1]))].sort((a, b) => a - b);
+  const party = (pa, club) => pa >= 0
+    ? `<button type="button" class="pl" data-gen="${esc(DF.parties[pa][0])}" title="${esc(DF.parties[pa][1])} in the genealogy"><span class="sw" style="background:${FAMS[DF.parties[pa][2]][1]}"></span><b style="font-weight:500">${esc(DF.parties[pa][1])}</b></button>`
+    : `<span class="pl0"><span class="sw" style="background:${C[club][2] === "u" ? "#D9D9D9" : "#BDBDBD"}"></span><b style="font-weight:500">${C[club][2] === "u" ? "Unaffiliated" : esc(C[club][0])}</b></span>`;
+  const out = [`<span class="label">MP record</span><div class="big">${esc(pe[1])}</div>`,
+    `<div style="color:var(--soft);font-size:13px">${nd} ${nd === 1 ? "move" : "moves"} between clubs · in the Sejm in ${terms.length === 1 ? "term" : "terms"} ${terms.map(termShort).join(", ")}</div>`,
+    `<div style="display:flex;gap:14px;flex-wrap:wrap"><button type="button" class="linkbtn" data-act="only">List only this MP's moves</button><button type="button" class="linkbtn" data-act="close">Close</button></div>`,
+    `<div class="tl">`];
+  for (const t of terms) {
+    out.push(`<div class="th">${esc(termLab(t))}</div>`);
+    const items = sp.filter(s => s[1] === t).map(s => [s[4], "s", s]).concat(ms.filter(m => m.term === t).map(m => [m.d - 0.5, "m", m]))
+      .sort((a, b) => a[0] - b[0]);
+    for (const [, kind, it] of items) {
+      if (kind === "s") {
+        const notes = [ENTRY[DF.reasons[it[6]]], it[7] >= 0 ? EXIT[DF.reasons[it[7]]] : null].filter(Boolean);
+        out.push(`<div class="sp"><span>${party(it[3], it[2])}<span class="d-s">${fmt(it[4])} – ${it[7] < 0 ? "to date" : fmt(it[5])}</span></span>`
+          + `<span class="d-s">${esc(C[it[2]][1])}${notes.length ? " · " + notes.join(" · ") : ""}</span></div>`);
+      } else {
+        const m = it, ty = DF.types[m.type], det = [];
+        if (undocumented(m)) det.push(esc(RULE_NOTE[m.rule] || m.rule) + (m.prec === "b" && m.d0 !== null ? `; between ${fmt(m.d0)} and ${fmt(m.d1)}` : ""));
+        if (m.grp >= 3) det.push(`One of ${m.grp} MPs who moved from ${esc(m.fl)} to ${esc(m.tl)} within a week.`);
+        if (m.lastOld !== null || m.firstNew !== null)
+          det.push("Roll calls: " + [m.lastOld !== null ? "last vote in the old club " + fmt(m.lastOld) : "", m.firstNew !== null ? "first in the new club " + fmt(m.firstNew) : ""].filter(Boolean).join(", ")
+            + (m.formal !== null ? "; formal date " + fmt(m.formal) : "") + ".");
+        if (m.note >= 0) det.push(esc(DF.notes[m.note]));
+        const src = srcLinks(m.src);
+        out.push(`<div class="mv"><span class="k"><span class="sw" style="background:${ty[2]}"></span>${esc(ty[1])}</span>`
+          + `<span>${approx(m)}${moveDate(m)}</span>`
+          + det.map(x => `<span class="d-s">${x}</span>`).join("") + (src ? `<span class="d-s">Sources: ${src}</span>` : "") + `</div>`);
+      }
+    }
+  }
+  out.push(`</div>`);
+  return out.join("");
+}
+function renderMP(rows) {
+  const pi = S.mp ? DF.pid.get(S.mp) : undefined;
+  if (pi !== undefined) { $("drecord").innerHTML = mpCard(pi); return; }
+  const cnt = new Map();
+  rows.forEach(m => cnt.set(m.p, (cnt.get(m.p) || 0) + 1));
+  const top = [...cnt].sort((a, b) => b[1] - a[1] || DF.sortName[a[0]].localeCompare(DF.sortName[b[0]])).slice(0, 10);
+  $("drecord").innerHTML = `<span class="label">MP records</span>
+    <p>Click a move in the list, or a name below, for the MP's record: every club they sat in, each move, and the evidence for its date.</p>
+    ${top.length && top[0][1] > 1 ? `<span class="label" style="color:var(--muted);padding-top:4px">Most moves${rows.length < DF.def.length ? " among these" : ""}</span>
+    <div class="movers">${top.map(([p, n]) => `<button type="button" data-mp="${esc(DF.people[p][0])}"><span>${esc(DF.people[p][1])}</span><span style="color:var(--soft)">${n}</span></button>`).join("")}</div>` : ""}`;
+}
+
+function defTip(tip, box, ev, html) {
+  if (!html) { tip.hidden = true; return; }
+  tip.innerHTML = html; tip.hidden = false;
+  const br = box.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let lx = ev.clientX - br.left + 14, ly = ev.clientY - br.top + 14;
+  if (lx + tw > br.width - 4) lx = ev.clientX - br.left - tw - 14;
+  if (ly + th > br.height - 4) ly = Math.max(4, ev.clientY - br.top - th - 14);
+  tip.style.left = Math.max(4, lx) + "px"; tip.style.top = ly + "px";
+}
+function setDef(changes) { Object.assign(S, changes); render(); writeHash(); }
+$("dterms").addEventListener("click", e => {
+  const b = e.target.closest("[data-b]"), t = e.target.closest("[data-t]");
+  if (b) {
+    const [term, k] = b.dataset.b.split(":").map(Number);
+    setDef(S.dterm === term && S.dtype === k ? {dterm:null, dtype:null} : {dterm:term, dtype:k});
+  } else if (t) setDef({dterm:S.dterm === +t.dataset.t && S.dtype === null ? null : +t.dataset.t, dtype:null});
+});
+$("dterms").addEventListener("pointermove", e => {
+  const b = e.target.closest("[data-b]");
+  if (!b) { $("dtip1").hidden = true; return; }
+  const [term, k] = b.dataset.b.split(":").map(Number), ty = DF.types[k];
+  defTip($("dtip1"), $("dterms-card"), e, `<b>${esc(termLab(term))}</b><div class="r"><span><span class="sw" style="background:${ty[2]}"></span>${esc(ty[1])}</span><span>${b.dataset.n}</span></div><div class="s">Click to list these moves</div>`);
+});
+$("dterms").addEventListener("pointerleave", () => { $("dtip1").hidden = true; });
+$("dtypes").addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (b) setDef({dtype:S.dtype === +b.dataset.k ? null : +b.dataset.k}); });
+$("dflows").addEventListener("click", e => { const r = e.target.closest("[data-f]"); if (r) { const k = DFL[+r.dataset.f].k; setDef({dflow:S.dflow === k ? null : k}); } });
+$("dflows").addEventListener("pointermove", e => {
+  const r = e.target.closest("[data-f]"), f = r ? DFL[+r.dataset.f] : null;
+  defTip($("dtip2"), $("dflows-card"), e, f ? `<b>${esc(f.k)}</b><div class="r"><span>Moves</span><span>${f.n}</span></div>`
+    + (S.jr && f.via ? `<div class="s">${f.via} through unaffiliated status</div>` : "")
+    + (f.fl === f.tl && f.fl !== "unaffiliated" ? `<div class="s">${S.jr ? "Moves between two clubs led by the same party, or back to it after a spell as unaffiliated" : "Moves between two clubs led by the same party"}</div>` : "")
+    + `<div class="s">${[...f.terms].sort((a, b) => a - b).map(termLab).join(", ")}</div><div class="s">Click to list ${f.n === 1 ? "it" : "them"}</div>` : "");
+});
+$("dflows").addEventListener("pointerleave", () => { $("dtip2").hidden = true; });
+$("djr").addEventListener("change", e => setDef({jr:e.target.checked, dflow:null}));
+$("dbar").addEventListener("click", e => {
+  const c = e.target.closest("[data-clear]");
+  if (!c) return;
+  const k = c.dataset.clear;
+  if (k === "q" || k === "all") { S.q = ""; $("q").value = ""; }
+  setDef(k === "all" ? {dparty:null, dterm:null, dtype:null, dflow:null}
+    : ({party:{dparty:null}, term:{dterm:null}, type:{dtype:null}, flow:{dflow:null}}[k] || {}));
+});
+document.querySelector("table.dt thead").addEventListener("click", e => {
+  const b = e.target.closest("[data-sort]");
+  if (!b) return;
+  if (S.dsort === b.dataset.sort) S.ddesc = !S.ddesc; else { S.dsort = b.dataset.sort; S.ddesc = false; }
+  render();
+});
+$("drows").addEventListener("click", e => {
+  const pt = e.target.closest("[data-pt]"), tr = e.target.closest("tr[data-n]");
+  if (pt) setDef({dparty:S.dparty === pt.dataset.pt ? null : pt.dataset.pt, dflow:null});
+  else if (tr) {
+    const id = DF.people[DF.mv[+tr.dataset.n].p][0];
+    setDef({mp:S.mp === id ? null : id});
+    // on a phone the record is below the list
+    if (S.mp && window.matchMedia("(max-width: 900px)").matches) $("drecord").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+});
+$("drecord").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.mp) setDef({mp:b.dataset.mp});
+  else if (b.dataset.gen) {
+    const i = D.parties.findIndex(p => p.id === b.dataset.gen);
+    if (i < 0) return;
+    Object.assign(S, {view:"gen", sel:i, lin:false, hov:null, period:0, q:""});
+    S.off.clear(); $("q").value = "";
+    render(); writeHash(); scrollToSel();
+  } else if (b.dataset.act === "only") {
+    S.q = DF.people[DF.pid.get(S.mp)][1]; $("q").value = S.q;
+    setDef({dparty:null, dterm:null, dtype:null, dflow:null});
+  } else if (b.dataset.act === "close") setDef({mp:null});
+});
+
 // ---- load -----------------------------------------------------------------------------------
 fetch("genealogy.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
   D = data;
@@ -424,18 +1284,27 @@ fetch("genealogy.json").then(r => { if (!r.ok) throw new Error(r.status); return
   PER = [["1989–" + yearOf(D.asOf), day(1989, 4, 15), end], ["1989–1997", day(1989, 4, 1), day(1998, 1, 1)],
     ["1997–2005", day(1997, 6, 1), day(2006, 1, 1)], ["2005–2015", day(2005, 6, 1), day(2016, 1, 1)],
     ["2015–" + yearOf(D.asOf), day(2015, 6, 1), end]];
-  $("asof").textContent = "Data to " + fmt(D.asOf) + ".";
+  document.querySelectorAll(".asof").forEach(el => { el.textContent = "Data to " + fmt(D.asOf) + "."; });
   if (window.matchMedia("(max-width: 900px)").matches) $("fam-box").open = false;
+  prepSeats();
   buildControls();
   const fromHash = readHash();
   render();
   if (fromHash) scrollToSel();
   try { hashTarget().addEventListener("hashchange", () => { if (readHash()) { render(); scrollToSel(); } }); } catch (e) { /* ignore */ }
-  let raf = 0, lastW = $("scroller").clientWidth;
+  fetch("defections.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(x => {
+    prepDef(x);
+    if (S.view === "def") render(); else if (S.view === "gen") renderRecord();
+  }).catch(() => { DFfail = true; if (S.view === "def") render(); });
+  // the genealogy and the defections redraw when their width changes; the seat chart also fills the height
+  const size = () => S.view + ":" + (S.view === "seats" ? $("seatbox").clientWidth + "x" + $("seatbox").clientHeight
+    : $(S.view === "def" ? "defbox" : "scroller").clientWidth);
+  let raf = 0, last = size();
   window.addEventListener("resize", () => {
     cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => { const w = $("scroller").clientWidth; if (w !== lastW) { lastW = w; render(); } });
+    raf = requestAnimationFrame(() => { const s = size(); if (s !== last) { last = s; render(); } });
   });
+  if (document.fonts) document.fonts.ready.then(() => { TW.clear(); if (S.view === "seats") render(); });
 }).catch(() => { $("status").textContent = "Could not load the party data."; });
 </script>
 </body>

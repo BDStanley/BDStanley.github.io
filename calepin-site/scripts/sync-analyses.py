@@ -7,6 +7,8 @@ page; this script copies it beside the page's chart under assets/:
 
     Party tracker/output/figures/genealogy.json  -> assets/party-genealogy/genealogy.json
         (written by Party tracker/R/63_export_genealogy_json.R, run by run_all.R)
+    Party tracker/output/figures/defections.json -> assets/party-genealogy/defections.json
+        (written by Party tracker/R/64_export_defections_json.R, run by run_all.R)
     Polls/web/polls.json                          -> assets/polling-tracker/polls.json
     Polls/web/draws.json                          -> assets/polling-tracker/draws.json
         (written by Polls/R/export_web.R, which PTP.R runs)
@@ -62,7 +64,10 @@ PPA_SRC = Path(os.environ.get("PPA_SRC", str(DEFAULT_SRC)))
 # (source in the repo, destination in the site, fields the file must have)
 FILES = [
     ("Party tracker/output/figures/genealogy.json", "assets/party-genealogy/genealogy.json",
-     {"asOf", "parties", "runs", "pres", "conn", "elections", "cabNames", "clubNames"}),
+     {"asOf", "parties", "runs", "pres", "conn", "elections", "cabNames", "clubNames",
+      "seatGroups", "seatRuns", "partnerNames"}),
+    ("Party tracker/output/figures/defections.json", "assets/party-genealogy/defections.json",
+     {"asOf", "terms", "types", "parties", "clubs", "people", "moves", "spells"}),
     ("Polls/web/polls.json", "assets/polling-tracker/polls.json",
      {"meta", "rules", "constituencies", "trend", "polls", "weeks"}),
     ("Polls/web/draws.json", "assets/polling-tracker/draws.json",
