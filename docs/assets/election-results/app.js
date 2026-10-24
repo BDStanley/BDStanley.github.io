@@ -2,7 +2,7 @@
  * since 1990: the facts and results of each, and maps down to gmina level.
  *
  * Reads elections.json (the index), geo.json (pre-projected SVG paths: today's gminas, each set of
- * constituencies, the Warsaw inset) and one <election-id>.json per election, loaded when it is
+ * constituencies) and one <election-id>.json per election, loaded when it is
  * chosen; all written by "Election results/analysis/90_export.R" in the Polish political analyses
  * repo. Unit counts are integer arrays aligned with geo.json's order. Lists and candidates under
  * 0.5% nationally with no seat are summed as "other" in the unit counts (but listed in the results
@@ -75,7 +75,7 @@ const ZONES = [["russian", "Russian Empire"], ["german", "German Empire"], ["aus
 let E, G, CUR = null, EL = null;   // index, geometry, current election file, its index entry
 const CACHE = new Map();
 const S = { type: "all", e: null, p: 0, m: null, i: 0, j: 1, l: "g", b: "o", v: "m", sel: null,
-  cc: null, ck: null, cx: null, z: false, pc: null, cv: "higher_ed" };   // change: compared contest, mode, item; zabory; profile camp
+  cc: null, ck: null, cx: null, z: false, pc: null, cv: "higher_ed", zc: null };   // change: compared contest, mode, item; zabory; profile camp; scatter colour
 let ELECTIONS = [], CONTEST = {}, OWN_ALL = {};
 // "Polls now": the Polling tracker's latest estimate (../polling-tracker/polls.json), shown as an
 // election of its own: national shares and the model's median seats, with each party's share spread
@@ -220,6 +220,7 @@ function stateString() {
   }
   if (S.z) q.set("z", 1);
   if (S.cv !== "higher_ed") q.set("cv", S.cv);
+  if (S.zc) q.set("zc", S.zc);
   if (S.sel && MAPV && S.sel.l === S.l + S.b + S.v) q.set("u", MAPV.L.kind === "g" ? G.gminas.teryt[S.sel.u] : "c" + G.sets[MAPV.L.set].okreg[S.sel.u]);
   return q.toString();
 }
@@ -247,6 +248,7 @@ function restoreHash() {
   S.cx = q.get("x");
   S.z = q.get("z") === "1";
   S.cv = q.get("cv") || "higher_ed";
+  S.zc = ["list", "1914", "1937"].includes(q.get("zc")) ? q.get("zc") : null;
 }
 function shareUrl() { const t = hashTarget(), s = stateString(); return t.location.origin + t.location.pathname + (s ? "#" + s : ""); }
 
@@ -702,7 +704,7 @@ function fitMap() {
   r.setProperty("--stripfit", Math.round(strip.offsetHeight + 16) + "px");
 }
 function renderMap() {
-  if (CUR.facts.facts_only) { $("map").innerHTML = ""; $("legend").innerHTML = ""; $("mapnote").textContent = "No maps for 1989: the election is not on the PKW portal."; $("insetbox").hidden = true; return; }
+  if (CUR.facts.facts_only) { $("map").innerHTML = ""; $("legend").innerHTML = ""; $("mapnote").textContent = "No maps for 1989: the election is not on the PKW portal."; return; }
   if (measure() === "chg") {
     const el = CONTEST[S.cc && CONTEST[S.cc] && S.cc !== partOf().contest_id ? S.cc : defaultCompare()].election;
     if (!CACHE.has(el)) {
@@ -712,7 +714,7 @@ function renderMap() {
     }
   }
   renderMapControls();
-  document.querySelectorAll("#mapbox .tip, #insetbox .tip").forEach(t => { t.hidden = true; });
+  document.querySelectorAll("#mapbox .tip").forEach(t => { t.hidden = true; });
   const L = levelData(), vals = valuesFor(L), sc = scaleFor(vals), svg = $("map");
   MAPV = { L, vals, sc };
   const fill = u => isNum(vals.v[u]) ? (sc.kind === "lead" ? sc.col(vals.v[u], vals.lead[u]) : sc.col(vals.v[u])) : NODATA;
@@ -722,7 +724,6 @@ function renderMap() {
     svg.classList.remove("cons");
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     html = G.gminas.d.map((d, u) => `<path class="u" d="${d}" fill="${fill(u)}" data-u="${u}"/>`).join("");
-    html += `<rect x="${G.inset.box[0]}" y="${G.inset.box[1]}" width="${G.inset.box[2]}" height="${G.inset.box[3]}" fill="none" stroke="#767676" stroke-width="0.8" stroke-dasharray="3 2" pointer-events="none"/>`;
   } else if (S.v === "c") {
     const s = G.sets[L.set], cv = s.circle_view;
     svg.classList.add("cons");
@@ -741,14 +742,6 @@ function renderMap() {
   svg.setAttribute("font-family", FONT);
   svg.innerHTML = html;
   fitMap();
-  // The Warsaw inset, for gminas
-  const ib = $("insetbox");
-  ib.hidden = L.kind !== "g";
-  if (L.kind === "g") {
-    const isv = $("inset");
-    isv.setAttribute("viewBox", `0 0 ${G.inset.view[0]} ${G.inset.view[1]}`);
-    isv.innerHTML = G.inset.d.map((d, k) => `<path d="${d}" fill="${fill(G.inset.gmina[k])}" data-u="${G.inset.gmina[k]}"/>`).join("");
-  }
   renderLegend(sc, vals);
   renderZones(vals);
   const notes = [];
@@ -838,7 +831,7 @@ function bindMap() {
       drawHighlight(); renderUnitCard();
     });
   };
-  over($("map"), $("mapbox")); over($("inset"), $("insetbox"));
+  over($("map"), $("mapbox"));
 }
 
 // ---- change maps ----------------------------------------------------------------------------
@@ -1106,14 +1099,28 @@ function bindSearch() {
 }
 
 // ---- who votes where ------------------------------------------------------------------------
-let COV = null, COV_LOADING = null, SCAT = null;
-// Neutral tones for the partition zones, not party colours
+let COV = null, COV_LOADING = null, SCAT = null, SCAT_TOK = 0;
+const COV_GROUPS = new Map();
+// Neutral tones for the partition zones and the sides of the 1937 border, not party colours
 const ZONECOL = { russian: "#6f7f8f", german: "#9a8c7a", austrian: "#c0a77f" };
+const ZONES37 = [["poland", "Poland"], ["germany", "Germany"], ["danzig", "Free City of Danzig"]];
+const ZONECOL37 = { poland: "#7d8fa3", germany: "#9a8c7a", danzig: "#b5725a" };
+// covariates.json is the index; each group's values are in its own file, fetched when one of
+// its characteristics is first chosen
 function loadCov() {
   if (COV) return Promise.resolve(COV);
-  if (!COV_LOADING) COV_LOADING = fetch("covariates.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => { COV = d; return d; });
+  if (!COV_LOADING) COV_LOADING = fetch("covariates.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { d.values = d.values || {}; COV = d; return d; }).catch(e => { COV_LOADING = null; throw e; });
   return COV_LOADING;
 }
+function loadCovGroup(id) {
+  const g = COV.groups.find(x => x.id === id);
+  if (!COV_GROUPS.has(id)) COV_GROUPS.set(id, fetch(g.file).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { Object.assign(COV.values, d.values); return d; }).catch(e => { COV_GROUPS.delete(id); throw e; }));
+  return COV_GROUPS.get(id);
+}
+// How the points are coloured: as chosen, or by 1914 zone while "Widać zabory!" is on
+const scatColour = () => S.zc || (S.z ? "1914" : "list");
 // The weighted correlation of x and y
 function wcor(p) {
   const sw = sum(p.map(q => q.w)), mx = sum(p.map(q => q.w * q.x)) / sw, my = sum(p.map(q => q.w * q.y)) / sw;
@@ -1161,12 +1168,25 @@ async function renderScatter() {
   const card = $("scatcard"), svg = $("scat");
   if (CUR.facts.facts_only || isPolls()) { $("whosec").hidden = true; return; }
   $("whosec").hidden = false;
+  // The list, candidate or answer plotted, as on the map: choosing one here also maps it
+  const its = mapItems(), ms = measure(), cur = ms === "turnout" ? "turnout" : ms === "chg" ? "chg" : String(S.i);
+  $("scatitemlab").textContent = itemLabel();
+  $("scatitem").innerHTML = (ms === "chg" ? `<option value="chg" selected>Change, as on the map</option>` : "") +
+    its.map((it, k) => `<option value="${k}"${String(k) === cur ? " selected" : ""}>${esc(nameOf(it))} (${pct(it.pct)})</option>`).join("") +
+    `<option value="turnout"${cur === "turnout" ? " selected" : ""}>Turnout</option>`;
+  const col = scatColour();
+  $("scatcol").value = col;
+  const tok = ++SCAT_TOK;
   try { await loadCov(); } catch (e) { card.innerHTML = `<p class="note">Could not load the gminas' characteristics.</p>`; return; }
   const cid = partOf().contest_id, years = COV.years[cid] || {};
   const vars = COV.vars;
   if (!vars.find(v => v.id === S.cv)) S.cv = "higher_ed";
-  $("covar").innerHTML = vars.map(v => `<option value="${v.id}"${v.id === S.cv ? " selected" : ""}>${esc(v.label)} (${years[v.id]})</option>`).join("");
-  const V = vars.find(v => v.id === S.cv), yr = years[V.id], xs = COV.values[V.id][String(yr)], Y = scatterY();
+  $("covar").innerHTML = COV.groups.map(g => [g, vars.filter(v => v.group === g.id)]).filter(([, vs]) => vs.length)
+    .map(([g, vs]) => `<optgroup label="${esc(g.label)}">${vs.map(v => `<option value="${v.id}"${v.id === S.cv ? " selected" : ""}>${esc(v.label)} (${years[v.id]})</option>`).join("")}</optgroup>`).join("");
+  const V = vars.find(v => v.id === S.cv), yr = years[V.id];
+  try { await loadCovGroup(V.group); } catch (e) { card.innerHTML = `<p class="note">Could not load the gminas' characteristics.</p>`; return; }
+  if (tok !== SCAT_TOK) return;   // a later render has started
+  const xs = COV.values[V.id][String(yr)], Y = scatterY();
   if (!Y) { svg.innerHTML = ""; card.innerHTML = `<p class="note">Loading…</p>`; return; }
   const A = unitsOf().gmina, logx = V.id === "density";
   const pts = [];
@@ -1183,14 +1203,14 @@ async function renderScatter() {
   const xd = [Math.min(qx[0], xt[0]), Math.max(qx[1], xt[xt.length - 1])], yd = [Math.min(yt[0], qy[0]), Math.max(yt[yt.length - 1], qy[1])];
   const X = v => m.l + (clamp(v, xd[0], xd[1]) - xd[0]) / (xd[1] - xd[0]) * (W - m.l - m.r), Yy = v => H - m.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - m.t - m.b);
   const emax = Math.max(...pts.map(p => p.w)), rad = p => 1 + 7 * Math.sqrt(p.w / emax);
-  const fmtx = v => logx ? (10 ** v >= 1000 ? (10 ** v / 1000).toFixed(0) + "k" : (+(10 ** v).toPrecision(2)).toString()) : V.unit.startsWith("%") ? Math.round(v) + "%" : V.id === "revenue" ? (v / 1000).toFixed(0) + "k" : (+v.toFixed(1)).toString();
+  const fmtx = v => logx ? (10 ** v >= 1000 ? (10 ** v / 1000).toFixed(0) + "k" : (+(10 ** v).toPrecision(2)).toString()) : V.unit.startsWith("%") ? Math.round(v) + "%" : V.unit.startsWith("PLN") && Math.abs(v) >= 1000 ? +(v / 1000).toFixed(1) + "k" : (+v.toFixed(1)).toString();
   const fmty = v => Y.div ? (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(Math.round(100 * v)) : Math.round(100 * v) + "%";
   const o = [];
   (logx ? [0, 1, 2, 3, 4].filter(v => v >= xd[0] - 1e-9 && v <= xd[1] + 1e-9) : xt).forEach(v => o.push(`<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" stroke="#EEEEEE"/><text x="${X(v)}" y="${H - m.b + 15}" text-anchor="middle" font-size="11" fill="#767676">${fmtx(v)}</text>`));
   yt.forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Yy(v)}" y2="${Yy(v)}" stroke="${Y.div && v === 0 ? "#B5B5B5" : "#EEEEEE"}"/><text x="${m.l - 6}" y="${Yy(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${fmty(v)}</text>`));
   o.push(`<text x="${(m.l + W - m.r) / 2}" y="${H - 6}" text-anchor="middle" font-size="11.5" fill="#4B4B4B">${esc(V.label)}, ${esc(V.unit)}${logx ? " (log scale)" : ""}, ${yr}</text>`);
-  const zon = S.z;
-  pts.slice().sort((a, b) => b.w - a.w).forEach(p => o.push(`<circle cx="${X(p.x).toFixed(1)}" cy="${Yy(p.y).toFixed(1)}" r="${rad(p).toFixed(2)}" fill="${zon ? ZONECOL[G.gminas.zone[p.u]] : Y.col}" fill-opacity="${zon ? 0.6 : 0.42}" stroke="#fff" stroke-width="0.4"/>`));
+  const zon = col !== "list", fillOf = p => col === "1914" ? ZONECOL[G.gminas.zone[p.u]] : col === "1937" ? ZONECOL37[COV.zones.zone_1937[p.u]] : Y.col;
+  pts.slice().sort((a, b) => b.w - a.w).forEach(p => o.push(`<circle cx="${X(p.x).toFixed(1)}" cy="${Yy(p.y).toFixed(1)}" r="${rad(p).toFixed(2)}" fill="${fillOf(p)}" fill-opacity="${zon ? 0.6 : 0.42}" stroke="#fff" stroke-width="0.4"/>`));
   const fit = wsmooth(pts);
   if (fit) o.push(`<polyline points="${fit.filter(f => f.x >= xd[0] && f.x <= xd[1]).map(f => `${X(f.x).toFixed(1)},${Yy(f.y).toFixed(1)}`).join(" ")}" fill="none" stroke="#141414" stroke-width="2"/>`);
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("font-family", FONT);
@@ -1200,12 +1220,24 @@ async function renderScatter() {
   card.innerHTML = `<span class="label">The pattern</span>
     <div><span class="bigno">${isNum(r) ? (r < 0 ? "−" : "") + Math.abs(r).toFixed(2) : NA}</span> <span class="note">correlation across ${n0(pts.length)} gminas, each weighted by its electorate</span></div>
     <p class="note"><b style="font-weight:500;color:var(--ink)">Up:</b> ${esc(Y.label)}. <b style="font-weight:500;color:var(--ink)">Across:</b> ${esc(V.label)} (${esc(V.unit)}), ${yr}${gap > 2 ? `, the nearest year to the election (${gap} years ${yr > EL.year ? "after" : "before"} it)` : ""}. The line is a weighted local fit.</p>
-    ${zon ? `<div class="legend">${ZONES.map(([k, nm]) => `<span><span class="dot" style="background:${ZONECOL[k]}"></span>${nm}</span>`).join("")}</div><p class="note">Points take their gmina's partition zone of 1914 while "Widać zabory!" is on.</p>` : ""}
+    ${col === "1914" ? `<div class="legend">${ZONES.map(([k, nm]) => `<span><span class="dot" style="background:${ZONECOL[k]}"></span>${nm}</span>`).join("")}</div><p class="note">Points take their gmina's partition zone of 1914${S.zc ? "" : ` while "Widać zabory!" is on`}.</p>` : ""}
+    ${col === "1937" ? `<div class="legend">${ZONES37.map(([k, nm]) => `<span><span class="dot" style="background:${ZONECOL37[k]}"></span>${nm}</span>`).join("")}</div><p class="note">Points take the side of the 1937 border on which their gmina's centre lies (CShapes 2.0).</p>` : ""}
     <p class="note">${joint ? `${joint} gminas reported jointly with a neighbour in this election are left out. ` : ""}These are associations between places, not between voters: a party that does well where many graduates live need not do well among graduates (the ecological fallacy).</p>
-    <p class="note">Source: ${esc(V.source)}. ${esc(COV.meta.note)}</p>`;
+    <p class="note">${V.note ? esc(V.note) + " " : ""}Source: ${esc(V.source)}. ${esc(COV.meta.note)}</p>`;
 }
 function bindScatter() {
   $("covar").addEventListener("change", e => { S.cv = e.target.value; renderScatter(); saveHash(); });
+  $("scatitem").addEventListener("change", e => {
+    const v = e.target.value;
+    if (v === "chg") return;
+    if (v === "turnout") S.m = "turnout";
+    else {
+      S.i = +v; if (S.j === S.i) S.j = S.i === 0 ? 1 : 0;
+      if (["turnout", "chg"].includes(measure())) S.m = "share";
+    }
+    renderMap(); renderUnitCard(); renderResults(); renderScatter(); renderData(); saveHash();
+  });
+  $("scatcol").addEventListener("change", e => { S.zc = e.target.value; renderScatter(); saveHash(); });
   const svg = $("scat"), box = $("scatbox"), tip = box.querySelector(".tip");
   const near = ev => {
     if (!SCAT) return null;

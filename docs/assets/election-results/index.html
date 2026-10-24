@@ -150,9 +150,6 @@ table.t tr.tot td{font-weight:500;border-top:1px solid var(--faint)}
 #map .hl{fill:none;stroke:#141414;stroke-width:1.6;pointer-events:none}
 #map [data-u]:focus{outline:none;stroke:#8B0000;stroke-width:2.4}
 #legend svg{display:block;width:100%;max-width:420px;height:auto}
-.insetbox{border:1px solid var(--rule);border-radius:12px;padding:6px;position:relative;max-width:300px}
-.insetbox svg{display:block;width:100%;height:auto}
-.insetbox path{stroke:#fff;stroke-width:.6;cursor:pointer}
 #unitcard .rowv{display:flex;justify-content:space-between;gap:8px;font-size:12.5px}
 .btn2.zab{font-weight:600}
 .btn2.zab[aria-pressed="true"]{background:#141414;border-color:#141414;color:#fff}
@@ -259,7 +256,6 @@ svg text:not([font-weight]){font-weight:300}
       </div>
       <div class="stack">
         <div class="card search"><span class="label">Find a gmina</span><input id="gsearch" type="search" placeholder="Type a gmina's name" autocomplete="off" aria-label="Find a gmina by name"><ul class="sugg" id="gresults" role="listbox"></ul></div>
-        <div class="insetbox" id="insetbox"><div class="charttitle">Warsaw and its surroundings</div><svg id="inset" role="img" aria-label="Gminas within 30 km of Warsaw"></svg><div class="tip" hidden></div></div>
         <div class="card" id="unitcard"><span class="label">Gmina or constituency</span><p class="note">Hover over the map for a unit's result; click it to keep it here.</p></div>
         <div class="card" id="profilecard" hidden></div>
       </div>
@@ -273,7 +269,11 @@ svg text:not([font-weight]){font-weight:300}
     </div>
     <p class="lede">Every gmina is a point, sized by its electorate: the map's list, candidate or measure against one of the gmina's characteristics from Statistics Poland's Local Data Bank. Hover over a point to find the gmina on the map; click it to open its history.</p>
     <div class="controls">
+      <div class="ctrl"><span id="scatitemlab">List</span><select id="scatitem" aria-label="List, candidate or answer to plot"></select></div>
       <div class="ctrl"><span>Against</span><select id="covar" aria-label="Characteristic of the gmina"></select></div>
+      <div class="ctrl"><span>Colour</span><select id="scatcol" aria-label="Colour the points by">
+        <option value="list">By result</option><option value="1914">Partition zone, 1914</option><option value="1937">Border of 1937</option>
+      </select></div>
     </div>
     <div class="grid">
       <div class="chartbox" id="scatbox"><svg id="scat" role="img" aria-label="Gminas' results against a characteristic of the gmina"></svg><div class="tip" hidden></div></div>

@@ -28,7 +28,8 @@ page; this script copies it beside the page's chart under assets/:
     Election results/web/elections.json           -> assets/election-results/elections.json
     Election results/web/<file>.json              -> assets/election-results/<file>.json
         (written by "Election results/analysis/90_export.R"; elections.json's `files`
-        lists the others: geo.json, covariates.json, one file per election and one
+        lists the others: geo.json, covariates.json, one covariates-<group>.json per
+        group of the scatter's characteristics, one file per election and one
         profiles file per voivodeship)
     Quality of democracy/web/democracy.json       -> assets/quality-of-democracy/democracy.json
     Quality of democracy/web/democracy-countries.json
@@ -105,8 +106,9 @@ LISTED = [
 # matches applying).
 LISTED_NAMES = [
     ("Election results/web/elections.json", "files", [
-        ("geo.json", {"meta", "gminas", "sets", "inset", "partitions"}),
-        ("covariates.json", {"meta", "vars", "years", "values", "zones"}),
+        ("geo.json", {"meta", "gminas", "sets", "partitions"}),
+        ("covariates.json", {"meta", "groups", "vars", "years", "zones"}),
+        ("covariates-", {"group", "values"}),
         ("profiles-", {"units"}),
         ("", {"facts", "results", "units"}),
     ]),
