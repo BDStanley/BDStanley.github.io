@@ -1,7 +1,7 @@
 #set document(title: [Social and political trends])
 #metadata((
   title: "Social and political trends",
-  description: "Long-run trends in Polish society and public opinion since 1990, pooled from many surveys: 55 trends, from left–right self-placement and support for EU membership to trust in institutions, religion and living conditions, with breakdowns by party, age, gender, education and place of residence",
+  description: "Long-run trends in Polish society and public opinion since 1990, pooled from many surveys, from left–right self-placement and support for EU membership to trust in institutions, religion and living conditions, with breakdowns by party, age, gender, education and place of residence",
 )) <website-metadata>
 
 // The page was called Political attitudes until 23 October 2026; its file names, the asset folder
@@ -17,7 +17,7 @@
 
 #heading(level: 1)[Social and political trends]
 
-How Poles' attitudes, values and lives have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, age and gender together, education and place of residence. There are 55 trends, grouped under ideology, the economy, society and morality, nation and immigration, Europe and the world, democracy and government, trust, the state of the country, religion and values, the communist past and living conditions.
+How Poles' attitudes, values and lives have changed since the end of communism. Each trend pools every comparable survey reading I could find, from the early 1990s to the latest polls, into one monthly estimate, and can be broken down by party preference, age, gender, age and gender together, education and place of residence. The trends are grouped under ideology, the economy, society and morality, nation and immigration, Europe and the world, democracy and government, trust, the state of the country, religion and values, the communist past and living conditions.
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]

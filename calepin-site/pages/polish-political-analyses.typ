@@ -15,7 +15,7 @@
 #html.elem("div", attrs: (class: "analysis-landing"))[
 #heading(level: 1)[Polish political analyses]
 
-Data and interactive charts on Polish politics, from my ongoing work on the party system, elections and public opinion. Each analysis is rebuilt from its data whenever the site is updated.
+Data and interactive charts on Polish politics, from my ongoing work on the party system, elections, public opinion and the quality of democracy. Each analysis is rebuilt from its data whenever the site is updated.
 
 #html.elem("div", attrs: (class: "course-list analysis-list"))[
 #html.elem("div", attrs: (class: "course-row"))[
@@ -24,7 +24,7 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/polling-tracker.html"))[Polling tracker]
-#html.elem("div", attrs: (class: "course-desc"))[A Bayesian poll-of-polls for the Sejm: voting intention since January 2025, seat projections for every week, polling-house effects, and a scenario builder for vote shares, joint lists and government options that keeps the model's uncertainty.]
+#html.elem("div", attrs: (class: "course-desc"))[A Bayesian poll-of-polls for the Sejm: voting intention since the October 2023 election, seat projections for every week, polling-house effects, and a scenario builder for vote shares, joint lists and government options that keeps the model's uncertainty. The polls of every earlier Sejm term since 1991 are there too, set against the elections that opened and closed each term.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
@@ -33,7 +33,7 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/election-results.html"))[Election results]
-#html.elem("div", attrs: (class: "course-desc"))[Every presidential, Sejm, European Parliament and referendum vote since 1990: the facts and results of each, maps of every gmina and constituency, the change between any two elections, the partitions of 1914, each gmina's history, and how the results line up with the make-up of the gminas.]
+#html.elem("div", attrs: (class: "course-desc"))[Every presidential, Sejm, European Parliament and referendum vote since 1990: the facts, results and seats of each, maps of every gmina and constituency, the change between any two elections, the partitions of 1914, each gmina's history, and how the results line up with the make-up of the gminas.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
@@ -42,7 +42,7 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/political-attitudes.html"))[Social and political trends]
-#html.elem("div", attrs: (class: "course-desc"))[How Poles' attitudes, values and lives have changed since 1990, each trend pooled from every comparable survey into one monthly estimate, with breakdowns by party preference, age, gender, education and place of residence. 55 trends, from left–right self-placement and support for EU membership to trust in institutions, religion and living conditions.]
+#html.elem("div", attrs: (class: "course-desc"))[How Poles' attitudes, values and lives have changed since 1990, from left–right self-placement and support for EU membership to trust in institutions, religion and living conditions, each trend pooled from every comparable survey into one monthly estimate, with breakdowns by party preference, age, gender, education and place of residence.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
@@ -60,7 +60,7 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-ideology.html"))[Party ideology]
-#html.elem("div", attrs: (class: "course-desc"))[Where Polish parties stand on the economy, cultural questions, European integration and democracy, set against parties across Europe in the Chapel Hill Expert Survey since 2002, and how expert ratings of anti-elite rhetoric compare with The PopuList's classification of parties as populist, far right or far left.]
+#html.elem("div", attrs: (class: "course-desc"))[Where Polish parties stand on the economy, cultural questions, European integration and democracy, set against parties across Europe in the Chapel Hill Expert Survey since 2002; how each party compares with its own voters; polarisation and alignment in party systems across Europe; and how expert ratings of anti-elite rhetoric compare with The PopuList's classification of parties as populist, far right or far left.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[

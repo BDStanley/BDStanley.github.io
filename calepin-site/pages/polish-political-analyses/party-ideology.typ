@@ -1,7 +1,7 @@
 #set document(title: [Party ideology])
 #metadata((
   title: "Party ideology",
-  description: "Where Polish parties stand in European ideological space, from the Chapel Hill Expert Survey and The PopuList",
+  description: "Where Polish parties stand in European ideological space, from the Chapel Hill Expert Survey and The PopuList, and how they compare with their own voters",
 )) <website-metadata>
 
 // The page is a standalone app, assets/party-ideology/index.html (+ app.js),
@@ -17,7 +17,7 @@
 
 #heading(level: 1)[Party ideology]
 
-Where Polish parties stand on the economy, on cultural questions, on European integration and on democracy, as rated by political scientists in the Chapel Hill Expert Survey, against parties across Europe; and how those ratings compare with the classification of parties as populist, far right or far left in The PopuList. Pick a party to follow it through two decades of surveys.
+Where Polish parties stand on the economy, on cultural questions, on European integration and on democracy, as rated by political scientists in the Chapel Hill Expert Survey, against parties across Europe; how those ratings compare with the classification of parties as populist, far right or far left in The PopuList; how each Polish party compares with its own voters, from my #link("political-attitudes.html")[Social and political trends]; and how polarised and how aligned party systems are across Europe. Pick a party to follow it through two decades of surveys.
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]
