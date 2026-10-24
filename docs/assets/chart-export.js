@@ -59,15 +59,15 @@
     svg.setAttribute("width", w * SVG_SCALE); svg.setAttribute("height", h * SVG_SCALE);
   }
 
-  const CITE_YEAR = 2026, SERIES = "Polish Political Analyses";
+  const CITE_YEAR = 2026, SERIES = "Polish Political Analyses", BY = `Ben Stanley, ${CITE_YEAR}. `;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
-  const citeText = page => `Stanley, Ben. ${CITE_YEAR}. ${page}, ${SERIES}, benstanley.eu.`;
-  const citeHtml = page => `Stanley, Ben. ${CITE_YEAR}. <i>${esc(page)}</i>, <b>${SERIES}</b>, benstanley.eu.`;
-  const csvCite = page => `# Suggested citation: ${citeText(page)}\n`;
+  const citeText = page => `${BY}${page}, ${SERIES}, benstanley.eu.`;
+  const citeHtml = page => `${BY}<i>${esc(page)}</i>, <b>${SERIES}</b>, benstanley.eu.`;
+  const csvCite = page => `# ${citeText(page)}\n`;
   // The citation on one line from (x, y) in the canvas's current fill, in CREDIT's size, or
   // smaller where it would run past maxW
   function drawCite(g, page, x, y, maxW) {
-    const runs = [["Suggested citation: Stanley, Ben. " + CITE_YEAR + ". ", ""], [page, "italic 400 "], [", ", ""], [SERIES, "600 "], [", benstanley.eu.", ""]];
+    const runs = [[BY, ""], [page, "italic 400 "], [", ", ""], [SERIES, "600 "], [", benstanley.eu.", ""]];
     const font = (pre, px) => `${pre}${px}px Jost, sans-serif`;
     let px = 12;
     const width = () => runs.reduce((s, [t, pre]) => { g.font = font(pre, px); return s + g.measureText(t).width; }, 0);

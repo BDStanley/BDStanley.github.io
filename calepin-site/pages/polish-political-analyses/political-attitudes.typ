@@ -63,7 +63,7 @@ Sources for left–right self-placement:
 - European Election Study, 2024 (microdata)
 - SWPS University's online surveys: the COVID tracker, 2020–21; the NCN Opus panel, 2023–24; FNW SWPS surveys, 2025–26 (microdata)
 
-Suggested citation: Stanley, Ben. 2026. _Social and political trends_, *Polish Political Analyses*, benstanley.eu.
+Ben Stanley, 2026. _Social and political trends_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (

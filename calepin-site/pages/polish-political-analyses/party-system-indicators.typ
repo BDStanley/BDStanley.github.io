@@ -38,7 +38,7 @@ Government: the closure index of Casal Bértoa and Mair scores each change of go
 
 The CSV button downloads every indicator for every election and the polls in one file.
 
-Suggested citation: Stanley, Ben. 2026. _Party system indicators_, *Polish Political Analyses*, benstanley.eu.
+Ben Stanley, 2026. _Party system indicators_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (
