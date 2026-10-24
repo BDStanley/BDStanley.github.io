@@ -24,6 +24,7 @@
 
 // ---- utilities ------------------------------------------------------------------------------
 const $ = id => document.getElementById(id);
+const PAGE = "Polling tracker";   // the page's name in its suggested citation (../chart-export.js)
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -1031,7 +1032,7 @@ function csv() {
       S.shares[p], +cur.eff[p].toFixed(2), inJ.has(p) ? "" : r.seats, inJ.has(p) || !r || r.lo == null ? "" : r.lo, inJ.has(p) || !r || r.hi == null ? "" : r.hi, inJ.has(p) || !r || r.pThr == null ? "" : +r.pThr.toFixed(3)]);
   });
   cur.ents.forEach((e, k) => { if (!e.joint) return; const r = cur.rows[k]; rows.push([iso(wk.date), e.name, "", "", "", "", "", "", "", +e.rawVote.toFixed(2), +e.vote.toFixed(2), r.seats, r.lo == null ? "" : r.lo, r.hi == null ? "" : r.hi, r.pThr == null ? "" : +r.pThr.toFixed(3)]); });
-  download(`polling-tracker-${iso(wk.date)}.csv`, new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download(`polling-tracker-${iso(wk.date)}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 async function png() {
   const ids = { trends: ["trend"], seats: ["hemi", "map"], time: ["seattime", "cointime", "thrtime"], pollsters: ["house"] }[S.view];
@@ -1041,7 +1042,7 @@ async function png() {
   const imgs = await Promise.all(ids.map(async id => {
     const svg = $(id), vb = svg.viewBox.baseVal, w = svg.clientWidth || vb.width, h = w * vb.height / vb.width;
     const clone = await ChartExport.clone(svg);
-    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); clone.setAttribute("width", w); clone.setAttribute("height", h);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hit,#trendhit,#trendhover,.hov").forEach(n => n.remove());
     return new Promise(res => {
       const img = new Image(); img.onload = () => res({ img, w, h });
@@ -1052,7 +1053,7 @@ async function png() {
   const side = S.view === "seats", pad = 24, head = 62, foot = 34;
   const W = side ? sum(imgs.map(i => i.w)) + pad * (imgs.length + 1) : Math.max(...imgs.map(i => i.w)) + 2 * pad;
   const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
-  const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[S.view]}${past ? " · " + past : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE;
@@ -1060,7 +1061,7 @@ async function png() {
     : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
-  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText(`${R.credit} · benstanley.eu`, pad, H - 12);
+  g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`polling-tracker-${S.view}-${past ? TERM.term.id : iso(CUR.wk.date)}.png`, b), "image/png");
 }
 
@@ -1240,7 +1241,7 @@ function termCsv() {
     const s = T.series[p]; if (s.med[i] != null) rows.push([iso(d), p, s.med[i], s.lo[i], s.hi[i]]);
   }));
   const q = v => typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-  download(`polling-tracker-${TERM.term.id}.csv`, new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download(`polling-tracker-${TERM.term.id}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 
 // ---- load -----------------------------------------------------------------------------------
@@ -1255,11 +1256,11 @@ function loadDraws() {
 function header() {
   if (TERM) {
     const m = TERM.meta, t = TERM.term;
-    $("asof").innerHTML = `Sejm term ${esc(t.label)}: ${m.nPolls} polls by ${m.pollsterCount} pollsters between the elections of ${dlong(t.start)} and ${dlong(t.end)}, as listed on <a href="${esc(m.source)}" target="_blank" rel="noopener">Wikipedia</a>. Shares of the parties the tables name, which lump the rest with the undecided; the trend is anchored on both election results. ${esc(R.credit)}.`;
+    $("asof").innerHTML = `Sejm term ${esc(t.label)}: ${m.nPolls} polls by ${m.pollsterCount} pollsters between the elections of ${dlong(t.start)} and ${dlong(t.end)}, as listed on <a href="${esc(m.source)}" target="_blank" rel="noopener">Wikipedia</a>. Shares of the parties the tables name, which lump the rest with the undecided; the trend is anchored on both election results.`;
     return;
   }
   const m = D.meta, last = WEEKS[WEEKS.length - 1].date;
-  $("asof").innerHTML = `Estimates as of ${dlong(last)}${m.nPolls ? `, from ${m.nPolls} polls by ${m.pollsterCount} pollsters (fieldwork ${dlong(m.firstFieldwork)} to ${dlong(m.lastFieldwork)})` : ""}, as listed on Wikipedia. ${esc(R.credit)}.`;
+  $("asof").innerHTML = `Estimates as of ${dlong(last)}${m.nPolls ? `, from ${m.nPolls} polls by ${m.pollsterCount} pollsters (fieldwork ${dlong(m.firstFieldwork)} to ${dlong(m.lastFieldwork)})` : ""}, as listed on Wikipedia.`;
 }
 fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
   D = d; prep(); restoreHash(); header(); renderChips(); bind();

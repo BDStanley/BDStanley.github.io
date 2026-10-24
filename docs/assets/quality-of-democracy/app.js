@@ -13,6 +13,7 @@
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
+const PAGE = "Quality of democracy";   // the page's name in its suggested citation (../chart-export.js)
 const ACCENT = "#8B0000";
 const PL = "#A11D1D";
 // Comparison countries take these in the order they are added, and keep theirs while selected
@@ -668,18 +669,18 @@ function csv() {
   }
   const qv = v => typeof v === "string" && /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v ?? "";
   const tag = S.view === "explain" ? S.l : S.view === "context" ? S.m : "";
-  download(`quality-of-democracy-${S.view}${tag ? "-" + tag : ""}.csv`, new Blob([rows.map(r => r.map(qv).join(",")).join("\n") + "\n"], {type: "text/csv"}));
+  download(`quality-of-democracy-${S.view}${tag ? "-" + tag : ""}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(qv).join(",")).join("\n") + "\n"], {type: "text/csv"}));
 }
 async function png() {
   const svg = $("fig-" + S.view); if (!svg) return;
   const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
   const clone = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
-  clone.setAttribute("xmlns", NS); clone.setAttribute("width", w); clone.setAttribute("height", h);
+  clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, w, h);
   clone.querySelectorAll(".hov").forEach(n => n.remove());
   const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
   await ChartExport.fonts();
-  const pad = 24, head = 64, foot = 34, W = w + 2 * pad, H = h + head + foot;
-  const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
+  const pad = 24, head = 64, foot = 50, W = w + 2 * pad, H = h + head + foot;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   const lens = LENSES.find(l => l[0] === S.l), m = MS.get(S.m);
   const title = {overview: "Polish democracy in V-Dem", explain: `${lens[1]} in Poland`, context: `${m ? m.label : "Liberal democracy"}: Poland and the other countries`, polarisation: "Polarisation in Poland"}[S.view];
@@ -687,7 +688,8 @@ async function png() {
   g.fillStyle = ACCENT; g.font = ChartExport.TITLE; g.fillText(`${title}, ${S.from}–${S.to}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`V-Dem ${D.meta.version}. ${cmp}.${S.u ? " Bands are 68% intervals." : ""}`, pad, 54);
   g.drawImage(img, pad, head, w, h);
-  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText(D.meta.credit, pad, H - 12);
+  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText(`Data: V-Dem ${D.meta.version} (${D.meta.licence}).`, pad, H - 28);
+  ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`quality-of-democracy-${S.view}.png`, b), "image/png");
 }
 

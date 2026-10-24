@@ -57,6 +57,7 @@ function ramp(stops, t) { // stops: hex colours spaced evenly over 0–1
   return rgbHex(a.map((v, i) => v + f * (b[i] - v)));
 }
 const ACCENT = "#8B0000", INK = "#141414", MUTED = "#767676", NODATA = "#ECECEC";
+const PAGE = "Election results";   // the page's name in its suggested citation (../chart-export.js)
 const FONT = "Jost, 'Avenir Next', -apple-system, sans-serif";
 // Not party colours: turnout runs through viridis, and referendum answers take the teal and plum
 // the repo uses for series that are not parties
@@ -1098,13 +1099,14 @@ function bindSearch() {
   document.addEventListener("click", e => { if (!e.target.closest(".search")) ul.innerHTML = ""; });
 }
 
-// ---- who votes where ------------------------------------------------------------------------
+// ---- votes by local characteristics ---------------------------------------------------------
 let COV = null, COV_LOADING = null, SCAT = null, SCAT_TOK = 0;
 const COV_GROUPS = new Map();
-// Neutral tones for the partition zones and the sides of the 1937 border, not party colours
-const ZONECOL = { russian: "#6f7f8f", german: "#9a8c7a", austrian: "#c0a77f" };
+// Muted tones for the partition zones and the sides of the 1937 border, not party colours: Germany is
+// the same orange in both, and Poland's red is darker than it so the two differ in lightness too
+const ZONECOL = { russian: "#141414", german: "#D4873E", austrian: "#4E79A7" };
 const ZONES37 = [["poland", "Poland"], ["germany", "Germany"], ["danzig", "Free City of Danzig"]];
-const ZONECOL37 = { poland: "#7d8fa3", germany: "#9a8c7a", danzig: "#b5725a" };
+const ZONECOL37 = { poland: "#A8423C", germany: "#D4873E", danzig: "#4E79A7" };
 // covariates.json is the index; each group's values are in its own file, fetched when one of
 // its characteristics is first chosen
 function loadCov() {
@@ -1340,7 +1342,7 @@ function renderData() {
   const f = CUR.facts, src = (f.sources || []).map(s => `<li>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a>` : esc(s.label)}</li>`);
   if (!f.facts_only && !isPolls()) src.push(`<li>Gmina boundaries: PRG 2022 (GUGiK), simplified; the 1990s gminas mapped to today's through a crosswalk built for this page</li>`);
   $("sources").innerHTML = src.join("");
-  $("citation").innerHTML = `${esc(E.meta.citation)} <span class="muted">Permalink:</span> <a href="${esc(shareUrl())}" target="_top">this view</a>.`;
+  $("citation").innerHTML = `${ChartExport.citeHtml(PAGE)} <span class="muted">Permalink:</span> <a href="${esc(shareUrl())}" target="_top">this view</a>.`;
   $("csvgmina").disabled = !!f.facts_only || isPolls();
   $("csvnote").textContent = f.facts_only ? "No files for 1989." : isPolls() ? "The parties' shares and seats, and the projection by constituency." : `Gmina results are on today's boundaries; constituency results are ${S.b === "t" ? "on today's 41 constituencies" : "on the constituencies of the time"} (as on the map).`;
 }
@@ -1351,7 +1353,7 @@ function download(name, blob) {
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 const q = v => v == null || (typeof v === "number" && !isFinite(v)) ? "" : typeof v === "string" && /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-const csvBlob = rows => new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" });
+const csvBlob = rows => new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" });
 const fileStem = () => partOf() ? partOf().contest_id : S.e;
 function csvNational() {
   if (CUR.facts.facts_only) return;
@@ -1382,23 +1384,24 @@ async function png(sec) {
   const svgs = sec === "mapsec" ? [$("map"), ...$("legend").querySelectorAll("svg")] : sec === "allsec" ? [$("turnchart")] : sec === "whosec" ? [$("scat")] : [...$("glancechart").querySelectorAll("svg")];
   const imgs = await Promise.all(svgs.map(async svg => {
     const vb = svg.viewBox.baseVal, ratio = vb.height / vb.width, w = sec === "mapsec" && svg.id === "map" ? 900 : Math.min(900, svg.clientWidth || 600), h = w * ratio, clone = await ChartExport.clone(svg);
-    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); clone.setAttribute("width", w); clone.setAttribute("height", h);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     return new Promise(res => {
       const img = new Image(); img.onload = () => res({ img, w, h }); img.onerror = () => res(null);
       img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
     });
   }));
   await ChartExport.fonts();
-  const ok = imgs.filter(Boolean), pad = 24, head = 62, foot = 34;
+  const ok = imgs.filter(Boolean), pad = 24, head = 62, foot = 50;
   const W = Math.max(...ok.map(i => i.w)) + 2 * pad, H = head + foot + sum(ok.map(i => i.h)) + 10 * (ok.length - 1);
-  const cv = document.createElement("canvas"), k = 2; cv.width = W * k; cv.height = H * k;
+  const cv = document.createElement("canvas"), k = ChartExport.scale(W, H); cv.width = W * k; cv.height = H * k;
   const g = cv.getContext("2d"); g.scale(k, k); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   const f = CUR.facts, part = partOf();
   g.fillStyle = ACCENT; g.font = ChartExport.TITLE; g.fillText(sec === "allsec" ? "Elections in Poland since 1989" : `${f.name_en}, ${f.year}${CUR.facts.parts && CUR.facts.parts.length > 1 ? (EL.type === "presidential" ? ", round " : ", question ") + (S.p + 1) : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(sec === "mapsec" ? MAPV.sc.title : sec === "allsec" ? "National turnout in every election since 1989" : sec === "whosec" ? `${SCAT.Y.label}, against ${SCAT.V.label.toLowerCase()} (${SCAT.V.unit})` : $("glancetitle").textContent, pad, 52);
   let yy = head;
   ok.forEach(i => { g.drawImage(i.img, pad, yy, i.w, i.h); yy += i.h + 10; });
-  g.fillStyle = MUTED; g.font = ChartExport.CREDIT; g.fillText(`Data: PKW. ${E.meta.citation} · benstanley.eu`, pad, H - 12);
+  g.fillStyle = MUTED; g.font = ChartExport.CREDIT; g.fillText("Data: PKW.", pad, H - 28);
+  ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`${fileStem()}-${sec === "mapsec" ? "map" : "glance"}.png`, b), "image/png");
 }
 

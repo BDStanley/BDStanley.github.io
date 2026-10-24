@@ -34,6 +34,8 @@ Scenarios: when you edit a vote share or build a joint list, your shares are app
 Estimates describe voting intention now, not a forecast of election day. They assume pollsters are, on average, unbiased.
 
 Past terms (1991–93 to 2019–23) are drawn from the polls Wikipedia lists for each election, with a model of their own. Before the current term the tables lump the other parties with the undecided, so each line is a share of the vote for the parties the polls named. The trend starts and ends at the two election results, and each house's lean is measured against them, so the "polls against the result" card shows how far the houses that polled last missed. Parties join the chart when the polls first named them; a splinter is counted inside its parent until it split, and a joint list replaces its members from when the polls began reporting it. Past terms show trends and pollsters only, without seats.
+
+Suggested citation: Stanley, Ben. 2026. _Polling tracker_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (

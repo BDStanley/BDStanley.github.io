@@ -22,6 +22,8 @@
 
 Every party that has held seats in the Sejm since June 1989, in three views. The Genealogy shows each party's organisational lifespan, its seats (ribbon height proportional to the square root of its seats, solid when in government) and the splits, mergers, transformations and alliance entries that link it to other parties. Hover over a party, a seat ribbon or an arrow for its record; click a party to trace its lineage. For parties rated in the Chapel Hill Expert Survey, the record links to their positions on the #link("party-ideology.html")[Party ideology] page. Seat strength stacks every party's seats on each day, ordered from left to right by party family. Hover over it for a party's seats on that day; click a party or a party family, in the chart or in the list beside it, to move it to the base of the chart and read its seats off the axis. Defections counts the MPs who changed clubs, by Sejm term and by the parties they left and joined, and lists every move: who moved, when, from which club to which, and on what evidence. Click a bar, a flow or a party to narrow the list, and a move for the MP's record. The data come from my Polish party tracker.
 
+Suggested citation: Stanley, Ben. 2026. _Parties in the Sejm_, *Polish Political Analyses*, benstanley.eu.
+
 #html.elem("iframe", attrs: (
   src: "../../assets/party-genealogy/index.html",
   class: "embed-frame embed-frame--app",

@@ -38,6 +38,8 @@ Sources:
 - Daniel Pemstein, Kyle L. Marquardt, Eitan Tzelgov, Yi-ting Wang, Juraj Medzihorsky, Joshua Krusell, Farhad Miri and Johannes von Römer (2026), "The V-Dem Measurement Model: Latent Variable Analysis for Cross-National and Cross-Temporal Expert-Coded Data", V-Dem Working Paper No. 21, 11th edition.
 - Elections and cabinets: my Polish party tracker (see #link("party-genealogy.html")[Parties in the Sejm]).
 - Sejm roll calls: my analysis of every recorded vote in the Sejm since 2005, from the Sejm's API.
+
+Suggested citation: Stanley, Ben. 2026. _Quality of democracy_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (

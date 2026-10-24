@@ -40,6 +40,8 @@ Sources:
 - Jan Rovny, Jonathan Polk, Ryan Bakker, Liesbet Hooghe, Seth Jolly, Gary Marks, Marco Steenbergen and Milada Anna Vachudova (2025), "The 2024 Chapel Hill Expert Survey on political party positioning in Europe: Twenty-five years of party positional data", Electoral Studies 97: 102981 (#link("https://www.chesdata.eu")[chesdata.eu]).
 - Matthijs Rooduijn, Andrea L. P. Pirro, Daphne Halikiopoulou, Caterina Froio, Stijn van Kessel, Sarah L. de Lange, Cas Mudde and Paul Taggart (2024), "The PopuList: A Database of Populist, Far-Left, and Far-Right Parties Using Expert-Informed Qualitative Comparative Classification (EiQCC)", British Journal of Political Science 54(3): 969–978, and The PopuList 4.0 (#link("https://popu-list.org")[popu-list.org]).
 - Voters' positions: my Social and political trends, pooled from CBOS, the Eurobarometers, the European Social Survey, the Polish National Election Study and other surveys (see that page).
+
+Suggested citation: Stanley, Ben. 2026. _Party ideology_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (

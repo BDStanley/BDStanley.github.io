@@ -83,6 +83,7 @@ function popText(code) {
   return (full.length ? list(full) : "") + (bl.length ? (full.length ? "; borderline " : "borderline ") + list(bl) : "");
 }
 const ACCENT = "#8B0000", INK = "#141414", SOFT = "#4B4B4B", MUTED = "#767676", FAINT = "#D5D5D5", RULE = "#ECECEC";
+const PAGE = "Party ideology";   // the page's name in its suggested citation (../chart-export.js)
 const POLAND = 26;
 
 // ---- data -----------------------------------------------------------------------------------
@@ -864,7 +865,7 @@ function renderPanel() {
     if (L.length || p.poll) o.push(`<div class="card soft"><span class="label">Elsewhere on this site</span>${pollLine(p)}<div class="links">${L.join("")}</div></div>`);
   }
   o.push(`<div class="actions"><button type="button" class="btn2" id="copylink">Copy link</button><button type="button" class="btn2" id="csvbtn">Download CSV</button><button type="button" class="btn2" id="pngbtn">Download PNG</button></div>`);
-  o.push(`<p class="help">${esc(D.meta.credit)}. Data: ${esc(D.meta.sources.ches)}; ${esc(D.meta.sources.populist)}.</p>`);
+  o.push(`<p class="help">Data: ${esc(D.meta.sources.ches)}; ${esc(D.meta.sources.populist)}.</p>`);
   $("panel").innerHTML = o.join("");
   wireSearch();
 }
@@ -901,7 +902,7 @@ function csv() {
   const lines = [head, ...rows.map(r => [w, r.p.ctry.name, r.p.id, r.p.abbr, (D.families.find(f => f.id === r.fam) || {}).label, r.vote, r.list, r.listV,
     lab(st(r.pop, "populist")), lab(st(r.pop, "farright")), lab(st(r.pop, "farleft")), lab(st(r.pop, "eurosceptic")),
     ...ds.map(d => r.v[d]), ...(w === 2024 ? ds.map(d => r.sd ? r.sd[d] : null) : []), r.n])];
-  download(`party-positions-${w}-${S.scope}.csv`, new Blob(["\ufeff" + lines.map(l => l.map(q).join(",")).join("\n")], {type: "text/csv;charset=utf-8"}));
+  download(`party-positions-${w}-${S.scope}.csv`, new Blob(["\ufeff" + ChartExport.csvCite(PAGE) + lines.map(l => l.map(q).join(",")).join("\n")], {type: "text/csv;charset=utf-8"}));
 }
 async function png() {
   const id = {map: "map", populism: "pop", systems: "systime", time: "ts-" + TIME_DIMS[0], voters: "vt"}[S.view];
@@ -909,13 +910,13 @@ async function png() {
   if (!svg || !svg.viewBox.baseVal || !svg.viewBox.baseVal.width) { toast("Nothing to download in this view"); return; }
   const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
   const c = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
-  c.setAttribute("xmlns", "http://www.w3.org/2000/svg"); c.setAttribute("width", W); c.setAttribute("height", H);
+  c.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(c, W, H);
   await ChartExport.fonts();
   const title = {map: `${DIM.get(S.x).label} and ${DIM.get(S.y).label}, ${S.wave}`, populism: `Anti-elite rhetoric and PopuList, ${S.wave}`,
     systems: MEASURE[S.measure].label, time: `Polish parties: ${DIM.get(TIME_DIMS[0]).label}`,
     voters: `Polish parties and their voters: ${DIM.get(S.vdim).label}, ${S.wave}`}[S.view];
   const leg = S.view === "map" && S.colour === "family" ? FAM_GROUPS : (S.view === "map" && S.colour === "none") || ["systems", "time", "voters"].includes(S.view) ? [] : POP_CATS;
-  const img = new Image(), sc = 2, top = 44, foot = leg.length ? 42 : 22;
+  const img = new Image(), top = 44, foot = leg.length ? 58 : 38, sc = ChartExport.scale(W + 20, H + top + foot);
   img.onload = () => {
     const cv = document.createElement("canvas"); cv.width = (W + 20) * sc; cv.height = (H + top + foot) * sc;
     const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W + 20, H + top + foot);
@@ -929,7 +930,8 @@ async function png() {
     }
     g.fillStyle = MUTED; g.font = "11px Jost, Helvetica, Arial, sans-serif";
     const src = S.view === "voters" ? "Parties: Chapel Hill Expert Survey. Voters: Social and political trends, benstanley.eu." : "Chapel Hill Expert Survey 1999–2024; The PopuList 4.0. Polish parties in their own colours.";
-    g.fillText(`${src} ${D.meta.credit}`, 10, H + top + (leg.length ? 35 : 15));
+    g.fillText(src, 10, H + top + (leg.length ? 35 : 15));
+    ChartExport.drawCite(g, PAGE, 10, H + top + (leg.length ? 51 : 31), W);
     cv.toBlob(b => download(`party-ideology-${S.view}-${S.wave}.png`, b), "image/png");
   };
   img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(c));

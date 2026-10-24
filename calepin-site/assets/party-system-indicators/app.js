@@ -79,6 +79,7 @@ function declutter(labs, h = 12) {
   return labs;
 }
 const ACCENT = "#8B0000", INK = "#141414", MUTED = "#767676", GRID = "#EEEEEE";
+const PAGE = "Party system indicators";   // the page's name in its suggested citation (../chart-export.js)
 const FONT = "Jost, 'Avenir Next', -apple-system, sans-serif";
 
 // ---- data -----------------------------------------------------------------------------------
@@ -920,7 +921,7 @@ function renderGovPanel() {
 function header() {
   const live = POLL.live;
   $("asof").innerHTML = `Sejm elections ${YEARS[0]}–${YEARS[YEARS.length - 1]} from PKW results, with party lineages, families and cabinets from my Polish party tracker (to ${dlong(D.meta.asOf)}). ` +
-    (live ? `The polls column is the Polling tracker's estimate for ${dlong(POLL.date)}.` : `The polls column is the snapshot of ${dlong(POLL.date)}; the Polling tracker's latest estimate could not be loaded.`) + ` ${esc(D.meta.credit)}.`;
+    (live ? `The polls column is the Polling tracker's estimate for ${dlong(POLL.date)}.` : `The polls column is the snapshot of ${dlong(POLL.date)}; the Polling tracker's latest estimate could not be loaded.`);
 }
 function renderAll() {
   renderStrip(); renderOverview(); renderFrag(); renderDisp(); renderVol(); renderNat(); renderPol(); renderGov();
@@ -943,7 +944,7 @@ function csv() {
   const rows = [head];
   YEARS.forEach(y => { const r = EBY[y], c = cheFor(y); rows.push([y, iso(r.date), "PKW results", ...keys.map(k => r[k]), c ? c.lrgen : "", c ? c.galtan : "", c ? c.lrecon : "", c ? c.wave : ""]); });
   rows.push(["polls", iso(POLL.date), POLL.live ? "Polling tracker (live)" : "Polling tracker (snapshot)", ...keys.map(k => POLL_KEYS.has(k) ? POLL.stats[k] : null), "", "", "", ""]);
-  download("party-system-indicators.csv", new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download("party-system-indicators.csv", new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 const SEC_TITLES = { fragmentation: "Fragmentation", disproportionality: "Disproportionality", volatility: "Volatility", nationalisation: "Nationalisation", polarisation: "Polarisation", government: "Government" };
 async function png(sec) {
@@ -951,7 +952,7 @@ async function png(sec) {
   // ChartExport (../chart-export.js) keeps the labels in Jost in the images.
   const imgs = await Promise.all(svgs.map(async svg => {
     const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height, clone = await ChartExport.clone(svg);
-    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); clone.setAttribute("width", w); clone.setAttribute("height", h);
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hov").forEach(n => n.remove());
     return new Promise(res => {
       const img = new Image(); img.onload = () => res({ img, w, h }); img.onerror = () => res(null);
@@ -962,7 +963,7 @@ async function png(sec) {
   imgs.forEach((im, i) => { if (im) im.title = svgs[i].dataset.title || ""; });
   const ok = imgs.filter(Boolean), pad = 24, head = 62, foot = 34, th = 22;
   const W = Math.max(...ok.map(i => i.w)) + 2 * pad, H = head + foot + sum(ok.map(i => i.h + (i.title ? th : 0))) + pad * (ok.length - 1);
-  const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = ACCENT; g.font = ChartExport.TITLE; g.fillText(`Party system indicators · ${SEC_TITLES[sec]}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`Sejm elections ${YEARS[0]}–${YEARS[YEARS.length - 1]}; selected: ${S.e === "polls" ? "polls, " + dstr(POLL.date) : S.e}`, pad, 52);
@@ -971,7 +972,7 @@ async function png(sec) {
     if (i.title) { g.fillStyle = INK; g.font = "500 13px Jost, sans-serif"; g.fillText(i.title, pad, yy + 14); yy += th; }
     g.drawImage(i.img, pad, yy, i.w, i.h); yy += i.h + pad;
   });
-  g.fillStyle = MUTED; g.font = ChartExport.CREDIT; g.fillText(`${D.meta.credit} · benstanley.eu`, pad, H - 12);
+  g.fillStyle = MUTED; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`party-system-${sec}-${S.e}.png`, b), "image/png");
 }
 

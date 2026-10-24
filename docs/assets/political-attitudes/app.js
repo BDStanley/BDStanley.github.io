@@ -14,6 +14,7 @@
 
 const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
+const PAGE = "Social and political trends";   // the page's name in its suggested citation (../chart-export.js)
 const ACCENT = "#8B0000";
 const BREAKS = [["all", "Everyone"], ["issue", "Issue"], ["party", "Party"], ["age", "Age"], ["sex", "Gender"], ["age_sex", "Age and gender"], ["educ", "Education"], ["residence", "Place of residence"]];
 const PERIODS = [["all", "All years"], ["2004", "Since 2004"], ["10y", "Last 10 years"]];
@@ -472,24 +473,24 @@ function csv() {
   const [x0] = periodRange(), i0 = clamp(yearToMonth(x0), 0, D.meta.months - 1);
   seriesNow().forEach(s => { for (let i = i0; i < D.meta.months; i++) if (s.median[i] != null) rows.push([D.meta.slug, S.b, s.name, monthShort(i), s.median[i], s.lo80[i], s.hi80[i]]); });
   const q = v => typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-  download(`${D.meta.slug}-${S.b}.csv`, new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download(`${D.meta.slug}-${S.b}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 async function png() {
   const svg = $("chart"), vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
   const clone = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
-  clone.setAttribute("xmlns", NS); clone.setAttribute("width", w); clone.setAttribute("height", h);
+  clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, w, h);
   clone.querySelectorAll("#hit,#xhair,#hoverdots").forEach(n => n.remove());
   const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
   await ChartExport.fonts();
   const pad = 24, head = 64, foot = 34, W = w + 2 * pad, H = h + head + foot;
-  const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = ACCENT; g.font = ChartExport.TITLE;
   const bl = BREAKS.find(b => b[0] === S.b)[1];
   g.fillText(`${D.meta.title}${S.b === "all" ? "" : " by " + bl.toLowerCase()}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${D.meta.measure}. Latent trend pooled from several surveys, to ${monthLabel(D.meta.months - 1)}.`, pad, 54);
   g.drawImage(img, pad, head, w, h);
-  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText("Ben Stanley, SWPS University · benstanley.eu", pad, H - 12);
+  g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`${D.meta.slug}-${S.b}.png`, b), "image/png");
 }
 

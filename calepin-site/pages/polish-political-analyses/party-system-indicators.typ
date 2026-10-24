@@ -37,6 +37,8 @@ Polarisation is Dalton's index, 10 × √(Σ vᵢ((pᵢ − p̄)/5)²), where p�
 Government: the closure index of Casal Bértoa and Mair scores each change of government on alternation, formula and access, and averages the three over all changes since the first cabinet of the 1991 Sejm, either counting each change once or weighting it by the days the new cabinet was in office. Cabinets that never won a confidence vote are left out.
 
 The CSV button downloads every indicator for every election and the polls in one file.
+
+Suggested citation: Stanley, Ben. 2026. _Party system indicators_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (

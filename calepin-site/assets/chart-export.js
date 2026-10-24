@@ -6,6 +6,16 @@
 // and fill, and Jost is embedded as data URIs in a <style>. fonts() loads the
 // faces the canvas draws the title and credits in, and TITLE etc. are those
 // fonts, so that every export is set like the site's headings.
+//
+// The suggested citation of each analysis lives here too, so that the pages, the
+// PNGs and the CSVs all cite it the same way: citeHtml() for a page, drawCite()
+// for a PNG's footer and csvCite() for a CSV's first line (CSV cannot set italics
+// or bold). The year and the series name are CITE_YEAR and SERIES.
+//
+// Exports are drawn at scale(W, H) canvas pixels per point: 4, or less where a
+// large chart would pass the 16.7 million pixels Safari allows a canvas. The SVG
+// images are given SVG_SCALE times their size (setSize), because Safari rasterises
+// an SVG <img> at its own size before drawing it, which blurs it when scaled up.
 (function () {
   "use strict";
   const NS = "http://www.w3.org/2000/svg";
@@ -40,11 +50,33 @@
   }
 
   function fonts() {
-    return Promise.all(["300 22px Jost", "400 13px Jost", "500 13px Jost"].map(f => document.fonts.load(f))).catch(() => {});
+    return Promise.all(["300 22px Jost", "400 13px Jost", "500 13px Jost", "italic 400 12px Jost", "600 12px Jost"].map(f => document.fonts.load(f))).catch(() => {});
+  }
+
+  const SVG_SCALE = 4;
+  const scale = (W, H) => Math.max(2, Math.min(4, Math.sqrt(16e6 / (W * H))));
+  function setSize(svg, w, h) {
+    svg.setAttribute("width", w * SVG_SCALE); svg.setAttribute("height", h * SVG_SCALE);
+  }
+
+  const CITE_YEAR = 2026, SERIES = "Polish Political Analyses";
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
+  const citeText = page => `Stanley, Ben. ${CITE_YEAR}. ${page}, ${SERIES}, benstanley.eu.`;
+  const citeHtml = page => `Stanley, Ben. ${CITE_YEAR}. <i>${esc(page)}</i>, <b>${SERIES}</b>, benstanley.eu.`;
+  const csvCite = page => `# Suggested citation: ${citeText(page)}\n`;
+  // The citation on one line from (x, y) in the canvas's current fill, in CREDIT's size, or
+  // smaller where it would run past maxW
+  function drawCite(g, page, x, y, maxW) {
+    const runs = [["Suggested citation: Stanley, Ben. " + CITE_YEAR + ". ", ""], [page, "italic 400 "], [", ", ""], [SERIES, "600 "], [", benstanley.eu.", ""]];
+    const font = (pre, px) => `${pre}${px}px Jost, sans-serif`;
+    let px = 12;
+    const width = () => runs.reduce((s, [t, pre]) => { g.font = font(pre, px); return s + g.measureText(t).width; }, 0);
+    if (maxW && width() > maxW) px = Math.max(8, Math.floor(px * maxW / width() * 10) / 10);
+    runs.forEach(([t, pre]) => { g.font = font(pre, px); g.fillText(t, x, y); x += g.measureText(t).width; });
   }
 
   window.ChartExport = {
-    clone, fonts,
+    clone, fonts, scale, setSize, citeText, citeHtml, csvCite, drawCite,
     TITLE: "300 22px Jost, sans-serif",   // dark red, like the site's h2
     SUBTITLE: "13px Jost, sans-serif",    // #4B4B4B
     CREDIT: "12px Jost, sans-serif",      // #767676
