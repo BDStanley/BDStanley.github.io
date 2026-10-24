@@ -9,8 +9,9 @@
   Web version of the Pooling the Poles poll-of-polls. Embedded in
   pages/polish-political-analyses/polling-tracker.typ; works on its own too.
   Data: polls.json and draws.json beside this file, written by Polls/R/export_web.R
-  in the Polish political analyses repo (PTP.R runs it) and copied here by
-  scripts/sync-analyses.py on each build. Logic in app.js; no libraries.
+  in the Polish political analyses repo (PTP.R runs it), and terms.json with one
+  term-<term>.json for each past Sejm term, written by Polls/R/terms/30_export.R;
+  all copied here by scripts/sync-analyses.py on each build. Logic in app.js; no libraries.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,6 +127,10 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
 .loading{padding:40px;color:var(--muted);font-size:15px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px}
 .legend span{display:inline-flex;align-items:center;gap:6px;cursor:default}
+.termsel{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--soft)}
+.termsel[hidden],.switch[hidden]{display:none}
+.termsel select{height:32px;border:1px solid var(--faint);border-radius:999px;padding:0 12px;background:#fff;color:var(--ink);font-size:13.5px;font-weight:500;cursor:pointer}
+.termsel select:hover{border-color:var(--accent)}
 @media (max-width:1100px){ .two{grid-template-columns:minmax(0,1fr)} }
 @media (max-width:960px){
   .app{height:auto}
@@ -145,20 +150,21 @@ svg text:not([font-weight]){font-weight:300}
 <div class="app" id="app">
   <div class="asof" id="asof">Loading the polling data…</div>
   <div class="toolbar">
+    <label class="termsel" id="termwrap" hidden>Sejm term <select id="term" aria-label="Sejm term"></select></label>
     <div class="seg" id="views" role="tablist" aria-label="View">
       <button type="button" role="tab" data-v="trends">Trends</button>
       <button type="button" role="tab" data-v="seats">Seats</button>
       <button type="button" role="tab" data-v="time">Over time</button>
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
-    <label class="switch"><input type="checkbox" id="cmp"> Change since 2023</label>
+    <label class="switch" id="cmpwrap"><input type="checkbox" id="cmp"> Change since 2023</label>
   </div>
   <div class="main">
     <div class="stage" id="stage">
       <section class="view" id="v-trends" aria-label="Polling trends">
         <div class="toolbar">
           <div class="seg small" id="periods" aria-label="Period"></div>
-          <span class="help">Hover for every party's estimate; click to load that week into the scenario.</span>
+          <span class="help" id="trendhelp">Hover for every party's estimate; click to load that week into the scenario.</span>
         </div>
         <div class="chips" id="pchips" aria-label="Highlight polling houses"></div>
         <div class="chartbox" id="trendbox"><svg id="trend" role="img" aria-label="Polling trends with 80% bands and individual polls"></svg><div class="tip" id="trendtip" hidden></div></div>
@@ -194,7 +200,7 @@ svg text:not([font-weight]){font-weight:300}
         </div>
       </section>
       <section class="view" id="v-pollsters" aria-label="Pollsters" hidden>
-        <p class="help">How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.</p>
+        <p class="help" id="househelp">How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.</p>
         <div class="chartbox" id="housebox"><svg id="house" role="img" aria-label="House effects by pollster"></svg><div class="tip" id="housetip" hidden></div></div>
       </section>
     </div>

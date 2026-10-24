@@ -14,6 +14,11 @@
  * party's regional profile is perturbed as in PTP.R, and seats are allocated in
  * every draw, giving medians, 80% ranges and probabilities for the scenario.
  * Without draws.json, scenarios fall back to a single allocation.
+ *
+ * Past Sejm terms (terms.json, one term-<term>.json each) show the trend and
+ * the pollsters only: shares of the parties Wikipedia's tables name, from a
+ * model anchored on the elections that open and close the term
+ * (Polls/R/terms/ in the Polish political analyses repo).
  */
 "use strict";
 
@@ -47,6 +52,17 @@ const OKABE = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#D55E00", "#56B4E9"]
 // ---- data -----------------------------------------------------------------------------------
 let D, R, P, SP, NP, NC, C, VV, MAG, COEFI, PIDX, LAUNCH, WEEKS;
 let DRAWS = null, drawsState = "idle", SWING = null;
+let TERMS = null, TERM = null;  // terms.json, and the past term on show (null: the current one)
+const TCACHE = new Map();
+let PENDING = null;             // a past term and highlighted houses from the link, until it loads
+// What the trend and pollster charts draw: the current term, or a past one
+function VD() {
+  return TERM
+    ? { trend: TERM.trend, polls: TERM.polls, pollsters: TERM.pollsters, parties: TERM.parties, events: TERM.events,
+        house: TERM.house, blocs: TERM.parties, results: TERM.results, past: true }
+    : { trend: D.trend, polls: D.polls, pollsters: D.pollsters, parties: P, events: R.launches,
+        house: D.house, blocs: R.houseEffectBlocs, results: [], past: false };
+}
 const WD = new Map();          // decoded draws per week index
 const MODEL_SIM = new Map();   // model-view simulations per week (constituency ranges)
 
@@ -61,7 +77,7 @@ function prep() {
   LAUNCH = {}; R.launches.forEach(l => { LAUNCH[l.party] = l.date; });
   WEEKS = D.weeks;
 }
-const col = n => (R.colours && R.colours[n]) || "#808080";
+const col = n => (TERM && TERM.colours[n]) || (R.colours && R.colours[n]) || "#808080";
 const exists = (p, date) => !(p in LAUNCH) || date >= LAUNCH[p];
 const short = p => R.short[p] || p;
 const sortParties = m => [...m].sort((a, b) => PIDX[a] - PIDX[b]);
@@ -428,6 +444,7 @@ function renderPanelLayout() {
 const layoutKey = () => [S.w, JSON.stringify(S.joint), S.cmp].join("§");
 
 function updatePanel() {
+  if (TERM) return;
   if (layoutKey() !== panelKey) renderPanelLayout();
   const cur = CUR, model = cur.mode === "model";
   const b = $("badge"); b.textContent = model ? "Model estimates" : "Your scenario"; b.className = "badge" + (model ? "" : " edited");
@@ -492,6 +509,7 @@ function updatePanel() {
   renderGov();
 }
 function renderGov() {
+  if (TERM) return;
   const cur = CUR, list = cur.gov, probabilistic = cur.mode !== "single";
   $("govhead").textContent = probabilistic ? "chance of 231+ seats" : "single allocation";
   const shown = S.showAllGov ? list : list.slice(0, 8);
@@ -544,16 +562,19 @@ function repel(items, minGap, lo, hi) { // items: {y}, sorted in place, pushed a
 }
 function renderTrends() {
   const box = $("trendbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 520));
-  const m = { l: 34, r: W < 520 ? 92 : 118, t: 22, b: 34 };
-  const T = D.trend, dates = T.dates, last = dates[dates.length - 1];
+  const V = VD(), T = V.trend, dates = T.dates, last = dates[dates.length - 1];
+  // Room on the right for the longest end label ("Solidarność / AWS 35.4%")
+  const endChars = Math.max(0, ...V.parties.filter(p => T.series[p].med[dates.length - 1] != null).map(p => (W < 600 ? short(p) : p).length + 6));
+  const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: 22, b: 34 };
   const span = S.period === "all" ? null : +S.period * 30.44;
   const a = span ? Math.max(dates[0], last - span) : dates[0], b = last;
   const x = d => m.l + (d - a) / (b - a) * (W - m.l - m.r);
   const hl = S.houses.size > 0;
-  const polls = D.polls.filter(r => r[0] >= a && r[0] <= b);
+  const polls = V.polls.filter(r => r[0] >= a && r[0] <= b);
   let ymax = 0;
   polls.forEach(r => { ymax = Math.max(ymax, r[3]); });
-  P.forEach(p => { T.series[p].hi.forEach((v, i) => { if (v != null && dates[i] >= a) ymax = Math.max(ymax, v); }); });
+  V.parties.forEach(p => { T.series[p].hi.forEach((v, i) => { if (v != null && dates[i] >= a) ymax = Math.max(ymax, v); }); });
+  V.results.forEach(r => { if (r.date >= a) Object.values(r.values).forEach(v => { ymax = Math.max(ymax, v); }); });
   ymax = Math.ceil((ymax + 1) / 5) * 5;
   const y = v => m.t + (1 - v / ymax) * (H - m.t - m.b);
   const fade = p => S.hoverParty && S.hoverParty !== p;
@@ -567,7 +588,7 @@ function renderTrends() {
     o.push(`<line x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${H - m.b}" stroke="#F4F4F4"/><text x="${x(d)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="#767676">${lab}</text>${yr ? `<text x="${x(d)}" y="${H - m.b + 27}" text-anchor="middle" font-size="11" fill="#767676">${yr}</text>` : ""}`);
   });
   // split events
-  const ev = R.launches.filter(l => l.date >= a && l.date <= b).sort((p, q) => p.date - q.date);
+  const ev = V.events.filter(l => l.date >= a && l.date <= b).sort((p, q) => p.date - q.date);
   let lastX = -1e9, stack = 0;
   ev.forEach(l => {
     const ex = x(l.date);
@@ -575,7 +596,7 @@ function renderTrends() {
     o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t}" y2="${H - m.b}" stroke="#AAA" stroke-dasharray="2 3"/><text x="${ex + 4}" y="${m.t + 10 + stack * 13}" font-size="11" fill="#4B4B4B">${esc(l.event)}</text>`);
   });
   // bands
-  P.forEach(p => {
+  V.parties.forEach(p => {
     const s = T.series[p]; let top = [], bot = [];
     const flush = () => { if (top.length > 1) o.push(`<path d="M${top.join("L")}L${bot.reverse().join("L")}Z" fill="${col(p)}" fill-opacity="${fade(p) ? 0.04 : 0.16}" stroke="none"/>`); top = []; bot = []; };
     dates.forEach((d, i) => { if (d < a || s.lo[i] == null) { flush(); return; } top.push(`${x(d).toFixed(1)},${y(s.hi[i]).toFixed(1)}`); bot.push(`${x(d).toFixed(1)},${y(s.lo[i]).toFixed(1)}`); });
@@ -584,23 +605,31 @@ function renderTrends() {
   // polls
   const dots = [];
   polls.forEach(r => {
-    const p = P[r[2]], on = !hl || S.houses.has(D.pollsters[r[1]]);
+    const p = V.parties[r[2]], on = !hl || S.houses.has(V.pollsters[r[1]]);
     dots.push(`<circle cx="${x(r[0]).toFixed(1)}" cy="${y(r[3]).toFixed(1)}" r="${on ? 2.4 : 2}" fill="${on ? col(p) : "#BBB"}" fill-opacity="${on ? (fade(p) ? 0.08 : hl ? 0.75 : 0.4) : 0.15}"/>`);
   });
   o.push(`<g>${dots.join("")}</g>`);
   // lines
-  P.forEach(p => {
+  V.parties.forEach(p => {
     const s = T.series[p]; let seg = [];
     const flush = () => { if (seg.length > 1) o.push(`<path d="M${seg.join("L")}" fill="none" stroke="${col(p)}" stroke-width="${S.hoverParty === p ? 2.6 : 1.8}" stroke-opacity="${fade(p) ? 0.2 : 1}"/>`); seg = []; };
     dates.forEach((d, i) => { if (d < a || s.med[i] == null) { flush(); return; } seg.push(`${x(d).toFixed(1)},${y(s.med[i]).toFixed(1)}`); });
     flush();
   });
+  // the election results that anchor a past term's trend
+  V.results.forEach(r => {
+    if (r.date < a) return;
+    Object.entries(r.values).forEach(([p, v]) => {
+      const cx = x(r.date), cy = y(v);
+      o.push(`<path d="M${cx},${cy - 5}L${cx + 5},${cy}L${cx},${cy + 5}L${cx - 5},${cy}Z" fill="#fff" stroke="${col(p)}" stroke-width="1.6" stroke-opacity="${fade(p) ? 0.25 : 1}"/>`);
+    });
+  });
   // selected week
   const sw = WEEKS[S.w].date;
-  if (sw >= a && sw <= b) o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#333" stroke-width="1"/><text x="${x(sw)}" y="${m.t - 11}" text-anchor="middle" font-size="10.5" fill="#333">${dstr(sw)}</text>`);
+  if (!V.past && sw >= a && sw <= b) o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#333" stroke-width="1"/><text x="${x(sw)}" y="${m.t - 11}" text-anchor="middle" font-size="10.5" fill="#333">${dstr(sw)}</text>`);
   // end labels
   const li = dates.length - 1;
-  const labs = P.filter(p => T.series[p].med[li] != null).map(p => ({ p, v: T.series[p].med[li], y: y(T.series[p].med[li]) }));
+  const labs = V.parties.filter(p => T.series[p].med[li] != null).map(p => ({ p, v: T.series[p].med[li], y: y(T.series[p].med[li]) }));
   repel(labs, 13, m.t, H - m.b);
   labs.forEach(l => {
     const ly0 = y(l.v);
@@ -612,7 +641,9 @@ function renderTrends() {
   svg.innerHTML = o.join("");
   TR = { W, H, m, a, b, x, y, polls, hl };
   // legend
-  $("trendlegend").innerHTML = P.filter(p => T.series[p].med[li] != null).map(p => `<span data-p="${esc(p)}"><span class="dot" style="background:${col(p)}"></span>${esc(p)} ${T.series[p].med[li].toFixed(1)}%</span>`).join("");
+  // A past term lists every party it had, with the closing figure for those still standing
+  const legend = V.past ? V.parties : P.filter(p => T.series[p].med[li] != null);
+  $("trendlegend").innerHTML = legend.map(p => { const v = T.series[p].med[li]; return `<span data-p="${esc(p)}"><span class="dot" style="background:${col(p)}"></span>${esc(p)}${v != null ? " " + v.toFixed(1) + "%" : ""}</span>`; }).join("");
 }
 function trendHover(ev) {
   if (!TR) return;
@@ -621,21 +652,22 @@ function trendHover(ev) {
   const tip = $("trendtip"), g = $("trendhover");
   // nearest poll within 8px
   let best = null, bd = 64;
+  const V = VD();
   TR.polls.forEach(p => {
-    if (TR.hl && !S.houses.has(D.pollsters[p[1]])) return;
+    if (TR.hl && !S.houses.has(V.pollsters[p[1]])) return;
     const dx = TR.x(p[0]) - mx, dy = TR.y(p[3]) - my, dd = dx * dx + dy * dy;
     if (dd < bd) { bd = dd; best = p; }
   });
   let html;
   if (best) {
     g.innerHTML = `<circle cx="${TR.x(best[0])}" cy="${TR.y(best[3])}" r="5" fill="none" stroke="#141414"/>`;
-    html = `<div class="r"><span><span class="dot" style="background:${col(P[best[2]])}"></span><b>${esc(P[best[2]])}</b></span><span>${best[3].toFixed(1)}%</span></div><div class="muted">${esc(D.pollsters[best[1]])} · ${dstr(best[0])}</div>`;
+    html = `<div class="r"><span><span class="dot" style="background:${col(V.parties[best[2]])}"></span><b>${esc(V.parties[best[2]])}</b></span><span>${best[3].toFixed(1)}%</span></div><div class="muted">${esc(V.pollsters[best[1]])} · ${dstr(best[0])}</div>`;
   } else {
-    const dates = D.trend.dates, d = TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a);
+    const dates = V.trend.dates, d = TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a);
     let i = 0, bdd = Infinity; dates.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bdd) { bdd = dd; i = j; } });
-    const vals = P.map(p => ({ p, v: D.trend.series[p].med[i], lo: D.trend.series[p].lo[i], hi: D.trend.series[p].hi[i] })).filter(o => o.v != null).sort((p, q) => q.v - p.v);
+    const vals = V.parties.map(p => ({ p, v: V.trend.series[p].med[i], lo: V.trend.series[p].lo[i], hi: V.trend.series[p].hi[i] })).filter(o => o.v != null).sort((p, q) => q.v - p.v);
     g.innerHTML = `<line x1="${TR.x(dates[i])}" x2="${TR.x(dates[i])}" y1="${TR.m.t}" y2="${TR.H - TR.m.b}" stroke="#141414" stroke-opacity=".35"/>`;
-    html = `<b>${dstr(dates[i])}</b>` + vals.map(o => `<div class="r"><span><span class="dot" style="background:${col(o.p)}"></span>${esc(o.p)}</span><span>${o.v.toFixed(1)}% <span class="muted">${o.lo != null ? o.lo.toFixed(1) + "–" + o.hi.toFixed(1) : ""}</span></span></div>`).join("") + `<div class="muted" style="margin-top:3px">Click to load the nearest week</div>`;
+    html = `<b>${dstr(dates[i])}</b>` + vals.map(o => `<div class="r"><span><span class="dot" style="background:${col(o.p)}"></span>${esc(o.p)}</span><span>${o.v.toFixed(1)}% <span class="muted">${o.lo != null ? o.lo.toFixed(1) + "–" + o.hi.toFixed(1) : ""}</span></span></div>`).join("") + (V.past ? "" : `<div class="muted" style="margin-top:3px">Click to load the nearest week</div>`);
   }
   placeTip(tip, $("trendbox"), ev, html);
 }
@@ -859,8 +891,12 @@ function renderTime() {
 // ---- pollsters ------------------------------------------------------------------------------
 let HOUSE = null;
 function renderHouse() {
-  const H0 = D.house; if (!H0 || !H0.length) { $("house").innerHTML = ""; return; }
-  const blocs = R.houseEffectBlocs, box = $("housebox"), W = Math.max(560, box.clientWidth - 12);
+  const V = VD(), H0 = V.house;
+  $("househelp").textContent = V.past
+    ? "How far each polling house's readings sat from the trend anchored on the two election results, in percentage points, averaged over its own polls, with 80% intervals. A positive figure means the house showed the party higher than the anchored trend. Click a house to highlight its polls on the trend chart."
+    : "How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.";
+  if (!H0 || !H0.length) { $("house").innerHTML = ""; return; }
+  const blocs = V.blocs, box = $("housebox"), W = Math.max(560, box.clientWidth - 12);
   const lw = 190, rowH = 30, top = 44, cw = (W - lw - 10) / blocs.length, H = top + H0.length * rowH + 10;
   let M = 0; H0.forEach(h => blocs.forEach(b => { const e = h.effects[b]; if (e) M = Math.max(M, Math.abs(e[1]), Math.abs(e[2])); }));
   M = Math.ceil(M);
@@ -885,16 +921,23 @@ function renderHouse() {
 
 // ---- static controls ------------------------------------------------------------------------
 function renderChips() {
-  $("pchips").innerHTML = D.pollsters.map(o => `<button type="button" class="chip" data-org="${esc(o)}" aria-pressed="${S.houses.has(o)}">${esc(o)}</button>`).join("") +
+  $("pchips").innerHTML = VD().pollsters.map(o => `<button type="button" class="chip" data-org="${esc(o)}" aria-pressed="${S.houses.has(o)}">${esc(o)}</button>`).join("") +
     (S.houses.size ? `<button type="button" class="linkbtn" id="houseclear">Show all houses</button>` : "");
   $("periods").innerHTML = PERIODS.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${S.period === k}">${l}</button>`).join("");
-  [...$("views").children].forEach(b => { b.setAttribute("aria-pressed", S.view === b.dataset.v); b.setAttribute("aria-selected", S.view === b.dataset.v); });
+  [...$("views").children].forEach(b => {
+    b.setAttribute("aria-pressed", S.view === b.dataset.v); b.setAttribute("aria-selected", S.view === b.dataset.v);
+    b.hidden = !!TERM && (b.dataset.v === "seats" || b.dataset.v === "time");
+  });
   ["trends", "seats", "time", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
   $("cmp").checked = S.cmp;
+  $("cmpwrap").hidden = !!TERM;
+  $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on."
+    : "Hover for every party's estimate; click to load that week into the scenario.";
 }
 
 // ---- rendering ------------------------------------------------------------------------------
 function renderView() {
+  if (TERM && (S.view === "seats" || S.view === "time")) { S.view = "trends"; renderChips(); }
   if (S.view === "trends") renderTrends();
   else if (S.view === "seats") { renderHemi(); renderMap(); renderConstCard(); render2023(); }
   else if (S.view === "time") renderTime();
@@ -903,6 +946,7 @@ function renderView() {
 const sharesValid = () => 100 - sum(SP.map(p => S.shares[p] || 0)) >= -0.05;
 // While the named shares exceed 100%, the last valid numbers stay on screen, faded.
 function update() {
+  if (TERM) { renderTermPanel(); renderView(); saveHash(); return; }
   if (sharesValid() || !CUR) compute();
   updatePanel(); renderView(); saveHash();
 }
@@ -912,6 +956,13 @@ const updateSoon = debounce(update, 60);
 function hashTarget() { try { if (window.top !== window && window.top.location.host === location.host) return window.top; } catch (e) { /* cross-origin */ } return window; }
 function stateString() {
   const q = new URLSearchParams();
+  if (TERM) {
+    q.set("t", TERM.term.id);
+    if (S.houses.size) q.set("h", [...S.houses].join(";"));
+    if (S.view !== "trends") q.set("view", S.view);
+    if (S.period !== "all") q.set("p", S.period);
+    return q.toString();
+  }
   if (S.w !== WEEKS.length - 1) q.set("w", iso(WEEKS[S.w].date));
   const d = defaults(S.w), ed = SP.filter(p => Math.abs(S.shares[p] - d[p]) > 0.051);
   if (ed.length) q.set("v", ed.map(p => p + ":" + S.shares[p]).join(","));
@@ -938,7 +989,8 @@ function restoreHash() {
   S.shares.Other = 100 - sum(SP.map(p => S.shares[p]));
   if (q.get("j")) q.get("j").split(";").forEach(g => { const m = g.split(",").filter(p => P.includes(p)); if (m.length >= 2 && !m.some(p => S.joint.flat().includes(p)) && S.joint.length < 4) S.joint.push(m); });
   if (q.get("s")) S.dyn = clamp(parseInt(q.get("s"), 10) || 0, 0, 100);
-  if (q.get("h")) q.get("h").split(";").forEach(o => { if (D.pollsters.includes(o)) S.houses.add(o); });
+  if (q.get("t")) PENDING = { term: q.get("t"), houses: q.get("h") ? q.get("h").split(";") : [] };
+  else if (q.get("h")) q.get("h").split(";").forEach(o => { if (D.pollsters.includes(o)) S.houses.add(o); });
   if (["trends", "seats", "time", "pollsters"].includes(q.get("view"))) S.view = q.get("view");
   if (PERIODS.some(p => p[0] === q.get("p"))) S.period = q.get("p");
   S.cmp = q.get("c") === "1";
@@ -954,6 +1006,7 @@ function download(name, blob) {
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 function csv() {
+  if (TERM) return termCsv();
   const cur = CUR, wk = cur.wk, inJ = new Set(S.joint.flat());
   const head = ["date", "list", "model_vote_pct", "model_vote_lower80", "model_vote_upper80", "model_p_clear_5pct", "model_seats", "model_seats_lower80", "model_seats_upper80",
     "scenario_vote_pct", "scenario_effective_vote_pct", "scenario_seats", "scenario_seats_lower80", "scenario_seats_upper80", "scenario_p_clear_threshold"];
@@ -969,6 +1022,7 @@ function csv() {
 }
 async function png() {
   const ids = { trends: ["trend"], seats: ["hemi", "map"], time: ["seattime", "cointime", "thrtime"], pollsters: ["house"] }[S.view];
+  const past = TERM ? `Sejm term ${TERM.term.label}` : null;
   const titles = { trends: "Voting intention", seats: "Seat projection", time: "Over time", pollsters: "House effects" };
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
   const imgs = await Promise.all(ids.map(async id => {
@@ -987,13 +1041,14 @@ async function png() {
   const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = 2; cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[S.view]}`, pad, 32);
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[S.view]}${past ? " · " + past : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE;
-  g.fillText(S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
+  g.fillText(past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
+    : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
   g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText(`${R.credit} · benstanley.eu`, pad, H - 12);
-  cv.toBlob(b => download(`polling-tracker-${S.view}-${iso(CUR.wk.date)}.png`, b), "image/png");
+  cv.toBlob(b => download(`polling-tracker-${S.view}-${past ? TERM.term.id : iso(CUR.wk.date)}.png`, b), "image/png");
 }
 
 // ---- events ---------------------------------------------------------------------------------
@@ -1014,6 +1069,7 @@ function setShare(p, v, from) {
   updateSoon();
 }
 function bind() {
+  $("term").addEventListener("change", e => setTerm(e.target.value));
   $("views").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.view = b.dataset.v; renderChips(); renderView(); saveHash(); });
   $("periods").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.period = b.dataset.k; renderChips(); renderTrends(); saveHash(); });
   $("pchips").addEventListener("click", e => {
@@ -1026,7 +1082,7 @@ function bind() {
   $("trend").addEventListener("mousemove", trendHover);
   $("trend").addEventListener("mouseleave", () => { $("trendtip").hidden = true; const g = $("trendhover"); if (g) g.innerHTML = ""; });
   $("trend").addEventListener("click", ev => {
-    if (!TR) return;
+    if (!TR || TERM) return;
     const r = $("trend").getBoundingClientRect(), k = TR.W / r.width, mx = (ev.clientX - r.left) * k;
     if (mx < TR.m.l || mx > TR.W - TR.m.r) return;
     setWeek(nearestWeek(TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a)));
@@ -1098,6 +1154,74 @@ function bind() {
   window.addEventListener("resize", debounce(renderView, 150));
 }
 
+// ---- past terms -----------------------------------------------------------------------------
+// The selector lists the current term and every past one in terms.json; a past
+// term's file is fetched the first time it is chosen.
+function loadTerms() {
+  fetch("terms.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+    TERMS = d;
+    if (!d.terms || !d.terms.length) return;
+    const cur = d.current ? d.current.label : "current";
+    $("term").innerHTML = `<option value="">${esc(cur)}</option>` + d.terms.map(t => `<option value="${esc(t.id)}">${esc(t.label)}</option>`).join("");
+    $("termwrap").hidden = false;
+    if (PENDING) setTerm(PENDING.term);
+  }).catch(() => { /* no past terms: the selector stays hidden */ });
+}
+function setTerm(id) {
+  const t = TERMS && TERMS.terms.find(x => x.id === id);
+  if (!t) {
+    TERM = null; PENDING = null; $("term").value = ""; S.houses.clear(); S.hoverParty = null;
+    header(); renderChips(); update(); return;
+  }
+  const show = d => {
+    TERM = d; S.houses.clear();
+    if (PENDING && PENDING.term === id) PENDING.houses.forEach(o => { if (d.pollsters.includes(o)) S.houses.add(o); });
+    PENDING = null; S.hoverParty = null; $("term").value = id;
+    if (S.view === "seats" || S.view === "time") S.view = "trends";
+    header(); renderChips(); update();
+  };
+  if (TCACHE.has(id)) return show(TCACHE.get(id));
+  fetch(t.file).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { TCACHE.set(id, d); show(d); })
+    .catch(() => { PENDING = null; $("term").value = TERM ? TERM.term.id : ""; toast("Could not load that term"); });
+}
+function renderTermPanel() {
+  const t = TERM.term, m = TERM.meta;
+  const rows = TERM.final.filter(f => f.result != null).map(f => {
+    const miss = f.polls - f.result;
+    return `<tr><td><span class="dot" style="background:${col(f.party)};margin-right:6px"></span>${esc(f.party)}</td><td>${f.result.toFixed(1)}%</td>
+      <td>${f.polls.toFixed(1)}% <span class="muted" style="font-size:11.5px">${f.lo.toFixed(1)}–${f.hi.toFixed(1)}</span></td><td class="${Math.abs(miss) >= 1 ? cls(miss) : ""}">${signed(miss, 1)}</td></tr>`;
+  }).join("");
+  $("panel").innerHTML = `
+  <div class="card">
+    <span class="label">Sejm term ${esc(t.label)}</span>
+    <h2 style="margin:0;font-size:20px;font-weight:400">${dlong(t.start)} to ${dlong(t.end)}</h2>
+    <p class="help">Each line is a party's share of the vote for the parties the polls named, so the figures add up to 100 without the others and the undecided, whom Wikipedia's tables lump together. The trend starts and ends at the election results (the diamonds) and runs between them through the polls, each house's lean estimated over the whole term. A party joins the chart when the polls first named it and leaves when they stopped; a joint list replaces its members from when the polls began reporting it.</p>
+  </div>
+  <div class="card">
+    <span class="label">The polls against the result</span>
+    <table class="t"><tr><th>Party</th><th>Result</th><th>Polls</th><th>Miss</th></tr>${rows}</table>
+    <p class="help" style="margin:0">"Polls" is what the houses that polled in the final month (${m.finalHouses.map(esc).join(", ")}) would have shown on election day, each with its own lean, averaged, with an 80% range. "Miss" is polls minus result, in points. Both are shares of the parties named, which is why they differ from the official percentages.</p>
+  </div>
+  <div class="card soft">
+    <span class="label">Share and download</span>
+    <div class="actions">
+      <button type="button" class="btn2" id="copylink">Copy link to this view</button>
+      <button type="button" class="btn2" id="dlcsv">CSV</button>
+      <button type="button" class="btn2" id="dlpng">PNG of the chart</button>
+    </div>
+  </div>`;
+  panelKey = "";
+}
+function termCsv() {
+  const T = TERM.trend, rows = [["date", "party", "median_pct", "lower80", "upper80"]];
+  T.dates.forEach((d, i) => TERM.parties.forEach(p => {
+    const s = T.series[p]; if (s.med[i] != null) rows.push([iso(d), p, s.med[i], s.lo[i], s.hi[i]]);
+  }));
+  const q = v => typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+  download(`polling-tracker-${TERM.term.id}.csv`, new Blob([rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+}
+
 // ---- load -----------------------------------------------------------------------------------
 function loadDraws() {
   if (drawsState !== "idle") return;
@@ -1108,11 +1232,17 @@ function loadDraws() {
   }).catch(() => { drawsState = "missing"; if (!modelView()) update(); else updatePanel(); });
 }
 function header() {
+  if (TERM) {
+    const m = TERM.meta, t = TERM.term;
+    $("asof").innerHTML = `Sejm term ${esc(t.label)}: ${m.nPolls} polls by ${m.pollsterCount} pollsters between the elections of ${dlong(t.start)} and ${dlong(t.end)}, as listed on <a href="${esc(m.source)}" target="_blank" rel="noopener">Wikipedia</a>. Shares of the parties the tables name, which lump the rest with the undecided; the trend is anchored on both election results. ${esc(R.credit)}.`;
+    return;
+  }
   const m = D.meta, last = WEEKS[WEEKS.length - 1].date;
   $("asof").innerHTML = `Estimates as of ${dlong(last)}${m.nPolls ? `, from ${m.nPolls} polls by ${m.pollsterCount} pollsters (fieldwork ${dlong(m.firstFieldwork)} to ${dlong(m.lastFieldwork)})` : ""}, as listed on Wikipedia. ${esc(R.credit)}.`;
 }
 fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
   D = d; prep(); restoreHash(); header(); renderChips(); bind();
+  loadTerms();
   // set on the SVGs themselves so PNG exports keep the typeface
   ["trend", "hemi", "map", "seattime", "cointime", "thrtime", "house"].forEach(id => $(id).setAttribute("font-family", "Jost, 'Avenir Next', -apple-system, sans-serif"));
   if (!modelView()) loadDraws();

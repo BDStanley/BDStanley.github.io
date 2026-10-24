@@ -1,45 +1,21 @@
 {
   "meta": {
-    "updated": "2026-10-23",
+    "updated": "2026-10-24",
     "n": 2
   },
   "attitudes": [
     {
-      "slug": "eu-membership",
-      "file": "eu-membership.json",
-      "title": "Support for EU membership",
-      "short": "EU membership",
-      "question": "Do Poles support their country's membership of the European Union?",
-      "measure": "Supporters of EU membership, % of those with a view",
-      "start": "1990-10-01",
-      "last_data": "2026-05-23",
-      "n_readings": 248,
-      "n_surveys": 245,
-      "sources": [
-        "Candidate Countries Eurobarometer",
-        "CBOS",
-        "Central and Eastern Eurobarometer",
-        "Commercial polls",
-        "Eurobarometer",
-        "European Election Study",
-        "European Social Survey",
-        "Polish General Social Survey (PGSS)",
-        "Polish National Election Study (PGSW)"
-      ],
-      "updated": "2026-10-23",
-      "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
-    },
-    {
       "slug": "left-right",
       "file": "left-right.json",
+      "group": "Ideological dimensions",
       "title": "Left–right self-placement",
       "short": "Left–right",
       "question": "Do Poles place themselves on the left or on the right?",
       "measure": "Average self-placement, from 0 (left) to 10 (right)",
-      "start": "1990-10-01",
+      "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 378,
-      "n_surveys": 378,
+      "n_readings": 472,
+      "n_surveys": 472,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -48,9 +24,42 @@
         "Eurobarometer",
         "European Election Study",
         "European Social Survey",
+        "European Values Study",
+        "Other surveys",
+        "Pew Global Attitudes",
         "Polish General Social Survey (PGSS)",
         "Polish National Election Study (PGSW)",
-        "SWPS online panels"
+        "SWPS online panels",
+        "World Values Survey"
+      ],
+      "updated": "2026-10-23",
+      "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
+    },
+    {
+      "slug": "eu-membership",
+      "file": "eu-membership.json",
+      "group": "Europe and the world",
+      "title": "Support for EU membership",
+      "short": "EU membership",
+      "question": "Do Poles support their country's membership of the European Union?",
+      "measure": "Supporters of EU membership, % of those with a view",
+      "start": "1990-11-01",
+      "last_data": "2026-05-23",
+      "n_readings": 320,
+      "n_surveys": 274,
+      "sources": [
+        "Candidate Countries Eurobarometer",
+        "CBOS",
+        "Central and Eastern Eurobarometer",
+        "Commercial polls",
+        "Eurobarometer",
+        "European Election Study",
+        "European Social Survey",
+        "Flash Eurobarometer",
+        "Pew Global Attitudes",
+        "Polish General Social Survey (PGSS)",
+        "Polish National Election Study (PGSW)",
+        "Polish Panel Survey (POLPAN)"
       ],
       "updated": "2026-10-23",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]

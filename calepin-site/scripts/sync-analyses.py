@@ -10,6 +10,10 @@ page; this script copies it beside the page's chart under assets/:
     Polls/web/polls.json                          -> assets/polling-tracker/polls.json
     Polls/web/draws.json                          -> assets/polling-tracker/draws.json
         (written by Polls/R/export_web.R, which PTP.R runs)
+    Polls/web/terms.json                          -> assets/polling-tracker/terms.json
+    Polls/web/term-<term>.json                    -> assets/polling-tracker/term-<term>.json
+        (the past Sejm terms, written by Polls/R/terms/30_export.R; terms.json lists
+        the terms, and each one it lists is copied too)
     Party system analysis/web/party_system.json   -> assets/party-system-indicators/party_system.json
         (written by Party system analysis/analysis/export_web.R, which
         "Party system analysis.R" runs)
@@ -63,6 +67,8 @@ FILES = [
      {"meta", "rules", "constituencies", "trend", "polls", "weeks"}),
     ("Polls/web/draws.json", "assets/polling-tracker/draws.json",
      {"nDraws", "categories", "weeks"}),
+    ("Polls/web/terms.json", "assets/polling-tracker/terms.json",
+     {"version", "terms"}),
     ("Party system analysis/web/party_system.json", "assets/party-system-indicators/party_system.json",
      {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
     ("Party ideology/web/ideology.json", "assets/party-ideology/ideology.json",
@@ -84,6 +90,8 @@ FILES = [
 LISTED = [
     ("Political attitudes/web/attitudes.json", "attitudes", "file",
      {"meta", "national", "groupings", "items", "readings", "events"}),
+    ("Polls/web/terms.json", "terms", "file",
+     {"term", "meta", "parties", "colours", "trend", "pollsters", "polls", "results", "house", "final"}),
 ]
 
 

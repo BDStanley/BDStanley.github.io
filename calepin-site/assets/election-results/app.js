@@ -659,7 +659,7 @@ function scaleFor(vals) {
     return { kind: "div", lo: -hi, hi, ca, cb, col: v => v >= 0 ? mix(ca, 0.04 + 0.96 * clamp(v / hi, 0, 1)) : mix(cb, 0.04 + 0.96 * clamp(-v / hi, 0, 1)), ticks: ticks(-hi, hi, 4), title: `${nameOf(a)} against ${nameOf(b)}: lead in points` };
   }
   const hi = Math.max(0.1, Math.ceil((quantile(vals.v, 0.9) || 0.1) * 10) / 10);
-  return { kind: "lead", hi, col: (v, id) => mix(colOf(itemById(id)), 0.3 + 0.7 * clamp(v / hi, 0, 1)), title: `The leading ${itemLabel().toLowerCase()}, deeper the wider its lead` };
+  return { kind: "lead", hi, col: (v, id) => mix(colOf(itemById(id)), 0.3 + 0.7 * clamp(v / hi, 0, 1)), title: `Leading ${itemLabel().toLowerCase()}` };
 }
 let MAPV = null;
 function renderMapControls() {
@@ -760,7 +760,8 @@ function renderLegend(sc, vals) {
     const counts = {}; vals.lead.forEach(id => { if (id) counts[id] = (counts[id] || 0) + 1; });
     $("legend").innerHTML = `<div class="charttitle" style="margin-left:0">${esc(sc.title)}</div><div class="legend">${its.map(it => `<span><span class="sw" style="background:${colOf(it)}"></span>${esc(nameOf(it))} <span class="muted">${counts[it.id]}</span></span>`).join("")}</div>
       <svg viewBox="0 0 ${W} 34" font-family="${FONT}" style="margin-top:4px">${[0, 0.25, 0.5, 0.75, 1].map((t, k) => `<rect x="${k * 44}" y="4" width="42" height="12" fill="${mix("#767676", 0.3 + 0.7 * t)}"/>`).join("")}
-      <text x="0" y="30" font-size="11" fill="#767676">lead: 0</text><text x="${4 * 44 + 42}" y="30" text-anchor="end" font-size="11" fill="#767676">${(100 * sc.hi).toFixed(0)} points or more</text></svg>`;
+      <text x="0" y="30" font-size="11" fill="#767676">0</text><text x="${4 * 44 + 42}" y="30" text-anchor="end" font-size="11" fill="#767676">${(100 * sc.hi).toFixed(0)} points or more</text>
+      <text x="${4 * 44 + 54}" y="14" font-size="11" fill="#4B4B4B">the lead over the runner-up</text></svg>`;
     return;
   }
   const lo = sc.lo, hi = sc.hi, X = v => 8 + (v - lo) / (hi - lo) * (W - 16), stops = [];
