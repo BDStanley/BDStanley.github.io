@@ -38,6 +38,7 @@ a:hover{color:var(--accent-hover)}
 .asof{font-size:12.5px;color:var(--muted);line-height:1.45;max-width:760px}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .btn2{height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--faint);background:#fff;color:var(--ink);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn2.sm{height:28px;padding:0 12px;font-size:12px}
 .btn2:hover{border-color:var(--accent);color:var(--accent)}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;font-weight:500}
 .linkbtn:hover{color:var(--accent-hover)}
@@ -151,8 +152,8 @@ svg text:not([font-weight]){font-weight:300}
   <div class="top">
     <div class="asof" id="asof">Loading the party system data…</div>
     <div class="actions">
-      <button type="button" class="btn2" id="copylink">Copy link</button>
-      <button type="button" class="btn2" id="csvall">Download CSV</button>
+      <button type="button" class="btn2 sm" id="copylink">Copy link</button>
+      <button type="button" class="btn2 sm" id="csvall" title="Every indicator, every election">CSV</button>
     </div>
   </div>
   <nav class="strip" aria-label="Election and sections">
@@ -174,7 +175,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="fragmentation" aria-labelledby="h-frag">
     <div class="sechead">
       <div><span class="label">Fragmentation</span><h2 id="h-frag">How many parties count?</h2></div>
-      <button type="button" class="linkbtn" data-png="fragmentation">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="fragmentation">PNG</button>
     </div>
     <p class="lede">The effective number of parties weights each list by its share: ten equal lists count as ten, one dominant list and many small ones as close to one. The gap between the vote-based and seat-based numbers is the work done by the electoral system.</p>
     <div class="controls">
@@ -192,7 +193,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="disproportionality" aria-labelledby="h-disp">
     <div class="sechead">
       <div><span class="label">Disproportionality</span><h2 id="h-disp">How votes become seats</h2></div>
-      <button type="button" class="linkbtn" data-png="disproportionality">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="disproportionality">PNG</button>
     </div>
     <p class="lede">The Gallagher index sums the squared gaps between each list's vote and seat shares (0 is perfect proportionality). Wasted votes are the votes for lists that won no seats, and the seat bonus is how many more points of seats than votes the largest list won.</p>
     <div class="grid">
@@ -209,7 +210,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="volatility" aria-labelledby="h-vol">
     <div class="sechead">
       <div><span class="label">Volatility</span><h2 id="h-vol">How much the vote moves</h2></div>
-      <button type="button" class="linkbtn" data-png="volatility">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="volatility">PNG</button>
     </div>
     <p class="lede">Pedersen volatility is half the sum of the changes in vote share between one election and the next, measured on list lineages: a list continues the lists of its parties at the previous election, through renames, mergers and alliances but not splits. It is the net change in the vote, not the number of voters who switched.</p>
     <div class="controls">
@@ -227,7 +228,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="nationalisation" aria-labelledby="h-nat">
     <div class="sechead">
       <div><span class="label">Nationalisation</span><h2 id="h-nat">How even is each party's vote?</h2></div>
-      <button type="button" class="linkbtn" data-png="nationalisation">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="nationalisation">PNG</button>
     </div>
     <p class="lede">Bochsler's standardised party nationalisation score is 1 for a party with the same share everywhere and falls towards 0 the more its vote is concentrated in a few places. It is standardised to ten equal units, so constituency and gmina scores can be compared. The system score is the vote-weighted mean of the lists that won seats.</p>
     <div class="controls">
@@ -245,7 +246,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="polarisation" aria-labelledby="h-pol">
     <div class="sechead">
       <div><span class="label">Polarisation</span><h2 id="h-pol">How far apart are the parties?</h2></div>
-      <button type="button" class="linkbtn" data-png="polarisation">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="polarisation">PNG</button>
     </div>
     <p class="lede">Dalton's polarisation index from the Chapel Hill Expert Survey: the vote-weighted spread of party positions on a 0–10 scale (0 when every party stands in the same place, 10 when the vote is split equally between the two ends). Each survey wave is weighted by the vote at the latest Sejm election in or before it.</p>
     <div class="controls">
@@ -260,7 +261,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="government" aria-labelledby="h-gov">
     <div class="sechead">
       <div><span class="label">Government</span><h2 id="h-gov">Who gets into government?</h2></div>
-      <button type="button" class="linkbtn" data-png="government">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="government">PNG</button>
     </div>
     <p class="lede">The closure of government competition, after Casal Bértoa and Mair. Each change of government is scored as closed or open on three counts: alternation (no change or a wholesale change is closed, a partial one open), formula (a coalition that has governed before is closed) and access (closed unless a party with no governing experience enters).</p>
     <div class="controls">

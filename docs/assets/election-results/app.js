@@ -76,7 +76,7 @@ const ZONES = [["russian", "Russian Empire"], ["german", "German Empire"], ["aus
 let E, G, CUR = null, EL = null;   // index, geometry, current election file, its index entry
 const CACHE = new Map();
 const S = { type: "all", e: null, p: 0, m: null, i: 0, j: 1, l: "g", b: "o", v: "m", sel: null,
-  cc: null, ck: null, cx: null, z: false, pc: null, cv: "higher_ed", zc: null };   // change: compared contest, mode, item; zabory; profile camp; scatter colour
+  cc: null, ck: null, cx: null, ca: null, xa: null, xb: null, z: false, pc: null, cv: "higher_ed", zc: null };   // change: compared contest, mode, item; zabory; profile camp; scatter colour
 let ELECTIONS = [], CONTEST = {}, OWN_ALL = {};
 // "Polls now": the Polling tracker's latest estimate (../polling-tracker/polls.json), shown as an
 // election of its own: national shares and the model's median seats, with each party's share spread
@@ -218,6 +218,7 @@ function stateString() {
     if (S.cc && S.cc !== defaultCompare()) q.set("c", S.cc);
     if (S.ck) q.set("k", S.ck);
     if (S.cx) q.set("x", S.cx);
+    if (isFree()) { if (S.xa) q.set("xa", S.xa); if (S.xb) q.set("xb", S.xb); }
   }
   if (S.z) q.set("z", 1);
   if (S.cv !== "higher_ed") q.set("cv", S.cv);
@@ -245,7 +246,8 @@ function restoreHash() {
   if (["o", "t"].includes(q.get("b"))) S.b = q.get("b");
   if (["m", "c"].includes(q.get("v"))) S.v = q.get("v");
   S.cc = CONTEST[q.get("c")] ? q.get("c") : null;
-  S.ck = ["lineage", "same", "camp"].includes(q.get("k")) ? q.get("k") : null;
+  S.ck = ["lineage", "same", "camp", "free"].includes(q.get("k")) ? q.get("k") : null;
+  S.xa = q.get("xa"); S.xb = q.get("xb");
   S.cx = q.get("x");
   S.z = q.get("z") === "1";
   S.cv = q.get("cv") || "higher_ed";
@@ -639,13 +641,27 @@ function valuesFor(L) {
   }
   return { v: out, lead: extra };
 }
+// Leader maps colour a unit by the list or candidate with the most votes in it; that is not who won
+// the seats where seats are shared out proportionally, so the cartogram of such an election shows the
+// seats themselves, a dot each
+function dottedMap(L) {
+  const sb = CUR.facts.seats_by_okreg;
+  return !!(L.kind === "c" && S.v === "c" && sb && sb.rows.length && sb.set === L.set && measure() === "leader");
+}
+// What each list or candidate on a leader map is counted for: the units where it had the most votes, or its seats
+function leaderCounts(L, vals) {
+  const counts = {};
+  if (dottedMap(L)) { CUR.facts.seats_by_okreg.rows.forEach(r => { if (r.seats > 0) counts[r.item] = (counts[r.item] || 0) + r.seats; }); return { counts, unit: "seats" }; }
+  vals.lead.forEach(id => { if (id) counts[id] = (counts[id] || 0) + 1; });
+  return { counts, unit: L.kind === "g" ? "gminas" : "constituencies" };
+}
 function scaleFor(vals) {
   const m = measure(), its = mapItems();
   if (m === "chg") {
     const o = vals.C && vals.C.opt, gc = o ? o.col : TURN_GAIN;
     const hi = Math.max(0.02, Math.ceil((quantile(vals.v.map(x => isNum(x) ? Math.abs(x) : null), 0.98) || 0.02) * 50) / 50);
     return { kind: "div", chg: true, lo: -hi, hi, col: v => v >= 0 ? mix(gc, 0.04 + 0.96 * clamp(v / hi, 0, 1)) : mix(LOSS, 0.04 + 0.96 * clamp(-v / hi, 0, 1)),
-      ticks: ticks(-hi, hi, 4), title: o ? `${o.name}: change since ${contestName(vals.C.cmp)}, in points` : "Change" };
+      ticks: ticks(-hi, hi, 4), title: o ? changeTitle(vals.C) : "Change" };
   }
   if (m === "turnout") {
     const lo = quantile(vals.v, 0.02), hi = quantile(vals.v, 0.98), tk = ticks(lo, hi, 5);
@@ -662,19 +678,24 @@ function scaleFor(vals) {
     return { kind: "div", lo: -hi, hi, ca, cb, col: v => v >= 0 ? mix(ca, 0.04 + 0.96 * clamp(v / hi, 0, 1)) : mix(cb, 0.04 + 0.96 * clamp(-v / hi, 0, 1)), ticks: ticks(-hi, hi, 4), title: `${nameOf(a)} against ${nameOf(b)}: lead in points` };
   }
   const hi = Math.max(0.1, Math.ceil((quantile(vals.v, 0.9) || 0.1) * 10) / 10);
-  return { kind: "lead", hi, col: (v, id) => mix(colOf(itemById(id)), 0.3 + 0.7 * clamp(v / hi, 0, 1)), title: `Leading ${itemLabel().toLowerCase()}` };
+  return { kind: "lead", hi, col: (v, id) => mix(colOf(itemById(id)), 0.3 + 0.7 * clamp(v / hi, 0, 1)), title: dottedMap(levelData()) ? "Seats won in each constituency" : `${itemLabel()} with the most votes` };
 }
 let MAPV = null;
 function renderMapControls() {
   const its = mapItems(), m = measure(), typ = EL.type;
-  const ms = isPolls() ? [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"]] : [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"], ["turnout", "Turnout"], ["chg", "Change"]];
+  const ms = isPolls() ? [["leader", "Leader"], ["share", "Share"], ["h2h", "Head to head"]] : [["leader", "Leader/Winner"], ["share", "Share"], ["h2h", "Head to head"], ["turnout", "Turnout"], ["chg", "Change"]];
   $("measures").innerHTML = ms.map(([k, l]) => `<button type="button" data-m="${k}" aria-pressed="${m === k}">${l}</button>`).join("");
   $("itemlab").textContent = itemLabel();
   if (m === "chg") {
     const C = changeSetup();
-    $("itemlab").textContent = C.mode === "camp" ? "Camp" : itemLabel();
-    $("item").innerHTML = C.options.map(o => `<option value="${esc(o.key)}"${o.key === C.key ? " selected" : ""}>${esc(o.name)}</option>`).join("");
-    $("cmp").innerHTML = compareOptions(C.cmp);
+    $("itemlab").textContent = C.free ? "" : C.mode === "camp" ? "Camp" : itemLabel();
+    const optHtml = (os, key) => os.map(o => `<option value="${esc(o.key)}"${o.key === key ? " selected" : ""}>${esc(o.name)}</option>`).join("");
+    $("item").innerHTML = C.free ? (C.A ? optHtml(C.A.opts, C.ka) : "") : optHtml(C.options, C.key);
+    $("itemB").innerHTML = C.free && C.B ? optHtml(C.B.opts, C.kb) : "";
+    $("cmpA").innerHTML = C.free ? groupedContests(E.contests.filter(c => !elOf(c.election).facts_only), C.ca) : "";
+    $("cmp").innerHTML = C.free ? groupedContests(C.laterList, C.cmp) : compareOptions(C.cmp);
+    $("cmplab").textContent = C.free ? "compared with" : C.to ? "to" : "since";
+    $("cmpActrl").hidden = !C.free; $("itemBctrl").hidden = !C.free;
     $("modes").innerHTML = C.modes.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${C.mode === k}">${l}</button>`).join("");
   } else {
     const opts = sel => its.map((it, k) => `<option value="${k}"${k === sel ? " selected" : ""}>${esc(nameOf(it))} (${pct(it.pct)})</option>`).join("");
@@ -682,6 +703,8 @@ function renderMapControls() {
   }
   $("itemctrl").hidden = !(m === "share" || m === "h2h" || m === "chg");
   $("item2ctrl").hidden = m !== "h2h";
+  if (m !== "chg") { $("cmpActrl").hidden = true; $("itemBctrl").hidden = true; }
+  $("chgbreak").hidden = m !== "chg";
   $("cmpctrl").hidden = m !== "chg"; $("modectrl").hidden = m !== "chg";
   $("levels").innerHTML = [["g", "Gminas"], ["c", "Constituencies"]].map(([k, l]) => `<button type="button" data-l="${k}" aria-pressed="${S.l === k}"${k === "g" && isPolls() ? ' disabled title="The polls are projected by constituency only"' : ""}>${l}</button>`).join("");
   const own = unitsOf().okreg.set;
@@ -704,11 +727,17 @@ function fitMap() {
   r.setProperty("--mapfit", Math.round(strip.offsetHeight + off + 16) + "px");
   r.setProperty("--stripfit", Math.round(strip.offsetHeight + 16) + "px");
 }
+const CART = {};
+const cartCircles = set => (CART[set] || (CART[set] = { c: G.sets[set].circles.map(c => ({ x: c[0], y: c[1], r: c[2] })) })).c;
+const cartOutlineOf = set => { const k = CART[set] || (cartCircles(set), CART[set]); return k.o || (k.o = Cartogram.outline(k.c, G.sets[set].circle_view, k.c.length < 20 ? 240 : 45)); };
 function renderMap() {
   if (CUR.facts.facts_only) { $("map").innerHTML = ""; $("legend").innerHTML = ""; $("mapnote").textContent = "No maps for 1989: the election is not on the PKW portal."; return; }
   if (measure() === "chg") {
-    const el = CONTEST[S.cc && CONTEST[S.cc] && S.cc !== partOf().contest_id ? S.cc : defaultCompare()].election;
-    if (!CACHE.has(el)) {
+    const cur = partOf().contest_id, other = isFree() ? (laterContests(cur).list.some(c => c.id === S.cc) ? S.cc : defaultLater(cur)) : (S.cc && CONTEST[S.cc] && S.cc !== cur ? S.cc : defaultCompare());
+    // the other modes' buttons depend on the election they would compare with, so that is loaded too
+    const std = S.cc && CONTEST[S.cc] && S.cc !== cur ? S.cc : defaultCompare();
+    const el = [CONTEST[other].election, CONTEST[std].election].find(e => !CACHE.has(e));
+    if (el) {
       $("mapnote").textContent = "Loading the election to compare with…";
       loadElection(el).then(() => { renderMap(); renderUnitCard(); renderScatter(); saveHash(); }).catch(() => toast("Could not load that election"));
       return;
@@ -726,11 +755,22 @@ function renderMap() {
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     html = G.gminas.d.map((d, u) => `<path class="u" d="${d}" fill="${fill(u)}" data-u="${u}"/>`).join("");
   } else if (S.v === "c") {
-    const s = G.sets[L.set], cv = s.circle_view;
+    // As on the Polling tracker: hollow circles inside an outline of the country, and where the election
+    // has seats by constituency, a dot for each seat won
+    const s = G.sets[L.set], cv = s.circle_view, cc = cartCircles(L.set);
+    const sb = CUR.facts.seats_by_okreg, dotted = dottedMap(L);
+    const won = {}; if (dotted) sb.rows.filter(r => r.seats > 0).forEach(r => { (won[r.okreg] = won[r.okreg] || []).push(r); });
     svg.classList.add("cons");
-    svg.setAttribute("viewBox", cv.join(" "));
-    html = s.circles.map((c, u) => `<circle class="u" cx="${c[0]}" cy="${c[1]}" r="${Math.max(1, c[2] - 1.2)}" fill="${fill(u)}" stroke="#fff" stroke-width="1.6" data-u="${u}" tabindex="0" role="button" aria-label="${esc(unitName("c", L.set, u).title)}"/>` +
-      (c[2] > 22 ? `<text x="${c[0]}" y="${c[1] + 4}" text-anchor="middle" font-size="${clamp(c[2] * 0.42, 9, 16)}" fill="#141414" pointer-events="none">${s.okreg[u]}</text>` : "")).join("");
+    svg.setAttribute("viewBox", [cv[0] - 30, cv[1] - 30, cv[2] + 60, cv[3] + 60].join(" "));
+    html = `<path d="${cartOutlineOf(L.set).d}" fill="none" stroke="#141414" stroke-width="2.5" stroke-linejoin="round" pointer-events="none"/>` + cc.map((c, u) => {
+      let o = `<circle class="u" cx="${c.x}" cy="${c.y}" r="${c.r - 1.2}" fill="${dotted ? "transparent" : fill(u)}" stroke="${dotted ? "#9A9A9A" : "#fff"}" stroke-width="${dotted ? 1.5 : 1.6}" data-u="${u}" tabindex="0" role="button" aria-label="${esc(unitName("c", L.set, u).title)}"/>`;
+      if (dotted) {
+        const ids = []; (won[s.okreg[u]] || []).sort((p, q) => q.seats - p.seats).forEach(r => { for (let j = 0; j < r.seats; j++) ids.push(r.item); });
+        const pk = Cartogram.dots({ x: c.x, y: c.y, r: c.r - 1.2 }, ids.length);
+        o += ids.map((id, i) => `<circle cx="${pk.pts[i][0].toFixed(1)}" cy="${pk.pts[i][1].toFixed(1)}" r="${pk.r.toFixed(1)}" fill="${colOf(itemById(id))}" pointer-events="none"/>`).join("");
+      }
+      return o;
+    }).join("");
   } else {
     const s = G.sets[L.set];
     svg.classList.add("cons");
@@ -753,7 +793,7 @@ function renderMap() {
   else if (S.b === "t") notes.push("Every election's gmina results added up by today's 41 Sejm constituencies, without votes abroad and on ships, so that any two elections compare like for like.");
   else if (EL.type === "sejm" || EL.type === "ep") notes.push("PKW's constituency results, which count votes abroad and on ships in the constituencies PKW assigns them to (Warsaw, and the seaports for ships).");
   else notes.push(`${G.sets[L.set].label}, in force at the time: the gmina results added up, without votes abroad and on ships.`);
-  if (S.l === "c" && S.v === "c") notes.push("Circles are sized by electorate.");
+  if (S.l === "c" && S.v === "c") notes.push(dottedMap(L) ? "Circles are sized by electorate; each dot is a seat won, in the colour of its list." : "Circles are sized by electorate.");
   if (measure() !== "turnout" && unitsOf().gmina && unitsOf().gmina.items.includes("other")) notes.push("Lists and candidates under 0.5% nationally with no seat are counted together as others.");
   $("mapnote").textContent = notes.join(" ");
   drawHighlight();
@@ -761,12 +801,13 @@ function renderMap() {
 function renderLegend(sc, vals) {
   const W = 420, o = [];
   if (sc.kind === "lead") {
-    const ids = [...new Set(vals.lead.filter(Boolean))], its = ids.map(itemById).filter(Boolean).sort((a, b) => b.votes - a.votes);
-    const counts = {}; vals.lead.forEach(id => { if (id) counts[id] = (counts[id] || 0) + 1; });
+    const { counts, unit } = leaderCounts(MAPV.L, vals), dotted = unit === "seats";
+    const its = Object.keys(counts).map(itemById).filter(Boolean).sort((a, b) => counts[b.id] - counts[a.id]);
     $("legend").innerHTML = `<div class="charttitle" style="margin-left:0">${esc(sc.title)}</div><div class="legend">${its.map(it => `<span><span class="sw" style="background:${colOf(it)}"></span>${esc(nameOf(it))} <span class="muted">${counts[it.id]}</span></span>`).join("")}</div>
-      <svg viewBox="0 0 ${W} 34" font-family="${FONT}" style="margin-top:4px">${[0, 0.25, 0.5, 0.75, 1].map((t, k) => `<rect x="${k * 44}" y="4" width="42" height="12" fill="${mix("#767676", 0.3 + 0.7 * t)}"/>`).join("")}
+      <div class="help" style="margin:2px 0 0;font-size:11.5px">${dotted ? "Numbers are seats won." : `Numbers are the ${unit} where each had the most votes, not necessarily the seats or the office won.`}</div>
+      ${dotted ? "" : `<svg viewBox="0 0 ${W} 34" font-family="${FONT}" style="margin-top:4px">${[0, 0.25, 0.5, 0.75, 1].map((t, k) => `<rect x="${k * 44}" y="4" width="42" height="12" fill="${mix("#767676", 0.3 + 0.7 * t)}"/>`).join("")}
       <text x="0" y="30" font-size="11" fill="#767676">0</text><text x="${4 * 44 + 42}" y="30" text-anchor="end" font-size="11" fill="#767676">${(100 * sc.hi).toFixed(0)} points or more</text>
-      <text x="${4 * 44 + 54}" y="14" font-size="11" fill="#4B4B4B">the lead over the runner-up</text></svg>`;
+      <text x="${4 * 44 + 54}" y="14" font-size="11" fill="#4B4B4B">the lead over the runner-up</text></svg>`}`;
     return;
   }
   const lo = sc.lo, hi = sc.hi, X = v => 8 + (v - lo) / (hi - lo) * (W - 16), stops = [];
@@ -787,7 +828,7 @@ function unitHtml(u, full = false) {
   let html = `<b>${esc(nm.title)}</b><div class="sub">${esc(nm.sub)}</div>`;
   const grp = L.kind === "g" && A.group && A.group[u] >= 0 ? A.groups[A.group[u]] : null;
   if (grp) html += `<div class="sub" style="color:#8B0000">Reported jointly with ${esc(grp.filter(x => x !== u).map(x => G.gminas.name[x]).join(", "))}: the figures are the whole unit's</div>`;
-  if (measure() === "chg" && vals.C && vals.C.opt) html += `<div class="r" style="margin-top:4px"><span><b>${esc(vals.C.opt.name)}</b>, since ${esc(contestName(vals.C.cmp))}</span><span><b>${isNum(vals.v[u]) ? signedPts(vals.v[u]) + " points" : NA}</b></span></div>`;
+  if (measure() === "chg" && vals.C && vals.C.opt) html += `<div class="r" style="margin-top:4px"><span><span><b>${esc(vals.C.opt.name)}</b>${vals.C.free ? `, compared with ${esc(vals.C.opt.vs)}` : `, ${vals.C.to ? "to" : "since"} ${esc(contestName(vals.C.cmp))}`}</span></span><span><b>${isNum(vals.v[u]) ? signedPts(vals.v[u]) + " points" : NA}</b></span></div>`;
   if (!isPolls()) html += `<div class="r" style="margin-top:4px"><span>Turnout</span><span>${pct(A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null)}</span></div>`;
   const shown = full ? rows : rows.slice(0, 6);
   shown.forEach(r => { const it = r.id === "other" ? null : itemById(r.id); html += tipRow(it ? colOf(it) : "#BDBDBD", it ? nameOf(it) : "Others", pct(r.v / valid), full ? n0(r.v) : ""); });
@@ -847,12 +888,24 @@ function defaultCompare() {
   for (let k = i - 1; k >= 0; k--) { const o = CONTEST[ids[k]]; if (elOf(o.election).type === EL.type && o.election !== EL.id && o.part === 1) return o.id; }
   return ids[i > 0 ? i - 1 : i + 1];
 }
-function compareOptions(sel) {
+function compareOptions(sel, all = false) {
   const cur = partOf().contest_id;
+  return groupedContests(E.contests.filter(c => all || c.id !== cur), sel);
+}
+function groupedContests(list, sel) {
   return ["sejm", "presidential", "ep", "referendum"].map(t => {
-    const cs = E.contests.filter(c => c.id !== cur && elOf(c.election).type === t).reverse();
-    return `<optgroup label="${TYPES[t]}">${cs.map(c => `<option value="${c.id}"${c.id === sel ? " selected" : ""}>${esc(contestName(c.id))}</option>`).join("")}</optgroup>`;
+    const cs = list.filter(c => elOf(c.election).type === t).reverse();
+    return cs.length ? `<optgroup label="${TYPES[t]}">${cs.map(c => `<option value="${c.id}"${c.id === sel ? " selected" : ""}>${esc(contestName(c.id))}</option>`).join("")}</optgroup>` : "";
   }).join("");
+}
+// Contests after the reference one in time; the latest one has none, so it is compared with the earlier ones
+function laterContests(ref) {
+  const all = E.contests.filter(c => !elOf(c.election).facts_only), i = all.findIndex(c => c.id === ref), later = all.slice(i + 1);
+  return later.length ? { list: later, back: false } : { list: all.slice(0, Math.max(0, i)), back: true };
+}
+function defaultLater(ref) {
+  const { list, back } = laterContests(ref), t = elOf(CONTEST[ref].election).type;
+  return (back ? list[list.length - 1] : list.find(c => elOf(c.election).type === t && c.part === 1) || list[list.length - 1]).id;
 }
 function previousSejm(id) {
   const s = ELECTIONS.filter(e => e.type === "sejm" && !e.facts_only), i = s.findIndex(e => e.id === id);
@@ -863,6 +916,41 @@ function previousSejm(id) {
 // (each list against the lists it continues at the previous Sejm election); camp adds up the
 // lists or candidates of one palette label in each contest.
 function changeSetup() {
+  const std = standardSetup();
+  return isFree() ? freeSetup(std.modes.length ? std.modes : [["free", "Any two"]]) : std;
+}
+// The "any two" mode: each side is a list, candidate or camp (or turnout) at an election of its own.
+// Turnout is only compared with turnout.
+const isFree = () => (S.ck || "free") === "free";
+const sideName = (el, it) => el.type === "referendum" ? (it.id === "yes" ? "Yes" : "No") : el.type === "presidential" ? (it.short || it.name) : (it.short || it.name);
+const sideCol = (el, it) => el.type === "referendum" ? ANSWER[it.id] || "#9E9E9E" : (OWN_ALL[el.id] && OWN_ALL[el.id][it.id]) || it.colour || E.labels[it.label] || E.labels.Other;
+function freeSide(id) {
+  const c = CONTEST[id], f = CACHE.get(c.election); if (!f) return null;
+  const k = f.results.findIndex(r => r.part === id), el = elOf(c.election), units = f.units[k], byId = new Map(f.results[k].items.map(i => [i.id, i]));
+  const stored = units.gmina.items.filter(x => x !== "other" && byId.has(x));
+  const opts = stored.map(x => ({ key: x, name: sideName(el, byId.get(x)), col: sideCol(el, byId.get(x)), ids: [x] }));
+  if (el.type !== "referendum") [...new Set(stored.map(x => byId.get(x).label).filter(l => l && l !== "Other" && l !== "Independent"))]
+    .forEach(l => opts.push({ key: "camp:" + l, name: l + " (camp)", col: E.labels[l], ids: stored.filter(x => byId.get(x).label === l) }));
+  opts.push({ key: "turnout", name: "Turnout", col: TURN_GAIN, ids: [], turnout: true });
+  return { id, el, units, opts };
+}
+function freeSetup(modes) {
+  // The reference is the election on the page; the other is later in time and is compared with it
+  const ca = partOf().contest_id, later = laterContests(ca);
+  const cb = S.cc && later.list.some(c => c.id === S.cc) ? S.cc : defaultLater(ca);
+  const A = freeSide(ca), B = freeSide(cb);
+  if (!A || !B) return { cmp: cb, ca, D: null, modes, mode: "free", free: true, options: [], key: null, opt: null, laterList: later.list };
+  const pick = (sd, key) => sd.opts.find(o => o.key === key);
+  const oa = pick(A, S.xa) || A.opts[0];
+  let ob = pick(B, S.xb) || pick(B, oa.key) || B.opts[0];
+  // turnout goes with turnout and nothing else goes with it
+  if (oa.turnout && !ob.turnout) ob = B.opts[B.opts.length - 1];
+  if (!oa.turnout && ob.turnout) ob = pick(B, oa.key) || B.opts[0];
+  const opt = { key: oa.key, name: `${ob.name}, ${contestName(cb)}`, vs: `${oa.name}, ${contestName(ca)}`, col: ob.col, turnout: !!oa.turnout, cur: oa.ids, cmp: ob.ids };
+  return { free: true, sign: -1, mode: "free", modes, ca, cmp: cb, D: { id: cb, election: B.el, units: B.units }, AU: A.units, A, B, ka: oa.key, kb: ob.key, options: [], key: oa.key, opt, laterList: later.list };
+}
+const changeTitle = C => C.free ? `${C.opt.name}, compared with ${C.opt.vs}: change in points` : `${C.opt.name}: change ${C.to ? "to" : "since"} ${contestName(C.cmp)}, in points`;
+function standardSetup() {
   const cmp = S.cc && CONTEST[S.cc] && S.cc !== partOf().contest_id ? S.cc : defaultCompare();
   const c = CONTEST[cmp], f = CACHE.get(c.election);
   if (!f) return { cmp, D: null, modes: [], mode: null, options: [], key: null, opt: null };
@@ -871,8 +959,8 @@ function changeSetup() {
   const cur = mapItems(), stored = new Set(D.units.gmina.items), modes = [];
   if (EL.type === "sejm" && D.election.type === "sejm" && previousSejm(EL.id) === D.election.id) modes.push(["lineage", "Lineage"]);
   if (cur.some(it => stored.has(it.id))) modes.push(["same", EL.type === "presidential" ? "Candidate" : "Same list"]);
-  modes.push(["camp", "Camp"]);
-  const mode = modes.find(x => x[0] === S.ck) ? S.ck : modes[0][0];
+  modes.push(["camp", "Camp"]); modes.unshift(["free", "Any two"]);
+  const mode = modes.find(x => x[0] === S.ck) ? S.ck : modes.find(x => x[0] !== "free")[0];
   let options = [];
   if (mode === "lineage") {
     options = cur.filter(it => it.predecessors).map(it => ({ key: it.id, name: nameOf(it), col: colOf(it), cur: [it.id], cmp: it.predecessors.split(";") }));
@@ -888,7 +976,9 @@ function changeSetup() {
   }
   options.push({ key: "turnout", name: "Turnout", col: TURN_GAIN, turnout: true });
   const key = options.find(o => o.key === S.cx) ? S.cx : options[0].key;
-  return { cmp, D, modes, mode, options, key, opt: options.find(o => o.key === key) };
+  // "since" only where the other election came first; where it came later the change runs to it
+  const ids = E.contests.map(c => c.id), to = ids.indexOf(cmp) > ids.indexOf(partOf().contest_id);
+  return { cmp, D, modes, mode, options, key, opt: options.find(o => o.key === key), to, sign: to ? -1 : 1 };
 }
 function shareOf(A, ids, u) {
   let v = 0, any = false;
@@ -898,7 +988,7 @@ function shareOf(A, ids, u) {
 function changeValues(L) {
   const C = changeSetup(), out = new Array(L.n).fill(null);
   if (!C.D) return { v: out, lead: [], C };
-  const A = L.A, B = L.kind === "g" ? C.D.units.gmina : C.D.units.okreg41, o = C.opt;
+  const A = C.AU ? (L.kind === "g" ? C.AU.gmina : C.AU.okreg41) : L.A, B = L.kind === "g" ? C.D.units.gmina : C.D.units.okreg41, o = C.opt;
   for (let u = 0; u < L.n; u++) {
     let a, b;
     if (o.turnout) {
@@ -910,7 +1000,7 @@ function changeValues(L) {
       if (a == null && b != null && A.valid[u] > 0) a = 0;
       if (b == null && a != null && B.valid[u] > 0) b = 0;
     }
-    out[u] = isNum(a) && isNum(b) ? a - b : null;
+    out[u] = isNum(a) && isNum(b) ? (a - b) * (C.sign || 1) : null;
   }
   return { v: out, lead: [], C };
 }
@@ -918,14 +1008,18 @@ function changeNote(C, L) {
   if (!C || !C.D) return "";
   const o = C.opt, bits = [];
   bits.push(L.kind === "g" ? "Both elections on today's gminas." : "Both elections added up by today's 41 Sejm constituencies, without votes abroad and on ships.");
-  if (o.turnout) bits.push("The change in turnout, in points.");
+  if (C.free) bits.push(o.turnout ? "Turnout at the later election less turnout at the reference election, in points." : "The reference is the election shown on this page; the other is a later one. Each side is a list, candidate or camp as a share of the valid votes, and the map shows the later figure less the reference figure. Where only one side stood in a unit, the other counts as nothing there.");
+  else if (o.turnout) bits.push("The change in turnout, in points.");
   else if (C.mode === "lineage") {
     const missing = o.cmp.filter(id => !C.D.units.gmina.items.includes(id));
     bits.push("Each list against the lists it continues at the previous election, by the lineages of Party system indicators.");
     if (missing.length) bits.push(`Part of what ${o.name} continues stood as lists too small to map, so its change is overstated.`);
   } else if (C.mode === "same") bits.push(`The same ${EL.type === "presidential" ? "candidate" : "list"} in both.`);
-  else bits.push("The lists or candidates of the same camp (colour) in each election, added up; lists under 0.5% are among the others and left out.");
+  else bits.push("A camp is all the lists or candidates of one colour, added up, so it can be followed where the names change, between Sejm and presidential elections, or between elections with different lists.");
   bits.push("Gains are in the party's colour and losses in olive, a colour no party has.");
+  const how = { lineage: "Lineage follows each Sejm list back to the lists it continues at the previous Sejm election", same: "Same list or candidate compares the identical one in both elections, where it stood in both",
+    camp: "Camp adds up everything of one colour in each election", free: "Any two lets you choose a list, candidate, camp or turnout at each of two elections" };
+  bits.push("By: " + C.modes.map(m => how[m[0]]).filter(Boolean).join("; ") + ". Lists and candidates under 0.5% nationally are among the others and cannot be chosen.");
   return bits.join(" ");
 }
 
@@ -947,7 +1041,8 @@ function zoneSums(A) { // each unit, or a 1990s joint unit once, in its first gm
 function renderZones() {
   const box = $("zonetable");
   if (!S.z || (S.l === "c" && S.v === "c") || isPolls()) { box.innerHTML = ""; return; }
-  const A = unitsOf().gmina, Z = zoneSums(A), m = measure(), its = mapItems();
+  let A = unitsOf().gmina, Z = zoneSums(A);
+  const m = measure(), its = mapItems();
   const sh = (z, ids, AA = A) => { let v = 0; ids.forEach(id => { const k = AA.items.indexOf(id); if (k >= 0) v += z.votes[k]; }); return z.valid > 0 ? v / z.valid : null; };
   let head, cell;
   if (m === "turnout") { head = "Turnout"; cell = z => pct(z.voters / z.electorate); }
@@ -956,8 +1051,9 @@ function renderZones() {
   else if (m === "chg") {
     const C = changeSetup(); if (!C.D) { box.innerHTML = ""; return; }
     const B = C.D.units.gmina, ZB = zoneSums(B), o = C.opt;
-    head = `${o.name}, since ${contestName(C.cmp)}`;
-    cell = (z, k) => { const b = ZB[k]; const x = o.turnout ? z.voters / z.electorate - b.voters / b.electorate : sh(z, o.cur) - sh(b, o.cmp, B); return signedPts(x) + " points"; };
+    if (C.AU) { A = C.AU.gmina; Z = zoneSums(A); }
+    head = C.free ? `${o.name}, compared with ${o.vs}` : `${o.name}, ${C.to ? "to" : "since"} ${contestName(C.cmp)}`;
+    cell = (z, k) => { const b = ZB[k]; const x = (o.turnout ? z.voters / z.electorate - b.voters / b.electorate : sh(z, o.cur) - sh(b, o.cmp, B)) * (C.sign || 1); return signedPts(x) + " points"; };
   } else {
     head = "Leader";
     cell = z => {
@@ -1161,7 +1257,7 @@ function scatterY() {
   const U = unitsOf(), A = U.gmina, n = A.valid.length, m = measure(), its = mapItems();
   const L = { kind: "g", A, set: null, n };
   if (m === "turnout") return { v: A.valid.map((x, u) => A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null), label: "Turnout", col: TURN_GAIN, div: false };
-  if (m === "chg") { const c = changeValues(L); return c.C && c.C.opt ? { v: c.v, label: `${c.C.opt.name}: change since ${contestName(c.C.cmp)}, points`, col: c.C.opt.col, div: true } : null; }
+  if (m === "chg") { const c = changeValues(L); return c.C && c.C.opt ? { v: c.v, label: changeTitle(c.C), col: c.C.opt.col, div: true } : null; }
   if (m === "h2h") { const a = its[S.i], b = its[S.j], v = valuesFor(L).v; return { v, label: `${nameOf(a)}'s lead over ${nameOf(b)}, points`, col: colOf(a), div: true }; }
   const it = its[S.i], k = A.items.indexOf(it.id);
   return { v: A.valid.map((x, u) => isNum(A.votes[k][u]) && x > 0 ? A.votes[k][u] / x : null), label: `${nameOf(it)}, share of the valid votes`, col: colOf(it), div: false };
@@ -1383,7 +1479,16 @@ function csvUnits(kind) {
 async function png(sec) {
   const svgs = sec === "mapsec" ? [$("map"), ...$("legend").querySelectorAll("svg")] : sec === "allsec" ? [$("turnchart")] : sec === "whosec" ? [$("scat")] : [...$("glancechart").querySelectorAll("svg")];
   const imgs = await Promise.all(svgs.map(async svg => {
-    const vb = svg.viewBox.baseVal, ratio = vb.height / vb.width, w = sec === "mapsec" && svg.id === "map" ? 900 : Math.min(900, svg.clientWidth || 600), h = w * ratio, clone = await ChartExport.clone(svg);
+    const vb = svg.viewBox.baseVal, clone = await ChartExport.clone(svg);
+    let [vx, vy, vw, vh] = [vb.x, vb.y, vb.width, vb.height], w = sec === "mapsec" && svg.id === "map" ? 900 : Math.min(900, svg.clientWidth || 600);
+    if (sec === "mapsec" && svg.id === "map" && MAPV.L.kind === "c" && S.v === "c") {
+      // the cartogram's numbers and a key to them go in the PNG only
+      const set = MAPV.L.set, s = G.sets[set], cc = cartCircles(set);
+      clone.insertAdjacentHTML("beforeend", Cartogram.badges(cc, s.okreg, cartOutlineOf(set).pts, c => c.r - 1.2) + Cartogram.key(s.okreg.map((n, i) => [n, esc(s.name[i])]), vx + vw + 10, vy + 30, vh - 60));
+      vw += 300; w = 1150;
+    }
+    clone.setAttribute("viewBox", [vx, vy, vw, vh].join(" "));
+    const h = w * vh / vw;
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     return new Promise(res => {
       const img = new Image(); img.onload = () => res({ img, w, h }); img.onerror = () => res(null);
@@ -1391,8 +1496,22 @@ async function png(sec) {
     });
   }));
   await ChartExport.fonts();
-  const ok = imgs.filter(Boolean), pad = 24, head = 62, foot = 50;
-  const W = Math.max(...ok.map(i => i.w)) + 2 * pad, H = head + foot + sum(ok.map(i => i.h)) + 10 * (ok.length - 1);
+  const ok = imgs.filter(Boolean), pad = 24, head = 62;
+  const W = Math.max(...ok.map(i => i.w)) + 2 * pad;
+  // on a leader map, the names of the lists or candidates that lead somewhere, with the number of units each leads
+  const leaders = []; let lx = 0, lines = 0, leadCaption = "";
+  if (sec === "mapsec" && MAPV.sc.kind === "lead") {
+    const lc = leaderCounts(MAPV.L, MAPV.vals), counts = lc.counts; leadCaption = lc.unit === "seats" ? "Seats won" : `Numbers are the ${lc.unit} where each had the most votes`;
+    const mc = document.createElement("canvas").getContext("2d"); mc.font = "13.5px Jost, 'Avenir Next', sans-serif";
+    Object.keys(counts).map(itemById).filter(Boolean).sort((a, b) => counts[b.id] - counts[a.id]).forEach(it => {
+      const text = `${nameOf(it)} ${counts[it.id]}`, wd = 16 + mc.measureText(text).width;
+      if (lx && lx + wd > W - 2 * pad) { lx = 0; lines++; }
+      leaders.push({ it, text, x: lx, line: lines }); lx += wd + 18;
+    });
+    if (leaders.length) lines++;
+  }
+  const foot = 50 + (leaders.length ? lines * 22 + 8 + 20 : 0);
+  const H = head + foot + sum(ok.map(i => i.h)) + 10 * (ok.length - 1);
   const cv = document.createElement("canvas"), k = ChartExport.scale(W, H); cv.width = W * k; cv.height = H * k;
   const g = cv.getContext("2d"); g.scale(k, k); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   const f = CUR.facts, part = partOf();
@@ -1400,6 +1519,11 @@ async function png(sec) {
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(sec === "mapsec" ? MAPV.sc.title : sec === "allsec" ? "National turnout in every election since 1989" : sec === "whosec" ? `${SCAT.Y.label}, against ${SCAT.V.label.toLowerCase()} (${SCAT.V.unit})` : $("glancetitle").textContent, pad, 52);
   let yy = head;
   ok.forEach(i => { g.drawImage(i.img, pad, yy, i.w, i.h); yy += i.h + 10; });
+  if (leaders.length) { g.fillStyle = MUTED; g.font = "12px Jost, 'Avenir Next', sans-serif"; g.fillText(leadCaption, pad, yy + 6); yy += 20; }
+  leaders.forEach(l => {
+    g.fillStyle = colOf(l.it); g.fillRect(pad + l.x, yy + 8 + l.line * 22 - 10, 11, 11);
+    g.fillStyle = "#141414"; g.font = "13.5px Jost, 'Avenir Next', sans-serif"; g.fillText(l.text, pad + l.x + 16, yy + 8 + l.line * 22);
+  });
   g.fillStyle = MUTED; g.font = ChartExport.CREDIT; g.fillText("Data: PKW.", pad, H - 28);
   ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`${fileStem()}-${sec === "mapsec" ? "map" : "glance"}.png`, b), "image/png");
@@ -1438,11 +1562,15 @@ function bind() {
   });
   seg("measures", "m"); seg("levels", "l", () => { S.sel = null; }); seg("bounds", "b", () => { S.sel = null; }); seg("shapes", "v", () => { S.sel = null; });
   $("item").addEventListener("change", e => {
+    if (measure() === "chg" && isFree()) { S.xa = e.target.value; if (S.xa === "turnout") S.xb = "turnout"; else if (S.xb === "turnout") S.xb = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); return; }
     if (measure() === "chg") { S.cx = e.target.value; renderMap(); renderUnitCard(); renderScatter(); saveHash(); return; }
     S.i = +e.target.value; renderScatter(); if (S.j === S.i) S.j = S.i === 0 ? 1 : 0; if (measure() === "leader") S.m = "share"; renderMap(); renderResults(); saveHash(); });
   $("item2").addEventListener("change", e => { S.j = +e.target.value; renderMap(); renderScatter(); saveHash(); });
-  $("cmp").addEventListener("change", e => { S.cc = e.target.value; S.ck = null; S.cx = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
-  $("modes").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b || b.dataset.k === S.ck) return; S.ck = b.dataset.k; S.cx = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
+  $("itemB").addEventListener("change", e => { S.xb = e.target.value; if (S.xb === "turnout") S.xa = "turnout"; else if (S.xa === "turnout") S.xa = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
+  // Choosing another reference election moves the whole page to it
+  $("cmpA").addEventListener("change", e => { const c = CONTEST[e.target.value]; S.p = c.part - 1; S.xa = null; S.cc = null; setElection(c.election, true); });
+  $("cmp").addEventListener("change", e => { S.cc = e.target.value; if (isFree()) { S.xb = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); return; } S.cx = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
+  $("modes").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b || b.dataset.k === (S.ck || "free")) return; S.ck = b.dataset.k; S.cx = null; if (S.ck === "free") { S.xa = S.xb = S.cc = null; } renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
   $("zabory").addEventListener("click", () => { S.z = !S.z; renderMap(); renderScatter(); saveHash(); });
   bindSearch(); bindProfile(); bindAll(); bindScatter();
   $("restable").addEventListener("click", e => {

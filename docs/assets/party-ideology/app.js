@@ -864,7 +864,7 @@ function renderPanel() {
     if (p.poll) L.push(`<a href="${base}polling-tracker.html" target="_top">${esc(p.poll)} in the Polling tracker →</a>`);
     if (L.length || p.poll) o.push(`<div class="card soft"><span class="label">Elsewhere on this site</span>${pollLine(p)}<div class="links">${L.join("")}</div></div>`);
   }
-  o.push(`<div class="actions"><button type="button" class="btn2" id="copylink">Copy link</button><button type="button" class="btn2" id="csvbtn">Download CSV</button><button type="button" class="btn2" id="pngbtn">Download PNG</button></div>`);
+  o.push(`<div class="actions"><button type="button" class="btn2 sm" id="copylink">Copy link</button><button type="button" class="btn2 sm" id="csvbtn">CSV</button><button type="button" class="btn2 sm" id="pngbtn">PNG</button></div>`);
   o.push(`<p class="help">Data: ${esc(D.meta.sources.ches)}; ${esc(D.meta.sources.populist)}.</p>`);
   $("panel").innerHTML = o.join("");
   wireSearch();

@@ -46,6 +46,8 @@ button,input,select{font-family:inherit;font-size:inherit}
 .btn1:hover{background:#6f0000}
 .btn1:disabled{background:#c9a0a0;cursor:default}
 .btn2{height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--faint);background:transparent;color:var(--ink);font-size:13px;font-weight:500;cursor:pointer}
+.btnrow{display:inline-flex;gap:6px}
+.btn2.sm{height:28px;padding:0 12px;font-size:12px}
 .btn2:hover{border-color:var(--accent);color:var(--accent)}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px}
 .linkbtn:hover{color:var(--accent-hover)}
@@ -165,27 +167,31 @@ svg text:not([font-weight]){font-weight:300}
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
     <label class="switch" id="ptswrap"><input type="checkbox" id="pts" checked> Individual polls</label>
+    <label class="switch" id="evwrap"><input type="checkbox" id="ev" checked> Events</label>
+    <label class="switch" id="dlwrap"><input type="checkbox" id="dl" checked> Date line</label>
   </div>
   <div class="main">
     <div class="stage" id="stage">
       <section class="view" id="v-trends" aria-label="Polling trends">
         <div class="toolbar">
           <div class="seg small" id="periods" aria-label="Period"></div>
-          <span class="help" id="trendhelp">Hover for every party's estimate; click to load that week into the scenario.</span>
+          <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click to load that week into the scenario.</span>
+          <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="trend">PNG</button><button type="button" class="btn2 sm" data-csv="trend">CSV</button></span>
         </div>
         <div class="chips" id="pchips" aria-label="Highlight polling houses"></div>
         <div class="chartbox" id="trendbox"><svg id="trend" role="img" aria-label="Polling trends with 80% bands and individual polls"></svg><div class="tip" id="trendtip" hidden></div></div>
         <div class="legend" id="trendlegend" aria-label="Show parties alone"></div>
+        <div class="legend" id="trendevents" style="gap:2px 22px" aria-label="Events"></div>
       </section>
       <section class="view" id="v-seats" aria-label="Seat projection" hidden>
         <div class="two">
           <div class="card soft" style="gap:4px">
-            <span class="label">Sejm</span>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Sejm</span><span class="btnrow"><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
             <div class="chartbox" id="hemibox" style="border:0;padding:0"><svg id="hemi" role="img" aria-label="Seats in the Sejm"></svg><div class="tip" id="hemitip" hidden></div></div>
             <div id="hemilabel" class="status"></div>
           </div>
           <div class="card soft" style="gap:4px">
-            <span class="label">Constituencies</span>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Constituencies</span><button type="button" class="btn2 sm" data-png="map">PNG</button></div>
             <div class="chartbox" id="mapbox" style="border:0;padding:0"><svg id="map" role="img" aria-label="Seats by constituency, one circle per constituency sized by its electorate"></svg><div class="tip" id="maptip" hidden></div></div>
             <p class="help" id="mapnote"></p>
           </div>
@@ -198,16 +204,17 @@ svg text:not([font-weight]){font-weight:300}
       <section class="view" id="v-time" aria-label="Over time" hidden>
         <p class="help">The model's estimates week by week. Click a chart to load that week into the scenario.</p>
         <div class="two">
-          <div class="chartbox" id="seattimebox"><div class="charttitle">Seats, with 80% ranges</div><svg id="seattime" role="img" aria-label="Seat projection over time"></svg><div class="tip" id="seattimetip" hidden></div></div>
-          <div class="chartbox" id="cointimebox"><div class="charttitle">Chance of a majority (231 seats)</div><svg id="cointime" role="img" aria-label="Chance of a governing majority over time"></svg><div class="tip" id="cointimetip" hidden></div></div>
+          <div class="chartbox" id="seattimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Seats, with 80% ranges</span><button type="button" class="btn2 sm" data-png="seattime">PNG</button></div><svg id="seattime" role="img" aria-label="Seat projection over time"></svg><div class="tip" id="seattimetip" hidden></div></div>
+          <div class="chartbox" id="cointimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Chance of a majority (231 seats)</span><button type="button" class="btn2 sm" data-png="cointime">PNG</button></div><svg id="cointime" role="img" aria-label="Chance of a governing majority over time"></svg><div class="tip" id="cointimetip" hidden></div></div>
         </div>
         <div class="two">
-          <div class="chartbox" id="thrtimebox"><div class="charttitle">Chance of clearing the threshold</div><svg id="thrtime" role="img" aria-label="Chance of clearing the threshold over time"></svg><div class="tip" id="thrtimetip" hidden></div></div>
+          <div class="chartbox" id="thrtimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Chance of clearing the threshold</span><button type="button" class="btn2 sm" data-png="thrtime">PNG</button></div><svg id="thrtime" role="img" aria-label="Chance of clearing the threshold over time"></svg><div class="tip" id="thrtimetip" hidden></div></div>
           <div class="card soft" id="timenote"></div>
         </div>
       </section>
       <section class="view" id="v-pollsters" aria-label="Pollsters" hidden>
         <p class="help" id="househelp">How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.</p>
+        <div class="toolbar" style="justify-content:flex-end"><button type="button" class="btn2 sm" data-png="house">PNG</button></div>
         <div class="chartbox" id="housebox"><svg id="house" role="img" aria-label="House effects by pollster"></svg><div class="tip" id="housetip" hidden></div></div>
       </section>
     </div>
@@ -216,6 +223,7 @@ svg text:not([font-weight]){font-weight:300}
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script src="../chart-export.js"></script>
+<script src="../cartogram.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

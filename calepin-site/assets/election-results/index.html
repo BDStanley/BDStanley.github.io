@@ -39,6 +39,7 @@ a:hover{color:var(--accent-hover)}
 .asof{font-size:12.5px;color:var(--muted);line-height:1.45;max-width:760px}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .btn2{height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--faint);background:#fff;color:var(--ink);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn2.sm{height:28px;padding:0 12px;font-size:12px}
 .btn2:hover{border-color:var(--accent);color:var(--accent)}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;font-weight:500}
 .linkbtn:hover{color:var(--accent-hover)}
@@ -209,7 +210,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="glance" aria-labelledby="h-glance">
     <div class="sechead">
       <div><span class="label" id="glancetype">At a glance</span><h2 id="h-glance">…</h2><div class="sub" id="glancesub"></div></div>
-      <button type="button" class="linkbtn" data-png="glance">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="glance">PNG</button>
     </div>
     <div class="grid">
       <div class="stack">
@@ -222,7 +223,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="results" aria-labelledby="h-results">
     <div class="sechead">
       <div><span class="label">Results</span><h2 id="h-results">National results</h2></div>
-      <button type="button" class="linkbtn" id="csvresults">Download CSV</button>
+      <button type="button" class="btn2 sm" id="csvresults">CSV</button>
     </div>
     <p class="lede" id="resultslede"></p>
     <div class="scroll"><table class="t" id="restable"></table></div>
@@ -232,14 +233,17 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="mapsec" aria-labelledby="h-map">
     <div class="sechead">
       <div><span class="label">Map</span><h2 id="h-map">Where the votes went</h2></div>
-      <button type="button" class="linkbtn" data-png="mapsec">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="mapsec">PNG</button>
     </div>
     <div class="controls">
       <div class="ctrl"><span>Show</span><div class="seg small" id="measures" role="group" aria-label="Measure"></div></div>
+      <div class="ctrl" id="modectrl" hidden><span>by</span><div class="seg small" id="modes" role="group" aria-label="What to follow between the two elections"></div></div>
+      <div id="chgbreak" hidden style="flex-basis:100%;height:0"></div>
+      <div class="ctrl" id="cmpActrl" hidden><span>Reference</span><select id="cmpA" aria-label="Reference election"></select></div>
       <div class="ctrl" id="itemctrl"><span id="itemlab">List</span><select id="item" aria-label="List, candidate or answer"></select></div>
       <div class="ctrl" id="item2ctrl" hidden><span>against</span><select id="item2" aria-label="Second list, candidate or answer"></select></div>
-      <div class="ctrl" id="cmpctrl" hidden><span>since</span><select id="cmp" aria-label="Election to compare with"></select></div>
-      <div class="ctrl" id="modectrl" hidden><span>by</span><div class="seg small" id="modes" role="group" aria-label="What to follow between the two elections"></div></div>
+      <div class="ctrl" id="cmpctrl" hidden><span id="cmplab">since</span><select id="cmp" aria-label="Election to compare with"></select></div>
+      <div class="ctrl" id="itemBctrl" hidden><select id="itemB" aria-label="List, candidate or camp at the second election"></select></div>
     </div>
     <div class="controls">
       <div class="ctrl"><span>Level</span><div class="seg small" id="levels" role="group" aria-label="Level"></div></div>
@@ -265,7 +269,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="whosec" aria-labelledby="h-who">
     <div class="sechead">
       <div><span class="label">Votes by local characteristics</span><h2 id="h-who">Results and the make-up of the gminas</h2></div>
-      <button type="button" class="linkbtn" data-png="whosec">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="whosec">PNG</button>
     </div>
     <p class="lede">Every gmina is a point, sized by its electorate: the map's list, candidate or measure against one of the gmina's characteristics from Statistics Poland's Local Data Bank. Hover over a point to find the gmina on the map; click it to open its history.</p>
     <div class="controls">
@@ -284,7 +288,7 @@ svg text:not([font-weight]){font-weight:300}
   <section class="sec" id="allsec" aria-labelledby="h-all">
     <div class="sechead">
       <div><span class="label">All elections</span><h2 id="h-all">Every vote since 1989</h2></div>
-      <button type="button" class="linkbtn" data-png="allsec">Download PNG</button>
+      <button type="button" class="btn2 sm" data-png="allsec">PNG</button>
     </div>
     <p class="lede">National turnout in every election, and each election's result. Click a point or a row to open that election.</p>
     <div class="chartbox" id="turnbox"><div class="charttitle">Turnout, % of the electorate</div><svg id="turnchart" role="img" aria-label="National turnout in every election since 1989"></svg><div class="tip" hidden></div><div class="legend" id="turnlegend" style="margin:2px 8px 6px"></div></div>
@@ -317,6 +321,7 @@ svg text:not([font-weight]){font-weight:300}
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script src="../chart-export.js"></script>
+<script src="../cartogram.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

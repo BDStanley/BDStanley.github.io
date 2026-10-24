@@ -10,6 +10,7 @@
     "assets/analyses/polling-tracker.png",
     "assets/analyses/quality-of-democracy.png",
     "assets/apple-touch-icon.png",
+    "assets/cartogram.js",
     "assets/chart-export.js",
     "assets/election-results/app.js",
     "assets/election-results/covariates-agriculture.json",

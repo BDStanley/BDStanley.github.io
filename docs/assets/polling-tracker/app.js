@@ -64,6 +64,29 @@ function VD() {
     : { trend: D.trend, polls: D.polls, pollsters: D.pollsters, parties: P, events: R.launches,
         house: D.house, blocs: R.houseEffectBlocs, results: [], past: false };
 }
+// Political events of the current term, shown with the party launches and splits from the model data
+const POLITICAL_EVENTS = [
+  ["2023-12-13", "Tusk government sworn in"],
+  ["2024-04-07", "Local elections"],
+  ["2024-06-09", "European Parliament election"],
+  ["2024-09-14", "Floods in south-west Poland"],
+  ["2024-11-22", "Trzaskowski wins the KO primary"],
+  ["2025-05-18", "Presidential election, first round"],
+  ["2025-06-01", "Nawrocki wins the presidential run-off"],
+  ["2025-06-11", "Tusk government wins a confidence vote"],
+  ["2025-08-06", "Nawrocki sworn in as president"],
+  ["2025-09-10", "Russian drones enter Polish airspace"],
+];
+// Events of the view on show, in date order, numbered through the whole list so a number never changes with the period
+function trendEvents() {
+  const V = VD(), all = V.events.map(e => ({ date: e.date, event: e.event }));
+  if (!V.past) POLITICAL_EVENTS.forEach(([d, t]) => all.push({ date: Date.parse(d) / 864e5, event: t }));
+  all.sort((p, q) => p.date - q.date); all.forEach((e, i) => { e.n = i + 1; });
+  const dates = V.trend.dates, last = dates[dates.length - 1], span = S.period === "all" ? null : +S.period * 30.44;
+  const a = span ? Math.max(dates[0], last - span) : dates[0];
+  return all.filter(e => e.date >= a && e.date <= last);
+}
+const evWhen = d => { const t = dateOf(d); return MON[t.getUTCMonth()] + " " + t.getUTCFullYear(); };
 const WD = new Map();          // decoded draws per week index
 const MODEL_SIM = new Map();   // model-view simulations per week (constituency ranges)
 
@@ -86,7 +109,7 @@ const compatible = parties => !R.forbidden.some(fp => fp.every(x => parties.incl
 const forbiddenIn = parties => R.forbidden.filter(fp => fp.every(x => parties.includes(x))).map(fp => fp.join(" and "));
 
 // ---- state ----------------------------------------------------------------------------------
-const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true,
+const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: true, events: true,
   hoverParty: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
@@ -433,11 +456,9 @@ function renderPanelLayout() {
     <button type="button" class="linkbtn" id="govmore" hidden></button>
   </div>
   <div class="card soft">
-    <span class="label">Share and download</span>
+    <span class="label">Share</span>
     <div class="actions">
       <button type="button" class="btn2" id="copylink">Copy link to this view</button>
-      <button type="button" class="btn2" id="dlcsv">CSV</button>
-      <button type="button" class="btn2" id="dlpng">PNG of the chart</button>
     </div>
   </div>`;
   panelKey = layoutKey();
@@ -566,7 +587,7 @@ function renderTrends() {
   const V = VD(), T = V.trend, dates = T.dates, last = dates[dates.length - 1];
   // Room on the right for the longest end label ("Solidarność / AWS 35.4%")
   const endChars = Math.max(0, ...V.parties.filter(p => T.series[p].med[dates.length - 1] != null).map(p => (W < 600 ? short(p) : p).length + 6));
-  const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: 22, b: 34 };
+  const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: S.events ? 38 : 22, b: 34 };
   const span = S.period === "all" ? null : +S.period * 30.44;
   const a = span ? Math.max(dates[0], last - span) : dates[0], b = last;
   const x = d => m.l + (d - a) / (b - a) * (W - m.l - m.r);
@@ -591,14 +612,14 @@ function renderTrends() {
     const [lab, yr] = tickLabel(d, prevY); prevY = dateOf(d).getUTCFullYear();
     o.push(`<line x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${H - m.b}" stroke="#F4F4F4"/><text x="${x(d)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="#767676">${lab}</text>${yr ? `<text x="${x(d)}" y="${H - m.b + 27}" text-anchor="middle" font-size="11" fill="#767676">${yr}</text>` : ""}`);
   });
-  // split events
-  const ev = V.events.filter(l => l.date >= a && l.date <= b).sort((p, q) => p.date - q.date);
-  let lastX = -1e9, stack = 0;
-  ev.forEach(l => {
-    const ex = x(l.date);
-    stack = ex - lastX < 90 ? stack + 1 : 0; lastX = ex;
-    o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t}" y2="${H - m.b}" stroke="#AAA" stroke-dasharray="2 3"/><text x="${ex + 4}" y="${m.t + 10 + stack * 13}" font-size="11" fill="#4B4B4B">${esc(l.event)}</text>`);
+  // events: a numbered marker over a dotted line, listed under the chart
+  const evs = S.events ? trendEvents() : [], evx = [];
+  let lastCx = -1e9;
+  evs.forEach(l => {
+    const ex = x(l.date), cx = Math.max(ex, lastCx + 17); lastCx = cx; evx.push({ cx, e: l });
+    o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t - 20}" y2="${H - m.b}" stroke="#AAA" stroke-dasharray="2 3"/><circle cx="${cx}" cy="10" r="8" fill="#fff" stroke="#B5B5B5"/><text x="${cx}" y="13.5" text-anchor="middle" font-size="10" font-weight="500" fill="#4B4B4B">${l.n}</text>`);
   });
+  $("trendevents").innerHTML = evs.map(l => `<span class="muted">${l.n}. ${esc(evWhen(l.date))} · ${esc(l.event)}</span>`).join("");
   // bands
   parties.forEach(p => {
     const s = T.series[p]; let top = [], bot = [];
@@ -631,7 +652,7 @@ function renderTrends() {
   });
   // selected week
   const sw = WEEKS[S.w].date;
-  if (!V.past && sw >= a && sw <= b) o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#333" stroke-width="1"/><text x="${x(sw)}" y="${m.t - 11}" text-anchor="middle" font-size="10.5" fill="#333">${dstr(sw)}</text>`);
+  if (S.dateLine && !V.past && sw >= a && sw <= b) o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#333" stroke-width="1"/><text x="${x(sw)}" y="${m.t - 11}" text-anchor="middle" font-size="10.5" fill="#333">${dstr(sw)}</text>`);
   // end labels
   const li = dates.length - 1;
   const labs = parties.filter(p => T.series[p].med[li] != null).map(p => ({ p, v: T.series[p].med[li], y: y(T.series[p].med[li]) }));
@@ -644,7 +665,7 @@ function renderTrends() {
   const svg = $("trend");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
   svg.innerHTML = o.join("");
-  TR = { W, H, m, a, b, x, y, polls, hl, shown };
+  TR = { W, H, m, a, b, x, y, polls, hl, shown, evx };
   // legend
   // A past term lists every party it had, with the closing figure for those still standing
   const legend = V.past ? V.parties : P.filter(p => T.series[p].med[li] != null);
@@ -657,6 +678,10 @@ function trendHover(ev) {
   const svg = $("trend"), r = svg.getBoundingClientRect(), k = TR.W / r.width;
   const mx = (ev.clientX - r.left) * k, my = (ev.clientY - r.top) * k;
   const tip = $("trendtip"), g = $("trendhover");
+  if (my < TR.m.t - 18) {
+    const hit = TR.evx.find(o => Math.abs(o.cx - mx) < 10);
+    if (hit) { g.innerHTML = ""; return placeTip(tip, $("trendbox"), ev, `<b>${esc(hit.e.event)}</b><div class="muted">${dstr(hit.e.date)}</div>`); }
+  }
   // nearest poll within 8px
   let best = null, bd = 64;
   const V = VD();
@@ -726,6 +751,8 @@ function renderHemi() {
     mem.forEach(p => { const n = o.e.joint ? cur.memberSeats[p] : o.s; if (n > 0) blocks.push({ p, ent: o.e, k: o.k, n }); });
   });
   const total = sum(blocks.map(b => b.n)), pts = hemiLayout(total);
+  const outer = Math.max(...pts.map(p => Math.hypot(p.x, p.y))), labels = [];
+  { let at = 0; blocks.forEach(bk => { const m = pts[at + (bk.n >> 1)]; labels.push({ p: bk.p, n: bk.n, a: Math.atan2(m.y, m.x) }); at += bk.n; }); }
   const rad = Math.min(0.046, 0.046 * Math.sqrt(460 / Math.max(total, 1)));
   let i = 0;
   const o = [];
@@ -743,7 +770,7 @@ function renderHemi() {
   const svg = $("hemi");
   svg.setAttribute("viewBox", "-2.2 -2.28 4.4 2.36");
   svg.innerHTML = o.join("");
-  HEMI = { total };
+  HEMI = { total, outer, labels };
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
     ? `<b style="color:var(--ink)">Minimum winning coalition:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
@@ -761,28 +788,30 @@ function mix(hex, t) { // blend hex colour towards white: t = 1 full colour
   const f = v => Math.round(v + (255 - v) * (1 - t));
   return `rgb(${f(r)},${f(g)},${f(b)})`;
 }
+let OUTLINE = null;
+const cartOutline = () => OUTLINE || (OUTLINE = Cartogram.outline(C, [0, 0, ...D.cartogramBox]));
 function renderMap() {
   const cur = CUR, E = cur.ents.length, [bw, bh] = D.cartogramBox;
   const hp = S.hoverParty, hk = hp ? cur.ents.findIndex(e => e.name === hp || e.members.includes(hp)) : -1;
-  const o = [];
+  const o = [`<path d="${cartOutline().d}" fill="none" stroke="#141414" stroke-width="2.5" stroke-linejoin="round"/>`];
   C.forEach((c, ci) => {
-    let fill = "#DDD", label = "";
     const seats = Array.from({ length: E }, (_, k) => cur.single.cons[ci * E + k]);
-    if (hk >= 0) {
-      const s = seats[hk];
-      fill = s > 0 ? mix(cur.ents[hk].colour, 0.25 + 0.75 * s / c.magnitude) : "#F1F1F1";
-      label = s > 0 ? String(s) : "";
-    } else {
-      let best = -1; seats.forEach((s, k) => { if (s > 0 && (best < 0 || s > seats[best])) best = k; });
-      if (best >= 0) fill = mix(cur.ents[best].colour, seats[best] / c.magnitude);
-    }
     const sel = S.constSel === c.okreg;
-    o.push(`<g data-c="${ci}" style="cursor:pointer"><circle cx="${c.x}" cy="${c.y}" r="${c.r - 1.5}" fill="${fill}" stroke="${sel ? "#141414" : "#fff"}" stroke-width="${sel ? 4 : 2}"/>${label ? `<text x="${c.x}" y="${c.y + 9}" text-anchor="middle" font-size="${clamp(c.r * 0.55, 18, 34)}" font-weight="500" fill="#141414">${label}</text>` : ""}</g>`);
+    o.push(`<g data-c="${ci}" style="cursor:pointer"><circle cx="${c.x}" cy="${c.y}" r="${c.r - 1.5}" fill="transparent" stroke="${sel ? "#141414" : "#9A9A9A"}" stroke-width="${sel ? 4 : 1.5}"/>`);
+    // one dot per elected MP, grouped by party and packed in a sunflower spiral
+    const dots = [];
+    seats.map((s, k) => [s, k]).filter(d => d[0] > 0).sort((p, q) => q[0] - p[0]).forEach(([s, k]) => { for (let j = 0; j < s; j++) dots.push(k); });
+    const pk = Cartogram.dots(c, dots.length);
+    dots.forEach((k, i) => {
+      const on = hk < 0 || k === hk;
+      o.push(`<circle cx="${pk.pts[i][0].toFixed(1)}" cy="${pk.pts[i][1].toFixed(1)}" r="${pk.r.toFixed(1)}" fill="${on ? cur.ents[k].colour : "#DEDEDE"}"/>`);
+    });
+    o.push("</g>");
   });
   const svg = $("map");
-  svg.setAttribute("viewBox", `-10 -10 ${bw + 20} ${bh + 20}`);
+  svg.setAttribute("viewBox", `-30 -30 ${bw + 60} ${bh + 60}`);
   svg.innerHTML = o.join("");
-  $("mapnote").textContent = (hk >= 0 ? `${cur.ents[hk].name}'s seats in each constituency. ` : "Each constituency in the colour of its largest list, deeper the larger its share of the seats. ") +
+  $("mapnote").textContent = (hk >= 0 ? `${cur.ents[hk].name}'s seats in each constituency. ` : "One dot for each MP elected, in the colour of their list. ") +
     "Circles are sized by electorate. A single allocation at the shares on screen, so totals can differ slightly from the medians. Click a constituency for its seats.";
 }
 function constSeats(ci) {
@@ -848,7 +877,7 @@ function lineChart(id, series, opts) {
   });
   series.forEach(s => o.push(`<path d="M${s.pts.map(p => `${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join("L")}" fill="none" stroke="${s.colour}" stroke-width="${S.hoverParty === s.name ? 2.6 : 1.8}" stroke-opacity="${S.hoverParty && S.hoverParty !== s.name ? 0.2 : 1}"/>`));
   const sw = WEEKS[S.w].date;
-  o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t}" y2="${H - m.b}" stroke="#333"/>`);
+  if (S.dateLine) o.push(`<line x1="${x(sw)}" x2="${x(sw)}" y1="${m.t}" y2="${H - m.b}" stroke="#333"/>`);
   const labs = series.map(s => { const lp = s.pts[s.pts.length - 1]; return { s, v: lp[1], y: y(lp[1]), d: lp[0] }; });
   repel(labs, 13, m.t, H - m.b);
   labs.forEach(l => o.push(`<line x1="${x(b) + 3}" x2="${x(b) + 9}" y1="${y(l.v)}" y2="${l.y}" stroke="#CCC"/><text x="${x(b) + 12}" y="${l.y + 4}" font-size="11.5" font-weight="500" fill="${l.s.colour}">${esc(l.s.label || l.s.name)} ${opts.fmt(l.v)}</text>`));
@@ -938,6 +967,10 @@ function renderChips() {
   ["trends", "seats", "time", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
   $("pts").checked = S.points;
   $("ptswrap").hidden = S.view !== "trends";
+  $("evwrap").hidden = S.view !== "trends";
+  $("ev").checked = S.events;
+  $("dlwrap").hidden = !((S.view === "trends" && !TERM) || S.view === "time");
+  $("dl").checked = S.dateLine;
   $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click parties below the chart to show them alone."
     : "Hover for every party's estimate; click to load that week into the scenario. Click parties below the chart to show them alone.";
 }
@@ -1019,8 +1052,8 @@ function download(name, blob) {
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
   document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
-function csv() {
-  if (TERM) return termCsv();
+function csv(which) {
+  if (which === "trend") return trendCsv();
   const cur = CUR, wk = cur.wk, inJ = new Set(S.joint.flat());
   const head = ["date", "list", "model_vote_pct", "model_vote_lower80", "model_vote_upper80", "model_p_clear_5pct", "model_seats", "model_seats_lower80", "model_seats_upper80",
     "scenario_vote_pct", "scenario_effective_vote_pct", "scenario_seats", "scenario_seats_lower80", "scenario_seats_upper80", "scenario_p_clear_threshold"];
@@ -1034,14 +1067,37 @@ function csv() {
   cur.ents.forEach((e, k) => { if (!e.joint) return; const r = cur.rows[k]; rows.push([iso(wk.date), e.name, "", "", "", "", "", "", "", +e.rawVote.toFixed(2), +e.vote.toFixed(2), r.seats, r.lo == null ? "" : r.lo, r.hi == null ? "" : r.hi, r.pThr == null ? "" : +r.pThr.toFixed(3)]); });
   download(`polling-tracker-${iso(wk.date)}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
-async function png() {
-  const ids = { trends: ["trend"], seats: ["hemi", "map"], time: ["seattime", "cointime", "thrtime"], pollsters: ["house"] }[S.view];
+function exportExtras(which, clone) {
+  if (which === "map") {
+    const [bw, bh] = D.cartogramBox, o = [];
+    o.push(Cartogram.badges(C, C.map(c => c.okreg), cartOutline().pts));
+    o.push(Cartogram.key(C.map(c => [c.okreg, esc(c.name)]), bw + 40, 8, bh));
+    clone.insertAdjacentHTML("beforeend", o.join(""));
+    return [-30, -30, bw + 60 + 290, bh + 60];
+  }
+  if (which !== "hemi") return null;
+  const o = [];
+  HEMI.labels.forEach(l => {
+    const cs = Math.cos(l.a), top = Math.abs(cs) < 0.12, r = HEMI.outer + 0.14 + (top ? 0.24 : 0);
+    const x = r * cs, y = -r * Math.sin(l.a);
+    o.push(`<text x="${x.toFixed(3)}" y="${(y + 0.035).toFixed(3)}" text-anchor="${top ? "middle" : cs > 0 ? "start" : "end"}" font-size="0.11" font-weight="500" fill="${col(l.p)}">${esc(l.p)} <tspan fill-opacity="0.7" font-weight="400">${l.n}</tspan></text>`);
+  });
+  clone.insertAdjacentHTML("beforeend", o.join(""));
+  return [-3.1, -2.75, 6.2, 2.85];
+}
+async function png(only) {
+  const ids = [only];
   const past = TERM ? `Sejm term ${TERM.term.label}` : null;
-  const titles = { trends: "Voting intention", seats: "Seat projection", time: "Over time", pollsters: "House effects" };
+  const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", seattime: "Seats over time", cointime: "Chance of a majority over time", thrtime: "Chance of clearing the threshold over time", house: "House effects" };
+  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", seattime: "seats-over-time", cointime: "majority-over-time", thrtime: "threshold-over-time", house: "pollsters" }[only];
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
   const imgs = await Promise.all(ids.map(async id => {
-    const svg = $(id), vb = svg.viewBox.baseVal, w = svg.clientWidth || vb.width, h = w * vb.height / vb.width;
+    const svg = $(id), vb = svg.viewBox.baseVal;
     const clone = await ChartExport.clone(svg);
+    // the single-graphic exports get labels the page doesn't show, and a wider canvas to hold them
+    const vb2 = exportExtras(only, clone), vw = vb2 ? vb2[2] : vb.width, vh = vb2 ? vb2[3] : vb.height;
+    const w = vb2 ? Math.max(svg.clientWidth, 640) * vw / vb.width : svg.clientWidth || vb.width, h = w * vh / vw;
+    if (vb2) clone.setAttribute("viewBox", vb2.join(" "));
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hit,#trendhit,#trendhover,.hov").forEach(n => n.remove());
     return new Promise(res => {
@@ -1050,19 +1106,30 @@ async function png() {
     });
   }));
   await ChartExport.fonts();
-  const side = S.view === "seats", pad = 24, head = 62, foot = 34;
+  const evl = only === "trend" && S.events ? trendEvents() : [];
+  const side = false, pad = 24, head = 62, evRows = Math.min(4, evl.length), evH = evl.length ? evRows * 17 + 24 : 0, foot = 34 + evH;
   const W = side ? sum(imgs.map(i => i.w)) + pad * (imgs.length + 1) : Math.max(...imgs.map(i => i.w)) + 2 * pad;
   const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[S.view]}${past ? " · " + past : ""}`, pad, 32);
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[only]}${past ? " · " + past : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE;
   g.fillText(past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
     : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
+  if (evl.length) {
+    // at most four to a column; the type shrinks if the columns would run past the image
+    const txt = l => `${l.n}. ${evWhen(l.date)} · ${l.event}`, cols = Array.from({ length: Math.ceil(evl.length / 4) }, (_, c) => evl.slice(c * 4, c * 4 + 4));
+    let fs = 10.5, widths;
+    do { g.font = `${fs}px Jost, 'Avenir Next', sans-serif`; widths = cols.map(c => Math.max(...c.map(l => g.measureText(txt(l)).width))); fs -= 0.5; }
+    while (sum(widths) + 28 * (cols.length - 1) > W - 2 * pad && fs > 8);
+    g.fillStyle = "#A0A0A0";
+    let cx = pad;
+    cols.forEach((c, k) => { c.forEach((l, i) => g.fillText(txt(l), cx, yy + 8 + i * 17)); cx += widths[k] + 28; });
+  }
   g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
-  cv.toBlob(b => download(`polling-tracker-${S.view}-${past ? TERM.term.id : iso(CUR.wk.date)}.png`, b), "image/png");
+  cv.toBlob(b => download(`polling-tracker-${fname}-${past ? TERM.term.id : iso(CUR.wk.date)}.png`, b), "image/png");
 }
 
 // ---- events ---------------------------------------------------------------------------------
@@ -1091,6 +1158,10 @@ function bind() {
     else { const b = e.target.closest("button[data-org]"); if (!b) return; const o = b.dataset.org; S.houses.has(o) ? S.houses.delete(o) : S.houses.add(o); }
     renderChips(); renderTrends(); saveHash();
   });
+  document.querySelectorAll("[data-png]").forEach(b => b.addEventListener("click", () => png(b.dataset.png)));
+  document.querySelectorAll("[data-csv]").forEach(b => b.addEventListener("click", () => csv(b.dataset.csv)));
+  $("ev").addEventListener("change", e => { S.events = e.target.checked; renderTrends(); });
+  $("dl").addEventListener("change", e => { S.dateLine = e.target.checked; if (S.view === "trends") renderTrends(); else renderView(); });
   $("pts").addEventListener("change", e => { S.points = e.target.checked; renderTrends(); saveHash(); });
   // trend chart
   $("trend").addEventListener("mousemove", trendHover);
@@ -1155,8 +1226,6 @@ function bind() {
     const gr = t.closest(".grow-row");
     if (gr) { S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderGov(); if (S.view !== "seats") { S.view = "seats"; renderChips(); } renderView(); saveHash(); return; }
     if (t.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); return; }
-    if (t.id === "dlcsv") return csv();
-    if (t.id === "dlpng") return png();
   });
   panel.addEventListener("keydown", e => { const gr = e.target.closest(".grow-row"); if (gr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); gr.click(); } });
   panel.addEventListener("mouseover", e => {
@@ -1226,22 +1295,20 @@ function renderTermPanel() {
     <p class="help" style="margin:0">"Polls" is what the houses that polled in the final month (${m.finalHouses.map(esc).join(", ")}) would have shown on election day, each with its own lean, averaged, with an 80% range. "Miss" is polls minus result, in points. Both are shares of the parties named, which is why they differ from the official percentages.</p>
   </div>
   <div class="card soft">
-    <span class="label">Share and download</span>
+    <span class="label">Share</span>
     <div class="actions">
       <button type="button" class="btn2" id="copylink">Copy link to this view</button>
-      <button type="button" class="btn2" id="dlcsv">CSV</button>
-      <button type="button" class="btn2" id="dlpng">PNG of the chart</button>
     </div>
   </div>`;
   panelKey = "";
 }
-function termCsv() {
-  const T = TERM.trend, rows = [["date", "party", "median_pct", "lower80", "upper80"]];
-  T.dates.forEach((d, i) => TERM.parties.forEach(p => {
+function trendCsv() {
+  const V = VD(), T = V.trend, rows = [["date", "party", "median_pct", "lower80", "upper80"]];
+  T.dates.forEach((d, i) => V.parties.forEach(p => {
     const s = T.series[p]; if (s.med[i] != null) rows.push([iso(d), p, s.med[i], s.lo[i], s.hi[i]]);
   }));
   const q = v => typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-  download(`polling-tracker-${TERM.term.id}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download(`polling-tracker-${TERM ? TERM.term.id : "trend"}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 
 // ---- load -----------------------------------------------------------------------------------
