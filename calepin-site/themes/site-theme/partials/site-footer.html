@@ -5,3 +5,17 @@
             {% endfor %}
         </div>
     </footer>
+    <script>
+    // Pages with an app frame (Polish political analyses): the frame fills the window
+    // above the footer, whose height changes with the width, so it is measured here
+    // (90_site.css uses it).
+    (() => {
+        if (!document.querySelector(".embed-frame--app")) return;
+        const fit = () => {
+            const f = document.querySelector(".calepin-site-footer");
+            if (f) document.documentElement.style.setProperty("--app-foot", f.offsetHeight + "px");
+        };
+        fit();
+        addEventListener("resize", fit);
+    })();
+    </script>

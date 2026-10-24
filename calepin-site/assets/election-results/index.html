@@ -142,6 +142,8 @@ table.t tr.tot td{font-weight:500;border-top:1px solid var(--faint)}
 .mapgrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr);gap:16px;align-items:start}
 .mapbox{position:relative;min-width:0}
 .mapbox svg{display:block;width:100%;height:auto}
+/* the whole map in view below the strip with its controls (--mapfit), or on short screens the map alone (--stripfit); set by fitMap() */
+#map{max-height:max(calc(100vh - var(--mapfit,330px)),min(420px,calc(100vh - var(--stripfit,150px))))}
 .mapbox path.u,.mapbox circle.u{cursor:pointer}
 #map path.u{stroke:#fff;stroke-width:.35;stroke-linejoin:round}
 #map.cons path.u{stroke:#fff;stroke-width:1.2}

@@ -691,6 +691,16 @@ function renderMapControls() {
   zb.disabled = carto; zb.setAttribute("aria-pressed", String(S.z && !carto));
   zb.title = carto ? "The partition borders are drawn on the map, not on the cartogram" : "Draw the 1914 borders between the Russian, German and Austro-Hungarian empires";
 }
+// The map's height is capped so that, with the section's heading and controls above it, it fits the
+// window below the sticky election strip (--mapfit); where that would leave it under 420px, the map
+// alone fits below the strip (--stripfit). The page usually sits in a frame a screen tall.
+function fitMap() {
+  const strip = document.querySelector(".strip"), sec = $("mapsec"), map = $("map");
+  if (!strip || !sec || !map) return;
+  const off = map.getBoundingClientRect().top - sec.getBoundingClientRect().top, r = document.documentElement.style;
+  r.setProperty("--mapfit", Math.round(strip.offsetHeight + off + 16) + "px");
+  r.setProperty("--stripfit", Math.round(strip.offsetHeight + 16) + "px");
+}
 function renderMap() {
   if (CUR.facts.facts_only) { $("map").innerHTML = ""; $("legend").innerHTML = ""; $("mapnote").textContent = "No maps for 1989: the election is not on the PKW portal."; $("insetbox").hidden = true; return; }
   if (measure() === "chg") {
@@ -730,6 +740,7 @@ function renderMap() {
   html += `<g id="hl"></g><g id="hov"></g>`;
   svg.setAttribute("font-family", FONT);
   svg.innerHTML = html;
+  fitMap();
   // The Warsaw inset, for gminas
   const ib = $("insetbox");
   ib.hidden = L.kind !== "g";
@@ -1413,15 +1424,21 @@ function bind() {
   document.querySelectorAll("[data-png]").forEach(b => b.addEventListener("click", () => png(b.dataset.png)));
   $("csvresults").addEventListener("click", csvNational); $("csvnational").addEventListener("click", csvNational);
   $("csvgmina").addEventListener("click", () => csvUnits("g")); $("csvokreg").addEventListener("click", () => csvUnits("c"));
-  $("jump").addEventListener("click", e => { const a = e.target.closest("a"); if (!a) return; e.preventDefault(); const el = $(a.getAttribute("href").slice(1)); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 92, behavior: "smooth" }); });
+  $("jump").addEventListener("click", e => { const a = e.target.closest("a"); if (!a) return; e.preventDefault(); const el = $(a.getAttribute("href").slice(1)); if (!el) return;
+    let top = el.getBoundingClientRect().top + window.scrollY - document.querySelector(".strip").offsetHeight - 8;
+    // On a short screen, where the map and its controls do not fit together, land with the whole map in view
+    if (el.id === "mapsec") top = Math.max(top, $("map").getBoundingClientRect().bottom + window.scrollY - window.innerHeight + 8);
+    window.scrollTo({ top, behavior: "smooth" }); });
   $("copylink").addEventListener("click", () => {
     const u = shareUrl();
     (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied")).catch(() => { window.prompt("Copy this link:", u); });
   });
   // A link pasted or edited by hand (the app itself writes the hash with replaceState)
   window.addEventListener("hashchange", () => { restoreHash(); setElection(S.e, true); });
+  // The strip grows a row for elections with two rounds, and wraps on narrow screens
+  if (window.ResizeObserver) new ResizeObserver(fitMap).observe(document.querySelector(".strip"));
   let lastW = window.innerWidth;
-  window.addEventListener("resize", debounce(() => { if (window.innerWidth !== lastW) { lastW = window.innerWidth; renderGlance(); renderScatter(); turnoutChart(); } }, 150));
+  window.addEventListener("resize", debounce(() => { fitMap(); if (window.innerWidth !== lastW) { lastW = window.innerWidth; renderGlance(); renderScatter(); turnoutChart(); } }, 150));
 }
 
 // ---- load -----------------------------------------------------------------------------------

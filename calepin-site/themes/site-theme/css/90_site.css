@@ -590,12 +590,34 @@ body {
 }
 
 /* A full app in an iframe (Polish political analyses): wider than the text
-   column and about a screen tall, so the app scrolls inside its own frame and
-   keeps its controls and side panel in view. */
+   column and exactly the window above the footer (--app-foot, measured by the
+   script in partials/site-footer.html, since the footer's height changes with
+   the width), so the app scrolls inside its own frame and keeps its controls and
+   side panel in view. The top bar hides itself on scrolling down, so the frame
+   can start at the top of the window: the page snaps it there when it is
+   scrolled near, and leaves almost no space below it, so the frame is never
+   half off screen with blank page beneath (which cut off the apps' maps). */
 .embed-frame--app {
+  display: block;
   width: min(94vw, 1440px);
-  height: max(640px, calc(100vh - 5rem));
+  height: max(480px, calc(100vh - var(--app-foot, 2.25rem) - 0.75rem));
+  height: max(480px, calc(100dvh - var(--app-foot, 2.25rem) - 0.75rem));
   margin-top: 0.6rem;
+  scroll-margin-top: 0;
+  scroll-snap-align: start;
+}
+html:has(.embed-frame--app) {
+  scroll-snap-type: y proximity;
+}
+p:has(> .embed-frame--app) {
+  margin-bottom: 0;
+}
+.academic-page:has(.embed-frame--app),
+main:has(> .embed-frame--app) {
+  padding-bottom: 0.25rem;
+}
+body:has(.embed-frame--app) .calepin-site-footer {
+  margin-top: 0;
 }
 
 /* ---- Polish political analyses: landing --------------------------------- */
