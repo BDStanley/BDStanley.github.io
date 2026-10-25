@@ -142,7 +142,7 @@ function neighbours(r, pool, k) {
 }
 
 // ---- state ----------------------------------------------------------------------------------
-const S = {view: "map", wave: 2024, scope: "eu", x: "lrecon", y: "galtan", colour: "family", trails: true, voters: false, fit: true,
+const S = {view: "map", wave: 2024, scope: "pl", sd: false, x: "lrecon", y: "galtan", colour: "family", trails: true, voters: false, fit: true,
   sel: 2605, group: "scope", prev: true, popY: "galtan", measure: "galtan", vdim: "lrgen"};
 const VIEWS = ["map", "profile", "populism", "time", "voters", "systems"];
 
@@ -152,7 +152,8 @@ function stateString() {
   if (S.view !== "map") q.set("view", S.view);
   if (S.sel !== 2605) q.set("party", S.sel);
   if (S.wave !== WAVES[WAVES.length - 1]) q.set("w", S.wave);
-  if (S.scope !== "eu") q.set("s", S.scope);
+  if (S.scope !== "pl") q.set("s", S.scope);
+  if (S.sd) q.set("sd", "1");
   if (S.x !== "lrecon") q.set("x", S.x);
   if (S.y !== "galtan") q.set("y", S.y);
   if (S.colour !== "family") q.set("c", S.colour);
@@ -185,6 +186,7 @@ function restoreHash() {
   if (WAVES.includes(w)) S.wave = w;
   else if (P.has(S.sel) && !P.get(S.sel).byW.has(S.wave)) { const ws = [...P.get(S.sel).byW.keys()].filter(x => WAVES.includes(x)); if (ws.length) S.wave = Math.max(...ws); }
   if (["eu", "cee", "pl"].includes(q.get("s"))) S.scope = q.get("s");
+  if (q.get("sd") === "1") { S.sd = true; S.scope = "pl"; }
   if (DIM.has(q.get("x"))) S.x = q.get("x");
   if (DIM.has(q.get("y"))) S.y = q.get("y");
   if (["populist", "family", "none"].includes(q.get("c"))) S.colour = q.get("c");
@@ -236,6 +238,8 @@ function renderControls() {
   document.querySelectorAll("#views button").forEach(b => { const on = b.dataset.v === S.view; b.setAttribute("aria-pressed", on); b.setAttribute("aria-selected", on); });
   $("waves").innerHTML = WAVES.map(w => `<button type="button" data-w="${w}" aria-pressed="${w === S.wave}">${w}</button>`).join("");
   document.querySelectorAll("#scopes button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === S.scope));
+  $("sdbtn").setAttribute("aria-pressed", S.sd); $("sdbtn").disabled = S.wave !== 2024;
+  $("sdbtn").title = S.wave !== 2024 ? "The experts' spread (SD) is only published for the 2024 wave" : "Show the spread (one SD) of the experts' ratings on every party";
   document.querySelectorAll("#colourby button").forEach(b => b.setAttribute("aria-pressed", b.dataset.c === S.colour));
   document.querySelectorAll("#groups button").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === S.group));
   document.querySelectorAll("#measures button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === S.measure));
@@ -373,8 +377,8 @@ function scatter(svgId, boxId, xd, yd, w, opts) {
   }
   // Polish parties, and the selected party wherever it is from
   const front = rows.filter(r => (r.p.pl && inScope(r.p)) || r.p === sel);
-  if (opts.spread && w === 2024) for (const r of front) {
-    if (!r.sd || r.p !== sel) continue;
+  if (opts.spread && w === 2024 && S.sd) for (const r of front) {
+    if (!r.sd) continue;
     const x = sx(r.v[xd.id]), y = sy(r.v[yd.id]), c = r.p.pl ? r.p.col : ACCENT;
     const sdx = r.sd[xd.id], sdy = r.sd[yd.id];
     if (isNum(sdx)) o.push(`<line x1="${sx(clamp(r.v[xd.id] - sdx, xd.min, xd.max))}" x2="${sx(clamp(r.v[xd.id] + sdx, xd.min, xd.max))}" y1="${y}" y2="${y}" stroke="${c}" stroke-opacity=".45" stroke-width="1.5"></line>`);
@@ -443,7 +447,7 @@ function renderMap() {
   const pa = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Social and political trends</a>`;
   const shown = rows.filter(r => inScope(r.p)).length;
   $("mapnote").innerHTML = `${shown} parties rated in the ${w} wave (fieldwork ${esc(D.meta.fieldwork[w])})${S.scope !== "pl" ? ", sized by vote" : ""}; Polish parties are sized by the vote for the list they ran on. `
-    + (w === 2024 ? "The whiskers on the selected party show the spread (one SD) of the experts' ratings. " : "")
+    + (S.sd && w === 2024 ? "The whiskers show the spread (one SD) of the experts' ratings of each party. " : "")
     + (S.trails ? "Paths join each Polish party's positions at earlier waves (labelled by year). " : "")
     + fitNote(xd, yd)
     + (voters ? `Diamonds are each Polish party's own voters at the wave's fieldwork month, from my ${pa}, joined to the party by a dashed line (with 80% intervals for the selected party); grey is all voters. ${MAPV.length ? "" : "No Polish party rated in " + w + " has a voter estimate on both axes. "}The voters' scales are survey measures placed on 0–10${[xd, yd].some(d => d.id === "eu_position" && voterDim(d.id).share) ? " (support for EU membership is a share of those with a view, divided by 10 and set on the 1–7 axis)" : ""}, not the experts' scale: read direction and order, not exact distances. `
@@ -971,7 +975,9 @@ function hoverChart(svgId, boxId, tipId, html) {
 function wire() {
   $("views").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.view = b.dataset.v; render(); });
   $("waves").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.wave = +b.dataset.w; render(); });
-  $("scopes").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.scope = b.dataset.s; render(); });
+  // The comparisons toggle; with none on, only the Polish parties are shown. Whiskers go with the Polish parties alone.
+  $("scopes").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.scope = S.scope === b.dataset.s ? "pl" : b.dataset.s; S.sd = false; render(); });
+  $("sdbtn").addEventListener("click", () => { S.sd = !S.sd; if (S.sd) S.scope = "pl"; render(); });
   $("colourby").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.colour = b.dataset.c; render(); });
   $("groups").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.group = b.dataset.g; render(); });
   $("measures").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.measure = b.dataset.m; render(); });

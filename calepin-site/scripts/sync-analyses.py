@@ -115,6 +115,23 @@ LISTED_NAMES = [
 ]
 
 
+# Site-wide spellings, applied to the data as it is copied so they survive the next sync (the
+# repo the data comes from is read-only here). Each rule replaces a whole JSON string, so
+# the lists' full names ("Komitet Wyborczy Samoobrona ...") are left alone.
+RENAMES = {'"Samoobrona"': '"SRP"'}
+# Political attitudes also names the party at the start of its events ("Samoobrona enters the Sejm")
+EVENT_RENAMES = {'"Samoobrona enters': '"SRP enters', '"Samoobrona and ': '"SRP and ', '"Samoobrona \'sex': '"SRP \'sex'}
+
+
+def apply_names(text: str, rel_dest: str) -> str:
+    for old, new in RENAMES.items():
+        text = text.replace(old, new)
+    if "political-attitudes" in rel_dest:
+        for old, new in EVENT_RENAMES.items():
+            text = text.replace(old, new)
+    return text
+
+
 def sync(rel_src: str, rel_dest: str, required: set[str]) -> None:
     source, dest = PPA_SRC / rel_src, SITE_DIR / rel_dest
     if not source.is_file():
@@ -132,11 +149,12 @@ def sync(rel_src: str, rel_dest: str, required: set[str]) -> None:
     if missing:
         print(f"  warning: {source.name} lacks {sorted(missing)}; keeping the committed {dest.name}", file=sys.stderr)
         return
-    if dest.is_file() and dest.read_bytes() == source.read_bytes():
+    out = apply_names(source.read_text(encoding="utf-8"), rel_dest).encode("utf-8")
+    if dest.is_file() and dest.read_bytes() == out:
         print(f"  {rel_dest}: unchanged")
         return
     dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(source, dest)
+    dest.write_bytes(out)
     print(f"  {rel_dest}: updated")
 
 

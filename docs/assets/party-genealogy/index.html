@@ -187,7 +187,7 @@ svg text:not([font-weight]){font-weight:300}
       </div></div>
     <div class="group"><span class="label" id="per-lab">Period</span><div class="seg" id="periods" role="group" aria-labelledby="per-lab"></div></div>
     <div class="group"><label class="label" for="q" id="q-lab">Find a party</label>
-      <input id="q" type="search" placeholder="e.g. PiS, Unia Wolności, Samoobrona" autocomplete="off"></div>
+      <input id="q" type="search" placeholder="e.g. PiS, Unia Wolności, SRP" autocomplete="off"></div>
     <div class="group gen-only"><span class="label" id="kind-lab">Genealogy links</span><div class="chips" id="kinds" role="group" aria-labelledby="kind-lab"></div></div>
     <button class="btn2" id="reset" type="button">Reset view</button>
   </div>
@@ -393,7 +393,7 @@ function buildControls() {
 function syncControls() {
   [...$("views").children].forEach(b => { const on = b.dataset.v === S.view; b.setAttribute("aria-pressed", on); b.setAttribute("aria-selected", on); });
   $("q-lab").textContent = S.view === "def" ? "Find a party or MP" : "Find a party";
-  $("q").placeholder = S.view === "def" ? "e.g. PiS, Samoobrona, Ludwik Dorn" : "e.g. PiS, Unia Wolności, Samoobrona";
+  $("q").placeholder = S.view === "def" ? "e.g. PiS, SRP, Ludwik Dorn" : "e.g. PiS, Unia Wolności, SRP";
   [...$("periods").children].forEach((b, j) => b.setAttribute("aria-pressed", S.period === j));
   [...$("kinds").children].forEach(b => b.setAttribute("aria-pressed", !S.kOff.has(b.dataset.k)));
   [...$("fams").children].forEach(b => b.setAttribute("aria-pressed", !S.off.has(+b.dataset.j)));
