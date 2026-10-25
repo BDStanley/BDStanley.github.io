@@ -120,7 +120,7 @@ LISTED_NAMES = [
         ("", {"facts", "results", "units"}),
     ]),
     ("Voting behaviour/web/voting.json", "files", [
-        ("calc-", {"year", "ballot", "design", "n_draws", "coef", "shifts", "support", "rules"}),
+        ("calc-", {"year", "ballot", "design", "n_draws", "coef", "shifts", "support", "rules", "attitudes"}),
     ]),
 ]
 

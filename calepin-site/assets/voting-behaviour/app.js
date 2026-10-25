@@ -37,7 +37,7 @@ const GR = new Map();
 const COMP = new Map();
 const S = {
   view: "who", show: "all", split: 0, cel: 2023, by: 1, ct: "educ_higher", el: 2023, out: "No vote", cal: false,
-  k: {el: 2023, age: 45, sex: "f", ed: 2, res: 3, rel: 4, ses: 3, cal: false}, all: false
+  k: {el: 2023, age: 45, sex: "f", ed: 2, res: 3, rel: 4, ses: 3, cal: false}
 };
 
 // ---- helpers ----------------------------------------------------------------------------------
@@ -85,9 +85,16 @@ function niceAxis(maxAbs) {
 }
 
 // The title and subtitle inside a figure, so that a PNG holds them (the other pages draw their panels this way)
-function figureHead(svg, title, sub) {
+function subLines(sub, W) {
+  const max = Math.floor((W - 8) / 5.4), lines = [];
+  (sub || "").split(" · ").forEach(part => { const last = lines.length - 1; if (last >= 0 && (lines[last] + " · " + part).length <= max) lines[last] += " · " + part; else lines.push(part); });
+  return lines;
+}
+function figureHead(svg, title, sub, W) {
   txt(svg, 0, 13, title, {"font-size": 13, "font-weight": 500, fill: "#141414"});
-  if (sub) txt(svg, 0, 28, sub, {"font-size": 11, fill: "#767676"});
+  const lines = subLines(sub, W);
+  lines.forEach((l, i) => txt(svg, 0, 28 + 14 * i, l, {"font-size": 11, fill: "#767676"}));
+  return lines.length;
 }
 
 // ---- links to the other pages: keys are those of their addresses (#e=, #it=, #pt=, #a=)
@@ -109,8 +116,8 @@ function lineChart(svgId, tipId, o) {
   const svg = $(svgId), box = svg.parentNode;
   const W = Math.max(320, box.clientWidth - 16), H = o.h || (o.title ? 300 : 270);
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const L = 44, R = W - 12, T = o.title ? 44 : 10, B = H - 24, n = o.xs.length;
-  if (o.title) figureHead(svg, o.title, o.sub);
+  const L = 44, R = W - 12, B = H - 24, n = o.xs.length;
+  const T = o.title ? 30 + 14 * figureHead(svg, o.title, o.sub, W) : 10;
   const X = i => L + (R - L) * (n === 1 ? 0.5 : i / (n - 1));
   const Y = v => B - (B - T) * (v - o.ymin) / (o.ymax - o.ymin);
   for (let g = o.ymin; g <= o.ymax + 1e-9; g += o.ystep) {
@@ -230,9 +237,9 @@ function drawComposition() {
   const rows = ballot.map(b => ({id: b.id, name: b.name, vals: levels.map((_, l) => (COMP.get(`${yr}|${b.id}|${by}|${l}`) || {share: null}).share)}));
   const all = levels.map((_, l) => ballot.reduce((a, b) => a + every[b.id] * ((COMP.get(`${yr}|${b.id}|${by}|${l}`) || {share: 0}).share || 0), 0));
   const cell = v => v == null ? "<td>–</td>" : `<td><span class="cell" style="background:rgba(139,0,0,${(0.04 + 0.6 * v).toFixed(2)});${v > 0.45 ? "color:#fff" : ""}">${(100 * v).toFixed(0)}%</span></td>`;
-  $("comp").innerHTML = `<table class="t"><thead><tr><th>${yr}</th>${levels.map(l => `<th>${esc(l)}</th>`).join("")}<th class="al">See also</th></tr></thead><tbody>` +
-    `<tr><td><b>All voters</b></td>${all.map(cell).join("")}<td class="al">${electionLinks(yr).join(" · ")}</td></tr>` +
-    rows.map(r => `<tr><td><i class="dot" style="background:${colour(r.id)}"></i> ${esc(r.name)}</td>${r.vals.map(cell).join("")}<td class="al">${listLinks(yr, r.id).join(" · ")}</td></tr>`).join("") + "</tbody></table>";
+  $("comp").innerHTML = `<table class="t"><thead><tr><th>${yr}</th>${levels.map(l => `<th>${esc(l)}</th>`).join("")}</tr></thead><tbody>` +
+    `<tr><td><b>All voters</b><div class="al">${electionLinks(yr).join(" · ")}</div></td>${all.map(cell).join("")}</tr>` +
+    rows.map(r => `<tr><td><i class="dot" style="background:${colour(r.id)}"></i> ${esc(r.name)}<div class="al">${listLinks(yr, r.id).join(" · ")}</div></td>${r.vals.map(cell).join("")}</tr>`).join("") + "</tbody></table>";
 }
 function renderWho() {
   $("wholead").textContent = "Turnout and support for each list in the eight Sejm elections from 1997 to 2023, as the Polish General Election Studies recorded them, with the official results alongside. Split the survey by age, gender, education, residence, religious attendance or socio-economic position to see who differs.";
@@ -246,9 +253,9 @@ function drawEffects() {
   const rows = effectRows(S.el, S.ct), ver = S.cal ? "cal" : "uncal", other = S.cal ? "uncal" : "cal";
   const order = [electionOf(S.el).ballot.find(b => b.id === "No vote"), ...listsByShare(S.el)];
   const items = order.map(b => ({b, r: rows.find(x => x.category === b.id)})).filter(x => x.r);
-  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 16), rowH = 26, T = 52, Lm = Math.min(220, W * 0.34), Rm = W - 44, H = T + rowH * items.length + 46;
+  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 16), rowH = 26, sub = `Change in the probability of each choice, percentage points · ${S.el} · 90% interval · ${S.cal ? "adjusted to the official results" : "unadjusted"}`, T = 38 + 14 * subLines(sub, W).length, Lm = Math.min(220, W * 0.34), Rm = W - 44, H = T + rowH * items.length + 46;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  figureHead(svg, effLabel(S.ct), `Change in the probability of each choice, percentage points · ${S.el} · 90% interval · ${S.cal ? "adjusted to the official results" : "unadjusted"}`);
+  figureHead(svg, effLabel(S.ct), sub, W);
   const {lim, step} = niceAxis(Math.max(...items.flatMap(x => [Math.abs(x.r[ver][1]), Math.abs(x.r[ver][2])])));
   const X = v => Lm + (Rm - Lm) * (v + lim) / (2 * lim);
   for (let g = -lim; g <= lim + 1e-9; g += step) {
@@ -290,7 +297,7 @@ function renderEffects() {
   $("eff-also").innerHTML = "See also: " + also.join(" · ");
 }
 
-// ---- Try a voter ------------------------------------------------------------------------------------------
+// ---- Hypothetical voter ------------------------------------------------------------------------------------------
 function loadCalc(year) {
   if (CALC[year]) return Promise.resolve(CALC[year]);
   return fetch(`calc-${year}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => (CALC[year] = j));
@@ -318,6 +325,33 @@ function probabilities(cd, p, cal) {
     out.push(ex.map(v => v / s));
   }
   return out;
+}
+// Attitudes: for each position, the probability of 0..10 in each draw (cumulative logit), summarised over draws
+const ATT_STYLE = {lr: ["#141414", true], econ: ["#D32F2F", false], soc: ["#2F7FC1", false]};
+function attitudes(cd, p) {
+  const {X, XI} = design(cd, p), x = [...X, ...XI];
+  return cd.attitudes.positions.map(pos => {
+    const draws = pos.beta.map((b, d) => {
+      let eta = 0; for (let j = 0; j < x.length; j++) eta += x[j] * b[j];
+      const cum = pos.cut[d].map(c => 1 / (1 + Math.exp(-(c - eta)))), out = [];
+      for (let k = 0; k <= 10; k++) out.push((k < 10 ? cum[k] : 1) - (k > 0 ? cum[k - 1] : 0));
+      return out;
+    });
+    const s = Array.from({length: 11}, (_, k) => { const v = draws.map(d => d[k]).sort((a, b) => a - b); return {m: quantile(v, 0.5), lo: quantile(v, 0.1), hi: quantile(v, 0.9)}; });
+    return {pos, s};
+  });
+}
+function drawAtt(cd, p) {
+  const res = attitudes(cd, p), top = Math.max(...res.flatMap(r => r.s.map(v => v.hi))), step = top > 0.4 ? 0.1 : top > 0.2 ? 0.05 : 0.025, ymax = Math.ceil(top / step) * step;
+  const series = res.map(r => ({name: r.pos.label, color: ATT_STYLE[r.pos.id][0], dash: ATT_STYLE[r.pos.id][1], vals: r.s.map(v => v.m), lo: r.s.map(v => v.lo), hi: r.s.map(v => v.hi), id: r.pos.id}));
+  lineChart("fig-att", "tip-att", {
+    xs: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], ymin: 0, ymax, ystep: step, fmt: v => Math.round(v * 1000) / 10 + "%", h: 300, series,
+    title: "Where this voter is likely to stand", sub: `Probability of each position, 0 (left, progressive) to 10 (right, conservative) · median and 80% interval · ${S.k.el}`,
+    tip: i => `<div class="h">Position ${i}</div>` + series.map(s => tipRow(s.color, s.name, Math.round(s.vals[i] * 100) + "%", `${Math.round(s.lo[i] * 100)}–${Math.round(s.hi[i] * 100)}%`)).join("")
+  });
+  legend("leg-att", [...series.map(s => [s.name, s.color, s.dash ? "dash" : null]), ["80% interval", "#9a9a9a", "band"]]);
+  const med = res.map(r => { let c = 0, k = 0; for (; k <= 10; k++) { c += r.s[k].m; if (c >= 0.5) break; } return `${r.pos.label.toLowerCase()} ${k}`; });
+  $("att-note").textContent = `Median positions: ${med.join(", ")}. The economic and socio-cultural positions are the mean of ${cd.attitudes.positions[1].items.length} economic and ${cd.attitudes.positions[2].items.length} socio-cultural survey items in ${S.k.el}, which differ between elections.`;
 }
 function summarise(draws) {
   const K = draws[0].length;
@@ -375,13 +409,14 @@ function renderCalc() {
       });
     }
     $("khelp").textContent = `Each bar is the median probability across the model's 200 posterior draws; the line is the 90% interval. ${k.cal ? "Adjusted to the official results: each list's chance is shifted so that the survey reproduces the official turnout and list shares." : "Unadjusted: as the survey records votes, so turnout and the winning list are somewhat too high."} Other lists means different lists at different elections.`;
+    const ab = $("att-box");
+    if (j.level !== "stop" && cd.attitudes) { ab.hidden = false; $("leg-att").hidden = false; drawAtt(cd, p); } else { ab.hidden = true; $("leg-att").hidden = true; $("att-note").textContent = ""; }
     $("calc-also").innerHTML = "See also: " + [...electionLinks(k.el), ...(k.rel >= 4 ? trendLinks().slice(1) : [])].join(" · ");
-    if (S.all) drawAll();
+    drawAll();
   }).catch(() => { $("k-note").className = "notice stop"; $("k-note").textContent = "The calculator's data for this election could not be loaded."; });
 }
 function drawAll() {
   const k = S.k, p = profile();
-  $("k-allbox").hidden = false;   // visible first, so the chart measures its box
   Promise.all(YEARS.map(loadCalc)).then(cds => {
     const cats = ["No vote", ...listCats(), "Other"], series = [], info = YEARS.map(() => ({}));
     const res = cds.map((cd, yi) => {
@@ -432,6 +467,7 @@ function renderAbout() {
     <div class="tscroll"><table class="t"><thead><tr><th>Specification</th><th>Gain over the reference</th><th>Standard error</th></tr></thead><tbody>${checks}</tbody></table></div>
     <h3>Voters who give no list</h3><p>${esc(m.notes.refusers)} The table compares the average marginal effects with those from complete cases. The imputed rows fill in each missing list from the person's characteristics, left–right placement and the party they feel close to, and then push the imputed voters further left.</p>
     <div class="tscroll"><table class="t"><thead><tr><th>Version</th><th>Estimates compared</th><th>Mean difference (points)</th><th>Largest (points)</th><th>Outside the complete-case interval</th><th>Conclusions changed</th><th>Signs flipped</th></tr></thead><tbody>${sens}</tbody></table></div>
+    <h3>Left-right, economic and socio-cultural positions</h3><p>In Hypothetical voter, the chart of positions shows how likely a person like the one you chose is to stand at each point from 0 to 10. Left-right is the survey's self-placement. The economic and socio-cultural positions are the mean of the survey's questions on those issues (tax, welfare, privatisation and similar; abortion, the Church, crime and similar), each placed on 0 to 10 with 10 the right or conservative end, for respondents who answered at least two. Each election and position has its own ordinal model on the same six characteristics as the vote model, with 80% intervals from 200 draws. The questions differ between elections and change format in 2011, so the economic and socio-cultural positions can be compared between people in one election but not between elections.</p>
     <h3>Reading the page</h3><ul>${["ses", "residence", "calibration", "other"].map(k => `<li>${esc(m.notes[k])}</li>`).join("")}<li>These are associations at eight elections, not causes, and the page says nothing about the current term.</li></ul>
     <h3>Related pages</h3><p>${[aLink(SITE + "election-results.html", "Election results"), aLink(SITE + "party-genealogy.html", "Parties in the Sejm"), aLink(SITE + "party-ideology.html", "Party ideology"), aLink(SITE + "party-system-indicators.html", "Party system indicators"), aLink(SITE + "political-attitudes.html#a=left-right", "Social and political trends")].join(" · ")}</p>
     <p class="cite">${cite}</p>`;
@@ -485,9 +521,9 @@ function restoreHash() {
 function shareUrl() { const t = hashTarget(), s = stateString(); return t.location.origin + t.location.pathname + (s ? "#" + s : ""); }
 // ---- PNG: the view's figures stacked on one canvas, with their legends and the citation -----------------
 function barsSvg() {
-  const k = S.k, W = 900, rowH = 24, T = 44, H = T + rowH * CALC_ROWS.length + 8, Lm = 170, Rm = W - 120;
+  const k = S.k, W = 560, rowH = 24, sub = `${profileText().split(" · ").slice(1).join(" · ")} · median and 90% interval${k.cal ? " · adjusted to the official results" : ""}`, T = 30 + 14 * subLines(sub, 560).length, H = T + rowH * CALC_ROWS.length + 8, Lm = 130, Rm = W - 100;
   const svg = document.createElementNS(NS, "svg"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("xmlns", NS);
-  figureHead(svg, `A ${k.age}-year-old ${k.sex === "f" ? "woman" : "man"} at the ${k.el} election`, `${profileText().split(" · ").slice(1).join(" · ")} · median and 90% interval${k.cal ? " · adjusted to the official results" : ""}`);
+  figureHead(svg, `A ${k.age}-year-old ${k.sex === "f" ? "woman" : "man"} at the ${k.el} election`, sub, W);
   CALC_ROWS.forEach((r, i) => {
     const y = T + i * rowH, c = r.id === "No vote" ? "#9aa5a9" : colour(r.id), x = v => Lm + v * (Rm - Lm);
     txt(svg, Lm - 8, y + 15, r.nm, {"font-size": 12, fill: "#141414", "text-anchor": "end"});
@@ -497,19 +533,21 @@ function barsSvg() {
   return svg;
 }
 function pngParts() {
-  if (S.view === "who") return {parts: [$("fig-who")], legends: ["leg-who"], name: "who-votes", head: "Who votes", sub: "Share of voters who name each list, by group; weighted survey with the official results"};
-  if (S.view === "effects") return {parts: [$("fig-eff"), $("fig-eff2")], legends: ["leg-eff2"], name: "what-changes-the-vote", head: "What changes the vote", sub: "Change in the probability of each choice, percentage points; 90% credible intervals"};
+  const P = (svg, leg) => ({svg, leg});
+  if (S.view === "who") return {parts: [P($("fig-who"), "leg-who")], name: "who-votes", head: "Who votes", sub: "Share of voters who name each list, by group; weighted survey with the official results"};
+  if (S.view === "effects") return {parts: [P($("fig-eff")), P($("fig-eff2"), "leg-eff2")], name: "what-changes-the-vote", head: "What changes the vote", sub: "Change in the probability of each choice, percentage points; 90% credible intervals"};
   if (S.view === "calc") {
-    const parts = []; if (CALC_ROWS) parts.push(barsSvg());
-    if (S.all && !$("k-allbox").hidden) parts.push($("fig-all"));
-    return {parts, legends: S.all ? ["leg-all"] : [], name: "try-a-voter", head: "Try a voter", sub: "Probability of each choice for one kind of voter; median and 90% credible interval"};
+    const parts = []; if (CALC_ROWS) parts.push(P(barsSvg()), P($("fig-all"), "leg-all"));
+    if (!$("att-box").hidden) parts.push(P($("fig-att"), "leg-att"));
+    return {parts, name: "hypothetical-voter", head: "Hypothetical voter", sub: "Probability of each choice for one kind of voter; median and 90% credible interval"};
   }
-  return {parts: [], legends: []};
+  return {parts: []};
 }
 async function png() {
-  const {parts, legends, name: fname, head: headT, sub: headS} = pngParts(); if (!parts.length) return;
-  const pad = 24, gap = 14, foot = 50, head = 62, items = [];
-  for (const svg of parts) {
+  const {parts, name: fname, head: headT, sub: headS} = pngParts(); if (!parts.length) return;
+  const pad = 24, gap = 16, foot = 50, head = 62, items = [];
+  const meas = document.createElement("canvas").getContext("2d");
+  for (const {svg, leg} of parts) {
     const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
     const temp = !svg.isConnected;
     if (temp) { svg.style.cssText = "position:absolute;left:-9999px;top:0;width:" + w + "px"; document.body.appendChild(svg); }
@@ -518,33 +556,31 @@ async function png() {
     clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hov").forEach(n => n.remove());
     const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
-    items.push({img, w, h});
+    meas.font = "12px Jost, sans-serif";
+    const rows = [[]]; let x = 0;
+    (leg ? LEGEND[leg] || [] : []).forEach(it => { const iw = 24 + meas.measureText(it[0]).width + 14; if (x + iw > w && rows[rows.length - 1].length) { rows.push([]); x = 0; } rows[rows.length - 1].push([it, x]); x += iw; });
+    items.push({img, w, h, rows, legH: rows[0].length ? rows.length * 18 + 8 : 0});
   }
   await ChartExport.fonts();
-  const w = Math.max(...items.map(i => i.w)), W = w + 2 * pad;
-  const lg = legends.flatMap(id => LEGEND[id] || []);
-  // legend layout, wrapped to the width
-  const meas = document.createElement("canvas").getContext("2d"); meas.font = "12px Jost, sans-serif";
-  const rows = [[]]; let x = 0;
-  lg.forEach(it => { const iw = 24 + meas.measureText(it[0]).width + 14; if (x + iw > w && rows[rows.length - 1].length) { rows.push([]); x = 0; } rows[rows.length - 1].push([it, x]); x += iw; });
-  const legH = lg.length ? rows.length * 18 + 4 : 0;
-  const bodyH = items.reduce((s, i) => s + i.h, 0) + gap * (items.length - 1);
-  const H = head + bodyH + legH + foot;
+  const W = Math.max(760, Math.max(...items.map(i => i.w)) + 2 * pad);
+  const H = head + items.reduce((s, i) => s + i.h + i.legH, 0) + gap * (items.length - 1) + foot;
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Voting behaviour · ${headT}`, pad, 32);
-  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${headS}. Polish General Election Studies, 1997–2023.`, pad, 52);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${headS}.`, pad, 52);
   let y = head;
-  items.forEach(i => { g.drawImage(i.img, pad, y, i.w, i.h); y += i.h + gap; });
-  y = y - gap + 4;
-  rows.forEach((r, ri) => r.forEach(([[label, color, kind], lx]) => {
-    const cy = y + ri * 18 + 9, sx = pad + lx;
-    g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 2.2; g.setLineDash(kind === "dash" ? [4, 3] : []);
-    if (kind === "ring") { g.beginPath(); g.arc(sx + 9, cy, 4, 0, 7); g.stroke(); }
-    else if (kind === "band") { g.globalAlpha = 0.35; g.fillRect(sx, cy - 5, 18, 10); g.globalAlpha = 1; }
-    else { g.beginPath(); g.moveTo(sx, cy); g.lineTo(sx + 18, cy); g.stroke(); }
-    g.setLineDash([]); g.fillStyle = "#4B4B4B"; g.font = "12px Jost, sans-serif"; g.fillText(label, sx + 24, cy + 4);
-  }));
+  items.forEach(i => {
+    g.drawImage(i.img, pad, y, i.w, i.h); y += i.h + 4;
+    i.rows.forEach((r, ri) => r.forEach(([[label, color, kind], lx]) => {
+      const cy = y + ri * 18 + 9, sx = pad + lx;
+      g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 2.2; g.setLineDash(kind === "dash" ? [4, 3] : []);
+      if (kind === "ring") { g.beginPath(); g.arc(sx + 9, cy, 4, 0, 7); g.stroke(); }
+      else if (kind === "band") { g.globalAlpha = 0.35; g.fillRect(sx, cy - 5, 18, 10); g.globalAlpha = 1; }
+      else { g.beginPath(); g.moveTo(sx, cy); g.lineTo(sx + 18, cy); g.stroke(); }
+      g.setLineDash([]); g.fillStyle = "#4B4B4B"; g.font = "12px Jost, sans-serif"; g.fillText(label, sx + 24, cy + 4);
+    }));
+    y += i.legH - 4 + gap;
+  });
   g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText("Data: Polish National Election Study (PGSW), 1997–2023; model estimates.", pad, H - 28);
   ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`voting-behaviour-${fname}.png`, b), "image/png");
@@ -627,7 +663,6 @@ function wire() {
   $("k-rel").onchange = e => { S.k.rel = +e.target.value; render(); };
   $("k-ses").onchange = e => { S.k.ses = +e.target.value; render(); };
   $("k-cal").onchange = e => { S.k.cal = e.target.checked; render(); };
-  $("k-all").onclick = () => { S.all = true; renderCalc(); };
   $("dlcsv").onclick = csv;
   $("dlpng").onclick = png;
   $("share").onclick = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };

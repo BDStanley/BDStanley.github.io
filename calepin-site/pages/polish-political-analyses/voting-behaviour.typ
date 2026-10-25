@@ -16,7 +16,7 @@
 
 #heading(level: 1)[Voting behaviour]
 
-Who votes for whom in Poland's Sejm elections, and who stays at home? This page follows age, gender, education, the size of the place people live in, how often they go to church and how well off they are across the eight elections from 1997 to 2023, in the Polish General Election Studies, the national surveys fielded after each election. Who votes shows each election's turnout and each list's support, split by any of these characteristics. What changes the vote takes one characteristic at a time and shows how much more or less likely each choice is. Try a voter lets you describe a person and see how likely a person like that was, at an election, to stay at home or to vote for each list, with the model's uncertainty.
+Who votes for whom in Poland's Sejm elections, and who stays at home? This page follows age, gender, education, the size of the place people live in, how often they go to church and how well off they are across the eight elections from 1997 to 2023, in the Polish General Election Studies, the national surveys fielded after each election. Who votes shows each election's turnout and each list's support, split by any of these characteristics. What changes the vote takes one characteristic at a time and shows how much more or less likely each choice is. Hypothetical voter lets you describe a person and see how likely a person like that was, at an election, to stay at home or to vote for each list, with the model's uncertainty.
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]
