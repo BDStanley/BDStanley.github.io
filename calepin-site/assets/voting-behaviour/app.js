@@ -19,6 +19,9 @@ const VIEWS = ["who", "effects", "calc", "about"];
 // The names the site uses for lists elsewhere (the Election results and Polling tracker pages); a list's name at one
 // election comes from the export (ballot), so the 2023 PSL list is Trzecia Droga there
 const NAMES = {PSL: "PSL / Trzecia Droga", "Liberal centre": "Liberal centre (UW)", Nowoczesna: "Liberal centre (Nowoczesna)", "No vote": "Did not vote", turnout: "Turnout"};
+const SITE = "../../pages/polish-political-analyses/";   // the other analysis pages, from this app's place in the site
+const LEGEND = {};
+let CALC_ROWS = null;   // the calculator's bars as last drawn, for the PNG
 const SPEC_NAMES = {
   main_constant: "Main effects constant across elections", main_varying: "Main effects drifting (the reference)",
   interactions_constant: "Main effects drifting, six constant interactions (the model on this page)",
@@ -81,13 +84,33 @@ function niceAxis(maxAbs) {
   return {step, lim: Math.max(step, Math.ceil(maxAbs / step) * step)};
 }
 
+// The title and subtitle inside a figure, so that a PNG holds them (the other pages draw their panels this way)
+function figureHead(svg, title, sub) {
+  txt(svg, 0, 13, title, {"font-size": 13, "font-weight": 500, fill: "#141414"});
+  if (sub) txt(svg, 0, 28, sub, {"font-size": 11, fill: "#767676"});
+}
+
+// ---- links to the other pages: keys are those of their addresses (#e=, #it=, #pt=, #a=)
+const aLink = (href, label) => `<a href="${esc(href)}" target="_top">${esc(label)}</a>`;
+function listLinks(year, id) {
+  const L = D.links && D.links[year] && D.links[year][id];
+  if (!L) return [];
+  const out = [aLink(`${SITE}election-results.html#e=sejm-${year}&m=share&it=${L.er}`, "Results map")];
+  if (L.pt) out.push(aLink(`${SITE}party-genealogy.html#pt=${L.pt}`, "Party history"));
+  if (L.ide) out.push(aLink(`${SITE}party-ideology.html#pt=${L.ide}`, "Ideology"));
+  return out;
+}
+const electionLinks = year => [aLink(`${SITE}election-results.html#e=sejm-${year}`, `${year} election results`), aLink(`${SITE}party-system-indicators.html#e=${year}`, `${year} party system indicators`)];
+const trendLinks = () => [aLink(`${SITE}political-attitudes.html#a=left-right`, "Left–right trends"), aLink(`${SITE}political-attitudes.html#a=religious-practice`, "Religious practice trends")];
+
 // ---- line chart ---------------------------------------------------------------------------------
 // o: {xs, ymin, ymax, ystep, fmt, series: [{name, color, vals, lo, hi, dash, rings}], tip(i) -> html, h, zero}
 function lineChart(svgId, tipId, o) {
   const svg = $(svgId), box = svg.parentNode;
-  const W = Math.max(320, box.clientWidth - 16), H = o.h || 270;
+  const W = Math.max(320, box.clientWidth - 16), H = o.h || (o.title ? 300 : 270);
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const L = 44, R = W - 12, T = 10, B = H - 24, n = o.xs.length;
+  const L = 44, R = W - 12, T = o.title ? 44 : 10, B = H - 24, n = o.xs.length;
+  if (o.title) figureHead(svg, o.title, o.sub);
   const X = i => L + (R - L) * (n === 1 ? 0.5 : i / (n - 1));
   const Y = v => B - (B - T) * (v - o.ymin) / (o.ymax - o.ymin);
   for (let g = o.ymin; g <= o.ymax + 1e-9; g += o.ystep) {
@@ -130,6 +153,7 @@ function lineChart(svgId, tipId, o) {
   svg.onmousemove = move; svg.onmouseleave = leave; svg.ontouchstart = move; svg.ontouchmove = move; svg.ontouchend = leave;
 }
 function legend(id, items) {
+  LEGEND[id] = items;
   $(id).innerHTML = items.map(([label, color, kind]) =>
     `<span><i class="sw ${kind === "ring" ? "ring" : kind === "band" ? "band" : ""}" style="${kind === "ring" ? "border-color:" + color : kind === "band" ? "background:" + color : "border-color:" + color + (kind === "dash" ? ";border-top-style:dashed" : "")}"></i>${esc(label)}</span>`).join("");
 }
@@ -179,8 +203,11 @@ function drawWho() {
   const turnout = S.show === "turnout";
   const top = Math.max(...series.flatMap(s => s.vals.filter(v => v != null)));
   const ymax = turnout ? 1 : Math.max(0.1, Math.ceil(top * 10 + 0.001) / 10), ystep = turnout ? 0.2 : ymax > 0.5 ? 0.1 : 0.05;
+  const gid = D.groupings[sp].id.toLowerCase();
+  const wtitle = (turnout ? "Turnout" : isAll ? "Support for each list among voters" : `${name(S.show)}: share of voters`) + (sp ? ` by ${gid}` : "");
+  const wsub = (turnout ? "Share who say they voted" : "Share of the voters who name a list") + ", weighted survey" + (sp === 0 ? " · rings: official result" : "");
   lineChart("fig-who", "tip-who", {
-    xs: YEARS, ymin: 0, ymax, ystep, fmt: v => Math.round(v * 100) + "%", series,
+    xs: YEARS, ymin: 0, ymax, ystep, fmt: v => Math.round(v * 100) + "%", series, title: wtitle, sub: wsub,
     tip: i => {
       const y = YEARS[i], rows = [];
       series.filter(s => !s.official).forEach(s => {
@@ -203,9 +230,9 @@ function drawComposition() {
   const rows = ballot.map(b => ({id: b.id, name: b.name, vals: levels.map((_, l) => (COMP.get(`${yr}|${b.id}|${by}|${l}`) || {share: null}).share)}));
   const all = levels.map((_, l) => ballot.reduce((a, b) => a + every[b.id] * ((COMP.get(`${yr}|${b.id}|${by}|${l}`) || {share: 0}).share || 0), 0));
   const cell = v => v == null ? "<td>–</td>" : `<td><span class="cell" style="background:rgba(139,0,0,${(0.04 + 0.6 * v).toFixed(2)});${v > 0.45 ? "color:#fff" : ""}">${(100 * v).toFixed(0)}%</span></td>`;
-  $("comp").innerHTML = `<table class="t"><thead><tr><th>${yr}</th>${levels.map(l => `<th>${esc(l)}</th>`).join("")}</tr></thead><tbody>` +
-    `<tr><td><b>All voters</b></td>${all.map(cell).join("")}</tr>` +
-    rows.map(r => `<tr><td><i class="dot" style="background:${colour(r.id)}"></i> ${esc(r.name)}</td>${r.vals.map(cell).join("")}</tr>`).join("") + "</tbody></table>";
+  $("comp").innerHTML = `<table class="t"><thead><tr><th>${yr}</th>${levels.map(l => `<th>${esc(l)}</th>`).join("")}<th class="al">See also</th></tr></thead><tbody>` +
+    `<tr><td><b>All voters</b></td>${all.map(cell).join("")}<td class="al">${electionLinks(yr).join(" · ")}</td></tr>` +
+    rows.map(r => `<tr><td><i class="dot" style="background:${colour(r.id)}"></i> ${esc(r.name)}</td>${r.vals.map(cell).join("")}<td class="al">${listLinks(yr, r.id).join(" · ")}</td></tr>`).join("") + "</tbody></table>";
 }
 function renderWho() {
   $("wholead").textContent = "Turnout and support for each list in the eight Sejm elections from 1997 to 2023, as the Polish General Election Studies recorded them, with the official results alongside. Split the survey by age, gender, education, residence, religious attendance or socio-economic position to see who differs.";
@@ -219,8 +246,9 @@ function drawEffects() {
   const rows = effectRows(S.el, S.ct), ver = S.cal ? "cal" : "uncal", other = S.cal ? "uncal" : "cal";
   const order = [electionOf(S.el).ballot.find(b => b.id === "No vote"), ...listsByShare(S.el)];
   const items = order.map(b => ({b, r: rows.find(x => x.category === b.id)})).filter(x => x.r);
-  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 16), rowH = 26, T = 12, Lm = Math.min(220, W * 0.34), Rm = W - 44, H = T + rowH * items.length + 34;
+  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 16), rowH = 26, T = 52, Lm = Math.min(220, W * 0.34), Rm = W - 44, H = T + rowH * items.length + 46;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
+  figureHead(svg, effLabel(S.ct), `Change in the probability of each choice, percentage points · ${S.el} · 90% interval · ${S.cal ? "adjusted to the official results" : "unadjusted"}`);
   const {lim, step} = niceAxis(Math.max(...items.flatMap(x => [Math.abs(x.r[ver][1]), Math.abs(x.r[ver][2])])));
   const X = v => Lm + (Rm - Lm) * (v + lim) / (2 * lim);
   for (let g = -lim; g <= lim + 1e-9; g += step) {
@@ -246,7 +274,8 @@ function drawEffects2() {
   const nz = vals.filter(Boolean), {lim, step} = niceAxis(Math.max(...nz.flatMap(v => [Math.abs(v[1]), Math.abs(v[2])])));
   const c = out === "No vote" ? "#9aa5a9" : colour(out);
   lineChart("fig-eff2", "tip-eff2", {
-    xs: YEARS, ymin: -lim, ymax: lim, ystep: step, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 230,
+    xs: YEARS, ymin: -lim, ymax: lim, ystep: step, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 260,
+    title: `${effLabel(S.ct)}: ${name(out)} across elections`, sub: `Change in the probability, percentage points · band: 90% interval · ${S.cal ? "adjusted to the official results" : "unadjusted"}`,
     series: [{name: name(out), color: c, vals: vals.map(v => v && v[0]), lo: vals.map(v => v && v[1]), hi: vals.map(v => v && v[2])}],
     tip: i => vals[i] ? `<b>${YEARS[i]}</b>${tipRow(c, name(out), pp(vals[i][0]) + " points", `90% interval ${pp(vals[i][1])} to ${pp(vals[i][2])}`)}` : ""
   });
@@ -257,6 +286,8 @@ function renderEffects() {
   $("effhelp").textContent = "Each estimate is the change in the probability of the choice, in percentage points, when everyone is set from the first level to the second, averaged over the election's respondents. Bars are 90% credible intervals; a filled dot means the interval excludes zero. " +
     (S.cal ? "Adjusted: each list's probability is shifted so that the survey reproduces the official turnout and list shares, which removes the survey's overstatement of turnout and of the winners." : "Unadjusted: as the survey records them, including its overstatement of turnout and of the winners. Switch on the adjustment to see the effects once the survey is brought into line with the official results.") +
     " Hover a row to see the other version.";
+  const also = [...electionLinks(S.el), ...(S.ct.startsWith("relig") ? trendLinks().slice(1) : [])];
+  $("eff-also").innerHTML = "See also: " + also.join(" · ");
 }
 
 // ---- Try a voter ------------------------------------------------------------------------------------------
@@ -317,6 +348,10 @@ function judge(cd, p) {
   if (warns.length) return {level: "warn", message: warns.join(" ")};
   return {level: "ok", message: `Well supported: at least ${Math.floor(n)} respondents in ${cd.year} are like this person in every pair of characteristics the model combines.`};
 }
+function profileText() {
+  const k = S.k, sel = id => $(id).selectedOptions[0].textContent.toLowerCase();
+  return `${k.age}-year-old ${k.sex === "f" ? "woman" : "man"} · ${sel("k-ed")} education · ${sel("k-res")} · attends ${sel("k-rel")} · ${sel("k-ses")} socio-economic position`;
+}
 function profile() {
   const k = S.k;
   return {age: k.age, sex: k.sex, ed: k.ed, res: k.res, rel: k.rel, ses: k.ses};
@@ -329,16 +364,18 @@ function renderCalc() {
     document.querySelectorAll("#k-sex button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === k.sex));
     const p = profile(), j = judge(cd, p), note = $("k-note"), bars = $("k-bars");
     note.className = "notice " + (j.level === "stop" ? "stop" : j.level === "warn" ? "" : "ok"); note.textContent = j.message;
-    bars.innerHTML = "";
+    bars.innerHTML = ""; CALC_ROWS = null;
     if (j.level !== "stop") {
       const sm = summarise(probabilities(cd, p, k.cal)), names = ["Did not vote", ...cd.ballot.map(b => b.name)], ids = ["No vote", ...cd.ballot.map(b => b.id)];
-      sm.map((s, i) => ({s, id: ids[i], nm: i === 0 ? "Did not vote" : cd.ballot[i - 1].name})).sort((a, b) => b.s.m - a.s.m).forEach(r => {
+      CALC_ROWS = sm.map((s, i) => ({s, id: ids[i], nm: i === 0 ? "Did not vote" : cd.ballot[i - 1].name})).sort((a, b) => b.s.m - a.s.m);
+      CALC_ROWS.forEach(r => {
         const row = document.createElement("div"); row.className = "bar";
         row.innerHTML = `<span>${esc(r.nm)}</span><span class="track"><span class="fill" style="width:${(100 * r.s.m).toFixed(1)}%;background:${r.id === "No vote" ? "#9aa5a9" : colour(r.id)}"></span><span class="ci" style="left:${(100 * r.s.lo).toFixed(1)}%;width:${(100 * (r.s.hi - r.s.lo)).toFixed(1)}%"></span></span><span class="num">${Math.round(100 * r.s.m)}% <i>(${Math.round(100 * r.s.lo)}–${Math.round(100 * r.s.hi)})</i></span>`;
         bars.appendChild(row);
       });
     }
     $("khelp").textContent = `Each bar is the median probability across the model's 200 posterior draws; the line is the 90% interval. ${k.cal ? "Adjusted to the official results: each list's chance is shifted so that the survey reproduces the official turnout and list shares." : "Unadjusted: as the survey records votes, so turnout and the winning list are somewhat too high."} Other lists means different lists at different elections.`;
+    $("calc-also").innerHTML = "See also: " + [...electionLinks(k.el), ...(k.rel >= 4 ? trendLinks().slice(1) : [])].join(" · ");
     if (S.all) drawAll();
   }).catch(() => { $("k-note").className = "notice stop"; $("k-note").textContent = "The calculator's data for this election could not be loaded."; });
 }
@@ -360,7 +397,8 @@ function drawAll() {
     const note = res.map((r, i) => r.ids ? null : YEARS[i]).filter(Boolean);
     $("k-allnote").textContent = note.length ? `No estimate for ${note.join(", ")}: the profile is outside what the survey supports in those elections.` : "";
     lineChart("fig-all", "tip-all", {
-      xs: YEARS, ymin: 0, ymax: 1, ystep: 0.2, fmt: v => Math.round(v * 100) + "%", h: 240, series,
+      xs: YEARS, ymin: 0, ymax: 1, ystep: 0.2, fmt: v => Math.round(v * 100) + "%", h: 290, series,
+      title: "The same person at every election", sub: `${profileText()} · median probability${k.cal ? " · adjusted to the official results" : ""}`,
       tip: i => {
         const r = res[i];
         if (!r.ids) return `<b>${YEARS[i]}</b><div class="s">${esc(r.j.message)}</div>`;
@@ -395,6 +433,7 @@ function renderAbout() {
     <h3>Voters who give no list</h3><p>${esc(m.notes.refusers)} The table compares the average marginal effects with those from complete cases. The imputed rows fill in each missing list from the person's characteristics, left–right placement and the party they feel close to, and then push the imputed voters further left.</p>
     <div class="tscroll"><table class="t"><thead><tr><th>Version</th><th>Estimates compared</th><th>Mean difference (points)</th><th>Largest (points)</th><th>Outside the complete-case interval</th><th>Conclusions changed</th><th>Signs flipped</th></tr></thead><tbody>${sens}</tbody></table></div>
     <h3>Reading the page</h3><ul>${["ses", "residence", "calibration", "other"].map(k => `<li>${esc(m.notes[k])}</li>`).join("")}<li>These are associations at eight elections, not causes, and the page says nothing about the current term.</li></ul>
+    <h3>Related pages</h3><p>${[aLink(SITE + "election-results.html", "Election results"), aLink(SITE + "party-genealogy.html", "Parties in the Sejm"), aLink(SITE + "party-ideology.html", "Party ideology"), aLink(SITE + "party-system-indicators.html", "Party system indicators"), aLink(SITE + "political-attitudes.html#a=left-right", "Social and political trends")].join(" · ")}</p>
     <p class="cite">${cite}</p>`;
 }
 
@@ -444,6 +483,72 @@ function restoreHash() {
     res: int("res", 1, 5, 3), rel: int("rel", 1, 6, 4), ses: int("ses", 1, 5, 3), cal: q.get("kcal") === "1"});
 }
 function shareUrl() { const t = hashTarget(), s = stateString(); return t.location.origin + t.location.pathname + (s ? "#" + s : ""); }
+// ---- PNG: the view's figures stacked on one canvas, with their legends and the citation -----------------
+function barsSvg() {
+  const k = S.k, W = 900, rowH = 24, T = 44, H = T + rowH * CALC_ROWS.length + 8, Lm = 170, Rm = W - 120;
+  const svg = document.createElementNS(NS, "svg"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("xmlns", NS);
+  figureHead(svg, `A ${k.age}-year-old ${k.sex === "f" ? "woman" : "man"} at the ${k.el} election`, `${profileText().split(" · ").slice(1).join(" · ")} · median and 90% interval${k.cal ? " · adjusted to the official results" : ""}`);
+  CALC_ROWS.forEach((r, i) => {
+    const y = T + i * rowH, c = r.id === "No vote" ? "#9aa5a9" : colour(r.id), x = v => Lm + v * (Rm - Lm);
+    txt(svg, Lm - 8, y + 15, r.nm, {"font-size": 12, fill: "#141414", "text-anchor": "end"});
+    svg.insertAdjacentHTML("beforeend", `<rect x="${Lm}" y="${y + 4}" width="${Rm - Lm}" height="14" fill="#f1f1ef"/><rect x="${Lm}" y="${y + 4}" width="${(x(r.s.m) - Lm).toFixed(1)}" height="14" fill="${c}"/><line x1="${x(r.s.lo).toFixed(1)}" x2="${x(r.s.hi).toFixed(1)}" y1="${y + 11}" y2="${y + 11}" stroke="#141414" stroke-width="2"/>`);
+    txt(svg, Rm + 8, y + 15, `${Math.round(100 * r.s.m)}% (${Math.round(100 * r.s.lo)}–${Math.round(100 * r.s.hi)})`, {"font-size": 12, fill: "#141414"});
+  });
+  return svg;
+}
+function pngParts() {
+  if (S.view === "who") return {parts: [$("fig-who")], legends: ["leg-who"], name: "who-votes", head: "Who votes", sub: "Share of voters who name each list, by group; weighted survey with the official results"};
+  if (S.view === "effects") return {parts: [$("fig-eff"), $("fig-eff2")], legends: ["leg-eff2"], name: "what-changes-the-vote", head: "What changes the vote", sub: "Change in the probability of each choice, percentage points; 90% credible intervals"};
+  if (S.view === "calc") {
+    const parts = []; if (CALC_ROWS) parts.push(barsSvg());
+    if (S.all && !$("k-allbox").hidden) parts.push($("fig-all"));
+    return {parts, legends: S.all ? ["leg-all"] : [], name: "try-a-voter", head: "Try a voter", sub: "Probability of each choice for one kind of voter; median and 90% credible interval"};
+  }
+  return {parts: [], legends: []};
+}
+async function png() {
+  const {parts, legends, name: fname, head: headT, sub: headS} = pngParts(); if (!parts.length) return;
+  const pad = 24, gap = 14, foot = 50, head = 62, items = [];
+  for (const svg of parts) {
+    const vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
+    const temp = !svg.isConnected;
+    if (temp) { svg.style.cssText = "position:absolute;left:-9999px;top:0;width:" + w + "px"; document.body.appendChild(svg); }
+    const clone = await ChartExport.clone(svg);
+    if (temp) { svg.remove(); clone.removeAttribute("style"); }
+    clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, w, h);
+    clone.querySelectorAll(".hov").forEach(n => n.remove());
+    const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
+    items.push({img, w, h});
+  }
+  await ChartExport.fonts();
+  const w = Math.max(...items.map(i => i.w)), W = w + 2 * pad;
+  const lg = legends.flatMap(id => LEGEND[id] || []);
+  // legend layout, wrapped to the width
+  const meas = document.createElement("canvas").getContext("2d"); meas.font = "12px Jost, sans-serif";
+  const rows = [[]]; let x = 0;
+  lg.forEach(it => { const iw = 24 + meas.measureText(it[0]).width + 14; if (x + iw > w && rows[rows.length - 1].length) { rows.push([]); x = 0; } rows[rows.length - 1].push([it, x]); x += iw; });
+  const legH = lg.length ? rows.length * 18 + 4 : 0;
+  const bodyH = items.reduce((s, i) => s + i.h, 0) + gap * (items.length - 1);
+  const H = head + bodyH + legH + foot;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
+  const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Voting behaviour · ${headT}`, pad, 32);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${headS}. Polish General Election Studies, 1997–2023.`, pad, 52);
+  let y = head;
+  items.forEach(i => { g.drawImage(i.img, pad, y, i.w, i.h); y += i.h + gap; });
+  y = y - gap + 4;
+  rows.forEach((r, ri) => r.forEach(([[label, color, kind], lx]) => {
+    const cy = y + ri * 18 + 9, sx = pad + lx;
+    g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 2.2; g.setLineDash(kind === "dash" ? [4, 3] : []);
+    if (kind === "ring") { g.beginPath(); g.arc(sx + 9, cy, 4, 0, 7); g.stroke(); }
+    else if (kind === "band") { g.globalAlpha = 0.35; g.fillRect(sx, cy - 5, 18, 10); g.globalAlpha = 1; }
+    else { g.beginPath(); g.moveTo(sx, cy); g.lineTo(sx + 18, cy); g.stroke(); }
+    g.setLineDash([]); g.fillStyle = "#4B4B4B"; g.font = "12px Jost, sans-serif"; g.fillText(label, sx + 24, cy + 4);
+  }));
+  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText("Data: Polish National Election Study (PGSW), 1997–2023; model estimates.", pad, H - 28);
+  ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
+  cv.toBlob(b => download(`voting-behaviour-${fname}.png`, b), "image/png");
+}
 function download(fileName, blob) {
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = fileName; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
@@ -478,7 +583,7 @@ function csv() {
 function render() {
   document.querySelectorAll("#views button").forEach(b => b.setAttribute("aria-selected", b.dataset.v === S.view));
   VIEWS.forEach(v => { $("v-" + v).hidden = v !== S.view; });
-  $("dlcsv").disabled = false;
+  $("dlcsv").disabled = false; $("dlpng").hidden = S.view === "about";
   if (S.view === "who") renderWho();
   else if (S.view === "effects") renderEffects();
   else if (S.view === "calc") renderCalc();
@@ -524,6 +629,7 @@ function wire() {
   $("k-cal").onchange = e => { S.k.cal = e.target.checked; render(); };
   $("k-all").onclick = () => { S.all = true; renderCalc(); };
   $("dlcsv").onclick = csv;
+  $("dlpng").onclick = png;
   $("share").onclick = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };
   try { hashTarget().addEventListener("hashchange", () => { restoreHash(); syncControls(); render(); }); } catch (e) { /* ignore */ }
   window.addEventListener("resize", debounce(() => { if (S.view === "who" || S.view === "effects" || S.view === "calc") render(); }, 200));
