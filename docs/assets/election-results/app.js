@@ -515,13 +515,13 @@ function partyLinks(ids) {
   return ids.split(";").filter(id => E.parties[id]).map(id => {
     const nm = esc(E.parties[id]), full = esc(E.party_names[id] || "");
     const a = gen.has(id) ? `<a href="${PAGES}party-genealogy.html#pt=${encodeURIComponent(id)}" target="_top" title="${full} in the party genealogy">${nm}</a>` : `<span title="${full}">${nm}</span>`;
-    return ideo.has(id) ? `${a} <a href="${PAGES}party-ideology.html#pt=${encodeURIComponent(id)}" target="_top" title="${full} in Party ideology" style="font-size:10.5px">ideology</a>` : a;
+    return ideo.has(id) ? `${a} (<a href="${PAGES}party-ideology.html#pt=${encodeURIComponent(id)}" target="_top" title="${full} in Party ideology" style="font-size:10.5px">ideology</a>)` : a;
   }).join(", ");
 }
 function pollsResults() {
   const items = resOf();
   $("restable").innerHTML = `<thead><tr><th class="l">Party</th><th>Share</th><th>80% range</th><th>Chance of 5%</th><th>Seats</th><th>80% range</th></tr></thead>
-    <tbody>${items.map(it => `<tr class="${mapItems()[S.i] && mapItems()[S.i].id === it.id ? "sel" : ""}"><td class="name"><button type="button" class="tbtn" data-id="${esc(it.id)}"><span class="dot" style="background:${colOf(it)};margin-right:6px"></span>${esc(it.name)}</button></td>
+    <tbody>${items.map(it => `<tr class="${mapItems()[S.i] && mapItems()[S.i].id === it.id ? "sel" : ""}" data-id="${esc(it.id)}"><td class="name"><button type="button" class="tbtn" data-id="${esc(it.id)}"><span class="dot" style="background:${colOf(it)};margin-right:6px"></span>${esc(it.name)}</button></td>
       <td>${pct(it.pct)}</td><td>${it.id === "MN" ? '<span class="na">2023 share</span>' : `${pct(it.lo)}–${pct(it.hi)}`}</td><td>${isNum(it.p_thr) ? pct(it.p_thr, 0) : '<span class="na">exempt</span>'}</td>
       <td>${it.seats}</td><td>${isNum(it.seats_lo) ? `${it.seats_lo}–${it.seats_hi}` : ""}</td></tr>`).join("")}</tbody>`;
   $("resultslede").textContent = "The Polling tracker's estimate for the latest week: each party's share with its 80% range, its chance of clearing 5%, and the model's median seats with their 80% range. The German minority enters at its 2023 share. Click a party to map it.";
@@ -569,7 +569,7 @@ function renderResults() {
   const big = it => it.pct >= 0.005 || it.seats > 0 || typ === "referendum";
   const hidden = items.filter(it => !big(it)).length, shown = hidden > 6 && !S.allLists ? items.filter(big) : items;
   $("restable").innerHTML = `<thead><tr>${cols.map(k => `<th class="${k.cls === "name" ? "l" : k.cls}">${k.h}</th>`).join("")}</tr></thead>
-    <tbody>${shown.map(it => `<tr class="${sel && sel.id === it.id ? "sel" : ""}">${cols.map(k => `<td class="${k.cls}">${k.f(it)}</td>`).join("")}</tr>`).join("")}
+    <tbody>${shown.map(it => `<tr class="${sel && sel.id === it.id ? "sel" : ""}" data-id="${esc(it.id)}">${cols.map(k => `<td class="${k.cls}">${k.f(it)}</td>`).join("")}</tr>`).join("")}
     ${hidden > 6 ? `<tr><td class="name" colspan="${cols.length}"><button type="button" class="linkbtn" id="alllists">${S.allLists ? "Show only the lists with 0.5% or a seat" : `Show all ${items.length} lists (${hidden} more, each under 0.5% with no seat)`}</button></td></tr>` : ""}
     <tr class="tot"><td class="name">Valid votes</td><td>${n0(T.valid_votes)}</td><td>100%</td>${cols.slice(3).map(() => "<td></td>").join("")}</tr></tbody>`;
   const lede = {
@@ -655,6 +655,7 @@ function leaderCounts(L, vals) {
   vals.lead.forEach(id => { if (id) counts[id] = (counts[id] || 0) + 1; });
   return { counts, unit: L.kind === "g" ? "gminas" : "constituencies" };
 }
+const leaderNote = unit => `Numbers are the count of ${unit} in which the ${EL.type === "presidential" ? "candidate" : EL.type === "referendum" ? "answer" : "party"} had the most votes.`;
 function scaleFor(vals) {
   const m = measure(), its = mapItems();
   if (m === "chg") {
@@ -804,7 +805,7 @@ function renderLegend(sc, vals) {
     const { counts, unit } = leaderCounts(MAPV.L, vals), dotted = unit === "seats";
     const its = Object.keys(counts).map(itemById).filter(Boolean).sort((a, b) => counts[b.id] - counts[a.id]);
     $("legend").innerHTML = `<div class="charttitle" style="margin-left:0">${esc(sc.title)}</div><div class="legend">${its.map(it => `<span><span class="sw" style="background:${colOf(it)}"></span>${esc(nameOf(it))} <span class="muted">${counts[it.id]}</span></span>`).join("")}</div>
-      <div class="help" style="margin:2px 0 0;font-size:11.5px">${dotted ? "Numbers are seats won." : `Numbers are the ${unit} where each had the most votes, not necessarily the seats or the office won.`}</div>
+      <div class="help" style="margin:2px 0 0;font-size:11.5px">${dotted ? "Numbers are seats won." : leaderNote(unit)}</div>
       ${dotted ? "" : `<svg viewBox="0 0 ${W} 34" font-family="${FONT}" style="margin-top:4px">${[0, 0.25, 0.5, 0.75, 1].map((t, k) => `<rect x="${k * 44}" y="4" width="42" height="12" fill="${mix("#767676", 0.3 + 0.7 * t)}"/>`).join("")}
       <text x="0" y="30" font-size="11" fill="#767676">0</text><text x="${4 * 44 + 42}" y="30" text-anchor="end" font-size="11" fill="#767676">${(100 * sc.hi).toFixed(0)} points or more</text>
       <text x="${4 * 44 + 54}" y="14" font-size="11" fill="#4B4B4B">the lead over the runner-up</text></svg>`}`;
@@ -1501,7 +1502,7 @@ async function png(sec) {
   // on a leader map, the names of the lists or candidates that lead somewhere, with the number of units each leads
   const leaders = []; let lx = 0, lines = 0, leadCaption = "";
   if (sec === "mapsec" && MAPV.sc.kind === "lead") {
-    const lc = leaderCounts(MAPV.L, MAPV.vals), counts = lc.counts; leadCaption = lc.unit === "seats" ? "Seats won" : `Numbers are the ${lc.unit} where each had the most votes`;
+    const lc = leaderCounts(MAPV.L, MAPV.vals), counts = lc.counts; leadCaption = lc.unit === "seats" ? "Seats won" : leaderNote(lc.unit);
     const mc = document.createElement("canvas").getContext("2d"); mc.font = "13.5px Jost, 'Avenir Next', sans-serif";
     Object.keys(counts).map(itemById).filter(Boolean).sort((a, b) => counts[b.id] - counts[a.id]).forEach(it => {
       const text = `${nameOf(it)} ${counts[it.id]}`, wd = 16 + mc.measureText(text).width;
@@ -1575,7 +1576,8 @@ function bind() {
   bindSearch(); bindProfile(); bindAll(); bindScatter();
   $("restable").addEventListener("click", e => {
     if (e.target.id === "alllists") { S.allLists = !S.allLists; renderResults(); return; }
-    const b = e.target.closest("button[data-id]"); if (!b) return;
+    if (e.target.closest("a")) return;   // the party links go where they say
+    const b = e.target.closest("[data-id]"); if (!b) return;
     const k = mapItems().findIndex(it => it.id === b.dataset.id);
     if (k < 0) { toast("Too small to map on its own: it is counted with the others"); return; }
     S.i = k; if (S.j === k) S.j = k === 0 ? 1 : 0; if (measure() === "leader" || measure() === "turnout") S.m = "share";
