@@ -37,13 +37,24 @@ const isMean = () => SC.type === "mean";
 const val = v => v == null ? "–" : isMean() ? (Math.round(v * 10 ** SC.dp) / 10 ** SC.dp).toFixed(SC.dp) : fmt0(v) + "%";
 const valRaw = v => v == null ? "–" : isMean() ? v.toFixed(2) : fmt(v) + "%";
 const change = ch => (ch > 0 ? "+" : "") + (isMean() ? ch.toFixed(2) : fmt(ch));
-const S = { a: null, b: "all", p: "all", pts: true, ev: true, hide: new Set() };
+const S = { a: null, b: "all", p: "all", pts: true, ev: true, hide: new Set(), famHide: new Set() };
 let GEO = null; // geometry of the last drawn chart, for hover
 
 // ---- helpers ------------------------------------------------------------------------------
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const fmt = v => v == null ? "–" : (Math.round(v * 10) / 10).toFixed(1);
 const fmt0 = v => v == null ? "–" : String(Math.round(v));
+const famOf = r => (D.itemById[r.i] || {}).family;
+// the agencies whose readings the chart can show: national ones, or those of the breakdown
+const agencies = () => [...new Set(D.rd.filter(r => r.g === (S.b === "all" ? "all" : S.b)).map(famOf))].filter(Boolean);
+// the agencies with a national reading, in the order the readings first name them
+const families = () => [...new Set(D.rd.filter(r => r.g === "all").map(famOf))].filter(Boolean);
+const evWhen = s => { const [y, m] = s.split("-").map(Number); return `${MON[m - 1]} ${y}`; };
+// the events in the period on show, numbered through the whole list so a number never changes with the period
+function eventsNow() {
+  const [x0, x1] = periodRange();
+  return D.events.map((e, k) => ({ n: k + 1, e, x: dateToYear(e.d) })).filter(o => o.x >= x0 && o.x <= x1);
+}
 function debounce(f, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => f(...a), ms); }; }
 function el(tag, attrs = {}, parent = null) {
   const n = document.createElementNS(NS, tag);
@@ -126,7 +137,7 @@ function buildAttitudes() {
 }
 async function pickAttitude(v) {
   if (v === S.a) return;
-  S.a = v; S.hide.clear(); await loadAttitude(v);
+  S.a = v; S.hide.clear(); S.famHide.clear(); await loadAttitude(v);
   if (!D.groupings.some(g => g.id === S.b)) S.b = "all";
   render();
 }
@@ -172,11 +183,11 @@ function draw() {
   const [x0, x1] = periodRange();
   const series = seriesNow();
   const i0 = clamp(yearToMonth(x0) - 1, 0, D.meta.months - 1), i1 = D.meta.months - 1;
-  const readings = !S.pts ? [] : D.rd.filter(r => r.x >= x0 && r.x <= x1 && (S.b === "all" ? r.g === "all" : r.g === S.b && !hiddenReading(r)));
-  // y domain from what is visible
-  const dmin = isMean() ? SC.min : 0, dmax = isMean() ? SC.max : 100;
+  const readings = !S.pts ? [] : D.rd.filter(r => r.x >= x0 && r.x <= x1 && (S.b === "all" ? r.g === "all" : r.g === S.b && !hiddenReading(r)) && !S.famHide.has(famOf(r)));
+  // y domain from what is visible, with the intervals
+  const dmin = isMean() ? SC.min : 0, dmax = isMean() ? SC.max : 100, mid = isMean() ? SC.mid : 50;
   let lo = dmax, hi = dmin;
-  series.forEach(s => { for (let i = i0; i <= i1; i++) { const a = s.lo80[i], b = s.hi80[i]; if (a != null) lo = Math.min(lo, a); if (b != null) hi = Math.max(hi, b); } });
+  series.forEach(s => { for (let i = i0; i <= i1; i++) { for (const k of ["lo80", "lo95"]) { const a = s[k] && s[k][i]; if (a != null) lo = Math.min(lo, a); } for (const k of ["hi80", "hi95"]) { const b = s[k] && s[k][i]; if (b != null) hi = Math.max(hi, b); } } });
   if (S.b !== "all") for (let i = i0; i <= i1; i++) { const v = D.national.median[i]; if (v != null) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }
   readings.forEach(r => { lo = Math.min(lo, r.adj); hi = Math.max(hi, r.adj); });
   if (lo > hi) { lo = dmin; hi = dmax; }
@@ -193,9 +204,10 @@ function draw() {
     el("line", { x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v), stroke: v === lo ? "#D5D5D5" : "#ECECEC", "stroke-width": 1 }, gGrid);
     const t = el("text", { x: m.l - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#767676" }, gGrid); t.textContent = isMean() ? +v.toFixed(2) : v + (v === hi ? "%" : "");
   }
+  // the scale's midpoint, a shade darker than the grid where it is in view
+  if (mid > lo && mid < hi) el("line", { x1: m.l, x2: W - m.r, y1: Y(mid), y2: Y(mid), stroke: "#A6A6A6", "stroke-width": 1 }, gGrid);
   // a scale's centre, and which way is which
   if (isMean()) {
-    el("line", { x1: m.l, x2: W - m.r, y1: Y(SC.mid), y2: Y(SC.mid), stroke: "#B5B5B5", "stroke-width": 1, "stroke-dasharray": "3 3" }, gGrid);
     const halo = { stroke: "#fff", "stroke-width": 3, "paint-order": "stroke" };
     const up = el("text", { x: m.l + 6, y: m.t + 12, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); up.textContent = `↑ ${SC.hi}`;
     const dn = el("text", { x: m.l + 6, y: H - m.b - 6, "font-size": 11.5, fill: "#4B4B4B", ...halo }, gGrid); dn.textContent = `↓ ${SC.lo}`;
@@ -260,7 +272,7 @@ function draw() {
     if (over > 0) right.forEach(l => { l.y -= over; });
     right.forEach(l => {
       const t = el("text", { x: X(monthYear(i1)) + 6, y: l.y + 4, "font-size": 12, fill: l.s.colour, "font-weight": 500 }, svg);
-      t.textContent = `${l.s.name} ${val(l.s.median[l.i])}`;
+      t.textContent = l.s.national ? val(l.s.median[l.i]) : `${l.s.name} ${val(l.s.median[l.i])}`;
     });
     early.forEach(l => {
       const t = el("text", { x: X(monthYear(l.i)) + 5, y: l.y + 4, "font-size": 11.5, fill: l.s.colour, "font-weight": 500, "paint-order": "stroke", stroke: "#fff", "stroke-width": 3 }, svg);
@@ -345,22 +357,32 @@ function hideHair() { const xh = $("xhair"); if (xh) xh.setAttribute("visibility
 function unhover() { $("tip").style.display = "none"; hideHair(); }
 
 // ---- legend, notes, tables ----------------------------------------------------------------
+// The agencies are buttons above the chart: each shows or hides where its surveys lie. They go with the individual surveys.
+function renderAgencies() {
+  const box = $("agencies"); box.innerHTML = ""; box.hidden = !S.pts;
+  if (!S.pts) return;
+  const fams = agencies();
+  fams.forEach(f => {
+    const on = !S.famHide.has(f), c = html("button", { type: "button", class: "chip sm", "data-f": f, "aria-pressed": String(on), title: `${on ? "Hide" : "Show"} the individual surveys by ${f}` });
+    const dt = html("span", { class: "dot" }); dt.style.background = S.b === "all" ? (FAMILY_COLOURS[f] || "#8F8F8F") : "#8F8F8F"; c.appendChild(dt);
+    c.appendChild(document.createTextNode(f));
+    c.onclick = () => { S.famHide.has(f) ? S.famHide.delete(f) : S.famHide.add(f); render(); };
+    box.appendChild(c);
+  });
+  const all = html("button", { type: "button", class: "linkbtn" }, fams.some(f => S.famHide.has(f)) ? "Show all" : "Hide all");
+  all.onclick = () => { if (fams.some(f => S.famHide.has(f))) S.famHide.clear(); else fams.forEach(f => S.famHide.add(f)); render(); };
+  box.appendChild(all);
+}
 function renderLegend() {
   const lg = $("legend"); lg.innerHTML = "";
   if (S.b === "all") {
     lg.innerHTML = `<span><span class="swatch" style="background:${ACCENT}"></span>Trend, with 80% and 95% credible intervals</span>`;
-    if (S.pts) {
-      const fams = [...new Set(D.rd.filter(r => r.g === "all").map(r => (D.itemById[r.i] || {}).family))].filter(Boolean);
-      fams.forEach(f => { lg.innerHTML += `<span><span class="dot" style="background:${FAMILY_COLOURS[f] || "#8F8F8F"}"></span>${esc(f)}</span>`; });
-    }
   } else {
     lg.innerHTML = `<span><svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="#9A9A9A" stroke-width="1.5" stroke-dasharray="5 4"/></svg>Everyone</span>`;
     if (S.pts) lg.innerHTML += `<span><span class="dot" style="background:#fff;border:1.2px solid #8F8F8F"></span>Reading covering more than one group</span>`;
   }
-  if (S.ev) {
-    const [x0, x1] = periodRange();
-    D.events.forEach((e, k) => { const x = dateToYear(e.d); if (x >= x0 && x <= x1) lg.innerHTML += `<span class="muted">${k + 1}. ${esc(e.label)}</span>`; });
-  }
+  // events, numbered as on the chart
+  $("evlist").innerHTML = S.ev ? eventsNow().map(o => `<span class="muted">${o.n}. ${esc(evWhen(o.e.d))} · ${esc(o.e.label)}</span>`).join("") : "";
   const pooled = D.groupings.some(g => g.id === "issue"), anchored = D.items.some(it => it.role === "anchor");
   const notes = {
     all: "Each dot is one survey's reading, placed on the trend's scale after allowing for how that question's wording, organisation and mode differ from " +
@@ -448,6 +470,7 @@ function stateString() {
   if (!S.pts) q.set("r", "0");
   if (!S.ev) q.set("e", "0");
   if (S.hide.size) q.set("h", [...S.hide].join(";"));
+  if (S.famHide.size) q.set("f", [...S.famHide].join(";"));
   return q.toString();
 }
 const saveHash = debounce(() => {
@@ -462,6 +485,7 @@ function readHash() {
   if (PERIODS.some(p => p[0] === q.get("p"))) S.p = q.get("p");
   S.pts = q.get("r") !== "0"; S.ev = q.get("e") !== "0";
   if (q.get("h")) q.get("h").split(";").forEach(x => S.hide.add(x));
+  if (q.get("f")) q.get("f").split(";").forEach(x => S.famHide.add(x));
 }
 function shareUrl() { const t = hashTarget(), s = stateString(); return t.location.origin + t.location.pathname + (s ? "#" + s : ""); }
 function download(name, blob) {
@@ -476,27 +500,59 @@ function csv() {
   download(`${D.meta.slug}-${S.b}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 async function png() {
-  const svg = $("chart"), vb = svg.viewBox.baseVal, w = vb.width, h = vb.height;
+  const svg = $("chart"), vb = svg.viewBox.baseVal, h = vb.height; let w = vb.width;
   const clone = await ChartExport.clone(svg);   // ../chart-export.js: labels stay in Jost
-  clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, w, h);
+  clone.setAttribute("xmlns", NS);
   clone.querySelectorAll("#hit,#xhair,#hoverdots").forEach(n => n.remove());
+  // with the individual surveys on, a key at the side names the agencies they come from
+  const dots = S.pts && S.b === "all";
+  const shown = dots ? families().filter(f => !S.famHide.has(f) && GEO.readings.some(r => famOf(r) === f)) : [];
+  if (shown.length) {
+    // the key starts half as far from the end of the plot as the margin would put it
+    const lx = Math.round(GEO.W - GEO.m.r + (GEO.m.r + 6) / 2), need = lx + Math.ceil(Math.max(...shown.map(f => f.length)) * 6.3 + 34);
+    clone.insertAdjacentHTML("beforeend", `<g font-family="Jost, 'Avenir Next', sans-serif"><text x="${lx}" y="${GEO.m.t + 4}" font-size="11.5" fill="#767676">Individual surveys</text>` +
+      shown.map((f, i) => `<circle cx="${lx + 4}" cy="${GEO.m.t + 24 + i * 20}" r="4.2" fill="${FAMILY_COLOURS[f] || "#8F8F8F"}" fill-opacity="0.85"/><text x="${lx + 14}" y="${GEO.m.t + 28 + i * 20}" font-size="12" fill="#4B4B4B">${esc(f)}</text>`).join("") + "</g>");
+    if (need > w) { w = need; clone.setAttribute("viewBox", `0 0 ${w} ${h}`); }
+  }
+  ChartExport.setSize(clone, w, h);
   const img = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); });
   await ChartExport.fonts();
-  const pad = 24, head = 64, foot = 34, W = w + 2 * pad, H = h + head + foot;
+  const pad = 24, last = D.meta.months - 1, mc = document.createElement("canvas").getContext("2d");
+  // the subtitle: what the measure is, which surveys the trend pools, what the shading shows; two lines at most
+  const names = dots ? "several surveys" : (S.b === "all" ? D.meta.sources : [...new Set(D.rd.filter(r => r.g === S.b).map(famOf))].filter(Boolean)).join(", ");
+  const bands = seriesNow().every(x => x.lo95) ? "80% and 95% credible intervals" : "80% credible intervals";
+  const sub = `${D.meta.measure}. Latent trend pooled from ${names}, to ${monthLabel(last)}. Shaded bands show ${bands}.`;
+  const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > w && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
+  let fs = 13, lines = wrap(fs);
+  while (lines.length > 2 && fs > 10.5) { fs -= 0.5; lines = wrap(fs); }
+  const lh = Math.round(fs * 1.35), head = 64 + (lines.length - 1) * lh;
+  // events, in columns of four at most, as on the Polling tracker
+  const evl = S.ev ? eventsNow() : [], rows = Math.min(4, evl.length), cols = Array.from({ length: Math.ceil(evl.length / 4) }, (_, c) => evl.slice(c * 4, c * 4 + 4));
+  const foot = 34 + (evl.length ? rows * 17 + 24 : 0);
+  const W = w + 2 * pad, H = h + head + foot;
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = ACCENT; g.font = ChartExport.TITLE;
   const bl = BREAKS.find(b => b[0] === S.b)[1];
   g.fillText(`${D.meta.title}${S.b === "all" ? "" : " by " + bl.toLowerCase()}`, pad, 32);
-  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText(`${D.meta.measure}. Latent trend pooled from several surveys, to ${monthLabel(D.meta.months - 1)}.`, pad, 54);
+  g.fillStyle = "#4B4B4B"; g.font = `${fs}px Jost, sans-serif`; lines.forEach((l, i) => g.fillText(l, pad, 54 + i * lh));
   g.drawImage(img, pad, head, w, h);
+  if (evl.length) {
+    const txt = o => `${o.n}. ${evWhen(o.e.d)} · ${o.e.label}`;
+    let efs = 10.5, widths;
+    do { g.font = `${efs}px Jost, 'Avenir Next', sans-serif`; widths = cols.map(c => Math.max(...c.map(o => g.measureText(txt(o)).width))); efs -= 0.5; }
+    while (widths.reduce((a, b) => a + b, 0) + 28 * (cols.length - 1) > w && efs > 8);
+    g.fillStyle = "#A0A0A0";
+    let cx = pad;
+    cols.forEach((c, k) => { c.forEach((o, i) => g.fillText(txt(o), cx, head + h + 24 + 8 + i * 17)); cx += widths[k] + 28; });
+  }
   g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
   cv.toBlob(b => download(`${D.meta.slug}-${S.b}.png`, b), "image/png");
 }
 
 // ---- main ---------------------------------------------------------------------------------
 function render() {
-  renderControls(); draw(); renderLegend(); renderLatest(); renderItems(); unhover(); saveHash();
+  renderControls(); renderAgencies(); draw(); renderLegend(); renderLatest(); renderItems(); unhover(); saveHash();
 }
 async function init() {
   try {

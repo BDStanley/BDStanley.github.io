@@ -1107,15 +1107,21 @@ async function png(only) {
   }));
   await ChartExport.fonts();
   const evl = only === "trend" && S.events ? trendEvents() : [];
-  const side = false, pad = 24, head = 62, evRows = Math.min(4, evl.length), evH = evl.length ? evRows * 17 + 24 : 0, foot = 34 + evH;
+  const side = false, pad = 24, evRows = Math.min(4, evl.length), evH = evl.length ? evRows * 17 + 24 : 0, foot = 34 + evH;
   const W = side ? sum(imgs.map(i => i.w)) + pad * (imgs.length + 1) : Math.max(...imgs.map(i => i.w)) + 2 * pad;
+  // the subtitle names the pollsters whose polls the estimates rest on, whether or not the polls are drawn; two lines at most
+  const base = past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
+    : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
+  const sub = `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
+  const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
+  let sfs = 13, lines = wrap(sfs);
+  while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
+  const slh = Math.round(sfs * 1.35), head = 62 + (lines.length - 1) * slh;
   const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[only]}${past ? " · " + past : ""}`, pad, 32);
-  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE;
-  g.fillText(past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
-    : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`, pad, 52);
+  g.fillStyle = "#4B4B4B"; g.font = `${sfs}px Jost, sans-serif`; lines.forEach((l, i) => g.fillText(l, pad, 52 + i * slh));
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
   if (evl.length) {

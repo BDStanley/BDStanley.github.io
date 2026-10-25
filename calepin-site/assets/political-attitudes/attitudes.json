@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated": "2026-10-24",
-    "n": 55
+    "updated": "2026-10-25",
+    "n": 54
   },
   "attitudes": [
     {
@@ -13,9 +13,9 @@
       "question": "Do Poles place themselves on the left or on the right?",
       "measure": "Average self-placement, from 0 (left) to 10 (right)",
       "start": "1990-06-01",
-      "last_data": "2026-05-15",
-      "n_readings": 472,
-      "n_surveys": 472,
+      "last_data": "2026-10-06",
+      "n_readings": 898,
+      "n_surveys": 578,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -32,7 +32,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -45,8 +45,8 @@
       "measure": "Average position on economic questions, from 0 (left) to 10 (right)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 328,
-      "n_surveys": 105,
+      "n_readings": 345,
+      "n_surveys": 110,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -64,7 +64,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["issue", "party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -77,8 +77,8 @@
       "measure": "Average position on social and cultural questions, from 0 (libertarian) to 10 (traditional)",
       "start": "1990-05-01",
       "last_data": "2026-05-15",
-      "n_readings": 737,
-      "n_surveys": 217,
+      "n_readings": 772,
+      "n_surveys": 232,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -95,7 +95,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["issue", "party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -108,8 +108,8 @@
       "measure": "Average position on redistribution, from 0 (for redistribution from rich to poor) to 10 (against)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 86,
-      "n_surveys": 57,
+      "n_readings": 87,
+      "n_surveys": 58,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -124,7 +124,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -137,8 +137,8 @@
       "measure": "Average position on the role of the state in the economy, from 0 (state) to 10 (market)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 129,
-      "n_surveys": 78,
+      "n_readings": 137,
+      "n_surveys": 82,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
@@ -154,7 +154,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -167,8 +167,8 @@
       "measure": "Average position on public services and benefits, from 0 (more public services and benefits) to 10 (lower taxes and self-reliance)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 87,
-      "n_surveys": 50,
+      "n_readings": 91,
+      "n_surveys": 54,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -184,7 +184,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -209,7 +209,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -230,7 +230,7 @@
         "Other surveys",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -243,8 +243,8 @@
       "measure": "Average position on social lifestyle questions, from 0 (liberal) to 10 (conservative)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 329,
-      "n_surveys": 128,
+      "n_readings": 357,
+      "n_surveys": 139,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -259,7 +259,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["issue", "party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -272,8 +272,8 @@
       "measure": "Average position on gay and lesbian rights, from 0 (for equal rights) to 10 (against)",
       "start": "1990-06-01",
       "last_data": "2025-07-09",
-      "n_readings": 146,
-      "n_surveys": 77,
+      "n_readings": 160,
+      "n_surveys": 85,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -299,9 +299,9 @@
       "question": "Should women and men have the same roles at home, at work and in politics?",
       "measure": "Average position on women's roles and rights, from 0 (equality) to 10 (traditional roles)",
       "start": "1990-06-01",
-      "last_data": "2025-12-10",
-      "n_readings": 144,
-      "n_surveys": 44,
+      "last_data": "2026-07-07",
+      "n_readings": 152,
+      "n_surveys": 51,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -316,7 +316,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -329,8 +329,8 @@
       "measure": "Average position on the Church and the state, from 0 (a secular state) to 10 (religious principles in politics)",
       "start": "1990-05-01",
       "last_data": "2025-12-10",
-      "n_readings": 135,
-      "n_surveys": 76,
+      "n_readings": 139,
+      "n_surveys": 80,
       "sources": [
         "CBOS",
         "European Values Study",
@@ -342,7 +342,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -355,8 +355,8 @@
       "measure": "Average position on crime and punishment, from 0 (civil liberties) to 10 (tough on crime)",
       "start": "1990-11-01",
       "last_data": "2025-12-10",
-      "n_readings": 80,
-      "n_surveys": 58,
+      "n_readings": 84,
+      "n_surveys": 62,
       "sources": [
         "CBOS",
         "European Election Study",
@@ -368,7 +368,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -381,8 +381,8 @@
       "measure": "Average position on the environment and the climate, from 0 (environment first) to 10 (growth first)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 185,
-      "n_surveys": 98,
+      "n_readings": 197,
+      "n_surveys": 104,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -409,9 +409,9 @@
       "question": "Should Poland welcome immigrants and refugees?",
       "measure": "Average position on immigration and refugees, from 0 (open) to 10 (restrictive)",
       "start": "1991-08-01",
-      "last_data": "2026-05-15",
-      "n_readings": 279,
-      "n_surveys": 91,
+      "last_data": "2026-07-07",
+      "n_readings": 316,
+      "n_surveys": 126,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -424,7 +424,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -448,7 +448,7 @@
         "Polish National Election Study (PGSW)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -475,7 +475,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -500,7 +500,7 @@
         "Polish Panel Survey (POLPAN)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -514,7 +514,7 @@
       "start": "1990-11-01",
       "last_data": "2026-05-23",
       "n_readings": 320,
-      "n_surveys": 274,
+      "n_surveys": 288,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -529,7 +529,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -542,8 +542,8 @@
       "measure": "Average position on European integration, from 0 (guard national independence) to 10 (closer integration)",
       "start": "1990-11-01",
       "last_data": "2026-04-15",
-      "n_readings": 226,
-      "n_surveys": 141,
+      "n_readings": 232,
+      "n_surveys": 146,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -556,31 +556,6 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)",
-        "SWPS online panels"
-      ],
-      "updated": "2026-10-23",
-      "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
-    },
-    {
-      "slug": "russia",
-      "file": "russia.json",
-      "group": "Europe and the world",
-      "title": "Russia",
-      "short": "Russia",
-      "question": "Should Poland stand up to Russia or seek accommodation?",
-      "measure": "Average position on Russia, from 0 (defend against Russia) to 10 (accommodate Russia)",
-      "start": "1994-01-01",
-      "last_data": "2026-03-25",
-      "n_readings": 176,
-      "n_surveys": 92,
-      "sources": [
-        "CBOS",
-        "Eurobarometer",
-        "European Election Study",
-        "Flash Eurobarometer",
-        "Other surveys",
-        "Pew Global Attitudes",
-        "Polish National Election Study (PGSW)",
         "SWPS online panels"
       ],
       "updated": "2026-10-24",
@@ -596,15 +571,15 @@
       "measure": "Average support for NATO and Poland's membership, from 0 (opposed) to 10 (strongly in favour)",
       "start": "1995-11-01",
       "last_data": "2025-03-18",
-      "n_readings": 44,
-      "n_surveys": 40,
+      "n_readings": 64,
+      "n_surveys": 48,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -617,8 +592,8 @@
       "measure": "Average satisfaction with the way democracy works in Poland, from 0 (not at all satisfied) to 10 (very satisfied)",
       "start": "1990-03-01",
       "last_data": "2026-03-25",
-      "n_readings": 161,
-      "n_surveys": 159,
+      "n_readings": 167,
+      "n_surveys": 165,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -634,7 +609,7 @@
         "Polish National Election Study (PGSW)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -646,9 +621,9 @@
       "question": "Do Poles prefer democracy to any other form of government?",
       "measure": "Average support for democracy as the best form of government, from 0 (another system can be better) to 10 (democracy is best)",
       "start": "1992-09-01",
-      "last_data": "2024-02-09",
-      "n_readings": 151,
-      "n_surveys": 72,
+      "last_data": "2025-10-07",
+      "n_readings": 172,
+      "n_surveys": 81,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -660,7 +635,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -672,9 +647,9 @@
       "question": "Do Poles support the government of the day?",
       "measure": "Average support for the government of the day, from 0 (opponent) to 10 (supporter)",
       "start": "1990-01-01",
-      "last_data": "2025-07-09",
-      "n_readings": 401,
-      "n_surveys": 349,
+      "last_data": "2026-10-06",
+      "n_readings": 1520,
+      "n_surveys": 459,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -686,7 +661,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -699,8 +674,8 @@
       "measure": "Average position on executive power, from 0 (a constrained executive) to 10 (a strong leader unconstrained by parliament)",
       "start": "1992-01-01",
       "last_data": "2025-12-15",
-      "n_readings": 69,
-      "n_surveys": 54,
+      "n_readings": 71,
+      "n_surveys": 56,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -713,7 +688,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -726,8 +701,8 @@
       "measure": "Average position on judicial independence, from 0 (independent courts) to 10 (government influence over the courts)",
       "start": "1995-01-01",
       "last_data": "2026-05-15",
-      "n_readings": 24,
-      "n_surveys": 18,
+      "n_readings": 25,
+      "n_surveys": 19,
       "sources": [
         "CBOS",
         "European Election Study",
@@ -736,7 +711,7 @@
         "Polish National Election Study (PGSW)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -749,9 +724,10 @@
       "measure": "Average position on populist attitudes, from 0 (trust in elected representatives) to 10 (the people against the elite)",
       "start": "1991-01-01",
       "last_data": "2025-12-15",
-      "n_readings": 56,
-      "n_surveys": 26,
+      "n_readings": 84,
+      "n_surveys": 40,
       "sources": [
+        "CBOS",
         "Consolidation of Democracy in CEE",
         "European Election Study",
         "European Social Survey",
@@ -761,7 +737,7 @@
         "Polish Panel Survey (POLPAN)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -774,21 +750,20 @@
       "measure": "Average sense of political efficacy, from 0 (people like me have no say) to 10 (people like me have a say)",
       "start": "1991-01-01",
       "last_data": "2026-03-25",
-      "n_readings": 140,
-      "n_surveys": 108,
+      "n_readings": 151,
+      "n_surveys": 119,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
         "Eurobarometer",
         "European Election Study",
         "European Social Survey",
-        "Other surveys",
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -801,8 +776,8 @@
       "measure": "Average interest in politics, from 0 (none) to 10 (very great)",
       "start": "1990-03-01",
       "last_data": "2026-05-15",
-      "n_readings": 372,
-      "n_surveys": 372,
+      "n_readings": 375,
+      "n_surveys": 375,
       "sources": [
         "CBOS",
         "European Election Study",
@@ -815,7 +790,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -826,10 +801,10 @@
       "short": "Trust: parliament",
       "question": "How much do Poles trust the Sejm and parliament?",
       "measure": "Average trust in parliament, from 0 (no trust at all) to 10 (complete trust)",
-      "start": "1990-06-01",
-      "last_data": "2026-03-25",
-      "n_readings": 104,
-      "n_surveys": 102,
+      "start": "1990-01-01",
+      "last_data": "2026-10-06",
+      "n_readings": 802,
+      "n_surveys": 438,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -843,7 +818,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -864,7 +839,7 @@
         "European Social Survey",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -877,8 +852,8 @@
       "measure": "Average trust in political parties, from 0 (no trust at all) to 10 (complete trust)",
       "start": "1991-01-01",
       "last_data": "2026-03-25",
-      "n_readings": 79,
-      "n_surveys": 79,
+      "n_readings": 84,
+      "n_surveys": 84,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -890,7 +865,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -902,9 +877,9 @@
       "question": "How much do Poles trust the courts and the justice system?",
       "measure": "Average trust in the courts and the justice system, from 0 (no trust at all) to 10 (complete trust)",
       "start": "1990-06-01",
-      "last_data": "2026-03-25",
-      "n_readings": 87,
-      "n_surveys": 85,
+      "last_data": "2026-09-20",
+      "n_readings": 176,
+      "n_surveys": 173,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -916,7 +891,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -928,9 +903,9 @@
       "question": "How much do Poles trust the police?",
       "measure": "Average trust in the police, from 0 (no trust at all) to 10 (complete trust)",
       "start": "1990-06-01",
-      "last_data": "2026-03-25",
-      "n_readings": 81,
-      "n_surveys": 79,
+      "last_data": "2026-09-20",
+      "n_readings": 157,
+      "n_surveys": 154,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -942,7 +917,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -953,10 +928,10 @@
       "short": "Trust: army",
       "question": "How much do Poles trust the armed forces?",
       "measure": "Average trust in the armed forces, from 0 (no trust at all) to 10 (complete trust)",
-      "start": "1990-06-01",
-      "last_data": "2026-03-25",
-      "n_readings": 69,
-      "n_surveys": 67,
+      "start": "1990-01-01",
+      "last_data": "2026-09-20",
+      "n_readings": 178,
+      "n_surveys": 175,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -967,7 +942,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -978,16 +953,16 @@
       "short": "Trust: local government",
       "question": "How much do Poles trust local government?",
       "measure": "Average trust in local government, from 0 (no trust at all) to 10 (complete trust)",
-      "start": "2000-11-01",
-      "last_data": "2026-03-25",
-      "n_readings": 46,
-      "n_surveys": 46,
+      "start": "1992-11-01",
+      "last_data": "2026-09-20",
+      "n_readings": 149,
+      "n_surveys": 145,
       "sources": [
         "CBOS",
         "Eurobarometer",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1000,8 +975,8 @@
       "measure": "Average trust in the European Union, from 0 (no trust at all) to 10 (complete trust)",
       "start": "1990-06-01",
       "last_data": "2026-03-25",
-      "n_readings": 72,
-      "n_surveys": 72,
+      "n_readings": 77,
+      "n_surveys": 77,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1011,7 +986,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1022,10 +997,10 @@
       "short": "Trust: Church",
       "question": "How much do Poles trust the Church?",
       "measure": "Average trust in the Church, from 0 (no trust at all) to 10 (complete trust)",
-      "start": "1990-06-01",
-      "last_data": "2023-11-25",
-      "n_readings": 46,
-      "n_surveys": 44,
+      "start": "1990-01-01",
+      "last_data": "2026-09-20",
+      "n_readings": 163,
+      "n_surveys": 160,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1036,7 +1011,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1049,8 +1024,8 @@
       "measure": "Average trust in the press, television and the media, from 0 (no trust at all) to 10 (complete trust)",
       "start": "1990-06-01",
       "last_data": "2026-03-25",
-      "n_readings": 115,
-      "n_surveys": 68,
+      "n_readings": 121,
+      "n_surveys": 73,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1061,7 +1036,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1085,7 +1060,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1097,9 +1072,9 @@
       "question": "Can most people be trusted?",
       "measure": "Average trust in other people, from 0 (you can't be too careful) to 10 (most people can be trusted)",
       "start": "1990-06-01",
-      "last_data": "2023-12-08",
-      "n_readings": 69,
-      "n_surveys": 40,
+      "last_data": "2026-02-10",
+      "n_readings": 92,
+      "n_surveys": 55,
       "sources": [
         "CBOS",
         "Eurobarometer",
@@ -1111,7 +1086,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1123,9 +1098,9 @@
       "question": "Are things in Poland going in the right direction?",
       "measure": "Average view of the country's direction, from 0 (wrong direction) to 10 (right direction)",
       "start": "1990-03-01",
-      "last_data": "2026-03-25",
-      "n_readings": 425,
-      "n_surveys": 419,
+      "last_data": "2026-10-06",
+      "n_readings": 529,
+      "n_surveys": 524,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
@@ -1136,7 +1111,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1148,9 +1123,9 @@
       "question": "How do Poles rate the state of the Polish economy?",
       "measure": "Average rating of the Polish economy, from 0 (very bad) to 10 (very good)",
       "start": "1990-01-01",
-      "last_data": "2026-03-25",
-      "n_readings": 412,
-      "n_surveys": 412,
+      "last_data": "2026-10-06",
+      "n_readings": 517,
+      "n_surveys": 517,
       "sources": [
         "CBOS",
         "Eurobarometer",
@@ -1159,7 +1134,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1171,9 +1146,9 @@
       "question": "Do Poles expect the economy to improve?",
       "measure": "Average expectation for the Polish economy in the coming year, from 0 (much worse) to 10 (much better)",
       "start": "1990-01-01",
-      "last_data": "2026-03-25",
-      "n_readings": 417,
-      "n_surveys": 415,
+      "last_data": "2026-10-06",
+      "n_readings": 500,
+      "n_surveys": 498,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1185,7 +1160,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1197,9 +1172,9 @@
       "question": "How often do Poles go to church?",
       "measure": "Average frequency of attending religious services, from 0 (never) to 10 (more than once a week)",
       "start": "1990-03-01",
-      "last_data": "2026-05-15",
-      "n_readings": 386,
-      "n_surveys": 385,
+      "last_data": "2026-10-06",
+      "n_readings": 488,
+      "n_surveys": 487,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
@@ -1214,7 +1189,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1243,7 +1218,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1255,16 +1230,16 @@
       "question": "Do Poles think hidden forces shape events?",
       "measure": "Average belief that hidden forces or conspiracies shape events, from 0 (disbelief) to 10 (strong belief)",
       "start": "1995-09-01",
-      "last_data": "2021-12-15",
-      "n_readings": 27,
-      "n_surveys": 15,
+      "last_data": "2023-04-29",
+      "n_readings": 31,
+      "n_surveys": 17,
       "sources": [
         "CBOS",
         "European Social Survey",
         "Polish National Election Study (PGSW)",
         "SWPS online panels"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1276,9 +1251,9 @@
       "question": "Do Poles look back on communist Poland (the PRL) favourably?",
       "measure": "Average view of communist Poland, from 0 (very negative) to 10 (very positive)",
       "start": "1991-01-01",
-      "last_data": "2018-05-15",
-      "n_readings": 43,
-      "n_surveys": 40,
+      "last_data": "2021-11-09",
+      "n_readings": 44,
+      "n_surveys": 41,
       "sources": [
         "CBOS",
         "Consolidation of Democracy in CEE",
@@ -1288,7 +1263,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1301,8 +1276,8 @@
       "measure": "Average view of the change of system after 1989, from 0 (not worth it, more losses) to 10 (worth it, more gains)",
       "start": "1991-01-01",
       "last_data": "2019-07-09",
-      "n_readings": 61,
-      "n_surveys": 32,
+      "n_readings": 63,
+      "n_surveys": 33,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
@@ -1312,7 +1287,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1334,7 +1309,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-24",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1346,9 +1321,9 @@
       "question": "How do Poles rate their household's material situation?",
       "measure": "Average rating of one's household's material situation, from 0 (very bad) to 10 (very good)",
       "start": "1990-01-01",
-      "last_data": "2026-05-15",
-      "n_readings": 452,
-      "n_surveys": 414,
+      "last_data": "2026-10-06",
+      "n_readings": 563,
+      "n_surveys": 521,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1363,7 +1338,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1375,9 +1350,9 @@
       "question": "Do Poles expect their household's situation to improve?",
       "measure": "Average expectation for one's household's material situation in the coming year, from 0 (much worse) to 10 (much better)",
       "start": "1990-11-01",
-      "last_data": "2026-03-25",
-      "n_readings": 582,
-      "n_surveys": 381,
+      "last_data": "2026-10-06",
+      "n_readings": 746,
+      "n_surveys": 467,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1388,7 +1363,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1401,8 +1376,8 @@
       "measure": "Average satisfaction with life as a whole, from 0 (not at all satisfied) to 10 (completely satisfied)",
       "start": "1990-06-01",
       "last_data": "2026-05-15",
-      "n_readings": 117,
-      "n_surveys": 117,
+      "n_readings": 125,
+      "n_surveys": 125,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1413,7 +1388,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1436,7 +1411,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-23",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     }
   ]
