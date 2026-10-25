@@ -37,6 +37,15 @@ Data and interactive charts on Polish politics, from my ongoing work on the part
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/voting-behaviour.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/voting-behaviour.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/voting-behaviour.html"))[Voting behaviour]
+#html.elem("div", attrs: (class: "course-desc"))[Who votes for whom in Sejm elections from 1997 to 2023, and who stays at home, by age, gender, education, where people live, how often they go to church and how well off they are; how much each characteristic changes the choice; and a calculator for a hypothetical voter with the model's uncertainty, from the national post-election surveys.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/political-attitudes.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/political-attitudes.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]

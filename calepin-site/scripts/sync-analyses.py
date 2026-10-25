@@ -39,6 +39,11 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Quality of democracy/analysis/export_web.R", which
         "Quality of democracy.R" runs)
 
+    Voting behaviour/web/voting.json              -> assets/voting-behaviour/voting.json
+    Voting behaviour/web/calc-<year>.json         -> assets/voting-behaviour/calc-<year>.json
+        (written by "Voting behaviour/analysis/70_export_web.R"; voting.json's `files`
+        lists the calculator files, one per election, and each one it lists is copied too)
+
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
 PPA_SRC. A file that is missing, unreadable or lacks the fields its chart needs is
@@ -89,6 +94,8 @@ FILES = [
      {"meta", "years", "countries"}),
     ("Quality of democracy/web/political-context.json", "assets/quality-of-democracy/political-context.json",
      {"meta", "elections", "cabinets", "presidents", "events"}),
+    ("Voting behaviour/web/voting.json", "assets/voting-behaviour/voting.json",
+     {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each
@@ -111,6 +118,9 @@ LISTED_NAMES = [
         ("covariates-", {"group", "values"}),
         ("profiles-", {"units"}),
         ("", {"facts", "results", "units"}),
+    ]),
+    ("Voting behaviour/web/voting.json", "files", [
+        ("calc-", {"year", "ballot", "design", "n_draws", "coef", "shifts", "support", "rules"}),
     ]),
 ]
 
