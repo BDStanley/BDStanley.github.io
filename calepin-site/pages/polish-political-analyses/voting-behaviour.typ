@@ -31,11 +31,13 @@ Surveys overstate turnout, by 8 to 15 points at these elections, and people tend
 
 A list has a category of its own at an election if it won seats and had at least 40 voters in the survey, or if it is one of the five long-running lists; every other list is "Other lists", which means different lists at different elections and is never drawn as a series. The calculator gives no estimate where a profile is impossible (a degree at 20 or under) or where fewer than about 15 respondents resemble the person on a pair of characteristics the model combines, and warns below about 50.
 
+The model treats respondents as independent, though the surveys are clustered. I checked this against a version that resamples whole clusters of respondents (the sampling point in 2023 and otherwise the municipality, locality or interviewer, the best the data allow; 2005 records none): allowing for clustering changes the standard errors of the effects by about 1 per cent on average, so the intervals are not widened. They do rest on the assumption that effects change gradually from one election to the next, which is what lets the model use all eight elections together; separate models for each election would give intervals about 1.6 times as wide.
+
 These are associations measured at eight elections, not causes, and not the same people followed over time. The page says nothing about the current term.
 
 Sources:
 
-- Polish General Election Study (Polskie Generalne Studia Wyborcze), post-election surveys 1997–2023 (full citation to be added).
+- Polish General Election Study (Polskie Generalne Studia Wyborcze), post-election surveys 1997–2023.
 - Official turnout and list shares: the National Electoral Commission (PKW), as in my #link("election-results.html")[Election results] and #link("party-genealogy.html")[party tracker].
 - Occupational status: the International Socio-Economic Index of occupational status (ISEI); Harry B. G. Ganzeboom and Donald J. Treiman (1996), "Internationally comparable measures of occupational status for the 1988 International Standard Classification of Occupations", _Social Science Research_ 25: 201–239.
 - Population of municipalities for the 2023 place of residence: Statistics Poland's Local Data Bank (BDL).

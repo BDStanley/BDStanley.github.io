@@ -46,7 +46,7 @@ function el(tag, attrs = {}, parent = null) {
   if (parent) parent.appendChild(n);
   return n;
 }
-function txt(parent, x, y, s, attrs = {}) { const t = el("text", {x, y, fill: MUTED, "font-size": 11.5, ...attrs}, parent); t.textContent = s; return t; }
+function txt(parent, x, y, s, attrs = {}) { const t = el("text", {x, y, fill: MUTED, "font-size": 11, ...attrs}, parent); t.textContent = s; return t; }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const MINUS = "−";
 const pct = (x, d = 1) => x == null ? "–" : (100 * x).toFixed(d) + "%";
@@ -75,20 +75,27 @@ function quantile(sorted, p) {
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (i - lo);
 }
 
+// A symmetric axis about zero whose ticks include zero: the step is 5, 10 or 20 points and the limit a multiple of it
+function niceAxis(maxAbs) {
+  const step = maxAbs <= 10 ? 5 : maxAbs <= 30 ? 10 : 20;
+  return {step, lim: Math.max(step, Math.ceil(maxAbs / step) * step)};
+}
+
 // ---- line chart ---------------------------------------------------------------------------------
 // o: {xs, ymin, ymax, ystep, fmt, series: [{name, color, vals, lo, hi, dash, rings}], tip(i) -> html, h, zero}
 function lineChart(svgId, tipId, o) {
   const svg = $(svgId), box = svg.parentNode;
-  const W = Math.max(320, box.clientWidth - 24), H = o.h || 340;
+  const W = Math.max(320, box.clientWidth - 16), H = o.h || 270;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const L = 50, R = W - 16, T = 14, B = H - 30, n = o.xs.length;
+  const L = 44, R = W - 12, T = 10, B = H - 24, n = o.xs.length;
   const X = i => L + (R - L) * (n === 1 ? 0.5 : i / (n - 1));
   const Y = v => B - (B - T) * (v - o.ymin) / (o.ymax - o.ymin);
   for (let g = o.ymin; g <= o.ymax + 1e-9; g += o.ystep) {
-    el("line", {x1: L, x2: R, y1: Y(g), y2: Y(g), stroke: g === 0 && o.ymin < 0 ? "#141414" : "#ECECEC", "stroke-width": g === 0 && o.ymin < 0 ? 1.2 : 1}, svg);
+    el("line", {x1: L, x2: R, y1: Y(g), y2: Y(g), stroke: "#ECECEC", "stroke-width": 1}, svg);
     txt(svg, L - 8, Y(g) + 4, o.fmt(g), {"text-anchor": "end"});
   }
-  o.xs.forEach((x, i) => txt(svg, X(i), H - 9, x, {"text-anchor": "middle"}));
+  if (o.ymin < 0 && o.ymax > 0) el("line", {x1: L, x2: R, y1: Y(0), y2: Y(0), stroke: "#141414", "stroke-width": 1.8}, svg);   // the zero line: increases above, decreases below
+  o.xs.forEach((x, i) => txt(svg, X(i), H - 7, x, {"text-anchor": "middle"}));
   o.series.forEach(s => {
     const idx = s.vals.map((v, i) => v == null ? null : i).filter(i => i != null);
     if (s.lo && idx.length > 1) {
@@ -212,21 +219,21 @@ function drawEffects() {
   const rows = effectRows(S.el, S.ct), ver = S.cal ? "cal" : "uncal", other = S.cal ? "uncal" : "cal";
   const order = [electionOf(S.el).ballot.find(b => b.id === "No vote"), ...listsByShare(S.el)];
   const items = order.map(b => ({b, r: rows.find(x => x.category === b.id)})).filter(x => x.r);
-  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 24), rowH = 34, T = 18, Lm = Math.min(250, W * 0.36), Rm = W - 20, H = T + rowH * items.length + 44;
+  const svg = $("fig-eff"), W = Math.max(320, svg.parentNode.clientWidth - 16), rowH = 26, T = 12, Lm = Math.min(220, W * 0.34), Rm = W - 44, H = T + rowH * items.length + 34;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const lim = Math.max(5, Math.ceil(Math.max(...items.flatMap(x => [Math.abs(x.r[ver][1]), Math.abs(x.r[ver][2])])) / 5) * 5);
+  const {lim, step} = niceAxis(Math.max(...items.flatMap(x => [Math.abs(x.r[ver][1]), Math.abs(x.r[ver][2])])));
   const X = v => Lm + (Rm - Lm) * (v + lim) / (2 * lim);
-  const step = lim <= 10 ? 5 : lim <= 30 ? 10 : 20;
   for (let g = -lim; g <= lim + 1e-9; g += step) {
-    el("line", {x1: X(g), x2: X(g), y1: T - 6, y2: T + rowH * items.length, stroke: g === 0 ? "#141414" : "#ECECEC", "stroke-width": g === 0 ? 1.4 : 1}, svg);
+    el("line", {x1: X(g), x2: X(g), y1: T - 6, y2: T + rowH * items.length, stroke: "#ECECEC", "stroke-width": 1}, svg);
     txt(svg, X(g), T + rowH * items.length + 16, (g > 0 ? "+" : g < 0 ? MINUS : "") + Math.abs(g), {"text-anchor": "middle"});
   }
+  el("line", {x1: X(0), x2: X(0), y1: T - 6, y2: T + rowH * items.length, stroke: "#141414", "stroke-width": 1.8}, svg);   // the zero line
   txt(svg, Rm, T + rowH * items.length + 34, "percentage points", {"text-anchor": "end"});
   items.forEach((x, i) => {
     const cy = T + rowH * i + rowH / 2, [m, lo, hi] = x.r[ver], c = colour(x.b.id), clear = lo > 0 || hi < 0;
     txt(svg, Lm - 10, cy + 4, x.b.name.length > 36 ? x.b.name.slice(0, 34) + "…" : x.b.name, {"text-anchor": "end", fill: "#141414", "font-size": 12.5});
-    el("line", {x1: X(lo), x2: X(hi), y1: cy, y2: cy, stroke: c, "stroke-width": 4, "stroke-linecap": "round", opacity: clear ? 1 : 0.45}, svg);
-    el("circle", {cx: X(m), cy, r: 6, fill: clear ? c : "#fff", stroke: c, "stroke-width": 2}, svg);
+    el("line", {x1: X(lo), x2: X(hi), y1: cy, y2: cy, stroke: c, "stroke-width": 3, "stroke-linecap": "round", opacity: clear ? 1 : 0.45}, svg);
+    el("circle", {cx: X(m), cy, r: 4.5, fill: clear ? c : "#fff", stroke: c, "stroke-width": 2}, svg);
     txt(svg, X(hi) + 8, cy + 4, pp(m), {fill: "#141414", "font-size": 12});
     const hit = el("rect", {x: 0, y: cy - rowH / 2, width: W, height: rowH, fill: "transparent"}, svg);
     const o = x.r[other];
@@ -236,10 +243,10 @@ function drawEffects() {
 function drawEffects2() {
   const out = S.out, ver = S.cal ? "cal" : "uncal";
   const vals = YEARS.map(y => { const r = effectRows(y, S.ct).find(x => x.category === out); return r ? r[ver] : null; });
-  const nz = vals.filter(Boolean), lim = Math.max(5, Math.ceil(Math.max(...nz.flatMap(v => [Math.abs(v[1]), Math.abs(v[2])])) / 5) * 5);
+  const nz = vals.filter(Boolean), {lim, step} = niceAxis(Math.max(...nz.flatMap(v => [Math.abs(v[1]), Math.abs(v[2])])));
   const c = out === "No vote" ? "#9aa5a9" : colour(out);
   lineChart("fig-eff2", "tip-eff2", {
-    xs: YEARS, ymin: -lim, ymax: lim, ystep: lim <= 10 ? 5 : lim <= 30 ? 10 : 20, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 300,
+    xs: YEARS, ymin: -lim, ymax: lim, ystep: step, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 230,
     series: [{name: name(out), color: c, vals: vals.map(v => v && v[0]), lo: vals.map(v => v && v[1]), hi: vals.map(v => v && v[2])}],
     tip: i => vals[i] ? `<b>${YEARS[i]}</b>${tipRow(c, name(out), pp(vals[i][0]) + " points", `90% interval ${pp(vals[i][1])} to ${pp(vals[i][2])}`)}` : ""
   });
@@ -337,6 +344,7 @@ function renderCalc() {
 }
 function drawAll() {
   const k = S.k, p = profile();
+  $("k-allbox").hidden = false;   // visible first, so the chart measures its box
   Promise.all(YEARS.map(loadCalc)).then(cds => {
     const cats = ["No vote", ...listCats(), "Other"], series = [], info = YEARS.map(() => ({}));
     const res = cds.map((cd, yi) => {
@@ -352,7 +360,7 @@ function drawAll() {
     const note = res.map((r, i) => r.ids ? null : YEARS[i]).filter(Boolean);
     $("k-allnote").textContent = note.length ? `No estimate for ${note.join(", ")}: the profile is outside what the survey supports in those elections.` : "";
     lineChart("fig-all", "tip-all", {
-      xs: YEARS, ymin: 0, ymax: 1, ystep: 0.2, fmt: v => Math.round(v * 100) + "%", h: 320, series,
+      xs: YEARS, ymin: 0, ymax: 1, ystep: 0.2, fmt: v => Math.round(v * 100) + "%", h: 240, series,
       tip: i => {
         const r = res[i];
         if (!r.ids) return `<b>${YEARS[i]}</b><div class="s">${esc(r.j.message)}</div>`;
@@ -360,7 +368,6 @@ function drawAll() {
       }
     });
     legend("leg-all", series.map(s => [s.name, s.color]));
-    $("k-allbox").hidden = false;
   });
 }
 
