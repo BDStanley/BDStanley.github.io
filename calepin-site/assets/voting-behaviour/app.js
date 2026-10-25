@@ -558,6 +558,45 @@ function pngParts() {
   }
   return {parts: []};
 }
+// Every election in which both chosen lists have a distribution: a row per election, a column per position
+async function pngIdeoAll() {
+  await ensurePol();
+  const A = polParties(S.pe).find(p => p.id === S.pa), Bn = polParties(S.pe).find(p => p.id === S.pb), dims = POL.ideological.dims;
+  const ends = {lr: ["Left", "Right"], econ: ["Left", "Right"], soc: ["Progressive", "Conservative"]};
+  const years = YEARS.filter(y => { const l = POL.ideological.elections[y].map(p => p.id); return l.includes(S.pa) && l.includes(S.pb); });
+  if (!years.length) return;
+  const cw = 420, chh = 240, pad = 24, gap = 10, head = 62, foot = 50, nameA = A ? A.name : name(S.pa), nameB = Bn ? Bn.name : name(S.pb);
+  const meas = document.createElement("canvas").getContext("2d");
+  const imgs = [];
+  for (const y of years) {
+    const pl = POL.ideological.elections[y], a = pl.find(p => p.id === S.pa), b = pl.find(p => p.id === S.pb);
+    for (const d of dims) {
+      const svg = document.createElementNS(NS, "svg"); svg.setAttribute("xmlns", NS); svg.style.cssText = "position:absolute;left:-9999px;top:0;width:" + cw + "px";
+      document.body.appendChild(svg);
+      densityChart(null, d, a, b, ends[d.id], {svg, W: cw, H: chh, title: `${d.label}, ${y}`});
+      const clone = await ChartExport.clone(svg); svg.remove(); clone.removeAttribute("style");
+      clone.setAttribute("xmlns", NS); ChartExport.setSize(clone, cw, chh);
+      imgs.push(await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone)); }));
+    }
+  }
+  await ChartExport.fonts();
+  const W = pad * 2 + cw * 3 + gap * 2, H = head + years.length * (chh + gap) + 30 + foot;
+  const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
+  const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Voting behaviour · Ideological polarisation: ${nameA} and ${nameB}`, pad, 32);
+  g.fillStyle = "#4B4B4B"; g.font = ChartExport.SUBTITLE; g.fillText("Share of each list's voters at each position, 0–10, in every election in which both lists can be compared. Dashed lines: means.", pad, 52);
+  imgs.forEach((im, i) => g.drawImage(im, pad + (i % 3) * (cw + gap), head + Math.floor(i / 3) * (chh + gap), cw, chh));
+  const ly = head + years.length * (chh + gap) + 14;
+  g.font = "12px Jost, sans-serif"; let lx = pad;
+  [[nameA, colour(S.pa), "band"], [nameB, colour(S.pb), "band"], ["Mean", "#4B4B4B", "dash"]].forEach(([label, color, kind]) => {
+    g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 2.2; g.setLineDash(kind === "dash" ? [4, 3] : []);
+    if (kind === "band") { g.globalAlpha = 0.5; g.fillRect(lx, ly - 5, 18, 10); g.globalAlpha = 1; } else { g.beginPath(); g.moveTo(lx, ly); g.lineTo(lx + 18, ly); g.stroke(); }
+    g.setLineDash([]); g.fillStyle = "#4B4B4B"; g.fillText(label, lx + 24, ly + 4); lx += 24 + g.measureText(label).width + 16;
+  });
+  g.fillStyle = "#767676"; g.font = ChartExport.CREDIT; g.fillText("Data: Polish National Election Study (PGSW), 1997–2023; weighted survey shares of recalled voters.", pad, H - 28);
+  ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
+  cv.toBlob(b => download(`voting-behaviour-ideological-${S.pa}-${S.pb}-all-elections.png`.replace(/[^\w.-]+/g, "_"), b), "image/png");
+}
 async function png() {
   const {parts, name: fname, head: headT, sub: headS} = pngParts(); if (!parts.length) return;
   const pad = 24, gap = 16, foot = 50, head = 62, items = [];
@@ -655,7 +694,7 @@ function renderPol() {
   $("pol-err").textContent = "";
   document.querySelectorAll("#p-sub button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === S.pv));
   $("pol-aff").hidden = S.pv !== "aff"; $("pol-ideo").hidden = S.pv !== "ideo";
-  $("p-pick").hidden = S.pv !== "ideo";
+  $("p-pick").hidden = S.pv !== "ideo"; $("p-allpng").hidden = S.pv !== "ideo";
   $("pollead").textContent = S.pv === "aff"
     ? "How warmly the voters of each list rate every list, and how large the gap is between feelings about one's own list and the others. Reiljan's index summarises it for the whole party system."
     : "Where the voters of two lists stand on left-right, economic and socio-cultural positions, 0 to 10, with 10 the right or conservative end. The more the shapes overlap, the less the electorates differ.";
@@ -730,13 +769,13 @@ function drawIdeological() {
   }).join("");
   $("ideo-tab").innerHTML = `<table class="t"><thead><tr><th>Position, ${S.pe}</th><th>${esc(A.name)}</th><th>${esc(Bp.name)}</th><th>${esc(Bp.name)} minus ${esc(A.name)}</th><th>Overlap</th><th>Voters</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
-function densityChart(svgId, dim, A, Bp, ends) {
-  const svg = $(svgId), box = svg.parentNode, W = Math.max(260, box.clientWidth - 16), H = 280, L = 40, R = W - 10, B = H - 40;
+function densityChart(svgId, dim, A, Bp, ends, o = {}) {
+  const svg = o.svg || $(svgId), box = o.svg ? null : svg.parentNode, W = o.W || Math.max(260, box.clientWidth - 16), H = o.H || 280, L = 40, R = W - 10, B = H - 40;
   const a = A.dims[dim.id], b = Bp.dims[dim.id];
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const sub = "Share of each list's voters at each position, 0–10";
-  const T = 30 + 14 * subLines(sub, W).length + 8;
-  figureHead(svg, dim.label, sub, W);
+  const sub = o.title ? null : "Share of each list's voters at each position, 0–10";
+  const T = o.title ? 38 : 30 + 14 * subLines(sub, W).length + 8;
+  figureHead(svg, o.title || dim.label, sub, W);
   if (!a || !b) { txt(svg, W / 2, H / 2, "Too few respondents", {"text-anchor": "middle"}); return; }
   const top = Math.max(...a.p, ...b.p), step = top > 0.4 ? 0.1 : top > 0.2 ? 0.05 : 0.025, ymax = Math.ceil(top / step) * step;
   const X = i => L + (R - L) * i / 10, Y = v => B - (B - T) * v / ymax;
@@ -749,6 +788,7 @@ function densityChart(svgId, dim, A, Bp, ends) {
     el("path", {d: `M${pts.join("L")}`, fill: "none", stroke: c, "stroke-width": 2, "stroke-linejoin": "round"}, svg);
     el("line", {x1: X(d.mean), x2: X(d.mean), y1: T, y2: B, stroke: c, "stroke-width": 1.6, "stroke-dasharray": "5 4"}, svg);
   });
+  if (o.svg) return;   // an export copy has no tooltip
   const guide = el("line", {y1: T, y2: B, stroke: "#4B4B4B", "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden"}, svg), tip = $("tip-" + svgId.slice(4));
   const move = ev => {
     const r = svg.getBoundingClientRect(), cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left, i = clamp(Math.round(((cx * W / r.width) - L) / (R - L) * 10), 0, 10);
@@ -813,6 +853,7 @@ function wire() {
   $("p-el").onchange = e => { S.pe = +e.target.value; render(); };
   $("p-a").onchange = e => { S.pa = e.target.value; render(); };
   $("p-b").onchange = e => { S.pb = e.target.value; render(); };
+  $("p-allpng").onclick = pngIdeoAll;
   $("dlcsv").onclick = csv;
   $("dlpng").onclick = png;
   $("share").onclick = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };
