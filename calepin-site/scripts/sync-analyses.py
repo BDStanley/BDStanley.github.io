@@ -40,6 +40,7 @@ page; this script copies it beside the page's chart under assets/:
         "Quality of democracy.R" runs)
 
     Voting behaviour/web/voting.json              -> assets/voting-behaviour/voting.json
+    Voting behaviour/web/polarisation.json        -> assets/voting-behaviour/polarisation.json
     Voting behaviour/web/calc-<year>.json         -> assets/voting-behaviour/calc-<year>.json
         (written by "Voting behaviour/analysis/70_export_web.R"; voting.json's `files`
         lists the calculator files, one per election, and each one it lists is copied too)
@@ -96,6 +97,8 @@ FILES = [
      {"meta", "elections", "cabinets", "presidents", "events"}),
     ("Voting behaviour/web/voting.json", "assets/voting-behaviour/voting.json",
      {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
+    ("Voting behaviour/web/polarisation.json", "assets/voting-behaviour/polarisation.json",
+     {"meta", "affective", "ideological"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each

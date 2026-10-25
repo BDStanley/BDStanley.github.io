@@ -15,7 +15,7 @@ const ACCENT = "#8B0000";
 const MUTED = "#767676";
 // Group levels take these in order (checked for colour-blind separation)
 const LEVEL_COL = ["#6A3FA0", "#E0A000", "#5E8C2A", "#D45DA4", "#4C9BE8"];
-const VIEWS = ["who", "effects", "calc", "about"];
+const VIEWS = ["who", "effects", "calc", "pol", "about"];
 // The names the site uses for lists elsewhere (the Election results and Polling tracker pages); a list's name at one
 // election comes from the export (ballot), so the 2023 PSL list is Trzecia Droga there
 const NAMES = {PSL: "PSL / Trzecia Droga", "Liberal centre": "Liberal centre (UW)", Nowoczesna: "Liberal centre (Nowoczesna)", "No vote": "Did not vote", turnout: "Turnout"};
@@ -37,8 +37,10 @@ const GR = new Map();
 const COMP = new Map();
 const S = {
   view: "who", show: "all", split: 0, cel: 2023, by: 1, ct: "educ_higher", el: 2023, out: "No vote", cal: false,
-  k: {el: 2023, age: 45, sex: "f", ed: 2, res: 3, rel: 4, ses: 3, cal: false}
+  k: {el: 2023, age: 45, sex: "f", ed: 2, res: 3, rel: 4, ses: 3, cal: false},
+  pv: "aff", pe: 2023, pa: "PiS", pb: "KO"
 };
+let POL = null;
 
 // ---- helpers ----------------------------------------------------------------------------------
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -468,6 +470,7 @@ function renderAbout() {
     <h3>Voters who give no list</h3><p>${esc(m.notes.refusers)} The table compares the average marginal effects with those from complete cases. The imputed rows fill in each missing list from the person's characteristics, left–right placement and the party they feel close to, and then push the imputed voters further left.</p>
     <div class="tscroll"><table class="t"><thead><tr><th>Version</th><th>Estimates compared</th><th>Mean difference (points)</th><th>Largest (points)</th><th>Outside the complete-case interval</th><th>Conclusions changed</th><th>Signs flipped</th></tr></thead><tbody>${sens}</tbody></table></div>
     <h3>Left-right, economic and socio-cultural positions</h3><p>In Hypothetical voter, the chart of positions shows how likely a person like the one you chose is to stand at each point from 0 to 10. Left-right is the survey's self-placement. The economic and socio-cultural positions are the mean of the survey's questions on those issues (tax, welfare, privatisation and similar; abortion, the Church, crime and similar), each placed on 0 to 10 with 10 the right or conservative end, for respondents who answered at least two. Each election and position has its own ordinal model on the same six characteristics as the vote model, with 80% intervals from 200 draws. The questions differ between elections and change format in 2011, so the economic and socio-cultural positions can be compared between people in one election but not between elections.</p>
+    <h3>Polarisation</h3><p>Affective polarisation uses the survey's like–dislike scales (0 to 10) for the lists it asks about; not every list is asked about in every election, and the lists rated are named under the chart. For the voters of each list, the gap is their mean like for their own list minus their mean like for the other rated lists, weighted by those lists' official vote shares. Reiljan's index (2020) is the average of these gaps across lists, weighted by vote share, with a 90% bootstrap interval. Reiljan uses reported partisans; this page uses recalled voters, so the figures are not strictly comparable with his. Ideological polarisation shows the weighted share of each list's voters at each position from 0 to 10 on the left-right, economic and socio-cultural measures described above, for the two lists chosen.</p>
     <h3>Reading the page</h3><ul>${["ses", "residence", "calibration", "other"].map(k => `<li>${esc(m.notes[k])}</li>`).join("")}<li>These are associations at eight elections, not causes, and the page says nothing about the current term.</li></ul>
     <h3>Related pages</h3><p>${[aLink(SITE + "election-results.html", "Election results"), aLink(SITE + "party-genealogy.html", "Parties in the Sejm"), aLink(SITE + "party-ideology.html", "Party ideology"), aLink(SITE + "party-system-indicators.html", "Party system indicators"), aLink(SITE + "political-attitudes.html#a=left-right", "Social and political trends")].join(" · ")}</p>
     <p class="cite">${cite}</p>`;
@@ -494,6 +497,10 @@ function stateString() {
   if (k.rel !== 4) q.set("rel", k.rel);
   if (k.ses !== 3) q.set("ses", k.ses);
   if (k.cal) q.set("kcal", "1");
+  if (S.pv !== "aff") q.set("pv", S.pv);
+  if (S.pe !== 2023) q.set("pe", S.pe);
+  if (S.pa !== "PiS") q.set("pa", S.pa);
+  if (S.pb !== "KO") q.set("pb", S.pb);
   return q.toString().replace(/%2C/g, ",");
 }
 const saveHash = debounce(() => {
@@ -515,6 +522,9 @@ function restoreHash() {
   S.el = YEARS.includes(+q.get("el")) ? +q.get("el") : 2023;
   S.out = outs.includes(q.get("out")) ? q.get("out") : "No vote";
   S.cal = q.get("cal") === "1";
+  S.pv = q.get("pv") === "ideo" ? "ideo" : "aff";
+  S.pe = YEARS.includes(+q.get("pe")) ? +q.get("pe") : 2023;
+  S.pa = q.get("pa") || "PiS"; S.pb = q.get("pb") || "KO";
   Object.assign(S.k, {el: YEARS.includes(+q.get("kel")) ? +q.get("kel") : 2023, age: int("age", 18, 98, 45), sex: q.get("sex") === "m" ? "m" : "f", ed: int("ed", 1, 3, 2),
     res: int("res", 1, 5, 3), rel: int("rel", 1, 6, 4), ses: int("ses", 1, 5, 3), cal: q.get("kcal") === "1"});
 }
@@ -540,6 +550,11 @@ function pngParts() {
     const parts = []; if (CALC_ROWS) parts.push(P(barsSvg()), P($("fig-all"), "leg-all"));
     if (!$("att-box").hidden) parts.push(P($("fig-att"), "leg-att"));
     return {parts, name: "hypothetical-voter", head: "Hypothetical voter", sub: "Probability of each choice for one kind of voter; median and 90% credible interval"};
+  }
+  if (S.view === "pol") {
+    const head = "Polarisation";
+    if (S.pv === "aff") return {parts: [P($("fig-heat")), P($("fig-api"))], name: "affective-polarisation", head: "Affective polarisation", sub: `Feelings towards the lists, ${S.pe}, and Reiljan's index over time`};
+    return {parts: [P($("fig-i-lr")), P($("fig-i-econ"), null), P($("fig-i-soc"), "leg-ideo")], name: "ideological-polarisation", head: "Ideological polarisation", sub: `Positions of the voters of two lists, ${S.pe}`};
   }
   return {parts: []};
 }
@@ -601,6 +616,15 @@ function csv() {
   } else if (S.view === "effects") {
     rows.push(["election", "characteristic", "outcome", "adjusted_to_official", "median_points", "lower_90", "upper_90"]);
     D.effects.rows.filter(r => D.effects.contrasts[r.effect].id === S.ct).forEach(r => ["uncal", "cal"].forEach(v => rows.push([r.year, effLabel(S.ct), name(r.category), v === "cal" ? "yes" : "no", ...r[v].map(x => x.toFixed(3))])));
+  } else if (S.view === "pol" && POL) {
+    if (S.pv === "aff") {
+      rows.push(["election", "voters_of", "rated_list", "mean_like_0_10", "own_list", "own_minus_others"]);
+      const E = POL.affective.elections[S.pe];
+      E.electorates.forEach((id, i) => E.rated.forEach((r, j) => rows.push([S.pe, id, r.id, E.matrix[i][j], id === r.id ? "yes" : "no", E.gap[i]])));
+    } else {
+      rows.push(["election", "list", "position", "measure_index", "share_of_voters", "mean", "se", "n"]);
+      POL.ideological.elections[S.pe].forEach(p => POL.ideological.dims.forEach(d => { const x = p.dims[d.id]; if (x) x.p.forEach((v, k) => rows.push([S.pe, p.id, d.id, k, v, x.mean, x.se, x.n])); }));
+    }
   } else if (S.view === "calc") {
     const cd = CALC[S.k.el]; if (!cd) return;
     const p = profile(), j = judge(cd, p); if (j.level === "stop") return;
@@ -616,6 +640,126 @@ function csv() {
 }
 
 // ---- wiring --------------------------------------------------------------------------------------------------------
+// ---- Polarisation -------------------------------------------------------------------------------------
+function ensurePol() {
+  if (POL) return Promise.resolve(POL);
+  return fetch("polarisation.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => (POL = j));
+}
+const POL_HEAT = [[247, 244, 240], [0, 121, 107]];
+const heatColour = v => { const t = clamp(v / 10, 0, 1), c = POL_HEAT[0].map((a, i) => Math.round(a + (POL_HEAT[1][i] - a) * t)); return `rgb(${c.join(",")})`; };
+function polParties(year) {   // lists with an ideological distribution, largest first
+  const sh = {}; (POL.affective.elections[year] ? POL.affective.elections[year].rated : []).forEach(r => { sh[r.id] = r.share; });
+  return POL.ideological.elections[year].slice().sort((a, b) => (sh[b.id] || 0) - (sh[a.id] || 0));
+}
+function renderPol() {
+  $("pol-err").textContent = "";
+  document.querySelectorAll("#p-sub button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === S.pv));
+  $("pol-aff").hidden = S.pv !== "aff"; $("pol-ideo").hidden = S.pv !== "ideo";
+  $("p-pick").hidden = S.pv !== "ideo";
+  $("pollead").textContent = S.pv === "aff"
+    ? "How warmly the voters of each list rate every list, and how large the gap is between feelings about one's own list and the others. Reiljan's index summarises it for the whole party system."
+    : "Where the voters of two lists stand on left-right, economic and socio-cultural positions, 0 to 10, with 10 the right or conservative end. The more the shapes overlap, the less the electorates differ.";
+  if (S.pv === "aff") drawAffective(); else drawIdeological();
+}
+function drawAffective() {
+  const E = POL.affective.elections[S.pe], svg = $("fig-heat"), box = svg.parentNode;
+  const order = E.rated.map((r, i) => i).sort((a, b) => E.rated[b].share - E.rated[a].share);
+  const cols = order.map(i => E.rated[i]);
+  const rows = E.electorates.map((id, i) => ({id, i, share: (E.rated.find(r => r.id === id) || {}).share || 0})).sort((a, b) => b.share - a.share);
+  const nm = id => (E.rated.find(r => r.id === id) || {}).name || id;
+  const W = Math.max(320, box.clientWidth - 16), Lm = Math.min(150, W * 0.3), Gm = 70, cw = Math.min(84, (W - Lm - Gm - 6) / cols.length), ch = 34, hh = 66;
+  const sub = "Mean like–dislike score, 0 (dislike) to 10 (like) · rows: voters of each list · outlined: own list · right: own list minus the others";
+  const nsub = subLines(sub, W).length, T = 30 + 14 * nsub + hh, H = T + ch * rows.length + 14;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
+  figureHead(svg, `How each list's voters rate every list, ${S.pe}`, sub, W);
+  cols.forEach((c, j) => {
+    const x = Lm + j * cw + cw / 2, tx = txt(svg, x, T - 8, nm(c.id), {"font-size": 11, fill: "#141414", "text-anchor": "start"});
+    tx.setAttribute("transform", `rotate(-38 ${x} ${T - 8})`);
+  });
+  txt(svg, Lm + cols.length * cw + 10, T - 8, "Own − others", {"font-size": 11, fill: "#767676"});
+  const gmax = Math.max(...rows.map(r => E.gap[r.i]), 1);
+  rows.forEach((r, k) => {
+    const y = T + k * ch, own = r.id;
+    el("circle", {cx: 8, cy: y + ch / 2, r: 5, fill: colour(own)}, svg);
+    txt(svg, 20, y + ch / 2 + 4, nm(own), {"font-size": 12, fill: "#141414"});
+    txt(svg, Lm - 6, y + ch / 2 + 4, `n=${E.n[r.i]}`, {"font-size": 9.5, fill: "#767676", "text-anchor": "end"});
+    cols.forEach((c, j) => {
+      const v = E.matrix[r.i][E.rated.findIndex(x => x.id === c.id)];
+      const g = el("g", {}, svg);
+      el("rect", {x: Lm + j * cw + 1, y: y + 1, width: cw - 2, height: ch - 2, rx: 3, fill: heatColour(v), stroke: c.id === own ? "#141414" : "none", "stroke-width": c.id === own ? 1.6 : 0}, g);
+      txt(g, Lm + j * cw + cw / 2, y + ch / 2 + 4, v.toFixed(1), {"font-size": 11, fill: v / 10 > 0.55 ? "#fff" : "#141414", "text-anchor": "middle"});
+      g.insertAdjacentHTML("beforeend", `<title>${esc(nm(own))} voters rate ${esc(nm(c.id))}: ${v.toFixed(2)}</title>`);
+    });
+    const gv = E.gap[r.i], gx = Lm + cols.length * cw + 10;
+    el("rect", {x: gx, y: y + 8, width: Math.max(1, 38 * gv / gmax), height: ch - 16, fill: "#8B0000", "fill-opacity": 0.75}, svg);
+    txt(svg, gx + 38 * gv / gmax + 4, y + ch / 2 + 4, gv.toFixed(1), {"font-size": 11, fill: "#141414"});
+  });
+  // The index across elections
+  const I = POL.affective.index, cur = I.find(r => r.year === S.pe);
+  lineChart("fig-api", "tip-api", {
+    xs: YEARS, ymin: 0, ymax: 8, ystep: 2, fmt: v => v, h: 300,
+    title: "Reiljan's index of affective polarisation", sub: "Average gap between feelings about one's own list and the others, 0–10, weighted by vote shares · 90% bootstrap interval",
+    series: [
+      {name: "Index", color: "#8B0000", vals: YEARS.map(y => (I.find(r => r.year === y) || {}).value), lo: YEARS.map(y => (I.find(r => r.year === y) || {}).lo), hi: YEARS.map(y => (I.find(r => r.year === y) || {}).hi)},
+      {name: "Selected", color: "#8B0000", rings: true, vals: YEARS.map(y => y === S.pe ? cur.value : null)}],
+    tip: i => { const r = I.find(x => x.year === YEARS[i]); return r ? `<div class="h">${r.year}</div>${tipRow("#8B0000", "Index", r.value.toFixed(2), `${r.lo.toFixed(2)}–${r.hi.toFixed(2)} · ${r.electorates} electorates, ${r.rated} lists rated`)}` : ""; }
+  });
+  const missing = POL.ideological.elections[S.pe].map(p => p.id).filter(id => !E.rated.some(r => r.id === id) && id !== "Other");
+  $("aff-note").innerHTML = `<b>${S.pe}: ${cur.value.toFixed(2)}</b> (${cur.lo.toFixed(2)}–${cur.hi.toFixed(2)}). Lists rated that year: ${E.rated.map(r => esc(r.name)).join(", ")}.` +
+    (missing.length ? ` Not rated in the survey, so left out: ${missing.map(m => esc(name(m))).join(", ")}.` : "") +
+    " The index is the vote-weighted average, over the lists whose voters rated their own list, of the gap between their mean like for their own list and their mean like for the other rated lists, those weighted by official vote shares.";
+}
+function drawIdeological() {
+  const pl = polParties(S.pe), ids = pl.map(p => p.id);
+  fillSelect($("p-a"), pl.map(p => [p.id, p.name]), ids.includes(S.pa) ? S.pa : ids[0]);
+  if (!ids.includes(S.pa)) S.pa = ids[0];
+  const others = pl.filter(p => p.id !== S.pa);
+  if (!ids.includes(S.pb) || S.pb === S.pa) S.pb = (others.find(p => p.id === "KO") || others[0]).id;
+  fillSelect($("p-b"), pl.map(p => [p.id, p.name]), S.pb);
+  const A = pl.find(p => p.id === S.pa), Bp = pl.find(p => p.id === S.pb), dims = POL.ideological.dims;
+  const ends = {lr: ["Left", "Right"], econ: ["Left", "Right"], soc: ["Progressive", "Conservative"]};
+  dims.forEach(d => densityChart("fig-i-" + d.id, d, A, Bp, ends[d.id]));
+  const colA = colour(A.id), colB = colour(Bp.id);
+  $("leg-ideo").innerHTML = [[A.name, colA], [Bp.name, colB]].map(([n, c]) => `<span><i class="sw band" style="background:${c};opacity:.6"></i>${esc(n)}</span>`).join("") + `<span><i class="sw" style="border-color:#4B4B4B;border-top-style:dashed"></i>Mean</span>`;
+  LEGEND["leg-ideo"] = [[A.name, colA, "band"], [Bp.name, colB, "band"], ["Mean", "#4B4B4B", "dash"]];
+  const rows = dims.map(d => {
+    const a = A.dims[d.id], b = Bp.dims[d.id];
+    if (!a || !b) return `<tr><td>${esc(d.label)}</td><td colspan="5">Too few respondents</td></tr>`;
+    const gap = b.mean - a.mean, se = Math.sqrt(a.se * a.se + b.se * b.se), ov = a.p.reduce((s, v, i) => s + Math.min(v, b.p[i]), 0);
+    return `<tr><td>${esc(d.label)}</td><td>${a.mean.toFixed(1)}</td><td>${b.mean.toFixed(1)}</td><td>${(gap < 0 ? MINUS : "+") + Math.abs(gap).toFixed(1)} <i>(${(gap - 1.645 * se).toFixed(1).replace("-", MINUS)} to ${(gap + 1.645 * se).toFixed(1).replace("-", MINUS)})</i></td><td>${Math.round(100 * ov)}%</td><td>${a.n} / ${b.n}</td></tr>`;
+  }).join("");
+  $("ideo-tab").innerHTML = `<table class="t"><thead><tr><th>Position, ${S.pe}</th><th>${esc(A.name)}</th><th>${esc(Bp.name)}</th><th>${esc(Bp.name)} minus ${esc(A.name)}</th><th>Overlap</th><th>Voters</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+function densityChart(svgId, dim, A, Bp, ends) {
+  const svg = $(svgId), box = svg.parentNode, W = Math.max(260, box.clientWidth - 16), H = 280, L = 40, R = W - 10, B = H - 40;
+  const a = A.dims[dim.id], b = Bp.dims[dim.id];
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
+  const sub = "Share of each list's voters at each position, 0–10";
+  const T = 30 + 14 * subLines(sub, W).length + 8;
+  figureHead(svg, dim.label, sub, W);
+  if (!a || !b) { txt(svg, W / 2, H / 2, "Too few respondents", {"text-anchor": "middle"}); return; }
+  const top = Math.max(...a.p, ...b.p), step = top > 0.4 ? 0.1 : top > 0.2 ? 0.05 : 0.025, ymax = Math.ceil(top / step) * step;
+  const X = i => L + (R - L) * i / 10, Y = v => B - (B - T) * v / ymax;
+  for (let g = 0; g <= ymax + 1e-9; g += step) { el("line", {x1: L, x2: R, y1: Y(g), y2: Y(g), stroke: "#ECECEC"}, svg); txt(svg, L - 6, Y(g) + 4, Math.round(g * 1000) / 10 + "%", {"text-anchor": "end"}); }
+  for (let i = 0; i <= 10; i++) txt(svg, X(i), B + 16, i, {"text-anchor": "middle"});
+  txt(svg, L, B + 33, `0 ${ends[0]}`, {"font-size": 11, fill: "#767676"}); txt(svg, R, B + 33, `10 ${ends[1]}`, {"font-size": 11, fill: "#767676", "text-anchor": "end"});
+  [[a, A], [b, Bp]].forEach(([d, p]) => {
+    const c = colour(p.id), pts = d.p.map((v, i) => `${X(i)} ${Y(v)}`);
+    el("path", {d: `M${X(0)} ${Y(0)}L${pts.join("L")}L${X(10)} ${Y(0)}Z`, fill: c, "fill-opacity": 0.42}, svg);
+    el("path", {d: `M${pts.join("L")}`, fill: "none", stroke: c, "stroke-width": 2, "stroke-linejoin": "round"}, svg);
+    el("line", {x1: X(d.mean), x2: X(d.mean), y1: T, y2: B, stroke: c, "stroke-width": 1.6, "stroke-dasharray": "5 4"}, svg);
+  });
+  const guide = el("line", {y1: T, y2: B, stroke: "#4B4B4B", "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden"}, svg), tip = $("tip-" + svgId.slice(4));
+  const move = ev => {
+    const r = svg.getBoundingClientRect(), cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left, i = clamp(Math.round(((cx * W / r.width) - L) / (R - L) * 10), 0, 10);
+    guide.setAttribute("x1", X(i)); guide.setAttribute("x2", X(i)); guide.setAttribute("visibility", "visible");
+    tip.innerHTML = `<div class="h">Position ${i}</div>` + tipRow(colour(A.id), A.name, Math.round(a.p[i] * 100) + "%") + tipRow(colour(Bp.id), Bp.name, Math.round(b.p[i] * 100) + "%");
+    tip.hidden = false; const bw = box.clientWidth, tw = tip.offsetWidth, px = X(i) * r.width / W + 12;
+    tip.style.left = clamp(px + tw > bw - 8 ? px - tw - 24 : px, 4, bw - tw - 4) + "px"; tip.style.top = "26px";
+  };
+  const leave = () => { guide.setAttribute("visibility", "hidden"); tip.hidden = true; };
+  svg.onmousemove = move; svg.onmouseleave = leave; svg.ontouchstart = move; svg.ontouchmove = move; svg.ontouchend = leave;
+}
 function render() {
   document.querySelectorAll("#views button").forEach(b => b.setAttribute("aria-selected", b.dataset.v === S.view));
   VIEWS.forEach(v => { $("v-" + v).hidden = v !== S.view; });
@@ -623,10 +767,12 @@ function render() {
   if (S.view === "who") renderWho();
   else if (S.view === "effects") renderEffects();
   else if (S.view === "calc") renderCalc();
+  else if (S.view === "pol") ensurePol().then(renderPol, e => { $("pol-err").textContent = "The polarisation data could not be loaded (" + e.message + ")."; });
   else renderAbout();
   saveHash();
 }
 function syncControls() {
+  fillSelect($("p-el"), YEARS.slice().reverse().map(y => [y, y]), S.pe);
   const lists = listCats();
   fillSelect($("w-show"), [["all", "All lists"], ["turnout", "Turnout"], ...lists.map(c => [c, name(c)])], S.show);
   fillSelect($("w-split"), D.groupings.map((g, i) => [i, i === 0 ? "Everyone" : g.id]), S.split);
@@ -663,11 +809,15 @@ function wire() {
   $("k-rel").onchange = e => { S.k.rel = +e.target.value; render(); };
   $("k-ses").onchange = e => { S.k.ses = +e.target.value; render(); };
   $("k-cal").onchange = e => { S.k.cal = e.target.checked; render(); };
+  document.querySelectorAll("#p-sub button").forEach(b => { b.onclick = () => { S.pv = b.dataset.p; render(); }; });
+  $("p-el").onchange = e => { S.pe = +e.target.value; render(); };
+  $("p-a").onchange = e => { S.pa = e.target.value; render(); };
+  $("p-b").onchange = e => { S.pb = e.target.value; render(); };
   $("dlcsv").onclick = csv;
   $("dlpng").onclick = png;
   $("share").onclick = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };
   try { hashTarget().addEventListener("hashchange", () => { restoreHash(); syncControls(); render(); }); } catch (e) { /* ignore */ }
-  window.addEventListener("resize", debounce(() => { if (S.view === "who" || S.view === "effects" || S.view === "calc") render(); }, 200));
+  window.addEventListener("resize", debounce(() => { if (S.view === "who" || S.view === "effects" || S.view === "calc" || S.view === "pol") render(); }, 200));
 }
 
 fetch("voting.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
