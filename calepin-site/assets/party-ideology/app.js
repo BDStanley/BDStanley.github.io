@@ -116,7 +116,23 @@ function prep() {
 }
 const asked = (dim, w) => DIM.get(dim).waves.includes(w);
 const dimsIn = w => D.dims.filter(d => d.waves.includes(w));
-const nameOf = p => p.pl ? (p.label || p.abbr) : p.abbr;
+// A Polish party that CHES rated under different names keeps the name it had in each wave (SLD until
+// 2019, Nowa Lewica in 2024; Unia Wolności in 2002, then PD); the party's own label is its latest name
+function waveEntry(p, w) {
+  const m = p.ptByWave, ids = m ? [...new Set(Object.values(m))] : [];
+  if (ids.length < 2 || !m[w] || m[w] === ids[ids.length - 1]) return null;
+  return D.ptNames.find(t => t.id === m[w]) || null;
+}
+const waveName = (p, w) => { const x = waveEntry(p, w); return x ? x.abbr : null; };
+// the party's full names as they stood in the wave
+const fullNames = (p, w = S.wave) => { const x = waveEntry(p, w); return (x ? [x.name] : [p.name, p.en]).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i); };
+const nameOf = (p, w = S.wave) => p.pl ? (waveName(p, w) || p.label || p.abbr) : p.abbr;
+// The party to show when none is chosen: the Polish party with the largest vote at the election the wave's ratings follow
+function defaultSel(w) {
+  let best = null;
+  for (const r of BYW.get(w) || []) if (r.p.pl && isNum(r.listV) && (!best || r.listV > best.listV)) best = r;
+  return best ? best.p.id : 2605;
+}
 function inScope(p, scope = S.scope) {
   return scope === "eu" ? true : scope === "cee" ? (p.ctry.east || p.pl) : p.pl;
 }
@@ -142,7 +158,7 @@ function neighbours(r, pool, k) {
 }
 
 // ---- state ----------------------------------------------------------------------------------
-const S = {view: "map", wave: 2024, scope: "pl", sd: false, x: "lrecon", y: "galtan", colour: "family", trails: true, voters: false, fit: true,
+const S = {view: "map", wave: 2024, scope: "pl", sd: false, x: "lrecon", y: "galtan", colour: "family", trails: false, voters: false, fit: false, selUser: false,
   sel: 2605, group: "scope", prev: true, popY: "galtan", measure: "galtan", vdim: "lrgen"};
 const VIEWS = ["map", "profile", "populism", "time", "voters", "systems"];
 
@@ -150,16 +166,16 @@ function hashTarget() { try { if (window.top !== window && window.top.location.h
 function stateString() {
   const q = new URLSearchParams();
   if (S.view !== "map") q.set("view", S.view);
-  if (S.sel !== 2605) q.set("party", S.sel);
+  if (S.selUser) q.set("party", S.sel);
   if (S.wave !== WAVES[WAVES.length - 1]) q.set("w", S.wave);
   if (S.scope !== "pl") q.set("s", S.scope);
   if (S.sd) q.set("sd", "1");
   if (S.x !== "lrecon") q.set("x", S.x);
   if (S.y !== "galtan") q.set("y", S.y);
   if (S.colour !== "family") q.set("c", S.colour);
-  if (!S.trails) q.set("t", "0");
+  if (S.trails) q.set("t", "1");
   if (S.voters) q.set("vo", "1");
-  if (!S.fit) q.set("fl", "0");
+  if (S.fit) q.set("fl", "1");
   if (S.group !== "scope") q.set("g", S.group);
   if (S.popY !== "galtan") q.set("py", S.popY);
   if (S.measure !== "galtan") q.set("m", S.measure);
@@ -176,23 +192,23 @@ function restoreHash() {
   const q = new URLSearchParams(h);
   if (VIEWS.includes(q.get("view"))) S.view = q.get("view");
   const pid = parseInt(q.get("party"), 10);
-  if (P.has(pid)) S.sel = pid;
+  if (P.has(pid)) { S.sel = pid; S.selUser = true; }
   const pt = q.get("pt");
   if (pt) {
-    if (D.ptChes[pt] && P.has(D.ptChes[pt])) S.sel = D.ptChes[pt];
+    if (D.ptChes[pt] && P.has(D.ptChes[pt])) { S.sel = D.ptChes[pt]; S.selUser = true; }
     else S.ptMissing = pt;
   }
   const w = parseInt(q.get("w"), 10);
-  if (WAVES.includes(w)) S.wave = w;
+  if (WAVES.includes(w)) { S.wave = w; if (!S.selUser) S.sel = defaultSel(w); }
   else if (P.has(S.sel) && !P.get(S.sel).byW.has(S.wave)) { const ws = [...P.get(S.sel).byW.keys()].filter(x => WAVES.includes(x)); if (ws.length) S.wave = Math.max(...ws); }
   if (["eu", "cee", "pl"].includes(q.get("s"))) S.scope = q.get("s");
   if (q.get("sd") === "1") { S.sd = true; S.scope = "pl"; }
   if (DIM.has(q.get("x"))) S.x = q.get("x");
   if (DIM.has(q.get("y"))) S.y = q.get("y");
   if (["populist", "family", "none"].includes(q.get("c"))) S.colour = q.get("c");
-  if (q.get("t") === "0") S.trails = false;
+  if (q.get("t") === "1") S.trails = true;
   if (q.get("vo") === "1") S.voters = true;
-  if (q.get("fl") === "0") S.fit = false;
+  if (q.get("fl") === "1") S.fit = true;
   if (["scope", "family", "pop"].includes(q.get("g"))) S.group = q.get("g");
   if (DIM.has(q.get("py"))) S.popY = q.get("py");
   if (["lrgen", "lrecon", "galtan", "align"].includes(q.get("m"))) S.measure = q.get("m");
@@ -212,8 +228,8 @@ function placeTip(tip, box, e) {
 }
 function rowTip(r, dims) {
   const p = r.p, c = POPC[popCat(r.pop).k];
-  const lines = [`<b>${esc(p.pl ? (p.label || p.abbr) : p.abbr)}</b> <span class="s">${esc(p.ctry.name)} · ${r.w}</span>`];
-  const nm = [p.name, p.en].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+  const lines = [`<b>${esc(nameOf(p, r.w))}</b> <span class="s">${esc(p.ctry.name)} · ${r.w}</span>`];
+  const nm = fullNames(p, r.w);
   if (nm.length) lines.push(`<div class="s">${esc(nm.join(" · "))}</div>`);
   for (const id of dims) {
     const d = DIM.get(id), v = r.v[id], sd = r.sd && r.sd[id];
@@ -390,7 +406,7 @@ function scatter(svgId, boxId, xd, yd, w, opts) {
     const c = r.p.pl ? r.p.col : opts.colour(r), rr = r.p.pl ? 4.2 + Math.sqrt(isNum(r.listV) ? r.listV : (r.vote || 1)) * 0.8 : rad(r.vote) + 1;
     if (on) o.push(`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(rr + 4).toFixed(1)}" fill="none" stroke="${ACCENT}" stroke-width="2"></circle>`);
     o.push(`<circle data-k="r:${r.i}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rr.toFixed(1)}" fill="${c}" stroke="#fff" stroke-width="1.5" style="cursor:pointer"></circle>`);
-    labels.push({x, y, r: rr + (on ? 4 : 0), t: r.p.pl ? nameOf(r.p) : `${r.p.abbr} (${r.p.ctry.iso})`, on, i: r.i});
+    labels.push({x, y, r: rr + (on ? 4 : 0), t: r.p.pl ? nameOf(r.p, w) : `${r.p.abbr} (${r.p.ctry.iso})`, on, i: r.i});
   }
   o.push(yPoles);
   o.push(placeLabels(labels, W, H, m, [...labels.map(l => ({x1: l.x - l.r, x2: l.x + l.r, y1: l.y - l.r, y2: l.y + l.r})), ...vobs,
@@ -448,7 +464,7 @@ function renderMap() {
   const shown = rows.filter(r => inScope(r.p)).length;
   $("mapnote").innerHTML = `${shown} parties rated in the ${w} wave (fieldwork ${esc(D.meta.fieldwork[w])})${S.scope !== "pl" ? ", sized by vote" : ""}; Polish parties are sized by the vote for the list they ran on. `
     + (S.sd && w === 2024 ? "The whiskers show the spread (one SD) of the experts' ratings of each party. " : "")
-    + (S.trails ? "Paths join each Polish party's positions at earlier waves (labelled by year). " : "")
+    + (S.trails ? "The trajectory joins each Polish party's positions at earlier waves (labelled by year). " : "")
     + fitNote(xd, yd)
     + (voters ? `Diamonds are each Polish party's own voters at the wave's fieldwork month, from my ${pa}, joined to the party by a dashed line (with 80% intervals for the selected party); grey is all voters. ${MAPV.length ? "" : "No Polish party rated in " + w + " has a voter estimate on both axes. "}The voters' scales are survey measures placed on 0–10${[xd, yd].some(d => d.id === "eu_position" && voterDim(d.id).share) ? " (support for EU membership is a share of those with a view, divided by 10 and set on the 1–7 axis)" : ""}, not the experts' scale: read direction and order, not exact distances. `
       : S.voters && !mapHasVoters() ? `Party voters can be shown when both axes are among the issues under Parties and voters. ` : "")
@@ -826,7 +842,7 @@ function renderPanel() {
   const now = POLISH.filter(q => q.byW.has(w)).sort((a, b) => (b.byW.get(w).listV || 0) - (a.byW.get(w).listV || 0));
   o.push(`<div class="chips">${now.map(q => `<button type="button" class="chip" data-p="${q.id}" aria-pressed="${q.id === p.id}"><span class="dot" style="background:${q.col}"></span>${esc(nameOf(q))}</button>`).join("")}</div>`);
   o.push(`<div class="phead"><h2>${esc(nameOf(p))}</h2><span class="ctry">${esc(p.ctry.name)}</span></div>`);
-  const nm = [p.name, p.en].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+  const nm = fullNames(p);
   if (nm.length) o.push(`<div class="pname">${esc(nm.join(" · "))}</div>`);
   // positions in the wave
   if (r) {
@@ -950,10 +966,12 @@ function renderView() {
   else if (S.view === "voters") renderVoters();
   else renderSystems();
 }
+// Until a party has been chosen, the party shown follows the wave
+function setWave(w) { S.wave = w; if (!S.selUser) S.sel = defaultSel(w); }
 function render() { renderControls(); renderView(); renderPanel(); saveHash(); }
 function select(id) {
   if (!P.has(id)) return;
-  S.sel = id; S.allEvents = false;
+  S.sel = id; S.selUser = true; S.allEvents = false;
   const p = P.get(id);
   if (!p.byW.has(S.wave)) {
     const ws = [...p.byW.keys()].filter(w => WAVES.includes(w));
@@ -974,7 +992,7 @@ function hoverChart(svgId, boxId, tipId, html) {
 }
 function wire() {
   $("views").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.view = b.dataset.v; render(); });
-  $("waves").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.wave = +b.dataset.w; render(); });
+  $("waves").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; setWave(+b.dataset.w); render(); });
   // The comparisons toggle; with none on, only the Polish parties are shown. Whiskers go with the Polish parties alone.
   $("scopes").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; S.scope = S.scope === b.dataset.s ? "pl" : b.dataset.s; S.sd = false; render(); });
   $("sdbtn").addEventListener("click", () => { S.sd = !S.sd; if (S.sd) S.scope = "pl"; render(); });
@@ -1007,7 +1025,7 @@ function wire() {
   $("pop").addEventListener("click", clickRow);
   document.addEventListener("click", e => {
     const g = e.target.closest("[data-goto]");
-    if (g) { S.wave = +g.dataset.goto; render(); return; }
+    if (g) { setWave(+g.dataset.goto); render(); return; }
     const pb = e.target.closest("[data-p]");
     if (pb && (pb.closest("#panel") || pb.closest("#popcards") || pb.closest("#timelegend"))) { select(+pb.dataset.p); return; }
     if (e.target.id === "allev") { S.allEvents = !S.allEvents; renderPanel(); return; }
@@ -1030,7 +1048,7 @@ async function init() {
     return;
   }
   prep();
-  S.wave = WAVES[WAVES.length - 1];
+  S.wave = WAVES[WAVES.length - 1]; S.sel = defaultSel(S.wave);
   restoreHash();
   $("asof").innerHTML = `Chapel Hill Expert Survey, ${WAVES[0]}–${WAVES[WAVES.length - 1]} (${WAVES.length} waves; ${D.parties.length} parties in ${D.countries.length} countries), and The PopuList 4.0 (elections to ${esc(D.meta.populistTo)}). Every position is the mean rating of the party's leadership by country experts.`;
   wire();
