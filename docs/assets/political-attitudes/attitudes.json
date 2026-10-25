@@ -1111,7 +1111,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-25",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
