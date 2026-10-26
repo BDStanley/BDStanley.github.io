@@ -56,6 +56,17 @@ let DRAWS = null, drawsState = "idle", SWING = null;
 let TERMS = null, TERM = null;  // terms.json, and the past term on show (null: the current one)
 const TCACHE = new Map();
 let PENDING = null;             // a past term, and the houses and parties picked in the link, until it loads
+// A poll is its house, mid-date and, where one house polled the same days for two clients, the k in the
+// fifth element of each of its rows (absent in a past term's data: 0)
+function pollKey(r) { return r[0] + "|" + r[1] + "|" + (r[4] || 0); }
+// The pop-up for a poll figure picked by a click: the figure under the pointer first, then the house and
+// date, then the poll's figures for the other parties, largest first
+function pollTipHtml(best, rows, V) {
+  const row = (q, bold) => `<div class="r"><span><span class="dot" style="background:${col(V.parties[q[2]])}"></span>${bold ? "<b>" : ""}${esc(V.parties[q[2]])}${bold ? "</b>" : ""}</span><span>${q[3].toFixed(1)}%</span></div>`;
+  const others = rows.filter(q => q !== best).sort((u, v) => v[3] - u[3]);
+  return row(best, true) + `<div class="muted">${esc(V.pollsters[best[1]])} · ${dstr(best[0])}</div>` +
+    (others.length ? `<div style="margin-top:6px;padding-top:5px;border-top:1px solid #EEE">${others.map(q => row(q, false)).join("")}</div>` : "");
+}
 // What the trend and pollster charts draw: the current term, or a past one
 function VD() {
   return TERM
@@ -110,7 +121,7 @@ const forbiddenIn = parties => R.forbidden.filter(fp => fp.every(x => parties.in
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: true, events: true,
-  hoverParty: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -596,13 +607,18 @@ function renderTrends() {
   const shown = p => S.parties.size === 0 || S.parties.has(p);
   const parties = V.parties.filter(shown);
   const polls = S.points ? V.polls.filter(r => r[0] >= a && r[0] <= b && shown(V.parties[r[2]])) : [];
+  // A poll picked by a click: all its figures, whatever parties are picked in the legend, with every other
+  // point and the trend lines greyed out
+  const selRows = S.pollSel && S.points ? V.polls.filter(r => pollKey(r) === S.pollSel && r[0] >= a && r[0] <= b) : [];
+  if (S.pollSel && !selRows.length) S.pollSel = null;
+  const sel = selRows.length > 0;
   let ymax = 0;
-  polls.forEach(r => { ymax = Math.max(ymax, r[3]); });
+  polls.concat(selRows).forEach(r => { ymax = Math.max(ymax, r[3]); });
   parties.forEach(p => { T.series[p].hi.forEach((v, i) => { if (v != null && dates[i] >= a) ymax = Math.max(ymax, v); }); });
   V.results.forEach(r => { if (r.date >= a) Object.entries(r.values).forEach(([p, v]) => { if (shown(p)) ymax = Math.max(ymax, v); }); });
   ymax = Math.ceil((ymax + 1) / 5) * 5;
   const y = v => m.t + (1 - v / ymax) * (H - m.t - m.b);
-  const fade = p => S.hoverParty && S.hoverParty !== p;
+  const fade = p => sel || (S.hoverParty && S.hoverParty !== p);
   const o = [];
   // grid
   const ystep = ymax > 40 ? 10 : 5;
@@ -630,9 +646,11 @@ function renderTrends() {
   // polls
   const dots = [];
   polls.forEach(r => {
+    if (sel) { if (pollKey(r) !== S.pollSel) dots.push(`<circle cx="${x(r[0]).toFixed(1)}" cy="${y(r[3]).toFixed(1)}" r="2" fill="#BBB" fill-opacity="0.2"/>`); return; }
     const p = V.parties[r[2]], on = !hl || S.houses.has(V.pollsters[r[1]]);
     dots.push(`<circle cx="${x(r[0]).toFixed(1)}" cy="${y(r[3]).toFixed(1)}" r="${on ? 2.4 : 2}" fill="${on ? col(p) : "#BBB"}" fill-opacity="${on ? (fade(p) ? 0.08 : hl ? 0.75 : 0.4) : 0.15}"/>`);
   });
+  selRows.forEach(r => dots.push(`<circle cx="${x(r[0]).toFixed(1)}" cy="${y(r[3]).toFixed(1)}" r="4" fill="${col(V.parties[r[2]])}" stroke="#fff" stroke-width="1"/>`));
   o.push(`<g>${dots.join("")}</g>`);
   // lines
   parties.forEach(p => {
@@ -665,13 +683,14 @@ function renderTrends() {
   const svg = $("trend");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
   svg.innerHTML = o.join("");
-  TR = { W, H, m, a, b, x, y, polls, hl, shown, evx };
+  TR = { W, H, m, a, b, x, y, polls: sel ? selRows : polls, allPolls: polls, selKey: sel ? S.pollSel : null, hl, shown, evx };
   // legend
   // A past term lists every party it had, with the closing figure for those still standing
   const legend = V.past ? V.parties : P.filter(p => T.series[p].med[li] != null);
   $("trendlegend").classList.toggle("picked", S.parties.size > 0);
   $("trendlegend").innerHTML = legend.map(p => { const v = T.series[p].med[li]; return `<button type="button" data-p="${esc(p)}" aria-pressed="${S.parties.has(p)}"><span class="dot" style="background:${col(p)}"></span>${esc(p)}${v != null ? " " + v.toFixed(1) + "%" : ""}</button>`; }).join("") +
-    (S.parties.size ? `<button type="button" class="linkbtn" id="partyclear">Show all parties</button>` : "");
+    (S.parties.size ? `<button type="button" class="linkbtn" id="partyclear">Show all parties</button>` : "") +
+    (sel ? `<button type="button" class="linkbtn" id="pollclear">Show all polls</button>` : "");
 }
 function trendHover(ev) {
   if (!TR) return;
@@ -686,14 +705,14 @@ function trendHover(ev) {
   let best = null, bd = 64;
   const V = VD();
   TR.polls.forEach(p => {
-    if (TR.hl && !S.houses.has(V.pollsters[p[1]])) return;
+    if (!TR.selKey && TR.hl && !S.houses.has(V.pollsters[p[1]])) return;
     const dx = TR.x(p[0]) - mx, dy = TR.y(p[3]) - my, dd = dx * dx + dy * dy;
     if (dd < bd) { bd = dd; best = p; }
   });
   let html;
   if (best) {
-    g.innerHTML = `<circle cx="${TR.x(best[0])}" cy="${TR.y(best[3])}" r="5" fill="none" stroke="#141414"/>`;
-    html = `<div class="r"><span><span class="dot" style="background:${col(V.parties[best[2]])}"></span><b>${esc(V.parties[best[2]])}</b></span><span>${best[3].toFixed(1)}%</span></div><div class="muted">${esc(V.pollsters[best[1]])} · ${dstr(best[0])}</div>`;
+    g.innerHTML = `<circle cx="${TR.x(best[0])}" cy="${TR.y(best[3])}" r="${TR.selKey ? 7 : 5}" fill="none" stroke="#141414"/>`;
+    html = TR.selKey ? pollTipHtml(best, TR.polls, V) : `<div class="r"><span><span class="dot" style="background:${col(V.parties[best[2]])}"></span><b>${esc(V.parties[best[2]])}</b></span><span>${best[3].toFixed(1)}%</span></div><div class="muted">${esc(V.pollsters[best[1]])} · ${dstr(best[0])}</div>`;
   } else {
     const dates = V.trend.dates, d = TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a);
     let i = 0, bdd = Infinity; dates.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bdd) { bdd = dd; i = j; } });
@@ -971,8 +990,8 @@ function renderChips() {
   $("ev").checked = S.events;
   $("dlwrap").hidden = !((S.view === "trends" && !TERM) || S.view === "time");
   $("dl").checked = S.dateLine;
-  $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click parties below the chart to show them alone."
-    : "Hover for every party's estimate; click to load that week into the scenario. Click parties below the chart to show them alone.";
+  $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click a poll figure to see that poll alone, with its figures for every party. Click parties below the chart to show them alone."
+    : "Hover for every party's estimate; click to load that week into the scenario. Click a poll figure to see that poll alone, with its figures for every party (click again or press Escape to let go). Click parties below the chart to show them alone.";
 }
 
 // ---- rendering ------------------------------------------------------------------------------
@@ -1170,11 +1189,24 @@ function bind() {
   $("dl").addEventListener("change", e => { S.dateLine = e.target.checked; if (S.view === "trends") renderTrends(); else renderView(); });
   $("pts").addEventListener("change", e => { S.points = e.target.checked; renderTrends(); saveHash(); });
   // trend chart
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && S.pollSel) { S.pollSel = null; renderTrends(); } });
   $("trend").addEventListener("mousemove", trendHover);
   $("trend").addEventListener("mouseleave", () => { $("trendtip").hidden = true; const g = $("trendhover"); if (g) g.innerHTML = ""; });
   $("trend").addEventListener("click", ev => {
-    if (!TR || TERM) return;
-    const r = $("trend").getBoundingClientRect(), k = TR.W / r.width, mx = (ev.clientX - r.left) * k;
+    if (!TR) return;
+    const r = $("trend").getBoundingClientRect(), k = TR.W / r.width, mx = (ev.clientX - r.left) * k, my = (ev.clientY - r.top) * k;
+    // A click on a poll figure (within 8px, as in the hover) picks that poll; a second click on it, a click
+    // anywhere else on the chart, or Escape lets go
+    const V = VD();
+    let hit = null, hd = 64;
+    (TR.allPolls || []).forEach(p => {
+      if (TR.hl && !S.houses.has(V.pollsters[p[1]])) return;
+      const dx = TR.x(p[0]) - mx, dy = TR.y(p[3]) - my, dd = dx * dx + dy * dy;
+      if (dd < hd) { hd = dd; hit = p; }
+    });
+    if (hit) { const key = pollKey(hit); S.pollSel = S.pollSel === key ? null : key; renderTrends(); trendHover(ev); return; }
+    if (S.pollSel) { S.pollSel = null; renderTrends(); trendHover(ev); return; }
+    if (TERM) return;
     if (mx < TR.m.l || mx > TR.W - TR.m.r) return;
     setWeek(nearestWeek(TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a)));
     toast("Loaded the week of " + dstr(WEEKS[S.w].date));
@@ -1182,7 +1214,8 @@ function bind() {
   $("trendlegend").addEventListener("mouseover", e => { const s = e.target.closest("[data-p]"); const p = s ? s.dataset.p : null; if (p !== S.hoverParty) { S.hoverParty = p; renderTrends(); } });
   $("trendlegend").addEventListener("mouseleave", () => { S.hoverParty = null; renderTrends(); });
   $("trendlegend").addEventListener("click", e => {
-    if (e.target.closest("#partyclear")) S.parties.clear();
+    if (e.target.closest("#pollclear")) S.pollSel = null;
+    else if (e.target.closest("#partyclear")) S.parties.clear();
     else { const b = e.target.closest("button[data-p]"); if (!b) return; const p = b.dataset.p; S.parties.has(p) ? S.parties.delete(p) : S.parties.add(p); }
     renderTrends(); saveHash();
   });
@@ -1264,11 +1297,11 @@ function loadTerms() {
 function setTerm(id) {
   const t = TERMS && TERMS.terms.find(x => x.id === id);
   if (!t) {
-    TERM = null; PENDING = null; $("term").value = ""; S.houses.clear(); S.parties.clear(); S.hoverParty = null;
+    TERM = null; PENDING = null; $("term").value = ""; S.houses.clear(); S.parties.clear(); S.hoverParty = null; S.pollSel = null;
     header(); renderChips(); update(); return;
   }
   const show = d => {
-    TERM = d; S.houses.clear(); S.parties.clear();
+    TERM = d; S.houses.clear(); S.parties.clear(); S.pollSel = null;
     if (PENDING && PENDING.term === id) {
       PENDING.houses.forEach(o => { if (d.pollsters.includes(o)) S.houses.add(o); });
       PENDING.parties.forEach(p => { if (d.parties.includes(p)) S.parties.add(p); });
