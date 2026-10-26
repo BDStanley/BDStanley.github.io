@@ -304,7 +304,9 @@ function consRange(sim, c, k) {
 }
 
 // ---- governing majorities -------------------------------------------------------------------
-const optLabel = members => members.map(m => m in PIDX ? short(m) : m).join(" + ");
+// Members are named from the most seats to the fewest in the current view
+const seatsOfName = m => { if (!CUR) return 0; const k = CUR.ents.findIndex(e => e.name === m); return k >= 0 ? CUR.seats[k] : (CUR.memberSeats && CUR.memberSeats[m]) || 0; };
+const optLabel = members => (CUR ? [...members].sort((a, b) => seatsOfName(b) - seatsOfName(a)) : members).map(m => m in PIDX ? short(m) : m).join(" + ");
 // Lists that can form a government: without joint lists the compatibility rules
 // apply and MN is never a partner; with joint lists any lists may combine.
 function govLists(ents, joint, seatsOf) {
@@ -370,14 +372,17 @@ function pruneGov(opts, probabilistic) {
   keep.forEach(o => { o.key = [...o.members].sort().join("|"); });
   return keep;
 }
-// Minimum winning coalition from the seat numbers on screen: fewest lists, then fewest seats.
-function mwcOf(ents, joint, seats) {
-  const maj = govDet(ents, joint, seats).filter(o => o.s >= R.seatsMajority);
-  if (!maj.length) return null;
-  maj.sort((a, b) => a.size - b.size || a.s - b.s);
-  const o = maj[0]; o.key = [...o.members].sort().join("|");
-  return o;
+// Ideological plausibility of an option. Its gaps are the seated parties that lie between its most distant members
+// on the left-right positions (R.ideology) without being in it: a coalition with no gap is ideologically adjacent.
+// Fewer gaps are more plausible, then fewer lists, then a narrower span.
+function plaus(o, ents, ms) {
+  const ps = o.members.flatMap(nm => { const e = ents.find(x => x.name === nm); return e ? e.members : [nm]; }).filter(p => p in R.ideology);
+  if (ps.length < 2) return { gaps: 0, span: 0, skipped: [] };
+  const pos = ps.map(p => R.ideology[p]), lo = Math.min(...pos), hi = Math.max(...pos);
+  const skipped = Object.keys(R.ideology).filter(p => !ps.includes(p) && R.ideology[p] > lo && R.ideology[p] < hi && (ms[p] || 0) > 0).sort((x, y) => R.ideology[x] - R.ideology[y]);
+  return { gaps: skipped.length, span: hi - lo, skipped };
 }
+const byPlaus = (a, b) => a.pl.gaps - b.pl.gaps || a.size - b.size || a.pl.span - b.pl.span || b.p - a.p || b.s - a.s;
 
 // ---- the current view's numbers -------------------------------------------------------------
 let CUR = null;
@@ -439,9 +444,12 @@ function compute() {
     e.vote = sum(e.members.map(p => eff[p]));
     e.rawVote = sum(e.members.map(p => S.shares[p] || 0));
   });
-  const mwc = mwcOf(ents, S.joint, seats);
-  if (mwc) { const m = gov.find(o => o.key === mwc.key); if (m) Object.assign(mwc, { s: m.s, p: m.p, lo: m.lo, hi: m.hi, pv: m.pv, pc: m.pc, prob: mode !== "single" }); }
-  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, govAll: allGov, sim, memberSeats, mwc };
+  allGov.forEach(o => { o.pl = plaus(o, ents, memberSeats); });
+  gov.sort(byPlaus);
+  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, govAll: allGov, sim, memberSeats, mwc: null };
+  // The most plausible government with a majority in most simulations is the one the hemicycle shows by default
+  const top = coalOptions()[0];
+  if (top && top.kind === 0) CUR.mwc = Object.assign({}, top.o, { prob: mode !== "single" });
 }
 
 // ---- panel ----------------------------------------------------------------------------------
@@ -905,7 +913,7 @@ function renderHemi() {
   } else $("hemicert").innerHTML = "";
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
-    ? `<b style="color:var(--ink)">Minimum winning coalition:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
+    ? `<b style="color:var(--ink)">Most plausible government:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
     : (minorityNote() || "No combination reaches a governing majority.");
 }
 // A list's seats in each of the 41 constituencies, by certainty
@@ -1028,14 +1036,23 @@ function render2023() {
 // Parties on the lists of an option (a joint list stands for its members)
 const partiesOf = o => o.members.flatMap(nm => { const e = CUR.ents.find(x => x.name === nm); return e ? e.members : [nm]; });
 const breaksOf = o => { const ps = partiesOf(o); return R.forbidden.filter(fp => fp.every(x => ps.includes(x))); };
-const COAL_KIND = ["Minimum winning", "Surplus majority", "Possible, short of a majority in most simulations"];
-// Every combination with at least a 5% chance of a majority, from the most parsimonious: first the minimum
-// winning coalitions (a majority in at least half the simulations, with no smaller coalition that is), by number
-// of lists and then seats; then the majorities with a partner they do not need; then the rest, by chance
+const COAL_KIND = ["Majority in most simulations", "", "Possible, short of a majority in most simulations"];
+// Every combination with at least a 5% chance of a majority, from the most to the least plausible: first those with
+// a majority in at least half the simulations, ordered by ideological adjacency (see plaus), then the rest
 function coalOptions() {
-  const all = CUR.govAll || [], win = o => o.p >= 0.5;
-  const items = all.filter(o => o.p >= 0.05).map(o => ({ o, kind: win(o) ? (all.some(b => win(b) && isSub(b, o)) ? 1 : 0) : 2, br: breaksOf(o) }));
-  items.sort((a, b) => a.kind - b.kind || (a.kind < 2 ? a.o.size - b.o.size || a.o.s - b.o.s : b.o.p - a.o.p || a.o.size - b.o.size));
+  const win = o => o.p >= 0.5;
+  const items = (CUR.govAll || []).filter(o => o.p >= 0.05).map(o => ({ o, kind: win(o) ? 0 : 2, br: breaksOf(o) }));
+  items.sort((a, b) => a.kind - b.kind || byPlaus(a.o, b.o));
+  // An oversized majority (one that holds a smaller majority of its own, so some member's seats are not needed)
+  // ranks below that smaller majority, however adjacent the extra party is
+  for (let pass = 0; pass < items.length; pass++) {
+    let moved = false;
+    for (let i = 0; i < items.length; i++) {
+      let last = -1; items.forEach((b, j) => { if (j !== i && win(b.o) && isSub(b.o, items[i].o)) last = Math.max(last, j); });
+      if (last > i) { items.splice(last, 0, items.splice(i, 1)[0]); moved = true; break; }
+    }
+    if (!moved) break;
+  }
   return items;
 }
 // With no viable majority (no option has one in most simulations, or in the single allocation), the largest list
@@ -1068,7 +1085,7 @@ function renderHemiCoal() {
     <div class="xkey"><span><i class="xc ex">✕</i> excluded</span><span><i class="xc in"></i> included</span><span><i class="xc in chg"></i> changed from default</span>${nChg ? `<button type="button" class="linkbtn" id="xreset">Reset to defaults</button>` : ""}</div>`;
   let kind = -1;
   const rows = items.map(({ o, kind: k, br }) => {
-    const head = k !== kind ? `<div class="muted" style="font-size:11.5px;margin:8px 0 2px;font-weight:500">${COAL_KIND[k]}</div>` : "";
+    const head = k !== kind ? `<div class="muted" style="font-size:11.5px;margin:8px 0 2px;font-weight:500">${k === 0 ? "Majority in most simulations, most plausible first" : COAL_KIND[k]}</div>` : "";
     kind = k;
     const sub = `${isNewKey(o.key) ? `<b style="color:var(--accent)">new</b> · ` : ""}${o.s} seats${o.lo != null ? ` (${o.lo}–${o.hi})` : ""}${br.length ? ` · <span class="neg">breaks: ${esc(br.map(fp => fp.join(" and ")).join("; "))}</span>` : ""}`;
     const isNew = S.coalMsg && S.coalMsg.keys.includes(o.key);
@@ -1080,9 +1097,9 @@ function renderHemiCoal() {
   const m = S.coalMsg;
   const msg = (m ? `<p class="help" style="margin:2px 0 6px;padding:6px 8px;background:var(--tint);border-radius:8px">${m.text}</p>` : "");
   box.innerHTML = `<span class="label" style="display:block;margin:10px 0 2px">Possible governments</span>${msg}
-    <p class="help" style="margin:0 0 4px">From the most parsimonious: minimum winning coalitions first, then majorities with a partner they do not need. ${probabilistic ? `The chance is the share of simulations with ${R.seatsMajority}+ seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Click one to show it on the hemicycle.</p>
+    <p class="help" style="margin:0 0 4px">From the most to the least plausible: coalitions whose parties are ideologically adjacent come first (none skips a seated party lying between its most distant members), whether or not they are minimum winning, then those with fewer parties; a majority with a party it does not need ranks below the smaller majority inside it. ${probabilistic ? `The chance is the share of simulations with ${R.seatsMajority}+ seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Click one to show it on the hemicycle.</p>
     <div style="max-height:340px;overflow-y:auto">${rows || `<p class="help" style="margin:0">No combination reaches a majority in at least 5% of simulations.</p>`}</div>
-    <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Coalition exclusions (${nExcl} pair${nExcl === 1 ? "" : "s"} excluded)</summary>
+    <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Coalition configurations (${nExcl} pair${nExcl === 1 ? "" : "s"} excluded)</summary>
       <div style="margin-top:4px">${rules}</div>
       <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, any lists may combine, so the rules are not applied." : canRelax ? "Switching a pair recalculates the options (and the government options in the panel) from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
 }
@@ -1469,7 +1486,7 @@ async function png(only) {
     const applied = joint ? [] : [...S.excl].map(pairOf);
     const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(pairText).join("; ")}.` : "No coalition possibilities are excluded.";
     const ruleLines = [{ lines: wrapTo(ruleSentence, "10.5px " + F, SW - 2 * pad) }];
-    const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most parsimonious: minimum winning coalitions first (a majority in at least half the simulations, with no smaller coalition that is), then majorities with a partner they do not need, then the rest by chance. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
+    const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most to the least plausible: coalitions of ideologically adjacent parties (none skips a seated party between its most distant members) first, then those with fewer parties, then a narrower span; a majority with a party it does not need ranks below the smaller majority inside it; options without a majority in most simulations come last. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
     const noteLines = wrapTo(note, "10.5px " + F, SW - 2 * pad);
     const rulesH = sum(ruleLines.map(r => r.lines.length * 13 + 3));
     secs.push({ col: "R", h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
