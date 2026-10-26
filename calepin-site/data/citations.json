@@ -2,12 +2,12 @@
   "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes them on every build (Scopus needs its API key in the Keychain); see that file.",
   "scopus": {
     "as_of": "2026-10",
-    "citations": 1669,
+    "citations": 1670,
     "h_index": 13
   },
   "google_scholar": {
     "as_of": "2026-10",
-    "citations": 4066,
+    "citations": 4069,
     "h_index": 20,
     "i10_index": 23
   },

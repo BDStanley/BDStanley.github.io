@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-10-25",
+    "updated": "2026-10-26",
     "n": 54
   },
   "attitudes": [
@@ -424,7 +424,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -635,7 +635,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -818,7 +818,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -891,7 +891,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -917,7 +917,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -942,7 +942,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -962,7 +962,7 @@
         "Eurobarometer",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1011,7 +1011,7 @@
         "Polish National Election Study (PGSW)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1086,7 +1086,7 @@
         "Polish Panel Survey (POLPAN)",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1134,7 +1134,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1160,7 +1160,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-24",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1338,7 +1338,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1363,7 +1363,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-10-26",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
