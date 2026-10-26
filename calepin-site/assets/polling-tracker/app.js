@@ -128,22 +128,28 @@ function prep() {
     : C.map(c => c[R.coef[p]]));
   LAUNCH = {}; R.launches.forEach(l => { LAUNCH[l.party] = l.date; });
   WEEKS = D.weeks;
+  S.excl = defaultExcl();
 }
 const col = n => (TERM && TERM.colours[n]) || (R.colours && R.colours[n]) || "#808080";
 const exists = (p, date) => !(p in LAUNCH) || date >= LAUNCH[p];
 const short = p => R.short[p] || p;
 const sortParties = m => [...m].sort((a, b) => PIDX[a] - PIDX[b]);
-// The exclusion rules (R.forbidden: pairs that will not govern together). A rule the user has switched off
-// (S.rulesOff, by ruleKey) no longer excludes a coalition.
-const ruleKey = fp => fp.join("|");
-const ruleOn = fp => !S.rulesOff.has(ruleKey(fp));
-const ruleText = fp => `${fp[0]} and ${fp[1]} do not govern together`;
-const compatible = parties => !R.forbidden.some(fp => ruleOn(fp) && fp.every(x => parties.includes(x)));
-const forbiddenIn = parties => R.forbidden.filter(fp => ruleOn(fp) && fp.every(x => parties.includes(x))).map(fp => fp.join(" and "));
+// The exclusion rules: pairs of parties that will not govern together (S.excl, by pairKey). They start as
+// R.forbidden, and the picker can switch any pair either way.
+const pairKey = (a, b) => (PIDX[a] <= PIDX[b] ? [a, b] : [b, a]).join("|");
+const pairOf = k => k.split("|");
+const defaultExcl = () => new Set(R.forbidden.map(fp => pairKey(fp[0], fp[1])));
+const pairText = fp => `${fp[0]} and ${fp[1]}`;
+const ruleText = fp => `${pairText(fp)} do not govern together`;
+const exclIn = parties => [...S.excl].map(pairOf).filter(fp => fp.every(x => parties.includes(x)));
+const compatible = parties => exclIn(parties).length === 0;
+const forbiddenIn = parties => exclIn(parties).map(pairText);
+// True if a default exclusion has been switched to Include (the published combinations then are not enough)
+const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])));
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
-  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, rulesOff: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -392,10 +398,10 @@ function compute() {
       const i = PIDX[e.name], s = wk.seats[i];
       return { seats: s == null ? single.nat[k] : s, lo: s == null ? null : wk.seatsLo[i], hi: s == null ? null : wk.seatsHi[i], pThr: e.mnOnly ? null : wk.pThr[i] };
     });
-    allGov = govFromWeek(wk);
+    allGov = govFromWeek(wk).filter(o => compatible(o.members));
     // With a rule switched off, the published combinations (which follow every rule) are not enough: the
     // browser's own simulation of the week's draws gives every combination
-    if (S.rulesOff.size && drawsState === "ready") {
+    if (relaxed() && drawsState === "ready") {
       if (!MODEL_SIM.has(S.w)) MODEL_SIM.set(S.w, simulate(S.w, null));
       const ms = MODEL_SIM.get(S.w);
       if (ms) allGov = govFromSim(ms, []);
@@ -580,7 +586,8 @@ function renderGov() {
   $("govhead").textContent = probabilistic ? "chance of 231+ seats" : "single allocation";
   const shown = S.showAllGov ? list : list.slice(0, 8);
   const focus = S.pinGov || S.focusGov;
-  $("gov").innerHTML = !list.length
+  const mn = minorityNote(), mnBox = mn ? `<p class="help" style="margin:0 0 6px;padding:6px 8px;background:var(--tint);border-radius:8px">${mn}</p>` : "";
+  $("gov").innerHTML = mnBox + (!list.length
     ? `<p class="help" style="margin:0">No combination of ${S.joint.length ? "lists" : "compatible parties"} reaches a majority${probabilistic ? " in at least 5% of simulations" : ""}.</p>`
     : shown.map(o => {
       const extra = probabilistic
@@ -591,7 +598,7 @@ function renderGov() {
         <span class="s">${o.s}</span><span class="p">${probabilistic ? prob(o.p) : "✓"}</span>
         <span class="bar"><i style="width:${(100 * Math.min(o.s, 460) / 460).toFixed(1)}%"></i><u style="left:${(100 * 231 / 460).toFixed(2)}%"></u><u style="left:${(100 * 276 / 460).toFixed(2)}%;opacity:.35"></u><u style="left:${(100 * 307 / 460).toFixed(2)}%;opacity:.35"></u></span>
       </div>`;
-    }).join("");
+    }).join(""));
   const more = $("govmore");
   more.hidden = list.length <= 8;
   more.textContent = S.showAllGov ? "Show fewer" : `Show all ${list.length}`;
@@ -899,7 +906,7 @@ function renderHemi() {
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
     ? `<b style="color:var(--ink)">Minimum winning coalition:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
-    : "No combination reaches a governing majority.";
+    : (minorityNote() || "No combination reaches a governing majority.");
 }
 // A list's seats in each of the 41 constituencies, by certainty
 let MODAL_FROM = null;
@@ -1031,6 +1038,16 @@ function coalOptions() {
   items.sort((a, b) => a.kind - b.kind || (a.kind < 2 ? a.o.size - b.o.size || a.o.s - b.o.s : b.o.p - a.o.p || a.o.size - b.o.size));
   return items;
 }
+// With no viable majority (no option has one in most simulations, or in the single allocation), the largest list
+// has to try to govern alone. Returns the sentence, or "" when a majority is viable.
+function minorityNote() {
+  const cur = CUR; if (!cur || TERM) return "";
+  const probabilistic = cur.mode !== "single";
+  if ((cur.govAll || []).some(o => probabilistic ? o.p >= 0.5 : o.s >= R.seatsMajority)) return "";
+  let k = -1; cur.ents.forEach((e, i) => { if (k < 0 || cur.seats[i] > cur.seats[k] || (cur.seats[i] === cur.seats[k] && e.vote > cur.ents[k].vote)) k = i; });
+  const e = cur.ents[k], n = cur.seats[k], rng = cur.rows[k] && cur.rows[k].lo != null ? ` (${cur.rows[k].lo}–${cur.rows[k].hi})` : "";
+  return `<b>No viable majority.</b> The largest ${e.joint ? "list" : "party"}, ${esc(optLabel(e.joint ? e.members : [e.name]))} with ${n} seats${rng}, would have to try to form a minority government${R.seatsMajority - n <= 10 ? " or court defectors from other parties" : ""}.`;
+}
 const isNewKey = key => !!(S.coalMsg && S.coalMsg.keys.includes(key));
 function renderHemiCoal() {
   const box = $("hemicoal");
@@ -1038,10 +1055,17 @@ function renderHemiCoal() {
   const cur = CUR, probabilistic = cur.mode !== "single", items = coalOptions(), joint = S.joint.length > 0;
   const canRelax = !joint && (cur.mode !== "model" || drawsState === "ready");
   const focus = S.pinGov || S.focusGov;
-  const rules = R.forbidden.map(fp => {
-    const on = ruleOn(fp), n = items.filter(it => it.br.some(b => ruleKey(b) === ruleKey(fp))).length;
-    return `<label class="switch" style="display:flex;font-size:12.5px;margin:3px 0"><input type="checkbox" data-rule="${esc(ruleKey(fp))}"${on ? " checked" : ""}${canRelax ? "" : " disabled"}><span>${esc(ruleText(fp))}${on ? "" : ` <span class="muted">· switched off${n ? `: ${n} option${n > 1 ? "s" : ""} below break${n > 1 ? "" : "s"} it` : ""}</span>`}</span></label>`;
-  }).join("");
+  const dk = defaultExcl(), cp = P.filter(p => p !== "MN");
+  const cell = (a, b) => {
+    const k = pairKey(a, b), x = S.excl.has(k), changed = x !== dk.has(k), n = items.filter(it => it.br.some(f => pairKey(f[0], f[1]) === k)).length;
+    const off = joint || (x && !canRelax);
+    return `<button type="button" class="xc ${x ? "ex" : "in"}${changed ? " chg" : ""}" data-pair="${esc(k)}" aria-pressed="${x}" aria-label="${esc(pairText([a, b]))}: ${x ? "excluded" : "included"}${changed ? ", changed from the default" : ""}" title="${esc(pairText([a, b]))}: ${x ? "excluded" : "included"}${x && !off ? " (click to include)" : off ? "" : " (click to exclude)"}${!x && n ? ` · ${n} option${n > 1 ? "s" : ""} below ${n > 1 ? "break" : "breaks"} the default` : ""}"${off ? " disabled" : ""}>${x ? "✕" : ""}</button>`;
+  };
+  const head = `<span></span>${cp.slice(0, -1).map(p => `<button type="button" class="xh" data-party="${esc(p)}"${joint ? " disabled" : ""} title="Toggle every pair with ${esc(p)}">${esc(short(p))}</button>`).join("")}`;
+  const body = cp.slice(1).map((r, i) => `<button type="button" class="xh xr" data-party="${esc(r)}"${joint ? " disabled" : ""} title="Toggle every pair with ${esc(r)}">${esc(short(r))}</button>${cp.slice(0, cp.length - 1).map((c, j) => j < i + 1 ? cell(r, c) : "<span></span>").join("")}`).join("");
+  const nExcl = S.excl.size, nChg = [...dk].filter(k => !S.excl.has(k)).length + [...S.excl].filter(k => !dk.has(k)).length;
+  const rules = `<div class="xgrid" style="grid-template-columns:auto repeat(${cp.length - 1},34px)" role="group" aria-label="Pairs of parties that will not govern together">${head}${body}</div>
+    <div class="xkey"><span><i class="xc ex">✕</i> excluded</span><span><i class="xc in"></i> included</span><span><i class="xc in chg"></i> changed from default</span>${nChg ? `<button type="button" class="linkbtn" id="xreset">Reset to defaults</button>` : ""}</div>`;
   let kind = -1;
   const rows = items.map(({ o, kind: k, br }) => {
     const head = k !== kind ? `<div class="muted" style="font-size:11.5px;margin:8px 0 2px;font-weight:500">${COAL_KIND[k]}</div>` : "";
@@ -1054,13 +1078,13 @@ function renderHemiCoal() {
       <span class="bar"><i style="width:${(100 * Math.min(o.s, 460) / 460).toFixed(1)}%"></i><u style="left:${(100 * 231 / 460).toFixed(2)}%"></u></span></div>`;
   }).join("");
   const m = S.coalMsg;
-  const msg = m ? `<p class="help" style="margin:2px 0 6px;padding:6px 8px;background:var(--tint);border-radius:8px">${m.text}</p>` : "";
+  const msg = (m ? `<p class="help" style="margin:2px 0 6px;padding:6px 8px;background:var(--tint);border-radius:8px">${m.text}</p>` : "");
   box.innerHTML = `<span class="label" style="display:block;margin:10px 0 2px">Possible governments</span>${msg}
     <p class="help" style="margin:0 0 4px">From the most parsimonious: minimum winning coalitions first, then majorities with a partner they do not need. ${probabilistic ? `The chance is the share of simulations with ${R.seatsMajority}+ seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Click one to show it on the hemicycle.</p>
     <div style="max-height:340px;overflow-y:auto">${rows || `<p class="help" style="margin:0">No combination reaches a majority in at least 5% of simulations.</p>`}</div>
-    <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Exclusion rules (switch off to allow a coalition)</summary>
+    <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Coalition exclusions (${nExcl} pair${nExcl === 1 ? "" : "s"} excluded)</summary>
       <div style="margin-top:4px">${rules}</div>
-      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, any lists may combine, so the rules are not applied." : canRelax ? "Switching a rule off recalculates the options (and the government options in the panel) from the simulations." : "Relaxing the rules needs the simulation, which loads with the scenario data."}</p></details>`;
+      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, any lists may combine, so the rules are not applied." : canRelax ? "Switching a pair recalculates the options (and the government options in the panel) from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
 }
 function renderHemiBlocks() {
   $("hemi2023btn").setAttribute("aria-pressed", String(S.hemi2023)); $("hemicoalbtn").setAttribute("aria-pressed", String(S.hemiCoal));
@@ -1231,6 +1255,9 @@ function stateString() {
   if (S.w !== WEEKS.length - 1) q.set("w", iso(WEEKS[S.w].date));
   const d = defaults(S.w), ed = SP.filter(p => Math.abs(S.shares[p] - d[p]) > 0.051);
   if (ed.length) q.set("v", ed.map(p => p + ":" + S.shares[p]).join(","));
+  const dk = defaultExcl(), xi = [...dk].filter(k => !S.excl.has(k)), xx = [...S.excl].filter(k => !dk.has(k));
+  if (xi.length) q.set("xi", xi.join(";"));
+  if (xx.length) q.set("xx", xx.join(";"));
   if (S.joint.length) q.set("j", S.joint.map(m => m.join(",")).join(";"));
   if (S.joint.length && S.dyn) q.set("s", S.dyn);
   if (S.houses.size) q.set("h", [...S.houses].join(";"));
@@ -1254,6 +1281,9 @@ function restoreHash() {
   if (q.get("v")) q.get("v").split(",").forEach(kv => { const i = kv.lastIndexOf(":"), p = kv.slice(0, i), v = parseFloat(kv.slice(i + 1)); if (p in PIDX && isFinite(v)) S.shares[p] = clamp(v, 0, 100); });
   S.shares.Other = 100 - sum(SP.map(p => S.shares[p]));
   if (q.get("j")) q.get("j").split(";").forEach(g => { const m = g.split(",").filter(p => P.includes(p)); if (m.length >= 2 && !m.some(p => S.joint.flat().includes(p)) && S.joint.length < 4) S.joint.push(m); });
+  const okPair = k => { const p = pairOf(k); return p.length === 2 && p[0] !== p[1] && p.every(x => P.includes(x)); };
+  if (q.get("xi")) q.get("xi").split(";").filter(okPair).forEach(k => S.excl.delete(pairKey(...pairOf(k))));
+  if (q.get("xx")) q.get("xx").split(";").filter(okPair).forEach(k => S.excl.add(pairKey(...pairOf(k))));
   if (q.get("s")) S.dyn = clamp(parseInt(q.get("s"), 10) || 0, 0, 100);
   const list = k => q.get(k) ? q.get(k).split(";") : [];
   if (q.get("t")) PENDING = { term: q.get("t"), houses: list("h"), parties: list("pp") };
@@ -1436,8 +1466,8 @@ async function png(only) {
   if ((combo || only === "hemi" && S.hemiCoal) && !TERM) {
     const items = coalOptions(), shownC = items.slice(0, a4 ? 8 : 12), more = items.length - shownC.length, joint = S.joint.length > 0, probabilistic = CUR.mode !== "single";
     const label = o => optLabel(o.members);
-    const applied = joint ? [] : R.forbidden.filter(ruleOn);
-    const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(fp => fp.join(" and ")).join("; ")}.` : "No coalition possibilities are excluded.";
+    const applied = joint ? [] : [...S.excl].map(pairOf);
+    const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(pairText).join("; ")}.` : "No coalition possibilities are excluded.";
     const ruleLines = [{ lines: wrapTo(ruleSentence, "10.5px " + F, SW - 2 * pad) }];
     const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most parsimonious: minimum winning coalitions first (a majority in at least half the simulations, with no smaller coalition that is), then majorities with a partner they do not need, then the rest by chance. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
     const noteLines = wrapTo(note, "10.5px " + F, SW - 2 * pad);
@@ -1603,15 +1633,25 @@ function bind() {
   $("hemi2023btn").addEventListener("click", () => { S.hemi2023 = !S.hemi2023; renderHemiBlocks(); });
   $("hemicoalbtn").addEventListener("click", () => { S.hemiCoal = !S.hemiCoal; renderHemiBlocks(); });
   const hc = $("hemicoal"), markOn = () => [...document.querySelectorAll(".grow-row")].forEach(g => g.classList.toggle("on", g.dataset.key === (S.pinGov || S.focusGov)));
-  hc.addEventListener("change", e => {
-    const k = e.target.dataset.rule; if (!k) return;
-    const before = new Map(coalOptions().map(i => [i.o.key, i])), fp = R.forbidden.find(x => ruleKey(x) === k);
-    e.target.checked ? S.rulesOff.delete(k) : S.rulesOff.add(k); S.pinGov = null; S.focusGov = null; S.coalMsg = null; update();
+  const toggled = (before, text) => {
+    S.pinGov = null; S.focusGov = null; S.coalMsg = null; update();
     const after = coalOptions(), added = after.filter(i => !before.has(i.o.key)), gone = [...before.keys()].filter(key => !after.some(i => i.o.key === key));
     const desc = i => `${esc(optLabel(i.o.members))} (${CUR.mode === "single" ? i.o.s + " seats" : prob(i.o.p) + (i.kind === 2 ? ", short of a majority in most simulations" : "")})`;
-    const verb = e.target.checked ? "Switching it back on" : "Switching off";
-    S.coalMsg = { keys: e.target.checked ? [] : added.map(i => i.o.key), text: `<b>${verb} “${esc(ruleText(fp))}”</b> ${e.target.checked ? (gone.length ? `removes ${gone.length} option${gone.length > 1 ? "s" : ""}.` : "changes no option.") : added.length ? `adds ${added.length} option${added.length > 1 ? "s" : ""}, highlighted below: ${added.slice(0, 4).map(desc).join("; ")}${added.length > 4 ? "…" : ""}.` : `adds no option with at least a 5% chance of a majority.`}` };
+    const nopt = (n, w) => `${n} option${n > 1 ? "s" : ""} ${w}`;
+    S.coalMsg = { keys: added.map(i => i.o.key), text: `<b>${text}</b>: ${added.length ? `adds ${added.length} option${added.length > 1 ? "s" : ""}, highlighted below: ${added.slice(0, 4).map(desc).join("; ")}${added.length > 4 ? "…" : ""}` : "adds no option with at least a 5% chance of a majority"}${gone.length ? `; ${nopt(gone.length, "no longer possible")}` : ""}.` };
     renderHemiBlocks();
+  };
+  const setPairs = (keys, ex, text) => {
+    const before = new Map(coalOptions().map(i => [i.o.key, i]));
+    keys.forEach(k => { ex ? S.excl.add(k) : S.excl.delete(k); });
+    toggled(before, text);
+  };
+  hc.addEventListener("click", e => {
+    const b = e.target.closest("button[data-pair],button[data-party],#xreset"); if (!b || b.disabled) return;
+    if (b.id === "xreset") { const dk = defaultExcl(), before = new Map(coalOptions().map(i => [i.o.key, i])); S.excl = dk; toggled(before, "Exclusions reset to the defaults"); return; }
+    if (b.dataset.pair) { const k = b.dataset.pair, fp = pairOf(k), ex = !S.excl.has(k); setPairs([k], ex, `${ex ? "Excluding" : "Including"} ${pairText(fp)}`); return; }
+    const p = b.dataset.party, keys = P.filter(x => x !== p && x !== "MN").map(x => pairKey(p, x)), ex = !keys.every(k => S.excl.has(k));
+    setPairs(keys, ex, `${ex ? "Excluding" : "Including"} ${p} with every other party`);
   });
   hc.addEventListener("click", e => { const gr = e.target.closest(".grow-row"); if (!gr) return; S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderHemi(); renderMap(); renderGov(); markOn(); });
   hc.addEventListener("keydown", e => { const gr = e.target.closest(".grow-row"); if (gr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); gr.click(); } });
