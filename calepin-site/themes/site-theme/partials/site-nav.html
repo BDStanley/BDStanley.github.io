@@ -52,3 +52,22 @@
             </div>
         </nav>
     </header>
+    {# Calepin's own mobile-menu script wires only the first .academic-nav-toggle on
+       the page to #academic-menu. That is the hidden public-mode header's button, so
+       the visible header's button did nothing. Wire every toggle to the menu it names
+       in aria-controls. #}
+    <script>
+    (() => {
+      document.querySelectorAll(".academic-nav-toggle[aria-controls]").forEach(button => {
+        const menu = document.getElementById(button.getAttribute("aria-controls"));
+        if (!menu) return;
+        const setOpen = open => {
+          menu.classList.toggle("is-open", open);
+          button.setAttribute("aria-expanded", open ? "true" : "false");
+        };
+        button.addEventListener("click", () => setOpen(!menu.classList.contains("is-open")));
+        menu.addEventListener("click", e => { if (e.target.closest("a")) setOpen(false); });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+      });
+    })();
+    </script>

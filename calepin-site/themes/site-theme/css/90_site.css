@@ -308,6 +308,22 @@ body {
   #academic-menu a[href^="https://openalex.org/"] {
     display: none;
   }
+  /* A smaller, quieter hamburger than the theme's 2.25rem button. */
+  .calepin-nav-toggle {
+    width: 1.75rem;
+    height: 1.75rem;
+    gap: 0.17rem;
+  }
+  .calepin-nav-toggle span {
+    width: 0.9rem;
+    height: 1.5px;
+    opacity: 0.85;
+  }
+  .calepin-nav-toggle:hover,
+  .calepin-nav-toggle:focus,
+  .calepin-nav-toggle:active {
+    background: transparent;
+  }
   /* Drop the pop-over from the bottom of the two-row bar rather than from the
      theme's one-row offset. */
   .academic-menu {
