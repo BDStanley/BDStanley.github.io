@@ -133,12 +133,17 @@ const col = n => (TERM && TERM.colours[n]) || (R.colours && R.colours[n]) || "#8
 const exists = (p, date) => !(p in LAUNCH) || date >= LAUNCH[p];
 const short = p => R.short[p] || p;
 const sortParties = m => [...m].sort((a, b) => PIDX[a] - PIDX[b]);
-const compatible = parties => !R.forbidden.some(fp => fp.every(x => parties.includes(x)));
-const forbiddenIn = parties => R.forbidden.filter(fp => fp.every(x => parties.includes(x))).map(fp => fp.join(" and "));
+// The exclusion rules (R.forbidden: pairs that will not govern together). A rule the user has switched off
+// (S.rulesOff, by ruleKey) no longer excludes a coalition.
+const ruleKey = fp => fp.join("|");
+const ruleOn = fp => !S.rulesOff.has(ruleKey(fp));
+const ruleText = fp => `${fp[0]} and ${fp[1]} do not govern together`;
+const compatible = parties => !R.forbidden.some(fp => ruleOn(fp) && fp.every(x => parties.includes(x)));
+const forbiddenIn = parties => R.forbidden.filter(fp => ruleOn(fp) && fp.every(x => parties.includes(x))).map(fp => fp.join(" and "));
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: true, events: true,
-  hoverParty: null, pollSel: null, hemiCert: false, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, rulesOff: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -380,23 +385,34 @@ function compute() {
   const eff = {}; SP.forEach((p, i) => { eff[p] = sh[i] * 100; });
   const single = { nat: new Int16Array(E), cons: new Int16Array(NC * E) };
   const tot = allocate(sh, ents, null, 0, single.nat, single.cons);
-  let mode, rows, gov, sim = null;
+  let mode, rows, gov, allGov, sim = null;
   if (model) {
     mode = "model";
     rows = ents.map((e, k) => {
       const i = PIDX[e.name], s = wk.seats[i];
       return { seats: s == null ? single.nat[k] : s, lo: s == null ? null : wk.seatsLo[i], hi: s == null ? null : wk.seatsHi[i], pThr: e.mnOnly ? null : wk.pThr[i] };
     });
-    gov = pruneGov(govFromWeek(wk), true);
+    allGov = govFromWeek(wk);
+    // With a rule switched off, the published combinations (which follow every rule) are not enough: the
+    // browser's own simulation of the week's draws gives every combination
+    if (S.rulesOff.size && drawsState === "ready") {
+      if (!MODEL_SIM.has(S.w)) MODEL_SIM.set(S.w, simulate(S.w, null));
+      const ms = MODEL_SIM.get(S.w);
+      if (ms) allGov = govFromSim(ms, []);
+    }
+    gov = pruneGov(allGov, true);
   } else if (drawsState === "ready" && (sim = simulate(S.w, { shares: S.shares, joint: S.joint, dyn: dynOn() ? S.dyn : 0 }))) {
     mode = "sim";
     rows = summarise(sim);
-    gov = pruneGov(govFromSim(sim, S.joint), true);
+    allGov = govFromSim(sim, S.joint);
+    gov = pruneGov(allGov, true);
   } else {
     mode = "single";
     rows = ents.map((e, k) => ({ seats: single.nat[k], lo: null, hi: null, pThr: null }));
-    gov = pruneGov(govDet(ents, S.joint, Array.from(single.nat)), false);
+    allGov = govDet(ents, S.joint, Array.from(single.nat));
+    gov = pruneGov(allGov, false);
   }
+  allGov.forEach(o => { o.key = [...o.members].sort().join("|"); });
   const seats = rows.map(r => r.seats);
   // A joint list's seats split among its members by vote share (largest remainder), for colours and 2023 sums
   const memberSeats = {};
@@ -419,7 +435,7 @@ function compute() {
   });
   const mwc = mwcOf(ents, S.joint, seats);
   if (mwc) { const m = gov.find(o => o.key === mwc.key); if (m) Object.assign(mwc, { s: m.s, p: m.p, lo: m.lo, hi: m.hi, pv: m.pv, pc: m.pc, prob: mode !== "single" }); }
-  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, sim, memberSeats, mwc };
+  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, govAll: allGov, sim, memberSeats, mwc };
 }
 
 // ---- panel ----------------------------------------------------------------------------------
@@ -807,7 +823,7 @@ let HEMI = null;
 function renderHemi() {
   const cur = CUR, ents = cur.ents;
   const focusKey = S.pinGov || S.focusGov || (cur.mwc && cur.mwc.key);
-  const focus = focusKey ? (cur.gov.find(o => o.key === focusKey) || (cur.mwc && cur.mwc.key === focusKey ? cur.mwc : null)) : null;
+  const focus = focusKey ? (cur.gov.find(o => o.key === focusKey) || (cur.govAll || []).find(o => o.key === focusKey) || (cur.mwc && cur.mwc.key === focusKey ? cur.mwc : null)) : null;
   const inFocus = e => focus && focus.members.includes(e.name);
   const won = ents.map((e, k) => ({ e, k, s: cur.seats[k] })).filter(o => o.s > 0);
   const hord = e => Math.min(...e.members.map(p => R.hemicycleOrder.indexOf(p)));
@@ -862,25 +878,45 @@ function renderHemi() {
   cbtn.disabled = !tab; cbtn.setAttribute("aria-pressed", String(cert));
   cbtn.title = tab ? "Shade each seat by how likely it is to be won" : "Needs the seat simulation, which loads with the scenario data";
   if (cert) {
+    const entSeats = {};
     const crows = [...byEnt.keys()].map(k => {
       const e = ents[k], L = info.filter((st, ii) => st && blocks.some(bk => bk.k === k && ii >= bk.at && ii < bk.at + bk.n)), c = { certain: 0, probable: 0, "toss-up": 0 };
       L.forEach(st => { c[seatCat(st.p)]++; });
-      return { name: e.name, colour: e.colour, seats: cur.seats[k], certain: c.certain, probable: c.probable, toss: c["toss-up"] };
+      entSeats[k] = L;
+      return { k, name: e.name, colour: e.colour, seats: cur.seats[k], certain: c.certain, probable: c.probable, toss: c["toss-up"] };
     });
     HEMI.cert = { rows: crows };
-    const rows = crows.map(r => `<tr><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.toss}</td></tr>`).join("");
+    HEMI.entSeats = entSeats;
+    const rows = crows.map(r => `<tr class="clickrow" data-k="${r.k}" tabindex="0" role="button" title="Seats of ${esc(r.name)} by constituency"><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.toss}</td></tr>`).join("");
     $("hemicert").innerHTML = `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;margin:6px 0 2px">
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more)</span>
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)</span>
       <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)</span></div>
       <table class="t"><tr><th>List</th><th>Seats</th><th>Certain</th><th>Probable</th><th>Toss-up</th></tr>${rows}</table>
-      <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. The chance is the share of simulated parliaments in which the list wins at least that many seats there (certain, 97.5% or more; probable, 50% to 97.5%). Within each list the most certain seats are at the outer end of its arc.</p>`;
+      <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. The chance is the share of simulated parliaments in which the list wins at least that many seats there (certain, 97.5% or more; probable, 50% to 97.5%). Within each list the most certain seats are at the outer end of its arc. Click a list for its seats in each constituency.</p>`;
   } else $("hemicert").innerHTML = "";
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
     ? `<b style="color:var(--ink)">Minimum winning coalition:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
     : "No combination reaches a governing majority.";
 }
+// A list's seats in each of the 41 constituencies, by certainty
+let MODAL_FROM = null;
+function openSeatModal(k) {
+  const cur = CUR, e = cur.ents[k], L = (HEMI.entSeats && HEMI.entSeats[k]) || [];
+  const per = C.map(() => ({ certain: 0, probable: 0, toss: 0 }));
+  L.forEach(st => { const c = per[st.ci], cat = seatCat(st.p); if (cat === "certain") c.certain++; else if (cat === "probable") c.probable++; else c.toss++; });
+  const cell = v => v ? v : `<span class="muted">0</span>`;
+  const tot = per.reduce((a, c) => ({ certain: a.certain + c.certain, probable: a.probable + c.probable, toss: a.toss + c.toss }), { certain: 0, probable: 0, toss: 0 });
+  const rows = C.map((c, ci) => { const x = per[ci], n = x.certain + x.probable + x.toss; return `<tr><td>${c.okreg}. ${esc(c.name)}</td><td>${c.magnitude}</td><td>${n ? `<b>${n}</b>` : `<span class="muted">0</span>`}</td><td>${cell(x.certain)}</td><td>${cell(x.probable)}</td><td>${cell(x.toss)}</td></tr>`; }).join("");
+  $("seatmodaltitle").innerHTML = `<span class="dot" style="background:${e.colour};margin-right:6px"></span>${esc(e.name)}: ${cur.seats[k]} seats by constituency`;
+  $("seatmodalbody").innerHTML = `<p class="help" style="margin:0 0 6px">The seats shown as dots for this list, by how likely each is. Certain: won in at least ${(SEAT_CERTAIN * 100).toFixed(1)}% of simulations; probable: ${Math.round(SEAT_PROBABLE * 100)}% to ${(SEAT_CERTAIN * 100).toFixed(1)}%; toss-up: under ${Math.round(SEAT_PROBABLE * 100)}%. ${cur.mode === "model" ? "Model estimates" : "Scenario"} for ${dstr(cur.wk.date)}.</p>
+    <table class="t hist"><tr><th>Constituency</th><th>District magnitude</th><th>Seats won</th><th>Certain</th><th>Probable</th><th>Toss-up</th></tr>${rows}
+    <tr style="font-weight:600"><td>All 41</td><td>${sum(C.map(c => c.magnitude))}</td><td>${tot.certain + tot.probable + tot.toss}</td><td>${tot.certain}</td><td>${tot.probable}</td><td>${tot.toss}</td></tr></table>`;
+  MODAL_FROM = document.activeElement;
+  $("seatmodal").hidden = false; $("seatmodalclose").focus();
+}
+function closeSeatModal() { $("seatmodal").hidden = true; if (MODAL_FROM && MODAL_FROM.focus) MODAL_FROM.focus(); MODAL_FROM = null; }
 function hemiHover(ev) {
   const c = ev.target.closest("circle[data-k]");
   const tip = $("hemitip");
@@ -967,15 +1003,69 @@ function renderConstCard() {
     ${joints.size ? `<p class="help" style="margin:0">† Stood on a joint list with another party shown here, whose seats are shown against each: ${[...joints.values()].sort().reverse().map(esc).join("; ")}. A dash: the party did not stand.</p>` : `<p class="help" style="margin:0">A dash: the party did not stand.</p>`}
     <a class="linkbtn" style="text-decoration:none" href="../../pages/polish-political-analyses/election-results.html#l=c&amp;u=c${c.okreg}" target="_top">${esc(c.name)} in every election since 1990 →</a>`;
 }
-function render2023() {
+// ---- the 2023 comparison and the other possible governments, shown on request under the hemicycle ----
+function since2023() {
   const cur = CUR;
-  const rows = R.election2023.map(l => {
-    const now = sum(l.parties.map(p => cur.eff[p] || 0)), seats = sum(l.parties.map(p => cur.memberSeats[p] || 0));
-    return `<tr><td>${esc(l.list)} <span class="muted" style="font-size:11.5px">${l.parties.length > 1 ? "now " + l.parties.map(short).join(" + ") : ""}</span></td><td>${l.vote.toFixed(1)}%</td><td>${now.toFixed(1)}%</td><td class="${cls(now - l.vote)}">${signed(now - l.vote, 1)}</td><td>${l.seats}</td><td>${seats}</td><td class="${cls(seats - l.seats)}">${signed(seats - l.seats)}</td></tr>`;
-  }).join("");
-  $("card2023").innerHTML = `<span class="label">Against the 2023 election</span>
+  return R.election2023.map(l => ({ l, now: sum(l.parties.map(p => cur.eff[p] || 0)), seats: sum(l.parties.map(p => cur.memberSeats[p] || 0)) }));
+}
+function render2023() {
+  const box = $("hemi2023"), cur = CUR;
+  if (!S.hemi2023 || !cur) { box.innerHTML = ""; return; }
+  const rows = since2023().map(({ l, now, seats }) =>
+    `<tr><td>${esc(l.list)} <span class="muted" style="font-size:11.5px">${l.parties.length > 1 ? "now " + l.parties.map(short).join(" + ") : ""}</span></td><td>${l.vote.toFixed(1)}%</td><td>${now.toFixed(1)}%</td><td class="${cls(now - l.vote)}">${signed(now - l.vote, 1)}</td><td>${l.seats}</td><td>${seats}</td><td class="${cls(seats - l.seats)}">${signed(seats - l.seats)}</td></tr>`).join("");
+  box.innerHTML = `<span class="label" style="display:block;margin:10px 0 4px">Change since the 2023 election</span>
     <table class="t"><tr><th>2023 list</th><th>Vote 2023</th><th>Now</th><th></th><th>Seats 2023</th><th>Now</th><th></th></tr>${rows}</table>
-    <p class="help" style="margin:0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${cur.mode === "model" ? "model's estimate" : "scenario"} for ${dstr(cur.wk.date)}.</p>`;
+    <p class="help" style="margin:4px 0 0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${cur.mode === "model" ? "model's estimate" : "scenario"} for ${dstr(cur.wk.date)}.</p>`;
+}
+// Parties on the lists of an option (a joint list stands for its members)
+const partiesOf = o => o.members.flatMap(nm => { const e = CUR.ents.find(x => x.name === nm); return e ? e.members : [nm]; });
+const breaksOf = o => { const ps = partiesOf(o); return R.forbidden.filter(fp => fp.every(x => ps.includes(x))); };
+const COAL_KIND = ["Minimum winning", "Surplus majority", "Possible, short of a majority in most simulations"];
+// Every combination with at least a 5% chance of a majority, from the most parsimonious: first the minimum
+// winning coalitions (a majority in at least half the simulations, with no smaller coalition that is), by number
+// of lists and then seats; then the majorities with a partner they do not need; then the rest, by chance
+function coalOptions() {
+  const all = CUR.govAll || [], win = o => o.p >= 0.5;
+  const items = all.filter(o => o.p >= 0.05).map(o => ({ o, kind: win(o) ? (all.some(b => win(b) && isSub(b, o)) ? 1 : 0) : 2, br: breaksOf(o) }));
+  items.sort((a, b) => a.kind - b.kind || (a.kind < 2 ? a.o.size - b.o.size || a.o.s - b.o.s : b.o.p - a.o.p || a.o.size - b.o.size));
+  return items;
+}
+const isNewKey = key => !!(S.coalMsg && S.coalMsg.keys.includes(key));
+function renderHemiCoal() {
+  const box = $("hemicoal");
+  if (!S.hemiCoal || !CUR) { box.innerHTML = ""; return; }
+  const cur = CUR, probabilistic = cur.mode !== "single", items = coalOptions(), joint = S.joint.length > 0;
+  const canRelax = !joint && (cur.mode !== "model" || drawsState === "ready");
+  const focus = S.pinGov || S.focusGov;
+  const rules = R.forbidden.map(fp => {
+    const on = ruleOn(fp), n = items.filter(it => it.br.some(b => ruleKey(b) === ruleKey(fp))).length;
+    return `<label class="switch" style="display:flex;font-size:12.5px;margin:3px 0"><input type="checkbox" data-rule="${esc(ruleKey(fp))}"${on ? " checked" : ""}${canRelax ? "" : " disabled"}><span>${esc(ruleText(fp))}${on ? "" : ` <span class="muted">· switched off${n ? `: ${n} option${n > 1 ? "s" : ""} below break${n > 1 ? "" : "s"} it` : ""}</span>`}</span></label>`;
+  }).join("");
+  let kind = -1;
+  const rows = items.map(({ o, kind: k, br }) => {
+    const head = k !== kind ? `<div class="muted" style="font-size:11.5px;margin:8px 0 2px;font-weight:500">${COAL_KIND[k]}</div>` : "";
+    kind = k;
+    const sub = `${isNewKey(o.key) ? `<b style="color:var(--accent)">new</b> · ` : ""}${o.s} seats${o.lo != null ? ` (${o.lo}–${o.hi})` : ""}${br.length ? ` · <span class="neg">breaks: ${esc(br.map(fp => fp.join(" and ")).join("; "))}</span>` : ""}`;
+    const isNew = S.coalMsg && S.coalMsg.keys.includes(o.key);
+    return head + `<div class="grow-row${focus === o.key ? " on" : ""}${isNew ? " newopt" : ""}" data-key="${esc(o.key)}" tabindex="0" role="button" aria-pressed="${S.pinGov === o.key}">
+      <span class="nm">${esc(optLabel(o.members))}<br><span class="sub">${sub}</span></span>
+      <span class="s">${o.s}</span><span class="p">${probabilistic ? prob(o.p) : "✓"}</span>
+      <span class="bar"><i style="width:${(100 * Math.min(o.s, 460) / 460).toFixed(1)}%"></i><u style="left:${(100 * 231 / 460).toFixed(2)}%"></u></span></div>`;
+  }).join("");
+  const m = S.coalMsg;
+  const msg = m ? `<p class="help" style="margin:2px 0 6px;padding:6px 8px;background:var(--tint);border-radius:8px">${m.text}</p>` : "";
+  box.innerHTML = `<span class="label" style="display:block;margin:10px 0 2px">Possible governments</span>${msg}
+    <p class="help" style="margin:0 0 4px">From the most parsimonious: minimum winning coalitions first, then majorities with a partner they do not need. ${probabilistic ? `The chance is the share of simulations with ${R.seatsMajority}+ seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Click one to show it on the hemicycle.</p>
+    <div style="max-height:340px;overflow-y:auto">${rows || `<p class="help" style="margin:0">No combination reaches a majority in at least 5% of simulations.</p>`}</div>
+    <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Exclusion rules (switch off to allow a coalition)</summary>
+      <div style="margin-top:4px">${rules}</div>
+      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, any lists may combine, so the rules are not applied." : canRelax ? "Switching a rule off recalculates the options (and the government options in the panel) from the simulations." : "Relaxing the rules needs the simulation, which loads with the scenario data."}</p></details>`;
+}
+function renderHemiBlocks() {
+  $("hemi2023btn").setAttribute("aria-pressed", String(S.hemi2023)); $("hemicoalbtn").setAttribute("aria-pressed", String(S.hemiCoal));
+  render2023(); renderHemiCoal();
+  const first = S.coalMsg && S.coalMsg.keys.length ? document.querySelector("#hemicoal .grow-row.newopt") : null;
+  if (first) { const sc = first.parentElement; sc.scrollTop = Math.max(0, first.offsetTop - sc.offsetTop - 24); }
 }
 
 // ---- over time ------------------------------------------------------------------------------
@@ -1107,7 +1197,7 @@ function renderChips() {
 function renderView() {
   if (TERM && (S.view === "seats" || S.view === "time")) { S.view = "trends"; renderChips(); }
   if (S.view === "trends") renderTrends();
-  else if (S.view === "seats") { renderHemi(); renderMap(); renderConstCard(); render2023(); }
+  else if (S.view === "seats") { renderHemi(); renderHemiBlocks(); renderMap(); renderConstCard(); }
   else if (S.view === "time") renderTime();
   else renderHouse();
 }
@@ -1245,49 +1335,121 @@ async function png(only) {
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
   const slh = Math.round(sfs * 1.35), head = 62 + (lines.length - 1) * slh;
-  // With Certainty on, the hemicycle's image gets a key, the counts and a note on what the shading means
-  const cert = only === "hemi" && HEMI && HEMI.cert ? HEMI.cert : null;
-  const certNote = `Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
-  let certLines = [], certH = 0;
-  if (cert) {
-    mc.font = "10.5px Jost, sans-serif";
-    let cl = ""; certNote.split(" ").forEach(wd => { const t = cl ? cl + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cl) { certLines.push(cl); cl = wd; } else cl = t; }); certLines.push(cl);
-    certH = 26 + (cert.rows.length + 1) * 17 + 10 + certLines.length * 14 + 18;
+  // Under the hemicycle the image can carry what the page shows on request: the certainty key and counts, the
+  // change since 2023, and the possible governments with the exclusion rules. Each is a section with a height
+  // and a drawing function, stacked in that order.
+  const secs = [], F = "Jost, 'Avenir Next', sans-serif";
+  const wrapTo = (txt, font, maxW) => { mc.font = font; const out = []; let c = ""; txt.split(" ").forEach(wd => { const t = c ? c + " " + wd : wd; if (mc.measureText(t).width > maxW && c) { out.push(c); c = wd; } else c = t; }); out.push(c); return out; };
+  const ell = (t, font, maxW) => { mc.font = font; let u = t; if (mc.measureText(u).width <= maxW) return u; while (u.length > 1 && mc.measureText(u + "…").width > maxW) u = u.slice(0, -1); return u + "…"; };
+  const POS = "#2E7D32", NEG = "#A31515";
+  if (only === "hemi" && HEMI && HEMI.cert) {
+    const cert = HEMI.cert;
+    const certNote = `Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
+    const certLines = wrapTo(certNote, "10.5px " + F, W - 2 * pad);
+    secs.push({ h: 26 + (cert.rows.length + 1) * 17 + 10 + certLines.length * 14 + 18, draw: y0 => {
+      const key = [["certain", `Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more of simulations)`], ["probable", `Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)`], ["toss-up", `Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)`]];
+      g.font = "11px " + F; g.textAlign = "left";
+      let lx = pad;
+      key.forEach(([c, t]) => {
+        g.beginPath(); g.arc(lx + 6, y0 + 6, 5, 0, 2 * Math.PI);
+        if (c === "toss-up") { g.fillStyle = "#fff"; g.fill(); g.strokeStyle = "#555"; g.lineWidth = 1.2; g.stroke(); }
+        else { g.globalAlpha = c === "probable" ? 0.5 : 1; g.fillStyle = "#555"; g.fill(); g.globalAlpha = 1; }
+        g.fillStyle = "#4B4B4B"; g.fillText(t, lx + 16, y0 + 10); lx += 16 + g.measureText(t).width + 20;
+      });
+      y0 += 26;
+      const nx = [pad + 200, pad + 262, pad + 332, pad + 402];
+      g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("List", pad + 16, y0 + 10);
+      g.textAlign = "right"; ["Seats", "Certain", "Probable", "Toss-up"].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
+      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 410, y0 + 15); g.stroke();
+      cert.rows.forEach((r, ri) => {
+        const ry = y0 + 17 + (ri + 1) * 17 - 5;
+        g.textAlign = "left"; g.fillStyle = r.colour; g.beginPath(); g.arc(pad + 5, ry - 4, 4, 0, 2 * Math.PI); g.fill();
+        g.fillStyle = "#141414"; g.font = "11px " + F; g.fillText(r.name, pad + 16, ry);
+        g.textAlign = "right"; [r.seats, r.certain, r.probable, r.toss].forEach((v, j) => g.fillText(String(v), nx[j], ry));
+      });
+      g.textAlign = "left";
+      const ty = y0 + 17 + (cert.rows.length + 1) * 17 + 10;
+      g.fillStyle = "#767676"; g.font = "10.5px " + F;
+      certLines.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
+    } });
   }
-  const H = head + foot + certH + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
+  if (only === "hemi" && S.hemi2023 && !TERM) {
+    const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${CUR.mode === "model" ? "model's estimate" : "scenario"} for ${dlong(CUR.wk.date)}.`;
+    const lines23 = wrapTo(note23, "10.5px " + F, W - 2 * pad);
+    secs.push({ h: 28 + (rows23.length + 1) * 17 + 10 + lines23.length * 14 + 14, draw: y0 => {
+      g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Change since the 2023 election", pad, y0 + 12);
+      y0 += 22;
+      const nx = [pad + 270, pad + 335, pad + 395, pad + 475, pad + 535, pad + 595];
+      g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("2023 list", pad, y0 + 10);
+      g.textAlign = "right"; ["Vote 2023", "Now", "", "Seats 2023", "Now", ""].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
+      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 600, y0 + 15); g.stroke();
+      rows23.forEach(({ l, now, seats }, ri) => {
+        const ry = y0 + 17 + (ri + 1) * 17 - 5;
+        g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "11px " + F; g.fillText(l.list, pad, ry);
+        if (l.parties.length > 1) { const w0 = g.measureText(l.list + " ").width; g.fillStyle = "#767676"; g.font = "10px " + F; g.fillText("now " + l.parties.map(short).join(" + "), pad + w0, ry); }
+        g.font = "11px " + F; g.textAlign = "right";
+        const dv = now - l.vote, ds = seats - l.seats;
+        [[l.vote.toFixed(1) + "%", "#141414"], [now.toFixed(1) + "%", "#141414"], [signed(dv, 1), dv > 0 ? POS : dv < 0 ? NEG : "#141414"], [String(l.seats), "#141414"], [String(seats), "#141414"], [signed(ds), ds > 0 ? POS : ds < 0 ? NEG : "#141414"]].forEach(([t, c], j) => { g.fillStyle = c; g.fillText(t, nx[j], ry); });
+      });
+      g.textAlign = "left";
+      const ty = y0 + 17 + (rows23.length + 1) * 17 + 10;
+      g.fillStyle = "#767676"; g.font = "10.5px " + F;
+      lines23.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
+    } });
+  }
+  if (only === "hemi" && S.hemiCoal && !TERM) {
+    const items = coalOptions(), shownC = items.slice(0, 12), more = items.length - shownC.length, joint = S.joint.length > 0, probabilistic = CUR.mode !== "single";
+    const label = o => optLabel(o.members);
+    const ruleLines = R.forbidden.map(fp => {
+      const on = ruleOn(fp), by = shownC.filter(it => it.br.some(b => ruleKey(b) === ruleKey(fp))).map(it => label(it.o));
+      const status = joint ? "not applied (joint lists on)" : on ? "applied" : "switched off";
+      const txt = `${ruleText(fp)}: ${status}. ${by.length ? "Broken by " + by.join("; ") + "." : on && !joint ? "Not broken by any option shown." : "Broken by none of the options shown."}`;
+      return { fp, lines: wrapTo(txt, "10.5px " + F, W - 2 * pad - 14), on: on && !joint, broken: by.length > 0 };
+    });
+    const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most parsimonious: minimum winning coalitions first (a majority in at least half the simulations, with no smaller coalition that is), then majorities with a partner they do not need, then the rest by chance. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
+    const noteLines = wrapTo(note, "10.5px " + F, W - 2 * pad);
+    const rulesH = sum(ruleLines.map(r => r.lines.length * 13 + 3));
+    secs.push({ h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
+      g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Possible governments, from the most to the least parsimonious", pad, y0 + 12);
+      g.fillStyle = "#767676"; g.font = "10.5px " + F;
+      noteLines.forEach((l, li) => g.fillText(l, pad, y0 + 28 + li * 14));
+      let y = y0 + 24 + noteLines.length * 14 + 6;
+      const nx = [pad + 330, pad + 410, pad + 480];
+      g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("Coalition", pad, y + 10);
+      g.textAlign = "right"; ["Seats", "80% range", "Chance"].forEach((t, j) => g.fillText(t, nx[j], y + 10));
+      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y + 15); g.lineTo(pad + 485, y + 15); g.stroke();
+      y += 20;
+      shownC.forEach(({ o, kind, br }) => {
+        g.textAlign = "left"; g.fillStyle = "#141414"; g.font = (kind === 0 ? "500 " : "") + "11px " + F; g.fillText(ell(label(o), (kind === 0 ? "500 " : "") + "11px " + F, 300), pad, y + 11);
+        g.textAlign = "right"; g.font = "11px " + F; g.fillText(String(o.s), nx[0], y + 11); g.fillText(o.lo != null ? `${o.lo}–${o.hi}` : "–", nx[1], y + 11);
+        g.font = "500 11px " + F; g.fillText(probabilistic ? prob(o.p) : "✓", nx[2], y + 11);
+        g.textAlign = "left"; g.font = "10px " + F;
+        g.fillStyle = "#767676"; const kt = COAL_KIND[kind] + " · "; g.fillText(kt, pad, y + 24);
+        const kw = g.measureText(kt).width; g.fillStyle = br.length ? NEG : "#767676";
+        g.fillText(ell(br.length ? "breaks " + br.map(fp => fp.join(" and ")).join("; ") : "breaks no rule", "10px " + F, W - 2 * pad - kw), pad + kw, y + 24);
+        y += 31;
+      });
+      if (more > 0) { g.fillStyle = "#767676"; g.font = "10.5px " + F; g.textAlign = "left"; g.fillText(`${more} further option${more > 1 ? "s" : ""} not shown`, pad, y + 11); y += 16; }
+      y += 6;
+      g.fillStyle = "#141414"; g.font = "500 12px " + F; g.textAlign = "left"; g.fillText("Exclusion rules", pad, y + 12); y += 22;
+      ruleLines.forEach(r => {
+        g.fillStyle = r.on ? "#767676" : r.broken ? NEG : "#767676"; g.font = "10.5px " + F;
+        g.beginPath(); g.arc(pad + 4, y + 5, 3.5, 0, 2 * Math.PI);
+        if (r.on) { g.fillStyle = "#555"; g.fill(); } else { g.strokeStyle = r.broken ? NEG : "#999"; g.lineWidth = 1.2; g.stroke(); }
+        g.fillStyle = r.on ? "#4B4B4B" : r.broken ? NEG : "#767676";
+        r.lines.forEach((l, li) => g.fillText(l, pad + 14, y + 9 + li * 13));
+        y += r.lines.length * 13 + 3;
+      });
+    } });
+  }
+  const H = head + foot + sum(secs.map(x => x.h)) + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[only]}${past ? " · " + past : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = `${sfs}px Jost, sans-serif`; lines.forEach((l, i) => g.fillText(l, pad, 52 + i * slh));
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
-  if (cert) {
-    let y0 = yy - pad + 10;
-    const key = [["certain", `Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more of simulations)`], ["probable", `Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)`], ["toss-up", `Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)`]];
-    g.font = "11px Jost, 'Avenir Next', sans-serif";
-    let lx = pad;
-    key.forEach(([c, t]) => {
-      g.beginPath(); g.arc(lx + 6, y0 + 6, 5, 0, 2 * Math.PI);
-      if (c === "toss-up") { g.fillStyle = "#fff"; g.fill(); g.strokeStyle = "#555"; g.lineWidth = 1.2; g.stroke(); }
-      else { g.globalAlpha = c === "probable" ? 0.5 : 1; g.fillStyle = "#555"; g.fill(); g.globalAlpha = 1; }
-      g.fillStyle = "#4B4B4B"; g.fillText(t, lx + 16, y0 + 10); lx += 16 + g.measureText(t).width + 20;
-    });
-    y0 += 26;
-    const nx = [pad + 200, pad + 262, pad + 332, pad + 402];
-    g.fillStyle = "#767676"; g.font = "500 11px Jost, 'Avenir Next', sans-serif"; g.textAlign = "left"; g.fillText("List", pad + 16, y0 + 10);
-    g.textAlign = "right"; ["Seats", "Certain", "Probable", "Toss-up"].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
-    g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 410, y0 + 15); g.stroke();
-    cert.rows.forEach((r, ri) => {
-      const ry = y0 + 17 + (ri + 1) * 17 - 5;
-      g.textAlign = "left"; g.fillStyle = r.colour; g.beginPath(); g.arc(pad + 5, ry - 4, 4, 0, 2 * Math.PI); g.fill();
-      g.fillStyle = "#141414"; g.font = "11px Jost, 'Avenir Next', sans-serif"; g.fillText(r.name, pad + 16, ry);
-      g.textAlign = "right"; [r.seats, r.certain, r.probable, r.toss].forEach((v, j) => g.fillText(String(v), nx[j], ry));
-    });
-    g.textAlign = "left";
-    const ty = y0 + 17 + (cert.rows.length + 1) * 17 + 10;
-    g.fillStyle = "#767676"; g.font = "10.5px Jost, 'Avenir Next', sans-serif";
-    certLines.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
-  }
+  { let sy = yy - pad + 10; secs.forEach(sec => { sec.draw(sy); sy += sec.h; }); }
   if (evl.length) {
     // at most four to a column; the type shrinks if the columns would run past the image
     const txt = l => `${l.n}. ${evWhen(l.date)} · ${l.event}`, cols = Array.from({ length: Math.ceil(evl.length / 4) }, (_, c) => evl.slice(c * 4, c * 4 + 4));
@@ -1378,6 +1540,28 @@ function bind() {
   // seats
   $("hemi").addEventListener("mousemove", hemiHover);
   $("hemicertbtn").addEventListener("click", () => { S.hemiCert = !S.hemiCert; renderHemi(); });
+  $("hemicert").addEventListener("click", e => { const tr = e.target.closest("tr[data-k]"); if (tr) openSeatModal(+tr.dataset.k); });
+  $("hemicert").addEventListener("keydown", e => { const tr = e.target.closest("tr[data-k]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeatModal(+tr.dataset.k); } });
+  $("seatmodalclose").addEventListener("click", closeSeatModal);
+  $("seatmodal").addEventListener("click", e => { if (e.target.id === "seatmodal") closeSeatModal(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("seatmodal").hidden) closeSeatModal(); });
+  $("hemi2023btn").addEventListener("click", () => { S.hemi2023 = !S.hemi2023; renderHemiBlocks(); });
+  $("hemicoalbtn").addEventListener("click", () => { S.hemiCoal = !S.hemiCoal; renderHemiBlocks(); });
+  const hc = $("hemicoal"), markOn = () => [...document.querySelectorAll(".grow-row")].forEach(g => g.classList.toggle("on", g.dataset.key === (S.pinGov || S.focusGov)));
+  hc.addEventListener("change", e => {
+    const k = e.target.dataset.rule; if (!k) return;
+    const before = new Map(coalOptions().map(i => [i.o.key, i])), fp = R.forbidden.find(x => ruleKey(x) === k);
+    e.target.checked ? S.rulesOff.delete(k) : S.rulesOff.add(k); S.pinGov = null; S.focusGov = null; S.coalMsg = null; update();
+    const after = coalOptions(), added = after.filter(i => !before.has(i.o.key)), gone = [...before.keys()].filter(key => !after.some(i => i.o.key === key));
+    const desc = i => `${esc(optLabel(i.o.members))} (${CUR.mode === "single" ? i.o.s + " seats" : prob(i.o.p) + (i.kind === 2 ? ", short of a majority in most simulations" : "")})`;
+    const verb = e.target.checked ? "Switching it back on" : "Switching off";
+    S.coalMsg = { keys: e.target.checked ? [] : added.map(i => i.o.key), text: `<b>${verb} “${esc(ruleText(fp))}”</b> ${e.target.checked ? (gone.length ? `removes ${gone.length} option${gone.length > 1 ? "s" : ""}.` : "changes no option.") : added.length ? `adds ${added.length} option${added.length > 1 ? "s" : ""}, highlighted below: ${added.slice(0, 4).map(desc).join("; ")}${added.length > 4 ? "…" : ""}.` : `adds no option with at least a 5% chance of a majority.`}` };
+    renderHemiBlocks();
+  });
+  hc.addEventListener("click", e => { const gr = e.target.closest(".grow-row"); if (!gr) return; S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderHemi(); renderMap(); renderGov(); markOn(); });
+  hc.addEventListener("keydown", e => { const gr = e.target.closest(".grow-row"); if (gr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); gr.click(); } });
+  hc.addEventListener("mouseover", e => { const gr = e.target.closest(".grow-row"), key = gr ? gr.dataset.key : null; if (key !== S.focusGov) { S.focusGov = key; renderHemi(); renderMap(); markOn(); } });
+  hc.addEventListener("mouseleave", () => { if (S.focusGov) { S.focusGov = null; renderHemi(); renderMap(); markOn(); } });
   $("hemi").addEventListener("mouseleave", () => { $("hemitip").hidden = true; });
   $("map").addEventListener("mousemove", ev => {
     const g = ev.target.closest("g[data-c]"), tip = $("maptip");

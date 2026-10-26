@@ -52,6 +52,13 @@ button,input,select{font-family:inherit;font-size:inherit}
 .btn2:hover{border-color:var(--accent);color:var(--accent)}
 .btn2[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn2:disabled{opacity:.45;cursor:default}
+.clickrow{cursor:pointer}
+.clickrow:hover,.clickrow:focus{background:var(--tint);outline:none}
+.modal{position:fixed;inset:0;background:rgba(20,20,20,.38);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal[hidden]{display:none}
+.modalcard{background:#fff;border-radius:14px;width:100%;max-width:580px;max-height:88vh;overflow:auto;padding:16px 18px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.modalhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;position:sticky;top:-16px;background:#fff;padding:2px 0 6px}
+.modalhead h3{margin:0;font-size:17px;font-weight:500}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px}
 .linkbtn:hover{color:var(--accent-hover)}
 .switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none}
@@ -120,6 +127,7 @@ table.hist th{white-space:nowrap}
 .gov{display:flex;flex-direction:column;gap:2px}
 .grow-row{display:grid;grid-template-columns:minmax(0,1fr) 58px 52px;gap:8px;align-items:center;padding:6px 6px;border-radius:8px;cursor:pointer;font-size:13px}
 .grow-row:hover,.grow-row.on{background:var(--tint)}
+.grow-row.newopt{box-shadow:inset 3px 0 0 var(--accent)}
 .grow-row .nm{font-weight:500;min-width:0}
 .grow-row .sub{font-size:11.5px;color:var(--muted);font-weight:400}
 .grow-row .bar{grid-column:1/-1;height:6px;background:var(--chip);border-radius:3px;position:relative;margin-top:-2px}
@@ -194,12 +202,13 @@ svg text:not([font-weight]){font-weight:300}
         <div class="two" style="align-items:start">
           <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
             <div class="card soft" style="gap:4px">
-              <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Sejm</span><span class="btnrow"><button type="button" class="btn2 sm" id="hemicertbtn" aria-pressed="false">Certainty</button><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px"><span class="label">Sejm</span><span class="btnrow" style="flex-wrap:wrap"><button type="button" class="btn2 sm" id="hemicertbtn" aria-pressed="false">Certainty</button><button type="button" class="btn2 sm" id="hemi2023btn" aria-pressed="false">Since 2023</button><button type="button" class="btn2 sm" id="hemicoalbtn" aria-pressed="false">Coalitions</button><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
               <div class="chartbox" id="hemibox" style="border:0;padding:0"><svg id="hemi" role="img" aria-label="Seats in the Sejm"></svg><div class="tip" id="hemitip" hidden></div></div>
               <div id="hemilabel" class="status"></div>
               <div id="hemicert"></div>
+              <div id="hemi2023"></div>
+              <div id="hemicoal"></div>
             </div>
-            <div class="card soft" id="card2023"></div>
           </div>
           <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
             <div class="card soft" style="gap:4px">
@@ -232,6 +241,9 @@ svg text:not([font-weight]){font-weight:300}
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<div class="modal" id="seatmodal" role="dialog" aria-modal="true" aria-labelledby="seatmodaltitle" hidden>
+  <div class="modalcard"><div class="modalhead"><h3 id="seatmodaltitle"></h3><button type="button" class="linkbtn" id="seatmodalclose">Close</button></div><div id="seatmodalbody"></div></div>
+</div>
 <script src="../chart-export.js"></script>
 <script src="../cartogram.js"></script>
 <script src="app.js"></script>
