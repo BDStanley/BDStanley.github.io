@@ -12,7 +12,7 @@
 // scripts/sync-analyses.py on each build. "Polls now" reads the Polling tracker's
 // ../polling-tracker/polls.json in the browser.
 
-#html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
+#html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Back")]
 
 #heading(level: 1)[Election results]
 

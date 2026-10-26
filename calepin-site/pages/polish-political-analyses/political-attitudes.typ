@@ -13,7 +13,7 @@
 // The method note (How this works) is a collapsed <details class="method"> under the
 // introduction; its styles are with the other method notes in 90_site.css.
 
-#html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Polish political analyses")]
+#html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Back")]
 
 #heading(level: 1)[Social and political trends]
 
