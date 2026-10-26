@@ -1152,13 +1152,17 @@ function renderHouse() {
     : "How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.";
   if (!H0 || !H0.length) { $("house").innerHTML = ""; return; }
   const blocs = V.blocs, box = $("housebox"), W = Math.max(560, box.clientWidth - 12);
-  const lw = 190, rowH = 30, top = 44, cw = (W - lw - 10) / blocs.length, H = top + H0.length * rowH + 10;
+  const lw = 190, rowH = 30, cw = (W - lw - 10) / blocs.length;
+  // party names wrap at spaces to the column width; the header grows with the longest
+  const mc = document.createElement("canvas").getContext("2d"); mc.font = "500 12px Jost, sans-serif";
+  const wrapName = b => { const out = []; let c = ""; b.split(" ").forEach(wd => { const t = c ? c + " " + wd : wd; if (mc.measureText(t).width > cw - 8 && c) { out.push(c); c = wd; } else c = t; }); out.push(c); return out; };
+  const names = blocs.map(wrapName), nl = Math.max(...names.map(n => n.length)), top = 44 + (nl - 1) * 14, H = top + H0.length * rowH + 10;
   let M = 0; H0.forEach(h => blocs.forEach(b => { const e = h.effects[b]; if (e) M = Math.max(M, Math.abs(e[1]), Math.abs(e[2])); }));
   M = Math.ceil(M);
   const o = [];
   blocs.forEach((b, j) => {
     const cx = lw + j * cw, x = v => cx + 8 + (v + M) / (2 * M) * (cw - 16);
-    o.push(`<text x="${cx + cw / 2}" y="16" text-anchor="middle" font-size="12" font-weight="500" fill="${col(b)}">${esc(b)}</text><text x="${x(-M)}" y="34" font-size="10" fill="#767676" text-anchor="start">−${M}</text><text x="${x(M)}" y="34" font-size="10" fill="#767676" text-anchor="end">+${M}</text><line x1="${x(0)}" x2="${x(0)}" y1="38" y2="${H - 6}" stroke="#CCC"/>`);
+    o.push(`<text text-anchor="middle" font-size="12" font-weight="500" fill="${col(b)}">${names[j].map((l, k) => `<tspan x="${cx + cw / 2}" y="${16 + k * 14}">${esc(l)}</tspan>`).join("")}</text><text x="${x(-M)}" y="${top - 10}" font-size="10" fill="#767676" text-anchor="start">−${M}</text><text x="${x(M)}" y="${top - 10}" font-size="10" fill="#767676" text-anchor="end">+${M}</text><line x1="${x(0)}" x2="${x(0)}" y1="${top - 6}" y2="${H - 6}" stroke="#CCC"/>`);
     H0.forEach((h, i) => {
       const e = h.effects[b], y = top + i * rowH + rowH / 2; if (!e) return;
       o.push(`<line x1="${x(e[1])}" x2="${x(e[2])}" y1="${y}" y2="${y}" stroke="${col(b)}" stroke-width="2" stroke-opacity=".55"/><circle cx="${x(e[0])}" cy="${y}" r="4" fill="${col(b)}"><title>${esc(h.org)}, ${esc(b)}: ${signed(e[0], 1)} pp (80% ${e[1].toFixed(1)} to ${e[2].toFixed(1)})</title></circle>`);
@@ -1296,10 +1300,15 @@ function exportExtras(which, clone) {
   }
   if (which !== "hemi") return null;
   const o = [];
+  // the count sits a fixed gap after the name: both are placed from the measured width, not with dx, which PDF drawing does not keep
+  const mc = document.createElement("canvas").getContext("2d"), FS = 0.11, GAP = 0.05, M = 1000;
+  const tw = (t, wt) => { mc.font = `${wt} ${FS * M}px Jost, sans-serif`; return mc.measureText(t).width / M; };
   HEMI.labels.forEach(l => {
     const cs = Math.cos(l.a), top = Math.abs(cs) < 0.12, r = HEMI.outer + 0.14 + (top ? 0.24 : 0);
-    const x = r * cs, y = -r * Math.sin(l.a);
-    o.push(`<text x="${x.toFixed(3)}" y="${(y + 0.035).toFixed(3)}" text-anchor="${top ? "middle" : cs > 0 ? "start" : "end"}" font-size="0.11" font-weight="500" fill="${col(l.p)}">${esc(l.p)}<tspan dx="0.035" fill-opacity="0.7" font-weight="400">${l.n}</tspan></text>`);
+    const x = r * cs, y = -r * Math.sin(l.a) + 0.035, pw = tw(l.p, 500), nw = tw(String(l.n), 400), tot = pw + GAP + nw;
+    const x0 = top ? x - tot / 2 : cs > 0 ? x : x - tot;
+    o.push(`<text x="${x0.toFixed(3)}" y="${y.toFixed(3)}" font-size="${FS}" font-weight="500" fill="${col(l.p)}">${esc(l.p)}</text>`);
+    o.push(`<text x="${(x0 + pw + GAP).toFixed(3)}" y="${y.toFixed(3)}" font-size="${FS}" font-weight="400" fill="${col(l.p)}" fill-opacity="0.7">${l.n}</text>`);
   });
   clone.insertAdjacentHTML("beforeend", o.join(""));
   return [-3.1, -2.75, 6.2, 2.85];
@@ -1322,12 +1331,17 @@ async function png(only) {
   const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", seattime: "Seats over time", cointime: "Chance of a majority over time", thrtime: "Chance of clearing the threshold over time", house: "House effects", combo: "Polish party polling: trends and projections" };
   const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", seattime: "seats-over-time", cointime: "majority-over-time", thrtime: "threshold-over-time", house: "pollsters", combo: "trends-and-projections" }[only];
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
+  await ChartExport.fonts();
+  // in the combined image the hemicycle is drawn small and the trends fill the width
+  const HEMI_K = 0.7, hsvg = $("hemi"), hemiW = a4 ? 600 : Math.max(hsvg.clientWidth, 640) * 6.2 / hsvg.viewBox.baseVal.width;
   const imgs = await Promise.all(ids.map(async id => {
     const svg = $(id), vb = svg.viewBox.baseVal;
     const clone = await ChartExport.clone(svg);
     // the single-graphic exports get labels the page doesn't show, and a wider canvas to hold them
     const vb2 = exportExtras(id, clone), vw = vb2 ? vb2[2] : vb.width, vh = vb2 ? vb2[3] : vb.height;
-    const w = a4 && vb2 ? 600 : vb2 ? Math.max(svg.clientWidth, 640) * vw / vb.width : svg.clientWidth || vb.width, h = w * vh / vw;
+    let w = a4 && vb2 ? 600 : vb2 ? Math.max(svg.clientWidth, 640) * vw / vb.width : svg.clientWidth || vb.width;
+    if (combo && id === "trend") w = Math.max(w, hemiW * 1.3);
+    const h = w * vh / vw;
     if (vb2) clone.setAttribute("viewBox", vb2.join(" "));
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hit,#trendhit,#trendhover,.hov").forEach(n => n.remove());
@@ -1429,7 +1443,7 @@ async function png(only) {
     const noteLines = wrapTo(note, "10.5px " + F, SW - 2 * pad);
     const rulesH = sum(ruleLines.map(r => r.lines.length * 13 + 3));
     secs.push({ col: "R", h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
-      g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Possible governments, from the most to the least parsimonious", pad, y0 + 12);
+      g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Possible governments", pad, y0 + 12);
       g.fillStyle = "#767676"; g.font = "10.5px " + F;
       noteLines.forEach((l, li) => g.fillText(l, pad, y0 + 28 + li * 14));
       let y = y0 + 24 + noteLines.length * 14 + 6;
@@ -1457,7 +1471,7 @@ async function png(only) {
     } });
   }
   const colL = secs.filter(x => x.col !== "R"), colR = secs.filter(x => x.col === "R");
-  const hk = combo ? Math.min(1, (W - 2 * pad) / imgs[1].w) : 1, hw = combo ? imgs[1].w * hk : 0, hh = combo ? imgs[1].h * hk : 0;
+  const hk = combo ? Math.min(HEMI_K, (W - 2 * pad) / imgs[1].w) : 1, hw = combo ? imgs[1].w * hk : 0, hh = combo ? imgs[1].h * hk : 0;
   const hL = sum(colL.map(x => x.h)), hR = sum(colR.map(x => x.h));
   const H = combo ? head + foot + imgs[0].h + pad + hh + 10 + (two ? Math.max(hL, hR) : hL + hR) : head + foot + sum(secs.map(x => x.h)) + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;

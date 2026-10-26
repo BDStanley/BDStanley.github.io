@@ -11,3 +11,19 @@
 {% include "partials/site-head-meta.html" %}
 {% include "partials/theme-init-script.html" %}
 {% include "partials/theme-styles.html" %}
+{# Public mode: a page under polish-political-analyses opened with ?public shows the
+   Polish politics header, and its links to the other analyses keep the flag. #}
+<script>
+(() => {
+  if (!/[?&]public(?:[=&]|$)/.test(location.search) || !/polish-political-analyses/.test(location.pathname)) return;
+  document.documentElement.dataset.public = "1";
+  addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("a[href]").forEach(a => {
+      const u = new URL(a.getAttribute("href"), location.href);
+      if (u.origin === location.origin && /polish-political-analyses/.test(u.pathname) && !u.searchParams.has("public") && !a.closest(".public-topbar")) {
+        u.searchParams.set("public", ""); a.href = u.pathname + u.search.replace(/public=(?=&|$)/, "public") + u.hash;
+      }
+    });
+  });
+})();
+</script>

@@ -2,7 +2,7 @@
 #metadata((title: "Media reach")) <website-metadata>
 
 // Not in the navigation bar: the Media line of the Citations list on the
-// Research outputs page (pages/publications.typ) links here. Every number, colour,
+// Publications page (pages/publications.typ) links here. Every number, colour,
 // bar length, hover text and list entry comes from data/media-reach.json
 // (scripts/update-media-reach.py, run by build.sh) and the map shapes from
 // data/world-map.json; this page only lays them out. It reuses the reach
@@ -67,7 +67,7 @@
   }]
 ]
 
-#el("p", class: "reach-back")[#link("publications.html")[← Research outputs]]
+#el("p", class: "reach-back")[#link("publications.html")[← Publications]]
 
 = Media reach
 

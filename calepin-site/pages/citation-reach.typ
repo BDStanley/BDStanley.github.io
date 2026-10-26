@@ -2,7 +2,7 @@
 #metadata((title: "Citation reach")) <website-metadata>
 
 // Not in the navigation bar: the OpenAlex line of the Citations list on the
-// Research outputs page (pages/publications.typ) links here. Every number, colour, bar length and hover
+// Publications page (pages/publications.typ) links here. Every number, colour, bar length and hover
 // text comes from data/reach.json (scripts/update-reach.py, run by build.sh)
 // and the map shapes from data/world-map.json (scripts/make-world-map.py); this
 // page only lays them out. Styles: .reach-* in themes/site-theme/css/90_site.css.
@@ -56,7 +56,7 @@
   name
 })
 
-#el("p", class: "reach-back")[#link("publications.html")[← Research outputs]]
+#el("p", class: "reach-back")[#link("publications.html")[← Publications]]
 
 = Citation reach
 

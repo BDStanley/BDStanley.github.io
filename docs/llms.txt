@@ -20,7 +20,7 @@
 - [Quality of democracy](https://benstanley.eu/pages/polish-political-analyses/quality-of-democracy.html): Polish democracy since 1990 in the V-Dem project's expert ratings, against Central and Eastern and Western Europe, with polarisation in V-Dem and in the Sejm's roll calls
 - [Voting behaviour](https://benstanley.eu/pages/polish-political-analyses/voting-behaviour.html): Who votes for whom in Poland's Sejm elections, 1997–2023, and who stays at home, by age, gender, education, residence, religious attendance and socio-economic position, with a calculator for a hypothetical voter
 - [Pooling the Poles](https://benstanley.eu/pages/pooling-the-poles.html): Pooling the Poles is now the Polling tracker under Polish political analyses
-- [Research outputs](https://benstanley.eu/pages/publications.html): Updated:
+- [Publications](https://benstanley.eu/pages/publications.html): Updated:
 - [Research projects](https://benstanley.eu/pages/research-projects.html)
 - [Teaching](https://benstanley.eu/pages/teaching.html)
 - [Dziennikarstwo danych](https://benstanley.eu/pages/teaching/dziennikarstwo-danych.html)

@@ -1,5 +1,5 @@
-#set document(title: [Research outputs])
-#metadata((title: "Research outputs")) <website-metadata>
+#set document(title: [Publications])
+#metadata((title: "Publications")) <website-metadata>
 
 // No on-page title heading (kept off, like the other pages); the nav label and
 // browser-tab title still come from the metadata / #set document above.

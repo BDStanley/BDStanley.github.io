@@ -13,10 +13,6 @@
 // assets/analyses/ (480 × 300 px), and a row below.
 
 #html.elem("div", attrs: (class: "analysis-landing"))[
-#heading(level: 1)[Polish political analyses]
-
-Data and interactive charts on Polish politics, from my ongoing work on the party system, elections, public opinion and the quality of democracy. Each analysis is rebuilt from its data whenever the site is updated.
-
 #html.elem("div", attrs: (class: "course-list analysis-list"))[
 #html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/polling-tracker.html", tabindex: "-1", "aria-hidden": "true"))[

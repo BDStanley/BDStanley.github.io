@@ -1,4 +1,23 @@
-    <header class="academic-topbar calepin-site-topbar">
+    {# Public-facing header, shown instead of the one below when a page under
+       polish-political-analyses is opened with ?public (see site-head.html). #}
+    <header class="academic-topbar calepin-site-topbar public-topbar">
+        <nav class="academic-nav calepin-site-nav" aria-label="Polish politics">
+            <a class="calepin-site-brand contrast" aria-label="Polish politics: facts, trends and analyses" href="/pages/polish-political-analyses.html?public"><span class="calepin-site-brand-text">Polish politics: facts, trends and analyses</span></a>
+            <button class="academic-nav-toggle calepin-nav-toggle" type="button" aria-controls="public-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
+            <div id="public-menu" class="academic-menu calepin-site-menu">
+                <span class="academic-menu-break-social" aria-hidden="true"></span>
+                {% for item in site.menus.social %}
+                {% if 'tel:' in item.href or 'mailto:' in item.href or 'bsky.app' in item.href %}{% include "partials/site-nav-item.html" %}{% endif %}
+                {% endfor %}
+                <a href="https://benstanley.eu/">benstanley.eu</a>
+            </div>
+        </nav>
+    </header>
+    <header class="academic-topbar calepin-site-topbar site-topbar-main">
         <nav class="academic-nav calepin-site-nav" aria-label="Site">
             {% include "partials/site-brand.html" %}
             <button class="academic-nav-toggle calepin-nav-toggle" type="button" aria-controls="academic-menu" aria-expanded="false" aria-label="Toggle navigation">

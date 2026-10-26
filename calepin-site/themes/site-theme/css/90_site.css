@@ -1099,3 +1099,8 @@ details.policy-details {
   font-size: 0.8rem;
   color: #767676;
 }
+
+/* Public mode (?public on a Polish political analyses page): the Polish politics header replaces the site menu. */
+html[data-public] .site-topbar-main { display: none; }
+.academic-topbar.public-topbar { display: none; }
+html[data-public] .academic-topbar.public-topbar { display: flex; }

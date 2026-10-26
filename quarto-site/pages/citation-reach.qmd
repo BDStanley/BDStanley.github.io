@@ -3,7 +3,7 @@ pagetitle: "Citation reach"
 ---
 
 <!-- Not in the navigation bar: the OpenAlex line of the Citations list on the
-     Research outputs page (pages/publications.qmd) links here. The Quarto twin of
+     Publications page (pages/publications.qmd) links here. The Quarto twin of
      calepin-site/pages/citation-reach.typ: the charts' markup comes from
      R/reach-helpers.R, the numbers from data/reach.json and the map from
      data/world-map.json (both copied here by the Calepin build). -->
@@ -18,7 +18,7 @@ top_countries <- reach$countries[seq_len(min(reach$top_countries, length(reach$c
 top_subfields <- reach$subfields[seq_len(min(reach$top_subfields, length(reach$subfields)))]
 ```
 
-<p class="reach-back"><a href="publications.html">← Research outputs</a></p>
+<p class="reach-back"><a href="publications.html">← Publications</a></p>
 
 ## Citation reach
 
