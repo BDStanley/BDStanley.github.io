@@ -50,6 +50,8 @@ button,input,select{font-family:inherit;font-size:inherit}
 .btnrow{display:inline-flex;gap:6px}
 .btn2.sm{height:28px;padding:0 12px;font-size:12px}
 .btn2:hover{border-color:var(--accent);color:var(--accent)}
+.btn2[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn2:disabled{opacity:.45;cursor:default}
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px}
 .linkbtn:hover{color:var(--accent-hover)}
 .switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none}
@@ -78,6 +80,10 @@ table.t{border-collapse:collapse;width:100%;font-size:13px}
 table.t th{font-weight:500;color:var(--muted);text-align:right;padding:3px 6px;border-bottom:1px solid var(--rule);font-size:12px}
 table.t th:first-child,table.t td:first-child{text-align:left}
 table.t td{padding:4px 6px;text-align:right;border-bottom:1px solid var(--rule)}
+table.hist{font-size:12.5px}
+table.hist th,table.hist td{padding-left:3px;padding-right:3px}
+table.hist td:first-child{white-space:nowrap}
+table.hist th{white-space:nowrap}
 .pos{color:#1b6e2d}.neg{color:#a11d1d}
 /* ---- panel ---- */
 .panel{width:390px;flex:none;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:2px}
@@ -176,7 +182,7 @@ svg text:not([font-weight]){font-weight:300}
       <section class="view" id="v-trends" aria-label="Polling trends">
         <div class="toolbar">
           <div class="seg small" id="periods" aria-label="Period"></div>
-          <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click to load that week into the scenario. Click a poll figure to see that poll alone.</span>
+          <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click a poll figure to see that poll alone, or click elsewhere to load that week into the scenario.</span>
           <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="trend">PNG</button><button type="button" class="btn2 sm" data-csv="trend">CSV</button></span>
         </div>
         <div class="chips" id="pchips" aria-label="Highlight polling houses"></div>
@@ -185,21 +191,24 @@ svg text:not([font-weight]){font-weight:300}
         <div class="legend" id="trendevents" style="gap:2px 22px" aria-label="Events"></div>
       </section>
       <section class="view" id="v-seats" aria-label="Seat projection" hidden>
-        <div class="two">
-          <div class="card soft" style="gap:4px">
-            <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Sejm</span><span class="btnrow"><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
-            <div class="chartbox" id="hemibox" style="border:0;padding:0"><svg id="hemi" role="img" aria-label="Seats in the Sejm"></svg><div class="tip" id="hemitip" hidden></div></div>
-            <div id="hemilabel" class="status"></div>
+        <div class="two" style="align-items:start">
+          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <div class="card soft" style="gap:4px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Sejm</span><span class="btnrow"><button type="button" class="btn2 sm" id="hemicertbtn" aria-pressed="false">Certainty</button><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
+              <div class="chartbox" id="hemibox" style="border:0;padding:0"><svg id="hemi" role="img" aria-label="Seats in the Sejm"></svg><div class="tip" id="hemitip" hidden></div></div>
+              <div id="hemilabel" class="status"></div>
+              <div id="hemicert"></div>
+            </div>
+            <div class="card soft" id="card2023"></div>
           </div>
-          <div class="card soft" style="gap:4px">
-            <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Constituencies</span><button type="button" class="btn2 sm" data-png="map">PNG</button></div>
-            <div class="chartbox" id="mapbox" style="border:0;padding:0"><svg id="map" role="img" aria-label="Seats by constituency, one circle per constituency sized by its electorate"></svg><div class="tip" id="maptip" hidden></div></div>
-            <p class="help" id="mapnote"></p>
+          <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+            <div class="card soft" style="gap:4px">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Constituencies</span><button type="button" class="btn2 sm" data-png="map">PNG</button></div>
+              <div class="chartbox" id="mapbox" style="border:0;padding:0"><svg id="map" role="img" aria-label="Seats by constituency, one circle per constituency sized by its electorate"></svg><div class="tip" id="maptip" hidden></div></div>
+              <p class="help" id="mapnote"></p>
+            </div>
+            <div class="card soft" id="constcard"></div>
           </div>
-        </div>
-        <div class="two">
-          <div class="card soft" id="constcard"></div>
-          <div class="card soft" id="card2023"></div>
         </div>
       </section>
       <section class="view" id="v-time" aria-label="Over time" hidden>

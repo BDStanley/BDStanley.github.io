@@ -59,13 +59,30 @@ let PENDING = null;             // a past term, and the houses and parties picke
 // A poll is its house, mid-date and, where one house polled the same days for two clients, the k in the
 // fifth element of each of its rows (absent in a past term's data: 0)
 function pollKey(r) { return r[0] + "|" + r[1] + "|" + (r[4] || 0); }
+// The trend line's value for a party on a day, interpolated between the two nearest dates the trend is
+// given for; null where the party has no trend line there
+function trendAt(V, party, d) {
+  const dates = V.trend.dates, ser = V.trend.series[party];
+  if (!ser || d < dates[0] || d > dates[dates.length - 1]) return null;
+  let i = dates.findIndex(t => t >= d);
+  if (i < 0) return null;
+  if (dates[i] === d || i === 0) return ser.med[i];
+  const v0 = ser.med[i - 1], v1 = ser.med[i];
+  if (v0 == null || v1 == null) return null;
+  return v0 + (v1 - v0) * (d - dates[i - 1]) / (dates[i] - dates[i - 1]);
+}
 // The pop-up for a poll figure picked by a click: the figure under the pointer first, then the house and
-// date, then the poll's figures for the other parties, largest first
+// date, then the poll's figures for the other parties, largest first; each with how far it sits above or
+// below the trend line on the poll's date
 function pollTipHtml(best, rows, V) {
-  const row = (q, bold) => `<div class="r"><span><span class="dot" style="background:${col(V.parties[q[2]])}"></span>${bold ? "<b>" : ""}${esc(V.parties[q[2]])}${bold ? "</b>" : ""}</span><span>${q[3].toFixed(1)}%</span></div>`;
+  const row = (q, bold) => {
+    const t = trendAt(V, V.parties[q[2]], q[0]);
+    return `<div class="r"><span><span class="dot" style="background:${col(V.parties[q[2]])}"></span>${bold ? "<b>" : ""}${esc(V.parties[q[2]])}${bold ? "</b>" : ""}</span><span style="font-variant-numeric:tabular-nums">${q[3].toFixed(1)}%${t != null ? `<span class="muted" style="display:inline-block;min-width:32px;text-align:right">${signed(q[3] - t, 1)}</span>` : ""}</span></div>`;
+  };
   const others = rows.filter(q => q !== best).sort((u, v) => v[3] - u[3]);
   return row(best, true) + `<div class="muted">${esc(V.pollsters[best[1]])} · ${dstr(best[0])}</div>` +
-    (others.length ? `<div style="margin-top:6px;padding-top:5px;border-top:1px solid #EEE">${others.map(q => row(q, false)).join("")}</div>` : "");
+    (others.length ? `<div style="margin-top:6px;padding-top:5px;border-top:1px solid #EEE">${others.map(q => row(q, false)).join("")}</div>` : "") +
+    `<div class="muted" style="margin-top:5px;font-size:11px;line-height:1.35;width:0;min-width:100%">Grey: points above (+) or below (−) the trend line.</div>`;
 }
 // What the trend and pollster charts draw: the current term, or a past one
 function VD() {
@@ -121,7 +138,7 @@ const forbiddenIn = parties => R.forbidden.filter(fp => fp.every(x => parties.in
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: true, events: true,
-  hoverParty: null, pollSel: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -718,7 +735,7 @@ function trendHover(ev) {
     let i = 0, bdd = Infinity; dates.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bdd) { bdd = dd; i = j; } });
     const vals = V.parties.filter(TR.shown).map(p => ({ p, v: V.trend.series[p].med[i], lo: V.trend.series[p].lo[i], hi: V.trend.series[p].hi[i] })).filter(o => o.v != null).sort((p, q) => q.v - p.v);
     g.innerHTML = `<line x1="${TR.x(dates[i])}" x2="${TR.x(dates[i])}" y1="${TR.m.t}" y2="${TR.H - TR.m.b}" stroke="#141414" stroke-opacity=".35"/>`;
-    html = `<b>${dstr(dates[i])}</b>` + vals.map(o => `<div class="r"><span><span class="dot" style="background:${col(o.p)}"></span>${esc(o.p)}</span><span>${o.v.toFixed(1)}% <span class="muted">${o.lo != null ? o.lo.toFixed(1) + "–" + o.hi.toFixed(1) : ""}</span></span></div>`).join("") + (V.past ? "" : `<div class="muted" style="margin-top:3px">Click to load the nearest week</div>`);
+    html = `<b>${dstr(dates[i])}</b>` + vals.map(o => `<div class="r"><span><span class="dot" style="background:${col(o.p)}"></span>${esc(o.p)}</span><span>${o.v.toFixed(1)}%${o.lo != null ? ` <span class="muted" style="display:inline">(${o.lo.toFixed(1)}–${o.hi.toFixed(1)})</span>` : ""}</span></div>`).join("") + (V.past ? "" : `<div class="muted" style="margin-top:3px">Click to load the nearest week</div>`);
   }
   placeTip(tip, $("trendbox"), ev, html);
 }
@@ -751,6 +768,41 @@ function hemiLayout(n, rows = 11) {
   pts.sort((p, q) => q.ang - p.ang || p.r - q.r);
   return pts;
 }
+// ---- the seats in the hemicycle, one dot for each seat in one constituency ---------------------
+// A list's k-th seat in a constituency is won in the share of simulated parliaments in which the list wins
+// at least k seats there. A list's dots are its most probable seats, as many as it is projected to win.
+const SEAT_CERTAIN = 0.975;   // won in at least this share of the simulations: certain
+const SEAT_PROBABLE = 0.5;    // from here to SEAT_CERTAIN: probable; below it, a toss-up
+const seatCat = p => (p >= SEAT_CERTAIN ? "certain" : p >= SEAT_PROBABLE ? "probable" : "toss-up");
+const ord = n => { const v = n % 100; return n + (["th", "st", "nd", "rd"][(v - 20) % 10] || ["th", "st", "nd", "rd"][v] || "th"); };
+const SEATPROB = new WeakMap();
+function hemiSim() {
+  const cur = CUR;
+  let sim = cur.sim;
+  if (!sim && cur.mode === "model" && drawsState === "ready") {
+    if (!MODEL_SIM.has(S.w)) MODEL_SIM.set(S.w, simulate(S.w, null));
+    sim = MODEL_SIM.get(S.w);
+  }
+  return sim || null;
+}
+// For each list in a simulation: its seats {ci, j, p}, most probable first
+function seatTable(sim) {
+  if (SEATPROB.has(sim)) return SEATPROB.get(sim);
+  const { n, ents, cons } = sim, E = ents.length, tab = {};
+  ents.forEach((e, kk) => {
+    const list = [];
+    for (let ci = 0; ci < NC; ci++) {
+      const mag = C[ci].magnitude, cnt = new Int32Array(mag + 1);
+      for (let d = 0; d < n; d++) cnt[Math.min(cons[d * NC * E + ci * E + kk], mag)]++;
+      let ge = 0;
+      for (let j = mag; j >= 1; j--) { ge += cnt[j]; if (ge > 0) list.push({ ci, j, p: ge / n }); }
+    }
+    list.sort((a, b) => b.p - a.p || a.ci - b.ci || a.j - b.j);
+    tab[e.name] = list;
+  });
+  SEATPROB.set(sim, tab);
+  return tab;
+}
 let HEMI = null;
 function renderHemi() {
   const cur = CUR, ents = cur.ents;
@@ -770,6 +822,19 @@ function renderHemi() {
     mem.forEach(p => { const n = o.e.joint ? cur.memberSeats[p] : o.s; if (n > 0) blocks.push({ p, ent: o.e, k: o.k, n }); });
   });
   const total = sum(blocks.map(b => b.n)), pts = hemiLayout(total);
+  // Each list's most probable seats, dealt to its blocks; within a block the most certain are at the end of
+  // the arc away from the centre of the chamber, so the toss-ups sit where the blocks meet
+  const sim = hemiSim(), tab = sim ? seatTable(sim) : null, info = new Array(total).fill(null), byEnt = new Map();
+  { let at = 0; blocks.forEach(bk => { bk.at = at; at += bk.n; if (!byEnt.has(bk.k)) byEnt.set(bk.k, []); byEnt.get(bk.k).push(bk); }); }
+  if (tab) byEnt.forEach((bks, k) => {
+    const L = tab[ents[k].name] || []; let take = 0;
+    bks.forEach(bk => {
+      const chunk = L.slice(take, take + bk.n); take += bk.n;
+      const m = pts[bk.at + (bk.n >> 1)], left = m.x < 0;
+      chunk.forEach((st, j) => { info[bk.at + (left ? j : bk.n - 1 - j)] = st; });
+    });
+  });
+  const cert = !!(S.hemiCert && tab);
   const outer = Math.max(...pts.map(p => Math.hypot(p.x, p.y))), labels = [];
   { let at = 0; blocks.forEach(bk => { const m = pts[at + (bk.n >> 1)]; labels.push({ p: bk.p, n: bk.n, a: Math.atan2(m.y, m.x) }); at += bk.n; }); }
   const rad = Math.min(0.046, 0.046 * Math.sqrt(460 / Math.max(total, 1)));
@@ -779,8 +844,11 @@ function renderHemi() {
   blocks.forEach(bk => {
     const dim = (explicit && !inFocus(bk.ent)) || (hp && !bk.ent.members.includes(hp) && bk.ent.name !== hp);
     for (let j = 0; j < bk.n; j++, i++) {
-      const pt = pts[i];
-      o.push(`<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${col(bk.p)}" fill-opacity="${dim ? 0.18 : 1}" data-k="${bk.k}"/>`);
+      const pt = pts[i], st = info[i], cat = cert && st ? seatCat(st.p) : "certain";
+      let fill = col(bk.p), fo = dim ? 0.18 : 1, stroke = "";
+      if (cat === "probable") { fo = dim ? 0.1 : 0.5; }
+      else if (cat === "toss-up") { fill = "#fff"; fo = dim ? 0.3 : 1; stroke = ` stroke="${col(bk.p)}" stroke-width="0.014"`; }
+      o.push(`<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${fill}" fill-opacity="${fo}"${stroke} data-k="${bk.k}" data-i="${i}"/>`);
     }
   });
   o.push(`<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" font-size="0.085" fill="#4B4B4B">231</text>`);
@@ -789,7 +857,25 @@ function renderHemi() {
   const svg = $("hemi");
   svg.setAttribute("viewBox", "-2.2 -2.28 4.4 2.36");
   svg.innerHTML = o.join("");
-  HEMI = { total, outer, labels };
+  HEMI = { total, outer, labels, info, sim, cert: null };
+  const cbtn = $("hemicertbtn");
+  cbtn.disabled = !tab; cbtn.setAttribute("aria-pressed", String(cert));
+  cbtn.title = tab ? "Shade each seat by how likely it is to be won" : "Needs the seat simulation, which loads with the scenario data";
+  if (cert) {
+    const crows = [...byEnt.keys()].map(k => {
+      const e = ents[k], L = info.filter((st, ii) => st && blocks.some(bk => bk.k === k && ii >= bk.at && ii < bk.at + bk.n)), c = { certain: 0, probable: 0, "toss-up": 0 };
+      L.forEach(st => { c[seatCat(st.p)]++; });
+      return { name: e.name, colour: e.colour, seats: cur.seats[k], certain: c.certain, probable: c.probable, toss: c["toss-up"] };
+    });
+    HEMI.cert = { rows: crows };
+    const rows = crows.map(r => `<tr><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.toss}</td></tr>`).join("");
+    $("hemicert").innerHTML = `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;margin:6px 0 2px">
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)</span></div>
+      <table class="t"><tr><th>List</th><th>Seats</th><th>Certain</th><th>Probable</th><th>Toss-up</th></tr>${rows}</table>
+      <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. The chance is the share of simulated parliaments in which the list wins at least that many seats there (certain, 97.5% or more; probable, 50% to 97.5%). Within each list the most certain seats are at the outer end of its arc.</p>`;
+  } else $("hemicert").innerHTML = "";
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
     ? `<b style="color:var(--ink)">Minimum winning coalition:</b> ${esc(optLabel(cur.mwc.members))}, ${cur.mwc.s} seats${cur.mwc.prob && cur.mwc.p != null ? ` · ${prob(cur.mwc.p)} chance of a majority` : ""}${cur.mwc.s >= R.seatsConstitutional ? " · constitutional majority" : cur.mwc.s >= R.seatsVeto ? " · can override a presidential veto" : ""}. Hover or click a government option to show it instead.`
@@ -799,8 +885,16 @@ function hemiHover(ev) {
   const c = ev.target.closest("circle[data-k]");
   const tip = $("hemitip");
   if (!c) { tip.hidden = true; return; }
-  const k = +c.dataset.k, e = CUR.ents[k], r = CUR.rows[k];
-  placeTip(tip, $("hemibox"), ev, `<div class="r"><span><span class="dot" style="background:${e.colour}"></span><b>${esc(e.name)}</b></span><span>${r.seats} seats</span></div>${r.lo != null ? `<div class="muted">80% range ${r.lo}–${r.hi}</div>` : ""}${e.joint ? e.members.map(p => `<div class="r"><span><span class="dot" style="background:${col(p)}"></span>${esc(p)}</span><span>${CUR.memberSeats[p]}</span></div>`).join("") + `<div class="muted">Joint list: seats split by vote share</div>` : ""}`);
+  const k = +c.dataset.k, e = CUR.ents[k], r = CUR.rows[k], st = HEMI && HEMI.info ? HEMI.info[+c.dataset.i] : null;
+  let seat = "";
+  if (st) {
+    const cc = C[st.ci], kk = HEMI.sim.ents.findIndex(x => x.name === e.name), rg = kk >= 0 ? consRange(HEMI.sim, st.ci, kk) : null;
+    seat = `<div style="margin-top:6px;padding-top:5px;border-top:1px solid #EEE"><b>${esc(cc.name)}</b> <span class="muted">constituency ${cc.okreg}</span>
+      <div class="muted">${esc(e.name)}'s ${ord(st.j)} seat (district magnitude: ${cc.magnitude})</div>
+      <div class="r"><span>Chance of winning it</span><span style="margin-left:10px"><b>${prob(st.p)}</b> <span class="muted">${seatCat(st.p)}</span></span></div>
+      ${rg ? `<div class="muted">${rg[0] === rg[1] ? rg[0] : rg[0] + "–" + rg[1]} seats here in 80% of simulations</div>` : ""}</div>`;
+  }
+  placeTip(tip, $("hemibox"), ev, `<div class="r"><span><span class="dot" style="background:${e.colour}"></span><b>${esc(e.name)}</b></span><span>${r.seats} seats</span></div>${r.lo != null ? `<div class="muted">80% range ${r.lo}–${r.hi}</div>` : ""}${e.joint ? e.members.map(p => `<div class="r"><span><span class="dot" style="background:${col(p)}"></span>${esc(p)}</span><span>${CUR.memberSeats[p]}</span></div>`).join("") + `<div class="muted">Joint list: seats split by vote share</div>` : ""}${seat}`);
 }
 function mix(hex, t) { // blend hex colour towards white: t = 1 full colour
   const n = parseInt(hex.slice(1), 16), r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
@@ -852,10 +946,25 @@ function renderConstCard() {
   const ci = S.constSel == null ? -1 : C.findIndex(c => c.okreg === S.constSel);
   if (ci < 0) { card.innerHTML = `<span class="label">Constituency</span><p class="help" style="margin:0">Click a circle on the map to see how its seats are shared out.</p>`; return; }
   const c = C[ci], rows = constSeats(ci), anyRg = rows.some(r => r.rg);
+  // Seats in the elections since 2001, from the lists each party stood on (D.history): a figure, 0 where the
+  // party stood and won nothing in this constituency, a dash where it did not stand; † where its list was
+  // a joint list with another party in the table. A joint list's seats are shown against each member.
+  const hist = D.history || [], years = [...new Set(hist.map(h => h.year))].sort((a, b) => b - a), joints = new Map();
+  const past = (e, y) => {
+    const ls = hist.filter(h => h.year === y && h.seats[ci] != null && h.members.some(m => e.members.includes(m)));
+    if (!ls.length) return `<td class="muted">–</td>`;
+    const jl = ls.filter(h => h.members.some(m => !e.members.includes(m)));
+    jl.forEach(h => joints.set(h.id, `${h.year} ${h.list} (${h.members.map(short).join(" + ")})`));
+    return `<td>${sum(ls.map(h => h.seats[ci]))}${jl.length ? "†" : ""}</td>`;
+  };
+  const body = rows.map(r => `<tr><td><span class="dot" style="background:${r.e.colour};margin-right:6px"></span>${esc(r.e.name)}</td><td>${r.s}</td>${anyRg ? `<td>${r.rg ? r.rg[0] + "–" + r.rg[1] : "–"}</td>` : ""}${years.map(y => past(r.e, y)).join("")}</tr>`).join("");
   card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="label">Constituency ${c.okreg}</span><button type="button" class="linkbtn" id="constclose">Close</button></div>
     <div style="font-size:20px">${esc(c.name)} <span class="muted" style="font-size:13px">${c.magnitude} seats</span></div>
-    <table class="t"><tr><th>List</th><th>Seats</th>${anyRg ? "<th>80% of simulations</th>" : ""}</tr>
-    ${rows.map(r => `<tr><td><span class="dot" style="background:${r.e.colour};margin-right:6px"></span>${esc(r.e.name)}</td><td>${r.s}</td>${anyRg ? `<td>${r.rg ? r.rg[0] + "–" + r.rg[1] : "–"}</td>` : ""}</tr>`).join("")}</table>
+    <div style="overflow-x:auto"><table class="t hist">
+    ${years.length ? `<tr><th colspan="${anyRg ? 3 : 2}" style="border-bottom:0"></th><th colspan="${years.length}" style="font-weight:400;border-bottom:0;text-align:center;white-space:nowrap">Seats in earlier elections</th></tr>` : ""}
+    <tr><th>List</th><th>Seats</th>${anyRg ? "<th>80% range</th>" : ""}${years.map(y => `<th>${y}</th>`).join("")}</tr>
+    ${body}</table></div>
+    ${joints.size ? `<p class="help" style="margin:0">† Stood on a joint list with another party shown here, whose seats are shown against each: ${[...joints.values()].sort().reverse().map(esc).join("; ")}. A dash: the party did not stand.</p>` : `<p class="help" style="margin:0">A dash: the party did not stand.</p>`}
     <a class="linkbtn" style="text-decoration:none" href="../../pages/polish-political-analyses/election-results.html#l=c&amp;u=c${c.okreg}" target="_top">${esc(c.name)} in every election since 1990 →</a>`;
 }
 function render2023() {
@@ -990,8 +1099,8 @@ function renderChips() {
   $("ev").checked = S.events;
   $("dlwrap").hidden = !((S.view === "trends" && !TERM) || S.view === "time");
   $("dl").checked = S.dateLine;
-  $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click a poll figure to see that poll alone, with its figures for every party. Click parties below the chart to show them alone."
-    : "Hover for every party's estimate; click to load that week into the scenario. Click a poll figure to see that poll alone, with its figures for every party (click again or press Escape to let go). Click parties below the chart to show them alone.";
+  $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click a poll figure to see that poll alone and how far each of its figures sits from the trend. Click parties below the chart to show them alone."
+    : "Hover for every party's estimate. Click a poll figure to see that poll alone and how far each of its figures sits from the trend (click again or press Escape to let go), or click elsewhere to load that week into the scenario. Click parties below the chart to show them alone.";
 }
 
 // ---- rendering ------------------------------------------------------------------------------
@@ -1136,13 +1245,49 @@ async function png(only) {
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
   const slh = Math.round(sfs * 1.35), head = 62 + (lines.length - 1) * slh;
-  const H = head + foot + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
+  // With Certainty on, the hemicycle's image gets a key, the counts and a note on what the shading means
+  const cert = only === "hemi" && HEMI && HEMI.cert ? HEMI.cert : null;
+  const certNote = `Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
+  let certLines = [], certH = 0;
+  if (cert) {
+    mc.font = "10.5px Jost, sans-serif";
+    let cl = ""; certNote.split(" ").forEach(wd => { const t = cl ? cl + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cl) { certLines.push(cl); cl = wd; } else cl = t; }); certLines.push(cl);
+    certH = 26 + (cert.rows.length + 1) * 17 + 10 + certLines.length * 14 + 18;
+  }
+  const H = head + foot + certH + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
   const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
   g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[only]}${past ? " · " + past : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = `${sfs}px Jost, sans-serif`; lines.forEach((l, i) => g.fillText(l, pad, 52 + i * slh));
   let xx = pad, yy = head;
   imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
+  if (cert) {
+    let y0 = yy - pad + 10;
+    const key = [["certain", `Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more of simulations)`], ["probable", `Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)`], ["toss-up", `Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)`]];
+    g.font = "11px Jost, 'Avenir Next', sans-serif";
+    let lx = pad;
+    key.forEach(([c, t]) => {
+      g.beginPath(); g.arc(lx + 6, y0 + 6, 5, 0, 2 * Math.PI);
+      if (c === "toss-up") { g.fillStyle = "#fff"; g.fill(); g.strokeStyle = "#555"; g.lineWidth = 1.2; g.stroke(); }
+      else { g.globalAlpha = c === "probable" ? 0.5 : 1; g.fillStyle = "#555"; g.fill(); g.globalAlpha = 1; }
+      g.fillStyle = "#4B4B4B"; g.fillText(t, lx + 16, y0 + 10); lx += 16 + g.measureText(t).width + 20;
+    });
+    y0 += 26;
+    const nx = [pad + 200, pad + 262, pad + 332, pad + 402];
+    g.fillStyle = "#767676"; g.font = "500 11px Jost, 'Avenir Next', sans-serif"; g.textAlign = "left"; g.fillText("List", pad + 16, y0 + 10);
+    g.textAlign = "right"; ["Seats", "Certain", "Probable", "Toss-up"].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
+    g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 410, y0 + 15); g.stroke();
+    cert.rows.forEach((r, ri) => {
+      const ry = y0 + 17 + (ri + 1) * 17 - 5;
+      g.textAlign = "left"; g.fillStyle = r.colour; g.beginPath(); g.arc(pad + 5, ry - 4, 4, 0, 2 * Math.PI); g.fill();
+      g.fillStyle = "#141414"; g.font = "11px Jost, 'Avenir Next', sans-serif"; g.fillText(r.name, pad + 16, ry);
+      g.textAlign = "right"; [r.seats, r.certain, r.probable, r.toss].forEach((v, j) => g.fillText(String(v), nx[j], ry));
+    });
+    g.textAlign = "left";
+    const ty = y0 + 17 + (cert.rows.length + 1) * 17 + 10;
+    g.fillStyle = "#767676"; g.font = "10.5px Jost, 'Avenir Next', sans-serif";
+    certLines.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
+  }
   if (evl.length) {
     // at most four to a column; the type shrinks if the columns would run past the image
     const txt = l => `${l.n}. ${evWhen(l.date)} · ${l.event}`, cols = Array.from({ length: Math.ceil(evl.length / 4) }, (_, c) => evl.slice(c * 4, c * 4 + 4));
@@ -1232,6 +1377,7 @@ function bind() {
   });
   // seats
   $("hemi").addEventListener("mousemove", hemiHover);
+  $("hemicertbtn").addEventListener("click", () => { S.hemiCert = !S.hemiCert; renderHemi(); });
   $("hemi").addEventListener("mouseleave", () => { $("hemitip").hidden = true; });
   $("map").addEventListener("mousemove", ev => {
     const g = ev.target.closest("g[data-c]"), tip = $("maptip");
