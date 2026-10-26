@@ -182,8 +182,9 @@ svg text:not([font-weight]){font-weight:300}
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
     <label class="switch" id="ptswrap"><input type="checkbox" id="pts" checked> Individual polls</label>
-    <label class="switch" id="evwrap"><input type="checkbox" id="ev" checked> Events</label>
-    <label class="switch" id="dlwrap"><input type="checkbox" id="dl" checked> Date line</label>
+    <label class="switch" id="evwrap"><input type="checkbox" id="ev"> Events</label>
+    <label class="switch" id="dlwrap"><input type="checkbox" id="dl"> Date line</label>
+    <span class="help" style="margin-left:auto">Export as</span><div class="seg small" id="fmt" role="group" aria-label="Export format"><button type="button" data-f="png" aria-pressed="true">PNG</button><button type="button" data-f="pdf" aria-pressed="false">PDF</button></div>
   </div>
   <div class="main">
     <div class="stage" id="stage">
@@ -191,7 +192,7 @@ svg text:not([font-weight]){font-weight:300}
         <div class="toolbar">
           <div class="seg small" id="periods" aria-label="Period"></div>
           <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click a poll figure to see that poll alone, or click elsewhere to load that week into the scenario.</span>
-          <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="trend">PNG</button><button type="button" class="btn2 sm" data-csv="trend">CSV</button></span>
+          <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="trend">PNG - trends only</button><button type="button" class="btn2 sm" id="combobtn" data-png="combo" title="One image with the trends, seat projection, change since 2023 and possible governments">PNG - include seat projections</button><button type="button" class="btn2 sm" data-csv="trend">CSV</button></span>
         </div>
         <div class="chips" id="pchips" aria-label="Highlight polling houses"></div>
         <div class="chartbox" id="trendbox"><svg id="trend" role="img" aria-label="Polling trends with 80% bands and individual polls"></svg><div class="tip" id="trendtip" hidden></div></div>
@@ -245,6 +246,7 @@ svg text:not([font-weight]){font-weight:300}
   <div class="modalcard"><div class="modalhead"><h3 id="seatmodaltitle"></h3><button type="button" class="linkbtn" id="seatmodalclose">Close</button></div><div id="seatmodalbody"></div></div>
 </div>
 <script src="../chart-export.js"></script>
+<script src="../pdf-export.js"></script>
 <script src="../cartogram.js"></script>
 <script src="app.js"></script>
 </body>

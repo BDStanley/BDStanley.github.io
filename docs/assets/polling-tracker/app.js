@@ -142,7 +142,7 @@ const compatible = parties => !R.forbidden.some(fp => ruleOn(fp) && fp.every(x =
 const forbiddenIn = parties => R.forbidden.filter(fp => ruleOn(fp) && fp.every(x => parties.includes(x))).map(fp => fp.join(" and "));
 
 // ---- state ----------------------------------------------------------------------------------
-const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: true, events: true,
+const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
   hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, rulesOff: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
@@ -627,6 +627,7 @@ function repel(items, minGap, lo, hi) { // items: {y}, sorted in place, pushed a
   return items;
 }
 function renderTrends() {
+  $("combobtn").hidden = !!TERM;
   const box = $("trendbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 520));
   const V = VD(), T = V.trend, dates = T.dates, last = dates[dates.length - 1];
   // Room on the right for the longest end label ("Solidarność / AWS 35.4%")
@@ -1298,39 +1299,57 @@ function exportExtras(which, clone) {
   HEMI.labels.forEach(l => {
     const cs = Math.cos(l.a), top = Math.abs(cs) < 0.12, r = HEMI.outer + 0.14 + (top ? 0.24 : 0);
     const x = r * cs, y = -r * Math.sin(l.a);
-    o.push(`<text x="${x.toFixed(3)}" y="${(y + 0.035).toFixed(3)}" text-anchor="${top ? "middle" : cs > 0 ? "start" : "end"}" font-size="0.11" font-weight="500" fill="${col(l.p)}">${esc(l.p)} <tspan fill-opacity="0.7" font-weight="400">${l.n}</tspan></text>`);
+    o.push(`<text x="${x.toFixed(3)}" y="${(y + 0.035).toFixed(3)}" text-anchor="${top ? "middle" : cs > 0 ? "start" : "end"}" font-size="0.11" font-weight="500" fill="${col(l.p)}">${esc(l.p)}<tspan dx="0.035" fill-opacity="0.7" font-weight="400">${l.n}</tspan></text>`);
   });
   clone.insertAdjacentHTML("beforeend", o.join(""));
   return [-3.1, -2.75, 6.2, 2.85];
 }
+// The export format: every PNG button becomes a PDF button, and the combined image's PDF is one A4 page
+function setFmt(f) {
+  S.fmt = f; try { localStorage.setItem("pt-fmt", f); } catch (e) { /* private window */ }
+  document.querySelectorAll("#fmt button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === f)));
+  document.querySelectorAll("[data-png]").forEach(b => { b.textContent = b.textContent.replace(/^(PNG|PDF)/, f.toUpperCase()).replace(/ \(A4\)$/, "") + (f === "pdf" && b.id === "combobtn" ? " (A4)" : ""); });
+}
 async function png(only) {
-  const ids = [only];
+  const combo = only === "combo", ids = combo ? ["trend", "hemi"] : [only];
+  // PDF is drawn as vectors by ChartPdf; the combined image on A4 is laid out at a fixed width so its type stays readable
+  const pdf = S.fmt === "pdf", a4 = pdf && combo, tbox = $("trendbox");
+  if (a4) { tbox.style.width = "864px"; renderTrends(); }
+  // the combined image takes the seat projection from the Seats view, which may not be on screen
+  const seatsView = $("v-seats"), seatsWasHidden = seatsView.hidden;
+  if (combo) { seatsView.hidden = false; renderHemi(); }
   const past = TERM ? `Sejm term ${TERM.term.label}` : null;
-  const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", seattime: "Seats over time", cointime: "Chance of a majority over time", thrtime: "Chance of clearing the threshold over time", house: "House effects" };
-  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", seattime: "seats-over-time", cointime: "majority-over-time", thrtime: "threshold-over-time", house: "pollsters" }[only];
+  const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", seattime: "Seats over time", cointime: "Chance of a majority over time", thrtime: "Chance of clearing the threshold over time", house: "House effects", combo: "Polish party polling: trends and projections" };
+  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", seattime: "seats-over-time", cointime: "majority-over-time", thrtime: "threshold-over-time", house: "pollsters", combo: "trends-and-projections" }[only];
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
   const imgs = await Promise.all(ids.map(async id => {
     const svg = $(id), vb = svg.viewBox.baseVal;
     const clone = await ChartExport.clone(svg);
     // the single-graphic exports get labels the page doesn't show, and a wider canvas to hold them
-    const vb2 = exportExtras(only, clone), vw = vb2 ? vb2[2] : vb.width, vh = vb2 ? vb2[3] : vb.height;
-    const w = vb2 ? Math.max(svg.clientWidth, 640) * vw / vb.width : svg.clientWidth || vb.width, h = w * vh / vw;
+    const vb2 = exportExtras(id, clone), vw = vb2 ? vb2[2] : vb.width, vh = vb2 ? vb2[3] : vb.height;
+    const w = a4 && vb2 ? 600 : vb2 ? Math.max(svg.clientWidth, 640) * vw / vb.width : svg.clientWidth || vb.width, h = w * vh / vw;
     if (vb2) clone.setAttribute("viewBox", vb2.join(" "));
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg"); ChartExport.setSize(clone, w, h);
     clone.querySelectorAll(".hit,#trendhit,#trendhover,.hov").forEach(n => n.remove());
+    if (pdf) return { img: { _svg: clone }, w, h };
     return new Promise(res => {
       const img = new Image(); img.onload = () => res({ img, w, h });
       img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
     });
   }));
+  if (combo) seatsView.hidden = seatsWasHidden;
+  if (a4) { tbox.style.width = ""; renderTrends(); }
   await ChartExport.fonts();
-  const evl = only === "trend" && S.events ? trendEvents() : [];
+  const evl = (only === "trend" || combo) && S.events ? trendEvents() : [];
   const side = false, pad = 24, evRows = Math.min(4, evl.length), evH = evl.length ? evRows * 17 + 24 : 0, foot = 34 + evH;
   const W = side ? sum(imgs.map(i => i.w)) + pad * (imgs.length + 1) : Math.max(...imgs.map(i => i.w)) + 2 * pad;
   // the subtitle names the pollsters whose polls the estimates rest on, whether or not the polls are drawn; two lines at most
   const base = past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
+    : combo ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}; seat projection for ${dlong(CUR.wk.date)}`
     : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
-  const sub = `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
+  // a hypothetical scenario is not the model's estimate: no pollsters are named, and the image says it is hypothetical
+  const hypo = !past && CUR.mode !== "model" && (only === "hemi" || only === "map" || only === "trend" || combo);
+  const sub = hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario for ${dlong(CUR.wk.date)}: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
   const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
@@ -1341,11 +1360,14 @@ async function png(only) {
   const secs = [], F = "Jost, 'Avenir Next', sans-serif";
   const wrapTo = (txt, font, maxW) => { mc.font = font; const out = []; let c = ""; txt.split(" ").forEach(wd => { const t = c ? c + " " + wd : wd; if (mc.measureText(t).width > maxW && c) { out.push(c); c = wd; } else c = t; }); out.push(c); return out; };
   const ell = (t, font, maxW) => { mc.font = font; let u = t; if (mc.measureText(u).width <= maxW) return u; while (u.length > 1 && mc.measureText(u + "…").width > maxW) u = u.slice(0, -1); return u + "…"; };
+  // in the combined image the two tables sit side by side under the hemicycle (stacked if the image is too narrow), each wrapping to its column
+  const two = combo && (W - 2 * pad - 40) / 2 >= 600, colW = combo ? (two ? 600 : Math.min(600, W - 2 * pad)) : 0;
+  const SW = combo ? colW + 2 * pad : W;
   const POS = "#2E7D32", NEG = "#A31515";
   if (only === "hemi" && HEMI && HEMI.cert) {
     const cert = HEMI.cert;
     const certNote = `Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
-    const certLines = wrapTo(certNote, "10.5px " + F, W - 2 * pad);
+    const certLines = wrapTo(certNote, "10.5px " + F, SW - 2 * pad);
     secs.push({ h: 26 + (cert.rows.length + 1) * 17 + 10 + certLines.length * 14 + 18, draw: y0 => {
       const key = [["certain", `Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more of simulations)`], ["probable", `Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)`], ["toss-up", `Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)`]];
       g.font = "11px " + F; g.textAlign = "left";
@@ -1373,9 +1395,9 @@ async function png(only) {
       certLines.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
     } });
   }
-  if (only === "hemi" && S.hemi2023 && !TERM) {
+  if ((combo || only === "hemi" && S.hemi2023) && !TERM) {
     const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${CUR.mode === "model" ? "model's estimate" : "scenario"} for ${dlong(CUR.wk.date)}.`;
-    const lines23 = wrapTo(note23, "10.5px " + F, W - 2 * pad);
+    const lines23 = wrapTo(note23, "10.5px " + F, SW - 2 * pad);
     secs.push({ h: 28 + (rows23.length + 1) * 17 + 10 + lines23.length * 14 + 14, draw: y0 => {
       g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Change since the 2023 election", pad, y0 + 12);
       y0 += 22;
@@ -1397,19 +1419,16 @@ async function png(only) {
       lines23.forEach((l, li) => g.fillText(l, pad, ty + li * 14));
     } });
   }
-  if (only === "hemi" && S.hemiCoal && !TERM) {
-    const items = coalOptions(), shownC = items.slice(0, 12), more = items.length - shownC.length, joint = S.joint.length > 0, probabilistic = CUR.mode !== "single";
+  if ((combo || only === "hemi" && S.hemiCoal) && !TERM) {
+    const items = coalOptions(), shownC = items.slice(0, a4 ? 8 : 12), more = items.length - shownC.length, joint = S.joint.length > 0, probabilistic = CUR.mode !== "single";
     const label = o => optLabel(o.members);
-    const ruleLines = R.forbidden.map(fp => {
-      const on = ruleOn(fp), by = shownC.filter(it => it.br.some(b => ruleKey(b) === ruleKey(fp))).map(it => label(it.o));
-      const status = joint ? "not applied (joint lists on)" : on ? "applied" : "switched off";
-      const txt = `${ruleText(fp)}: ${status}. ${by.length ? "Broken by " + by.join("; ") + "." : on && !joint ? "Not broken by any option shown." : "Broken by none of the options shown."}`;
-      return { fp, lines: wrapTo(txt, "10.5px " + F, W - 2 * pad - 14), on: on && !joint, broken: by.length > 0 };
-    });
+    const applied = joint ? [] : R.forbidden.filter(ruleOn);
+    const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(fp => fp.join(" and ")).join("; ")}.` : "No coalition possibilities are excluded.";
+    const ruleLines = [{ lines: wrapTo(ruleSentence, "10.5px " + F, SW - 2 * pad) }];
     const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most parsimonious: minimum winning coalitions first (a majority in at least half the simulations, with no smaller coalition that is), then majorities with a partner they do not need, then the rest by chance. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
-    const noteLines = wrapTo(note, "10.5px " + F, W - 2 * pad);
+    const noteLines = wrapTo(note, "10.5px " + F, SW - 2 * pad);
     const rulesH = sum(ruleLines.map(r => r.lines.length * 13 + 3));
-    secs.push({ h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
+    secs.push({ col: "R", h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
       g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Possible governments, from the most to the least parsimonious", pad, y0 + 12);
       g.fillStyle = "#767676"; g.font = "10.5px " + F;
       noteLines.forEach((l, li) => g.fillText(l, pad, y0 + 28 + li * 14));
@@ -1424,33 +1443,31 @@ async function png(only) {
         g.textAlign = "right"; g.font = "11px " + F; g.fillText(String(o.s), nx[0], y + 11); g.fillText(o.lo != null ? `${o.lo}–${o.hi}` : "–", nx[1], y + 11);
         g.font = "500 11px " + F; g.fillText(probabilistic ? prob(o.p) : "✓", nx[2], y + 11);
         g.textAlign = "left"; g.font = "10px " + F;
-        g.fillStyle = "#767676"; const kt = COAL_KIND[kind] + " · "; g.fillText(kt, pad, y + 24);
-        const kw = g.measureText(kt).width; g.fillStyle = br.length ? NEG : "#767676";
-        g.fillText(ell(br.length ? "breaks " + br.map(fp => fp.join(" and ")).join("; ") : "breaks no rule", "10px " + F, W - 2 * pad - kw), pad + kw, y + 24);
+        g.fillStyle = "#767676"; g.fillText(COAL_KIND[kind], pad, y + 24);
         y += 31;
       });
       if (more > 0) { g.fillStyle = "#767676"; g.font = "10.5px " + F; g.textAlign = "left"; g.fillText(`${more} further option${more > 1 ? "s" : ""} not shown`, pad, y + 11); y += 16; }
       y += 6;
-      g.fillStyle = "#141414"; g.font = "500 12px " + F; g.textAlign = "left"; g.fillText("Exclusion rules", pad, y + 12); y += 22;
+      g.fillStyle = "#141414"; g.font = "500 12px " + F; g.textAlign = "left"; g.fillText("Exclusions", pad, y + 12); y += 22;
       ruleLines.forEach(r => {
-        g.fillStyle = r.on ? "#767676" : r.broken ? NEG : "#767676"; g.font = "10.5px " + F;
-        g.beginPath(); g.arc(pad + 4, y + 5, 3.5, 0, 2 * Math.PI);
-        if (r.on) { g.fillStyle = "#555"; g.fill(); } else { g.strokeStyle = r.broken ? NEG : "#999"; g.lineWidth = 1.2; g.stroke(); }
-        g.fillStyle = r.on ? "#4B4B4B" : r.broken ? NEG : "#767676";
-        r.lines.forEach((l, li) => g.fillText(l, pad + 14, y + 9 + li * 13));
+        g.fillStyle = "#4B4B4B"; g.font = "10.5px " + F;
+        r.lines.forEach((l, li) => g.fillText(l, pad, y + 9 + li * 13));
         y += r.lines.length * 13 + 3;
       });
     } });
   }
-  const H = head + foot + sum(secs.map(x => x.h)) + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
+  const colL = secs.filter(x => x.col !== "R"), colR = secs.filter(x => x.col === "R");
+  const hk = combo ? Math.min(1, (W - 2 * pad) / imgs[1].w) : 1, hw = combo ? imgs[1].w * hk : 0, hh = combo ? imgs[1].h * hk : 0;
+  const hL = sum(colL.map(x => x.h)), hR = sum(colR.map(x => x.h));
+  const H = combo ? head + foot + imgs[0].h + pad + hh + 10 + (two ? Math.max(hL, hR) : hL + hR) : head + foot + sum(secs.map(x => x.h)) + (side ? Math.max(...imgs.map(i => i.h)) : sum(imgs.map(i => i.h)) + pad * (imgs.length - 1));
   const cv = document.createElement("canvas"), sc = ChartExport.scale(W, H); cv.width = W * sc; cv.height = H * sc;
-  const g = cv.getContext("2d"); g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H);
-  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(`Polling tracker · ${titles[only]}${past ? " · " + past : ""}`, pad, 32);
+  const docTitle = combo ? titles.combo : `Polling tracker · ${titles[only]}${past ? " · " + past : ""}`;
+  const g = pdf ? await ChartPdf.context(W, H, { a4, title: docTitle + (hypo ? " (hypothetical scenario)" : ""), subject: sub }) : cv.getContext("2d");
+  if (!pdf) { g.scale(sc, sc); g.fillStyle = "#fff"; g.fillRect(0, 0, W, H); }
+  g.fillStyle = "#8B0000"; g.font = ChartExport.TITLE; g.fillText(combo ? titles.combo : `Polling tracker · ${titles[only]}${past ? " · " + past : ""}${hypo ? " · Hypothetical scenario" : ""}`, pad, 32);
   g.fillStyle = "#4B4B4B"; g.font = `${sfs}px Jost, sans-serif`; lines.forEach((l, i) => g.fillText(l, pad, 52 + i * slh));
-  let xx = pad, yy = head;
-  imgs.forEach(i => { g.drawImage(i.img, xx, yy, i.w, i.h); if (side) xx += i.w + pad; else yy += i.h + pad; });
-  { let sy = yy - pad + 10; secs.forEach(sec => { sec.draw(sy); sy += sec.h; }); }
-  if (evl.length) {
+  const drawEvents = y0 => {
+    if (evl.length) {
     // at most four to a column; the type shrinks if the columns would run past the image
     const txt = l => `${l.n}. ${evWhen(l.date)} · ${l.event}`, cols = Array.from({ length: Math.ceil(evl.length / 4) }, (_, c) => evl.slice(c * 4, c * 4 + 4));
     let fs = 10.5, widths;
@@ -1458,10 +1475,32 @@ async function png(only) {
     while (sum(widths) + 28 * (cols.length - 1) > W - 2 * pad && fs > 8);
     g.fillStyle = "#A0A0A0";
     let cx = pad;
-    cols.forEach((c, k) => { c.forEach((l, i) => g.fillText(txt(l), cx, yy + 8 + i * 17)); cx += widths[k] + 28; });
+    cols.forEach((c, k) => { c.forEach((l, i) => g.fillText(txt(l), cx, y0 + 8 + i * 17)); cx += widths[k] + 28; });
+  }
+  };
+  let xx = pad, yy = head;
+  if (combo) {
+    // trend across the top, the hemicycle centred under it, then the change table and the possible governments side by side, centred
+    const [ti, hi] = imgs;
+    g.drawImage(ti.img, pad + (W - 2 * pad - ti.w) / 2, yy, ti.w, ti.h);
+    yy += ti.h + pad; drawEvents(yy); if (evl.length) yy += evH;
+    g.drawImage(hi.img, (W - hw) / 2, yy, hw, hh);
+    const x0 = two ? (W - 2 * colW - 40) / 2 : (W - colW) / 2;
+    const rowY = yy + hh + 10;
+    let ly = rowY; g.save(); g.translate(x0 - pad, 0); colL.forEach(sec => { sec.draw(ly); ly += sec.h; }); g.restore();
+    let ry = two ? rowY : rowY + hL; g.save(); g.translate((two ? x0 + colW + 40 : x0) - pad, 0); colR.forEach(sec => { sec.draw(ry); ry += sec.h; }); g.restore();
+  } else {
+    imgs.forEach(i => {
+      g.drawImage(i.img, xx + (side ? 0 : (W - 2 * pad - i.w) / 2), yy, i.w, i.h);
+      if (side) xx += i.w + pad; else yy += i.h + pad;
+    });
+    { let sy = yy - pad + 10; secs.forEach(sec => { sec.draw(sy); sy += sec.h; }); }
+    drawEvents(yy);
   }
   g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
-  cv.toBlob(b => download(`polling-tracker-${fname}-${past ? TERM.term.id : iso(CUR.wk.date)}.png`, b), "image/png");
+  const fileBase = `polling-tracker-${fname}${hypo ? "-hypothetical-scenario" : ""}-${past ? TERM.term.id : iso(CUR.wk.date)}`;
+  if (pdf) download(fileBase + ".pdf", await g.finish());
+  else cv.toBlob(b => download(fileBase + ".png", b), "image/png");
 }
 
 // ---- events ---------------------------------------------------------------------------------
@@ -1490,7 +1529,9 @@ function bind() {
     else { const b = e.target.closest("button[data-org]"); if (!b) return; const o = b.dataset.org; S.houses.has(o) ? S.houses.delete(o) : S.houses.add(o); }
     renderChips(); renderTrends(); saveHash();
   });
-  document.querySelectorAll("[data-png]").forEach(b => b.addEventListener("click", () => png(b.dataset.png)));
+  document.querySelectorAll("[data-png]").forEach(b => b.addEventListener("click", () => png(b.dataset.png).catch(e => toast("Could not make the " + S.fmt.toUpperCase() + ": " + e.message))));
+  $("fmt").addEventListener("click", e => { const b = e.target.closest("button"); if (b) setFmt(b.dataset.f); });
+  try { setFmt(localStorage.getItem("pt-fmt") === "pdf" ? "pdf" : "png"); } catch (e) { setFmt("png"); }
   document.querySelectorAll("[data-csv]").forEach(b => b.addEventListener("click", () => csv(b.dataset.csv)));
   $("ev").addEventListener("change", e => { S.events = e.target.checked; renderTrends(); });
   $("dl").addEventListener("change", e => { S.dateLine = e.target.checked; if (S.view === "trends") renderTrends(); else renderView(); });

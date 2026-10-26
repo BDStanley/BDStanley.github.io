@@ -4,12 +4,12 @@
  "totals": {
   "citations": 2333,
   "citing_works": 2034,
-  "scholars": 2155,
+  "scholars": 2157,
   "countries": 74,
   "my_works": 49,
   "first_year": 2008,
   "self_citing_works": 16,
-  "works_without_country": 485,
+  "works_without_country": 483,
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
@@ -1338,19 +1338,19 @@
    "code": "PL",
    "name": "Poland",
    "scholars": 160,
-   "works": 153,
+   "works": 154,
    "colour": "#8b0000",
-   "tip": "Poland: 160 citing scholars, in 153 citing works",
+   "tip": "Poland: 160 citing scholars, in 154 citing works",
    "w": 0.6751
   },
   {
    "code": "IT",
    "name": "Italy",
-   "scholars": 125,
-   "works": 111,
+   "scholars": 128,
+   "works": 112,
    "colour": "#8b0000",
-   "tip": "Italy: 125 citing scholars, in 111 citing works",
-   "w": 0.5274
+   "tip": "Italy: 128 citing scholars, in 112 citing works",
+   "w": 0.5401
   },
   {
    "code": "NL",
@@ -1373,11 +1373,11 @@
   {
    "code": "ES",
    "name": "Spain",
-   "scholars": 69,
-   "works": 69,
+   "scholars": 70,
+   "works": 70,
    "colour": "#a72219",
-   "tip": "Spain: 69 citing scholars, in 69 citing works",
-   "w": 0.2911
+   "tip": "Spain: 70 citing scholars, in 70 citing works",
+   "w": 0.2954
   },
   {
    "code": "AT",
@@ -1499,6 +1499,14 @@
    "tip": "Slovakia: 24 citing scholars, in 16 citing works"
   },
   {
+   "code": "CN",
+   "name": "China",
+   "scholars": 21,
+   "works": 14,
+   "colour": "#d55d4b",
+   "tip": "China: 21 citing scholars, in 14 citing works"
+  },
+  {
    "code": "ID",
    "name": "Indonesia",
    "scholars": 21,
@@ -1513,14 +1521,6 @@
    "works": 22,
    "colour": "#d55d4b",
    "tip": "Chile: 20 citing scholars, in 22 citing works"
-  },
-  {
-   "code": "CN",
-   "name": "China",
-   "scholars": 19,
-   "works": 14,
-   "colour": "#d55d4b",
-   "tip": "China: 19 citing scholars, in 14 citing works"
   },
   {
    "code": "PT",
@@ -1646,9 +1646,9 @@
    "code": "MX",
    "name": "Mexico",
    "scholars": 9,
-   "works": 8,
+   "works": 9,
    "colour": "#e38070",
-   "tip": "Mexico: 9 citing scholars, in 8 citing works"
+   "tip": "Mexico: 9 citing scholars, in 9 citing works"
   },
   {
    "code": "RS",
@@ -1763,14 +1763,6 @@
    "tip": "Philippines: 4 citing scholars, in 2 citing works"
   },
   {
-   "code": "BD",
-   "name": "Bangladesh",
-   "scholars": 3,
-   "works": 3,
-   "colour": "#eda496",
-   "tip": "Bangladesh: 3 citing scholars, in 3 citing works"
-  },
-  {
    "code": "CY",
    "name": "Cyprus",
    "scholars": 3,
@@ -1825,6 +1817,14 @@
    "works": 4,
    "colour": "#eda496",
    "tip": "Argentina: 2 citing scholars, in 4 citing works"
+  },
+  {
+   "code": "BD",
+   "name": "Bangladesh",
+   "scholars": 2,
+   "works": 2,
+   "colour": "#eda496",
+   "tip": "Bangladesh: 2 citing scholars, in 2 citing works"
   },
   {
    "code": "IR",
