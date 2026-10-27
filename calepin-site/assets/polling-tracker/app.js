@@ -143,6 +143,9 @@ const pairText = fp => `${fp[0]} and ${fp[1]}`;
 const ruleText = fp => `${pairText(fp)} do not govern together`;
 const exclIn = parties => [...S.excl].map(pairOf).filter(fp => fp.every(x => parties.includes(x)));
 const compatible = parties => exclIn(parties).length === 0;
+// A government of several lists: no excluded pair may span two different lists. Pairs inside one joint list are the
+// user's own choice (the list picker warns about them) and do not count.
+const compatibleLists = groups => groups.every((g, i) => groups.slice(i + 1).every(h => !g.some(a => h.some(b => S.excl.has(pairKey(a, b))))));
 const forbiddenIn = parties => exclIn(parties).map(pairText);
 // True if a default exclusion has been switched to Include (the published combinations then are not enough)
 const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])));
@@ -307,8 +310,8 @@ function consRange(sim, c, k) {
 // Members are named from the most seats to the fewest in the current view
 const seatsOfName = m => { if (!CUR) return 0; const k = CUR.ents.findIndex(e => e.name === m); return k >= 0 ? CUR.seats[k] : (CUR.memberSeats && CUR.memberSeats[m]) || 0; };
 const optLabel = members => (CUR ? [...members].sort((a, b) => seatsOfName(b) - seatsOfName(a)) : members).map(m => m in PIDX ? short(m) : m).join(" + ");
-// Lists that can form a government: without joint lists the compatibility rules
-// apply and MN is never a partner; with joint lists any lists may combine.
+// Lists that can form a government: without joint lists MN is never a partner; the exclusion rules apply
+// between lists, with or without joint lists (compatibleLists).
 function govLists(ents, joint, seatsOf) {
   return ents.map((e, k) => k).filter(k => seatsOf(k) > 0 && (joint.length ? true : ents[k].members[0] in R.ideology));
 }
@@ -323,8 +326,7 @@ function govFromSim(sim, joint) {
     if (mask === full && L > 1) continue; // someone must be in opposition
     const ks = lists.filter((k, j) => mask & (1 << j));
     const names = ks.map(k => ents[k].name);
-    const parties = ks.flatMap(k => ents[k].members);
-    if (!joint.length && !compatible(parties)) continue;
+    if (!compatibleLists(ks.map(k => ents[k].members))) continue;
     const v = new Array(n);
     let pm = 0, pv = 0, pc = 0;
     for (let d = 0; d < n; d++) {
@@ -347,8 +349,7 @@ function govDet(ents, joint, seats) {
   for (let mask = 1; mask <= full; mask++) {
     if (mask === full && L > 1) continue;
     const ks = lists.filter((k, j) => mask & (1 << j));
-    const parties = ks.flatMap(k => ents[k].members);
-    if (!joint.length && !compatible(parties)) continue;
+    if (!compatibleLists(ks.map(k => ents[k].members))) continue;
     const s = sum(ks.map(k => seats[k]));
     out.push({ members: ks.map(k => ents[k].name), size: ks.length, s, lo: null, hi: null, p: s >= R.seatsMajority ? 1 : 0, pv: s >= R.seatsVeto ? 1 : 0, pc: s >= R.seatsConstitutional ? 1 : 0 });
   }
@@ -494,7 +495,7 @@ function renderPanelLayout() {
   </div>
   <div class="card">
     <span class="label">Joint lists</span>
-    <p class="help" style="margin:0">Parties standing as one list face an 8% threshold instead of 5%. While any joint list stands, the compatibility rules for government are switched off.</p>
+    <p class="help" style="margin:0">Parties standing as one list face an 8% threshold instead of 5%. A government of two or more lists is possible only if no party on one list is excluded from a party on another; the pairs excluded inside a joint list are not checked.</p>
     <div class="chips" id="jpills">${S.joint.map((m, j) => `<span class="jpill">${esc(sortParties(m).map(short).join(" + "))}<button type="button" data-rm="${j}" aria-label="Remove this joint list">×</button></span>`).join("")}</div>
     ${S.joint.length >= 4 ? `<p class="help" style="margin:0">At most four joint lists.</p>` : avail.length < 2 ? "" : `
     <div class="picker">
@@ -1070,16 +1071,16 @@ function renderHemiCoal() {
   const box = $("hemicoal");
   if (!S.hemiCoal || !CUR) { box.innerHTML = ""; return; }
   const cur = CUR, probabilistic = cur.mode !== "single", items = coalOptions(), joint = S.joint.length > 0;
-  const canRelax = !joint && (cur.mode !== "model" || drawsState === "ready");
+  const canRelax = (cur.mode !== "model" || drawsState === "ready");
   const focus = S.pinGov || S.focusGov;
   const dk = defaultExcl(), cp = P.filter(p => p !== "MN");
   const cell = (a, b) => {
     const k = pairKey(a, b), x = S.excl.has(k), changed = x !== dk.has(k), n = items.filter(it => it.br.some(f => pairKey(f[0], f[1]) === k)).length;
-    const off = joint || (x && !canRelax);
+    const off = x && !canRelax;
     return `<button type="button" class="xc ${x ? "ex" : "in"}${changed ? " chg" : ""}" data-pair="${esc(k)}" aria-pressed="${x}" aria-label="${esc(pairText([a, b]))}: ${x ? "excluded" : "included"}${changed ? ", changed from the default" : ""}" title="${esc(pairText([a, b]))}: ${x ? "excluded" : "included"}${x && !off ? " (click to include)" : off ? "" : " (click to exclude)"}${!x && n ? ` · ${n} option${n > 1 ? "s" : ""} below ${n > 1 ? "break" : "breaks"} the default` : ""}"${off ? " disabled" : ""}>${x ? "✕" : ""}</button>`;
   };
-  const head = `<span></span>${cp.slice(0, -1).map(p => `<button type="button" class="xh" data-party="${esc(p)}"${joint ? " disabled" : ""} title="Toggle every pair with ${esc(p)}">${esc(short(p))}</button>`).join("")}`;
-  const body = cp.slice(1).map((r, i) => `<button type="button" class="xh xr" data-party="${esc(r)}"${joint ? " disabled" : ""} title="Toggle every pair with ${esc(r)}">${esc(short(r))}</button>${cp.slice(0, cp.length - 1).map((c, j) => j < i + 1 ? cell(r, c) : "<span></span>").join("")}`).join("");
+  const head = `<span></span>${cp.slice(0, -1).map(p => `<button type="button" class="xh" data-party="${esc(p)}"${!canRelax ? " disabled" : ""} title="Toggle every pair with ${esc(p)}">${esc(short(p))}</button>`).join("")}`;
+  const body = cp.slice(1).map((r, i) => `<button type="button" class="xh xr" data-party="${esc(r)}"${!canRelax ? " disabled" : ""} title="Toggle every pair with ${esc(r)}">${esc(short(r))}</button>${cp.slice(0, cp.length - 1).map((c, j) => j < i + 1 ? cell(r, c) : "<span></span>").join("")}`).join("");
   const nExcl = S.excl.size, nChg = [...dk].filter(k => !S.excl.has(k)).length + [...S.excl].filter(k => !dk.has(k)).length;
   const rules = `<div class="xgrid" style="grid-template-columns:auto repeat(${cp.length - 1},34px)" role="group" aria-label="Pairs of parties that will not govern together">${head}${body}</div>
     <div class="xkey"><span><i class="xc ex">✕</i> excluded</span><span><i class="xc in"></i> included</span><span><i class="xc in chg"></i> changed from default</span>${nChg ? `<button type="button" class="linkbtn" id="xreset">Reset to defaults</button>` : ""}</div>`;
@@ -1101,7 +1102,7 @@ function renderHemiCoal() {
     <div style="max-height:340px;overflow-y:auto">${rows || `<p class="help" style="margin:0">No combination reaches a majority in at least 5% of simulations.</p>`}</div>
     <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Coalition configurations (${nExcl} pair${nExcl === 1 ? "" : "s"} excluded)</summary>
       <div style="margin-top:4px">${rules}</div>
-      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, any lists may combine, so the rules are not applied." : canRelax ? "Switching a pair recalculates the options (and the government options in the panel) from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
+      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, a pair excludes two lists from governing together when one party is on each; pairs inside a list are not checked. " : ""}${canRelax ? "Switching a pair recalculates the options (and the government options in the panel) from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
 }
 function renderHemiBlocks() {
   $("hemi2023btn").setAttribute("aria-pressed", String(S.hemi2023)); $("hemicoalbtn").setAttribute("aria-pressed", String(S.hemiCoal));
@@ -1483,7 +1484,7 @@ async function png(only) {
   if ((combo || only === "hemi" && S.hemiCoal) && !TERM) {
     const items = coalOptions(), shownC = items.slice(0, a4 ? 8 : 12), more = items.length - shownC.length, joint = S.joint.length > 0, probabilistic = CUR.mode !== "single";
     const label = o => optLabel(o.members);
-    const applied = joint ? [] : [...S.excl].map(pairOf);
+    const applied = [...S.excl].map(pairOf);
     const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(pairText).join("; ")}.` : "No coalition possibilities are excluded.";
     const ruleLines = [{ lines: wrapTo(ruleSentence, "10.5px " + F, SW - 2 * pad) }];
     const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most to the least plausible: coalitions of ideologically adjacent parties (none skips a seated party between its most distant members) first, then those with fewer parties, then a narrower span; a majority with a party it does not need ranks below the smaller majority inside it; options without a majority in most simulations come last. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
