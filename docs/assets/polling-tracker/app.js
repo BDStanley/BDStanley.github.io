@@ -1111,7 +1111,7 @@ function render2023() {
     `<tr><td>${esc(l.list)} <span class="muted" style="font-size:11.5px">${l.parties.length > 1 ? "now " + l.parties.map(short).join(" + ") : ""}</span></td><td>${l.vote.toFixed(1)}%</td><td>${now.toFixed(1)}%</td><td class="${cls(now - l.vote)}">${signed(now - l.vote, 1)}</td><td>${l.seats}</td><td>${seats}</td><td class="${cls(seats - l.seats)}">${signed(seats - l.seats)}</td></tr>`).join("");
   box.innerHTML = `<span class="label" style="display:block;margin:10px 0 4px">Change since the 2023 election</span>
     <table class="t"><tr><th>2023 list</th><th>Vote 2023</th><th>Now</th><th></th><th>Seats 2023</th><th>Now</th><th></th></tr>${rows}</table>
-    <p class="help" style="margin:4px 0 0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${cur.mode === "model" ? "model's estimate" : "scenario"} for ${dstr(cur.wk.date)}.</p>`;
+    <p class="help" style="margin:4px 0 0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${cur.mode === "model" ? `the model's estimate for ${dstr(cur.wk.date)}` : "the hypothetical scenario"}.</p>`;
 }
 // Parties on the lists of an option (a joint list stands for its members)
 const partiesOf = o => o.members.flatMap(nm => { const e = CUR.ents.find(x => x.name === nm); return e ? e.members : [nm]; });
@@ -1490,10 +1490,10 @@ async function png(only) {
   // the subtitle names the pollsters whose polls the estimates rest on, whether or not the polls are drawn; two lines at most
   const base = past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
     : combo ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}; seat projection for ${dlong(CUR.wk.date)}`
-    : S.view === "seats" ? `${dlong(CUR.wk.date)} · ${CUR.mode === "model" ? "model estimates" : "scenario"}` : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
+    : S.view === "seats" ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
   // a hypothetical scenario is not the model's estimate: no pollsters are named, and the image says it is hypothetical
   const hypo = !past && CUR.mode !== "model" && (only === "hemi" || only === "map" || only === "trend" || combo);
-  const sub = hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario for ${dlong(CUR.wk.date)}: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
+  const sub = hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
   const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
@@ -1540,7 +1540,7 @@ async function png(only) {
     } });
   }
   if ((combo || only === "hemi" && S.hemi2023) && !TERM) {
-    const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is the ${CUR.mode === "model" ? "model's estimate" : "scenario"} for ${dlong(CUR.wk.date)}.`;
+    const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${CUR.mode === "model" ? `the model's estimate for ${dlong(CUR.wk.date)}` : "the hypothetical scenario"}.`;
     const lines23 = wrapTo(note23, "10.5px " + F, SW - 2 * pad);
     secs.push({ h: 28 + (rows23.length + 1) * 17 + 10 + lines23.length * 14 + 14, draw: y0 => {
       g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Change since the 2023 election", pad, y0 + 12);
@@ -1642,7 +1642,7 @@ async function png(only) {
     drawEvents(yy);
   }
   g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
-  const fileBase = `polling-tracker-${fname}${hypo ? "-hypothetical-scenario" : ""}-${past ? TERM.term.id : iso(CUR.wk.date)}`;
+  const fileBase = `polling-tracker-${fname}${hypo ? "-hypothetical-scenario" : `-${past ? TERM.term.id : iso(CUR.wk.date)}`}`;
   if (pdf) download(fileBase + ".pdf", await g.finish());
   else cv.toBlob(b => download(fileBase + ".png", b), "image/png");
 }
