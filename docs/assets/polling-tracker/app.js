@@ -1433,12 +1433,27 @@ function exportExtras(which, clone) {
   // the count sits a fixed gap after the name: both are placed from the measured width, not with dx, which PDF drawing does not keep
   const mc = document.createElement("canvas").getContext("2d"), FS = 0.11, GAP = 0.05, M = 1000;
   const tw = (t, wt) => { mc.font = `${wt} ${FS * M}px Jost, sans-serif`; return mc.measureText(t).width / M; };
-  HEMI.labels.forEach(l => {
+  const items = HEMI.labels.map(l => {
     const cs = Math.cos(l.a), top = Math.abs(cs) < 0.12, r = HEMI.outer + 0.14 + (top ? 0.24 : 0);
     const x = r * cs, y = -r * Math.sin(l.a) + 0.035, pw = tw(l.p, 500), nw = tw(String(l.n), 400), tot = pw + GAP + nw;
-    const x0 = top ? x - tot / 2 : cs > 0 ? x : x - tot;
-    o.push(`<text x="${x0.toFixed(3)}" y="${y.toFixed(3)}" font-size="${FS}" font-weight="500" fill="${col(l.p)}">${esc(l.p)}</text>`);
-    o.push(`<text x="${(x0 + pw + GAP).toFixed(3)}" y="${y.toFixed(3)}" font-size="${FS}" font-weight="400" fill="${col(l.p)}" fill-opacity="0.7">${l.n}</text>`);
+    return { l, cs, y, pw, w: tot, x0: top ? x - tot / 2 : cs > 0 ? x : x - tot };
+  });
+  // neighbouring small blocks can put their labels on top of each other: lift the one further from the top until they clear
+  const box = it => [it.x0, it.x0 + it.w, it.y - FS, it.y + 0.02];
+  for (let pass = 0; pass < 30; pass++) {
+    let moved = false;
+    for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
+      const A = box(items[i]), B = box(items[j]), pad = 0.03;
+      if (A[0] < B[1] + pad && B[0] < A[1] + pad && A[2] < B[3] && B[2] < A[3]) {
+        (Math.abs(items[i].cs) >= Math.abs(items[j].cs) ? items[i] : items[j]).y -= FS * 1.15; moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  items.forEach(it => {
+    const l = it.l;
+    o.push(`<text x="${it.x0.toFixed(3)}" y="${it.y.toFixed(3)}" font-size="${FS}" font-weight="500" fill="${col(l.p)}">${esc(l.p)}</text>`);
+    o.push(`<text x="${(it.x0 + it.pw + GAP).toFixed(3)}" y="${it.y.toFixed(3)}" font-size="${FS}" font-weight="400" fill="${col(l.p)}" fill-opacity="0.7">${l.n}</text>`);
   });
   clone.insertAdjacentHTML("beforeend", o.join(""));
   return [-3.1, -2.75, 6.2, 2.85];
@@ -1569,28 +1584,32 @@ async function png(only) {
     const applied = [...S.excl].map(pairOf);
     const ruleSentence = applied.length ? `Excluded coalition possibilities: ${applied.map(pairText).join("; ")}.` : "No coalition possibilities are excluded.";
     const ruleLines = [{ lines: wrapTo(ruleSentence, "10.5px " + F, SW - 2 * pad) }];
-    const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most to the least plausible: coalitions of ideologically adjacent parties (none skips a seated party between its most distant members) first, then those with fewer parties, then a narrower span; a majority with a party it does not need ranks below the smaller majority inside it; options without a majority in most simulations come last. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}.`;
-    const noteLines = wrapTo(note, "10.5px " + F, SW - 2 * pad);
+    const note = `${probabilistic ? `Chance: the share of simulations in which the coalition has ${R.seatsMajority} or more seats; options under 5% are left out.` : "Single allocation at the shares on screen."} Ordered from the most to the least plausible: coalitions of ideologically adjacent parties (none skips a seated party between its most distant members) first, then those with fewer parties, then a narrower span; a majority with a party it does not need ranks below the smaller majority inside it; options without a majority in most simulations come last. ${CUR.mode === "model" ? `Model estimates for ${dlong(CUR.wk.date)}.` : "Hypothetical scenario."}`;
+    const none = !shownC.length, noteLines = none ? [] : wrapTo(note, "10.5px " + F, SW - 2 * pad);
     const rulesH = sum(ruleLines.map(r => r.lines.length * 13 + 3));
-    secs.push({ col: "R", h: 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0) + 22 + rulesH + 10, draw: y0 => {
+    secs.push({ col: "R", h: (none ? 24 + 18 : 24 + noteLines.length * 14 + 6 + 20 + shownC.length * 31 + (more > 0 ? 16 : 0)) + 22 + rulesH + 10, draw: y0 => {
       g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Possible governments", pad, y0 + 12);
-      g.fillStyle = "#767676"; g.font = "10.5px " + F;
-      noteLines.forEach((l, li) => g.fillText(l, pad, y0 + 28 + li * 14));
-      let y = y0 + 24 + noteLines.length * 14 + 6;
-      const nx = [pad + 330, pad + 410, pad + 480];
-      g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("Coalition", pad, y + 10);
-      g.textAlign = "right"; ["Seats", "80% range", "Chance"].forEach((t, j) => g.fillText(t, nx[j], y + 10));
-      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y + 15); g.lineTo(pad + 485, y + 15); g.stroke();
-      y += 20;
-      shownC.forEach(({ o, kind, br }) => {
-        g.textAlign = "left"; g.fillStyle = "#141414"; g.font = (kind === 0 ? "500 " : "") + "11px " + F; g.fillText(ell(label(o), (kind === 0 ? "500 " : "") + "11px " + F, 300), pad, y + 11);
-        g.textAlign = "right"; g.font = "11px " + F; g.fillText(String(o.s), nx[0], y + 11); g.fillText(o.lo != null ? `${o.lo}–${o.hi}` : "–", nx[1], y + 11);
-        g.font = "500 11px " + F; g.fillText(probabilistic ? prob(o.p) : "✓", nx[2], y + 11);
-        g.textAlign = "left"; g.font = "10px " + F;
-        g.fillStyle = "#767676"; g.fillText(COAL_KIND[kind], pad, y + 24);
-        y += 31;
-      });
-      if (more > 0) { g.fillStyle = "#767676"; g.font = "10.5px " + F; g.textAlign = "left"; g.fillText(`${more} further option${more > 1 ? "s" : ""} not shown`, pad, y + 11); y += 16; }
+      let y;
+      if (none) { g.fillStyle = "#141414"; g.font = "11px " + F; g.fillText("None", pad, y0 + 30); y = y0 + 36; }
+      else {
+        g.fillStyle = "#767676"; g.font = "10.5px " + F;
+        noteLines.forEach((l, li) => g.fillText(l, pad, y0 + 28 + li * 14));
+        y = y0 + 24 + noteLines.length * 14 + 6;
+        const nx = [pad + 330, pad + 410, pad + 480];
+        g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("Coalition", pad, y + 10);
+        g.textAlign = "right"; ["Seats", "80% range", "Chance"].forEach((t, j) => g.fillText(t, nx[j], y + 10));
+        g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y + 15); g.lineTo(pad + 485, y + 15); g.stroke();
+        y += 20;
+        shownC.forEach(({ o, kind, br }) => {
+          g.textAlign = "left"; g.fillStyle = "#141414"; g.font = (kind === 0 ? "500 " : "") + "11px " + F; g.fillText(ell(label(o), (kind === 0 ? "500 " : "") + "11px " + F, 300), pad, y + 11);
+          g.textAlign = "right"; g.font = "11px " + F; g.fillText(String(o.s), nx[0], y + 11); g.fillText(o.lo != null ? `${o.lo}–${o.hi}` : "–", nx[1], y + 11);
+          g.font = "500 11px " + F; g.fillText(probabilistic ? prob(o.p) : "✓", nx[2], y + 11);
+          g.textAlign = "left"; g.font = "10px " + F;
+          g.fillStyle = "#767676"; g.fillText(COAL_KIND[kind], pad, y + 24);
+          y += 31;
+        });
+        if (more > 0) { g.fillStyle = "#767676"; g.font = "10.5px " + F; g.textAlign = "left"; g.fillText(`${more} further option${more > 1 ? "s" : ""} not shown`, pad, y + 11); y += 16; }
+      }
       y += 6;
       g.fillStyle = "#141414"; g.font = "500 12px " + F; g.textAlign = "left"; g.fillText("Exclusions", pad, y + 12); y += 22;
       ruleLines.forEach(r => {
