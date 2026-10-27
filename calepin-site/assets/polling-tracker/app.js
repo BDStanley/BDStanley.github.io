@@ -53,6 +53,7 @@ const OKABE = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#D55E00", "#56B4E9"]
 // ---- data -----------------------------------------------------------------------------------
 let D, R, P, SP, NP, NC, C, VV, MAG, COEFI, PIDX, LAUNCH, WEEKS;
 let DRAWS = null, drawsState = "idle", SWING = null;
+let JP = null, JPAIR = {};
 let TERMS = null, TERM = null;  // terms.json, and the past term on show (null: the current one)
 const TCACHE = new Map();
 let PENDING = null;             // a past term, and the houses and parties picked in the link, until it loads
@@ -151,7 +152,7 @@ const forbiddenIn = parties => exclIn(parties).map(pairText);
 const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])));
 
 // ---- state ----------------------------------------------------------------------------------
-const S = { w: 0, shares: {}, joint: [], dyn: 0, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
+const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
   hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
@@ -162,7 +163,7 @@ function defaults(w) {
   return s;
 }
 function edited() { const d = defaults(S.w); return SP.some(p => Math.abs(S.shares[p] - d[p]) > 0.051); }
-const dynOn = () => S.joint.length > 0 && S.dyn > 0;
+const respOn = () => !!JP && S.joint.length > 0 && S.resp !== "none";
 function modelView() { return !edited() && S.joint.length === 0; }
 const weekParties = w => P.filter(p => exists(p, WEEKS[w].date));
 
@@ -173,24 +174,50 @@ function makeEnts(joint) {
   ents.forEach(e => { e.idx = e.members.map(p => PIDX[p]); e.mnOnly = !e.joint && e.members[0] === "MN"; });
   return ents;
 }
-// Coalition dynamics: each member of a joint list loses
-// strength * PUNISH_MAX_LOSS * (distance to its furthest partner / 100)^2 of its vote.
-function punishArr(sh, joint, strength) {
-  if (!joint.length || strength <= 0) return 0;
-  let lost = 0;
-  for (const m of joint) {
-    const pos = m.filter(p => p in R.ideology);
-    if (pos.length < 2) continue;
-    for (const p of pos) {
-      let far = 0;
-      for (const q of pos) far = Math.max(far, Math.abs(R.ideology[q] - R.ideology[p]));
-      const i = PIDX[p], o = sh[i];
-      if (!(o > 0)) continue;
-      const l = o * strength * R.punishMaxLoss * (far / 100) ** 2;
-      sh[i] = o - l; lost += l;
-    }
+// ---- voters' response to joint lists (joint_penalty.json, written by Voting behaviour/analysis/79b_joint_penalty_export.R) ----
+// For each party on a joint list: the voters who are reluctant about any partner on it (pair reluctance, drawn on the logit scale in the
+// simulation) and who defect (rp.conv of them) leave. A share rp.abst of the defectors abstains; the rest vote for the parties off the list that
+// they rate highest (weight: the square of the mean rating). Pairs that split recently carry at least rp.split reluctance when ticked.
+const lgt = p => Math.log(p / (1 - p)), expt = x => 1 / (1 + Math.exp(-x)), clampP = x => Math.min(0.995, Math.max(0.005, x));
+const RESP_NAMES = { none: "None", low: "Low", medium: "Medium", high: "High" };
+function prepJP(d) {
+  JP = d; JPAIR = {};
+  d.pairs.forEach(q => { (JPAIR[q.a] = JPAIR[q.a] || {})[q.b] = q; });
+}
+function respParams() {
+  if (S.adv) return S.adv;
+  const b = JP.levels[S.resp === "none" ? "medium" : S.resp];
+  return { conv: b.conv, shift: b.shift, split: b.split, abst: JP.abstain, splitsOn: JP.splitsOn.slice() };
+}
+function pairMu(a, b, rp) {
+  let mu = JPAIR[a][b].mu;
+  JP.splits.forEach((sp, i) => { if (rp.splitsOn[i] && ((sp[0] === a && sp[1] === b) || (sp[0] === b && sp[1] === a))) mu = Math.max(mu, lgt(clampP(rp.split))); });
+  return mu;
+}
+const newFlow = () => P.map(() => ({ ab: 0, to: new Float64Array(SP.length) }));
+function stdNormal(seed) {
+  const r = mulberry32(seed); let spare = null;
+  return () => { if (spare != null) { const t = spare; spare = null; return t; }
+    let u = 0, v = 0; while (u === 0) u = r(); v = r();
+    const m = Math.sqrt(-2 * Math.log(u)); spare = m * Math.sin(2 * Math.PI * v); return m * Math.cos(2 * Math.PI * v); };
+}
+// sh: national shares (fractions, SP order), changed in place. rnd: a standard normal generator for a simulation draw, or null for the point estimate.
+// flow: optional newFlow() to add the votes moved to. w: the week, for the parties that exist.
+function applyResponse(sh, joint, rp, rnd, flow, w) {
+  const loss = new Float64Array(SP.length), gain = new Float64Array(SP.length), av = new Set(weekParties(w));
+  for (const m of joint) for (const a of m) {
+    const ia = PIDX[a]; if (!JPAIR[a] || !(sh[ia] > 0)) continue;
+    let keep = 1;
+    for (const b of m) if (b !== a && JPAIR[a][b]) keep *= 1 - expt(pairMu(a, b, rp) + JPAIR[a][b].sd * (rp.shift + (rnd ? rnd() : 0)));
+    const lost = sh[ia] * (1 - keep) * rp.conv; if (!(lost > 0)) continue;
+    loss[ia] += lost;
+    const wt = P.map(b => (m.includes(b) || !av.has(b) || !JPAIR[a][b]) ? 0 : JPAIR[a][b].like ** 2), tot = sum(wt);
+    let ab = tot ? rp.abst : 1;
+    if (rnd && ab > 0 && ab < 1) ab = expt(lgt(Math.min(0.98, Math.max(0.02, ab))) + 0.4 * rnd());
+    if (flow) flow[ia].ab += lost * ab;
+    P.forEach((b, j) => { if (!wt[j]) return; const g = lost * (1 - ab) * wt[j] / tot; gain[PIDX[b]] += g; if (flow) flow[ia].to[PIDX[b]] += g; });
   }
-  return lost;
+  for (let i = 0; i < SP.length; i++) sh[i] += gain[i] - loss[i];
 }
 function dhondt(votes, n, out) {
   out.fill(0);
@@ -264,7 +291,7 @@ function weekDraws(w) {
   WD.set(w, out);
   return out;
 }
-// Simulate week w. scen = {shares (%), joint, dyn} or null for the model's own draws.
+// Simulate week w. scen = {shares (%), joint, resp (respParams() or null)} or null for the model's own draws.
 function simulate(w, scen) {
   const wd = weekDraws(w);
   if (!wd) return null;
@@ -278,16 +305,18 @@ function simulate(w, scen) {
     if (m > 0) factor[i] = u / m; else { factor[i] = 0; fixed[i] = u; }
   });
   const sh = new Float64Array(SP.length), iMN = PIDX.MN;
+  const rnd = scen && scen.resp ? stdNormal(780046) : null, flow = rnd ? newFlow() : null;
   for (let d = 0; d < n; d++) {
     sh.fill(0);
     wd.map.forEach((i, k) => { if (i >= 0) sh[i] = wd.arr[d * wd.K + k]; });
     if (scen) for (let i = 0; i < SP.length; i++) if (i !== iMN) sh[i] = factor[i] > 0 || fixed[i] === 0 ? sh[i] * factor[i] : fixed[i];
     sh[iMN] = (scen ? scen.shares.MN : R.mnNational2023) / 100;
-    if (scen && scen.joint.length && scen.dyn > 0) punishArr(sh, scen.joint, scen.dyn / 100);
+    if (rnd && scen.joint.length) applyResponse(sh, scen.joint, scen.resp, rnd, flow, w);
     const tot = allocate(sh, ents, SWING, d, nat, cons, d * E, d * NC * E);
     for (let k = 0; k < E; k++) tots[d * E + k] = tot[k];
   }
-  return { n, ents, nat, cons, tots };
+  if (flow) flow.forEach(f => { f.ab /= n; for (let i = 0; i < f.to.length; i++) f.to[i] /= n; });
+  return { n, ents, nat, cons, tots, flow };
 }
 function summarise(sim) {
   const { n, ents, nat, tots } = sim, E = ents.length;
@@ -393,7 +422,8 @@ function compute() {
   // Shares after coalition dynamics (single allocation and display)
   const sh = new Float64Array(SP.length);
   SP.forEach((p, i) => { sh[i] = Math.max(0, S.shares[p] || 0) / 100; });
-  if (dynOn()) punishArr(sh, S.joint, S.dyn / 100);
+  const flowS = respOn() ? newFlow() : null;
+  if (flowS) applyResponse(sh, S.joint, respParams(), null, flowS, S.w);
   const eff = {}; SP.forEach((p, i) => { eff[p] = sh[i] * 100; });
   const single = { nat: new Int16Array(E), cons: new Int16Array(NC * E) };
   const tot = allocate(sh, ents, null, 0, single.nat, single.cons);
@@ -413,7 +443,7 @@ function compute() {
       if (ms) allGov = govFromSim(ms, []);
     }
     gov = pruneGov(allGov, true);
-  } else if (drawsState === "ready" && (sim = simulate(S.w, { shares: S.shares, joint: S.joint, dyn: dynOn() ? S.dyn : 0 }))) {
+  } else if (drawsState === "ready" && (sim = simulate(S.w, { shares: S.shares, joint: S.joint, resp: respOn() ? respParams() : null }))) {
     mode = "sim";
     rows = summarise(sim);
     allGov = govFromSim(sim, S.joint);
@@ -447,7 +477,7 @@ function compute() {
   });
   allGov.forEach(o => { o.pl = plaus(o, ents, memberSeats); });
   gov.sort(byPlaus);
-  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, govAll: allGov, sim, memberSeats, mwc: null };
+  CUR = { wk, mode, ents, eff, tot, single, rows, seats, gov, govAll: allGov, sim, memberSeats, mwc: null, flow: sim && sim.flow ? sim.flow : flowS };
   // The most plausible government with a majority in most simulations is the one the hemicycle shows by default
   const top = coalOptions()[0];
   if (top && top.kind === 0) CUR.mwc = Object.assign({}, top.o, { prob: mode !== "single" });
@@ -466,6 +496,59 @@ function partyRow(p, inJoint) {
     ${inJoint ? "<span></span>" : `<span class="pseats" id="seat-${slug(p)}"></span>`}
     <span class="psub" id="sub-${slug(p)}"></span>
   </div>`;
+}
+function respBlock() {
+  const rp = JP ? respParams() : { conv: 0, shift: 0, split: 0, abst: 0, splitsOn: [false, false, false, false] };
+  const row = (id, label, min, max, step, val) => `<div class="advrow"><label for="a_${id}" class="advl"><span>${label}</span><b id="o_${id}"></b></label><input type="range" class="wide" id="a_${id}" min="${min}" max="${max}" step="${step}" value="${val}"></div>`;
+  const method = JP ? `<p class="help" style="margin:6px 0 0">Reluctance is the share of a party's voters who rate a partner 0 to 2 out of 10 (PGSW 2023), pulled towards a model of ideological distance and of which side of the PiS divide the partner is on. Of such voters, ${Math.round(100 * JP.meta.calibration.pooled)}% named a party they rated that low as one they would never vote for in 2005 and 2007 (${Math.round(100 * JP.meta.calibration.party_q25)}% to ${Math.round(100 * JP.meta.calibration.party_q75)}% across parties: the Low and High settings). R+ and KKP were not rated and take the figures of PiS and Konfederacja. The abstention share and the penalties for recent splits are judgement.</p>` : "";
+  return `<div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+      <span class="label">Voter response</span>
+      <div class="seg small" id="resp" role="group" aria-label="How strongly voters react to joint lists">${["none", "low", "medium", "high"].map(k => `<button type="button" data-resp="${k}">${RESP_NAMES[k]}</button>`).join("")}<button type="button" data-resp="custom" hidden>Custom</button></div>
+      <p class="help" id="respnote" style="margin:0"></p>
+      <div id="respflow"></div>
+      ${JP ? `<details id="adv"${S.advOpen ? " open" : ""}><summary class="help" style="cursor:pointer">Advanced settings</summary>
+        ${row("conv", "Reluctant voters who defect", 0, 100, 5, Math.round(100 * rp.conv))}
+        ${row("shift", "Reluctance against the estimate (SDs)", -2, 2, 0.25, rp.shift)}
+        ${row("abst", "Defectors who abstain", 0, 100, 5, Math.round(100 * rp.abst))}
+        ${row("split", "Reluctance between recently split parties", 0, 40, 1, Math.round(100 * rp.split))}
+        <div class="chips" style="margin-top:4px">${JP.splits.map((sp, i) => `<label class="chip"><input type="checkbox" id="a_sp${i}"${rp.splitsOn[i] ? " checked" : ""}> ${esc(short(sp[0]))} / ${esc(short(sp[1]))}</label>`).join("")}</div>
+        ${method}</details>` : ""}
+    </div>`;
+}
+const pctPt = x => (100 * x).toFixed(1);
+function updateRespUI() {
+  if (!$("resp")) return;
+  const custom = !!S.adv, joint = S.joint.length > 0;
+  document.querySelectorAll("#resp button").forEach(b => { const k = b.dataset.resp; b.setAttribute("aria-pressed", k === "custom" ? custom : (!custom && k === S.resp)); b.hidden = k === "custom" && !custom; b.disabled = !joint || !JP; });
+  const note = $("respnote");
+  if (!JP) note.textContent = "The voter-response data could not be loaded, so a joint list simply adds its members' votes.";
+  else if (!joint) note.textContent = "Applies to joint lists: build one to use it.";
+  else if (custom) note.textContent = "Advanced settings are changed from Low, Medium and High.";
+  else if (S.resp === "none") note.textContent = "Voters do not react: a joint list simply adds its members' votes.";
+  else { const rp = respParams(); note.textContent = `Of a party's voters who rate a partner on the list 0 to 2 out of 10, ${Math.round(100 * rp.conv)}% defect: some abstain, the rest vote for the other parties they rate highest. Recently split partners carry a ${Math.round(100 * rp.split)}% reluctance.`; }
+  if (!JP) return;
+  const rp = respParams(), set = (id, v, t) => { const el = $("a_" + id), o = $("o_" + id); if (el && document.activeElement !== el) el.value = v; if (o) o.textContent = t; };
+  set("conv", Math.round(100 * rp.conv), Math.round(100 * rp.conv) + "%"); set("shift", rp.shift, (rp.shift > 0 ? "+" : "") + rp.shift.toFixed(2));
+  set("abst", Math.round(100 * rp.abst), Math.round(100 * rp.abst) + "%"); set("split", Math.round(100 * rp.split), Math.round(100 * rp.split) + "%");
+  rp.splitsOn.forEach((on, i) => { const c = $("a_sp" + i); if (c) c.checked = on; });
+  document.querySelectorAll("#adv input").forEach(i => { i.disabled = !joint; });
+  renderRespFlow();
+}
+// Where the votes lost in this scenario go, in points of the national vote
+function renderRespFlow() {
+  const box = $("respflow"); if (!box) return;
+  if (!respOn() || !CUR || !CUR.flow) { box.innerHTML = ""; return; }
+  const lines = [];
+  S.joint.forEach(m => m.forEach(a => {
+    const f = CUR.flow[PIDX[a]], lost = f.ab + sum(Array.from(f.to)); if (lost < 0.0005) return;
+    const dest = P.map((b, j) => [b, f.to[PIDX[b]]]).filter(x => x[1] >= 0.0005).sort((x, y) => y[1] - x[1]);
+    const shown = dest.slice(0, 3).map(([b, v]) => `${pctPt(v)} to ${esc(short(b))}`);
+    const rest = sum(dest.slice(3).map(x => x[1]));
+    if (rest >= 0.0005) shown.push(`${pctPt(rest)} to others`);
+    if (f.ab >= 0.0005) shown.push(`${pctPt(f.ab)} abstain or other`);
+    lines.push(`<div><b>${esc(short(a))}</b> loses ${pctPt(lost)}: ${shown.join(", ")}</div>`);
+  }));
+  box.innerHTML = lines.length ? `<div class="help" style="display:grid;gap:2px;padding:6px 8px;background:var(--tint);border-radius:8px"><span style="font-weight:500">Votes lost to the joint lists (points of the national vote)</span>${lines.join("")}</div>` : "";
 }
 function renderPanelLayout() {
   const wk = WEEKS[S.w], def = defaults(S.w);
@@ -503,11 +586,7 @@ function renderPanelLayout() {
       <div class="status" id="jsummary"></div>
       <div><button type="button" class="btn1" id="jadd">Add joint list</button></div>
     </div>`}
-    <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px">
-      <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="label">Coalition dynamics</span><b id="dynval"></b></div>
-      <input type="range" class="wide" id="dyn" min="0" max="100" step="1" value="${S.dyn}" ${S.joint.length ? "" : "disabled"} aria-label="Coalition dynamics strength">
-      <p class="help" style="margin:0">${S.joint.length ? "How strongly voters punish a party for allying with ideologically distant partners. At 0% there is no effect; at 100%, parties furthest apart lose three quarters of their vote, and closer ones less." : "Applies to joint lists: build one to use it."}</p>
-    </div>
+    ${respBlock()}
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="label">Government options</span><span class="help" id="govhead"></span></div>
@@ -563,7 +642,7 @@ function updatePanel() {
     $("jdot-" + j).style.background = e.colour;
     const below = e.vote < 100 * R.thresholdJoint;
     const s23 = sum(e.members.map(p => R.seats2023[p] || 0));
-    $("jt-" + j).innerHTML = `<span>${pct(e.vote)}${dynOn() && Math.abs(e.vote - e.rawVote) > 0.05 ? ` <span class="muted">(${pct(e.rawVote)} before dynamics)</span>` : ""}${below ? ` <span class="neg">below 8%</span>` : ""}${r.pThr != null && r.pThr < 0.995 ? ` <span class="muted">· clears 8%: ${prob(r.pThr)}</span>` : ""}</span>
+    $("jt-" + j).innerHTML = `<span>${pct(e.vote)}${respOn() && Math.abs(e.vote - e.rawVote) > 0.05 ? ` <span class="muted">(${pct(e.rawVote)} before voter response)</span>` : ""}${below ? ` <span class="neg">below 8%</span>` : ""}${r.pThr != null && r.pThr < 0.995 ? ` <span class="muted">· clears 8%: ${prob(r.pThr)}</span>` : ""}</span>
       <span class="pseats"><span class="n">${r.seats}</span>${r.lo != null ? ` <span class="muted" style="font-size:11.5px">${r.lo}–${r.hi}</span>` : ""} <span class="${cls(r.seats - s23)}" style="font-size:11.5px">${signed(r.seats - s23)}</span></span>`;
   });
   SP.forEach(p => { const row = $("row-" + slug(p)); if (row) row.classList.toggle("hl", S.hoverParty === p); });
@@ -586,7 +665,7 @@ function updatePanel() {
     }
     $("jadd").disabled = mem.length < 2;
   }
-  $("dynval").textContent = S.dyn + "%";
+  updateRespUI();
   renderGov();
 }
 function renderGov() {
@@ -1277,7 +1356,8 @@ function stateString() {
   if (xi.length) q.set("xi", xi.join(";"));
   if (xx.length) q.set("xx", xx.join(";"));
   if (S.joint.length) q.set("j", S.joint.map(m => m.join(",")).join(";"));
-  if (S.joint.length && S.dyn) q.set("s", S.dyn);
+  if (S.joint.length && S.adv) q.set("ra", [S.adv.conv, S.adv.shift, S.adv.abst, S.adv.split, S.adv.splitsOn.map(x => +x).join("")].join(","));
+  else if (S.joint.length && S.resp !== "medium") q.set("r", S.resp);
   if (S.houses.size) q.set("h", [...S.houses].join(";"));
   if (S.parties.size) q.set("pp", [...S.parties].join(";"));
   if (S.view !== "trends") q.set("view", S.view);
@@ -1302,7 +1382,9 @@ function restoreHash() {
   const okPair = k => { const p = pairOf(k); return p.length === 2 && p[0] !== p[1] && p.every(x => P.includes(x)); };
   if (q.get("xi")) q.get("xi").split(";").filter(okPair).forEach(k => S.excl.delete(pairKey(...pairOf(k))));
   if (q.get("xx")) q.get("xx").split(";").filter(okPair).forEach(k => S.excl.add(pairKey(...pairOf(k))));
-  if (q.get("s")) S.dyn = clamp(parseInt(q.get("s"), 10) || 0, 0, 100);
+  if (["none", "low", "medium", "high"].includes(q.get("r"))) S.resp = q.get("r");
+  if (q.get("ra")) { const a = q.get("ra").split(","), n = a.slice(0, 4).map(Number), mk = (a[4] || "").padEnd(4, "0");
+    if (n.every(isFinite)) S.adv = { conv: clamp(n[0], 0, 1), shift: clamp(n[1], -2, 2), abst: clamp(n[2], 0, 1), split: clamp(n[3], 0, 0.4), splitsOn: [0, 1, 2, 3].map(i => mk[i] === "1") }; }
   const list = k => q.get(k) ? q.get(k).split(";") : [];
   if (q.get("t")) PENDING = { term: q.get("t"), houses: list("h"), parties: list("pp") };
   else {
@@ -1692,14 +1774,22 @@ function bind() {
   const panel = $("panel");
   panel.addEventListener("input", e => {
     const t = e.target;
-    if (t.id === "dyn") { S.dyn = +t.value; $("dynval").textContent = S.dyn + "%"; updateSoon(); return; }
+    if (t.id && t.id.startsWith("a_") && JP) {
+      if (!S.adv) { const b = respParams(); S.adv = { conv: b.conv, shift: b.shift, split: b.split, abst: b.abst, splitsOn: b.splitsOn.slice() }; if (S.resp === "none") S.resp = "medium"; }
+      const k = t.id.slice(2);
+      if (k === "conv") S.adv.conv = +t.value / 100; else if (k === "shift") S.adv.shift = +t.value; else if (k === "abst") S.adv.abst = +t.value / 100;
+      else if (k === "split") S.adv.split = +t.value / 100; else if (k.startsWith("sp")) S.adv.splitsOn[+k.slice(2)] = t.checked;
+      updateRespUI(); updateSoon(); return;
+    }
     if (t.dataset.p && (t.type === "range" || t.type === "number")) setShare(t.dataset.p, parseFloat(t.value), t.type);
   });
   panel.addEventListener("click", e => {
     const t = e.target;
     if (t.id === "wprev") return setWeek(S.w - 1);
     if (t.id === "wnext") return setWeek(S.w + 1);
-    if (t.id === "reset") { S.shares = defaults(S.w); S.joint = []; S.dyn = 0; S.pinGov = null; S.focusGov = null; return update(); }
+    if (t.id === "reset") { S.shares = defaults(S.w); S.joint = []; S.resp = "medium"; S.adv = null; S.pinGov = null; S.focusGov = null; return update(); }
+    const rb = t.closest("#resp button[data-resp]");
+    if (rb) { if (rb.dataset.resp !== "custom" && !rb.disabled) { S.resp = rb.dataset.resp; S.adv = null; update(); } return; }
     if (t.id === "jadd") { if (S.picker.size >= 2) { S.joint.push(sortParties([...S.picker])); S.picker.clear(); S.pinGov = null; update(); } return; }
     if (t.dataset.rm != null) { S.joint.splice(+t.dataset.rm, 1); S.pinGov = null; return update(); }
     const pick = t.closest("#jpick button[data-p]");
@@ -1709,6 +1799,7 @@ function bind() {
     if (gr) { S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderGov(); if (S.view !== "seats") { S.view = "seats"; renderChips(); } renderView(); saveHash(); return; }
     if (t.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); return; }
   });
+  panel.addEventListener("toggle", e => { if (e.target.id === "adv") S.advOpen = e.target.open; }, true);
   panel.addEventListener("keydown", e => { const gr = e.target.closest(".grow-row"); if (gr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); gr.click(); } });
   panel.addEventListener("mouseover", e => {
     const gr = e.target.closest(".grow-row"), row = e.target.closest(".prow");
@@ -1811,7 +1902,9 @@ function header() {
   const m = D.meta, last = WEEKS[WEEKS.length - 1].date;
   $("asof").innerHTML = `Estimates as of ${dlong(last)}${m.nPolls ? `, from ${m.nPolls} polls by ${m.pollsterCount} pollsters (fieldwork ${dlong(m.firstFieldwork)} to ${dlong(m.lastFieldwork)})` : ""}, as listed on Wikipedia.`;
 }
-fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+Promise.all([fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+  fetch("joint_penalty.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).catch(() => null)]).then(([d, jp]) => {
+  if (jp) prepJP(jp);
   D = d; prep(); restoreHash(); header(); renderChips(); bind();
   loadTerms();
   // set on the SVGs themselves so PNG exports keep the typeface

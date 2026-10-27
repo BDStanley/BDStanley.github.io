@@ -16,6 +16,8 @@ page; this script copies it beside the page's chart under assets/:
     Polls/web/term-<term>.json                    -> assets/polling-tracker/term-<term>.json
         (the past Sejm terms, written by Polls/R/terms/30_export.R; terms.json lists
         the terms, and each one it lists is copied too)
+    Voting behaviour/web/joint_penalty.json       -> assets/polling-tracker/joint_penalty.json
+        (the voters' response to joint lists, written by "Voting behaviour/analysis/79b_joint_penalty_export.R")
     Party system analysis/web/party_system.json   -> assets/party-system-indicators/party_system.json
         (written by Party system analysis/analysis/export_web.R, which
         "Party system analysis.R" runs)
@@ -81,6 +83,8 @@ FILES = [
      {"nDraws", "categories", "weeks"}),
     ("Polls/web/terms.json", "assets/polling-tracker/terms.json",
      {"version", "terms"}),
+    ("Voting behaviour/web/joint_penalty.json", "assets/polling-tracker/joint_penalty.json",
+     {"meta", "parties", "pairs", "levels", "abstain", "splits", "splitsOn"}),
     ("Party system analysis/web/party_system.json", "assets/party-system-indicators/party_system.json",
      {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
     ("Party ideology/web/ideology.json", "assets/party-ideology/ideology.json",
