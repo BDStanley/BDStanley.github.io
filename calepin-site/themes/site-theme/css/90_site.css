@@ -655,8 +655,23 @@ body:has(.embed-frame--app) .calepin-site-footer {
 .analysis-thumb:hover {
   border-color: #8b0000;
 }
+/* Phones: three columns, thumbnail above the name and a one-sentence line. */
 @media (max-width: 640px) {
-  .analysis-thumb { flex-basis: auto; width: 100%; max-width: 24rem; }
+  .course-list.analysis-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.3rem 0.7rem;
+    align-items: start;
+  }
+  .analysis-list .course-row { flex-direction: column; gap: 0.45rem; }
+  .analysis-list .analysis-thumb {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    border-radius: 6px;
+  }
+  .analysis-list .course-name { font-size: 0.82rem; line-height: 1.25; }
+  .analysis-list .course-desc { font-size: 0.72rem; line-height: 1.35; }
 }
 /* On a computer screen or a landscape tablet the page widens, centred and
    capped at 66rem as Good Change is, and the rows sit in two columns with a
