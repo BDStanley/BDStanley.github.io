@@ -42,6 +42,7 @@ function init(d) {
   $("ca").addEventListener("change", e => { S.a = e.target.value; render(); });
   $("cb").addEventListener("change", e => { S.b = e.target.value; render(); });
   $("cswap").addEventListener("click", () => { [S.a, S.b] = [S.b, S.a]; render(); });
+  let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (S.v === "time") drawTime(); }, 150); });
   $("hmode").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { S.hm = b.dataset.m; render(); }));
   $("hscale").querySelectorAll("button").forEach(b => b.addEventListener("click", () => { S.hs = b.dataset.s; render(); }));
   $("asof").innerHTML = "Manifesto Project dataset 2026a and corpus 2026-1; " + esc(D.meta.coverage) +
@@ -211,57 +212,96 @@ function drawDims(p) {
     (ches ? `CHES's party is ${esc(ches.chesParty)}${p.flags.bloc ? ", the main member of this bloc" : ""}, rated in ${ches.wave}.` : "CHES has no matching rating at the nearest wave.") + "</div>";
 }
 
-// ---- Over time ----------------------------------------------------------------------------------
+// ---- Charts in the house style of the Social and political trends page --------------------------------
+// Light grid, a darker baseline, a darker line at zero, tick labels in grey, and "↑ / ↓" labels at the
+// plot's corners saying what up and down mean; series named at their last point, intervals as bands.
+const INK = "#141414", SOFT = "#4B4B4B", MUTED = "#767676", GRID = "#ECECEC", BASE = "#D5D5D5", MID = "#A6A6A6";
+const HALO = {stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"};
+const tipAt = (tip, svg, ev, html) => {
+  const r = svg.parentNode.getBoundingClientRect();
+  tip.hidden = false; tip.style.left = Math.min(ev.clientX - r.left + 12, r.width - 260) + "px"; tip.style.top = ev.clientY - r.top + 12 + "px"; tip.innerHTML = html;
+};
+const trunc = (s, n) => s.length > n ? s.slice(0, n - 1) + "…" : s;
+const yearOf = p => { const d = new Date(p.date); return d.getUTCFullYear() + d.getUTCMonth() / 12; };
+const labelOf = p => p.palette || (p.abbrev && p.abbrev.length > 1 ? p.abbrev : trunc(p.name, 16));
+function niceTicks(lo, hi, n) {
+  const raw = (hi - lo) / n, e = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / e;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e;
+  return {step, lo: Math.floor(lo / step + 1e-9) * step, hi: Math.ceil(hi / step - 1e-9) * step};
+}
+function poles(key) {
+  const d = dimByKey[key];
+  if (d && d.kind === "position") return [d.highMeans, d.lowMeans];
+  if (d) return [d.highMeans, "less emphasis"];
+  return ["larger share of the manifesto", "smaller share"];
+}
+
+// ---- Over time: one panel per party family, all on the same scale ------------------------------------
 function drawTime() {
   const svg = $("time"); svg.innerHTML = "";
-  const key = S.m, log = isLog(key), g = log ? 2 : 1;
+  const key = S.m, log = isLog(key), g = log ? 2 : 1, tip = $("tip");
   const sel = $("measure").selectedOptions[0];
   const label = sel ? sel.textContent : key;
   const dim = dimByKey[key];
-  $("timehelp").textContent = label + (dim && dim.kind === "position" ? (log ? " (log-ratio" : " (points") + "; higher is " + dim.highMeans + ")" : ", % of a manifesto's coded sentences.") +
-    " Each point is a manifesto; coloured lines join a party's manifestos across elections, and the bar is the 95% interval. Grey points are parties not yet matched to the palette. Short manifestos (under " + D.meta.smallBelow + " sentences) are hollow.";
-  const W = 780, H = 400, L = 56, R = 24, T = 16, B = 40;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const els = D.elections, X = i => L + (W - L - R) * (i + .5) / els.length;
+  $("timehelp").textContent = label + (dim && dim.kind === "position" ? (log ? " (log-ratio)" : " (points)") : ", % of a manifesto's coded sentences") +
+    ". One panel for each party family (Party tracker's classification of a list's lead party), all on the same scale. Each point is a manifesto, the line joins a party's manifestos across elections and the band is the 95% interval. Hollow points are short manifestos (under " + D.meta.smallBelow + " sentences). Click a point to open it.";
   const all = D.programmes.map(p => value(p, key));
-  let lo = Math.min(0, ...all.map(v => v[1])), hi = Math.max(0, ...all.map(v => v[2]));
-  const step = niceStep((hi - lo) / 5);
-  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
-  const Y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
-  for (let v = lo; v <= hi + step / 2; v += step) {
-    el("line", {x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "#ECECEC"}, svg);
-    text(svg, L - 8, Y(v) + 4, fmt(Math.abs(v) < 1e-9 ? 0 : v, step < 1 ? 1 : 0), {"text-anchor": "end"});
-  }
-  if (lo < 0) el("line", {x1: L, x2: W - R, y1: Y(0), y2: Y(0), stroke: "#B8B8B8"}, svg);
-  els.forEach((e, i) => text(svg, X(i), H - 14, YEAR(e.id), {"text-anchor": "middle", "font-size": 13}));
-  const series = {};
-  D.programmes.forEach(p => { if (p.palette) (series[p.palette] = series[p.palette] || []).push(p); });
-  const labels = Object.keys(series);
-  const off = k => (labels.indexOf(k) - (labels.length - 1) / 2) * 5;
-  const tip = $("tip");
-  const dot = (p, x, colour) => {
-    const v = value(p, key);
-    el("line", {x1: x, x2: x, y1: Y(v[1]), y2: Y(v[2]), stroke: colour, "stroke-width": 1.2, opacity: .55}, svg);
-    const c = el("circle", {cx: x, cy: Y(v[0]), r: 4.5, fill: p.flags.small ? "#fff" : colour, stroke: colour, "stroke-width": 2, style: "cursor:pointer"}, svg);
-    c.addEventListener("mousemove", ev => {
-      const r = svg.parentNode.getBoundingClientRect();
-      tip.hidden = false; tip.style.left = Math.min(ev.clientX - r.left + 12, r.width - 260) + "px"; tip.style.top = ev.clientY - r.top + 12 + "px";
-      tip.innerHTML = `<b>${esc(p.name)}, ${YEAR(p.election)}</b><br>${fmt(v[0], g)} (${fmt(v[1], g)} to ${fmt(v[2], g)})<br><span class="muted">${p.sentences} sentences</span>`;
+  const tk = niceTicks(Math.min(0, ...all.map(v => v[1])), Math.max(0, ...all.map(v => v[2])), 8);
+  const lo = tk.lo, hi = tk.hi, step = tk.step;
+  const W = Math.max(320, svg.parentNode.clientWidth - 12), cols = W >= 900 ? 3 : W >= 560 ? 2 : 1, pw = W / cols, ph = Math.max(200, Math.min(250, pw * 0.74));
+  const groups = D.meta.families.map(f => ({f, ps: D.programmes.filter(p => p.family === f.key)})).filter(x => x.ps.length);
+  const rows = Math.ceil(groups.length / cols);
+  svg.setAttribute("viewBox", `0 0 ${W} ${rows * ph}`);
+  const [up, dn] = poles(key);
+  const x0 = 1990, x1 = 2021;
+  groups.forEach((grp, gi) => {
+    const o = el("g", {transform: `translate(${(gi % cols) * pw},${Math.floor(gi / cols) * ph})`}, svg);
+    const m = {l: 40, r: 14, t: 30, b: 26}, X = yr => m.l + (yr - x0) / (x1 - x0) * (pw - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (ph - m.t - m.b);
+    text(o, m.l, 14, `${grp.f.label}`, {"font-size": 12.5, "font-weight": 500, fill: INK});
+    text(o, pw - m.r, 14, `${grp.ps.length} manifesto${grp.ps.length > 1 ? "s" : ""}`, {"text-anchor": "end", "font-size": 11, fill: MUTED});
+    for (let v = lo; v <= hi + 1e-9; v += step) {
+      el("line", {x1: m.l, x2: pw - m.r, y1: Y(v), y2: Y(v), stroke: v === lo ? BASE : GRID, "stroke-width": 1}, o);
+      text(o, m.l - 6, Y(v) + 4, fmt(Math.abs(v) < 1e-9 ? 0 : v, step < 1 ? 1 : 0), {"text-anchor": "end", "font-size": 11, fill: MUTED});
+    }
+    if (lo < 0 && hi > 0 && dim && dim.kind === "position") el("line", {x1: m.l, x2: pw - m.r, y1: Y(0), y2: Y(0), stroke: MID, "stroke-width": 1}, o);
+    for (let yr = 1990; yr <= 2020; yr += 10) {
+      el("line", {x1: X(yr), x2: X(yr), y1: ph - m.b, y2: ph - m.b + 4, stroke: BASE}, o);
+      text(o, X(yr), ph - m.b + 17, yr, {"text-anchor": "middle", "font-size": 11, fill: MUTED});
+    }
+    const nch = Math.floor((pw - m.l - m.r - 12) / 5.4) - 2;
+    text(o, m.l + 6, m.t + 12, "↑ " + trunc(up, nch), Object.assign({"font-size": 11, fill: SOFT}, HALO));
+    text(o, m.l + 6, ph - m.b - 6, "↓ " + trunc(dn, nch), Object.assign({"font-size": 11, fill: SOFT}, HALO));
+    const series = {};
+    grp.ps.forEach(p => { (series[p.series] = series[p.series] || []).push(p); });
+    const keys = Object.keys(series), labels = [];
+    const clip = el("clipPath", {id: "pc" + gi}, el("defs", {}, o)); el("rect", {x: m.l, y: m.t - 6, width: pw - m.l - m.r + 6, height: ph - m.t - m.b + 12}, clip);
+    const gp = el("g", {"clip-path": `url(#pc${gi})`}, o);
+    keys.forEach((k, ki) => {
+      const colour = D.meta.colours[k] || GREY;
+      const ps = series[k].slice().sort((a, b) => a.date.localeCompare(b.date));
+      const dx = (ki - (keys.length - 1) / 2) * 3;
+      const pts = ps.map(p => ({p, x: X(yearOf(p)) + dx, v: value(p, key)}));
+      if (pts.length > 1) {
+        el("path", {d: "M" + pts.map(q => `${q.x.toFixed(1)},${Y(q.v[2]).toFixed(1)}`).join("L") + "L" + pts.slice().reverse().map(q => `${q.x.toFixed(1)},${Y(q.v[1]).toFixed(1)}`).join("L") + "Z", fill: colour, "fill-opacity": .12}, gp);
+        el("path", {d: "M" + pts.map(q => `${q.x.toFixed(1)},${Y(q.v[0]).toFixed(1)}`).join("L"), fill: "none", stroke: colour, "stroke-width": 2, "stroke-linejoin": "round", opacity: D.meta.colours[k] ? 1 : .6}, gp);
+      }
+      pts.forEach(q => {
+        if (pts.length === 1) el("line", {x1: q.x, x2: q.x, y1: Y(q.v[1]), y2: Y(q.v[2]), stroke: colour, "stroke-width": 1.4, opacity: .5}, gp);
+        const c = el("circle", {cx: q.x, cy: Y(q.v[0]), r: 3.8, fill: q.p.flags.small ? "#fff" : colour, "fill-opacity": .9, stroke: q.p.flags.small ? colour : "#fff", "stroke-width": q.p.flags.small ? 1.6 : 1, style: "cursor:pointer"}, gp);
+        c.addEventListener("mousemove", ev => tipAt(tip, svg, ev, `<b>${esc(q.p.name)}, ${YEAR(q.p.election)}</b><br>${fmt(q.v[0], g)} (${fmt(q.v[1], g)} to ${fmt(q.v[2], g)})<br><span class="muted">${q.p.sentences} sentences</span>`));
+        c.addEventListener("mouseleave", () => { tip.hidden = true; });
+        c.addEventListener("click", () => { S.p = q.p.id; S.v = "profile"; render(); });
+      });
+      const last = pts[pts.length - 1];
+      labels.push({txt: labelOf(last.p), colour, x: last.x, y: Y(last.v[0]), left: last.x > pw - m.r - 70});
     });
-    c.addEventListener("mouseleave", () => { tip.hidden = true; });
-    c.addEventListener("click", () => { S.p = p.id; S.v = "profile"; render(); });
-  };
-  D.programmes.filter(p => !p.palette).forEach(p => dot(p, X(els.findIndex(e => e.id === p.election)) + 14, GREY));
-  labels.forEach(k => {
-    const colour = D.meta.colours[k];
-    const ps = series[k].slice().sort((a, b) => a.election.localeCompare(b.election));
-    const pts = ps.map(p => ({p, x: X(els.findIndex(e => e.id === p.election)) + off(k), v: value(p, key)}));
-    if (pts.length > 1) el("polyline", {points: pts.map(q => q.x + "," + Y(q.v[0])).join(" "), fill: "none", stroke: colour, "stroke-width": 1.6, opacity: .7}, svg);
-    pts.forEach(q => dot(q.p, q.x, colour));
+    // name each series at its last point, spread apart so the names do not overlap
+    labels.sort((a, b) => a.y - b.y);
+    for (let k = 1; k < labels.length; k++) if (labels[k].y - labels[k - 1].y < 11) labels[k].y = labels[k - 1].y + 11;
+    labels.forEach(l => text(o, l.left ? l.x - 7 : l.x + 7, l.y + 3.5, l.txt, Object.assign({"text-anchor": l.left ? "end" : "start", "font-size": 11, "font-weight": 500, fill: l.colour === GREY ? MUTED : l.colour}, HALO)));
   });
-  $("legend").innerHTML = labels.map(k => `<span><span class="dot" style="background:${D.meta.colours[k]}"></span>${esc(k)}</span>`).join("");
+  $("legend").innerHTML = "";
 }
-
 
 // ---- Heat map -------------------------------------------------------------------------------------
 function heatColour(t) {
@@ -368,6 +408,19 @@ function drawCompare() {
 }
 
 // ---- Against the experts --------------------------------------------------------------------------
+// What the low and high ends of each CHES scale mean (from its codebook)
+const CHES_POLES = {
+  lrecon: ["economic left", "economic right"], galtan: ["libertarian, post-materialist", "traditional, authoritarian"], lrgen: ["left", "right"],
+  eu_position: ["strongly opposed to the EU", "strongly in favour of the EU"], nationalism: ["cosmopolitan", "nationalist"],
+  multiculturalism: ["favours multiculturalism", "favours assimilation"], sociallifestyle: ["supports liberal policies", "opposes liberal policies"],
+  religious_principles: ["opposes religious principles in politics", "supports religious principles in politics"],
+  civlib_laworder: ["promotes civil liberties", "tough measures against crime"], deregulation: ["opposes deregulation", "supports deregulation"],
+  protectionism: ["favours trade liberalisation", "favours protecting domestic producers"], spendvtax: ["improve public services", "reduce taxes"],
+  redistribution: ["favours redistribution", "opposes redistribution"], environment: ["environmental protection first", "economic growth first"],
+  regions: ["favours decentralisation", "opposes decentralisation"], corrupt_salience: ["corruption unimportant", "corruption extremely important"],
+  urban_rural: ["urban interests", "rural interests"], eu_salience: ["EU unimportant", "EU extremely important"],
+  ethnic_minorities: ["more rights for ethnic minorities", "opposes more rights"]
+};
 function drawChes() {
   const svg = $("scat"); svg.innerHTML = "";
   const dim = dimByKey[S.d], cv = S.c, log = isLog(S.d), g = log ? 2 : 1, tip = $("ctip");
@@ -375,37 +428,44 @@ function drawChes() {
     .map(o => ({p: o.p, wave: o.c.wave, x: o.p.dims[S.d][0], y: o.c.values[cv]}));
   const n = pts.length, mx = pts.reduce((s, q) => s + q.x, 0) / n, my = pts.reduce((s, q) => s + q.y, 0) / n;
   const sxy = pts.reduce((s, q) => s + (q.x - mx) * (q.y - my), 0), sxx = pts.reduce((s, q) => s + (q.x - mx) ** 2, 0), syy = pts.reduce((s, q) => s + (q.y - my) ** 2, 0);
-  const r = sxy / Math.sqrt(sxx * syy), b1 = sxy / sxx, b0 = my - b1 * mx;
+  const r = sxy / Math.sqrt(sxx * syy), b1 = sxy / sxx, b0 = my - b1 * mx, expect = dim.expectedSign;
   const ym = cv === "eu_position" ? [1, 7] : [0, 10];
-  const expect = dim.expectedSign, fit = r * expect;
   $("chelp").innerHTML = `Each manifesto of 100 sentences or more: its position on <b>${esc(dim.label.toLowerCase())}</b> against the experts' <b>${esc(chesName(cv))}</b> rating of the same party at the nearest Chapel Hill wave (0–10${cv === "eu_position" ? ", here 1–7" : ""}). ` +
-    `${n} manifestos; r = ${fmt(r, 2).replace("−", "−")}${expect < 0 ? ", where a negative correlation is expected" : ""}. ` +
+    `${n} manifestos; r = ${fmt(r, 2)}${expect < 0 ? ", where a negative correlation is expected" : ""}. ` +
     (dim.note ? esc(dim.note) + " " : "") + "The scales differ, so read the order of parties, not the numbers. Click a point to open its manifesto.";
-  const W = 780, H = 410, L = 56, R = 24, T = 30, B = 52;
+  const W = Math.max(320, svg.parentNode.clientWidth - 12), H = Math.round(Math.max(320, Math.min(520, W * 0.5)));
+  const m = {l: 40, r: 16, t: 14, b: 44};
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  let xlo = Math.min(...pts.map(q => q.x)), xhi = Math.max(...pts.map(q => q.x));
-  const sx = niceStep((xhi - xlo) / 6); xlo = Math.floor(xlo / sx) * sx; xhi = Math.ceil(xhi / sx) * sx;
-  const X = v => L + (W - L - R) * (v - xlo) / (xhi - xlo), Y = v => T + (H - T - B) * (1 - (v - ym[0]) / (ym[1] - ym[0]));
-  for (let v = ym[0]; v <= ym[1]; v += 2) { el("line", {x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "#ECECEC"}, svg); text(svg, L - 8, Y(v) + 4, v, {"text-anchor": "end"}); }
-  for (let v = xlo; v <= xhi + sx / 2; v += sx) text(svg, X(v), H - B + 18, fmt(Math.abs(v) < 1e-9 ? 0 : v, sx < 1 ? 1 : 0), {"text-anchor": "middle"});
-  text(svg, (L + W - R) / 2, H - 8, `Manifesto: ${dim.lowMeans && dim.lowMeans !== "null" ? dim.lowMeans + " ← → " : ""}${dim.highMeans} (${log ? "log-ratio" : dim.kind === "salience" ? "% of sentences" : "points"})`, {"text-anchor": "middle", fill: "#767676"});
-  text(svg, 4, 12, `Experts: ${chesName(cv)}`, {fill: "#767676"});
-  const y0 = b0 + b1 * xlo, y1 = b0 + b1 * xhi;
-  el("line", {x1: X(xlo), y1: Y(Math.max(ym[0], Math.min(ym[1], y0))), x2: X(xhi), y2: Y(Math.max(ym[0], Math.min(ym[1], y1))), stroke: "#767676", "stroke-width": 1.2, "stroke-dasharray": "4 4"}, svg);
+  const xt = niceTicks(Math.min(...pts.map(q => q.x)), Math.max(...pts.map(q => q.x)), 6), xlo = xt.lo, xhi = xt.hi;
+  const X = v => m.l + (v - xlo) / (xhi - xlo) * (W - m.l - m.r), Y = v => m.t + (ym[1] - v) / (ym[1] - ym[0]) * (H - m.t - m.b);
+  for (let v = ym[0]; v <= ym[1]; v += 2) {
+    el("line", {x1: m.l, x2: W - m.r, y1: Y(v), y2: Y(v), stroke: v === ym[0] ? BASE : GRID}, svg);
+    text(svg, m.l - 6, Y(v) + 4, v, {"text-anchor": "end", "font-size": 11, fill: MUTED});
+  }
+  if (xlo < 0 && xhi > 0 && dim.kind === "position") el("line", {x1: X(0), x2: X(0), y1: m.t, y2: H - m.b, stroke: MID}, svg);
+  for (let v = xlo; v <= xhi + xt.step / 2; v += xt.step) {
+    el("line", {x1: X(v), x2: X(v), y1: H - m.b, y2: H - m.b + 4, stroke: BASE}, svg);
+    text(svg, X(v), H - m.b + 17, fmt(Math.abs(v) < 1e-9 ? 0 : v, xt.step < 1 ? 1 : 0), {"text-anchor": "middle", "font-size": 11, fill: MUTED});
+  }
+  const [cl, ch] = CHES_POLES[cv] || ["low", "high"];
+  text(svg, m.l + 6, m.t + 12, "↑ " + ch, Object.assign({"font-size": 11.5, fill: SOFT}, HALO));
+  text(svg, m.l + 6, H - m.b - 6, "↓ " + cl, Object.assign({"font-size": 11.5, fill: SOFT}, HALO));
+  const lowM = dim.lowMeans && dim.lowMeans !== "null" ? dim.lowMeans : "less emphasis";
+  text(svg, m.l, H - 8, "← " + lowM, {"font-size": 11.5, fill: SOFT});
+  text(svg, W - m.r, H - 8, dim.highMeans + " →", {"text-anchor": "end", "font-size": 11.5, fill: SOFT});
+  text(svg, (m.l + W - m.r) / 2, H - 8, "Manifesto (" + (log ? "log-ratio" : dim.kind === "salience" ? "% of sentences" : "points") + ")", {"text-anchor": "middle", "font-size": 11, fill: MUTED});
+  const cp = v => Math.max(ym[0], Math.min(ym[1], v));
+  el("line", {x1: X(xlo), y1: Y(cp(b0 + b1 * xlo)), x2: X(xhi), y2: Y(cp(b0 + b1 * xhi)), stroke: "#9A9A9A", "stroke-width": 1.4, "stroke-dasharray": "5 4"}, svg);
+  const names = new Map();
   pts.slice().sort((a, b) => (a.p.id === S.p) - (b.p.id === S.p)).forEach(q => {
-    const on = q.p.id === S.p, colour = col(q.p);
+    const on = q.p.id === S.p, colour = col(q.p); names.set(name(q.p), colour);
     if (on) el("circle", {cx: X(q.x), cy: Y(q.y), r: 11, fill: "none", stroke: "#8B0000", "stroke-width": 1.6}, svg);
-    const c = el("circle", {cx: X(q.x), cy: Y(q.y), r: 5.2, fill: colour, stroke: "#fff", "stroke-width": 1.2, style: "cursor:pointer"}, svg);
-    c.addEventListener("mousemove", ev => {
-      const rr = svg.parentNode.getBoundingClientRect();
-      tip.hidden = false; tip.style.left = Math.min(ev.clientX - rr.left + 12, rr.width - 260) + "px"; tip.style.top = ev.clientY - rr.top + 12 + "px";
-      tip.innerHTML = `<b>${esc(q.p.name)}, ${YEAR(q.p.election)}</b><br>Manifesto ${fmt(q.x, g)}; experts ${fmt(q.y, 1)} (${q.wave})`;
-    });
+    const c = el("circle", {cx: X(q.x), cy: Y(q.y), r: 4.6, fill: colour, "fill-opacity": .9, stroke: "#fff", "stroke-width": 1, style: "cursor:pointer"}, svg);
+    c.addEventListener("mousemove", ev => tipAt(tip, svg, ev, `<b>${esc(q.p.name)}, ${YEAR(q.p.election)}</b><br>Manifesto ${fmt(q.x, g)}; experts ${fmt(q.y, 1)} (${q.wave})`));
     c.addEventListener("mouseleave", () => { tip.hidden = true; });
     c.addEventListener("click", () => { S.p = q.p.id; S.v = "profile"; render(); });
   });
-  const names = [...new Map(pts.map(q => [name(q.p), col(q.p)])).entries()];
-  $("clegend").innerHTML = names.map(([k, c]) => `<span><span class="dot" style="background:${c}"></span>${esc(k)}</span>`).join("");
+  $("clegend").innerHTML = [...names.entries()].map(([k, c]) => `<span><span class="dot" style="background:${c}"></span>${esc(k)}</span>`).join("");
 }
 
 fetch("manifestos.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(init)
