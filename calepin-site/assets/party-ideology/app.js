@@ -5,7 +5,8 @@
  * 4.0 classification at every wave, Party tracker records for Polish parties,
  * and polarisation and alignment by country and wave. Written by
  * "Party ideology/analysis/Party ideology.R" in the Polish political analyses
- * repo. Also reads ../polling-tracker/polls.json, if it is there, for each
+ * repo. Also reads ../party-manifestos/manifestos.json, if it is there, for the election manifesto behind
+ * a Polish party's ratings (Election manifesto card), and ../polling-tracker/polls.json, if it is there, for each
  * Polish party's current polling.
  *
  * Views: Map (any two dimensions), Profile (one party on every dimension
@@ -90,6 +91,7 @@ const POLAND = 26;
 let D, WAVES, POLISH;
 const P = new Map(), DIM = new Map(), CTRY = new Map(), BYW = new Map(), ROWS = [];
 let POLL = null;
+let MAN = null, MANBY = {}; // the Party manifestos page's manifestos.json, if it is there
 
 function prep() {
   D.countries.forEach(c => CTRY.set(c.id, c));
@@ -836,6 +838,51 @@ function pollLine(p) {
   if (i < 0 || !wk || !isNum(wk.vote[i])) return "";
   return `<div class="poll">Polling now: <b>${fmt(wk.vote[i])}%</b> <span class="muted">(80% range ${fmt(wk.voteLo[i])}–${fmt(wk.voteHi[i])}), week of ${dstr(wk.date)}</span>${p.poll === "Konfederacja" ? '<br><span class="muted">Without KKP, which left Konfederacja in 2025 and is polled separately.</span>' : ""}</div>`;
 }
+
+// ---- Party manifestos: the election manifesto behind a Polish party's ratings in a wave --------------
+const MAN_DIMS = [["econ", "lrecon", "Economy"], ["culture", "galtan", "Culture"], ["eu", "eu_position", "European Union"],
+  ["morality", "sociallifestyle", "Traditional morality"], ["spending", "spendvtax", "Public spending"], ["nationalism", "nationalism", "Nationalism"]];
+function manifestoDumbbell(prog, rated) {
+  const rows = [];
+  MAN_DIMS.forEach(([k, cv, label]) => {
+    const g = rated.map(c => ({c, q: MANBY[c.programme]})).filter(o => o.q && o.q.dims[k] && isNum(o.c.values[cv]));
+    const me = g.find(o => o.q.id === prog.id);
+    if (!me || g.length < 3) return;
+    const sc = f => { const v = g.map(f), lo = Math.min(...v), hi = Math.max(...v); return hi > lo ? (f(me) - lo) / (hi - lo) : 0.5; };
+    rows.push({label, a: sc(o => o.q.dims[k][0]), b: sc(o => o.c.values[cv]), n: g.length});
+  });
+  if (!rows.length) return "";
+  const W = 330, L = 112, R = 10, rh = 22, H = rows.length * rh + 18, X = t => L + (W - L - R) * t, s = [];
+  s.push(`<text x="${L}" y="9" font-size="10" fill="${MUTED}">lowest of ${rows[0].n}</text><text x="${W - R}" y="9" font-size="10" fill="${MUTED}" text-anchor="end">highest</text>`);
+  rows.forEach((r, i) => {
+    const y = 22 + i * rh;
+    s.push(`<text x="${L - 8}" y="${y + 4}" font-size="11.5" fill="${SOFT}" text-anchor="end">${esc(r.label)}</text>` +
+      `<line x1="${X(0)}" x2="${X(1)}" y1="${y}" y2="${y}" stroke="${RULE}" stroke-width="5" stroke-linecap="round"/>` +
+      `<line x1="${X(r.a)}" x2="${X(r.b)}" y1="${y}" y2="${y}" stroke="${ACCENT}" stroke-width="1.6" opacity=".55"/>` +
+      `<circle cx="${X(r.b)}" cy="${y}" r="4.6" fill="#fff" stroke="${INK}" stroke-width="1.6"><title>Experts: ${esc(r.label)}</title></circle>` +
+      `<circle cx="${X(r.a)}" cy="${y}" r="5" fill="${ACCENT}"><title>Manifesto: ${esc(r.label)}</title></circle>`);
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;overflow:visible" role="img" aria-label="Where the manifesto and the experts place the party among the Polish parties with manifestos in this wave">${s.join("")}</svg>`;
+}
+function manifestoCard(p, w) {
+  if (!MAN || !p.pl) return "";
+  const rated = MAN.ches.filter(c => c.wave === w && MANBY[c.programme]);
+  const mine = rated.filter(c => String(MANBY[c.programme].ches) === String(p.id)).map(c => MANBY[c.programme]).sort((x, y) => x.election < y.election ? -1 : 1);
+  if (!mine.length) return "";
+  const base = "../../pages/polish-political-analyses/";
+  const cat = code => (MAN.categories.find(c => c.code === code) || {label: code}).label.replace(/: Positive$/, "").toLowerCase();
+  const blocks = mine.map(q => {
+    const top = Object.entries(q.categories).filter(([k]) => k !== "000").sort((a, b) => b[1][0] - a[1][0]).slice(0, 3);
+    const note = [q.flags.bloc ? "A coalition's manifesto." : "", q.flags.small ? "Very short, so its figures are uncertain." : ""].filter(Boolean).join(" ");
+    return `<div><div class="muted" style="font-size:12px">${esc(q.name)}, ${q.election.slice(-4)} election · ${q.sentences.toLocaleString("en-GB")} coded sentences</div>` +
+      `<p class="help">Most stressed: ${top.map(([k, v]) => `${esc(cat(k))} ${fmt(v[0])}%`).join(", ")}.${note ? " " + esc(note) : ""}</p>` +
+      manifestoDumbbell(q, rated) +
+      `<div class="links"><a href="${base}party-manifestos.html#p=${encodeURIComponent(q.id)}" target="_top">The ${q.election.slice(-4)} manifesto in Party manifestos →</a></div></div>`;
+  });
+  return `<div class="card soft"><span class="label">Election manifesto</span>${blocks.join("")}` +
+    `<div class="legend"><span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="${ACCENT}"/></svg>Manifesto</span><span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.2" fill="#fff" stroke="${INK}" stroke-width="1.6"/></svg>Experts</span></div>` +
+    `<p class="help">Each dimension is placed between the lowest and highest of the Polish parties that have a manifesto rated in ${w}. Source: <a href="https://manifesto-project.wzb.eu" target="_top">Manifesto Project</a> (Lehmann et al. 2026); the dimensions are my own readings of its coded categories.</p></div>`;
+}
 function renderPanel() {
   const p = P.get(S.sel), r = p.byW.get(S.wave), w = S.wave, o = [];
   o.push(`<div class="search"><input id="q" type="search" placeholder="Find a party: PiS, Fidesz, Lega…" autocomplete="off" aria-label="Find a party"><div class="results" id="results" hidden></div></div>`);
@@ -860,6 +907,7 @@ function renderPanel() {
     const ws = [...p.byW.keys()].filter(x => WAVES.includes(x));
     o.push(`<div class="card soft"><p class="help">Not rated in ${w}.${ws.length ? " Rated in " + ws.map(x => `<button class="linkbtn" data-goto="${x}">${x}</button>`).join(", ") + "." : ""}</p></div>`);
   }
+  if (r) { const mc = manifestoCard(p, w); if (mc) o.push(mc); }
   // PopuList
   o.push(`<div class="card soft"><span class="label">PopuList 4.0</span><div class="tl">${spellsSvg(p)}</div><p class="help">${esc(spellText(p))}${(p.spells || []).length ? " Hatched: borderline." : ""}</p></div>`);
   // closest parties
@@ -1054,6 +1102,9 @@ async function init() {
   wire();
   render();
   if (S.ptMissing) toast("That party has no CHES ratings, so PiS is shown");
+  fetch("../party-manifestos/manifestos.json").then(r => r.ok ? r.json() : null).then(j => {
+    if (j && j.programmes && j.ches) { MAN = j; MANBY = Object.fromEntries(j.programmes.map(q => [q.id, q])); renderPanel(); }
+  }).catch(() => {});
   fetch("../polling-tracker/polls.json").then(r => r.ok ? r.json() : null).then(j => { if (j && j.rules && j.weeks) { POLL = j; renderPanel(); } }).catch(() => {});
 }
 init();

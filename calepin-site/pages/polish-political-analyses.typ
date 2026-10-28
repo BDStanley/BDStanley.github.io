@@ -69,6 +69,15 @@
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/party-manifestos.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/party-manifestos.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/party-manifestos.html"))[Party manifestos]
+#html.elem("div", attrs: (class: "course-desc"))[What each party's election manifesto stressed at the Sejm elections from 1991 to 2019, from the Manifesto Project's coding of every sentence: the domains and categories it emphasised, how that changed from election to election, and the positions on the economy, culture, the European Union and other questions that follow, beside the ratings of experts.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/quality-of-democracy.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/quality-of-democracy.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]

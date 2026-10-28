@@ -23,6 +23,8 @@ page; this script copies it beside the page's chart under assets/:
         "Party system analysis.R" runs)
     Party ideology/web/ideology.json              -> assets/party-ideology/ideology.json
         (written by "Party ideology/analysis/Party ideology.R")
+    Party manifestos/web/manifestos.json          -> assets/party-manifestos/manifestos.json
+        (written by "Party manifestos/analysis/30_export.R")
     Political attitudes/web/attitudes.json        -> assets/political-attitudes/attitudes.json
     Political attitudes/web/<slug>.json           -> assets/political-attitudes/<slug>.json
         (written by "Political attitudes/web/build_web.R"; attitudes.json lists the
@@ -89,6 +91,8 @@ FILES = [
      {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
     ("Party ideology/web/ideology.json", "assets/party-ideology/ideology.json",
      {"meta", "countries", "dims", "parties", "rows", "system"}),
+    ("Party manifestos/web/manifestos.json", "assets/party-manifestos/manifestos.json",
+     {"meta", "elections", "programmes", "categories", "domains", "ches", "chesCorrelations"}),
     ("Political attitudes/web/attitudes.json", "assets/political-attitudes/attitudes.json",
      {"meta", "attitudes"}),
     ("Election results/web/elections.json", "assets/election-results/elections.json",
