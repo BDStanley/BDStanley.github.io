@@ -244,12 +244,12 @@ function drawTime() {
   const label = sel ? sel.textContent : key;
   const dim = dimByKey[key];
   $("timehelp").textContent = label + (dim && dim.kind === "position" ? (log ? " (log-ratio)" : " (points)") : ", % of a manifesto's coded sentences") +
-    ". One panel for each party family (Party tracker's classification of a list's lead party), all on the same scale. Each point is a manifesto, the line joins a party's manifestos across elections and the band is the 95% interval. Hollow points are short manifestos (under " + D.meta.smallBelow + " sentences). Click a point to open it.";
+    ". One panel for each group of party families (Party tracker's classification of a list's lead party, with the two left families grouped as Left, the national-conservative, libertarian, radical-nationalist and Solidarity families as Right, and the populist, communist-era allied and other families as Other), all on the same scale. Each point is a manifesto, the line joins a party's manifestos across elections and the band is the 95% interval. Hollow points are short manifestos (under " + D.meta.smallBelow + " sentences). Click a point to open it.";
   const all = D.programmes.map(p => value(p, key));
   const tk = niceTicks(Math.min(0, ...all.map(v => v[1])), Math.max(0, ...all.map(v => v[2])), 8);
   const lo = tk.lo, hi = tk.hi, step = tk.step;
   const W = Math.max(320, svg.parentNode.clientWidth - 12), cols = W >= 900 ? 3 : W >= 560 ? 2 : 1, pw = W / cols, ph = Math.max(200, Math.min(250, pw * 0.74));
-  const groups = D.meta.families.map(f => ({f, ps: D.programmes.filter(p => p.family === f.key)})).filter(x => x.ps.length);
+  const groups = D.meta.facets.map(f => ({f, ps: D.programmes.filter(p => p.facet === f.key)})).filter(x => x.ps.length);
   const rows = Math.ceil(groups.length / cols);
   svg.setAttribute("viewBox", `0 0 ${W} ${rows * ph}`);
   const [up, dn] = poles(key);
