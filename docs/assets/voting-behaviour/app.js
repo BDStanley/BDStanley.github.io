@@ -118,7 +118,7 @@ function lineChart(svgId, tipId, o) {
   const svg = $(svgId), box = svg.parentNode;
   const W = Math.max(320, box.clientWidth - 16), H = o.h || (o.title ? 300 : 270);
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = "";
-  const L = 44, R = W - 12, B = H - 24, n = o.xs.length;
+  const L = 44, R = W - 12, B = H - (o.xends ? 38 : 24), n = o.xs.length;
   const T = o.title ? 30 + 14 * figureHead(svg, o.title, o.sub, W) : 10;
   const X = i => L + (R - L) * (n === 1 ? 0.5 : i / (n - 1));
   const Y = v => B - (B - T) * (v - o.ymin) / (o.ymax - o.ymin);
@@ -126,8 +126,13 @@ function lineChart(svgId, tipId, o) {
     el("line", {x1: L, x2: R, y1: Y(g), y2: Y(g), stroke: "#ECECEC", "stroke-width": 1}, svg);
     txt(svg, L - 8, Y(g) + 4, o.fmt(g), {"text-anchor": "end"});
   }
-  if (o.ymin < 0 && o.ymax > 0) el("line", {x1: L, x2: R, y1: Y(0), y2: Y(0), stroke: "#141414", "stroke-width": 1.8}, svg);   // the zero line: increases above, decreases below
-  o.xs.forEach((x, i) => txt(svg, X(i), H - 7, x, {"text-anchor": "middle"}));
+  if (o.ymin < 0 && o.ymax > 0) el("line", {x1: L, x2: R, y1: Y(0), y2: Y(0), stroke: "#A6A6A6", "stroke-width": 1}, svg);   // the zero line: increases above, decreases below
+  // which way is which, as on the Social and political trends page
+  const halo = {stroke: "#fff", "stroke-width": 3, "paint-order": "stroke"};
+  if (o.up) txt(svg, L + 6, T + 12, "↑ " + o.up, Object.assign({"font-size": 11.5, fill: "#4B4B4B"}, halo));
+  if (o.dn) txt(svg, L + 6, B - 6, "↓ " + o.dn, Object.assign({"font-size": 11.5, fill: "#4B4B4B"}, halo));
+  o.xs.forEach((x, i) => txt(svg, X(i), o.xends ? H - 21 : H - 7, x, {"text-anchor": "middle"}));
+  if (o.xends) { txt(svg, L, H - 6, "← " + o.xends[0], {"font-size": 11.5, fill: "#4B4B4B"}); txt(svg, R, H - 6, o.xends[1] + " →", {"font-size": 11.5, fill: "#4B4B4B", "text-anchor": "end"}); }
   o.series.forEach(s => {
     const idx = s.vals.map((v, i) => v == null ? null : i).filter(i => i != null);
     if (s.lo && idx.length > 1) {
@@ -283,7 +288,7 @@ function drawEffects2() {
   const nz = vals.filter(Boolean), {lim, step} = niceAxis(Math.max(...nz.flatMap(v => [Math.abs(v[1]), Math.abs(v[2])])));
   const c = out === "No vote" ? "#9aa5a9" : colour(out);
   lineChart("fig-eff2", "tip-eff2", {
-    xs: YEARS, ymin: -lim, ymax: lim, ystep: step, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 260,
+    xs: YEARS, ymin: -lim, ymax: lim, ystep: step, fmt: v => (v > 0 ? "+" : v < 0 ? MINUS : "") + Math.abs(v), h: 260, up: "more likely", dn: "less likely",
     title: `${effLabel(S.ct)}: ${name(out)} across elections`, sub: `Change in the probability, percentage points · band: 90% interval · ${S.cal ? "adjusted to the official results" : "unadjusted"}`,
     series: [{name: name(out), color: c, vals: vals.map(v => v && v[0]), lo: vals.map(v => v && v[1]), hi: vals.map(v => v && v[2])}],
     tip: i => vals[i] ? `<b>${YEARS[i]}</b>${tipRow(c, name(out), pp(vals[i][0]) + " points", `90% interval ${pp(vals[i][1])} to ${pp(vals[i][2])}`)}` : ""
@@ -347,7 +352,7 @@ function drawAtt(cd, p) {
   const res = attitudes(cd, p), top = Math.max(...res.flatMap(r => r.s.map(v => v.hi))), step = top > 0.4 ? 0.1 : top > 0.2 ? 0.05 : 0.025, ymax = Math.ceil(top / step) * step;
   const series = res.map(r => ({name: r.pos.label, color: ATT_STYLE[r.pos.id][0], dash: ATT_STYLE[r.pos.id][1], vals: r.s.map(v => v.m), lo: r.s.map(v => v.lo), hi: r.s.map(v => v.hi), id: r.pos.id}));
   lineChart("fig-att", "tip-att", {
-    xs: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], ymin: 0, ymax, ystep: step, fmt: v => Math.round(v * 1000) / 10 + "%", h: 300, series,
+    xs: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], ymin: 0, ymax, ystep: step, fmt: v => Math.round(v * 1000) / 10 + "%", h: 310, xends: ["left, progressive", "right, conservative"], series,
     title: "Where this voter is likely to stand", sub: `Probability of each position, 0 (left, progressive) to 10 (right, conservative) · median and 80% interval · ${S.k.el}`,
     tip: i => `<div class="h">Position ${i}</div>` + series.map(s => tipRow(s.color, s.name, Math.round(s.vals[i] * 100) + "%", `${Math.round(s.lo[i] * 100)}–${Math.round(s.hi[i] * 100)}%`)).join("")
   });
@@ -736,7 +741,7 @@ function drawAffective() {
   // The index across elections
   const I = POL.affective.index, cur = I.find(r => r.year === S.pe);
   lineChart("fig-api", "tip-api", {
-    xs: YEARS, ymin: 0, ymax: 8, ystep: 2, fmt: v => v, h: 300,
+    xs: YEARS, ymin: 0, ymax: 8, ystep: 2, fmt: v => v, h: 300, up: "more polarised", dn: "less polarised",
     title: "Reiljan's index of affective polarisation", sub: "Average gap between feelings about one's own list and the others, 0–10, weighted by vote shares · 90% bootstrap interval",
     series: [
       {name: "Index", color: "#8B0000", vals: YEARS.map(y => (I.find(r => r.year === y) || {}).value), lo: YEARS.map(y => (I.find(r => r.year === y) || {}).lo), hi: YEARS.map(y => (I.find(r => r.year === y) || {}).hi)},

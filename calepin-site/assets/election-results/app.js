@@ -1139,7 +1139,7 @@ function profileChart(rows, col) {
   const x0 = 1990, x1 = 2026, X = d => m.l + (yf(d) - x0) / (x1 - x0) * (W - m.l - m.r);
   const hi = Math.max(0.1, Math.ceil(Math.max(...pts.map(r => Math.max(r.sh, r.nat || 0))) * 10) / 10), Y = v => m.t + (1 - v / hi) * (H - m.t - m.b);
   const o = [];
-  ticks(0, hi, 4).forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EEEEEE"/><text x="${m.l - 4}" y="${Y(v) + 3.5}" text-anchor="end" font-size="9.5" fill="#767676">${Math.round(100 * v)}%</text>`));
+  ticks(0, hi, 4).forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ECECEC"/><text x="${m.l - 4}" y="${Y(v) + 3.5}" text-anchor="end" font-size="9.5" fill="#767676">${Math.round(100 * v)}%</text>`));
   [1990, 2000, 2010, 2020].forEach(y => o.push(`<text x="${m.l + (y - x0) / (x1 - x0) * (W - m.l - m.r)}" y="${H - 4}" text-anchor="middle" font-size="9.5" fill="#767676">${y}</text>`));
   const series = [["sejm", r => r.e.type === "sejm", ""], ["pres", r => r.e.type === "presidential" && r.c.part === 1, "4 3"], ["ep", r => r.e.type === "ep", "1.5 2.5"]];
   series.forEach(([, f, dash]) => {
@@ -1257,11 +1257,11 @@ function wsmooth(pts, span = 0.75, k = 48) {
 function scatterY() {
   const U = unitsOf(), A = U.gmina, n = A.valid.length, m = measure(), its = mapItems();
   const L = { kind: "g", A, set: null, n };
-  if (m === "turnout") return { v: A.valid.map((x, u) => A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null), label: "Turnout", col: TURN_GAIN, div: false };
-  if (m === "chg") { const c = changeValues(L); return c.C && c.C.opt ? { v: c.v, label: changeTitle(c.C), col: c.C.opt.col, div: true } : null; }
-  if (m === "h2h") { const a = its[S.i], b = its[S.j], v = valuesFor(L).v; return { v, label: `${nameOf(a)}'s lead over ${nameOf(b)}, points`, col: colOf(a), div: true }; }
+  if (m === "turnout") return { v: A.valid.map((x, u) => A.electorate[u] > 0 ? A.voters[u] / A.electorate[u] : null), label: "Turnout", col: TURN_GAIN, div: false, up: "higher turnout" };
+  if (m === "chg") { const c = changeValues(L); return c.C && c.C.opt ? { v: c.v, label: changeTitle(c.C), col: c.C.opt.col, div: true, up: "gained vote share", dn: "lost vote share" } : null; }
+  if (m === "h2h") { const a = its[S.i], b = its[S.j], v = valuesFor(L).v; return { v, label: `${nameOf(a)}'s lead over ${nameOf(b)}, points`, col: colOf(a), div: true, up: `${nameOf(a)} ahead`, dn: `${nameOf(b)} ahead` }; }
   const it = its[S.i], k = A.items.indexOf(it.id);
-  return { v: A.valid.map((x, u) => isNum(A.votes[k][u]) && x > 0 ? A.votes[k][u] / x : null), label: `${nameOf(it)}, share of the valid votes`, col: colOf(it), div: false };
+  return { v: A.valid.map((x, u) => isNum(A.votes[k][u]) && x > 0 ? A.votes[k][u] / x : null), label: `${nameOf(it)}, share of the valid votes`, col: colOf(it), div: false, up: "larger share of the valid votes" };
 }
 async function renderScatter() {
   const card = $("scatcard"), svg = $("scat");
@@ -1305,8 +1305,12 @@ async function renderScatter() {
   const fmtx = v => logx ? (10 ** v >= 1000 ? (10 ** v / 1000).toFixed(0) + "k" : (+(10 ** v).toPrecision(2)).toString()) : V.unit.startsWith("%") ? Math.round(v) + "%" : V.unit.startsWith("PLN") && Math.abs(v) >= 1000 ? +(v / 1000).toFixed(1) + "k" : (+v.toFixed(1)).toString();
   const fmty = v => Y.div ? (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(Math.round(100 * v)) : Math.round(100 * v) + "%";
   const o = [];
-  (logx ? [0, 1, 2, 3, 4].filter(v => v >= xd[0] - 1e-9 && v <= xd[1] + 1e-9) : xt).forEach(v => o.push(`<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" stroke="#EEEEEE"/><text x="${X(v)}" y="${H - m.b + 15}" text-anchor="middle" font-size="11" fill="#767676">${fmtx(v)}</text>`));
-  yt.forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Yy(v)}" y2="${Yy(v)}" stroke="${Y.div && v === 0 ? "#B5B5B5" : "#EEEEEE"}"/><text x="${m.l - 6}" y="${Yy(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${fmty(v)}</text>`));
+  (logx ? [0, 1, 2, 3, 4].filter(v => v >= xd[0] - 1e-9 && v <= xd[1] + 1e-9) : xt).forEach(v => o.push(`<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}" stroke="#ECECEC"/><text x="${X(v)}" y="${H - m.b + 15}" text-anchor="middle" font-size="11" fill="#767676">${fmtx(v)}</text>`));
+  yt.forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Yy(v)}" y2="${Yy(v)}" stroke="${Y.div && v === 0 ? "#A6A6A6" : "#ECECEC"}"/><text x="${m.l - 6}" y="${Yy(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${fmty(v)}</text>`));
+  // which way is which, as on the Social and political trends page
+  const halo = 'stroke="#fff" stroke-width="3" paint-order="stroke"';
+  if (Y.up) o.push(`<text x="${m.l + 6}" y="${m.t + 12}" font-size="11.5" fill="#4B4B4B" ${halo}>↑ ${esc(Y.up)}</text>`);
+  if (Y.dn) o.push(`<text x="${m.l + 6}" y="${H - m.b - 6}" font-size="11.5" fill="#4B4B4B" ${halo}>↓ ${esc(Y.dn)}</text>`);
   o.push(`<text x="${(m.l + W - m.r) / 2}" y="${H - 6}" text-anchor="middle" font-size="11.5" fill="#4B4B4B">${esc(V.label)}, ${esc(V.unit)}${logx ? " (log scale)" : ""}, ${yr}</text>`);
   const zon = col !== "list", fillOf = p => col === "1914" ? ZONECOL[G.gminas.zone[p.u]] : col === "1937" ? ZONECOL37[COV.zones.zone_1937[p.u]] : Y.col;
   pts.slice().sort((a, b) => b.w - a.w).forEach(p => o.push(`<circle cx="${X(p.x).toFixed(1)}" cy="${Yy(p.y).toFixed(1)}" r="${rad(p).toFixed(2)}" fill="${fillOf(p)}" fill-opacity="${zon ? 0.6 : 0.42}" stroke="#fff" stroke-width="0.4"/>`));
@@ -1394,7 +1398,7 @@ function turnoutChart() {
     if (e.type === "presidential" && isNum(o.turnout2)) pts.push({ e, d: e.date2, v: o.turnout2, type: e.type, round: 2 });
   });
   const o = [];
-  [0, 0.2, 0.4, 0.6, 0.8].forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EEEEEE"/><text x="${m.l - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${100 * v}%</text>`));
+  [0, 0.2, 0.4, 0.6, 0.8].forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ECECEC"/><text x="${m.l - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${100 * v}%</text>`));
   for (let y = 1990; y <= 2025; y += 5) o.push(`<text x="${X(y + "-07-01")}" y="${H - 6}" text-anchor="middle" font-size="11" fill="#767676">${y}</text>`);
   o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(0.5)}" y2="${Y(0.5)}" stroke="#9c2d74" stroke-width="1" stroke-dasharray="3 3"/><text x="${W - m.r}" y="${Y(0.5) - 4}" text-anchor="end" font-size="10.5" fill="#9c2d74">50%: a referendum binds</text>`);
   ["sejm", "presidential", "ep"].forEach(t => {

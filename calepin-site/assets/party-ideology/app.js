@@ -309,7 +309,7 @@ function smoothFit(pts, span = 0.75, k = 48) {
   }
   return out.length > 1 ? out : null;
 }
-const FIT_PL = INK, FIT_OTHER = "#8F8F8F";
+const FIT_PL = INK, FIT_OTHER = "#9A9A9A";
 let FITN = {pl: 0, other: 0};
 function axisTicks(d) { const t = []; for (let v = d.min; v <= d.max + 1e-9; v += (d.max - d.min > 6 ? 2 : 1)) t.push(v); return t; }
 function scatter(svgId, boxId, xd, yd, w, opts) {
@@ -539,7 +539,7 @@ function renderProfile() {
       const sd = r.sd && r.sd[d.id];
       if (isNum(sd)) s.push(`<line x1="${sx(clamp(v - sd, d.min, d.max)).toFixed(1)}" x2="${sx(clamp(v + sd, d.min, d.max)).toFixed(1)}" y1="20" y2="20" stroke="${col}" stroke-width="1.5" stroke-opacity=".55"></line>`);
       s.push(`<circle cx="${sx(v).toFixed(1)}" cy="20" r="6" fill="${col}" stroke="#fff" stroke-width="1.5"><title>${esc(nameOf(p))} ${S.wave}: ${fmt(v)}${isNum(sd) ? " ± " + fmt(sd) : ""}</title></circle>`);
-      s.push(`<text x="8" y="34" font-size="10" fill="${MUTED}">${esc(d.lo)}</text><text x="${W - 8}" y="34" text-anchor="end" font-size="10" fill="${MUTED}">${esc(d.hi)}</text>`);
+      s.push(`<text x="8" y="34" font-size="10.5" fill="${MUTED}">${esc(d.lo)}</text><text x="${W - 8}" y="34" text-anchor="end" font-size="10.5" fill="${MUTED}">${esc(d.hi)}</text>`);
       const below = vals.filter(x => x < v).length + 0.5 * vals.filter(x => x === v).length;
       const pctl = vals.length ? Math.round(100 * below / vals.length) : null;
       const delta = prev && isNum(prev.v[d.id]) ? v - prev.v[d.id] : null;
@@ -616,14 +616,14 @@ function renderTime() {
     const m = {l: 30, r: 12, t: 8, b: 24};
     const sx = w => m.l + (w - x0) / (x1 - x0) * (W - m.l - m.r), sy = v => H - m.b - (v - d.min) / (d.max - d.min) * (H - m.t - m.b);
     const o = [];
-    for (const v of axisTicks(d)) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="${RULE}"></line><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${v}</text>`);
-    for (const w of WAVES) o.push(`<text x="${sx(w)}" y="${H - 6}" text-anchor="middle" font-size="10.5" fill="${w === S.wave ? ACCENT : MUTED}" font-weight="${w === S.wave ? 600 : 400}">${w}</text>`);
+    for (const v of axisTicks(d)) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="${RULE}"></line><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${v}</text>`);
+    for (const w of WAVES) o.push(`<text x="${sx(w)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="${w === S.wave ? ACCENT : MUTED}" font-weight="${w === S.wave ? 600 : 400}">${w}</text>`);
     if (S.scope !== "pl") {
       const ws = WAVES.filter(w => d.waves.includes(w));
       const q = ws.map(w => { const vals = (BYW.get(w) || []).filter(r => !r.p.pl && inScope(r.p) && isNum(r.v[id])).map(r => r.v[id]).sort((a, b) => a - b); return {w, q1: quant(vals, .25), md: quant(vals, .5), q3: quant(vals, .75)}; }).filter(q => isNum(q.md));
       if (q.length > 1) {
         o.push(`<path d="M${q.map(z => sx(z.w) + "," + sy(z.q3)).join("L")}L${q.slice().reverse().map(z => sx(z.w) + "," + sy(z.q1)).join("L")}Z" fill="#9E9E9E" fill-opacity=".14"></path>`);
-        o.push(`<polyline points="${q.map(z => sx(z.w) + "," + sy(z.md)).join(" ")}" fill="none" stroke="#9E9E9E" stroke-width="1.5" stroke-dasharray="4 3"></polyline>`);
+        o.push(`<polyline points="${q.map(z => sx(z.w) + "," + sy(z.md)).join(" ")}" fill="none" stroke="#9A9A9A" stroke-width="1.5" stroke-dasharray="4 3"></polyline>`);
       }
     }
     const order = POLISH.slice().sort((a, b) => (a.id === S.sel) - (b.id === S.sel));
@@ -678,7 +678,7 @@ function renderVoters() {
   o.push(`<text x="${sx(0)}" y="${H - 10}" font-size="11.5" fill="${SOFT}">← ${esc(d.lo)}</text><text x="${sx(10)}" y="${H - 10}" text-anchor="end" font-size="11.5" fill="${SOFT}">${esc(d.hi)} →</text>`);
   if (VALL) {
     o.push(`<rect data-k="a:0" x="${sx(VALL.lo).toFixed(1)}" y="${m.t - 8}" width="${Math.max(1, sx(VALL.hi) - sx(VALL.lo)).toFixed(1)}" height="${H - m.b - m.t + 8}" fill="#9E9E9E" fill-opacity=".14"></rect>`);
-    o.push(`<line x1="${sx(VALL.m).toFixed(1)}" x2="${sx(VALL.m).toFixed(1)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#8F8F8F" stroke-width="1.5" stroke-dasharray="5 4" pointer-events="none"></line>`);
+    o.push(`<line x1="${sx(VALL.m).toFixed(1)}" x2="${sx(VALL.m).toFixed(1)}" y1="${m.t - 8}" y2="${H - m.b}" stroke="#9A9A9A" stroke-width="1.5" stroke-dasharray="5 4" pointer-events="none"></line>`);
     o.push(`<text x="${sx(VALL.m).toFixed(1)}" y="${m.t - 13}" text-anchor="middle" font-size="11" fill="${SOFT}">All voters</text>`);
   }
   VROWS.forEach((x, i) => {
@@ -694,7 +694,7 @@ function renderVoters() {
   svg.innerHTML = o.join("");
   $("vlegend").innerHTML = `<span><span class="dot" style="background:${INK}"></span>The party, as experts rate it</span>` +
     `<span><span class="ring" style="border-color:${INK}"></span>Its voters, with 80% interval</span>` +
-    `<span><svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="#8F8F8F" stroke-width="1.5" stroke-dasharray="5 4"/></svg>All voters</span>`;
+    `<span><svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="#9A9A9A" stroke-width="1.5" stroke-dasharray="5 4"/></svg>All voters</span>`;
   const month = V.month[w] ? MON[+V.month[w].slice(5, 7) - 1] + " " + V.month[w].slice(0, 4) : String(w);
   const link = `<a href="../../pages/polish-political-analyses/political-attitudes.html" target="_top">Social and political trends</a>`;
   const pooled = (what, issues, ends) => `${what} as CHES experts rated each party in ${w}, beside the average position of the party's own voters on ${issues} (${ends}), from my ${link} for ${month}. The voters' scale pools survey questions placed on 0–10; it is not the experts' scale, so read the order and the gaps, not equal numbers as agreement. `;
@@ -753,8 +753,8 @@ function renderSystems() {
     const sy = v => H - m.b - (v - ymin) / (ymax - ymin) * (H - m.t - m.b);
     const o = [];
     const step = key === "align" ? 0.5 : (ymax > 6 ? 2 : 1);
-    for (let v = ymin; v <= ymax + 1e-9; v += step) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="${v === 0 && key === "align" ? FAINT : RULE}"></line><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${key === "align" ? v.toFixed(1) : v}</text>`);
-    for (const w of allW) o.push(`<text x="${sx(w)}" y="${H - 6}" text-anchor="middle" font-size="10.5" fill="${w === S.wave ? ACCENT : MUTED}" font-weight="${w === S.wave ? 600 : 400}">${w}</text>`);
+    for (let v = ymin; v <= ymax + 1e-9; v += step) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="${v === 0 && key === "align" ? FAINT : RULE}"></line><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${key === "align" ? v.toFixed(1) : v}</text>`);
+    for (const w of allW) o.push(`<text x="${sx(w)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="${w === S.wave ? ACCENT : MUTED}" font-weight="${w === S.wave ? 600 : 400}">${w}</text>`);
     const byC = new Map();
     rows.forEach(s => { if (!byC.has(s.c)) byC.set(s.c, []); byC.get(s.c).push(s); });
     const draw = (c, pts, on) => {
@@ -814,7 +814,7 @@ function spellsSvg(p) {
     }
   });
   const yb = 6 + cats.length * rowH + 4;
-  for (const y of [1990, 2000, 2010, 2020]) o.push(`<text x="${sx(y)}" y="${yb + 8}" text-anchor="middle" font-size="10" fill="${MUTED}">${y}</text>`);
+  for (const y of [1990, 2000, 2010, 2020]) o.push(`<text x="${sx(y)}" y="${yb + 8}" text-anchor="middle" font-size="11" fill="${MUTED}">${y}</text>`);
   return `<svg viewBox="0 0 ${W} ${yb + 12}"><defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#F3E3E3"></rect><line x1="0" y1="0" x2="0" y2="5" stroke="${ACCENT}" stroke-width="1.6"></line></pattern></defs>${o.join("")}</svg>`;
 }
 function spellText(p) {

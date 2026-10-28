@@ -755,14 +755,14 @@ function renderTrends() {
   let prevY = null;
   monthTicks(a, b, W - m.l - m.r).forEach(d => {
     const [lab, yr] = tickLabel(d, prevY); prevY = dateOf(d).getUTCFullYear();
-    o.push(`<line x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${H - m.b}" stroke="#F4F4F4"/><text x="${x(d)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="#767676">${lab}</text>${yr ? `<text x="${x(d)}" y="${H - m.b + 27}" text-anchor="middle" font-size="11" fill="#767676">${yr}</text>` : ""}`);
+    o.push(`<line x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${H - m.b}" stroke="#ECECEC"/><text x="${x(d)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="#767676">${lab}</text>${yr ? `<text x="${x(d)}" y="${H - m.b + 27}" text-anchor="middle" font-size="11" fill="#767676">${yr}</text>` : ""}`);
   });
   // events: a numbered marker over a dotted line, listed under the chart
   const evs = S.events ? trendEvents() : [], evx = [];
   let lastCx = -1e9;
   evs.forEach(l => {
     const ex = x(l.date), cx = Math.max(ex, lastCx + 17); lastCx = cx; evx.push({ cx, e: l });
-    o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t - 20}" y2="${H - m.b}" stroke="#AAA" stroke-dasharray="2 3"/><circle cx="${cx}" cy="10" r="8" fill="#fff" stroke="#B5B5B5"/><text x="${cx}" y="13.5" text-anchor="middle" font-size="10" font-weight="500" fill="#4B4B4B">${l.n}</text>`);
+    o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t - 20}" y2="${H - m.b}" stroke="#C9C9C9" stroke-dasharray="2 3"/><circle cx="${cx}" cy="10" r="8" fill="#fff" stroke="#B5B5B5"/><text x="${cx}" y="13.5" text-anchor="middle" font-size="10" font-weight="500" fill="#4B4B4B">${l.n}</text>`);
   });
   $("trendevents").innerHTML = evs.map(l => `<span class="muted">${l.n}. ${esc(evWhen(l.date))} · ${esc(l.event)}</span>`).join("");
   // bands

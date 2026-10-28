@@ -78,7 +78,7 @@ function declutter(labs, h = 12) {
   });
   return labs;
 }
-const ACCENT = "#8B0000", INK = "#141414", MUTED = "#767676", GRID = "#EEEEEE";
+const ACCENT = "#8B0000", INK = "#141414", MUTED = "#767676", GRID = "#ECECEC";
 const PAGE = "Party system indicators";   // the page's name in its suggested citation (../chart-export.js)
 const FONT = "Jost, 'Avenir Next', -apple-system, sans-serif";
 
@@ -279,7 +279,7 @@ function lineChart(svgId, boxId, cfg) {
   const fmtY = cfg.fmtAxis || (v => v.toFixed(dp));
   const o = [];
   yt.forEach(v => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="${GRID}"/><text x="${m.l - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${fmtY(v)}</text>`));
-  (cfg.refs || []).forEach(r => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(r.v)}" y2="${Y(r.v)}" stroke="#999" stroke-dasharray="3 3"/>${r.lab ? `<text x="${W - m.r - 4}" y="${Y(r.v) - 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${esc(r.lab)}</text>` : ""}`));
+  (cfg.refs || []).forEach(r => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(r.v)}" y2="${Y(r.v)}" stroke="#999" stroke-dasharray="3 3"/>${r.lab ? `<text x="${W - m.r - 4}" y="${Y(r.v) - 4}" text-anchor="end" font-size="11" fill="${MUTED}">${esc(r.lab)}</text>` : ""}`));
   // selected point: a light band
   const sp = pts.find(p => p.k === cfg.sel);
   if (sp) o.push(`<rect x="${X(sp.x) - 9}" y="${m.t - 4}" width="18" height="${H - m.t - m.b + 8}" rx="6" fill="#F6EBEB"/>`);
@@ -472,7 +472,7 @@ function partyBars(svgId, boxId, rows, opts = {}) { // horizontal vote bars with
   const H = rows.length * rh + 22, mx = Math.max(...rows.map(r => Math.max(r.v, r.s || 0)), 0.05);
   const X = v => lw + v / mx * (W - lw - vw - 6);
   const o = [];
-  ticks(0, mx, 4).forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${H - 18}" stroke="${GRID}"/><text x="${X(t)}" y="${H - 5}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${Math.round(t * 100)}%</text>`));
+  ticks(0, mx, 4).forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${H - 18}" stroke="${GRID}"/><text x="${X(t)}" y="${H - 5}" text-anchor="middle" font-size="11" fill="${MUTED}">${Math.round(t * 100)}%</text>`));
   rows.forEach((r, i) => {
     const y = i * rh + 3;
     o.push(`<g data-i="${i}" style="cursor:default"><rect x="0" y="${y - 2}" width="${W}" height="${rh}" fill="transparent"/>`);
@@ -526,7 +526,7 @@ function renderDispPanel() {
   const mx = Math.max(...rows.map(r => Math.max(r.v, r.s)), 0.1) * 1.06, [, top] = niceDomain(0, mx, 4);
   const X = v => m.l + v / top * (W - m.l - m.r), Y = v => H - m.b - v / top * (H - m.t - m.b);
   const o = [];
-  ticks(0, top, 4).forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${Math.round(t * 100)}%</text><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${Math.round(t * 100)}%</text>`));
+  ticks(0, top, 4).forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="${MUTED}">${Math.round(t * 100)}%</text><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${Math.round(t * 100)}%</text>`));
   o.push(`<text x="${(m.l + W - m.r) / 2}" y="${H - 3}" text-anchor="middle" font-size="11" fill="${MUTED}">Vote share</text><text x="${m.l + 4}" y="${m.t + 10}" font-size="11" fill="${MUTED}">Seat share</text>`);
   o.push(`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(top)}" y2="${Y(top)}" stroke="#999"/>`);
   if (e !== 1991) o.push(`<line x1="${X(0.05)}" x2="${X(0.05)}" y1="${m.t}" y2="${H - m.b}" stroke="#999" stroke-dasharray="3 3"/>`);
@@ -567,7 +567,7 @@ function stackedBars(svgId, boxId, cfg) { // cfg: cats [k], parts [[get, name, c
   const top = cfg.pct100 ? 1 : niceDomain(0, Math.max(...cats.map(k => Math.max(tot(k), cfg.total ? cfg.total(k) || 0 : 0))), 4)[1];
   const Y = v => H - m.b - v / top * (H - m.t - m.b), X = i => m.l + bw * i + bw / 2;
   const o = [];
-  ticks(0, top, 4).forEach(t => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${Math.round(t * 100)}</text>`));
+  ticks(0, top, 4).forEach(t => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${Math.round(t * 100)}</text>`));
   cats.forEach((k, i) => {
     const sel = k === cfg.sel, short = W < 560;
     if (sel) o.push(`<rect x="${X(i) - bw / 2 + 2}" y="${m.t - 6}" width="${bw - 4}" height="${H - m.t - m.b + 6}" rx="6" fill="#F6EBEB"/>`);
@@ -747,8 +747,8 @@ function renderNatPanel() {
   const vmin = 0.0005, vmax = 0.6, L = v => Math.log10(Math.max(v, vmin));
   const X = v => m.l + (L(v) - L(vmin)) / (L(vmax) - L(vmin)) * (W - m.l - m.r), Y = v => H - m.b - v * (H - m.t - m.b);
   const o = [];
-  [0, 0.2, 0.4, 0.6, 0.8, 1].forEach(t => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${t.toFixed(1)}</text>`));
-  [0.001, 0.01, 0.05, 0.1, 0.5].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${t < 0.01 ? (t * 100).toFixed(1) : Math.round(t * 100)}%</text>`));
+  [0, 0.2, 0.4, 0.6, 0.8, 1].forEach(t => o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${t.toFixed(1)}</text>`));
+  [0.001, 0.01, 0.05, 0.1, 0.5].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="${MUTED}">${t < 0.01 ? (t * 100).toFixed(1) : Math.round(t * 100)}%</text>`));
   o.push(`<text x="${(m.l + W - m.r) / 2}" y="${H - 3}" text-anchor="middle" font-size="11" fill="${MUTED}">Vote share</text>`);
   const sys = E["psns_" + lv];
   if (isNum(sys)) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${Y(sys)}" y2="${Y(sys)}" stroke="${INK}" stroke-dasharray="5 3"/>`);
@@ -817,7 +817,7 @@ function renderPolPanel() {
     const laneH = 54, H = 46 + lanes.length * laneH, base = 26;
     const mean = sum(rows.map(r => r.v * r[dim])) / sum(rows.map(r => r.v));
     o.push(`<line x1="${X(0)}" x2="${X(10)}" y1="${H - 22}" y2="${H - 22}" stroke="${MUTED}"/>`);
-    [0, 2, 4, 6, 8, 10].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${H - 25}" y2="${H - 19}" stroke="${MUTED}"/><text x="${X(t)}" y="${H - 6}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${t}</text>`));
+    [0, 2, 4, 6, 8, 10].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${H - 25}" y2="${H - 19}" stroke="${MUTED}"/><text x="${X(t)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="${MUTED}">${t}</text>`));
     o.push(`<text x="${X(0)}" y="12" font-size="11" fill="${MUTED}">${DIMS[dim].lo}</text><text x="${X(10)}" y="12" text-anchor="end" font-size="11" fill="${MUTED}">${DIMS[dim].hi}</text>`);
     o.push(`<line x1="${X(mean)}" x2="${X(mean)}" y1="${base - 6}" y2="${H - 22}" stroke="${INK}" stroke-dasharray="3 3"/><path d="M${X(mean)},${H - 24}l-6,-9h12z" fill="${INK}"/>`);
     const labs = [];
@@ -831,7 +831,7 @@ function renderPolPanel() {
   } else {
     const H = Math.round(clamp(W * 0.85, 260, 380)), m = { l: 28, r: 12, t: 12, b: 30 };
     const X = p => m.l + p / 10 * (W - m.l - m.r), Y = p => H - m.b - p / 10 * (H - m.t - m.b);
-    [0, 2, 4, 6, 8, 10].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${t}</text><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="10.5" fill="${MUTED}">${t}</text>`));
+    [0, 2, 4, 6, 8, 10].forEach(t => o.push(`<line x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}" stroke="${GRID}"/><line x1="${m.l}" x2="${W - m.r}" y1="${Y(t)}" y2="${Y(t)}" stroke="${GRID}"/><text x="${X(t)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="${MUTED}">${t}</text><text x="${m.l - 5}" y="${Y(t) + 4}" text-anchor="end" font-size="11" fill="${MUTED}">${t}</text>`));
     o.push(`<text x="${(m.l + W - m.r) / 2}" y="${H - 3}" text-anchor="middle" font-size="11" fill="${MUTED}">Economic left–right</text><text x="${m.l + 4}" y="${m.t + 10}" font-size="11" fill="${MUTED}">TAN ↑</text><text x="${m.l + 4}" y="${H - m.b - 5}" font-size="11" fill="${MUTED}">GAL</text>`);
     const labs = [];
     [...rows].sort((a, b) => b.v - a.v).forEach(r => {
@@ -885,7 +885,7 @@ function renderGov() {
   });
   // x axis: years every 5
   const yStep = X(Math.round(Date.UTC(2000, 0, 1) / 864e5)) - X(Math.round(Date.UTC(1995, 0, 1) / 864e5)) < 40 ? 10 : 5;
-  for (let yr = yStep === 10 ? 2000 : 1995; yr <= 2025; yr += yStep) { const d = Math.round(Date.UTC(yr, 0, 1) / 864e5); o.push(`<text x="${X(d)}" y="${H - 6}" text-anchor="middle" font-size="10.5" fill="${MUTED}">${yr}</text>`); }
+  for (let yr = yStep === 10 ? 2000 : 1995; yr <= 2025; yr += yStep) { const d = Math.round(Date.UTC(yr, 0, 1) / 864e5); o.push(`<text x="${X(d)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="${MUTED}">${yr}</text>`); }
   put("gov", W, H, o.join(""), "Cabinets since 1991; squares: alternation, formula and access, filled when closed");
   CH.gov = {
     W, box: $("govbox"),
