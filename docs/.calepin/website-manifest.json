@@ -2,6 +2,7 @@
   "outputs": [
     "404.html",
     "assets/analyses/election-results.png",
+    "assets/analyses/governments.png",
     "assets/analyses/party-genealogy.png",
     "assets/analyses/party-ideology.png",
     "assets/analyses/party-manifestos.png",
@@ -212,6 +213,7 @@
     "pages/media.html",
     "pages/policy-reach.html",
     "pages/polish-political-analyses/election-results.html",
+    "pages/polish-political-analyses/governments.html",
     "pages/polish-political-analyses/party-genealogy.html",
     "pages/polish-political-analyses/party-ideology.html",
     "pages/polish-political-analyses/party-manifestos.html",
