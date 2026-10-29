@@ -8,7 +8,6 @@
 <!--
   Who sat in each Polish government, 1988–2026. Data: governments.json beside this file, written by
   "Governments/analysis/90_export.R" in the Polish political analyses repo. Logic in app.js; no libraries.
-  DRAFT: the ministry lineage is proposed and not yet confirmed.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,7 +71,6 @@ svg text:not([font-weight]){font-weight:300}
 <body>
 <div class="app" id="app">
   <div class="asof" id="asof">Loading the governments…</div>
-  <p class="notice">Draft. The ministry lineage is a proposal that has not yet been confirmed, and some ministers' parties are not recorded.</p>
   <div class="toolbar">
     <div class="seg" id="views" role="tablist" aria-label="View">
       <button type="button" role="tab" data-v="cabinet">Cabinets</button>
@@ -92,7 +90,7 @@ svg text:not([font-weight]){font-weight:300}
     <div class="card" id="changes"></div>
   </section>
   <section class="view" id="v-ministries" hidden>
-    <p class="help">Each ministry's lineage: the names a portfolio has had, with mergers and transfers of functions. Proposed, not yet confirmed.</p>
+    <p class="help">Each ministry's lineage: the names a portfolio has had, with mergers and transfers of functions.</p>
     <div class="toolbar"><label class="ctl">Group <select class="sel" id="mintype"></select></label></div>
     <div class="grid3" id="lineages"></div>
     <div class="card" id="holders" hidden></div>
@@ -110,7 +108,7 @@ svg text:not([font-weight]){font-weight:300}
     </div>
     <div class="two">
       <div class="chartbox"><div class="charttitle">Ministerial changes per year in office (dates on which anyone joined or left, after the first month)</div><svg id="s-turn"></svg></div>
-      <div class="card"><h3>Ministries held by each party</h3><p class="help">Posts heading a ministry or central office, by type of portfolio; the grouping is a coding choice (proposed).</p><div id="s-party"></div></div>
+      <div class="card"><h3>Ministries held by each party</h3><p class="help">Posts heading a ministry or central office, by type of portfolio; the grouping is a coding choice.</p><div id="s-party"></div></div>
     </div>
   </section>
   <footer class="credit" id="credit"></footer>

@@ -1,8 +1,8 @@
-/* Governments and ministers — who sat in each Polish government, 1988–2026 (draft).
+/* Governments and ministers — who sat in each Polish government, 1988–2026 .
  *
  * Reads governments.json: the 23 cabinets of Party tracker, every post (minister, deputy prime minister,
  * minister without portfolio, head of a central office, committee chair) with its dates and the official
- * acts that confirm them, the ministry lineages (proposed) and statistics. Written by
+ * acts that confirm them, the ministry lineages with their legal references and statistics. Written by
  * "Governments/analysis/90_export.R" in the Polish political analyses repo.
  * Views: Cabinets (a timeline of posts), Ministries (lineages), Statistics.
  */
@@ -72,15 +72,15 @@ function postOrder(a, b) {
   return (a.lineageLabel || a.portfolio || "").localeCompare(b.lineageLabel || b.portfolio || "") || a.s - b.s;
 }
 function drawCabinet() {
-  const c = D.cabinets.find(x => x.id === S.cab), v = c.validation, st = c.stats, t = c.turnover;
+  const c = D.cabinets.find(x => x.id === S.cab), has = o => o && Object.keys(o).length > 0, v = has(c.validation) ? c.validation : null, st = has(c.stats) ? c.stats : null, t = has(c.turnover) ? c.turnover : null;
   const ok = v ? Math.round(100 * v.share) : null;
   $("cabhead").innerHTML =
     `<div class="card"><h3>${esc(c.name)}</h3><div class="kv"><span class="k">Prime minister</span><span>${esc(c.pm)}</span><span class="k">In office</span><span>${dstr(c.start)} to ${dstr(c.end)}</span>` +
     `<span class="k">Dates checked</span><span>${v ? `<span class="badge ${ok >= 95 ? "ok" : "warn"}">${v.confirmed} of ${v.events} confirmed (${ok}%)</span>` : "–"}</span>` +
     `<span class="k">Source</span><span>${c.wikipedia ? `<a href="${esc(c.wikipedia.url)}" target="_top">Wikipedia: ${esc(c.wikipedia.title)}</a>` : "–"}</span></div></div>` +
-    `<div class="card"><h3>The cabinet in numbers</h3><div class="kv">` +
+    (c.failed ? `<div class="card"><h3>A government that was never formed</h3><p class="help" style="margin:0">Waldemar Pawlak was nominated prime minister on 5 June 1992, after the Sejm dismissed Jan Olszewski\u2019s government, but could not form a cabinet by 11 July, when Hanna Suchocka\u2019s government took over. The Olszewski ministers stayed in office meanwhile, so the timeline shows them, and they are counted under the Olszewski government in the statistics.</p></div>` : `<div class="card"><h3>The cabinet in numbers</h3><div class="kv">` +
     (st ? `<span class="k">Members over the term</span><span>${st.people}, of whom ${st.women} women (${Math.round(100 * st.women / st.people)}%)</span><span class="k">Average age at appointment</span><span>${st.meanAge} years</span><span class="k">Non-party</span><span>${st.nonParty} recorded</span>` : "") +
-    (t ? `<span class="k">Changes after the first month</span><span>${t.changeDates} dates: ${t.joiners} joined, ${t.departures} left, ${t.moves} moved post (${t.perYear} dates a year)</span>` : "") + `</div></div>`;
+    (t ? `<span class="k">Changes after the first month</span><span>${t.changeDates} dates: ${t.joiners} joined, ${t.departures} left, ${t.moves} moved post (${t.perYear} dates a year)</span>` : "") + `</div></div>`);
   drawGantt(); drawChanges(c); drawDetail();
 }
 function drawGantt() {
@@ -167,13 +167,22 @@ function drawChanges(c) {
 const portfolioLabel = p => roleTxt(segIn(p, S.cab));
 
 // ---- Ministries -----------------------------------------------------------------------------------
+function legalTxt(n) {
+  const l = n.legal; if (!l) return "";
+  const arr = x => Array.isArray(x) ? x : (x == null ? [] : [x]);
+  const link = a => a.url ? `<a href="${esc(a.url)}" target="_blank" rel="noopener" title="${esc(a.title || "")}">${esc(a.act)}</a>` : esc(a.act);
+  const sp = arr(l.spans), many = sp.length > 1;
+  const main = sp.map(s => `<br><span class="muted">${many ? s.from.slice(0, 4) + ": " : ""}${s.act ? `Scope regulation${s.status.startsWith("only") ? " (amending only)" : ""}: ${link(s)}, ${dstr(s.date)}` : "No scope regulation found in the Sejm's legal database"}</span>`).join("");
+  const am = arr(l.amendments).slice(0, 4).map(x => `${link(x)} (${dstr(x.date)})`).join("; ");
+  return main + (am ? `<br><span class="muted">Amendments to the act on departments within a year: ${am}</span>` : "");
+}
 function drawMinistries() {
   const ms = D.ministries.filter(m => S.type === "all" || m.type === S.type).sort((a, b) => a.label.localeCompare(b.label));
   $("lineages").innerHTML = ms.map(m => {
     const names = m.names.slice().sort((a, b) => a.first.localeCompare(b.first));
-    return `<div class="lin${S.lin === m.id ? " on" : ""}"><h4><button type="button" data-l="${esc(m.id)}">${esc(m.label)}</button> <span class="badge">${esc(m.type)}</span> <span class="badge warn">proposed</span></h4><div class="names">` +
-      names.map(n => `<div><span class="yr">${n.first.slice(0, 4)}–${n.last >= "2026-09" ? "" : n.last.slice(0, 4)}</span><span>${esc(S.lang === "en" ? (n.nameEn || n.name) : "Minister " + n.name)}${n.roleType !== "minister" ? ` <span class="muted">(${esc(n.roleType)})</span>` : ""}` +
-        `${n.alsoFrom ? `<br><span class="muted">draws on: ${esc(n.alsoFrom.split(";").map(a => (D.ministries.find(x => x.id === a) || {label: a}).label).join(", "))}</span>` : ""}${n.note ? `<br><span class="muted">${esc(n.note)}</span>` : ""}</span></div>`).join("") + `</div></div>`;
+    return `<div class="lin${S.lin === m.id ? " on" : ""}"><h4><button type="button" data-l="${esc(m.id)}">${esc(m.label)}</button> <span class="badge">${esc(m.type)}</span> </h4><div class="names">` +
+      names.map(n => `<div><span class="yr">${(Array.isArray(n.spans) ? n.spans : (n.spans ? [n.spans] : [{from: n.first, to: n.last >= "2026-09" ? null : n.last}])).map(s => s.from.slice(0, 4) + "–" + (s.to ? s.to.slice(0, 4) : "")).join("<br>")}</span><span>${esc(S.lang === "en" ? (n.nameEn || n.name) : "Minister " + n.name)}${n.roleType !== "minister" ? ` <span class="muted">(${esc(n.roleType)})</span>` : ""}` +
+        `${n.alsoFrom ? `<br><span class="muted">draws on: ${esc(n.alsoFrom.split(";").map(a => (D.ministries.find(x => x.id === a) || {label: a}).label).join(", "))}</span>` : ""}${n.note ? `<br><span class="muted">${esc(n.note)}</span>` : ""}${legalTxt(n)}</span></div>`).join("") + `</div></div>`;
   }).join("");
   $("lineages").querySelectorAll("h4 button").forEach(b => b.addEventListener("click", () => { S.lin = S.lin === b.dataset.l ? null : b.dataset.l; render(); }));
   drawHolders();
@@ -189,7 +198,7 @@ function drawHolders() {
   for (let y = 1990; y <= 2025; y += 5) svg += `<line x1="${X(day(y + "-01-01"))}" x2="${X(day(y + "-01-01"))}" y1="2" y2="36" stroke="${GRID}"/><text x="${X(day(y + "-01-01"))}" y="50" font-size="10.5" fill="${MUTED}" text-anchor="middle">${y}</text>`;
   ts.forEach((p, i) => { const xs = X(p.s), xe = X(p.e == null ? x1 : p.e); svg += `<rect x="${xs}" y="${i % 2 ? 20 : 4}" width="${Math.max(2, xe - xs)}" height="14" rx="2" fill="${p.colour}" opacity=".88"><title>${esc(p.person)}: ${esc(roleTxt(p.segments[0]))}, ${dstr(p.start)} to ${dstr(p.end)}</title></rect>`; });
   svg += `</svg>`;
-  box.innerHTML = `<h3>${esc(m.label)}: who held it</h3><p class="help">Every minister of this lineage, in order. Alternate rows only keep neighbouring bars apart. Proposed lineage: the names are joined by my reading of their dates, not yet confirmed.</p>${svg}` +
+  box.innerHTML = `<h3>${esc(m.label)}: who held it</h3><p class="help">Every minister of this lineage, in order. Alternate rows only keep neighbouring bars apart. The names are joined into one lineage by my reading of the changes, confirmed by Ben Stanley. Legal references are the Prime Minister\u2019s or Council of Ministers\u2019 regulation on the ministry\u2019s scope of action and amendments to the act on departments of government administration found in the Sejm\u2019s database nearest in date; they show the legal setting, not that each act created the ministry.</p>${svg}` +
     `<table class="t"><tr><th>From</th><th>To</th><th>Minister</th><th>Ministry as named</th><th>Party</th><th>Government(s)</th></tr>` +
     ts.map(p => `<tr><td style="white-space:nowrap">${dstr(p.start)}</td><td style="white-space:nowrap">${dstr(p.end)}</td><td><a href="#" data-q="${esc(p.qid)}">${esc(p.person)}</a></td><td>${esc(S.lang === "en" ? p.segments.map(s => s.roleEn).filter((v, i, a) => a.indexOf(v) === i).join(" > ") : p.portfolio)}</td><td><span class="dot" style="background:${p.colour}"></span> ${esc(p.party)}</td><td>${p.cabinets.map(cabPm).join(", ")}</td></tr>`).join("") + `</table>`;
   box.querySelectorAll("a[data-q]").forEach(l => l.addEventListener("click", ev => { ev.preventDefault(); S.person = l.dataset.q; S.v = "people"; render(); }));
@@ -243,7 +252,7 @@ function barChart(svgId, rows, o) {
 }
 function drawStats() {
   const cs = D.cabinets.filter(c => c.stats && isNum(c.stats.meanAge));
-  const short = c => c.pm.split(" ").slice(-1)[0] + " " + c.start.slice(0, 4);
+  const ROM = ["", "I", "II", "III"], short = c => { const k = /_(\d)$/.exec(c.id); return c.pm.split(" ").slice(-1)[0] + (k ? " " + ROM[+k[1]] : "") + " " + c.start.slice(0, 4); };
   barChart("s-women", cs.map(c => ({label: short(c), v: c.stats.women / c.stats.people})), {col: "#8B0000", fmt: v => Math.round(100 * v) + "%", max: 0.6});
   barChart("s-age", cs.map(c => ({label: short(c), v: c.stats.meanAge})), {col: "#4B6A9B", fmt: v => v.toFixed(1), max: 60});
   barChart("s-turn", cs.filter(c => c.turnover && isNum(c.turnover.perYear)).map(c => ({label: short(c), v: c.turnover.perYear})), {col: "#6B8F71", fmt: v => v.toFixed(1)});
