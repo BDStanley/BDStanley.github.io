@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governments and ministers: Poland, 1988–2026</title>
+<meta name="theme-color" content="#8B0000">
+<!--
+  Who sat in each Polish government, 1988–2026. Data: governments.json beside this file, written by
+  "Governments/analysis/90_export.R" in the Polish political analyses repo. Logic in app.js; no libraries.
+  DRAFT: the ministry lineage is proposed and not yet confirmed.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#141414; --soft:#4B4B4B; --muted:#767676; --faint:#D5D5D5; --rule:#ECECEC;
+  --chip:#F3F3F1; --accent:#8B0000; --accent-hover:#495057; --tint:#F6EBEB; --warn:#8A5A00;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-weight:400;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:14px}
+button,input,select{font-family:inherit;font-size:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-hover)}
+.app{display:flex;flex-direction:column;gap:10px;padding:12px 16px}
+.muted{color:var(--muted)}
+.asof{font-size:12.5px;color:var(--muted);line-height:1.45}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--chip);border-radius:999px}
+.seg button{border:0;border-radius:999px;padding:0 13px;height:32px;font-size:13.5px;font-weight:500;cursor:pointer;background:transparent;color:var(--soft)}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg.small button{height:28px;font-size:12.5px;padding:0 10px}
+.ctl{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--soft)}
+select.sel{height:30px;border:1px solid var(--faint);border-radius:8px;padding:0 6px;background:#fff;color:var(--ink);font-size:13px;max-width:340px}
+.view[hidden]{display:none}.view{display:flex;flex-direction:column;gap:10px}
+.help{font-size:12.5px;color:var(--muted);line-height:1.45;margin:0}
+.notice{font-size:13px;color:var(--warn);line-height:1.45;margin:0;padding:8px 12px;border-radius:10px;background:#FBF4E6}
+.chartbox{position:relative;border:1px solid var(--rule);border-radius:14px;padding:8px 6px 4px;overflow-x:auto}
+.chartbox svg{display:block;width:100%;height:auto;font-family:Jost,"Avenir Next",sans-serif;overflow:visible}
+.charttitle{font-size:13px;font-weight:500;margin:2px 8px 4px}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:5;min-width:170px;max-width:320px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{border:1px solid var(--faint);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.card h3{margin:0;font-size:16px;font-weight:500}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 12px;font-size:13px}.kv .k{color:var(--muted)}
+.badge{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:999px;background:var(--chip);color:var(--soft)}
+.badge.ok{background:#E6F1E8;color:#1b6e2d}.badge.warn{background:#FBF4E6;color:var(--warn)}
+table.t{border-collapse:collapse;width:100%;font-size:13px}
+table.t th{font-weight:500;color:var(--muted);text-align:left;padding:3px 6px;border-bottom:1px solid var(--rule);font-size:12px}
+table.t td{padding:4px 6px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.t td.n,table.t th.n{text-align:right}
+.lin{border:1px solid var(--rule);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.lin h4 button{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left}
+.lin h4 button:hover{color:var(--accent)}
+.lin.on{border-color:var(--accent);background:var(--tint)}
+.lin h4{margin:0;font-size:14px;font-weight:500;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.lin .names{display:flex;flex-direction:column;gap:3px;font-size:12.5px}
+.lin .names div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px}
+.lin .names .yr{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px}
+.credit{border-top:1px solid var(--rule);padding-top:10px;font-size:12px;color:var(--muted);line-height:1.5}.credit p{margin:0;max-width:110ch}
+.loading{padding:40px;color:var(--muted);font-size:15px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--soft)}.legend span{display:inline-flex;align-items:center;gap:6px}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+svg text:not([font-weight]){font-weight:300}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="asof" id="asof">Loading the governments…</div>
+  <p class="notice">Draft. The ministry lineage is a proposal that has not yet been confirmed, and 31 party labels are not yet linked to Party tracker.</p>
+  <div class="toolbar">
+    <div class="seg" id="views" role="tablist" aria-label="View">
+      <button type="button" role="tab" data-v="cabinet">Cabinets</button>
+      <button type="button" role="tab" data-v="ministries">Ministries</button>
+      <button type="button" role="tab" data-v="people">People</button>
+      <button type="button" role="tab" data-v="stats">Statistics</button>
+    </div>
+    <span class="ctl">Titles <span class="seg small" id="langsel" aria-label="Language of titles"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="pl">Polski</button></span></span>
+  </div>
+  <section class="view" id="v-cabinet" hidden>
+    <div class="toolbar"><label class="ctl">Cabinet <select class="sel" id="cabsel"></select></label>
+      <span class="ctl">Colour by <span class="seg" id="colourby"><button type="button" data-c="party" aria-pressed="true">Party</button><button type="button" data-c="type" aria-pressed="false">Post type</button></span></span></div>
+    <div class="two" id="cabhead"></div>
+    <div class="chartbox"><div class="charttitle" id="gtitle"></div><svg id="gantt" role="img" aria-label="Who held each post and when"></svg><div class="tip" id="tip" hidden></div></div>
+    <div class="legend" id="glegend"></div>
+    <div class="card" id="detail"><span class="muted">Click a bar for the minister's details and the official acts that confirm their dates.</span></div>
+    <div class="card" id="changes"></div>
+  </section>
+  <section class="view" id="v-ministries" hidden>
+    <p class="help">Each ministry's lineage: the names a portfolio has had, with mergers and transfers of functions. Proposed, not yet confirmed.</p>
+    <div class="toolbar"><label class="ctl">Group <select class="sel" id="mintype"></select></label></div>
+    <div class="grid3" id="lineages"></div>
+    <div class="card" id="holders" hidden></div>
+  </section>
+  <section class="view" id="v-people" hidden>
+    <div class="toolbar"><label class="ctl">Minister <input class="sel" id="psearch" list="plist" placeholder="Type a name" autocomplete="off" style="width:260px"></label><datalist id="plist"></datalist></div>
+    <div class="two" id="pcard"></div>
+    <div class="chartbox"><div class="charttitle" id="ptitle"></div><svg id="pgantt" role="img" aria-label="The minister's posts over time"></svg></div>
+    <div class="card" id="ptable"></div>
+  </section>
+  <section class="view" id="v-stats" hidden>
+    <div class="two">
+      <div class="chartbox"><div class="charttitle">Share of women among each cabinet's members</div><svg id="s-women"></svg></div>
+      <div class="chartbox"><div class="charttitle">Average age at appointment</div><svg id="s-age"></svg></div>
+    </div>
+    <div class="two">
+      <div class="chartbox"><div class="charttitle">Ministerial changes per year in office (dates on which anyone joined or left, after the first month)</div><svg id="s-turn"></svg></div>
+      <div class="card"><h3>Ministries held by each party</h3><p class="help">Posts heading a ministry or central office, by type of portfolio; the grouping is a coding choice (proposed).</p><div id="s-party"></div></div>
+    </div>
+  </section>
+  <footer class="credit" id="credit"></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
