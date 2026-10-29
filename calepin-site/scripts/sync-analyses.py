@@ -91,6 +91,8 @@ FILES = [
      {"meta", "elections", "lists", "lineages", "governments", "closureIndex"}),
     ("Party ideology/web/ideology.json", "assets/party-ideology/ideology.json",
      {"meta", "countries", "dims", "parties", "rows", "system"}),
+    ("Governments/web/governments.json", "assets/governments/governments.json",
+     {"meta", "cabinets", "posts", "ministries", "stats"}),
     ("Party manifestos/web/manifestos.json", "assets/party-manifestos/manifestos.json",
      {"meta", "elections", "programmes", "categories", "domains", "ches", "chesCorrelations"}),
     ("Political attitudes/web/attitudes.json", "assets/political-attitudes/attitudes.json",

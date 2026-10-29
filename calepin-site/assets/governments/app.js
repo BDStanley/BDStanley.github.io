@@ -58,6 +58,7 @@ function render() {
 }
 
 // ---- Cabinets -------------------------------------------------------------------------------------
+const cabPm = id => { const c = D.cabinets.find(x => x.id === id); return esc(c ? c.pm + " " + c.start.slice(0, 4) : id); };
 const cabPosts = id => D.posts.filter(p => p.cabinets.includes(id)).filter(p => p.type !== "other");
 // The post as it was in this cabinet: the last segment of the tenure inside it
 const segIn = (p, id) => { const s = p.segments.filter(x => x.cabinet === id); return s.length ? s[s.length - 1] : p.segments[p.segments.length - 1]; };
@@ -87,7 +88,7 @@ function drawGantt() {
   const posts = cabPosts(S.cab).sort(postOrder);
   const nHead = new Set(posts.map(p => p.type)).size;
   const x0 = day(c.start) - 10, x1 = (c.end ? day(c.end) : day("2026-10-01")) + 10;
-  const W = Math.max(520, svg.parentNode.clientWidth - 12), L = 330, R = 16, rh = 17, T = 22, H = T + (posts.length + nHead) * rh + 22;
+  const narrow = svg.parentNode.clientWidth < 560, W = Math.max(narrow ? 320 : 520, svg.parentNode.clientWidth - 12), L = narrow ? 120 : 330, R = 16, rh = 17, T = 22, H = T + (posts.length + nHead) * rh + 22;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const X = d => L + (d - x0) / (x1 - x0) * (W - L - R);
   $("gtitle").textContent = `${posts.length} posts, grouped by type and portfolio. Each bar is one person\u2019s continuous service in one post; an open end (\u25C2 \u25B8) means the minister carried on from, or into, the neighbouring government.`;
@@ -109,7 +110,7 @@ function drawGantt() {
     if (p.s < cStart - 3) el("path", {d: `M${xs},${y + 2}l-6,${(rh - 5) / 2}l6,${(rh - 5) / 2}`, fill: "none", stroke: pcol, "stroke-width": 1.6}, svg);
     if (cEnd != null && (p.e == null || p.e > cEnd + 3)) el("path", {d: `M${xe},${y + 2}l6,${(rh - 5) / 2}l-6,${(rh - 5) / 2}`, fill: "none", stroke: pcol, "stroke-width": 1.6}, svg);
     text(svg, xs + 4, y + 12, trunc(p.person, Math.max(8, Math.floor((xe - xs) / 5.6))), Object.assign({"font-size": 10, fill: "#fff"}, {}));
-    const nl = text(svg, L - 6, y + 12, trunc(label, 56), {"text-anchor": "end", fill: SOFT});
+    const nl = text(svg, L - 6, y + 12, trunc(label, narrow ? 19 : 56), {"text-anchor": "end", fill: SOFT});
     const hit = el("rect", {x: 0, y: y, width: W, height: rh, fill: "transparent", style: "cursor:pointer"}, svg);
     hit.addEventListener("mousemove", ev => {
       const r = svg.parentNode.getBoundingClientRect();
@@ -190,7 +191,7 @@ function drawHolders() {
   svg += `</svg>`;
   box.innerHTML = `<h3>${esc(m.label)}: who held it</h3><p class="help">Every minister of this lineage, in order. Alternate rows only keep neighbouring bars apart. Proposed lineage: the names are joined by my reading of their dates, not yet confirmed.</p>${svg}` +
     `<table class="t"><tr><th>From</th><th>To</th><th>Minister</th><th>Ministry as named</th><th>Party</th><th>Government(s)</th></tr>` +
-    ts.map(p => `<tr><td style="white-space:nowrap">${dstr(p.start)}</td><td style="white-space:nowrap">${dstr(p.end)}</td><td><a href="#" data-q="${esc(p.qid)}">${esc(p.person)}</a></td><td>${esc(S.lang === "en" ? p.segments.map(s => s.roleEn).filter((v, i, a) => a.indexOf(v) === i).join(" > ") : p.portfolio)}</td><td><span class="dot" style="background:${p.colour}"></span> ${esc(p.party)}</td><td>${p.cabinets.map(esc).join(", ")}</td></tr>`).join("") + `</table>`;
+    ts.map(p => `<tr><td style="white-space:nowrap">${dstr(p.start)}</td><td style="white-space:nowrap">${dstr(p.end)}</td><td><a href="#" data-q="${esc(p.qid)}">${esc(p.person)}</a></td><td>${esc(S.lang === "en" ? p.segments.map(s => s.roleEn).filter((v, i, a) => a.indexOf(v) === i).join(" > ") : p.portfolio)}</td><td><span class="dot" style="background:${p.colour}"></span> ${esc(p.party)}</td><td>${p.cabinets.map(cabPm).join(", ")}</td></tr>`).join("") + `</table>`;
   box.querySelectorAll("a[data-q]").forEach(l => l.addEventListener("click", ev => { ev.preventDefault(); S.person = l.dataset.q; S.v = "people"; render(); }));
 }
 
@@ -198,7 +199,8 @@ function drawHolders() {
 function drawPeople() {
   const pc = $("pcard"), pt = $("ptable"), svg = $("pgantt"); svg.innerHTML = "";
   const ts = D.posts.filter(p => p.qid === S.person).sort((a, b) => a.s - b.s);
-  if (!ts.length) { pc.innerHTML = `<div class="card"><span class="muted">Choose a minister: type a name above, or open one from a cabinet's timeline or a ministry's holders.</span></div>`; pt.innerHTML = ""; $("ptitle").textContent = ""; return; }
+  const none = !ts.length; svg.parentNode.hidden = none; pt.hidden = none;
+  if (none) { pc.innerHTML = `<div class="card"><span class="muted">Choose a minister: type a name above, or open one from a cabinet's timeline or a ministry's holders.</span></div>`; pt.innerHTML = ""; $("ptitle").textContent = ""; return; }
   const p0 = ts[0];
   $("psearch").value = p0.person;
   const gov = []; ts.forEach(t => { const last = gov[gov.length - 1]; if (last && t.s <= last.e + 3) last.e = Math.max(last.e, t.e == null ? 1e9 : t.e); else gov.push({s: t.s, e: t.e == null ? 1e9 : t.e}); });
@@ -211,19 +213,19 @@ function drawPeople() {
     `<span class="k">Records</span><span><a href="https://www.wikidata.org/wiki/${esc(p0.qid)}" target="_top">Wikidata ${esc(p0.qid)}</a></span></div></div>` +
     `<div class="card"><h3>Governments served in</h3><div class="kv"><span class="k">Cabinets</span><span>${cabs.map(esc).join("<br>")}</span></div></div>`;
   $("ptitle").textContent = `${ts.length} posts; each bar is one continuous tenure`;
-  const x0 = ts[0].s - 200, x1 = Math.max(...ts.map(t => t.e == null ? day("2026-10-01") : t.e)) + 200, W = Math.max(520, svg.parentNode.clientWidth - 12), Lm = 330, R = 16, rh = 22, T = 8, H = T + ts.length * rh + 22;
+  const x0 = ts[0].s - 200, x1 = Math.max(...ts.map(t => t.e == null ? day("2026-10-01") : t.e)) + 200, nw = svg.parentNode.clientWidth < 560, W = Math.max(nw ? 320 : 520, svg.parentNode.clientWidth - 12), Lm = nw ? 120 : 330, R = 16, rh = 22, T = 8, H = T + ts.length * rh + 22;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const X = d => Lm + (d - x0) / (x1 - x0) * (W - Lm - R);
   const y0 = new Date(x0 * 864e5).getUTCFullYear(), y1 = new Date(x1 * 864e5).getUTCFullYear(), step = (y1 - y0) > 20 ? 5 : (y1 - y0) > 8 ? 2 : 1;
   for (let y = Math.ceil(y0 / step) * step; y <= y1; y += step) { const x = X(day(y + "-01-01")); if (x < Lm || x > W - R) continue; el("line", {x1: x, x2: x, y1: T, y2: H - 16, stroke: GRID}, svg); text(svg, x, H - 4, y, {"text-anchor": "middle"}); }
   ts.forEach((t, i) => {
     const y = T + i * rh, xs = X(t.s), xe = X(t.e == null ? day("2026-10-01") : t.e);
-    text(svg, Lm - 6, y + 14, trunc(roleTxt(t.segments[t.segments.length - 1]), 56), {"text-anchor": "end", fill: SOFT});
+    text(svg, Lm - 6, y + 14, trunc(roleTxt(t.segments[t.segments.length - 1]), nw ? 19 : 56), {"text-anchor": "end", fill: SOFT});
     el("rect", {x: xs, y: y + 2, width: Math.max(3, xe - xs), height: rh - 6, rx: 2, fill: t.colour, opacity: .88}, svg);
   });
-  pt.innerHTML = `<h3>Posts and sources</h3><table class="t"><tr><th>From</th><th>To</th><th>Post</th><th>Government(s)</th><th>Confirmed by</th></tr>` +
-    ts.map(t => `<tr><td style="white-space:nowrap">${dstr(t.start)}</td><td style="white-space:nowrap">${dstr(t.end)}</td><td>${esc(roleTxt(t.segments[t.segments.length - 1]))}<br><span class="muted">${esc(t.startEvent)}${t.endEvent && t.end ? "; " + esc(t.endEvent) : ""}</span></td><td>${t.cabinets.map(esc).join(", ")}</td>` +
-      `<td>${statusBadge(t.startStatus, t.startAct, t.startActUrl)}${t.end ? "<br>" + statusBadge(t.endStatus, t.endAct, t.endActUrl) : ""}</td></tr>`).join("") + `</table>`;
+  pt.innerHTML = `<h3>Posts and sources</h3><div style="overflow-x:auto"><table class="t"><tr><th>From</th><th>To</th><th>Post</th><th>Government(s)</th><th>Confirmed by</th></tr>` +
+    ts.map(t => `<tr><td style="white-space:nowrap">${dstr(t.start)}</td><td style="white-space:nowrap">${dstr(t.end)}</td><td>${esc(roleTxt(t.segments[t.segments.length - 1]))}<br><span class="muted">${esc(t.startEvent)}${t.endEvent && t.end ? "; " + esc(t.endEvent) : ""}</span></td><td>${t.cabinets.map(cabPm).join(", ")}</td>` +
+      `<td>${statusBadge(t.startStatus, t.startAct, t.startActUrl)}${t.end ? "<br>" + statusBadge(t.endStatus, t.endAct, t.endActUrl) : ""}</td></tr>`).join("") + `</table></div>`;
 }
 
 // ---- Statistics ---------------------------------------------------------------------------------

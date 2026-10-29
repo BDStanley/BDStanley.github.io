@@ -79,6 +79,15 @@
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/governments.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/governments.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/governments.html"))[Governments and ministers]
+#html.elem("div", attrs: (class: "course-desc"))[Who sat in each cabinet since 1988, and how ministries changed.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/quality-of-democracy.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/quality-of-democracy.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
