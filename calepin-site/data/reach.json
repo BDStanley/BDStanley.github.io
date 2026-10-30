@@ -2,9 +2,9 @@
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
  "as_of": "2026-10",
  "totals": {
-  "citations": 2334,
-  "citing_works": 2035,
-  "scholars": 2162,
+  "citations": 2335,
+  "citing_works": 2036,
+  "scholars": 2164,
   "countries": 74,
   "my_works": 49,
   "first_year": 2008,
@@ -13,16 +13,16 @@
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
-  "classified_citations": 2235
+  "classified_citations": 2236
  },
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2122,
+   "citations": 2123,
    "share": 94.9,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,122 citations (94.9% of classified citations)"
+   "tip": "Social Sciences: 2,123 citations (94.9% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
@@ -37,7 +37,7 @@
    "citations": 26,
    "share": 1.2,
    "colour": "#8b0000",
-   "w": 0.0123,
+   "w": 0.0122,
    "tip": "Business, Management and Accounting: 26 citations (1.2% of classified citations)"
   },
   {
@@ -186,11 +186,11 @@
   {
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
-   "citations": 1778,
+   "citations": 1779,
    "share": 79.6,
    "colour": "#2a78d6",
    "w": 1.0,
-   "tip": "Political Science and International Relations (Social Sciences): 1,778 citations"
+   "tip": "Political Science and International Relations (Social Sciences): 1,779 citations"
   },
   {
    "name": "Sociology and Political Science",
@@ -198,7 +198,7 @@
    "citations": 160,
    "share": 7.2,
    "colour": "#eb6834",
-   "w": 0.09,
+   "w": 0.0899,
    "tip": "Sociology and Political Science (Social Sciences): 160 citations"
   },
   {
@@ -1255,16 +1255,16 @@
    {
     "year": 2026,
     "label": "2026 (to October)",
-    "citations": 251,
-    "h": 0.6275,
+    "citations": 252,
+    "h": 0.63,
     "minor": true,
-    "tip": "2026 (to October): 251 citations (Political Science and International Relations 190, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 19, Unclassified 7)",
+    "tip": "2026 (to October): 252 citations (Political Science and International Relations 191, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 19, Unclassified 7)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 190,
+      "citations": 191,
       "colour": "#2a78d6",
-      "tip": "2026, Political Science and International Relations: 190 citations"
+      "tip": "2026, Political Science and International Relations: 191 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1337,11 +1337,11 @@
   {
    "code": "PL",
    "name": "Poland",
-   "scholars": 160,
-   "works": 155,
+   "scholars": 162,
+   "works": 156,
    "colour": "#8b0000",
-   "tip": "Poland: 160 citing scholars, in 155 citing works",
-   "w": 0.6751
+   "tip": "Poland: 162 citing scholars, in 156 citing works",
+   "w": 0.6835
   },
   {
    "code": "IT",
