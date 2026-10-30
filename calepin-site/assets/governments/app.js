@@ -158,15 +158,19 @@ function drawGantt() {
     const bh = rh - 5;
     rw.items.forEach((p, k) => {
       const seg = segIn(p, S.cab), pcol = p.colour;
+      const prev = rw.items[k - 1], next = rw.items[k + 1];
+      const touches = (u, v) => u && v && Math.abs(v.s - (u.e == null ? 1e9 : u.e)) <= 6;
+      const gapL = touches(prev, p) ? 1 : 0, gapR = touches(p, next) ? 1 : 0;
+      // a 2 px gap between neighbouring holders, with rounded ends, so that a hand-over shows
       const xs = X(Math.max(p.s, cStart)), xe = X(Math.min(p.e == null ? x1 - 10 : p.e, cEnd == null ? x1 - 10 : cEnd)), w = xe - xs;
-      el("rect", {x: xs, y: y + 2, width: Math.max(3, w), height: bh, rx: 2, fill: pcol, opacity: .88}, svg);
+      el("rect", {x: xs + gapL, y: y + 2, width: Math.max(3, w - gapL - gapR), height: bh, rx: 2.5, fill: pcol, opacity: .88}, svg);
       // a post that carries on from the previous government, or into the next one, is drawn open at that end
       if (p.s < cStart - 3) el("path", {d: `M${xs},${y + 2}l-6,${bh / 2}l6,${bh / 2}`, fill: "none", stroke: pcol, "stroke-width": 1.6}, svg);
       if (cEnd != null && (p.e == null || p.e > cEnd + 3)) el("path", {d: `M${xe},${y + 2}l6,${bh / 2}l-6,${bh / 2}`, fill: "none", stroke: pcol, "stroke-width": 1.6}, svg);
       // name: in full if it fits, else the surname; else beside the bar when nothing is in the way
       const sn = surname(p.person), full = narrow ? sn : p.person, ty = y + 2 + bh / 2 + 3.6;
-      if (w >= full.length * CW + 8) text(svg, xs + 4, ty, full, {"font-size": 10, fill: inkOn(pcol)});
-      else if (w >= sn.length * CW + 8) text(svg, xs + 4, ty, sn, {"font-size": 10, fill: inkOn(pcol)});
+      if (w >= full.length * CW + 8) text(svg, xs + 4 + gapL, ty, full, {"font-size": 10, fill: inkOn(pcol)});
+      else if (w >= sn.length * CW + 8) text(svg, xs + 4 + gapL, ty, sn, {"font-size": 10, fill: inkOn(pcol)});
       else { const nx = rw.items[k + 1] ? X(Math.max(rw.items[k + 1].s, cStart)) : W; if (xe + 4 + sn.length * CW < Math.min(nx, W - R)) text(svg, xe + 4, ty, sn, {"font-size": 10, fill: SOFT}); }
       const hit = el("rect", {x: xs, y: y, width: Math.max(10, w), height: rh, fill: "transparent", style: "cursor:pointer"}, svg);
       hit.addEventListener("mousemove", ev => { if (ev.pointerType !== "touch") showTip(ev, p, seg); });
