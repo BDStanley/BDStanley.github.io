@@ -1,10 +1,10 @@
 {
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
- "as_of": "2026-10",
+ "as_of": "2026-11",
  "totals": {
-  "citations": 2335,
-  "citing_works": 2036,
-  "scholars": 2164,
+  "citations": 2336,
+  "citing_works": 2037,
+  "scholars": 2166,
   "countries": 74,
   "my_works": 49,
   "first_year": 2008,
@@ -13,7 +13,7 @@
   "citations_without_topic": 99,
   "citations_before_first_year": 2,
   "citations_undated": 0,
-  "classified_citations": 2236
+  "classified_citations": 2237
  },
  "fields": [
   {
@@ -34,11 +34,11 @@
   },
   {
    "name": "Business, Management and Accounting",
-   "citations": 26,
+   "citations": 27,
    "share": 1.2,
    "colour": "#8b0000",
-   "w": 0.0122,
-   "tip": "Business, Management and Accounting: 26 citations (1.2% of classified citations)"
+   "w": 0.0127,
+   "tip": "Business, Management and Accounting: 27 citations (1.2% of classified citations)"
   },
   {
    "name": "Economics, Econometrics and Finance",
@@ -187,7 +187,7 @@
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
    "citations": 1779,
-   "share": 79.6,
+   "share": 79.5,
    "colour": "#2a78d6",
    "w": 1.0,
    "tip": "Political Science and International Relations (Social Sciences): 1,779 citations"
@@ -267,11 +267,11 @@
   {
    "name": "Strategy and Management",
    "field": "Business, Management and Accounting",
-   "citations": 12,
-   "share": 0.5,
+   "citations": 13,
+   "share": 0.6,
    "colour": "#a9a79f",
-   "w": 0.0067,
-   "tip": "Strategy and Management (Business, Management and Accounting): 12 citations"
+   "w": 0.0073,
+   "tip": "Strategy and Management (Business, Management and Accounting): 13 citations"
   },
   {
    "name": "Philosophy",
@@ -1254,11 +1254,11 @@
    },
    {
     "year": 2026,
-    "label": "2026 (to October)",
-    "citations": 252,
-    "h": 0.63,
+    "label": "2026 (to November)",
+    "citations": 253,
+    "h": 0.6325,
     "minor": true,
-    "tip": "2026 (to October): 252 citations (Political Science and International Relations 191, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 19, Unclassified 7)",
+    "tip": "2026 (to November): 253 citations (Political Science and International Relations 191, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 20, Unclassified 7)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1292,9 +1292,9 @@
      },
      {
       "name": "Other",
-      "citations": 19,
+      "citations": 20,
       "colour": "#a9a79f",
-      "tip": "2026, Other: 19 citations"
+      "tip": "2026, Other: 20 citations"
      },
      {
       "name": "Unclassified",
@@ -1310,10 +1310,10 @@
   {
    "code": "US",
    "name": "United States",
-   "scholars": 237,
-   "works": 245,
+   "scholars": 239,
+   "works": 246,
    "colour": "#8b0000",
-   "tip": "United States: 237 citing scholars, in 245 citing works",
+   "tip": "United States: 239 citing scholars, in 246 citing works",
    "w": 1.0
   },
   {
@@ -1323,7 +1323,7 @@
    "works": 246,
    "colour": "#8b0000",
    "tip": "United Kingdom: 232 citing scholars, in 246 citing works",
-   "w": 0.9789
+   "w": 0.9707
   },
   {
    "code": "DE",
@@ -1332,7 +1332,7 @@
    "works": 212,
    "colour": "#8b0000",
    "tip": "Germany: 221 citing scholars, in 212 citing works",
-   "w": 0.9325
+   "w": 0.9247
   },
   {
    "code": "PL",
@@ -1341,7 +1341,7 @@
    "works": 156,
    "colour": "#8b0000",
    "tip": "Poland: 162 citing scholars, in 156 citing works",
-   "w": 0.6835
+   "w": 0.6778
   },
   {
    "code": "IT",
@@ -1350,7 +1350,7 @@
    "works": 112,
    "colour": "#8b0000",
    "tip": "Italy: 128 citing scholars, in 112 citing works",
-   "w": 0.5401
+   "w": 0.5356
   },
   {
    "code": "NL",
@@ -1359,7 +1359,7 @@
    "works": 92,
    "colour": "#a72219",
    "tip": "Netherlands: 84 citing scholars, in 92 citing works",
-   "w": 0.3544
+   "w": 0.3515
   },
   {
    "code": "CZ",
@@ -1368,7 +1368,7 @@
    "works": 74,
    "colour": "#a72219",
    "tip": "Czechia: 83 citing scholars, in 74 citing works",
-   "w": 0.3502
+   "w": 0.3473
   },
   {
    "code": "ES",
@@ -1377,7 +1377,7 @@
    "works": 70,
    "colour": "#a72219",
    "tip": "Spain: 70 citing scholars, in 70 citing works",
-   "w": 0.2954
+   "w": 0.2929
   },
   {
    "code": "AT",
@@ -1386,7 +1386,7 @@
    "works": 60,
    "colour": "#a72219",
    "tip": "Austria: 59 citing scholars, in 60 citing works",
-   "w": 0.2489
+   "w": 0.2469
   },
   {
    "code": "TR",
@@ -1395,7 +1395,7 @@
    "works": 49,
    "colour": "#a72219",
    "tip": "Turkey: 53 citing scholars, in 49 citing works",
-   "w": 0.2236
+   "w": 0.2218
   },
   {
    "code": "HU",
@@ -1404,7 +1404,7 @@
    "works": 45,
    "colour": "#a72219",
    "tip": "Hungary: 50 citing scholars, in 45 citing works",
-   "w": 0.211
+   "w": 0.2092
   },
   {
    "code": "SE",
@@ -1413,7 +1413,7 @@
    "works": 42,
    "colour": "#c13d30",
    "tip": "Sweden: 48 citing scholars, in 42 citing works",
-   "w": 0.2025
+   "w": 0.2008
   },
   {
    "code": "CH",
@@ -1422,7 +1422,7 @@
    "works": 42,
    "colour": "#c13d30",
    "tip": "Switzerland: 46 citing scholars, in 42 citing works",
-   "w": 0.1941
+   "w": 0.1925
   },
   {
    "code": "FR",
@@ -1431,7 +1431,7 @@
    "works": 65,
    "colour": "#c13d30",
    "tip": "France: 40 citing scholars, in 65 citing works",
-   "w": 0.1688
+   "w": 0.1674
   },
   {
    "code": "AU",
@@ -1440,7 +1440,7 @@
    "works": 55,
    "colour": "#c13d30",
    "tip": "Australia: 39 citing scholars, in 55 citing works",
-   "w": 0.1646
+   "w": 0.1632
   },
   {
    "code": "CA",

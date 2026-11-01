@@ -1,6 +1,6 @@
 {
  "_about": "Data behind the Media reach page, from Google News search and Google Alerts. Written by scripts/update-media-reach.py; see that file for what is counted and how.",
- "as_of": "2026-10",
+ "as_of": "2026-11",
  "totals": {
   "articles": 79,
   "outlets": 37,
@@ -812,11 +812,11 @@
    },
    {
     "year": 2026,
-    "label": "2026 (to October)",
+    "label": "2026 (to November)",
     "count": 17,
     "h": 0.5667,
     "minor": true,
-    "tip": "2026 (to October): 17 articles (Interviews and commentary 9, Ideas 6, Research in the news 2)",
+    "tip": "2026 (to November): 17 articles (Interviews and commentary 9, Ideas 6, Research in the news 2)",
     "segments": [
      {
       "name": "Interviews and commentary",
@@ -1888,7 +1888,7 @@
    }
   ]
  },
- "searched": "2026-10-23",
+ "searched": "2026-11-01",
  "records": [
   {
    "gid": "CBMipwFBVV95cUxPNVhpRGd6VVlsdlFSUEJaU1N0WDhSM0staWlYdlR6c3hsTnRtbE5YTE94OGpRUXcxb3l0MFNMRzl4ZVNwelhWU1ZBSnd3NHBxcVh2ZlJqNEtfNkpRUkMzMmFwWnA4eWpSNi1OeTFoZklLSXNlRXF4a251aGctWXlqV19tS0VmdXowUERKbDNod3VyeWNyWHU2M0pkSV9hLThjTkpIUVF2UQ",
@@ -3668,6 +3668,7 @@
   "gnews:CBMijAFBVV95cUxQOUdvdDhtLUNYRlJKejFqT1J6Mk94Z0d5dl96Y0psTTY1NVVvNzR0ZHh3NkxvWFRob3p1X2hXeE5MY1FwWkpQU1lCU1dCZ2dFaWZEY3RTcktxS1NrVTJsdTdYd29UenFseGJfbUdHVlZmc1JPY20yWDJQSDhVVThpclRJX1p3bVMtd2ZhYw": "page does not have what the query requires: Po pierwsze, nie ufaj nikomu. 5. rocznica katastrofy smoleńskiej",
   "gnews:CBMihwFBVV95cUxNSmlqNkg5SHQ3M3pCclhGZUE3VWtLTWJrSkxQRGhWbmoyblgxSVJsQTRYZ2JtR1cxb3I3V0tUdkZlbG11bGJMVWNYSnEwWVBCdVJ5b2Y4dExTUEs3VGxmeW5TYnJPMUsydUZzdVhwdmFYSFduVC1yeWZBUjlTYzUyQkQ4VDN5bDQ": "page does not have what the query requires: Riki Ellison: An all-American Kiwi hero",
   "gnews:CBMia0FVX3lxTE5GbmxUbVJIR2dQUWVQY3JPV3NhaUVfTlRvMDcyY1JTUzdxaExWdWloQmlXMVJrbE5KNUpHdVhramNvV2JIVGJScUJ4Vll1VVlDVlZYeHdrMEhmVFZhTUhtd3UzM0dxRzZxX2xn": "page does not have what the query requires: Raser etter dette",
-  "gnews:CBMickFVX3lxTE1rRUhTWlVjZVRGVEZlRThZM2tSdWxFMXdfeWR1cm0ya3BEQ2cwYVJ1V05UbHFRN1YxaU1QSmFJVlZGWkk1LU83NkRDSFZQbDFNNWtCMDZzcVZvaURzdjNtWG4xc3RDdzFKNnFrLTNWZXY4UQ": "page does not have what the query requires: Isvogn skaper rabalder"
+  "gnews:CBMickFVX3lxTE1rRUhTWlVjZVRGVEZlRThZM2tSdWxFMXdfeWR1cm0ya3BEQ2cwYVJ1V05UbHFRN1YxaU1QSmFJVlZGWkk1LU83NkRDSFZQbDFNNWtCMDZzcVZvaURzdjNtWG4xc3RDdzFKNnFrLTNWZXY4UQ": "page does not have what the query requires: Isvogn skaper rabalder",
+  "gnews:CBMidEFVX3lxTFBRVWpSbnhuY0VGUWN5M1h5YjFJSmk2SG5VMjUzZmxOY3JtQzBrNWFmV3c1NzlvTzVZclhvU0NCR0laQi0ycFFDNGljSVNtX00zSzdfdkJvR0s4amJiOXN3MXBPeFB4RC1RV1gyT2xaN3NYMm1G": "page does not have what the query requires: A new type of democratic transition: lessons from Hungary and Poland"
  }
 }

@@ -1,8 +1,8 @@
 {
  "_about": "Data behind the Policy reach page, from Sage Policy Profiles and OpenAlex. Written by scripts/update-policy-reach.py; see that file for what is counted and how.",
  "as_of": {
-  "sage": "2026-10",
-  "openalex": "2026-10"
+  "sage": "2026-11",
+  "openalex": "2026-11"
  },
  "totals": {
   "documents": 41,
@@ -1137,11 +1137,11 @@
    },
    {
     "year": 2026,
-    "label": "2026 (to October)",
+    "label": "2026 (to November)",
     "count": 7,
     "h": 0.4667,
     "minor": true,
-    "tip": "2026 (to October): 7 documents and works (Think tanks and foundations 6, International organisations 1)",
+    "tip": "2026 (to November): 7 documents and works (Think tanks and foundations 6, International organisations 1)",
     "segments": [
      {
       "name": "Think tanks and foundations",
