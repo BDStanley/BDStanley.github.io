@@ -43,6 +43,15 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Quality of democracy/analysis/export_web.R", which
         "Quality of democracy.R" runs)
 
+    Constitutional Tribunal/web/composition.json  -> assets/constitutional-tribunal/composition.json
+    Constitutional Tribunal/web/chronology.json   -> assets/constitutional-tribunal/chronology.json
+    Constitutional Tribunal/web/activity.json     -> assets/constitutional-tribunal/activity.json
+    Constitutional Tribunal/web/rulings.json      -> assets/constitutional-tribunal/rulings.json
+    Constitutional Tribunal/web/rulings-<year>.json, rulings-pending.json
+                                                  -> assets/constitutional-tribunal/
+        (written by "Constitutional Tribunal/analysis/90_export.R" and "91_export_rulings.R";
+        rulings.json's `years` lists the yearly files, and each one it lists is copied too)
+
     Voting behaviour/web/voting.json              -> assets/voting-behaviour/voting.json
     Voting behaviour/web/polarisation.json        -> assets/voting-behaviour/polarisation.json
     Voting behaviour/web/calc-<year>.json         -> assets/voting-behaviour/calc-<year>.json
@@ -105,6 +114,16 @@ FILES = [
      {"meta", "years", "countries"}),
     ("Quality of democracy/web/political-context.json", "assets/quality-of-democracy/political-context.json",
      {"meta", "elections", "cabinets", "presidents", "events"}),
+    ("Constitutional Tribunal/web/composition.json", "assets/constitutional-tribunal/composition.json",
+     {"meta", "judges", "seat_runs", "elected_not_on_lists"}),
+    ("Constitutional Tribunal/web/chronology.json", "assets/constitutional-tribunal/chronology.json",
+     {"meta", "events"}),
+    ("Constitutional Tribunal/web/activity.json", "assets/constitutional-tribunal/activity.json",
+     {"meta", "long", "years"}),
+    ("Constitutional Tribunal/web/rulings-pending.json", "assets/constitutional-tribunal/rulings-pending.json",
+     {"year", "cases"}),
+    ("Constitutional Tribunal/web/rulings.json", "assets/constitutional-tribunal/rulings.json",
+     {"meta", "judges", "years"}),
     ("Voting behaviour/web/voting.json", "assets/voting-behaviour/voting.json",
      {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
     ("Voting behaviour/web/polarisation.json", "assets/voting-behaviour/polarisation.json",
@@ -118,6 +137,7 @@ LISTED = [
      {"meta", "national", "groupings", "items", "readings", "events"}),
     ("Polls/web/terms.json", "terms", "file",
      {"term", "meta", "parties", "colours", "trend", "pollsters", "polls", "results", "house", "final"}),
+    ("Constitutional Tribunal/web/rulings.json", "years", "file", {"year", "partial", "cases"}),
 ]
 
 
