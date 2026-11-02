@@ -111,7 +111,7 @@ function profile() {
   if (hist.length > 1) {
     const W = 360, H = 120, m = {l: 30, r: 10, t: 8, b: 20}, ys = hist.map(h => h.year), vs = hist.flatMap(h => [h.vvi_electors]), lo = Math.min(0.85, ...vs), hi = Math.max(1.15, ...vs);
     const X = y => m.l + (y - ys[0]) / Math.max(1, ys[ys.length - 1] - ys[0]) * (W - m.l - m.r), Y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
-    let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Vote value over time"><line x1="${m.l}" x2="${W - m.r}" y1="${Y(1)}" y2="${Y(1)}" stroke="#D5D5D5" stroke-dasharray="3 3"/><text x="${m.l - 4}" y="${Y(1) + 4}" text-anchor="end">1</text>
+    let g = `<svg style="max-width:${Math.round(W * 1.2)}px" viewBox="0 0 ${W} ${H}" role="img" aria-label="Vote value over time"><line x1="${m.l}" x2="${W - m.r}" y1="${Y(1)}" y2="${Y(1)}" stroke="#D5D5D5" stroke-dasharray="3 3"/><text x="${m.l - 4}" y="${Y(1) + 4}" text-anchor="end">1</text>
       <polyline fill="none" stroke="#8B0000" stroke-width="2" points="${hist.map(h => X(h.year) + "," + Y(h.vvi_electors)).join(" ")}"/>`;
     hist.forEach(h => g += `<circle cx="${X(h.year)}" cy="${Y(h.vvi_electors)}" r="${h.year === S.year ? 5 : 3}" fill="#8B0000" data-tip="${h.year}: ${f2(h.vvi_electors)} (${h.seats} seats, ${num(h.electors_per_seat)} electors per seat)"/><text x="${X(h.year)}" y="${H - 4}" text-anchor="middle">${h.year}</text>`);
     $("#hs").innerHTML = g + "</svg>";
@@ -145,7 +145,7 @@ function viewWorth() {
   // malapportionment over time
   const E = C.elections.filter(e => e.year >= 1991), W = 520, H = 190, m = {l: 40, r: 14, t: 10, b: 22}, mx = Math.max(...E.map(e => e.mal_electors), 0.045);
   const X = i => m.l + i / (E.length - 1) * (W - m.l - m.r), Y = v => m.t + (1 - v / mx) * (H - m.t - m.b);
-  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Malapportionment by election">`;
+  let s = `<svg style="max-width:${Math.round(W * 1.2)}px" viewBox="0 0 ${W} ${H}" role="img" aria-label="Malapportionment by election">`;
   for (let v = 0; v <= mx + 1e-9; v += 0.01) s += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ECECEC"/><text x="${m.l - 5}" y="${Y(v) + 4}" text-anchor="end">${(v * 100).toFixed(0)}%</text>`;
   const line = (key, col, dash) => { const pts = E.map((e, i) => [i, e[key]]).filter(p => p[1] != null); return `<polyline fill="none" stroke="${col}" stroke-width="2" ${dash ? 'stroke-dasharray="4 3"' : ""} points="${pts.map(p => X(p[0]) + "," + Y(p[1])).join(" ")}"/>` + pts.map(p => `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="${E[p[0]].year === S.year ? 5 : 3}" fill="${col}" data-tip="${E[p[0]].year}: ${(p[1] * 100).toFixed(1)}%"/>`).join(""); };
   E.forEach((e, i) => s += `<text x="${X(i)}" y="${H - 5}" text-anchor="middle">${e.year}</text>`);
@@ -153,7 +153,7 @@ function viewWorth() {
   $("#mal").innerHTML = s + "</svg>";
   // bonus against magnitude
   const P = C.constituencies.filter(r => r.year >= 2005), W2 = 520, H2 = 190, m2 = {l: 40, r: 14, t: 10, b: 24}, Xm = v => m2.l + (v - 6) / 15 * (W2 - m2.l - m2.r), Yb = v => m2.t + (1 - v / 0.24) * (H2 - m2.t - m2.b);
-  let b = `<svg viewBox="0 0 ${W2} ${H2}" role="img" aria-label="Bonus against magnitude">`;
+  let b = `<svg style="max-width:${Math.round(W2 * 1.2)}px" viewBox="0 0 ${W2} ${H2}" role="img" aria-label="Bonus against magnitude">`;
   for (let v = 0; v <= 0.24; v += 0.08) b += `<line x1="${m2.l}" x2="${W2 - m2.r}" y1="${Yb(v)}" y2="${Yb(v)}" stroke="#ECECEC"/><text x="${m2.l - 5}" y="${Yb(v) + 4}" text-anchor="end">${Math.round(v * 100)}</text>`;
   for (let M = 7; M <= 20; M += 3) b += `<text x="${Xm(M)}" y="${H2 - 6}" text-anchor="middle">${M}</text>`;
   P.forEach(r => b += `<circle cx="${Xm(r.seats) + ((r.year - 2005) % 5 - 2) * 1.8}" cy="${Yb(Math.max(0, r.largest_bonus))}" r="3" fill="#8B0000" fill-opacity=".35" data-tip="<b>${esc(r.name)} ${r.year}</b><br>${r.seats} seats: ${esc(r.largest_list)} ${pct(r.largest_vote_share, 0)} of votes, ${pct(r.largest_seat_share, 0)} of seats"/>`);
@@ -162,7 +162,7 @@ function viewWorth() {
   // dot plot of the index
   const sorted = rows.filter(r => r[wm] != null).sort((a, c) => a[wm] - c[wm]), lim = Math.max(0.15, ...sorted.map(r => Math.abs(r[wm] - 1))) * 1.05, rowH = 15, W3 = 520, H3 = sorted.length * rowH + 26, ml = 100;
   const X3 = v => ml + (v - (1 - lim)) / (2 * lim) * (W3 - ml - 14);
-  let d = `<svg viewBox="0 0 ${W3} ${H3}" role="img" aria-label="Vote value by constituency"><line x1="${X3(1)}" x2="${X3(1)}" y1="4" y2="${H3 - 20}" stroke="#141414" stroke-dasharray="3 3"/>`;
+  let d = `<svg style="max-width:${Math.round(W3 * 1.2)}px" viewBox="0 0 ${W3} ${H3}" role="img" aria-label="Vote value by constituency"><line x1="${X3(1)}" x2="${X3(1)}" y1="4" y2="${H3 - 20}" stroke="#141414" stroke-dasharray="3 3"/>`;
   [1 - lim, 1, 1 + lim].forEach(v => d += `<text x="${X3(v)}" y="${H3 - 6}" text-anchor="middle">${f2(v)}</text>`);
   sorted.forEach((r, i) => { const y = 10 + i * rowH; d += `<text class="t" x="${ml - 6}" y="${y + 4}" text-anchor="end" style="font-size:10.5px">${esc(r.name)}</text><circle cx="${X3(r[wm])}" cy="${y}" r="${2.5 + r.seats / 4}" fill="${r[wm] >= 1 ? "#8B0000" : "#3E5C76"}" fill-opacity=".85" data-tip="<b>${esc(r.name)}</b> (${r.seats} seats)<br>${f2(r[wm])}; ${num(r.electors_per_seat)} electors per seat"/>`; });
   $("#dot").innerHTML = d + "</svg>";
