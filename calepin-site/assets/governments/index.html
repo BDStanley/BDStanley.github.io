@@ -63,6 +63,8 @@ table.t td.n,table.t th.n{text-align:right}
 .credit{border-top:1px solid var(--rule);padding-top:10px;font-size:12px;color:var(--muted);line-height:1.5}.credit p{margin:0;max-width:110ch}
 .loading{padding:40px;color:var(--muted);font-size:15px}
 .dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.costat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.costat div{border:1px solid var(--faint);border-radius:12px;padding:10px 12px}.costat b{display:block;font-size:22px;font-weight:600;line-height:1.15}.costat span{font-size:12px;color:var(--muted)}
+#co-table table{border-collapse:collapse;width:100%;font-size:13px}#co-table th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--ink);white-space:nowrap}#co-table td{padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:top}#co-table td.n,#co-table th.n{text-align:right}#co-table tr{cursor:pointer}#co-table tr:hover{background:var(--chip)}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--soft)}.legend span{display:inline-flex;align-items:center;gap:6px}
 .cabnav{display:flex;align-items:stretch;gap:6px}.cabnav .strip{flex:1;min-width:0;padding:4px 6px 0}
 .step{border:1px solid var(--faint);background:#fff;color:var(--soft);border-radius:10px;width:34px;cursor:pointer;font-size:14px}.step:hover{color:var(--accent);border-color:var(--accent)}
@@ -83,6 +85,7 @@ svg text:not([font-weight]){font-weight:300}
       <button type="button" role="tab" data-v="cabinet">Cabinets</button>
       <button type="button" role="tab" data-v="ministries">Ministries</button>
       <button type="button" role="tab" data-v="people">People</button>
+      <button type="button" role="tab" data-v="coalitions">Coalitions</button>
       <button type="button" role="tab" data-v="stats">Statistics</button>
     </div>
     <span class="ctl">Titles <span class="seg small" id="langsel" aria-label="Language of titles"><button type="button" data-l="en" aria-pressed="true">English</button><button type="button" data-l="pl">Polski</button></span></span>
@@ -106,6 +109,13 @@ svg text:not([font-weight]){font-weight:300}
     <div class="two" id="pcard"></div>
     <div class="chartbox"><div class="charttitle" id="ptitle"></div><svg id="pgantt" role="img" aria-label="The minister's posts over time"></svg></div>
     <div class="card" id="ptable"></div>
+  </section>
+  <section class="view" id="v-coalitions" hidden>
+    <p class="help" id="co-lead"></p>
+    <div class="costat" id="co-sum"></div>
+    <div class="chartbox"><div class="charttitle" id="co-title"></div><svg id="co-tl" role="img" aria-label="Every cabinet from appointment to the end of its term"></svg><div class="tip" id="co-tip" hidden></div></div>
+    <div class="legend" id="co-legend"></div>
+    <div class="card"><h3>Each cabinet's parties, seats and fate</h3><div id="co-table" style="overflow-x:auto"></div></div>
   </section>
   <section class="view" id="v-stats" hidden>
     <div class="chartbox" id="s-multi-box" hidden><div class="charttitle">Each cabinet at a glance: share of women, average age at appointment, and dates of change a year (after the first month)</div><svg id="s-multi"></svg></div>
