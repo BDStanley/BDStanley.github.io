@@ -125,11 +125,12 @@ async function rebelsOf(m) {
   return lst.map(([i, v, l]) => { const k = chunkOf(i), r = vf[k].votes.rows[i - firsts[k]]; return {date: r[1], label: r[2], vote: NAME[v], line: NAME[l], c: r[4]}; }).sort((a, b) => a.date < b.date ? 1 : -1);
 }
 async function drawProfile() {
-  const mps = TD[S.term].mps, m = mps.find(x => x.mp_id === S.mp); if (!m) return;
+  const mps = TD[S.term].mps, m0 = mps.find(x => x.mp_id === S.mp); if (!m0) return;
   document.querySelectorAll("#list .row").forEach(r => r.setAttribute("aria-selected", +r.dataset.id === S.mp));
   const box = $("#prof"); box.innerHTML = `<div class="loading">Loading…</div>`;
-  const [rolesF, rb] = await Promise.all([fetchJSON(`roles-${S.term}.json`), rebelsOf(m)]);
-  if (S.mp !== m.mp_id) return;
+  const [rolesF, rb, profF] = await Promise.all([fetchJSON(`roles-${S.term}.json`), rebelsOf(m0), fetchJSON(`profile-${S.term}.json`)]);
+  if (S.mp !== m0.mp_id) return;
+  const m = Object.assign({}, m0, profF.mps[m0.mp_id] || {});   // the core fields (mps-<term>.json) plus the profile's detail fields
   const det = rolesF.mps[m.mp_id] || {}, hist = det.club_history || [], roles = det.roles || [], rec = det.top_recipients || [];
   const peers = mps.filter(x => x.modal_club === m.modal_club && !x.office_holder && x.n_cast >= 500 && x.rebellion_rate != null).map(x => x.rebellion_rate).sort((a, b) => a - b);
   const med = peers.length ? peers[Math.floor(peers.length / 2)] : null, per = 12, pages = Math.max(1, Math.ceil(rb.length / per)); S.page = Math.min(S.page, pages - 1);
