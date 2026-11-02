@@ -58,6 +58,9 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Voting behaviour/analysis/70_export_web.R"; voting.json's `files`
         lists the calculator files, one per election, and each one it lists is copied too)
 
+    Constituencies/web/constituencies.json         -> assets/constituencies/constituencies.json
+    Constituencies/web/{geometry,mps}.json         -> assets/constituencies/<same name>
+        (written by "Constituencies/analysis/90_export.R"; constituencies.json's `files` lists the other two, and each one it lists is copied too)
     Sejm analysis/Legislative activity/web/legislative.json -> assets/legislative-activity/legislative.json
     Sejm analysis/Legislative activity/web/{mps,profile,roles,rebels,votes}-<term>[-<chunk>].json
                                                   -> assets/legislative-activity/<same name>
@@ -134,6 +137,8 @@ FILES = [
      {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
     ("Voting behaviour/web/polarisation.json", "assets/voting-behaviour/polarisation.json",
      {"meta", "affective", "ideological"}),
+    ("Constituencies/web/constituencies.json", "assets/constituencies/constituencies.json",
+     {"files", "meta", "elections", "constituencies", "list_results", "list_costs", "national_lists", "magnitude_bands", "palette", "covariates", "projection"}),
     ("Sejm analysis/Legislative activity/web/legislative.json", "assets/legislative-activity/legislative.json",
      {"files", "meta", "terms", "clubs", "family_colours", "cohesion", "government_opposition", "agreement_between_families",
       "ministry_delays", "topics", "distributions", "wnominate"}),
@@ -163,6 +168,10 @@ LISTED_NAMES = [
     ]),
     ("Voting behaviour/web/voting.json", "files", [
         ("calc-", {"year", "ballot", "design", "n_draws", "coef", "shifts", "support", "rules", "attitudes"}),
+    ]),
+    ("Constituencies/web/constituencies.json", "files", [
+        ("geometry.json", {"meta", "sets"}),
+        ("mps.json", {"note", "mps"}),
     ]),
     ("Sejm analysis/Legislative activity/web/legislative.json", "files", [
         ("mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
