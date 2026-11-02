@@ -1,4 +1,4 @@
-/* Governments and ministers — who sat in each Polish government, 1988–2026 .
+/* Governments — who sat in each Polish government, 1988–2026 .
  *
  * Reads governments.json: the 23 cabinets of Party tracker, every post (minister, deputy prime minister,
  * minister without portfolio, head of a central office, committee chair) with its dates and the official

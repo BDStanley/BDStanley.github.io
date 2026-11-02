@@ -1,6 +1,6 @@
-#set document(title: [Governments and ministers])
+#set document(title: [Governments])
 #metadata((
-  title: "Governments and ministers",
+  title: "Governments",
   description: "Who sat in each of Poland's 23 cabinets since 1988: ministers, reshuffles, ministries and their changes, and the party, age and gender of those who held them",
 )) <website-metadata>
 
@@ -11,7 +11,7 @@
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../polish-political-analyses.html", "← Back")]
 
-#heading(level: 1)[Governments and ministers]
+#heading(level: 1)[Governments]
 
 Who sat in each of Poland's 23 cabinets from September 1988 to 2026, and when. For every government the page shows each minister's time in post, coloured by party, and the changes made during its term: who joined, who left, who moved and who took on a second post. A second view follows each ministry through its mergers, splits and renamings, and lists everyone who headed it. A third follows one minister across governments. Coalitions shows how long each cabinet lasted, what share of its Sejm term it served, which parties formed it, whether it had a majority of seats when it took office, and how it ended: after an election, by resignation or forced out by the Sejm. The statistics compare cabinets by the share of women, the age of ministers at appointment, the pace of change and the portfolios held by each party. Titles are in English, with the Polish ones a click away. See also #link("party-genealogy.html")[Parties in the Sejm], whose cabinets these are, and #link("election-results.html")[Election results].
 
@@ -32,12 +32,12 @@ A minister's party is the one printed beside their name in the cabinet's Wikiped
 
 Sources: #link("https://monitorpolski.gov.pl")[Monitor Polski] and the #link("https://api.sejm.gov.pl")[Sejm's open API] for appointments, dismissals, dates and regulations; the Chancellery of the Prime Minister for the current composition; #link("https://pl.wikipedia.org")[Polish Wikipedia] (CC BY-SA 4.0) for party labels and for dates no act confirms; #link("https://www.wikidata.org")[Wikidata] (CC0) for gender, birth dates and party memberships.
 
-Ben Stanley, 2026. _Governments and ministers_, *Polish Political Analyses*, benstanley.eu.
+Ben Stanley, 2026. _Governments_, *Polish Political Analyses*, benstanley.eu.
 ]
 
 #html.elem("iframe", attrs: (
   src: "../../assets/governments/index.html",
   class: "embed-frame embed-frame--app",
-  title: "Governments and ministers: who sat in Poland's cabinets, 1988–2026",
+  title: "Governments: who sat in Poland's cabinets, 1988–2026",
   loading: "lazy",
 ))[]
