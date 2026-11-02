@@ -84,7 +84,7 @@
     // bars
     list.forEach((j, i) => {
       const yy = topH + 14 + i * (rowH + gap);
-      const r = svg("rect", { x: x(j.t0), y: yy, width: Math.max(2, x(j.t1) - x(j.t0)), height: rowH, rx: 2, fill: colourOf(j, mode), tabindex: 0, style: "cursor:pointer" });
+      const r = svg("rect", { x: x(j.t0), y: yy, width: Math.max(2, x(Math.min(j.t1, t1)) - x(j.t0)), height: rowH, rx: 2, fill: colourOf(j, mode), tabindex: 0, style: "cursor:pointer" });
       if (j.standing && j.standing.category && mode !== "standing") r.setAttribute("stroke", "#141414");
       r.addEventListener("mousemove", ev => tip(ev, j)); r.addEventListener("mouseleave", () => { const t = $(".tip"); if (t) t.remove(); });
       r.addEventListener("click", () => detail(j)); r.addEventListener("keydown", ev => { if (ev.key === "Enter") detail(j); });
