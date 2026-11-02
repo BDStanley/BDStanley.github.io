@@ -58,6 +58,12 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Voting behaviour/analysis/70_export_web.R"; voting.json's `files`
         lists the calculator files, one per election, and each one it lists is copied too)
 
+    Sejm analysis/Legislative activity/web/legislative.json -> assets/legislative-activity/legislative.json
+    Sejm analysis/Legislative activity/web/{mps,roles,rebels,votes}-<term>[-<chunk>].json
+                                                  -> assets/legislative-activity/<same name>
+        (written by "Sejm analysis/Legislative activity/R/la90_export_web.R", which run_all.R runs;
+        legislative.json's `files` lists the per-term files, and each one it lists is copied too)
+
 build.sh runs this before `calepin compile`, so re-running an analysis and rebuilding
 the site updates its page. The repo's location can be overridden with the env var
 PPA_SRC. A file that is missing, unreadable or lacks the fields its chart needs is
@@ -128,6 +134,9 @@ FILES = [
      {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
     ("Voting behaviour/web/polarisation.json", "assets/voting-behaviour/polarisation.json",
      {"meta", "affective", "ideological"}),
+    ("Sejm analysis/Legislative activity/web/legislative.json", "assets/legislative-activity/legislative.json",
+     {"files", "meta", "terms", "clubs", "family_colours", "cohesion", "government_opposition", "agreement_between_families",
+      "ministry_delays", "topics", "distributions", "wnominate"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each
@@ -154,6 +163,12 @@ LISTED_NAMES = [
     ]),
     ("Voting behaviour/web/voting.json", "files", [
         ("calc-", {"year", "ballot", "design", "n_draws", "coef", "shifts", "support", "rules", "attitudes"}),
+    ]),
+    ("Sejm analysis/Legislative activity/web/legislative.json", "files", [
+        ("mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
+        ("roles-", {"term", "mps"}),
+        ("rebels-", {"term", "chunk", "mps"}),
+        ("votes-", {"term", "chunk", "first_index", "votes"}),
     ]),
 ]
 
