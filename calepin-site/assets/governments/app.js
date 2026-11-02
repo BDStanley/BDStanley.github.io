@@ -1,10 +1,10 @@
-/* Governments and ministers — who sat in each Polish government, 1988–2026 .
+/* Governments — who sat in each Polish government, 1988–2026 .
  *
  * Reads governments.json: the 23 cabinets of Party tracker, every post (minister, deputy prime minister,
  * minister without portfolio, head of a central office, committee chair) with its dates and the official
  * acts that confirm them, the ministry lineages with their legal references and statistics. Written by
  * "Governments/analysis/90_export.R" in the Polish political analyses repo.
- * Views: Cabinets (a timeline of posts), Ministries (lineages), Statistics.
+ * Views: Cabinets (a timeline of posts), Ministries (lineages), People, Coalitions (how cabinets last and end), Statistics.
  */
 "use strict";
 const $ = id => document.getElementById(id);
@@ -27,7 +27,7 @@ const trunc = (s, n) => s && s.length > n ? s.slice(0, n - 1) + "…" : s;
 function init(d) {
   D = d; D.posts.forEach(p => { p.s = day(p.start); p.e = day(p.end); const arr = x => Array.isArray(x) ? x : (x == null ? [] : [x]); p.segments = arr(p.segments); p.cabinets = arr(p.cabinets); p.reappointedOn = arr(p.reappointedOn); });
   S.cab = D.cabinets[D.cabinets.length - 1].id;
-  const h = new URLSearchParams(location.hash.replace(/^#/, "")); if (h.get("c") && D.cabinets.some(c => c.id === h.get("c"))) S.cab = h.get("c"); if (["cabinet", "ministries", "people", "stats"].includes(h.get("v"))) S.v = h.get("v"); if (h.get("m")) S.lin = h.get("m"); if (h.get("q")) S.person = h.get("q");
+  const h = new URLSearchParams(location.hash.replace(/^#/, "")); if (h.get("c") && D.cabinets.some(c => c.id === h.get("c"))) S.cab = h.get("c"); if (["cabinet", "ministries", "people", "coalitions", "stats"].includes(h.get("v"))) S.v = h.get("v"); if (h.get("m")) S.lin = h.get("m"); if (h.get("q")) S.person = h.get("q");
   $("asof").innerHTML = `${esc(D.meta.coverage)}. ${D.meta.validation.confirmed.toLocaleString("en-GB")} of ${D.meta.validation.events.toLocaleString("en-GB")} appointments and departures are confirmed against Monitor Polski, the official gazette.`;
   const step = k => { const i = D.cabinets.findIndex(c => c.id === S.cab) + k; if (i >= 0 && i < D.cabinets.length) { S.cab = D.cabinets[i].id; S.post = null; render(); } };
   $("cabprev").addEventListener("click", () => step(-1)); $("cabnext").addEventListener("click", () => step(1));
@@ -42,15 +42,15 @@ function init(d) {
   $("plist").innerHTML = D.people.map(p => `<option value="${esc(p.name)}"></option>`).join("");
   $("psearch").addEventListener("change", e => { const m = D.people.find(p => p.name.toLowerCase() === e.target.value.trim().toLowerCase()); if (m) { S.person = m.qid; render(); } });
   $("credit").innerHTML = "<p><b>Sources:</b> " + D.meta.sources.map(s => `<a href="${esc(s.url)}" target="_top">${esc(s.name)}</a> (${esc(s.note)})`).join("; ") + ". Every post links to the official acts that confirm its dates where Monitor Polski has them.</p>";
-  window.addEventListener("resize", () => { clearTimeout(init.rz); init.rz = setTimeout(() => { if (S.v === "cabinet") { drawStrip(); drawGantt(); } else if (S.v === "stats") drawStats(); else if (S.v === "people") drawPeople(); else if (S.v === "ministries") drawHolders(); }, 150); });
+  window.addEventListener("resize", () => { clearTimeout(init.rz); init.rz = setTimeout(() => { if (S.v === "cabinet") { drawStrip(); drawGantt(); } else if (S.v === "stats") drawStats(); else if (S.v === "coalitions") drawCoalitions(); else if (S.v === "people") drawPeople(); else if (S.v === "ministries") drawHolders(); }, 150); });
   render();
 }
 function render() {
   $("views").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === S.v));
-  ["cabinet", "ministries", "people", "stats"].forEach(v => { $("v-" + v).hidden = S.v !== v; });
+  ["cabinet", "ministries", "people", "coalitions", "stats"].forEach(v => { $("v-" + v).hidden = S.v !== v; });
   $("langsel").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === S.lang));
   try { history.replaceState(null, "", "#v=" + S.v + "&c=" + S.cab + (S.lang === "pl" ? "&l=pl" : "") + (S.lin ? "&m=" + S.lin : "") + (S.person ? "&q=" + S.person : "")); } catch (e) {}
-  if (S.v === "cabinet") { drawStrip(); drawCabinet(); } else if (S.v === "ministries") drawMinistries(); else if (S.v === "people") drawPeople(); else drawStats();
+  if (S.v === "cabinet") { drawStrip(); drawCabinet(); } else if (S.v === "ministries") drawMinistries(); else if (S.v === "people") drawPeople(); else if (S.v === "coalitions") drawCoalitions(); else drawStats();
 }
 
 
@@ -95,7 +95,7 @@ function drawCabinet() {
   const ok = v ? Math.round(100 * v.share) : null;
   $("cabhead").innerHTML =
     `<div class="card"><h3>${esc(c.name)}</h3><div class="kv"><span class="k">Prime minister</span><span>${esc(c.pm)}</span><span class="k">In office</span><span>${dstr(c.start)} to ${dstr(c.end)}</span>` +
-    `<span class="k">Dates checked</span><span>${v ? `<span class="badge ${ok >= 95 ? "ok" : "warn"}">${v.confirmed} of ${v.events} confirmed (${ok}%)</span>` : "–"}</span>` +
+    `${c.durability && !c.failed ? `<span class="k">Time in office</span><span>${c.durability.days.toLocaleString("en-GB")} days${c.durability.shareOfTerm != null ? `, ${Math.round(100 * c.durability.shareOfTerm)}% of the Sejm term it began in` : ""}</span><span class="k">Coalition</span><span>${[].concat(c.durability.parties).map(esc).join(", ")} (${esc(c.durability.majority)}${c.durability.seatsStart ? `, ${c.durability.seatsStart} seats at appointment` : ""})</span><span class="k">How it ended</span><span>${esc(c.durability.endLabel)}</span>` : ""}<span class="k">Dates checked</span><span>${v ? `<span class="badge ${ok >= 95 ? "ok" : "warn"}">${v.confirmed} of ${v.events} confirmed (${ok}%)</span>` : "–"}</span>` +
     `<span class="k">Source</span><span><a href="https://monitorpolski.gov.pl" target="_top">Monitor Polski</a>${v && v.confirmed < v.events && c.wikipedia ? `; the ${v.events - v.confirmed} unconfirmed dates are from <a href="${esc(c.wikipedia.url)}" target="_top">Polish Wikipedia</a>` : (!v && c.wikipedia ? `; <a href="${esc(c.wikipedia.url)}" target="_top">Polish Wikipedia</a>` : "")}</span></div></div>` +
     (c.failed ? `<div class="card"><h3>A government that was never formed</h3><p class="help" style="margin:0">The Sejm appointed Waldemar Pawlak prime minister on 5 June 1992, after dismissing Jan Olszewski\u2019s government, and asked him to propose a Council of Ministers (M.P. 1992 nr 17 poz. 126). He could not form one, resigned and was dismissed on 10 July, and Hanna Suchocka was appointed in his place. The Olszewski ministers stayed in office meanwhile, so the timeline shows them, and they are counted under the Olszewski government in the statistics.</p></div>` : `<div class="card"><h3>The cabinet in numbers</h3><div class="kv">` +
     (st ? `<span class="k">Members over the term</span><span>${st.people}, of whom ${st.women} women (${Math.round(100 * st.women / st.people)}%)</span><span class="k">Average age at appointment</span><span>${st.meanAge} years</span><span class="k">Non-party</span><span>${st.nonParty} recorded</span>` : "") +
@@ -365,6 +365,95 @@ function multiChart(cs, short) {
     el("line", {x1: x0, x2: x0, y1: T - 4, y2: H - 6, stroke: BASE}, svg);
     cs.forEach((c, i) => { const v = p.f(c); if (v == null) return; const y = T + i * rh; el("rect", {x: x0, y: y + 2, width: Math.max(1, X(v) - x0), height: rh - 6, fill: p.col, opacity: .85}, svg); text(svg, X(v) + 4, y + 12, p.fmt(v), {fill: SOFT, "font-size": 10.5}); });
   });
+}
+const END_COL = {"after an election": "#4B6A9B", "resignation": "#B8860B", "forced out by the Sejm": "#8B0000", "never formed": "#B0B0B0", "still in office": "#2F7D4F"};
+const cabShort = c => { const n = surname(c.pm), same = D.cabinets.filter(x => surname(x.pm) === n); return same.length > 1 ? n + " " + (same.indexOf(c) + 1) : n; };
+function drawCoalitions() {
+  const cs = D.cabinets.filter(c => c.durability), formed = cs.filter(c => !c.failed), med = a => { const v = [...a].sort((x, y) => x - y), m = v.length >> 1; return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2; };
+  const days = formed.map(c => c.durability.days), out = formed.filter(c => c.durability.outlastedTerm === true).length, known = formed.filter(c => c.durability.outlastedTerm != null).length;
+  const forced = formed.filter(c => c.durability.endGroup === "forced out by the Sejm").length, minority = formed.filter(c => c.durability.majority === "minority").length;
+  const ended = formed.filter(c => !c.durability.ongoing);
+  $("co-lead").textContent = D.coalitions.note;
+  $("co-sum").innerHTML = [[formed.length, "governments that took office, September 1988 to 2026"], [Math.round(med(days)).toLocaleString("en-GB") + " days", "median time in office (about " + (med(days) / 365.25).toFixed(1) + " years)"],
+    [forced, "were forced out by the Sejm: a vote of no confidence or a lost confidence vote"], [ended.filter(c => c.durability.endGroup === "resignation").length, "ended by the government's or the prime minister's resignation"],
+    [minority, "had no majority of seats when appointed"], [out + " of " + known, "were still in office when the Sejm term they began in ended"]].map(([a, b]) => `<div><b>${a}</b><span>${esc(b)}</span></div>`).join("");
+  $("co-title").textContent = "Each bar runs from a cabinet's appointment to its end. Colour shows how it ended; stripes mark a cabinet without a majority of seats. Shaded bands are Sejm terms. Click a row to open the cabinet.";
+  const svg = $("co-tl"); svg.innerHTML = "";
+  const narrow = svg.parentNode.clientWidth < 560, W = Math.max(narrow ? 320 : 520, svg.parentNode.clientWidth - 12), L = narrow ? 78 : 96, R = narrow ? 92 : 190, rh = 22, T = 26, H = T + cs.length * rh + 24;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const AS = day("2026-10-01"), x0 = day("1988-09-01"), x1 = AS, X = d => L + (d - x0) / (x1 - x0) * (W - L - R);
+  const defs = el("defs", {}, svg), pat = el("pattern", {id: "co-mi", width: 5, height: 5, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)"}, defs); el("rect", {width: 2, height: 5, fill: "#fff", opacity: .75}, pat);
+  D.coalitions.terms.forEach((t, i) => { const a = X(Math.max(x0, day(t.from))), b = X(t.to ? day(t.to) : AS); if (i % 2 === 0) el("rect", {x: a, y: T - 6, width: Math.max(0, b - a), height: cs.length * rh + 6, fill: "#F6F6F4"}, svg); if (b - a > 14) text(svg, (a + b) / 2, T - 10, t.term === 0 ? "Contract" : t.term, {"text-anchor": "middle"}); });
+  for (let y = 1990; y <= 2025; y += 5) { const x = X(day(y + "-01-01")); el("line", {x1: x, x2: x, y1: T - 6, y2: T + cs.length * rh, stroke: GRID}, svg); text(svg, x, H - 8, y, {"text-anchor": "middle"}); }
+  cs.forEach((c, i) => { const u = c.durability, y = T + i * rh, a = X(day(c.start)), b = X(c.end ? day(c.end) : AS), col = END_COL[u.endGroup] || "#999", w = Math.max(2.5, b - a);
+    const g = el("g", {style: "cursor:pointer"}, svg); g.addEventListener("click", () => { S.cab = c.id; S.v = "cabinet"; S.post = null; render(); });
+    el("rect", {x: L - 4 - 0, y, width: W - L - 4, height: rh, fill: "transparent"}, g);
+    text(g, L - 6, y + 14, cabShort(c), {"text-anchor": "end", fill: INK});
+    el("rect", {x: a, y: y + 4, width: w, height: rh - 8, rx: 3, fill: col}, g);
+    if (u.majority === "minority") el("rect", {x: a, y: y + 4, width: w, height: rh - 8, rx: 3, fill: "url(#co-mi)"}, g);
+    const lab = c.failed ? "never formed" : u.days.toLocaleString("en-GB") + " days" + (!narrow && u.shareOfTerm != null ? ` · ${Math.round(100 * u.shareOfTerm)}% of term` : "");
+    text(g, Math.min(b + 5, W - R + 6), y + 14, lab, {fill: SOFT, "font-size": 10.5});
+    g.appendChild(Object.assign(document.createElementNS(NS, "title"), {textContent: `${c.name}: ${dstr(c.start)} to ${dstr(c.end)}, ${u.days} days; ${u.endLabel}; ${u.majority}`})); });
+  $("co-legend").innerHTML = D.coalitions.endGroups.filter(g => cs.some(c => c.durability.endGroup === g.id)).map(g => `<span><i style="display:inline-block;width:14px;height:10px;border-radius:2px;background:${END_COL[g.id]}"></i>${esc(g.label)}</span>`).join("") + `<span><i style="display:inline-block;width:14px;height:10px;border-radius:2px;background:repeating-linear-gradient(45deg,#8a8a8a 0 2px,#d9d9d9 2px 4px)"></i>no majority of seats</span>`;
+  $("co-table").innerHTML = `<table><thead><tr><th>Cabinet</th><th>Parties</th><th class="n">Seats at appointment</th><th class="n">Days with a majority</th><th class="n">Fewest seats</th><th class="n">Days</th><th class="n">Share of term</th><th>How it ended</th></tr></thead><tbody>${cs.map(c => { const u = c.durability; return `<tr data-c="${esc(c.id)}"><td>${esc(c.pm)}<br><span class="muted">${dstr(c.start)} to ${dstr(c.end)}</span></td><td>${[].concat(u.parties).map(esc).join(", ")}</td><td class="n">${u.seatsStart == null ? "" : u.seatsStart}${u.majority === "minority" ? " (minority)" : ""}</td><td class="n">${c.failed || !c.majority || c.majority.share == null ? "" : Math.round(100 * c.majority.share) + "%"}</td><td class="n">${c.failed || !c.majority || c.majority.share == null ? "" : c.majority.seatsMin}</td><td class="n">${c.failed ? "" : u.days.toLocaleString("en-GB")}</td><td class="n">${c.failed || u.shareOfTerm == null ? "" : Math.round(100 * u.shareOfTerm) + "%"}</td><td>${esc(u.endLabel)}</td></tr>`; }).join("")}</tbody></table>`;
+  $("co-table").querySelectorAll("tr[data-c]").forEach(r => r.addEventListener("click", () => { S.cab = r.dataset.c; S.v = "cabinet"; S.post = null; render(); }));
+  drawMajority(); drawPartners(); drawSupport();
+}
+// the width, margins and time scale shared by the three charts below the table
+function frame(svg, L, R) { svg.innerHTML = ""; const W = Math.max(320, svg.parentNode.clientWidth - 12); return {W, L, R}; }
+const surnameOf = c => cabShort(c);
+function bandsFor(svg, X, T, H, narrow) {
+  D.cabinets.filter(c => c.durability && !c.failed).forEach((c, i) => { const a = X(day(c.start)), b = X(c.end ? day(c.end) : day("2026-10-01")); if (i % 2 === 0) el("rect", {x: a, y: T, width: Math.max(0, b - a), height: H - T - 22, fill: "#F6F6F4"}, svg);
+    if (!narrow && b - a > 46) text(svg, (a + b) / 2, T - 4, surnameOf(c), {"text-anchor": "middle", "font-size": 9.5}); });
+}
+function drawMajority() {
+  const svg = $("mj-svg"), rows = D.coalitions.majority.series.rows, f = frame(svg, 44, 12), narrow = f.W < 560, T = 20, H = 270; svg.setAttribute("viewBox", `0 0 ${f.W} ${H}`);
+  const x0 = day("1989-06-01"), x1 = day("2026-10-01"), X = d => f.L + (d - x0) / (x1 - x0) * (f.W - f.L - f.R), maj = D.coalitions.majority.threshold, lo = -190, hi = 210, Y = m => T + (hi - m) / (hi - lo) * (H - T - 22);
+  $("mj-lead").textContent = "How far the governing parties' seats were above or below the 231 that make a majority of the Sejm's 460, on each day. " + D.coalitions.majority.note;
+  bandsFor(svg, X, T, H, narrow);
+  [-150, -100, -50, 0, 50, 100, 150, 200].forEach(v => { el("line", {x1: f.L, x2: f.W - f.R, y1: Y(v), y2: Y(v), stroke: v === 0 ? INK : GRID, "stroke-dasharray": v === 0 ? "4 3" : null}, svg); text(svg, f.L - 5, Y(v) + 4, (v > 0 ? "+" : "") + v, {"text-anchor": "end"}); });
+  for (let y = 1990; y <= 2025; y += 5) text(svg, X(day(y + "-01-01")), H - 6, y, {"text-anchor": "middle"});
+  rows.forEach((r, i) => { const d0 = day(r[0]), d1 = i + 1 < rows.length ? day(rows[i + 1][0]) : x1, m = r[1] - maj, y = Y(Math.max(m, 0)), h = Math.abs(Y(m) - Y(0));
+    el("rect", {x: X(d0), y, width: Math.max(1, X(d1) - X(d0)), height: Math.max(0.6, h), fill: m >= 0 ? "#2F7D4F" : "#8B0000", opacity: .85}, svg).appendChild(Object.assign(document.createElementNS(NS, "title"), {textContent: `${dstr(r[0])}: ${r[1]} seats, ${m >= 0 ? m + " above" : -m + " below"} a majority (${r[2]})`})); });
+  text(svg, f.L + 6, Y(0) - 4, "231 seats: a majority", {fill: INK});
+}
+function drawPartners() {
+  const sel = $("pa-sel"); if (!sel.options.length) { sel.innerHTML = D.cabinets.filter(c => c.durability && !c.failed).map(c => `<option value="${esc(c.id)}">${esc(cabShort(c))}: ${esc(c.name)}</option>`).join(""); sel.addEventListener("change", () => { S.cab = sel.value; drawPartners(); }); }
+  if (!D.cabinets.find(c => c.id === S.cab && !c.failed)) { sel.value = D.cabinets[D.cabinets.length - 1].id; } else sel.value = S.cab;
+  const c = D.cabinets.find(x => x.id === sel.value), ps = (c.partners || []).slice().sort((a, b) => a.from.localeCompare(b.from) || b.to.localeCompare(a.to));
+  const svg = $("pa-svg"), f = frame(svg, 110, 140), rh = 24, T = 22, H = T + ps.length * rh + 24; svg.setAttribute("viewBox", `0 0 ${f.W} ${H}`);
+  const x0 = day(ps.length ? ps.reduce((m, p) => p.from < m ? p.from : m, ps[0].from) : c.start), x1 = Math.max(day(ps.length ? ps.reduce((m, p) => p.to > m ? p.to : m, ps[0].to) : c.start) , x0 + 30), X = d => f.L + (d - x0) / (x1 - x0) * (f.W - f.L - f.R);
+  $("pa-title").textContent = `${c.name}: ${dstr(c.start)} to ${dstr(c.end)}. Each bar is a governing party's time in the coalition; a grey bar is a party giving external support. A marker ▸ means the party joined after the cabinet took office, ◂ that it left before it ended; a rename or merger (one party's bar ending as another's begins) is not a departure.`;
+  const span = (x1 - x0) / 365.25, step = span > 8 ? 2 : 1;
+  for (let y = Math.ceil(new Date(x0 * 864e5).getUTCFullYear() / step) * step; y <= new Date(x1 * 864e5).getUTCFullYear(); y += step) { const x = X(day(y + "-01-01")); if (x < f.L || x > f.W - f.R) continue; el("line", {x1: x, x2: x, y1: T - 4, y2: H - 20, stroke: GRID}, svg); text(svg, x, H - 6, y, {"text-anchor": "middle"}); }
+  if (span <= 1) { [x0, x1].forEach((d, i) => text(svg, X(d), H - 6, dstr(new Date(d * 864e5).toISOString().slice(0, 10)), {"text-anchor": i ? "end" : "start"})); }
+  ps.forEach((p, i) => { const y = T + i * rh, a = X(day(p.from)), b = X(day(p.to));
+    text(svg, f.L - 6, y + 15, trunc(p.party, 16), {"text-anchor": "end", fill: INK}); el("rect", {x: a, y: y + 4, width: Math.max(3, b - a), height: rh - 9, rx: 3, fill: p.status === "external_support" ? "#B0B0B0" : "#4B6A9B"}, svg).appendChild(Object.assign(document.createElementNS(NS, "title"), {textContent: `${p.name || p.party}: ${dstr(p.from)} to ${dstr(p.to)}`}));
+    if (p.joinedLate) text(svg, a - 3, y + 15, "▸", {"text-anchor": "end", fill: "#8B0000", "font-size": 13}); if (p.leftEarly) text(svg, b + 3, y + 15, "◂", {fill: "#8B0000", "font-size": 13});
+    text(svg, Math.min(b + (p.leftEarly ? 16 : 5), f.W - 90), y + 15, `${dstr(p.from)} – ${dstr(p.to)}`, {fill: SOFT, "font-size": 10}); });
+  const m = c.majority, mb = (c.ministers || []).map(x => `${esc(x.party)} ${x.people}`).join("; ");
+  $("pa-card").innerHTML = `<div class="kv"><span class="k">Parties</span><span>${ps.length ? [...new Set(ps.map(p => p.party))].map(esc).join(", ") : "–"}</span>` +
+    (m ? `<span class="k">Seats</span><span>${m.seatsMin} to ${m.seatsMax} over the cabinet's life (the lowest ${m.seatsMin >= D.coalitions.majority.threshold ? "still a majority" : "below the 231 for a majority"}); a majority on ${Math.round(100 * m.share)}% of days${m.firstBelow && c.durability.majority === "majority" ? `; first fell below 231 on ${dstr(m.firstBelow)}` : ""}</span>` : "") +
+    (mb ? `<span class="k">People who held a post, by party at appointment</span><span>${mb}</span>` : "") + `</div>`;
+}
+function drawSupport() {
+  const svg = $("su-svg"), rows = D.coalitions.support.series.rows, f = frame(svg, 40, 12), narrow = f.W < 560, T = 24, H = 290; svg.setAttribute("viewBox", `0 0 ${f.W} ${H}`);
+  $("su-lead").textContent = D.coalitions.support.note;
+  const x0 = day("1990-01-01"), x1 = day("2026-10-01"), lo = 1, hi = 9, X = d => f.L + (d - x0) / (x1 - x0) * (f.W - f.L - f.R), Y = v => T + (hi - v) / (hi - lo) * (H - T - 22);
+  bandsFor(svg, X, T, H, narrow);
+  for (let v = 2; v <= 8; v += 2) { el("line", {x1: f.L, x2: f.W - f.R, y1: Y(v), y2: Y(v), stroke: GRID}, svg); text(svg, f.L - 5, Y(v) + 4, v, {"text-anchor": "end"}); }
+  for (let y = 1990; y <= 2025; y += 5) text(svg, X(day(y + "-01-01")), H - 6, y, {"text-anchor": "middle"});
+  const pts = k => rows.filter(r => r[k] != null).map(r => X(day(r[0])).toFixed(1) + "," + Y(r[k]).toFixed(1)).join(" ");
+  const band = rows.map(r => X(day(r[0])).toFixed(1) + "," + Y(r[3]).toFixed(1)).concat(rows.slice().reverse().map(r => X(day(r[0])).toFixed(1) + "," + Y(r[2]).toFixed(1))).join(" ");
+  el("polygon", {points: band, fill: "#141414", opacity: .09}, svg);
+  el("polyline", {points: pts(5), fill: "none", stroke: "#4B6A9B", "stroke-width": 1.6, "stroke-dasharray": "4 3"}, svg);
+  el("polyline", {points: pts(4), fill: "none", stroke: "#8B0000", "stroke-width": 1.6}, svg);
+  el("polyline", {points: pts(1), fill: "none", stroke: INK, "stroke-width": 2.2}, svg);
+  $("su-leg").innerHTML = `<span><i style="display:inline-block;width:18px;border-top:2.4px solid ${INK}"></i>All Poles (80% range shaded)</span><span><i style="display:inline-block;width:18px;border-top:2px solid #8B0000"></i>Voters of the governing parties</span><span><i style="display:inline-block;width:18px;border-top:2px dashed #4B6A9B"></i>Voters of the other parties</span>`;
+  const cs = D.cabinets.filter(c => c.support && c.support.startLevel != null);
+  const sg = v => v == null ? "" : Math.abs(v) < 0.05 ? "0.0" : (v > 0 ? "+" : "") + v.toFixed(1);
+  $("su-table").innerHTML = `<table><thead><tr><th>Cabinet</th><th class="n">Months</th><th class="n">First three months</th><th class="n">Last three months</th><th class="n">Change</th><th class="n">Governing parties' voters, first to last</th><th class="n">Others' voters, first to last</th></tr></thead><tbody>${cs.map(c => { const s = c.support; return `<tr data-c="${esc(c.id)}"><td>${esc(c.pm)}<br><span class="muted">${dstr(c.start)} to ${dstr(c.end)}</span></td><td class="n">${s.months}</td><td class="n">${s.startLevel.toFixed(1)}</td><td class="n">${s.endLevel.toFixed(1)}</td><td class="n">${sg(s.change)}</td><td class="n">${s.govVotersStart == null ? "" : s.govVotersStart.toFixed(1) + " to " + s.govVotersEnd.toFixed(1)}</td><td class="n">${s.otherVotersStart == null ? "" : s.otherVotersStart.toFixed(1) + " to " + s.otherVotersEnd.toFixed(1)}</td></tr>`; }).join("")}</tbody></table>`;
+  $("su-table").querySelectorAll("tr[data-c]").forEach(r => r.addEventListener("click", () => { S.cab = r.dataset.c; S.v = "cabinet"; S.post = null; render(); }));
 }
 function drawStats() {
   const cs = D.cabinets.filter(c => c.stats && isNum(c.stats.meanAge));

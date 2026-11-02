@@ -101,7 +101,7 @@
 #html.elem("img", attrs: (src: "../assets/analyses/governments.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
 #html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/governments.html"))[Governments and ministers]
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/governments.html"))[Governments]
 #html.elem("div", attrs: (class: "course-desc"))[Who sat in each cabinet since 1988, and how ministries changed.]
 ]
 ]
