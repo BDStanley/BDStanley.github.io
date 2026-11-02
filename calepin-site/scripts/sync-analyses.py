@@ -187,12 +187,20 @@ LISTED_NAMES = [
 # repo the data comes from is read-only here). Each rule replaces a whole JSON string, so
 # the lists' full names ("Komitet Wyborczy Samoobrona ...") are left alone.
 RENAMES = {'"Samoobrona"': '"SRP"'}
+# Variable names that leak into the explanatory text of the data files, put into words
+TEXT_FIXES = {
+    "(tally_ok FALSE)": "(failed the tally check)",
+    "As psns_constituency, gminas": "As the constituency measure, but for gminas",
+    "over enp_district_mean, minus 1": "over the mean ENP of the districts, minus 1",
+}
 # Political attitudes also names the party at the start of its events ("Samoobrona enters the Sejm")
 EVENT_RENAMES = {'"Samoobrona enters': '"SRP enters', '"Samoobrona and ': '"SRP and ', '"Samoobrona \'sex': '"SRP \'sex'}
 
 
 def apply_names(text: str, rel_dest: str) -> str:
     for old, new in RENAMES.items():
+        text = text.replace(old, new)
+    for old, new in TEXT_FIXES.items():
         text = text.replace(old, new)
     if "political-attitudes" in rel_dest:
         for old, new in EVENT_RENAMES.items():
