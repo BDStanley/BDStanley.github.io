@@ -281,6 +281,7 @@ function applyLinks() {
   S.it = S.jt = S.u = null;
 }
 async function setElection(id, keepPart = false) {
+  let linked = false;
   S.e = id; EL = elOf(id);
   if (id === "polls") CUR = CACHE.get("polls") || (CACHE.set("polls", buildPolls()), CACHE.get("polls"));
   else {
@@ -291,12 +292,21 @@ async function setElection(id, keepPart = false) {
   if (isPolls()) { if (!["leader", "share", "h2h"].includes(S.m)) S.m = null; S.l = "c"; }
   if (!CUR.facts.facts_only) {
     S.p = clamp(S.p, 0, CUR.facts.parts.length - 1);
+    linked = !!S.u;
     applyLinks();
     const n = mapItems().length;
     S.i = clamp(S.i, 0, Math.max(0, n - 1)); S.j = clamp(S.j, 0, Math.max(0, n - 1));
     if (S.j === S.i) S.j = S.i === 0 ? 1 : 0;
   }
   renderAll();
+  // A link to a gmina or constituency lands on the map, with its card, not at the top of the page
+  if (linked && S.sel) setTimeout(() => scrollToMap(), 150);
+}
+function scrollToMap() {
+  const el = $("mapsec"); if (!el) return;
+  let top = el.getBoundingClientRect().top + window.scrollY - document.querySelector(".strip").offsetHeight - 8;
+  top = Math.max(top, $("map").getBoundingClientRect().bottom + window.scrollY - window.innerHeight + 8);
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
 function defaultMeasure() {
   if (!EL || EL.facts_only) return "leader";

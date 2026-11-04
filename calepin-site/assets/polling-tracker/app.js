@@ -153,7 +153,7 @@ const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])))
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
-  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
