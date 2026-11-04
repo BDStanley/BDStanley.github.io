@@ -153,7 +153,7 @@ const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])))
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
-  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: false, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: null, picker: new Set(), showAllGov: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -588,11 +588,6 @@ function renderPanelLayout() {
     </div>`}
     ${respBlock()}
   </div>
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="label">Government options</span><span class="help" id="govhead"></span></div>
-    <div class="gov" id="gov"></div>
-    <button type="button" class="linkbtn" id="govmore" hidden></button>
-  </div>
   <div class="card soft">
     <span class="label">Share</span>
     <div class="actions">
@@ -669,7 +664,7 @@ function updatePanel() {
   renderGov();
 }
 function renderGov() {
-  if (TERM) return;
+  if (TERM || !$("gov")) return;
   const cur = CUR, list = cur.gov, probabilistic = cur.mode !== "single";
   $("govhead").textContent = probabilistic ? "chance of 231+ seats" : "single allocation";
   const shown = S.showAllGov ? list : list.slice(0, 8);
@@ -1181,7 +1176,7 @@ function renderHemiCoal() {
     <div style="max-height:340px;overflow-y:auto">${rows || `<p class="help" style="margin:0">No combination reaches a majority in at least 5% of simulations.</p>`}</div>
     <details open style="margin-top:8px"><summary class="muted" style="cursor:pointer;font-size:12.5px;font-weight:500">Coalition configurations (${nExcl} pair${nExcl === 1 ? "" : "s"} excluded)</summary>
       <div style="margin-top:4px">${rules}</div>
-      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, a pair excludes two lists from governing together when one party is on each; pairs inside a list are not checked. " : ""}${canRelax ? "Switching a pair recalculates the options (and the government options in the panel) from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
+      <p class="help" style="margin:2px 0 0">${joint ? "With joint lists on, a pair excludes two lists from governing together when one party is on each; pairs inside a list are not checked. " : ""}${canRelax ? "Switching a pair recalculates the options from the simulations." : "Including an excluded pair needs the simulation, which loads with the scenario data."}</p></details>`;
 }
 function renderHemiBlocks() {
   $("hemi2023btn").setAttribute("aria-pressed", String(S.hemi2023)); $("hemicoalbtn").setAttribute("aria-pressed", String(S.hemiCoal));
@@ -1813,8 +1808,7 @@ function bind() {
     if (t.dataset.rm != null) { S.joint.splice(+t.dataset.rm, 1); S.pinGov = null; return update(); }
     const pick = t.closest("#jpick button[data-p]");
     if (pick) { const p = pick.dataset.p; S.picker.has(p) ? S.picker.delete(p) : S.picker.add(p); pick.setAttribute("aria-pressed", S.picker.has(p)); updatePanel(); return; }
-    if (t.id === "govmore") { S.showAllGov = !S.showAllGov; return renderGov(); }
-    const gr = t.closest(".grow-row");
+        const gr = t.closest(".grow-row");
     if (gr) { S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderGov(); if (S.view !== "seats") { S.view = "seats"; renderChips(); } renderView(); saveHash(); return; }
     if (t.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); return; }
   });

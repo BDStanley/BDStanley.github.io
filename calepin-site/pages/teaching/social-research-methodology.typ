@@ -13,6 +13,8 @@
 #enum(
   { link("https://bdstanley.netlify.app/social-research-methodology-1-slides-tb7yq", "The nature and purpose of social research") },
   { link("https://bdstanley.netlify.app/social-research-methodology-2-slides-fynvz", "Research goals and research questions") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-3-slides-dgfsy", "Hypotheses and research design") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-4-slides-dhwyg", "Research ethics") },
 )
 
 #heading(level: 2)[#"Handouts"]
@@ -20,4 +22,6 @@
 #list(
   { link("https://bdstanley.netlify.app/social-research-methodology-1-handout-wdrmq", "The nature and purpose of social research") },
   { link("https://bdstanley.netlify.app/social-research-methodology-2-handout-ycq7u", "Research goals and research questions") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-3-handout-u8873", "Hypotheses and research design") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-4-handout-tkjyf", "Research ethics") },
 )

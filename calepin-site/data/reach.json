@@ -2,35 +2,35 @@
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
  "as_of": "2026-11",
  "totals": {
-  "citations": 2336,
-  "citing_works": 2037,
-  "scholars": 2166,
+  "citations": 2345,
+  "citing_works": 2046,
+  "scholars": 2168,
   "countries": 74,
   "my_works": 49,
   "first_year": 2008,
   "self_citing_works": 16,
   "works_without_country": 479,
-  "citations_without_topic": 99,
+  "citations_without_topic": 100,
   "citations_before_first_year": 2,
   "citations_undated": 0,
-  "classified_citations": 2237
+  "classified_citations": 2245
  },
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2123,
-   "share": 94.9,
+   "citations": 2126,
+   "share": 94.7,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,123 citations (94.9% of classified citations)"
+   "tip": "Social Sciences: 2,126 citations (94.7% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
-   "citations": 45,
-   "share": 2.0,
+   "citations": 50,
+   "share": 2.2,
    "colour": "#8b0000",
-   "w": 0.0212,
-   "tip": "Arts and Humanities: 45 citations (2.0% of classified citations)"
+   "w": 0.0235,
+   "tip": "Arts and Humanities: 50 citations (2.2% of classified citations)"
   },
   {
    "name": "Business, Management and Accounting",
@@ -53,7 +53,7 @@
    "citations": 12,
    "share": 0.5,
    "colour": "#8b0000",
-   "w": 0.0057,
+   "w": 0.0056,
    "tip": "Psychology: 12 citations (0.5% of classified citations)"
   },
   {
@@ -118,16 +118,16 @@
   "Gender Studies",
   "Economics and Econometrics",
   "Language and Linguistics",
-  "Strategy and Management",
   "Philosophy",
+  "Strategy and Management",
   "Urban Studies",
   "Education",
+  "History",
   "Public Administration",
   "Visual Arts and Performing Arts",
   "General Social Sciences",
   "Geography, Planning and Development",
   "Literature and Literary Theory",
-  "History",
   "Social Psychology",
   "Accounting",
   "Clinical Psychology",
@@ -186,19 +186,19 @@
   {
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
-   "citations": 1779,
-   "share": 79.5,
+   "citations": 1782,
+   "share": 79.4,
    "colour": "#2a78d6",
    "w": 1.0,
-   "tip": "Political Science and International Relations (Social Sciences): 1,779 citations"
+   "tip": "Political Science and International Relations (Social Sciences): 1,782 citations"
   },
   {
    "name": "Sociology and Political Science",
    "field": "Social Sciences",
    "citations": 160,
-   "share": 7.2,
+   "share": 7.1,
    "colour": "#eb6834",
-   "w": 0.0899,
+   "w": 0.0898,
    "tip": "Sociology and Political Science (Social Sciences): 160 citations"
   },
   {
@@ -214,7 +214,7 @@
    "name": "Communication",
    "field": "Social Sciences",
    "citations": 28,
-   "share": 1.3,
+   "share": 1.2,
    "colour": "#eda100",
    "w": 0.0157,
    "tip": "Communication (Social Sciences): 28 citations"
@@ -223,7 +223,7 @@
    "name": "Demography",
    "field": "Social Sciences",
    "citations": 28,
-   "share": 1.3,
+   "share": 1.2,
    "colour": "#e87ba4",
    "w": 0.0157,
    "tip": "Demography (Social Sciences): 28 citations"
@@ -243,7 +243,7 @@
    "citations": 17,
    "share": 0.8,
    "colour": "#a9a79f",
-   "w": 0.0096,
+   "w": 0.0095,
    "tip": "Gender Studies (Social Sciences): 17 citations"
   },
   {
@@ -265,6 +265,15 @@
    "tip": "Language and Linguistics (Arts and Humanities): 13 citations"
   },
   {
+   "name": "Philosophy",
+   "field": "Arts and Humanities",
+   "citations": 13,
+   "share": 0.6,
+   "colour": "#a9a79f",
+   "w": 0.0073,
+   "tip": "Philosophy (Arts and Humanities): 13 citations"
+  },
+  {
    "name": "Strategy and Management",
    "field": "Business, Management and Accounting",
    "citations": 13,
@@ -272,15 +281,6 @@
    "colour": "#a9a79f",
    "w": 0.0073,
    "tip": "Strategy and Management (Business, Management and Accounting): 13 citations"
-  },
-  {
-   "name": "Philosophy",
-   "field": "Arts and Humanities",
-   "citations": 10,
-   "share": 0.4,
-   "colour": "#a9a79f",
-   "w": 0.0056,
-   "tip": "Philosophy (Arts and Humanities): 10 citations"
   },
   {
    "name": "Urban Studies",
@@ -299,6 +299,15 @@
    "colour": "#a9a79f",
    "w": 0.0051,
    "tip": "Education (Social Sciences): 9 citations"
+  },
+  {
+   "name": "History",
+   "field": "Arts and Humanities",
+   "citations": 8,
+   "share": 0.4,
+   "colour": "#a9a79f",
+   "w": 0.0045,
+   "tip": "History (Arts and Humanities): 8 citations"
   },
   {
    "name": "Public Administration",
@@ -344,15 +353,6 @@
    "colour": "#a9a79f",
    "w": 0.0039,
    "tip": "Literature and Literary Theory (Arts and Humanities): 7 citations"
-  },
-  {
-   "name": "History",
-   "field": "Arts and Humanities",
-   "citations": 6,
-   "share": 0.3,
-   "colour": "#a9a79f",
-   "w": 0.0034,
-   "tip": "History (Arts and Humanities): 6 citations"
   },
   {
    "name": "Social Psychology",
@@ -1255,16 +1255,16 @@
    {
     "year": 2026,
     "label": "2026 (to November)",
-    "citations": 253,
-    "h": 0.6325,
+    "citations": 262,
+    "h": 0.655,
     "minor": true,
-    "tip": "2026 (to November): 253 citations (Political Science and International Relations 191, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 20, Unclassified 7)",
+    "tip": "2026 (to November): 262 citations (Political Science and International Relations 194, Sociology and Political Science 20, Law 6, Communication 4, Demography 5, Other 25, Unclassified 8)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 191,
+      "citations": 194,
       "colour": "#2a78d6",
-      "tip": "2026, Political Science and International Relations: 191 citations"
+      "tip": "2026, Political Science and International Relations: 194 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1292,15 +1292,15 @@
      },
      {
       "name": "Other",
-      "citations": 20,
+      "citations": 25,
       "colour": "#a9a79f",
-      "tip": "2026, Other: 20 citations"
+      "tip": "2026, Other: 25 citations"
      },
      {
       "name": "Unclassified",
-      "citations": 7,
+      "citations": 8,
       "colour": "#d3d1c9",
-      "tip": "2026, Unclassified: 7 citations"
+      "tip": "2026, Unclassified: 8 citations"
      }
     ]
    }
@@ -1329,9 +1329,9 @@
    "code": "DE",
    "name": "Germany",
    "scholars": 221,
-   "works": 212,
+   "works": 213,
    "colour": "#8b0000",
-   "tip": "Germany: 221 citing scholars, in 212 citing works",
+   "tip": "Germany: 221 citing scholars, in 213 citing works",
    "w": 0.9247
   },
   {
@@ -1355,11 +1355,11 @@
   {
    "code": "NL",
    "name": "Netherlands",
-   "scholars": 84,
-   "works": 92,
+   "scholars": 85,
+   "works": 93,
    "colour": "#a72219",
-   "tip": "Netherlands: 84 citing scholars, in 92 citing works",
-   "w": 0.3515
+   "tip": "Netherlands: 85 citing scholars, in 93 citing works",
+   "w": 0.3556
   },
   {
    "code": "CZ",
@@ -1373,11 +1373,11 @@
   {
    "code": "ES",
    "name": "Spain",
-   "scholars": 70,
-   "works": 70,
+   "scholars": 71,
+   "works": 78,
    "colour": "#a72219",
-   "tip": "Spain: 70 citing scholars, in 70 citing works",
-   "w": 0.2929
+   "tip": "Spain: 71 citing scholars, in 78 citing works",
+   "w": 0.2971
   },
   {
    "code": "AT",

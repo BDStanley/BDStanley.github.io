@@ -14,6 +14,7 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-slides-8taqg", "Systemy polityczne - pojęcia i typy") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides-apqmg", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-slides-d8s5t", "Niedemokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-4-slides-dgqqm", "Konstytucja i system polityczny w Polsce. Wartość praworządności.") },
 )
 
 #heading(level: 2)[#"Materiały"]
@@ -22,6 +23,7 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-1-handout-te3wa", "Systemy polityczne — pojęcia i typy") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout-d8xuv", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout-bpmew", "Niedemokratyczne systemy polityczne") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-4-handout-z8w98", "Konstytucja i system polityczny w Polsce. Wartość praworządności") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
