@@ -11,7 +11,7 @@ page; this script copies it beside the page's chart under assets/:
         (written by Party tracker/R/64_export_defections_json.R, run by run_all.R)
     Polls/web/polls.json                          -> assets/polling-tracker/polls.json
     Polls/web/draws.json                          -> assets/polling-tracker/draws.json
-        (written by Polls/R/export_web.R, which PTP.R runs)
+        (written by Polls/current term/R/export_web.R, which PTP.R runs)
     Polls/web/terms.json                          -> assets/polling-tracker/terms.json
     Polls/web/term-<term>.json                    -> assets/polling-tracker/term-<term>.json
         (the past Sejm terms, written by Polls/R/terms/30_export.R; terms.json lists

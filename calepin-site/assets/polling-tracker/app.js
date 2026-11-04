@@ -1247,6 +1247,7 @@ function coalitionTrend() { // >=10% in some week, minimal, top six by latest
   return COALTREND;
 }
 function renderTime() {
+  renderTimePanel();
   const seatSeries = SP.map((p, i) => ({ name: p, colour: col(p), pts: WEEKS.filter(w => exists(p, w.date) && w.seats[i] != null).map(w => [w.date, w.seats[i], w.seatsLo[i], w.seatsHi[i]]) }))
     .filter(s => s.pts.some(pt => pt[3] > 0));
   const smax = Math.ceil((Math.max(...seatSeries.flatMap(s => s.pts.map(p => p[3]))) + 10) / 50) * 50;
@@ -1256,12 +1257,13 @@ function renderTime() {
     .filter(s => s.pts.some(pt => pt[1] > 2 && pt[1] < 98));
   lineChart("thrtime", thrSeries, { ymax: 100, yticks: [0, 25, 50, 75, 100], ref: [50], fmt: v => Math.round(v) + "%" });
   $("timenote").innerHTML = `<span class="label">About these charts</span>
-    <p class="help" style="margin:0">Seats: the model's median projection each week, with 80% ranges. Majorities: the share of the model's simulated parliaments in which each governing option holds at least 231 seats, for options that reached 10% in some week, leaving out any that only add parties to a smaller one. Thresholds: the chance that each party clears 5%, for parties whose chances have been in doubt. These follow the model's own estimates, not your scenario.</p>`;
+    <p class="help" style="margin:0">Seats: the model's median projection each week, with 80% ranges. Majorities: the share of the model's simulated parliaments in which each governing option holds at least 231 seats, for options that reached 10% in some week, leaving out any that only add parties to a smaller one. Thresholds: the chance that each party clears 5%, for parties whose chances have been in doubt. These are the model's own estimates.</p>`;
 }
 
 // ---- pollsters ------------------------------------------------------------------------------
 let HOUSE = null;
 function renderHouse() {
+  renderHousePanel();
   const V = VD(), H0 = V.house;
   $("househelp").textContent = V.past
     ? "How far each polling house's readings sat from the trend anchored on the two election results, in percentage points, averaged over its own polls, with 80% intervals. A positive figure means the house showed the party higher than the anchored trend. Click a house to highlight its polls on the trend chart."
@@ -1304,6 +1306,8 @@ function renderChips() {
     b.hidden = !!TERM && (b.dataset.v === "seats" || b.dataset.v === "time");
   });
   ["trends", "seats", "time", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
+  $("panel").hidden = !TERM && S.view !== "seats";
+  $("panel2").hidden = !!TERM || !(S.view === "time" || S.view === "pollsters");
   $("pts").checked = S.points;
   $("ptswrap").hidden = S.view !== "trends";
   $("evwrap").hidden = S.view !== "trends";
@@ -1311,7 +1315,56 @@ function renderChips() {
   $("dlwrap").hidden = !((S.view === "trends" && !TERM) || S.view === "time");
   $("dl").checked = S.dateLine;
   $("trendhelp").textContent = TERM ? "Hover for every party's estimate. Diamonds are the election results the trend is anchored on. Click a poll figure to see that poll alone and how far each of its figures sits from the trend. Click parties below the chart to show them alone."
-    : "Hover for every party's estimate. Click a poll figure to see that poll alone and how far each of its figures sits from the trend (click again or press Escape to let go), or click elsewhere to load that week into the scenario. Click parties below the chart to show them alone.";
+    : "Hover for every party's estimate. Click a poll figure to see that poll alone and how far each of its figures sits from the trend (click again or press Escape to let go). Click parties below the chart to show them alone.";
+}
+
+
+// ---- details panels beside Over time and Pollsters (read-only; the scenario lives on Seats and majorities) ----
+function renderTimePanel() {
+  if (TERM) return;
+  const i = S.tw == null ? WEEKS.length - 1 : clamp(S.tw, 0, WEEKS.length - 1), w = WEEKS[i];
+  const rows = SP.map((p, k) => ({ p, k })).filter(({ p, k }) => p !== "MN" && w.seats[k] != null && exists(p, w.date) && (w.seats[k] > 0 || (w.vote[k] || 0) >= 1))
+    .map(({ p, k }) => `<tr><td><span class="dot" style="background:${col(p)};margin-right:6px"></span>${esc(p)}</td><td>${w.vote[k] == null ? "–" : w.vote[k].toFixed(1) + "%"}</td><td>${w.seats[k]}</td><td class="muted">${w.seatsLo[k]}–${w.seatsHi[k]}</td><td>${prob(w.pThr[k])}</td></tr>`).join("");
+  const coal = [...w.coalitions].sort((a, b) => b.p - a.p).filter(c => c.p >= 0.05).slice(0, 6)
+    .map(c => `<tr><td>${esc(sortParties(c.m).map(short).join(" + "))}</td><td>${Math.round(c.s)}</td><td>${prob(c.p)}</td></tr>`).join("");
+  $("panel2").innerHTML = `
+  <div class="card">
+    <span class="label">Week by week</span>
+    <h2 style="margin:0;font-size:20px;font-weight:400">${dlong(w.date)}</h2>
+    <input type="range" id="twk" min="0" max="${WEEKS.length - 1}" step="1" value="${i}" aria-label="Week">
+    <div class="actions"><button type="button" class="btn2 sm" id="twprev"${i === 0 ? " disabled" : ""}>Earlier</button><button type="button" class="btn2 sm" id="twnext"${i === WEEKS.length - 1 ? " disabled" : ""}>Later</button></div>
+    <table class="t"><tr><th>Party</th><th>Vote</th><th>Seats</th><th>80% range</th><th>Clears 5%</th></tr>${rows}</table>
+  </div>
+  <div class="card">
+    <span class="label">Governing options</span>
+    <table class="t"><tr><th>Coalition</th><th>Seats</th><th>Majority</th></tr>${coal || `<tr><td colspan="3" class="muted">No option reached 5%.</td></tr>`}</table>
+    <p class="help" style="margin:0">The model's estimates for this week: medians, with the share of simulated parliaments in which each option holds ${R.seatsMajority} or more seats. Options under 5% are left out.</p>
+  </div>`;
+}
+function renderHousePanel() {
+  if (TERM) return;
+  const V = VD(), picked = [...S.houses];
+  if (picked.length !== 1) {
+    $("panel2").innerHTML = `<div class="card"><span class="label">Polling house</span><p class="help" style="margin:0">Click a house in the chart to see its polls and how it leans on each party. Its polls are then highlighted on the Trends view.${picked.length > 1 ? " Several houses are highlighted; pick one to see its details." : ""}</p></div>`;
+    return;
+  }
+  const org = picked[0], oi = V.pollsters.indexOf(org), h = (V.house || []).find(x => x.org === org);
+  const polls = new Map(); V.polls.forEach(r => { if (r[1] === oi) polls.set(pollKey(r), r[0]); });
+  const dates = [...polls.values()].sort((a, b) => a - b), last = WEEKS[WEEKS.length - 1].date;
+  const recent = dates.filter(d => d > last - 90).length;
+  const eff = h ? V.blocs.filter(b => h.effects[b]).map(b => { const e = h.effects[b];
+    return `<tr><td><span class="dot" style="background:${col(b)};margin-right:6px"></span>${esc(b)}</td><td class="${cls(e[0])}">${signed(e[0], 1)}</td><td class="muted">${e[1].toFixed(1)} to ${e[2].toFixed(1)}</td></tr>`; }).join("") : "";
+  $("panel2").innerHTML = `
+  <div class="card">
+    <span class="label">Polling house</span>
+    <h2 style="margin:0;font-size:20px;font-weight:400">${esc(org)}</h2>
+    <table class="t"><tr><th>Polls</th><th>First</th><th>Latest</th><th>Last 90 days</th></tr><tr><td>${dates.length}</td><td>${dates.length ? dstr(dates[0]) : "–"}</td><td>${dates.length ? dstr(dates[dates.length - 1]) : "–"}</td><td>${recent}</td></tr></table>
+  </div>
+  <div class="card">
+    <span class="label">Lean against the average house</span>
+    <table class="t"><tr><th>Party</th><th>Lean (pp)</th><th>80% interval</th></tr>${eff}</table>
+    <p class="help" style="margin:0">A positive lean means the house shows the party higher than the others do.</p>
+  </div>`;
 }
 
 // ---- rendering ------------------------------------------------------------------------------
@@ -1712,10 +1765,6 @@ function bind() {
     });
     if (hit) { const key = pollKey(hit); S.pollSel = S.pollSel === key ? null : key; renderTrends(); trendHover(ev); return; }
     if (S.pollSel) { S.pollSel = null; renderTrends(); trendHover(ev); return; }
-    if (TERM) return;
-    if (mx < TR.m.l || mx > TR.W - TR.m.r) return;
-    setWeek(nearestWeek(TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a)));
-    toast("Loaded the week of " + dstr(WEEKS[S.w].date));
   });
   $("trendlegend").addEventListener("mouseover", e => { const s = e.target.closest("[data-p]"); const p = s ? s.dataset.p : null; if (p !== S.hoverParty) { S.hoverParty = p; renderTrends(); } });
   $("trendlegend").addEventListener("mouseleave", () => { S.hoverParty = null; renderTrends(); });
@@ -1725,16 +1774,16 @@ function bind() {
     else { const b = e.target.closest("button[data-p]"); if (!b) return; const p = b.dataset.p; S.parties.has(p) ? S.parties.delete(p) : S.parties.add(p); }
     renderTrends(); saveHash();
   });
+  $("panel2").addEventListener("input", e => { if (e.target.id === "twk") { S.tw = +e.target.value; renderTimePanel(); const f = $("twk"); if (f) f.focus(); } });
+  $("panel2").addEventListener("click", e => {
+    const t = e.target.closest("button"); if (!t) return;
+    const cur = S.tw == null ? WEEKS.length - 1 : S.tw;
+    if (t.id === "twprev") { S.tw = cur - 1; renderTimePanel(); } else if (t.id === "twnext") { S.tw = cur + 1; renderTimePanel(); }
+  });
   // over-time charts
   ["seattime", "cointime", "thrtime"].forEach(id => {
     $(id).addEventListener("mousemove", ev => timeHover(id, ev));
     $(id).addEventListener("mouseleave", () => { $(id + "tip").hidden = true; const h = $(id).querySelector(".hov"); if (h) h.innerHTML = ""; });
-    $(id).addEventListener("click", ev => {
-      const g = TIMECH[id]; if (!g) return;
-      const r = $(id).getBoundingClientRect(), mx = (ev.clientX - r.left) * g.W / r.width;
-      setWeek(nearestWeek(g.a + (mx - g.m.l) / (g.W - g.m.l - g.m.r) * (g.b - g.a)));
-      toast("Loaded the week of " + dstr(WEEKS[S.w].date));
-    });
   });
   // seats
   $("hemi").addEventListener("mousemove", hemiHover);

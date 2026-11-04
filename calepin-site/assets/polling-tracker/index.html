@@ -8,7 +8,7 @@
 <!--
   Web version of the Pooling the Poles poll-of-polls. Embedded in
   pages/polish-political-analyses/polling-tracker.typ; works on its own too.
-  Data: polls.json and draws.json beside this file, written by Polls/R/export_web.R
+  Data: polls.json and draws.json beside this file, written by Polls/current term/R/export_web.R
   in the Polish political analyses repo (PTP.R runs it), and terms.json with one
   term-<term>.json for each past Sejm term, written by Polls/R/terms/30_export.R;
   all copied here by scripts/sync-analyses.py on each build. Logic in app.js; no libraries.
@@ -97,6 +97,8 @@ table.hist td:first-child{white-space:nowrap}
 table.hist th{white-space:nowrap}
 .pos{color:#1b6e2d}.neg{color:#a11d1d}
 /* ---- panel ---- */
+.panel[hidden]{display:none}
+#panel2 input[type=range]{width:100%;accent-color:var(--accent)}
 .panel{width:390px;flex:none;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:2px}
 .phead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .phead h2{margin:0;font-size:20px;font-weight:400;color:var(--ink);flex:1;min-width:0}
@@ -199,7 +201,7 @@ svg text:not([font-weight]){font-weight:300}
     <label class="termsel" id="termwrap" hidden>Sejm term <select id="term" aria-label="Sejm term"></select></label>
     <div class="seg" id="views" role="tablist" aria-label="View">
       <button type="button" role="tab" data-v="trends">Trends</button>
-      <button type="button" role="tab" data-v="seats">Seats</button>
+      <button type="button" role="tab" data-v="seats">Seats and majorities</button>
       <button type="button" role="tab" data-v="time">Over time</button>
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
@@ -213,7 +215,7 @@ svg text:not([font-weight]){font-weight:300}
       <section class="view" id="v-trends" aria-label="Polling trends">
         <div class="toolbar">
           <div class="seg small" id="periods" aria-label="Period"></div>
-          <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click a poll figure to see that poll alone, or click elsewhere to load that week into the scenario.</span>
+          <span class="help" id="trendhelp" style="flex:1 1 240px">Hover for every party's estimate; click a poll figure to see that poll alone.</span>
           <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="trend">PNG - trends only</button><button type="button" class="btn2 sm" id="combobtn" data-png="combo" title="One image with the trends, seat projection, change since 2023 and possible governments">PNG - include seat projections</button><button type="button" class="btn2 sm" data-csv="trend">CSV</button></span>
         </div>
         <div class="chips" id="pchips" aria-label="Highlight polling houses"></div>
@@ -244,7 +246,7 @@ svg text:not([font-weight]){font-weight:300}
         </div>
       </section>
       <section class="view" id="v-time" aria-label="Over time" hidden>
-        <p class="help">The model's estimates week by week. Click a chart to load that week into the scenario.</p>
+        <p class="help">The model's estimates week by week.</p>
         <div class="two">
           <div class="chartbox" id="seattimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Seats, with 80% ranges</span><button type="button" class="btn2 sm" data-png="seattime">PNG</button></div><svg id="seattime" role="img" aria-label="Seat projection over time"></svg><div class="tip" id="seattimetip" hidden></div></div>
           <div class="chartbox" id="cointimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Chance of a majority (231 seats)</span><button type="button" class="btn2 sm" data-png="cointime">PNG</button></div><svg id="cointime" role="img" aria-label="Chance of a governing majority over time"></svg><div class="tip" id="cointimetip" hidden></div></div>
@@ -261,6 +263,7 @@ svg text:not([font-weight]){font-weight:300}
       </section>
     </div>
     <aside class="panel" id="panel" aria-label="Scenario"></aside>
+    <aside class="panel" id="panel2" aria-label="Details" hidden></aside>
   </div>
   <div class="backlink" id="backlink"><a href="https://benstanley.eu/pages/polish-political-analyses.html" target="_top">Polish political analyses</a> · <a href="https://benstanley.eu/pages/polish-political-analyses/polling-tracker.html" target="_top">Ben Stanley · benstanley.eu</a></div>
 </div>

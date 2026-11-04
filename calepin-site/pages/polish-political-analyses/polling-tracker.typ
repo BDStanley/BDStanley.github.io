@@ -6,7 +6,7 @@
 
 // The tracker is a standalone page, assets/polling-tracker/index.html (+ app.js),
 // embedded here like the party genealogy. Its data, polls.json and draws.json,
-// comes from Polls/ in the Polish political analyses repo (R/export_web.R, run by
+// comes from Polls/ in the Polish political analyses repo (current term/R/export_web.R, run by
 // PTP.R), and the past terms' terms.json and term-<term>.json from Polls/R/terms/;
 // scripts/sync-analyses.py copies them in on each build. It replaced
 // the Shiny app, retired on 22 October 2026; pages/pooling-the-poles.typ now
