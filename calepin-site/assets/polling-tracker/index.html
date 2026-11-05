@@ -202,7 +202,6 @@ svg text:not([font-weight]){font-weight:300}
     <div class="seg" id="views" role="tablist" aria-label="View">
       <button type="button" role="tab" data-v="trends">Trends</button>
       <button type="button" role="tab" data-v="seats">Seats and majorities</button>
-      <button type="button" role="tab" data-v="time">Over time</button>
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
     <label class="switch" id="ptswrap"><input type="checkbox" id="pts" checked> Individual polls</label>
@@ -243,17 +242,6 @@ svg text:not([font-weight]){font-weight:300}
             </div>
             <div class="card soft" id="constcard"></div>
           </div>
-        </div>
-      </section>
-      <section class="view" id="v-time" aria-label="Over time" hidden>
-        <p class="help">The model's estimates week by week.</p>
-        <div class="two">
-          <div class="chartbox" id="seattimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Seats, with 80% ranges</span><button type="button" class="btn2 sm" data-png="seattime">PNG</button></div><svg id="seattime" role="img" aria-label="Seat projection over time"></svg><div class="tip" id="seattimetip" hidden></div></div>
-          <div class="chartbox" id="cointimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Chance of a majority (231 seats)</span><button type="button" class="btn2 sm" data-png="cointime">PNG</button></div><svg id="cointime" role="img" aria-label="Chance of a governing majority over time"></svg><div class="tip" id="cointimetip" hidden></div></div>
-        </div>
-        <div class="two">
-          <div class="chartbox" id="thrtimebox"><div class="charttitle" style="display:flex;justify-content:space-between;align-items:center"><span>Chance of clearing the threshold</span><button type="button" class="btn2 sm" data-png="thrtime">PNG</button></div><svg id="thrtime" role="img" aria-label="Chance of clearing the threshold over time"></svg><div class="tip" id="thrtimetip" hidden></div></div>
-          <div class="card soft" id="timenote"></div>
         </div>
       </section>
       <section class="view" id="v-pollsters" aria-label="Pollsters" hidden>
