@@ -1667,11 +1667,11 @@ function bind() {
     });
     if (hit) { const key = pollKey(hit); S.pollSel = S.pollSel === key ? null : key; renderTrends(); trendHover(ev); return; }
     if (S.pollSel) { S.pollSel = null; renderTrends(); trendHover(ev); return; }
-    // Otherwise a click inside the plot sets the Seats view to the nearest week
+    // Otherwise a click inside the plot sets the week the Seats view will show (nearest week), without leaving Trends
     if (TERM || mx < TR.m.l || mx > TR.W - TR.m.r || my < TR.m.t || my > TR.H - TR.m.b) return;
     const wi = nearestWeek(TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a));
-    S.view = "seats"; renderChips(); setWeek(wi); saveHash();
-    toast(`Seats and majorities for ${dlong(WEEKS[wi].date)}`);
+    setWeek(wi); saveHash();
+    toast(`Seats and majorities now show ${dlong(WEEKS[wi].date)}`);
   });
   $("trendlegend").addEventListener("mouseover", e => { const s = e.target.closest("[data-p]"); const p = s ? s.dataset.p : null; if (p !== S.hoverParty) { S.hoverParty = p; renderTrends(); } });
   $("trendlegend").addEventListener("mouseleave", () => { S.hoverParty = null; renderTrends(); });
