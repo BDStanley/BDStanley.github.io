@@ -6,7 +6,7 @@
 <title>Election results: Poland since 1990</title>
 <meta name="theme-color" content="#8B0000">
 <!--
-  Every presidential, Sejm, European Parliament and referendum vote in Poland since 1990: the facts
+  Every presidential, Sejm, Senate, European Parliament and referendum vote in Poland since 1990: the facts
   and results of each, and maps down to gmina level. Embedded in
   pages/polish-political-analyses/election-results.typ; works on its own too.
   Data: elections.json (the index), geo.json (the map paths) and one <election-id>.json per election
@@ -21,7 +21,7 @@
 :root{
   --bg:#FFFFFF; --ink:#141414; --soft:#4B4B4B; --muted:#767676; --faint:#D5D5D5; --rule:#ECECEC;
   --chip:#F3F3F1; --accent:#8B0000; --accent-hover:#495057; --tint:#F6EBEB;
-  --sejm:#8B0000; --pres:#495057; --ep:#00796b; --ref:#9c2d74;
+  --sejm:#8B0000; --senate:#a15c00; --pres:#495057; --ep:#00796b; --ref:#9c2d74;
 }
 *{box-sizing:border-box}
 [hidden]{display:none !important}
@@ -56,7 +56,7 @@ a:hover{color:var(--accent-hover)}
 .seg.small button{height:28px;font-size:12.5px;padding:0 10px}
 .seg.timeline{flex:1 1 auto;min-width:0}
 .tdot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block}
-.tdot.sejm{background:var(--sejm)} .tdot.presidential{background:var(--pres)} .tdot.ep{background:var(--ep)} .tdot.referendum{background:var(--ref)}
+.tdot.sejm{background:var(--sejm)} .tdot.senate{background:var(--senate)} .tdot.presidential{background:var(--pres)} .tdot.ep{background:var(--ep)} .tdot.referendum{background:var(--ref)}
 .seg button .early{font-size:10px;color:var(--muted);font-weight:400}
 .seg button.polls{font-style:italic}
 .jump{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:12.5px;margin-left:auto}
@@ -221,6 +221,46 @@ svg text:not([font-weight]){font-weight:300}
     </div>
   </section>
 
+  <section class="sec" id="senatesec" aria-labelledby="h-senate" hidden>
+    <div class="sechead">
+      <div><span class="label">Senate</span><h2 id="h-senate">Who won each district</h2></div>
+    </div>
+    <p class="lede" id="senatelede"></p>
+    <div class="scroll"><table class="t" id="spartytable"></table></div>
+    <div class="controls" style="margin-top:14px">
+      <div class="ctrl"><span>Show</span><div class="seg small" id="smeasure" role="group" aria-label="Measure"></div></div>
+      <div class="ctrl" id="slevelctrl"><span>Level</span><div class="seg small" id="slevel" role="group" aria-label="Level"></div></div>
+      <div class="ctrl"><span>Shape</span><div class="seg small" id="sshape" role="group" aria-label="Map or cartogram"></div></div>
+    </div>
+    <div class="mapgrid">
+      <div class="stack">
+        <div class="chartbox plain mapbox" id="smapbox"><svg id="smap" role="img" aria-label="Map of the Senate districts, coloured by the party of the winner"></svg><div class="tip" hidden></div></div>
+        <div id="slegend"></div>
+        <p class="note" id="snote"></p>
+      </div>
+      <div class="stack">
+        <div class="card" id="sdcard"></div>
+        <div class="card" id="scareer" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="senatedist" aria-labelledby="h-sdist" hidden>
+    <div class="sechead">
+      <div><span class="label">Districts</span><h2 id="h-sdist">Every district</h2></div>
+      <input id="sdq" type="search" placeholder="District, candidate" autocomplete="off" aria-label="Find a district or candidate" style="height:32px;padding:0 12px;border:1px solid var(--faint);border-radius:999px;min-width:200px">
+    </div>
+    <div class="scroll"><table class="t" id="sdisttable"></table></div>
+  </section>
+
+  <section class="sec" id="senatemove" aria-labelledby="h-smove" hidden>
+    <div class="sechead">
+      <div><span class="label">Movement</span><h2 id="h-smove">Between the Sejm, the Senate and the European Parliament</h2></div>
+    </div>
+    <div id="smovebox"></div>
+    <div class="card" id="smoveall" style="margin-top:12px"></div>
+  </section>
+
   <section class="sec" id="results" aria-labelledby="h-results">
     <div class="sechead">
       <div><span class="label">Results</span><h2 id="h-results">National results</h2></div>
@@ -229,6 +269,22 @@ svg text:not([font-weight]){font-weight:300}
     <p class="lede" id="resultslede"></p>
     <div class="scroll"><table class="t" id="restable"></table></div>
     <div class="stack" style="margin-top:12px" id="extras"></div>
+  </section>
+
+  <section class="sec" id="membersec" aria-labelledby="h-members" hidden>
+    <div class="sechead">
+      <div><span class="label">Members</span><h2 id="h-members">Who sat in this term</h2></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="muted" id="mcount"></span>
+        <select id="mparty" aria-label="Party" style="height:32px;border:1px solid var(--faint);border-radius:999px;padding:0 10px"></select>
+        <input id="mq" type="search" placeholder="Name" autocomplete="off" aria-label="Find a member by name" style="height:32px;padding:0 12px;border:1px solid var(--faint);border-radius:999px;min-width:150px">
+      </div>
+    </div>
+    <p class="lede" id="memberlede"></p>
+    <div class="mapgrid">
+      <div class="stack"><div class="scroll" style="max-height:640px;overflow:auto"><table class="t" id="mtable"></table></div></div>
+      <div class="stack"><div class="card" id="mcareer" hidden></div></div>
+    </div>
   </section>
 
   <section class="sec" id="mapsec" aria-labelledby="h-map">
@@ -324,5 +380,7 @@ svg text:not([font-weight]){font-weight:300}
 <script src="../chart-export.js"></script>
 <script src="../cartogram.js"></script>
 <script src="app.js"></script>
+<script src="senate.js"></script>
+<script src="members.js"></script>
 </body>
 </html>

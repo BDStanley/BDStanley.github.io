@@ -33,8 +33,10 @@ page; this script copies it beside the page's chart under assets/:
     Election results/web/<file>.json              -> assets/election-results/<file>.json
         (written by "Election results/analysis/90_export.R"; elections.json's `files`
         lists the others: geo.json, covariates.json, one covariates-<group>.json per
-        group of the scatter's characteristics, one file per election and one
-        profiles file per voivodeship)
+        group of the scatter's characteristics, one file per election, one
+        profiles file per voivodeship, senate-<year>.json for each Senate election
+        people.json and people-sejm.json, the careers of senators, MEPs and deputies; the Senate files and
+        the people files are written by "Election results/analysis/92_senate_export.R")
     Quality of democracy/web/democracy.json       -> assets/quality-of-democracy/democracy.json
     Quality of democracy/web/democracy-countries.json
                                                   -> assets/quality-of-democracy/democracy-countries.json
@@ -164,6 +166,9 @@ LISTED_NAMES = [
         ("covariates.json", {"meta", "groups", "vars", "years", "zones"}),
         ("covariates-", {"group", "values"}),
         ("profiles-", {"units"}),
+        ("senate-", {"facts", "districts"}),
+        ("people.json", {"meta", "parties", "persons", "moves"}),
+        ("people-sejm.json", {"meta", "persons"}),
         ("", {"facts", "results", "units"}),
     ]),
     ("Voting behaviour/web/voting.json", "files", [

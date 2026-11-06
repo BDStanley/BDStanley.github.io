@@ -63,13 +63,13 @@ const FONT = "Jost, 'Avenir Next', -apple-system, sans-serif";
 // the repo uses for series that are not parties
 const TURNOUT = ["#440154", "#3b528b", "#21918c", "#5ec962", "#fde725"];
 const ANSWER = { yes: "#00796b", no: "#9c2d74" };
-const TYPES = { sejm: "Sejm", presidential: "Presidential", ep: "European Parliament", referendum: "Referendum", polls: "Polls" };
-const TYPE_SHORT = { sejm: "Sejm", presidential: "President", ep: "EP", referendum: "Referendum", polls: "Polls now" };
+const TYPES = { sejm: "Sejm", senate: "Senate", presidential: "Presidential", ep: "European Parliament", referendum: "Referendum", polls: "Polls" };
+const TYPE_SHORT = { sejm: "Sejm", senate: "Senate", presidential: "President", ep: "EP", referendum: "Referendum", polls: "Polls now" };
 const PAGES = "../../pages/polish-political-analyses/";
 // Change maps: gains in the party's colour, losses in a dark olive that no party uses; turnout
 // gains in viridis's teal
 const LOSS = "#5f5b0b", TURN_GAIN = "#21918c";
-const TYPECOL = { sejm: "#8B0000", presidential: "#495057", ep: "#00796b", referendum: "#9c2d74" };
+const TYPECOL = { sejm: "#8B0000", senate: "#a15c00", presidential: "#495057", ep: "#00796b", referendum: "#9c2d74" };
 const ZONES = [["russian", "Russian Empire"], ["german", "German Empire"], ["austrian", "Austria-Hungary"]];
 
 // ---- data -----------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ function prep() {
 const campCol = (camp, election, itemId) => (OWN_ALL[election] || {})[itemId] || ANSWER[camp] || E.labels[camp] || E.labels.Other;
 const elOf = id => id === "polls" ? POLLS_EL : E.elections.find(e => e.id === id);
 const isPolls = () => !!EL && EL.type === "polls";
-const partOf = () => CUR && !CUR.facts.facts_only ? CUR.facts.parts[S.p] : null;
+const partOf = () => CUR && !CUR.facts.facts_only && CUR.facts.parts ? CUR.facts.parts[S.p] : null;
 const resOf = () => CUR.results[S.p].items;
 const unitsOf = () => CUR.units[S.p];
 const itemById = id => resOf().find(r => r.id === id);
@@ -188,7 +188,7 @@ const boxW = id => Math.max(280, $(id).clientWidth - 12);
 function renderStrip() {
   const counts = { all: ELECTIONS.length };
   ELECTIONS.forEach(e => { counts[e.type] = (counts[e.type] || 0) + 1; });
-  $("types").innerHTML = ["all", "sejm", "presidential", "ep", "referendum"].map(t =>
+  $("types").innerHTML = ["all", "sejm", "senate", "presidential", "ep", "referendum"].map(t =>
     `<button type="button" data-t="${t}" aria-pressed="${S.type === t}">${t === "all" ? "All" : `<span class="tdot ${t}"></span>${TYPES[t]}`}</button>`).join("");
   const shown = ELECTIONS.filter(e => S.type === "all" || e.type === S.type);
   $("elections").innerHTML = shown.map(e =>
@@ -220,6 +220,14 @@ function stateString() {
     if (S.cx) q.set("x", S.cx);
     if (isFree()) { if (S.xa) q.set("xa", S.xa); if (S.xb) q.set("xb", S.xb); }
   }
+  if (typeof senateOn === "function" && senateOn()) {
+    if (SS.sel != null) q.set("sd", SS.sel);
+    if (SS.person) q.set("sp", SS.person);
+    if (SS.measure !== "winner") q.set("sm", SS.measure);
+    if (SS.level !== "district") q.set("sl", SS.level);
+    if (SS.shape !== "map") q.set("ss", SS.shape);
+  }
+  if (typeof membersOn === "function" && membersOn() && MM.person) q.set("mp", MM.person);
   if (S.z) q.set("z", 1);
   if (S.cv !== "higher_ed") q.set("cv", S.cv);
   if (S.zc) q.set("zc", S.zc);
@@ -252,6 +260,8 @@ function restoreHash() {
   S.z = q.get("z") === "1";
   S.cv = q.get("cv") || "higher_ed";
   S.zc = ["list", "1914", "1937"].includes(q.get("zc")) ? q.get("zc") : null;
+  S.sd = q.has("sd") ? +q.get("sd") : null;   // a Senate district, and how its map is drawn
+  S.sp = q.get("sp"); S.mp = q.get("mp"); S.sopts = { measure: q.get("sm"), level: q.get("sl"), shape: q.get("ss") };
 }
 function shareUrl() { const t = hashTarget(), s = stateString(); return t.location.origin + t.location.pathname + (s ? "#" + s : ""); }
 
@@ -288,6 +298,15 @@ async function setElection(id, keepPart = false) {
     if (!CACHE.has(id)) toast("Loading the election…");
     try { CUR = await loadElection(id); } catch (err) { console.error(err); toast("Could not load that election"); return; }
   }
+  if (EL.type === "senate") {   // a Senate election has its own view (senate.js)
+    await loadPeople();
+    if (S.sd != null) { SS.sel = S.sd; S.sd = null; } else if (!keepPart) SS.sel = null;
+    if (!keepPart) SS.person = null;
+    if (S.sp) { SS.person = S.sp; S.sp = null; }
+    if (S.sopts) { if (["winner", "margin"].includes(S.sopts.measure)) SS.measure = S.sopts.measure; if (["district", "gmina"].includes(S.sopts.level)) SS.level = S.sopts.level; if (["map", "cart"].includes(S.sopts.shape)) SS.shape = S.sopts.shape; S.sopts = null; }
+    renderSenateAll();
+    return;
+  }
   if (!keepPart) { S.p = 0; S.m = null; S.i = 0; S.j = 1; S.sel = null; S.cc = null; S.ck = null; S.cx = null; }
   if (isPolls()) { if (!["leader", "share", "h2h"].includes(S.m)) S.m = null; S.l = "c"; }
   if (!CUR.facts.facts_only) {
@@ -298,6 +317,7 @@ async function setElection(id, keepPart = false) {
     S.i = clamp(S.i, 0, Math.max(0, n - 1)); S.j = clamp(S.j, 0, Math.max(0, n - 1));
     if (S.j === S.i) S.j = S.i === 0 ? 1 : 0;
   }
+  if (S.mp) { MM.person = S.mp; S.mp = null; } else if (!keepPart) MM.person = null;
   renderAll();
   // A link to a gmina or constituency lands on the map, with its card, not at the top of the page
   if (linked && S.sel) setTimeout(() => scrollToMap(), 150);
@@ -1387,7 +1407,7 @@ function renderAllElections() {
       return `<tr data-e="${e.id}" class="${e.id === S.e ? "sel" : ""}" style="cursor:pointer"><td class="l">${dlong(e.date)}${e.date2 && e.type === "presidential" ? `<br><span class="muted">${dlong(e.date2)}</span>` : ""}</td>
         <td class="l"><button type="button" class="tbtn"><span class="tdot ${e.type}"></span> ${TYPES[e.type]}</button>${e.early ? ' <span class="muted">(early)</span>' : ""}</td>
         <td>${pct(o.turnout)}${isNum(o.turnout2) ? `<br><span class="muted">${pct(o.turnout2)}</span>` : ""}</td>
-        <td class="l">${res}</td><td>${e.type === "referendum" || e.facts_only ? "" : pct(o.winner_pct)}</td>
+        <td class="l">${res}</td><td>${e.type === "referendum" || e.facts_only ? "" : e.type === "senate" ? `${o.seats} of 100 seats` : pct(o.winner_pct)}</td>
         <td>${isNum(o.margin_pp) ? o.margin_pp.toFixed(1) : ""}</td><td>${isNum(o.enp) ? o.enp.toFixed(2) : ""}</td></tr>`;
     }).join("")}</tbody>`;
   turnoutChart();
@@ -1467,6 +1487,7 @@ const q = v => v == null || (typeof v === "number" && !isFinite(v)) ? "" : typeo
 const csvBlob = rows => new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" });
 const fileStem = () => partOf() ? partOf().contest_id : S.e;
 function csvNational() {
+  if (typeof senateOn === "function" && senateOn()) return csvSenate();
   if (CUR.facts.facts_only) return;
   if (isPolls()) {
     const head = ["week", "party", "share", "share_lo80", "share_hi80", "p_threshold", "seats", "seats_lo80", "seats_hi80"];
@@ -1546,14 +1567,16 @@ async function png(sec) {
 
 // ---- rendering ------------------------------------------------------------------------------
 function header() {
-  $("asof").textContent = `Every presidential, Sejm, European Parliament and referendum vote since 1990, from the files of the National Electoral Commission (PKW). National figures are PKW's announced ones; the maps use PKW's gmina files.`;
+  $("asof").textContent = `Every presidential, Sejm, Senate, European Parliament and referendum vote since 1990, from the files of the National Electoral Commission (PKW). National figures are PKW's announced ones; the maps use PKW's gmina files.`;
 }
 function renderAll() {
+  setSenateMode(false);
   const fo = CUR.facts.facts_only;
   $("mapsec").hidden = fo; $("results").hidden = fo;
   $("profilecard").hidden = true;
   document.querySelectorAll("#data .card")[0].hidden = fo;
   renderStrip(); renderGlance(); renderResults(); renderMap(); renderUnitCard(); renderScatter(); renderAllElections(); renderData();
+  renderMembers();
   saveHash();
 }
 
@@ -1587,7 +1610,7 @@ function bind() {
   $("cmp").addEventListener("change", e => { S.cc = e.target.value; if (isFree()) { S.xb = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); return; } S.cx = null; renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
   $("modes").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b || b.dataset.k === (S.ck || "free")) return; S.ck = b.dataset.k; S.cx = null; if (S.ck === "free") { S.xa = S.xb = S.cc = null; } renderMap(); renderUnitCard(); renderScatter(); saveHash(); });
   $("zabory").addEventListener("click", () => { S.z = !S.z; renderMap(); renderScatter(); saveHash(); });
-  bindSearch(); bindProfile(); bindAll(); bindScatter();
+  bindSearch(); bindProfile(); bindAll(); bindScatter(); bindSenate(); bindMembers();
   $("restable").addEventListener("click", e => {
     if (e.target.id === "alllists") { S.allLists = !S.allLists; renderResults(); return; }
     if (e.target.closest("a")) return;   // the party links go where they say
