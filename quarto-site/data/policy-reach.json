@@ -6,8 +6,8 @@
  },
  "totals": {
   "documents": 41,
-  "works": 30,
-  "organisations": 53,
+  "works": 31,
+  "organisations": 54,
   "countries": 18,
   "first_year": 2013,
   "cited_works": 12,
@@ -19,9 +19,9 @@
    "key": "think_tank",
    "name": "Think tanks and foundations",
    "colour": "#2a78d6",
-   "organisations": 38,
-   "records": 56,
-   "tip": "Think tanks and foundations: 38 organisations, behind 56 documents and works",
+   "organisations": 39,
+   "records": 57,
+   "tip": "Think tanks and foundations: 39 organisations, behind 57 documents and works",
    "w": 1.0
   },
   {
@@ -31,7 +31,7 @@
    "organisations": 12,
    "records": 12,
    "tip": "Government: 12 organisations, behind 12 documents and works",
-   "w": 0.3158
+   "w": 0.3077
   },
   {
    "key": "international",
@@ -40,7 +40,7 @@
    "organisations": 3,
    "records": 3,
    "tip": "International organisations: 3 organisations, behind 3 documents and works",
-   "w": 0.0789
+   "w": 0.0769
   }
  ],
  "organisations": [
@@ -355,6 +355,17 @@
    "total": 1,
    "colour": "#2a78d6",
    "tip": "Dahrendorf Forum (think tank, Germany): 1 policy document"
+  },
+  {
+   "name": "Eurac Research",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Italy",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Eurac Research (think tank, Italy): 1 research work"
   },
   {
    "name": "European Commission",
@@ -716,6 +727,16 @@
    "w": 0.1429
   },
   {
+   "code": "IT",
+   "name": "Italy",
+   "records": 3,
+   "organisations": 3,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Italy: 3 documents and works, from 3 organisations",
+   "w": 0.1429
+  },
+  {
    "code": "LU",
    "name": "Luxembourg",
    "records": 3,
@@ -743,16 +764,6 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Greece: 2 documents and works, from 1 organisation",
-   "w": 0.0952
-  },
-  {
-   "code": "IT",
-   "name": "Italy",
-   "records": 2,
-   "organisations": 2,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Italy: 2 documents and works, from 2 organisations",
    "w": 0.0952
   },
   {
@@ -1094,16 +1105,16 @@
    {
     "year": 2024,
     "label": "2024",
-    "count": 8,
-    "h": 0.5333,
+    "count": 9,
+    "h": 0.6,
     "minor": true,
-    "tip": "2024: 8 documents and works (Think tanks and foundations 4, Government 4)",
+    "tip": "2024: 9 documents and works (Think tanks and foundations 5, Government 4)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 4,
+      "count": 5,
       "colour": "#2a78d6",
-      "tip": "2024, Think tanks and foundations: 4 documents and works"
+      "tip": "2024, Think tanks and foundations: 5 documents and works"
      },
      {
       "name": "Government",
@@ -1180,8 +1191,8 @@
    "title": "The Thin Ideology of Populism",
    "year": 2008,
    "documents": 26,
-   "works": 12,
-   "summary": "26 policy documents and 12 research works",
+   "works": 13,
+   "summary": "26 policy documents and 13 research works",
    "items": [
     {
      "date": "2026",
@@ -1236,6 +1247,15 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "Centre for Economic Policy Research (think tank, United Kingdom); Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Climate Politics in Populist Times",
+     "url": "https://doi.org/10.4324/9781003536987",
+     "kind": "book",
+     "source": "openalex",
+     "orgs": "Eurac Research (think tank, Italy)"
     },
     {
      "date": "2024",
@@ -2374,6 +2394,26 @@
    ],
    "cites": [
     "10.1016/j.electstud.2022.102552"
+   ]
+  },
+  {
+   "id": "openalex:W4402197683",
+   "source": "openalex",
+   "title": "Climate Politics in Populist Times",
+   "url": "https://doi.org/10.4324/9781003536987",
+   "date": "",
+   "year": 2024,
+   "kind": "book",
+   "orgs": [
+    {
+     "name": "Eurac Research",
+     "type": "think_tank",
+     "country": "IT",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
    ]
   },
   {

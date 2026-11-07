@@ -14,7 +14,7 @@ const BODY_NAME = { sejm: "Sejm", senate: "Senate", ep: "European Parliament" };
 const BODY_COL = { sejm: "#8B0000", senate: "#a15c00", ep: "#00796b" };
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
 const SS = { measure: "winner", level: "district", shape: "map", sel: null, q: "", sort: "no", asc: true, person: null };
-let SJACT = null, EPACT = null, PEOPLE = null, PEOPLE_BY = new Map(), SEJMP = null, GMN = null;
+let SJACT = null, SNACT = null, EPACT = null, PEOPLE = null, PEOPLE_BY = new Map(), SEJMP = null, GMN = null;
 const personById = id => PEOPLE_BY.get(id) || (SEJMP && SEJMP.get(id)) || null;
 
 const senateOn = () => !!EL && EL.type === "senate" && !!CUR && !!CUR.districts;
@@ -49,6 +49,10 @@ async function loadPeople() {
     const r = await fetch("sejm-activity.json"); if (!r.ok) throw new Error(r.status);
     SJACT = await r.json();
   } catch (err) { console.warn("sejm-activity.json unavailable:", err); SJACT = { meta: {}, persons: {} }; }
+  try {
+    const r = await fetch("senate-activity.json"); if (!r.ok) throw new Error(r.status);
+    SNACT = await r.json();
+  } catch (err) { console.warn("senate-activity.json unavailable:", err); SNACT = { meta: {}, persons: {} }; }
   return PEOPLE;
 }
 
@@ -269,9 +273,11 @@ function careerCard(id, el = $("scareer")) {
     return `<li>${esc(BODY_NAME[x.from])} → ${esc(BODY_NAME[x.to])}: ${x.kind === "concurrent" ? "at the same time" : x.kind === "direct" ? "straight on" : `after ${x.gap != null ? Math.round(x.gap / 365.25 * 10) / 10 + " years" : "a gap"}`}${ch ? `, ${dot(partyCol(fp))}${esc(partyName(fp))} → ${dot(partyCol(tp))}${esc(partyName(tp))}` : ""}</li>`;
   }).join("");
   const ea = EPACT && EPACT.persons[id], pc = x => x == null ? NA : Math.round(x * 100) + "%";
-  const epv = ea && ea.votes && ea.votes.length ? `<span class="label" style="margin-top:6px">In the European Parliament: roll-call votes</span><div class="scroll"><table class="t proftable"><thead><tr><th class="l">Term</th><th>Votes</th><th>Voted</th><th>With group</th><th>With party</th></tr></thead><tbody>${ea.votes.map(v => `<tr><td class="l">${rom(v[0])}</td><td>${v[1].toLocaleString("en-GB")}</td><td>${pc(v[3])}</td><td>${pc(v[4])}</td><td>${pc(v[5])}</td></tr>`).join("")}</tbody></table></div><p class="note">Terms VI–VIII from VoteWatch Europe (Hix, Frantescu and Hagemann 2022), IX–X from HowTheyVote.eu; both secondary, compiled from the Parliament's roll-call results. Voted: share of roll-call votes held in the mandate on which the MEP voted for, against or abstained. With group, with party: share of votes cast that matched the plurality position of the EP group, or of the Polish MEPs of the same party.</p>` : "";
+  const epv = ea && ea.votes && ea.votes.length ? `<span class="label" style="margin-top:6px">In the European Parliament: roll-call votes</span><div class="scroll"><table class="t proftable"><thead><tr><th class="l">Term</th><th>Votes</th><th>Voted</th><th>With group</th><th>With party</th></tr></thead><tbody>${ea.votes.map(v => `<tr><td class="l">${v[1] == null ? rom(v[0]) : `<a href="${PAGES}legislative-activity.html#b=ep&view=mps&t=${v[0]}&mp=${v[1]}" target="_top" title="Full profile on the Legislative activity page">${rom(v[0])}</a>`}</td><td>${v[2].toLocaleString("en-GB")}</td><td>${pc(v[4])}</td><td>${pc(v[5])}</td><td>${pc(v[6])}</td></tr>`).join("")}</tbody></table></div><p class="note">Terms VI–VIII from VoteWatch Europe (Hix, Frantescu and Hagemann 2022), IX–X from HowTheyVote.eu; both secondary, compiled from the Parliament's roll-call results (the term links to the MEP's full profile on the Legislative activity page). Voted: share of roll-call votes held in the mandate on which the MEP voted for, against or abstained. With group, with party: share of votes cast that matched the plurality position of the EP group, or of the Polish MEPs of the same party.</p>` : "";
   const sa = SJACT && SJACT.persons[id];
   const sjv = sa && sa.length ? `<span class="label" style="margin-top:6px">In the Sejm: roll-call votes</span><div class="scroll"><table class="t proftable"><thead><tr><th class="l">Term</th><th>Votes</th><th>Voted</th><th>Against club</th><th>Speeches</th><th>Questions</th></tr></thead><tbody>${sa.map(v => `<tr><td class="l"><a href="${PAGES}legislative-activity.html#view=mps&t=${v[0]}&mp=${v[1]}" target="_top" title="Full profile on the Legislative activity page">${rom(v[0])}</a></td><td>${v[2].toLocaleString("en-GB")}</td><td>${pc(v[4])}</td><td>${v[6] == null ? NA : (v[6] * 100).toFixed(1) + "%"}</td><td>${v[7] == null ? NA : v[7].toLocaleString("en-GB")}</td><td>${v[8] == null ? NA : v[8].toLocaleString("en-GB")}</td></tr>`).join("")}</tbody></table></div><p class="note">From the Sejm's own API, via the Legislative activity page (the term links to the deputy's full profile). Voted: share of roll calls held in the mandate on which the deputy voted for, against or abstained. Against club: share of votes cast against the club's line. Speeches from term VI and questions from term VII.</p>` : "";
+  const na = SNACT && SNACT.persons[id];
+  const snv = na && na.length ? `<span class="label" style="margin-top:6px">In the Senate: named votes</span><div class="scroll"><table class="t proftable"><thead><tr><th class="l">Term</th><th>Votes</th><th>Voted</th><th>Against club</th></tr></thead><tbody>${na.map(v => `<tr><td class="l"><a href="${PAGES}legislative-activity.html#b=senate&view=mps&t=${v[0]}&mp=${v[1]}" target="_top" title="Full profile on the Legislative activity page">${rom(v[0])}</a></td><td>${v[2].toLocaleString("en-GB")}</td><td>${pc(v[4])}</td><td>${v[6] == null ? NA : (v[6] * 100).toFixed(1) + "%"}</td></tr>`).join("")}</tbody></table></div><p class="note">From the Senate's own pages of named votes (senat.gov.pl), via the Legislative activity page (the term links to the senator's full profile). Voted: share of the votes held in the mandate on which the senator voted for, against or abstained; in term IX the Senate prints absence and not voting alike. Against club: share of votes cast against the club's line.</p>` : "";
   const ROLE = { CHAIR: "chair", CHAIR_VICE: "vice-chair", MEMBER: "member", MEMBER_SUBSTITUTE: "substitute", OBSERVER: "observer" };
   const bdy = ea && ea.bodies && ea.bodies.length ? `<details style="margin-top:6px"><summary class="label" style="cursor:pointer">European Parliament committees and delegations (${ea.bodies.length})</summary><div class="scroll"><table class="t proftable"><tbody>${ea.bodies.map(b => `<tr><td class="l" style="white-space:normal"><span title="${esc(b[2])}">${esc(b[1])}</span> <span class="muted">${b[0] === "delegation" ? "delegation" : b[0] === "working_group" ? "working group" : "committee"}</span></td><td class="l">${esc(ROLE[b[3]] || b[3].toLowerCase().replace(/_/g, " "))}</td><td class="l muted">${yr(b[4])}${b[5] ? "–" + yr(b[5]) : "–"}</td></tr>`).join("")}</tbody></table></div><p class="note">From the European Parliament's open data. Hover an abbreviation for the full name.</p></details>` : "";
   el.innerHTML = `<span class="label">Career</span><h3 style="margin:2px 0 2px;font-size:18px;font-weight:500">${esc(p.name)}</h3>
@@ -279,6 +285,7 @@ function careerCard(id, el = $("scareer")) {
     <svg viewBox="0 0 ${W} ${lanes.length * 22 + 18}" role="img" aria-label="Mandates in the Sejm, the Senate and the European Parliament over time" style="width:100%;max-width:${W}px;overflow:visible">${bars}${axis}</svg>
     <div class="scroll"><table class="t proftable"><tbody>${rows}</tbody></table></div>
     ${sjv}
+    ${snv}
     ${epv}
     ${bdy}
     ${mv ? `<span class="label" style="margin-top:6px">Moves between bodies</span><ul class="note" style="margin:2px 0 0;padding-left:16px">${mv}</ul>` : ""}
