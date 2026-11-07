@@ -8,8 +8,8 @@ const pct = (x, d = 1) => x == null ? "n/a" : (100 * x).toFixed(d) + "%";
 const num = x => x == null ? "n/a" : Number(x).toLocaleString("en-GB");
 const BODIES = {
   sejm: {name: "Sejm", short: "Sejm", index: "legislative.json", prefix: "", mp: "MP", mps: "MPs", votes: "roll calls", views: ["clubs", "mps", "spread", "positions", "questions", "legislation"]},
-  senate: {name: "Senate", short: "Senate", index: "senate-legislative.json", prefix: "senate-", mp: "senator", mps: "senators", votes: "recorded votes", views: ["clubs", "mps", "spread"]},
-  ep: {name: "European Parliament", short: "EP", index: "ep-legislative.json", prefix: "ep-", mp: "MEP", mps: "MEPs", votes: "roll calls", views: ["clubs", "mps", "spread"]}};
+  senate: {name: "Senate", short: "Senate", index: "senate-legislative.json", prefix: "senate-", mp: "senator", mps: "senators", votes: "recorded votes", views: ["clubs", "mps", "spread", "positions"]},
+  ep: {name: "European Parliament", short: "EP", index: "ep-legislative.json", prefix: "ep-", mp: "MEP", mps: "MEPs", votes: "roll calls", views: ["clubs", "mps", "spread", "positions"]}};
 const VIEWNAMES = {clubs: "Clubs", mps: "MPs", spread: "All MPs", positions: "Positions", questions: "Questions", legislation: "Legislation"};
 let VIEWS = [];
 const viewList = b => BODIES[b].views.map(v => [v, v === "clubs" ? (b === "ep" ? "Groups" : "Clubs") : v === "mps" ? (b === "sejm" ? "MPs" : b === "ep" ? "MEPs" : "Senators") : v === "spread" ? (b === "sejm" ? "All MPs" : b === "ep" ? "All MEPs" : "All senators") : VIEWNAMES[v]]);
@@ -165,7 +165,7 @@ async function drawProfile() {
     ${ti.questions ? `<div class="stat"><b>${(m.n_interpellations_first || 0) + (m.n_written_questions_first || 0)}</b><span>questions first-signed, ${(m.n_interpellations_co || 0) + (m.n_written_questions_co || 0)} co-signed${m.median_days_to_reply != null ? `; median reply ${m.median_days_to_reply} days` : ""}</span></div>` : ""}
     ${ti.speech ? `<div class="stat"><b>${num(m.n_words_spoken)}</b><span>words in ${num(m.n_statements)} statements${m.n_unspoken_statements ? `, ${m.n_unspoken_statements} written` : ""}</span></div>` : ""}
     ${m.n_rapporteur_reports ? `<div class="stat"><b>${m.n_rapporteur_reports}</b><span>committee reports as rapporteur</span></div>` : ""}</div>
-   <div class="two"><div><h3>Position against the club</h3>${m.ideal_point != null ? ideal(m) : `<p class="help">${S.body === "sejm" ? "Ideal points exist for terms 5 to 10." : "Ideal points are not estimated for the " + N.name + "."}</p>`}</div>
+   <div class="two"><div><h3>Position against the club</h3>${m.ideal_point != null ? ideal(m) : `<p class="help">${S.body === "sejm" ? "Ideal points exist for terms 5 to 10." : "No position: too few recorded votes to place this " + N.mp + "."}</p>`}</div>
     <div><h3>Roles</h3>${roles.length ? `<div class="tbl"><table><tbody>${roles.slice(0, 8).map(r => `<tr><td>${esc(r.body)}<br><span class="help">${esc(r.kind)}</span></td><td>${esc(r.role)}</td><td class="n">${esc((r.from || "").slice(0, 7))}</td></tr>`).join("")}</tbody></table></div>${roles.length > 8 ? `<p class="help">and ${roles.length - 8} more</p>` : ""}` : `<p class="help">${S.body === "sejm" ? "No committee, club or group roles recorded." : "No committee roles are included for the " + N.name + "; the chips above show the club history."}</p>`}
     ${rec.length ? `<h3 style="margin-top:12px">Most questions addressed to</h3><p class="help">${rec.map(r => esc(up(r.recipient)) + " (" + r.n + ")").join("; ")}</p>` : ""}</div></div>
    <h3>Votes against the club line (${num(rb.length)})</h3>
@@ -205,12 +205,12 @@ async function viewSpread() {
 /* ---------- Positions ---------- */
 async function viewPositions() {
   const ti = L.terms.find(t => t.term === S.term);
-  if (!ti.ideal_points) { $("#main").innerHTML = `<p class="notice">Positions are estimated from roll calls for terms 5 to 10. Choose one of those terms.</p>`; return; }
+  if (!ti.ideal_points) { $("#main").innerHTML = `<p class="notice">${S.body === "sejm" ? "Positions are estimated from roll calls for terms 5 to 10. Choose one of those terms." : "Positions are not estimated for this term."}</p>`; return; }
   const WN = L.wnominate, pkv = (tab(WN.indices_halfyear).filter(r => r.term === S.term && r.index === "d_PiS_KO").map(r => r.value)), fit = tab(WN.fit).find(r => r.term === S.term), ms = TD[S.term].mps.filter(m => m.wn_dim1 != null);
-  $("#main").innerHTML = `<p class="lead">Each dot is one MP, placed by how they voted over the whole term (W-NOMINATE). The horizontal axis is the main line of division in the Sejm; the vertical axis picks up what is left. Select a dot to open the profile.</p>
+  $("#main").innerHTML = `<p class="lead">Each dot is one ${N.mp}, placed by how they voted over the whole term (W-NOMINATE). The horizontal axis is the main line of division in ${S.body === "ep" ? "the Polish delegation" : "the " + N.name}; the vertical axis picks up what is left. ${S.body === "ep" ? "Only Polish MEPs are scaled, so the picture is of the Polish delegation, not of the whole Parliament. " : ""}Select a dot to open the profile.</p>
    <div class="cols"><div class="chartbox"><div id="wn"></div><div class="legend" id="wnl"></div></div>
    <div class="chartbox"><h3>Fit, term ${S.term}</h3><div class="stats" style="grid-template-columns:1fr 1fr"><div class="stat"><b>${fit.correctclass1D.toFixed(1)}%</b><span>votes correctly classified, one dimension</span></div><div class="stat"><b>${fit.correctclass2D.toFixed(1)}%</b><span>two dimensions</span></div></div>
-   ${note(`${num(fit.n_votes_scaled)} roll calls scaled for ${num(fit.n_legislators)} MPs. Dimension 1 has ${esc(fit.polarity_dim1)} on the positive side; dimension 2 is anchored on ${esc(fit.polarity_dim2)}. ${esc(WN.note)}`)}
+   ${note(`${num(fit.n_votes_scaled)} ${N.votes} scaled for ${num(fit.n_legislators)} ${N.mps}. Dimension 1 has ${esc(fit.polarity_dim1)} on the positive side; dimension 2 is anchored on ${esc(fit.polarity_dim2)}. ${esc(WN.note)}`)}
 ${pkv.length ? `<h3 style="margin-top:14px">Distance between PiS and KO</h3><p class="lead"><b style="font-size:22px">${(pkv.reduce((a, b) => a + b, 0) / pkv.length).toFixed(2)}</b> on dimension 1, the gap between the two parties' average positions over the term (the scale runs from about -1 to 1).</p>` : ""}</div></div>`;
   const W = 640, H = 460, m = {l: 40, r: 14, t: 10, b: 34}, X = v => m.l + (v + 1) / 2 * (W - m.l - m.r), Y = v => m.t + (1 - (v + 1) / 2) * (H - m.t - m.b);
   let s = `<svg style="max-width:${Math.round(W * 1.2)}px" viewBox="0 0 ${W} ${H}" role="img" aria-label="W-NOMINATE map">`;
