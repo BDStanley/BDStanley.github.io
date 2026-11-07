@@ -170,6 +170,7 @@ LISTED_NAMES = [
         ("people.json", {"meta", "parties", "persons", "moves"}),
         ("people-sejm.json", {"meta", "persons"}),
         ("ep-activity.json", {"meta", "persons"}),
+        ("sejm-activity.json", {"meta", "persons"}),
         ("", {"facts", "results", "units"}),
     ]),
     ("Voting behaviour/web/voting.json", "files", [
