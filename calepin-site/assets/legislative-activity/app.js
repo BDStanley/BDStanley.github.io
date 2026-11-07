@@ -6,18 +6,33 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const pct = (x, d = 1) => x == null ? "n/a" : (100 * x).toFixed(d) + "%";
 const num = x => x == null ? "n/a" : Number(x).toLocaleString("en-GB");
-const VIEWS = [["clubs", "Clubs"], ["mps", "MPs"], ["spread", "All MPs"], ["positions", "Positions"], ["questions", "Questions"], ["legislation", "Legislation"]];
+const BODIES = {
+  sejm: {name: "Sejm", short: "Sejm", index: "legislative.json", prefix: "", mp: "MP", mps: "MPs", votes: "roll calls", views: ["clubs", "mps", "spread", "positions", "questions", "legislation"]},
+  senate: {name: "Senate", short: "Senate", index: "senate-legislative.json", prefix: "senate-", mp: "senator", mps: "senators", votes: "recorded votes", views: ["clubs", "mps", "spread"]},
+  ep: {name: "European Parliament", short: "EP", index: "ep-legislative.json", prefix: "ep-", mp: "MEP", mps: "MEPs", votes: "roll calls", views: ["clubs", "mps", "spread"]}};
+const VIEWNAMES = {clubs: "Clubs", mps: "MPs", spread: "All MPs", positions: "Positions", questions: "Questions", legislation: "Legislation"};
+let VIEWS = [];
+const viewList = b => BODIES[b].views.map(v => [v, v === "clubs" ? (b === "ep" ? "Groups" : "Clubs") : v === "mps" ? (b === "sejm" ? "MPs" : b === "ep" ? "MEPs" : "Senators") : v === "spread" ? (b === "sejm" ? "All MPs" : b === "ep" ? "All MEPs" : "All senators") : VIEWNAMES[v]]);
 const cache = {};
 const fetchJSON = f => cache[f] || (cache[f] = fetch(f).then(r => { if (!r.ok) throw new Error(f + " " + r.status); return r.json(); }));
-let L, S = {view: "clubs", term: 10, mp: null, q: "", club: "", page: 0, ext: false};
-const TD = {};   // term -> mps json
+let L, S = {body: "sejm", view: "clubs", term: 10, mp: null, q: "", club: "", page: 0, ext: false}, PFX = "", N = BODIES.sejm;
+const LB = {}, TDS = {sejm: {}, senate: {}, ep: {}};
+let TD = TDS.sejm;   // term -> mps json, of the current body
 const colOf = f => (L.family_colours[f]) || "#7f7f7f";
 const up = s => s ? String(s).charAt(0).toUpperCase() + String(s).slice(1) : s;
 const PARTY = {aws: "AWS", aws_party: "AWS (party)", centrum: "Centrum", centrum_dla_polski: "Centrum dla Polski", inicjatywa_polska: "Inicjatywa Polska", ko_coalition: "KO coalition", ko_party: "KO (party)", koalicja_polska: "Koalicja Polska", konfederacja: "Konfederacja", kukiz15: "Kukiz'15", lewica_committee: "Lewica committee", lid: "LiD", nowa_lewica: "Nowa Lewica", nowoczesna: "Nowoczesna", pc: "PC", pd: "PD", pis: "PiS", pld: "PLD", po: "PO", polska2050: "Polska 2050", polska_plus: "Polska Plus", polska_razem: "Polska Razem", polska_xxi: "Polska XXI", pps: "PPS", psl: "PSL", razem: "Razem", rop: "ROP", ruch_ludzi_pracy: "Ruch Ludzi Pracy", ruch_narodowy: "Ruch Narodowy", sd: "SD", sld: "SLD", sld_coalition: "SLD coalition", solidarna_polska: "Solidarna Polska", stronnictwo_gospodarcze: "Stronnictwo Gospodarcze", suwerenna_polska: "Suwerenna Polska", td: "Trzecia Droga", unia_centrum: "Unia Centrum", up: "UP", wolni_republikanie: "Wolni Republikanie", zp: "Zjednoczona Prawica"};
 const cn = c => c == null ? c : ({RozwojPlus: "Rozwój Plus"}[c] || String(c).replace(/_/g, " ").replace(/([A-Za-z])(\d)/g, "$1 $2"));
 const parties = p => p ? String(p).split(/;\s*/).map(x => PARTY[x] || up(x.replace(/_/g, " "))).join(", ") : "";
+const K = s => S.body !== "ep" ? s : s.replace(/\bclubs\b/g, "groups").replace(/\bClubs\b/g, "Groups").replace(/\bclub's\b/g, "group's").replace(/\bClub\b/g, "Group").replace(/\bclub\b/g, "group");   // the EP has groups, not clubs
+const HASGO = () => !!(L.government_opposition && L.government_opposition.rows && L.government_opposition.rows.length);
 const tab = t => t.rows.map(r => Object.fromEntries(t.columns.map((c, i) => [c, r[i]])));
 
+async function setBody(b) {
+  if (!BODIES[b]) b = "sejm";
+  LB[b] = LB[b] || await fetchJSON(BODIES[b].index);
+  S.body = b; L = LB[b]; N = BODIES[b]; PFX = N.prefix; TD = TDS[b]; VIEWS = viewList(b);
+}
+const hashBody = () => new URLSearchParams(location.hash.slice(1)).get("b") || "sejm";
 function readHash() {
   const p = new URLSearchParams(location.hash.slice(1));
   if (p.get("view") && VIEWS.some(v => v[0] === p.get("view"))) S.view = p.get("view");
@@ -25,7 +40,7 @@ function readHash() {
   if (p.get("mp")) S.mp = +p.get("mp");
 }
 function writeHash() {
-  const p = new URLSearchParams({view: S.view, t: S.term}); if (S.mp && (S.view === "mps")) p.set("mp", S.mp);
+  const p = new URLSearchParams({view: S.view, t: S.term}); if (S.body !== "sejm") p.set("b", S.body); if (S.mp && (S.view === "mps")) p.set("mp", S.mp);
   history.replaceState(null, "", "#" + p.toString());
 }
 const tip = $("#tip");
@@ -38,9 +53,11 @@ document.addEventListener("mousemove", e => {
 
 function toolbar() {
   const T = L.terms;
-  $("#tb").innerHTML = `<div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
-   <label class="ctl">Sejm term <span class="seg small" role="group" aria-label="Term">${T.map(t => `<button data-t="${t.term}" aria-pressed="${S.term === t.term}" ${S.view === "legislation" ? "disabled" : ""} title="${t.first_vote.slice(0, 4)}–${t.term === 10 ? "" : t.term_end.slice(0, 4)}">${t.term}</button>`).join("")}</span></label>`;
+  $("#tb").innerHTML = `<label class="ctl">Body <span class="seg small" role="group" aria-label="Body">${Object.keys(BODIES).map(b => `<button data-b="${b}" aria-pressed="${S.body === b}">${BODIES[b].name}</button>`).join("")}</span></label>
+   <div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
+   <label class="ctl">${N.name} term <span class="seg small" role="group" aria-label="Term">${T.map(t => `<button data-t="${t.term}" aria-pressed="${S.term === t.term}" ${S.view === "legislation" ? "disabled" : ""} title="${t.first_vote.slice(0, 4)}–${t.term_end ? t.term_end.slice(0, 4) : ""}">${t.label || t.term}</button>`).join("")}</span></label>`;
   $("#tb").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return;
+    if (b.dataset.b) { if (b.dataset.b !== S.body) { setBody(b.dataset.b).then(() => { S.term = Math.max(...L.terms.map(t => t.term)); if (!VIEWS.some(v => v[0] === S.view)) S.view = "clubs"; S.mp = null; S.club = ""; S.q = ""; S.page = 0; render(); }); } return; }
     if (b.dataset.v) { S.view = b.dataset.v; } else { S.term = +b.dataset.t; S.mp = null; S.club = ""; S.q = ""; S.page = 0; }
     render(); };
 }
@@ -48,11 +65,11 @@ async function render() {
   writeHash(); toolbar();
   const ti = L.terms.find(t => t.term === S.term);
   $("#main").innerHTML = `<div class="loading">Loading…</div>`;
-  try { if (S.view !== "legislation" && S.view !== "questions") TD[S.term] = TD[S.term] || await fetchJSON(`mps-${S.term}.json`);
+  try { if (S.view !== "legislation" && S.view !== "questions") TD[S.term] = TD[S.term] || await fetchJSON(`${PFX}mps-${S.term}.json`);
     await ({clubs: viewClubs, mps: viewMps, spread: viewSpread, positions: viewPositions, questions: viewQuestions, legislation: viewLegislation})[S.view]();
   } catch (e) { $("#main").innerHTML = `<p class="notice">Could not load the data (${esc(e.message)}).</p>`; }
   const cav = L.meta.caveats;
-  $("#foot").innerHTML = `<b>Term ${S.term}</b>: ${num(ti.n_mps)} MPs, ${num(ti.n_roll_calls)} roll calls, ${esc(ti.first_vote)} to ${esc(ti.last_vote)}. Sources and their cut-off dates: ${L.meta.sources.filter(s => s.term === S.term).map(s => esc(s.source) + " " + esc(s.last)).join("; ")}.<ul>${[2, 3, 4, 5, 6, 10].map(i => `<li>${esc(cav[i])}</li>`).join("")}</ul>`;
+  $("#foot").innerHTML = `<b>${N.name} term ${esc(ti.label || S.term)}</b>: ${num(ti.n_mps)} ${N.mps}, ${num(ti.n_roll_calls)} ${N.votes}, ${esc(ti.first_vote)} to ${esc(ti.last_vote)}. Sources and their cut-off dates: ${L.meta.sources.filter(s => s.term === S.term).map(s => esc(s.source) + " " + esc(s.last)).join("; ")}.<ul>${(S.body === "sejm" ? [2, 3, 4, 5, 6, 10] : cav.map((_, i) => i)).map(i => `<li>${esc(cav[i])}</li>`).join("")}</ul>`;
 }
 const hyx = h => +h.slice(0, 4) + (h.endsWith("H1") ? 0.25 : 0.75);
 function note(html) { return `<p class="help">${html}</p>`; }
@@ -62,12 +79,12 @@ async function viewClubs() {
   const cl = L.clubs.filter(c => c.term === S.term && c.max_size >= 8);
   const rows = tab(L.cohesion).filter(r => r.term === S.term && r.n_votes >= 20);
   const clubs = cl.filter(c => rows.some(r => r.club === c.club));
-  $("#main").innerHTML = `<p class="lead">How united is each club, and how often do government and opposition take opposite sides? Cohesion is the agreement index on contested votes: 1 means every MP voted with the club's majority, 0 an even three-way split.</p>
+  $("#main").innerHTML = K(`<p class="lead">How united is each club${HASGO() ? ", and how often do government and opposition take opposite sides" : ""}? Cohesion is the agreement index on contested votes: 1 means every ${N.mp} voted with the club's majority, 0 an even three-way split.</p>
    <div class="cols"><div class="chartbox"><h3>Cohesion by half-year</h3><div id="cc"></div><div class="legend" id="cl"></div></div>
-   <div class="chartbox"><h3>Government against opposition</h3><div id="go"></div>${note("Share of contested votes on which the two sides' majorities voted YES against NO.")}</div></div>
-   <div class="chartbox"><h3>Clubs this term</h3><div class="tbl"><table><thead><tr><th>Club</th><th>Family</th><th class="n">MPs (largest)</th><th>Composite</th></tr></thead><tbody>${cl.map(c => `<tr><td><span class="sw" style="border-color:${colOf(c.family)};margin-right:8px"></span>${esc(cn(c.club))}<br><span class="help">${esc(c.name || "")}</span></td><td>${esc(up(c.family))}</td><td class="n">${Math.round(c.max_size)}</td><td>${c.composite ? esc(parties(c.parties)) : ""}</td></tr>`).join("")}</tbody></table></div>
-   ${note("Composite clubs hold more than one party (Party tracker), so rebellion inside them often marks a party faction rather than individual dissent. Dotted lines mark them.")}</div>
-   <div class="chartbox"><h3>Agreement between party families, term ${S.term}</h3><div id="ag"></div>${note("Hix–Noury–Roland agreement index of two families' pooled votes on contested votes (1 = identical majority position, lower = further apart). Families of at least three MPs.")}</div>`;
+   ${HASGO() ? `<div class="chartbox"><h3>Government against opposition</h3><div id="go"></div>${note("Share of contested votes on which the two sides' majorities voted YES against NO.")}</div>` : ""}</div>
+   <div class="chartbox"><h3>Clubs this term</h3><div class="tbl"><table><thead><tr><th>Club</th><th>Family</th><th class="n">${up(N.mps)} (largest)</th><th>Composite</th></tr></thead><tbody>${cl.map(c => `<tr><td><span class="sw" style="border-color:${colOf(c.family)};margin-right:8px"></span>${esc(cn(c.club))}<br><span class="help">${esc(c.name || "")}</span></td><td>${esc(up(c.family))}</td><td class="n">${Math.round(c.max_size)}</td><td>${c.composite ? esc(parties(c.parties)) : ""}</td></tr>`).join("")}</tbody></table></div>
+   ${S.body === "sejm" ? note("Composite clubs hold more than one party (Party tracker), so rebellion inside them often marks a party faction rather than individual dissent. Dotted lines mark them.") : ""}</div>
+   <div class="chartbox"><h3>Agreement between party families, term ${S.term}</h3><div id="ag"></div>${note(`Hix–Noury–Roland agreement index of two families' pooled votes on contested votes (1 = identical majority position, lower = further apart). Families of at least three ${N.mps}.`)}</div>`);
   if (!rows.length) { $("#cc").innerHTML = `<p class="help">No club has enough contested votes.</p>`; return; }
   const hs = [...new Set(rows.map(r => r.half_year))].sort(), x0 = hyx(hs[0]), x1 = hyx(hs[hs.length - 1]);
   const W = 640, H = 320, m = {l: 40, r: 64, t: 8, b: 24}, vmin = Math.floor(Math.min(...rows.map(r => r.cohesion)) * 20) / 20;
@@ -84,12 +101,14 @@ async function viewClubs() {
   ends.forEach(e => s += `<circle cx="${e.x}" cy="${e.y}" r="3" fill="${e.col}"/><text class="t" x="${e.x + 7}" y="${e.y + 4}">${esc(e.club)}</text>`);
   $("#cc").innerHTML = s + "</svg>";
   $("#cl").innerHTML = clubs.map(c => `<span><i class="sw ${c.composite ? "dots" : ""}" style="border-color:${colOf(c.family)}"></i>${esc(cn(c.club))}</span>`).join("");
+  if (HASGO()) {
   const g = tab(L.government_opposition).filter(r => r.term === S.term), W2 = 420, H2 = 320, bw = Math.max(8, (W2 - 50) / Math.max(1, g.length) - 8);
   let s2 = `<svg style="max-width:${Math.round(W2 * 1.2)}px" viewBox="0 0 ${W2} ${H2}" role="img" aria-label="Opposed-line rate by half-year">`;
   for (let v = 0; v <= 1.0001; v += .25) { const y = 8 + (1 - v) * (H2 - 34); s2 += `<line x1="36" x2="${W2}" y1="${y}" y2="${y}" stroke="#ECECEC"/><text x="30" y="${y + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`; }
   g.forEach((r, i) => { const x = 44 + i * ((W2 - 50) / g.length), h = (r.opposed_rate || 0) * (H2 - 34);
     s2 += `<rect x="${x}" y="${8 + (H2 - 34) - h}" width="${bw}" height="${h}" rx="3" fill="#8B0000" data-tip="${r.half_year}: ${pct(r.opposed_rate)} of ${r.n_both_lines} contested votes"/><text x="${x + bw / 2}" y="${H2 - 6}" text-anchor="middle">${r.half_year.slice(2)}</text>`; });
   $("#go").innerHTML = s2 + "</svg>";
+  }
   const ag = tab(L.agreement_between_families).filter(r => r.term === S.term), fams = [...new Set(ag.map(r => r.family_a))];
   const get = (a, b) => (ag.find(r => r.family_a === a && r.family_b === b) || {}).hnr_ai;
   $("#ag").innerHTML = `<div class="tbl"><table class="heat"><thead><tr><th></th>${fams.map(f => `<th style="text-align:center">${esc(up(f))}</th>`).join("")}</tr></thead><tbody>${fams.map(a => `<tr><td><b>${esc(up(a))}</b></td>${fams.map(b => { const v = get(a, b); return v == null ? "<td></td>" : `<td style="background:rgba(139,0,0,${Math.max(0, (v - .3) / .7 * .75).toFixed(2)});color:${v > .8 ? "#fff" : "#141414"}">${v.toFixed(2)}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div>`;
@@ -100,10 +119,10 @@ async function viewMps() {
   const mps = TD[S.term].mps;
   if (!S.mp || !mps.some(m => m.mp_id === S.mp)) S.mp = (mps.find(m => m.n_cast >= 500 && !m.office_holder) || mps[0]).mp_id;
   const clubs = [...new Set(mps.map(m => m.modal_club).filter(Boolean))].sort();
-  $("#main").innerHTML = `<p class="lead">Every MP of the term can be found by name. There are no ranked lists: the charts and profiles show where an MP stands among colleagues, not who is "best" or "worst".</p>
-   <div class="ledger"><div class="find"><label class="ctl" for="q">Find an MP</label><input id="q" type="search" placeholder="Name" value="${esc(S.q)}" autocomplete="off">
+  $("#main").innerHTML = K(`<p class="lead">Every ${N.mp} of the term can be found by name. There are no ranked lists: the charts and profiles show where ${/^(MP|MEP)$/.test(N.mp) ? "an" : "a"} ${N.mp} stands among colleagues, not who is "best" or "worst".</p>
+   <div class="ledger"><div class="find"><label class="ctl" for="q">Find ${/^(MP|MEP)$/.test(N.mp) ? "an" : "a"} ${N.mp}</label><input id="q" type="search" placeholder="Name" value="${esc(S.q)}" autocomplete="off">
    <label class="ctl" for="cf">Club</label><select class="sel" id="cf"><option value="">All clubs</option>${clubs.map(c => `<option value="${esc(c)}" ${c === S.club ? "selected" : ""}>${esc(cn(c))}</option>`).join("")}</select>
-   <div class="list" id="list" role="listbox" aria-label="MPs"></div></div><div class="chartbox" id="prof"></div></div>`;
+   <div class="list" id="list" role="listbox" aria-label="${N.mps}"></div></div><div class="chartbox" id="prof"></div></div>`);
   $("#q").oninput = e => { S.q = e.target.value; drawList(); };
   $("#cf").onchange = e => { S.club = e.target.value; drawList(); };
   drawList(); await drawProfile();
@@ -111,16 +130,16 @@ async function viewMps() {
 function drawList() {
   const q = S.q.trim().toLowerCase();
   const Ls = TD[S.term].mps.filter(m => (!q || m.name.toLowerCase().includes(q)) && (!S.club || m.modal_club === S.club)).sort((a, b) => (a.last_name || "").localeCompare(b.last_name || "", "pl"));
-  $("#list").innerHTML = Ls.map(m => `<div class="row" role="option" tabindex="0" data-id="${m.mp_id}" aria-selected="${m.mp_id === S.mp}"><i class="bar" style="background:${colOf(m.modal_family)}"></i><div>${esc(m.name)}<small>${esc(cn(m.modal_club) || "No club")}${m.marshal ? " · Marshal" : m.office_holder ? " · Office holder" : ""}</small></div><div class="r">${m.attendance_rollcalls == null ? "" : pct(m.attendance_rollcalls, 0)}</div></div>`).join("") || `<div class="row"><div>No MP matches.</div></div>`;
+  $("#list").innerHTML = Ls.map(m => `<div class="row" role="option" tabindex="0" data-id="${m.mp_id}" aria-selected="${m.mp_id === S.mp}"><i class="bar" style="background:${colOf(m.modal_family)}"></i><div>${esc(m.name)}<small>${esc(cn(m.modal_club) || (S.body === "ep" ? "No group" : "No club"))}${m.marshal ? " · Marshal" : m.office_holder ? " · Office holder" : ""}</small></div><div class="r">${m.attendance_rollcalls == null ? "" : pct(m.attendance_rollcalls, 0)}</div></div>`).join("") || `<div class="row"><div>No ${N.mp} matches.</div></div>`;
   const pick = el => { const r = el.closest(".row"); if (!r || !r.dataset.id) return; S.mp = +r.dataset.id; S.page = 0; writeHash(); drawList(); drawProfile(); };
   $("#list").onclick = e => pick(e.target); $("#list").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(e.target); } };
 }
 async function rebelsOf(m) {
   const td = TD[S.term]; if (!m.rebels_file) return [];
-  const rf = await fetchJSON(`rebels-${S.term}-${m.rebels_file}.json`), lst = rf.mps[m.mp_id] || [], firsts = [].concat(td.vote_chunk_first_index);
+  const rf = await fetchJSON(`${PFX}rebels-${S.term}-${m.rebels_file}.json`), lst = rf.mps[m.mp_id] || [], firsts = [].concat(td.vote_chunk_first_index);
   const chunkOf = i => { let k = firsts.length - 1; while (firsts[k] > i) k--; return k; };
   const need = [...new Set(lst.map(x => chunkOf(x[0])))];
-  const vf = {}; await Promise.all(need.map(async k => vf[k] = await fetchJSON(`votes-${S.term}-${k + 1}.json`)));
+  const vf = {}; await Promise.all(need.map(async k => vf[k] = await fetchJSON(`${PFX}votes-${S.term}-${k + 1}.json`)));
   const NAME = ["", "YES", "NO", "ABSTAIN"];
   return lst.map(([i, v, l]) => { const k = chunkOf(i), r = vf[k].votes.rows[i - firsts[k]]; return {date: r[1], label: r[2], vote: NAME[v], line: NAME[l], c: r[4]}; }).sort((a, b) => a.date < b.date ? 1 : -1);
 }
@@ -128,31 +147,31 @@ async function drawProfile() {
   const mps = TD[S.term].mps, m0 = mps.find(x => x.mp_id === S.mp); if (!m0) return;
   document.querySelectorAll("#list .row").forEach(r => r.setAttribute("aria-selected", +r.dataset.id === S.mp));
   const box = $("#prof"); box.innerHTML = `<div class="loading">Loading…</div>`;
-  const [rolesF, rb, profF] = await Promise.all([fetchJSON(`roles-${S.term}.json`), rebelsOf(m0), fetchJSON(`profile-${S.term}.json`)]);
+  const [rolesF, rb, profF] = await Promise.all([fetchJSON(`${PFX}roles-${S.term}.json`), rebelsOf(m0), fetchJSON(`${PFX}profile-${S.term}.json`)]);
   if (S.mp !== m0.mp_id) return;
   const m = Object.assign({}, m0, profF.mps[m0.mp_id] || {});   // the core fields (mps-<term>.json) plus the profile's detail fields
   const det = rolesF.mps[m.mp_id] || {}, hist = det.club_history || [], roles = det.roles || [], rec = det.top_recipients || [];
   const peers = mps.filter(x => x.modal_club === m.modal_club && !x.office_holder && x.n_cast >= 500 && x.rebellion_rate != null).map(x => x.rebellion_rate).sort((a, b) => a - b);
   const med = peers.length ? peers[Math.floor(peers.length / 2)] : null, per = 12, pages = Math.max(1, Math.ceil(rb.length / per)); S.page = Math.min(S.page, pages - 1);
   const ti = L.terms.find(t => t.term === S.term);
-  box.innerHTML = `<h2 style="font-size:24px">${esc(m.name)}</h2>
+  box.innerHTML = K(`<h2 style="font-size:24px">${esc(m.name)}</h2>
    <div class="chips">${hist.map(h => `<span class="chip"><i class="sw sq" style="background:${colOf(h.family)}"></i>${esc(cn(h.club))} <span style="color:var(--muted)">${esc(h.from)} to ${esc(h.to)}</span></span>`).join("")}
     ${m.modal_club_composite ? `<span class="chip flag">Composite club</span>` : ""}${m.marshal ? `<span class="chip flag">Marshal of the Sejm: left out of medians</span>` : m.office_holder ? `<span class="chip flag" data-tip="${esc(m.offices || "")}">Minister or secretary of state: left out of medians</span>` : ""}
     <span class="chip">${esc(m.district_name || "")}${m.constituency_41 ? " · Constituency " + m.constituency_41 : ""}</span>${m.mandate_end ? `<span class="chip">Mandate ended ${esc(m.mandate_end)}</span>` : ""}</div>
    <div class="stats">
-    <div class="stat"><b>${pct(m.attendance_rollcalls)}</b><span>of ${num(m.n_held)} roll calls voted in</span></div>
+    <div class="stat"><b>${pct(m.attendance_rollcalls)}</b><span>of ${num(m.n_held)} ${N.votes} voted in</span></div>
     <div class="stat"><b>${pct(m.rebellion_rate, 2)}</b><span>votes against the club${med != null ? `; club median ${pct(med, 2)}` : ""}</span></div>
-    <div class="stat"><b>${m.days_missed_some_unexcused == null ? "n/a" : m.days_missed_some_unexcused}</b><span>sitting days with missed votes, unexcused (${m.days_missed_some_excused || 0} excused of ${m.sitting_days || 0} days)</span></div>
+    ${S.body === "sejm" ? `<div class="stat"><b>${m.days_missed_some_unexcused == null ? "n/a" : m.days_missed_some_unexcused}</b><span>sitting days with missed votes, unexcused (${m.days_missed_some_excused || 0} excused of ${m.sitting_days || 0} days)</span></div>` : ""}
     ${ti.questions ? `<div class="stat"><b>${(m.n_interpellations_first || 0) + (m.n_written_questions_first || 0)}</b><span>questions first-signed, ${(m.n_interpellations_co || 0) + (m.n_written_questions_co || 0)} co-signed${m.median_days_to_reply != null ? `; median reply ${m.median_days_to_reply} days` : ""}</span></div>` : ""}
     ${ti.speech ? `<div class="stat"><b>${num(m.n_words_spoken)}</b><span>words in ${num(m.n_statements)} statements${m.n_unspoken_statements ? `, ${m.n_unspoken_statements} written` : ""}</span></div>` : ""}
     ${m.n_rapporteur_reports ? `<div class="stat"><b>${m.n_rapporteur_reports}</b><span>committee reports as rapporteur</span></div>` : ""}</div>
-   <div class="two"><div><h3>Position against the club</h3>${m.ideal_point != null ? ideal(m) : `<p class="help">Ideal points exist for terms 5 to 10.</p>`}</div>
-    <div><h3>Roles</h3>${roles.length ? `<div class="tbl"><table><tbody>${roles.slice(0, 8).map(r => `<tr><td>${esc(r.body)}<br><span class="help">${esc(r.kind)}</span></td><td>${esc(r.role)}</td><td class="n">${esc((r.from || "").slice(0, 7))}</td></tr>`).join("")}</tbody></table></div>${roles.length > 8 ? `<p class="help">and ${roles.length - 8} more</p>` : ""}` : `<p class="help">No committee, club or group roles recorded.</p>`}
+   <div class="two"><div><h3>Position against the club</h3>${m.ideal_point != null ? ideal(m) : `<p class="help">${S.body === "sejm" ? "Ideal points exist for terms 5 to 10." : "Ideal points are not estimated for the " + N.name + "."}</p>`}</div>
+    <div><h3>Roles</h3>${roles.length ? `<div class="tbl"><table><tbody>${roles.slice(0, 8).map(r => `<tr><td>${esc(r.body)}<br><span class="help">${esc(r.kind)}</span></td><td>${esc(r.role)}</td><td class="n">${esc((r.from || "").slice(0, 7))}</td></tr>`).join("")}</tbody></table></div>${roles.length > 8 ? `<p class="help">and ${roles.length - 8} more</p>` : ""}` : `<p class="help">${S.body === "sejm" ? "No committee, club or group roles recorded." : "Committee roles are not included for the " + N.name + "; the chips above show the club history."}</p>`}
     ${rec.length ? `<h3 style="margin-top:12px">Most questions addressed to</h3><p class="help">${rec.map(r => esc(up(r.recipient)) + " (" + r.n + ")").join("; ")}</p>` : ""}</div></div>
    <h3>Votes against the club line (${num(rb.length)})</h3>
-   <div class="tbl"><table><thead><tr><th>Date</th><th>Roll call</th><th>MP</th><th>Club</th></tr></thead><tbody>${rb.slice(S.page * per, (S.page + 1) * per).map(r => `<tr><td style="white-space:nowrap">${esc(r.date)}</td><td>${esc(r.label)}${r.c ? "" : ' <span class="help">(uncontested)</span>'}</td><td><span class="vote ${r.vote}">${r.vote}</span></td><td><span class="vote ${r.line}">${r.line}</span></td></tr>`).join("") || `<tr><td colspan="4">No votes against the club line.</td></tr>`}</tbody></table></div>
+   <div class="tbl"><table><thead><tr><th>Date</th><th>${S.body === "sejm" ? "Roll call" : "Vote"}</th><th>${N.mp.charAt(0).toUpperCase() + N.mp.slice(1)}</th><th>Club</th></tr></thead><tbody>${rb.slice(S.page * per, (S.page + 1) * per).map(r => `<tr><td style="white-space:nowrap">${esc(r.date)}</td><td>${esc(r.label)}${r.c ? "" : ' <span class="help">(uncontested)</span>'}</td><td><span class="vote ${r.vote}">${r.vote}</span></td><td><span class="vote ${r.line}">${r.line}</span></td></tr>`).join("") || `<tr><td colspan="4">No votes against the club line.</td></tr>`}</tbody></table></div>
    <div class="pg"><button class="btn2" id="pp" ${S.page === 0 ? "disabled" : ""}>Newer</button><span>${S.page + 1} of ${pages}</span><button class="btn2" id="pn" ${S.page >= pages - 1 ? "disabled" : ""}>Older</button></div>
-   <p class="help" style="margin-top:8px">Attendance is the share of roll calls the MP voted in. Days with missed votes come from the API's sitting-day statistics, which also count personnel-list ballots, so the two sources count slightly differently.</p>`;
+   <p class="help" style="margin-top:8px">${S.body === "sejm" ? "Attendance is the share of roll calls the MP voted in. Days with missed votes come from the API's sitting-day statistics, which also count personnel-list ballots, so the two sources count slightly differently." : "Attendance is the share of recorded votes the " + N.mp + " voted in (for, against or abstained)."}</p>`);
   $("#pp").onclick = () => { S.page--; drawProfile(); }; $("#pn").onclick = () => { S.page++; drawProfile(); };
 }
 function ideal(m) {
@@ -169,15 +188,15 @@ function openMp(id) { S.mp = id; S.view = "mps"; S.page = 0; S.q = ""; S.club = 
 function legendFor(ms) { return [...new Set(ms.map(x => x.modal_family))].map(f => `<span><i class="sw sq" style="background:${colOf(f)}"></i>${esc(up(f))}</span>`).join(""); }
 async function viewSpread() {
   const ms = TD[S.term].mps.filter(m => m.n_cast >= 500 && m.rebellion_rate != null && m.attendance_rollcalls != null);
-  $("#main").innerHTML = `<p class="lead">Every MP with at least 500 votes cast: how often they voted (right) and how often they voted against their club's line (up). Hollow dots are ministers, secretaries of state and Marshals, who are left out of medians. Select a dot to open the MP's profile.</p>
-   <div class="chartbox"><div id="sp"></div><div class="legend" id="spl"></div></div>${S.term === 3 || S.term === 4 ? note("In terms 3 and 4 many MPs sat in composite clubs, and term 3's vote types are unreliable, so high rebellion rates there often mark a party faction.") : ""}`;
+  $("#main").innerHTML = K(`<p class="lead">Every ${N.mp} with at least 500 votes cast: how often they voted (right) and how often they voted against their club's line (up). ${S.body === "sejm" ? "Hollow dots are ministers, secretaries of state and Marshals, who are left out of medians. " : ""}Select a dot to open the ${N.mp}'s profile.</p>
+   <div class="chartbox"><div id="sp"></div><div class="legend" id="spl"></div></div>${S.term === 3 || S.term === 4 ? note("In terms 3 and 4 many MPs sat in composite clubs, and term 3's vote types are unreliable, so high rebellion rates there often mark a party faction.") : ""}`);
   const W = 900, H = 420, m = {l: 52, r: 16, t: 24, b: 40}, xmin = Math.min(.5, Math.floor(Math.min(...ms.map(x => x.attendance_rollcalls)) * 10) / 10), ymax = Math.min(.2, Math.max(...ms.map(x => x.rebellion_rate)) * 1.05);
   const X = v => m.l + (v - xmin) / (1 - xmin) * (W - m.l - m.r), Y = v => m.t + (1 - Math.min(v, ymax) / ymax) * (H - m.t - m.b);
   let s = `<svg style="max-width:${Math.round(W * 1.2)}px" viewBox="0 0 ${W} ${H}" role="img" aria-label="Rebellion against attendance">`;
   const step = ymax > .1 ? .05 : .025;
   for (let v = 0; v <= ymax + 1e-9; v += step) s += `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#ECECEC"/><text x="${m.l - 6}" y="${Y(v) + 4}" text-anchor="end">${(v * 100).toFixed(1)}%</text>`;
   for (let v = Math.ceil(xmin * 10) / 10; v <= 1.0001; v += .1) s += `<text x="${X(v)}" y="${H - 18}" text-anchor="middle">${Math.round(v * 100)}%</text>`;
-  s += `<text x="${(W + m.l) / 2}" y="${H - 2}" text-anchor="middle">Roll calls voted in</text><text x="4" y="10">Votes against club</text>`;
+  s += `<text x="${(W + m.l) / 2}" y="${H - 2}" text-anchor="middle">${S.body === "sejm" ? "Roll calls" : "Recorded votes"} voted in</text><text x="4" y="10">Votes against club</text>`;
   ms.forEach(x => { const c = colOf(x.modal_family); s += `<circle class="dot" data-id="${x.mp_id}" cx="${X(x.attendance_rollcalls)}" cy="${Y(x.rebellion_rate)}" r="4" fill="${x.office_holder ? "none" : c}" fill-opacity=".7" stroke="${c}" stroke-width="1.3" style="cursor:pointer" data-tip="<b>${esc(x.name)}</b><br>${esc(cn(x.modal_club) || "")}<br>voted in ${pct(x.attendance_rollcalls)}, against club ${pct(x.rebellion_rate, 2)}"/>`; });
   $("#sp").innerHTML = s + "</svg>"; $("#spl").innerHTML = legendFor(ms);
   $("#sp").onclick = e => { const d = e.target.closest(".dot"); if (d) openMp(+d.dataset.id); };
@@ -243,7 +262,7 @@ async function viewLegislation() {
   $("#sd").innerHTML = s2 + "</svg>";
 }
 
-fetchJSON("legislative.json").then(j => { L = j; readHash(); if (!L.terms.some(t => t.term === S.term)) S.term = 10; render(); })
+setBody(hashBody()).then(() => { readHash(); if (!L.terms.some(t => t.term === S.term)) S.term = Math.max(...L.terms.map(t => t.term)); render(); })
   .catch(e => { $("#main").innerHTML = `<p class="notice">Could not load the data (${esc(e.message)}).</p>`; });
-window.addEventListener("hashchange", () => { if (L) { readHash(); render(); } });
+window.addEventListener("hashchange", () => { if (L) { const b = hashBody(); (b !== S.body ? setBody(b) : Promise.resolve()).then(() => { readHash(); render(); }); } });
 })();

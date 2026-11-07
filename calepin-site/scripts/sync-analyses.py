@@ -144,6 +144,10 @@ FILES = [
     ("Sejm analysis/Legislative activity/web/legislative.json", "assets/legislative-activity/legislative.json",
      {"files", "meta", "terms", "clubs", "family_colours", "cohesion", "government_opposition", "agreement_between_families",
       "ministry_delays", "topics", "distributions", "wnominate"}),
+    ("Sejm analysis/Legislative activity/web/senate-legislative.json", "assets/legislative-activity/senate-legislative.json",
+     {"files", "meta", "terms", "clubs", "family_colours", "cohesion", "government_opposition", "agreement_between_families"}),
+    ("Sejm analysis/Legislative activity/web/ep-legislative.json", "assets/legislative-activity/ep-legislative.json",
+     {"files", "meta", "terms", "clubs", "family_colours", "cohesion", "agreement_between_families"}),
 ]
 
 # Files listed inside a synced index: (index in the repo, field with the list, key naming each
@@ -166,6 +170,7 @@ LISTED_NAMES = [
         ("covariates.json", {"meta", "groups", "vars", "years", "zones"}),
         ("covariates-", {"group", "values"}),
         ("profiles-", {"units"}),
+        ("senate-activity.json", {"meta", "persons"}),
         ("senate-", {"facts", "districts"}),
         ("people.json", {"meta", "parties", "persons", "moves"}),
         ("people-sejm.json", {"meta", "persons"}),
@@ -186,6 +191,20 @@ LISTED_NAMES = [
         ("roles-", {"term", "mps"}),
         ("rebels-", {"term", "chunk", "mps"}),
         ("votes-", {"term", "chunk", "first_index", "votes"}),
+    ]),
+    ("Sejm analysis/Legislative activity/web/senate-legislative.json", "files", [
+        ("senate-mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
+        ("senate-profile-", {"term", "mps"}),
+        ("senate-roles-", {"term", "mps"}),
+        ("senate-rebels-", {"term", "chunk", "mps"}),
+        ("senate-votes-", {"term", "chunk", "first_index", "votes"}),
+    ]),
+    ("Sejm analysis/Legislative activity/web/ep-legislative.json", "files", [
+        ("ep-mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
+        ("ep-profile-", {"term", "mps"}),
+        ("ep-roles-", {"term", "mps"}),
+        ("ep-rebels-", {"term", "chunk", "mps"}),
+        ("ep-votes-", {"term", "chunk", "first_index", "votes"}),
     ]),
 ]
 
