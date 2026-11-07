@@ -56,7 +56,7 @@ function renderMemberTable() {
   const how = r => r.m[5] === "replacement" ? "took a seat during the term" : r.m[5] === "by_election" ? "by-election" : "elected";
   $("mtable").innerHTML = `<thead><tr>${th("name", "Name")}${th("party", "Party")}${th("from", "From – to")}<th class="l">Also</th></tr></thead><tbody>` +
     rows.map(r => `<tr class="${r.p.id === MM.person ? "sel" : ""}"><td class="l name"><a href="#" class="mlink" data-p="${esc(r.p.id)}">${esc(r.p.name)}</a>${r.m[5] === "replacement" ? ' <span class="badge" title="Took a seat during the term">Replacement</span>' : ""}</td>
-      <td class="l">${r.party ? dot(partyCol(r.party)) + " " + esc(partyName(r.party)) : '<span class="muted">no party</span>'}</td>
+      <td class="l">${r.party ? dot(partyCol(r.party)) + " " + partyLink(r.party) : '<span class="muted">no party</span>'}</td>
       <td class="l">${dlong(r.m[2])}${r.m[3] ? " – " + dlong(r.m[3]) : " – "}${r.m[3] && r.m[6] && r.m[6] !== "term_end" ? `<span class="muted">, ${esc(r.m[6].replace(/_/g, " "))}</span>` : ""}${r.m[8] ? ' <span class="muted" title="A date on this row rests on Polish Wikipedia">*</span>' : ""}</td>
       <td class="l">${r.others.map(o => `<span class="badge" style="background:#F3F3F1;color:var(--soft)">${esc(o)}</span>`).join(" ")}${r.terms > 1 ? ` <span class="muted">${r.terms} terms</span>` : ""}</td></tr>`).join("") + "</tbody>";
   $("mcount").textContent = rows.length === MM.rows.length ? "" : `${rows.length} of ${MM.rows.length}`;
@@ -74,6 +74,7 @@ function bindMembers() {
   document.addEventListener("click", e => {
     const a = e.target.closest("a.plink"); if (!a || senateOn() || !membersOn()) return;
     e.preventDefault(); MM.person = a.dataset.p; if (EL.type === "presidential") candCard(MM.person); else careerCard(MM.person, $("mcareer")); renderMemberTable(); saveHash();
+    if (!e.target.closest("#membersec")) $("membersec").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
@@ -125,4 +126,11 @@ function renderCandTable() {
       <td class="l">${dot(r.colour || "#9E9E9E")} ${esc(r.label || "")}</td><td class="l">${pctf(r.res[1] && r.res[1].pct)}</td><td class="l">${r.res[2] ? pctf(r.res[2].pct) : ""}</td>
       <td class="l">${r.others.map(o => `<span class="badge" style="background:#F3F3F1;color:var(--soft)">${esc(o)}</span>`).join(" ")}</td></tr>`).join("") + "</tbody>";
   $("mcount").textContent = rows.length === MM.rows.length ? "" : `${rows.length} of ${MM.rows.length}`;
+}
+
+// a presidential candidate's name in the outcome, linked to the candidacy (and career) in the Members section
+function candLink(name) {
+  let key = null;
+  if (EL && EL.type === "presidential" && CUR) CUR.results.forEach(pt => pt.items.forEach(it => { if (!key && it.name === name) key = it.person || it.id; }));
+  return key ? `<a href="#" class="plink" data-p="${esc(key)}">${esc(name)}</a>` : esc(name);
 }

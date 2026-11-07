@@ -525,10 +525,10 @@ function outcomeHtml() {
   }
   if (EL.type === "presidential") {
     return `<details open><summary>Outcome</summary><dl class="facts" style="margin-top:6px">
-      <dt>Elected</dt><dd><b>${esc(oc.winner_name)}</b>${isNum(oc.margin_pp) ? `, by ${n0(oc.margin_votes)} votes (${oc.margin_pp.toFixed(2)} points) in round 2` : " in round 1"}</dd>
+      <dt>Elected</dt><dd><b>${candLink(oc.winner_name)}</b>${isNum(oc.margin_pp) ? `, by ${n0(oc.margin_votes)} votes (${oc.margin_pp.toFixed(2)} points) in round 2` : " in round 1"}</dd>
       <dt>Took office</dt><dd>${dlong(oc.took_office)}</dd>
-      <dt>Predecessor</dt><dd>${esc(oc.predecessor)}${oc.note ? `<br><span class="muted">${esc(oc.note)}</span>` : ""}</dd>
-      <dt>Incumbent</dt><dd>${oc.incumbent_ran ? `${esc(oc.incumbent)} ran` : "did not run"}</dd></dl></details>`;
+      <dt>Predecessor</dt><dd>${candLink(oc.predecessor)}${oc.note ? `<br><span class="muted">${esc(oc.note)}</span>` : ""}</dd>
+      <dt>Incumbent</dt><dd>${oc.incumbent_ran ? `${candLink(oc.incumbent)} ran` : "did not run"}</dd></dl></details>`;
   }
   if (EL.type === "ep") {
     const L = itemById(oc.largest);

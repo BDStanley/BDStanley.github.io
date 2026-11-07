@@ -14,7 +14,7 @@ const BODY_NAME = { sejm: "Sejm", senate: "Senate", ep: "European Parliament" };
 const BODY_COL = { sejm: "#8B0000", senate: "#a15c00", ep: "#00796b" };
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
 const SS = { measure: "winner", level: "district", shape: "map", sel: null, q: "", sort: "no", asc: true, person: null };
-let PEOPLE = null, PEOPLE_BY = new Map(), SEJMP = null, GMN = null;
+let EPACT = null, PEOPLE = null, PEOPLE_BY = new Map(), SEJMP = null, GMN = null;
 const personById = id => PEOPLE_BY.get(id) || (SEJMP && SEJMP.get(id)) || null;
 
 const senateOn = () => !!EL && EL.type === "senate" && !!CUR && !!CUR.districts;
@@ -23,6 +23,8 @@ const partyOf = id => (PEOPLE && PEOPLE.parties[id]) || null;
 const partyCol = id => { const p = partyOf(id); return p ? labCol(p.label) : "#9E9E9E"; };
 const partyName = id => { if (id === "unresolved") return "party unknown"; const p = partyOf(id); return p ? (p.abbrev || p.name) : "–"; };
 const yr = s => s ? s.slice(0, 4) : "";
+const partyLink = id => { const t = esc(partyName(id)); if (!id || id === "unresolved" || !(E.genealogy_ids || []).includes(id)) return t;
+  const p = partyOf(id); return `<a href="${PAGES}party-genealogy.html#pt=${encodeURIComponent(id)}" target="_top" title="${esc(p ? p.name : "")} in the party genealogy">${t}</a>`; };
 const dist = okreg => CUR.districts.find(d => d.okreg === okreg);
 // PKW's 2015 file names no district: the commission's seat from the geometry set (2023's names) stands in
 const dname = d => { if (d.name) return d.name; const set = G.sets[CUR.facts.rules.set], i = set ? set.okreg.indexOf(d.okreg) : -1; return i >= 0 && set.name[i] ? set.name[i] : ""; };
@@ -39,6 +41,10 @@ async function loadPeople() {
     PEOPLE = await r.json();
     PEOPLE_BY = new Map(PEOPLE.persons.map(p => [p.id, p]));
   } catch (err) { console.warn("people.json unavailable:", err); PEOPLE = { parties: {}, persons: [], moves: [] }; }
+  try {
+    const r = await fetch("ep-activity.json"); if (!r.ok) throw new Error(r.status);
+    EPACT = await r.json();
+  } catch (err) { console.warn("ep-activity.json unavailable:", err); EPACT = { meta: {}, persons: {} }; }
   return PEOPLE;
 }
 
@@ -58,6 +64,7 @@ function setSenateMode(on) {
   const j = $("jump"); if (!j.dataset.std) j.dataset.std = j.innerHTML;
   STD_SECTIONS.forEach(id => { $(id).hidden = on; });
   ["senatesec", "senatedist", "senatemove"].forEach(id => { $(id).hidden = !on; });
+  if (on) $("senatedist").after($("membersec")); else $("results").after($("membersec"));
   j.innerHTML = on
     ? '<a href="#glance">At a glance</a><a href="#senatesec">Map</a><a href="#senatedist">Districts</a><a href="#membersec">Members</a><a href="#senatemove">Movement</a><a href="#allsec">All elections</a><a href="#data">Data</a>'
     : j.dataset.std;
@@ -252,15 +259,21 @@ function careerCard(id, el = $("scareer")) {
     ms.filter(m => m[0] === b).map(m => { const a = X(+yr(m[2]) + (+m[2].slice(5, 7) - 1) / 12), z = X(m[3] ? +yr(m[3]) + (+m[3].slice(5, 7)) / 12 : now - 0.5);
       return `<rect x="${a.toFixed(1)}" y="${li * 22 + 4}" width="${Math.max(2, z - a).toFixed(1)}" height="14" rx="2" fill="${m[4] ? partyCol(m[4]) : "#BDBDBD"}" stroke="${BODY_COL[b]}" stroke-width="1.4"${m[8] ? ' stroke-dasharray="3 2"' : ""}><title>${esc(mandLabel(m))}${m[4] ? ", " + esc(partyName(m[4])) : ""}</title></rect>`; }).join("")).join("");
   const axis = [y0, y0 + Math.round(span / 2), y1].map(y => `<text x="${X(y).toFixed(1)}" y="${lanes.length * 22 + 12}" font-size="9" fill="#767676" text-anchor="middle">${y}</text>`).join("");
-  const rows = ms.map(m => `<tr><td class="l">${esc(mandLabel(m))}${m[8] ? ' <span class="muted" title="A date on this row rests on Polish Wikipedia">*</span>' : ""}</td><td class="l">${m[4] ? dot(partyCol(m[4])) + " " + esc(partyName(m[4])) : '<span class="muted">no party</span>'}</td><td class="l muted" style="white-space:normal">${esc(({ election: "elected", by_election: "by-election", replacement: "replacement", delegation: "delegated" })[m[5]] || m[5] || "")}${m[6] && m[6] !== "term_end" ? ", " + esc(m[6].replace(/_/g, " ")) : ""}</td></tr>`).join("");
+  const rows = ms.map(m => `<tr><td class="l">${esc(mandLabel(m))}${m[8] ? ' <span class="muted" title="A date on this row rests on Polish Wikipedia">*</span>' : ""}</td><td class="l">${m[4] ? dot(partyCol(m[4])) + " " + partyLink(m[4]) : '<span class="muted">no party</span>'}</td><td class="l muted" style="white-space:normal">${esc(({ election: "elected", by_election: "by-election", replacement: "replacement", delegation: "delegated" })[m[5]] || m[5] || "")}${m[6] && m[6] !== "term_end" ? ", " + esc(m[6].replace(/_/g, " ")) : ""}</td></tr>`).join("");
   const mv = (PEOPLE ? PEOPLE.moves : []).filter(x => x.person === id).map(x => {
     const fp = x.from_party, tp = x.to_party, ch = fp && tp && fp !== "unresolved" && tp !== "unresolved" && fp !== tp;
     return `<li>${esc(BODY_NAME[x.from])} → ${esc(BODY_NAME[x.to])}: ${x.kind === "concurrent" ? "at the same time" : x.kind === "direct" ? "straight on" : `after ${x.gap != null ? Math.round(x.gap / 365.25 * 10) / 10 + " years" : "a gap"}`}${ch ? `, ${dot(partyCol(fp))}${esc(partyName(fp))} → ${dot(partyCol(tp))}${esc(partyName(tp))}` : ""}</li>`;
   }).join("");
+  const ea = EPACT && EPACT.persons[id], pc = x => x == null ? NA : Math.round(x * 100) + "%";
+  const epv = ea && ea.votes && ea.votes.length ? `<span class="label" style="margin-top:6px">In the European Parliament: roll-call votes</span><div class="scroll"><table class="t proftable"><thead><tr><th class="l">Term</th><th>Votes</th><th>Voted</th><th>With group</th><th>With party</th></tr></thead><tbody>${ea.votes.map(v => `<tr><td class="l">${rom(v[0])}</td><td>${v[1].toLocaleString("en-GB")}</td><td>${pc(v[3])}</td><td>${pc(v[4])}</td><td>${pc(v[5])}</td></tr>`).join("")}</tbody></table></div><p class="note">From July 2019, from HowTheyVote.eu (secondary). Voted: share of roll-call votes held in the mandate on which the MEP voted for, against or abstained. With group, with party: share of votes cast that matched the plurality position of the EP group, or of the Polish MEPs of the same party.</p>` : "";
+  const ROLE = { CHAIR: "chair", CHAIR_VICE: "vice-chair", MEMBER: "member", MEMBER_SUBSTITUTE: "substitute", OBSERVER: "observer" };
+  const bdy = ea && ea.bodies && ea.bodies.length ? `<details style="margin-top:6px"><summary class="label" style="cursor:pointer">European Parliament committees and delegations (${ea.bodies.length})</summary><div class="scroll"><table class="t proftable"><tbody>${ea.bodies.map(b => `<tr><td class="l" style="white-space:normal"><span title="${esc(b[2])}">${esc(b[1])}</span> <span class="muted">${b[0] === "delegation" ? "delegation" : b[0] === "working_group" ? "working group" : "committee"}</span></td><td class="l">${esc(ROLE[b[3]] || b[3].toLowerCase().replace(/_/g, " "))}</td><td class="l muted">${yr(b[4])}${b[5] ? "–" + yr(b[5]) : "–"}</td></tr>`).join("")}</tbody></table></div><p class="note">From the European Parliament's open data. Hover an abbreviation for the full name.</p></details>` : "";
   el.innerHTML = `<span class="label">Career</span><h3 style="margin:2px 0 2px;font-size:18px;font-weight:500">${esc(p.name)}</h3>
     <div class="note">${p.born ? "Born " + (p.born.length > 4 ? dlong(p.born) : p.born) + (p.place ? ", " + esc(p.place) : "") : ""}</div>
     <svg viewBox="0 0 ${W} ${lanes.length * 22 + 18}" role="img" aria-label="Mandates in the Sejm, the Senate and the European Parliament over time" style="width:100%;max-width:${W}px;overflow:visible">${bars}${axis}</svg>
     <div class="scroll"><table class="t proftable"><tbody>${rows}</tbody></table></div>
+    ${epv}
+    ${bdy}
     ${mv ? `<span class="label" style="margin-top:6px">Moves between bodies</span><ul class="note" style="margin:2px 0 0;padding-left:16px">${mv}</ul>` : ""}
     <p class="note">Mandates from the Senate's own pages, the European Parliament's open data and Party tracker's Sejm records. A bar's colour is the party the mandate was won for; a dashed outline marks a date that rests on Polish Wikipedia. Bars start and end in the months the mandates did.</p>
     <button type="button" class="linkbtn careerclose" data-for="${el.id}">Close</button>`;
@@ -276,7 +289,7 @@ function senateTable() {
   const th = (k, t, cls = "") => `<th class="${cls}" data-s="${k}" style="cursor:pointer">${t}${SS.sort === k ? (SS.asc ? " ▲" : " ▼") : ""}</th>`;
   $("sdisttable").innerHTML = `<thead><tr>${th("no", "No.", "l")}${th("name", "District", "l")}${th("seats", "Seats")}<th class="l">Elected</th>${th("pct", "Top votes")}${th("margin", "Lead")}</tr></thead><tbody>` +
     rows.map(r => `<tr data-d="${r.d.okreg}" class="${r.d.okreg === SS.sel ? "sel" : ""}" style="cursor:pointer"><td class="l">${r.d.okreg}</td><td class="l">${esc(dname(r.d))}</td><td>${r.d.seats}</td>
-      <td class="l name">${r.w.map(c => `${dot(labCol(c.label))} ${esc(c.name)}`).join("<br>")}</td><td>${pct(r.top.pct)}</td><td>${r.m == null ? NA : pct(r.m)}</td></tr>`).join("") + "</tbody>";
+      <td class="l name">${r.w.map(c => `${dot(labCol(c.label))} ${c.person ? `<a href="#" class="plink" data-p="${esc(c.person)}">${esc(c.name)}</a>` : esc(c.name)}`).join("<br>")}</td><td>${pct(r.top.pct)}</td><td>${r.m == null ? NA : pct(r.m)}</td></tr>`).join("") + "</tbody>";
 }
 
 // ---- movement between the bodies -------------------------------------------------------------------

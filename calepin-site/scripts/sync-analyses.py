@@ -169,6 +169,7 @@ LISTED_NAMES = [
         ("senate-", {"facts", "districts"}),
         ("people.json", {"meta", "parties", "persons", "moves"}),
         ("people-sejm.json", {"meta", "persons"}),
+        ("ep-activity.json", {"meta", "persons"}),
         ("", {"facts", "results", "units"}),
     ]),
     ("Voting behaviour/web/voting.json", "files", [
