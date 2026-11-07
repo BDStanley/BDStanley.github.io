@@ -58,9 +58,8 @@ function setSenateMode(on) {
   const j = $("jump"); if (!j.dataset.std) j.dataset.std = j.innerHTML;
   STD_SECTIONS.forEach(id => { $(id).hidden = on; });
   ["senatesec", "senatedist", "senatemove"].forEach(id => { $(id).hidden = !on; });
-  if (on) $("membersec").hidden = true;
   j.innerHTML = on
-    ? '<a href="#glance">At a glance</a><a href="#senatesec">Map</a><a href="#senatedist">Districts</a><a href="#senatemove">Movement</a><a href="#allsec">All elections</a><a href="#data">Data</a>'
+    ? '<a href="#glance">At a glance</a><a href="#senatesec">Map</a><a href="#senatedist">Districts</a><a href="#membersec">Members</a><a href="#senatemove">Movement</a><a href="#allsec">All elections</a><a href="#data">Data</a>'
     : j.dataset.std;
   const cards = document.querySelectorAll("#data .card"); if (cards[0]) cards[0].hidden = on ? false : (CUR && CUR.facts.facts_only);
   ["csvresults", "csvgmina", "csvokreg"].forEach(id => { if ($(id)) $(id).hidden = on; });
@@ -71,7 +70,7 @@ function setSenateMode(on) {
 function renderSenateAll() {
   setSenateMode(true);
   $("profilecard").hidden = true;
-  renderStrip(); senateGlance(); senateParties(); senateMapControls(); senateGmina(); senateMap(); senateCard(); senateTable(); senateMovement();
+  renderStrip(); senateGlance(); senateParties(); senateMapControls(); senateGmina(); senateMap(); senateCard(); senateTable(); senateMovement(); renderMembers();
   renderAllElections(); renderData();
   senateData();
   saveHash();
