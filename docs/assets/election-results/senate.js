@@ -265,9 +265,9 @@ function careerCard(id, el = $("scareer")) {
   const X = y => L + (y - y0) / span * (W - L - 6), lanes = ["sejm", "senate", "ep"].filter(b => ms.some(m => m[0] === b));
   const bars = lanes.map((b, li) => `<text x="0" y="${li * 22 + 14}" font-size="10" fill="#4B4B4B">${BODY_NAME[b].replace("European Parliament", "EP")}</text>` +
     ms.filter(m => m[0] === b).map(m => { const a = X(+yr(m[2]) + (+m[2].slice(5, 7) - 1) / 12), z = X(m[3] ? +yr(m[3]) + (+m[3].slice(5, 7)) / 12 : now - 0.5);
-      return `<rect x="${a.toFixed(1)}" y="${li * 22 + 4}" width="${Math.max(2, z - a).toFixed(1)}" height="14" rx="2" fill="${m[4] ? partyCol(m[4]) : "#BDBDBD"}" stroke="${BODY_COL[b]}" stroke-width="1.4"${m[8] ? ' stroke-dasharray="3 2"' : ""}><title>${esc(mandLabel(m))}${m[4] ? ", " + esc(partyName(m[4])) : ""}</title></rect>`; }).join("")).join("");
+      return `<rect x="${a.toFixed(1)}" y="${li * 22 + 4}" width="${Math.max(2, z - a).toFixed(1)}" height="14" rx="2" fill="${m[4] ? partyCol(m[4]) : "#BDBDBD"}" stroke="${BODY_COL[b]}" stroke-width="1.4"${m[8] ? ' stroke-dasharray="3 2"' : ""}><title>${esc(mandLabel(m))}${m[4] ? ", elected on the list of " + esc(partyName(m[4])) : ""}</title></rect>`; }).join("")).join("");
   const axis = [y0, y0 + Math.round(span / 2), y1].map(y => `<text x="${X(y).toFixed(1)}" y="${lanes.length * 22 + 12}" font-size="9" fill="#767676" text-anchor="middle">${y}</text>`).join("");
-  const rows = ms.map(m => `<tr><td class="l">${esc(mandLabel(m))}${m[8] ? ' <span class="muted" title="A date on this row rests on Polish Wikipedia">*</span>' : ""}</td><td class="l">${m[4] ? dot(partyCol(m[4])) + " " + partyLink(m[4]) : '<span class="muted">no party</span>'}</td><td class="l muted" style="white-space:normal">${esc(({ election: "elected", by_election: "by-election", replacement: "replacement", delegation: "delegated" })[m[5]] || m[5] || "")}${m[6] && m[6] !== "term_end" ? ", " + esc(m[6].replace(/_/g, " ")) : ""}</td></tr>`).join("");
+  const rows = ms.map(m => `<tr><td class="l">${esc(mandLabel(m))}${m[8] ? ' <span class="muted" title="A date on this row rests on Polish Wikipedia">*</span>' : ""}</td><td class="l">${m[4] ? dot(partyCol(m[4])) + " " + partyLink(m[4]) : '<span class="muted">no party</span>'}</td><td class="l muted" style="white-space:normal">${esc(({ election: m[4] ? "elected on the party's list" : "elected", by_election: "by-election", replacement: m[4] ? "took the seat won on the party's list" : "replacement", delegation: "delegated" })[m[5]] || m[5] || "")}${m[6] && m[6] !== "term_end" ? ", " + esc(m[6].replace(/_/g, " ")) : ""}</td></tr>`).join("");
   const mv = (PEOPLE ? PEOPLE.moves : []).filter(x => x.person === id).map(x => {
     const fp = x.from_party, tp = x.to_party, ch = fp && tp && fp !== "unresolved" && tp !== "unresolved" && fp !== tp;
     return `<li>${esc(BODY_NAME[x.from])} → ${esc(BODY_NAME[x.to])}: ${x.kind === "concurrent" ? "at the same time" : x.kind === "direct" ? "straight on" : `after ${x.gap != null ? Math.round(x.gap / 365.25 * 10) / 10 + " years" : "a gap"}`}${ch ? `, ${dot(partyCol(fp))}${esc(partyName(fp))} → ${dot(partyCol(tp))}${esc(partyName(tp))}` : ""}</li>`;
@@ -289,7 +289,7 @@ function careerCard(id, el = $("scareer")) {
     ${epv}
     ${bdy}
     ${mv ? `<span class="label" style="margin-top:6px">Moves between bodies</span><ul class="note" style="margin:2px 0 0;padding-left:16px">${mv}</ul>` : ""}
-    <p class="note">Mandates from the Senate's own pages, the European Parliament's open data and Party tracker's Sejm records. A bar's colour is the party the mandate was won for; a dashed outline marks a date that rests on Polish Wikipedia. Bars start and end in the months the mandates did.</p>
+    <p class="note">Mandates from the Senate's own pages, the European Parliament's open data and Party tracker's Sejm records. A bar's colour is the party whose list the mandate was won on, which is not necessarily a party the person belonged to (the data do not record membership); a dashed outline marks a date that rests on Polish Wikipedia. Bars start and end in the months the mandates did.</p>
     <button type="button" class="linkbtn careerclose" data-for="${el.id}">Close</button>`;
 }
 
@@ -318,7 +318,7 @@ function senateMovement() {
   const T = SENATE_TERM[EL.year], mv = PEOPLE ? PEOPLE.moves : [];
   const inn = mv.filter(x => x.to === "senate" && x.to_term === T).sort((a, b) => (a.to_start < b.to_start ? -1 : 1));
   const out = mv.filter(x => x.from === "senate" && x.from_term === T).sort((a, b) => ((a.from_end || "") < (b.from_end || "") ? -1 : 1));
-  const tbl = (rows, dir, head) => rows.length ? `<div class="scroll"><table class="t proftable"><thead><tr><th class="l">Senator</th><th class="l">${head}</th><th class="l">How</th><th class="l">Party</th></tr></thead><tbody>${rows.map(x => moveRow(x, dir)).join("")}</tbody></table></div>` : '<p class="note">None recorded.</p>';
+  const tbl = (rows, dir, head) => rows.length ? `<div class="scroll"><table class="t proftable"><thead><tr><th class="l">Senator</th><th class="l">${head}</th><th class="l">How</th><th class="l">Elected on list of</th></tr></thead><tbody>${rows.map(x => moveRow(x, dir)).join("")}</tbody></table></div>` : '<p class="note">None recorded.</p>';
   const known = id => id && id !== "unresolved";
   const chg = rows => rows.filter(x => known(x.from_party) && known(x.to_party) && x.from_party !== x.to_party).length;
   $("smovebox").innerHTML = `<div class="grid even"><div class="card"><span class="label">Came to this Senate from</span><div style="font-size:13px">${inn.length} senator${inn.length === 1 ? "" : "s"} of term ${rom(T)} had sat in the Sejm or the European Parliament${inn.length ? `; ${chg(inn)} changed party` : ""}</div>${tbl(inn, "in", "Before")}</div>

@@ -57,7 +57,7 @@
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/legislative-activity.html"))[Legislative activity]
-#html.elem("div", attrs: (class: "course-desc"))[How Sejm clubs and MPs vote, attend and ask questions, 1997–2026.]
+#html.elem("div", attrs: (class: "course-desc"))[How the Sejm, the Senate and the European Parliament vote: clubs, groups and every member's record, 1997–2026.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
