@@ -145,6 +145,9 @@ async function rebelsOf(m) {
   return lst.map(([i, v, l]) => { const k = chunkOf(i), r = vf[k].votes.rows[i - firsts[k]]; return {date: r[1], label: r[2], type: r[3], vote: NAME[v], line: NAME[l], c: r[4]}; }).sort((a, b) => a.date < b.date ? 1 : -1);
 }
 async function drawProfile() {
+  try { await drawProfile0(); } catch (e) { console.error(e); const b = $("#prof"); if (b) b.innerHTML = `<p class="notice">Could not show this profile (${esc(e.message)}).</p>`; }
+}
+async function drawProfile0() {
   const mps = TD[S.term].mps, m0 = mps.find(x => x.mp_id === S.mp); if (!m0) return;
   document.querySelectorAll("#list .row").forEach(r => r.setAttribute("aria-selected", +r.dataset.id === S.mp));
   const box = $("#prof"); box.innerHTML = `<div class="loading">Loading…</div>`;
@@ -180,7 +183,7 @@ function ideal(m) {
   const xs = TD[S.term].mps.map(x => x.ideal_point).filter(v => v != null), lo = Math.min(...xs), hi = Math.max(...xs), W = 360, p = v => 10 + (v - lo) / (hi - lo) * (W - 20);
   const dots = TD[S.term].mps.filter(x => x.ideal_point != null).map((x, i) => `<circle cx="${p(x.ideal_point)}" cy="${34 + ((i * 37) % 24) - 12}" r="2" fill="${colOf(x.modal_family)}" opacity=".5"/>`).join("");
   return `<svg style="max-width:${Math.round(W * 1.2)}px" viewBox="0 0 ${W} 100" role="img" aria-label="Ideal point against club mean"><line x1="10" x2="${W - 10}" y1="34" y2="34" stroke="#ECECEC"/>${dots}
-   <line x1="${p(m.ideal_point_club)}" x2="${p(m.ideal_point_club)}" y1="8" y2="62" stroke="#141414" stroke-dasharray="3 3"/><text x="${p(m.ideal_point_club)}" y="76" text-anchor="middle">Club ${m.ideal_point_club.toFixed(2)}</text>
+   ${m.ideal_point_club != null ? `<line x1="${p(m.ideal_point_club)}" x2="${p(m.ideal_point_club)}" y1="8" y2="62" stroke="#141414" stroke-dasharray="3 3"/><text x="${p(m.ideal_point_club)}" y="76" text-anchor="middle">Club ${m.ideal_point_club.toFixed(2)}</text>` : ""}
    <circle cx="${p(m.ideal_point)}" cy="34" r="6" fill="${colOf(m.modal_family)}" stroke="#fff" stroke-width="2"/><text class="t" x="${p(m.ideal_point)}" y="92" text-anchor="middle">This MP ${m.ideal_point.toFixed(2)}</text>
    <text x="10" y="20">PO/KO side</text><text x="${W - 10}" y="20" text-anchor="end">PiS side</text></svg>`;
 }
