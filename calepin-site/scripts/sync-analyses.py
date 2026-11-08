@@ -61,7 +61,7 @@ page; this script copies it beside the page's chart under assets/:
         lists the calculator files, one per election, and each one it lists is copied too)
 
     Constituencies/web/constituencies.json         -> assets/constituencies/constituencies.json
-    Constituencies/web/{geometry,mps}.json         -> assets/constituencies/<same name>
+    Constituencies/web/{geometry,mps,scenarios}.json         -> assets/constituencies/<same name>
         (written by "Constituencies/analysis/90_export.R"; constituencies.json's `files` lists the other two, and each one it lists is copied too)
     Sejm analysis/Legislative activity/web/legislative.json -> assets/legislative-activity/legislative.json
     Sejm analysis/Legislative activity/web/{mps,profile,roles,rebels,votes}-<term>[-<chunk>].json
@@ -184,6 +184,7 @@ LISTED_NAMES = [
     ("Constituencies/web/constituencies.json", "files", [
         ("geometry.json", {"meta", "sets"}),
         ("mps.json", {"note", "mps"}),
+        ("scenarios.json", {"meta", "palette", "constituencies", "measures", "parties", "gallagher", "by_constituency"}),
     ]),
     ("Sejm analysis/Legislative activity/web/legislative.json", "files", [
         ("mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),

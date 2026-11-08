@@ -8,7 +8,7 @@ const pct = (x, d = 1) => x == null ? "n/a" : (100 * x).toFixed(d) + "%";
 const f2 = x => x == null ? "n/a" : x.toFixed(2);
 const tab = t => t.rows.map(r => Object.fromEntries(t.columns.map((c, i) => [c, r[i]])));
 const cache = {}; const fetchJSON = f => cache[f] || (cache[f] = fetch(f).then(r => { if (!r.ok) throw new Error(f + " " + r.status); return r.json(); }));
-const VIEWS = [["map", "Map"], ["worth", "What a vote is worth"], ["method", "How it is measured"]];
+const VIEWS = [["map", "Map"], ["worth", "What a vote is worth"], ["seats", "If seats followed population"], ["method", "How it is measured"]];
 const MEASURES = {
   vvi_electors: {label: "Vote value: electors per seat", kind: "div", help: "1 is the national average. Above 1, a registered elector counts for more than average in choosing the Sejm; below 1, for less."},
   vvi_electors_dom: {label: "Vote value: electors at home per seat", kind: "div", help: "As the first measure, leaving out electors registered abroad or on ships, whom PKW counts in Warsaw (constituency 19): 637,000 of them in 2023."},
@@ -20,7 +20,7 @@ const MEASURES = {
   largest_bonus: {label: "Bonus to the largest list", kind: "seq", fmt: x => pct(x, 0), help: "The largest list's share of the seats minus its share of the votes, in points."}
 };
 let C, G, MP = null;
-const S = {view: "map", year: 2023, measure: "vvi_electors", mode: "geo", sel: null, wm: "vvi_electors"};
+const S = {view: "map", year: 2023, measure: "vvi_electors", mode: "geo", sel: null, wm: "vvi_electors", sc: "annex"};
 const colOf = l => (C.palette && C.palette[l]) || "#7f7f7f";
 const setOf = y => C.elections.find(e => e.year === y).set;
 const rowsOf = y => C.constituencies.filter(r => r.year === y);
@@ -31,15 +31,16 @@ function hash() {
   if (VIEWS.some(v => v[0] === p.get("view"))) S.view = p.get("view");
   if (C.elections.some(e => e.year === +p.get("y"))) S.year = +p.get("y");
   if (p.get("c")) S.sel = +p.get("c");
+  if (["annex", "extended", "halfway", "norm"].includes(p.get("sc"))) S.sc = p.get("sc");
 }
-function save() { const p = new URLSearchParams({view: S.view, y: S.year}); if (S.sel) p.set("c", S.sel); history.replaceState(null, "", "#" + p.toString()); }
+function save() { const p = new URLSearchParams({view: S.view, y: S.year}); if (S.sel) p.set("c", S.sel); if (S.view === "seats") p.set("sc", S.sc); history.replaceState(null, "", "#" + p.toString()); }
 const tip = $("#tip");
 document.addEventListener("mousemove", e => { const t = e.target.closest && e.target.closest("[data-tip]"); if (!t) { tip.style.display = "none"; return; }
   tip.innerHTML = t.dataset.tip; tip.style.display = "block"; tip.style.left = Math.min(innerWidth - tip.offsetWidth - 8, e.clientX + 12) + "px"; tip.style.top = (e.clientY + 14) + "px"; });
 
 function toolbar() {
   $("#tb").innerHTML = `<div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
-   <label class="ctl">Election <span class="seg small wrap" role="group" aria-label="Election">${C.elections.map(e => `<button data-y="${e.year}" aria-pressed="${S.year === e.year}">${e.year}</button>`).join("")}</span></label>`;
+   <label class="ctl" ${S.view === "seats" ? "hidden" : ""}>Election <span class="seg small wrap" role="group" aria-label="Election">${C.elections.map(e => `<button data-y="${e.year}" aria-pressed="${S.year === e.year}">${e.year}</button>`).join("")}</span></label>`;
   $("#tb").onclick = e => { const b = e.target.closest("button"); if (!b) return;
     if (b.dataset.v) S.view = b.dataset.v; else { S.year = +b.dataset.y; if (S.measure === "vvi_residents" && S.year < 2001) S.measure = "vvi_electors"; if (S.sel && !rowsOf(S.year).some(r => r.okreg === S.sel)) S.sel = null; }
     render(); };
@@ -47,7 +48,7 @@ function toolbar() {
 function render() {
   save(); toolbar();
   const el = C.elections.find(e => e.year === S.year);
-  ({map: viewMap, worth: viewWorth, method: viewMethod})[S.view]();
+  ({map: viewMap, worth: viewWorth, seats: viewSeats, method: viewMethod})[S.view]();
   $("#foot").innerHTML = `${S.year}: ${el.constituencies} constituencies, ${el.seats_total} constituency seats${el.national_list_seats ? ` and ${el.national_list_seats} from national lists (not counted here)` : ""}. ${esc(C.meta.caveats[3])}`;
 }
 
@@ -179,6 +180,94 @@ function viewMethod() {
    <h3 style="margin-top:12px">How seats go to lists</h3><p class="help">${Object.entries(C.meta.legal.formulas).map(([y, f]) => y + ": " + ({hare_niemeyer: "largest remainder (Hare–Niemeyer)", dhondt: "D'Hondt", "sainte_lague_1.4": "modified Sainte-Laguë (first divisor 1.4)"})[f]).join("; ")}.</p>
    <h3 style="margin-top:12px">National lists, 1991–97</h3><p class="help">${C.national_lists.filter(x => x.year === S.year).length ? C.national_lists.filter(x => x.year === S.year).map(x => `${esc(x.committee)} ${x.seats}`).join("; ") : "None this election."}</p>
    <h3 style="margin-top:12px">Sources</h3><ul class="help">${C.meta.sources.map(c => `<li>${esc(c)}</li>`).join("")}</ul></div>`;
+}
+
+/* ---------- if seats followed population: the latest polls on four distributions of the 460 seats ---------- */
+let SCN = null;
+const SC_KEYS = ["annex", "extended", "halfway", "norm"], SC_LET = {annex: "a", extended: "b", halfway: "c", norm: "d"};
+const SC_SHORT = {annex: "As it is", extended: "Continuation of the trend", halfway: "Moderate alleviation", norm: "Full correction"};
+function loadScn() { return SCN ? Promise.resolve(SCN) : fetchJSON("scenarios.json").then(d => { SCN = d; d.constituencies = tab(d.constituencies); d.measures = tab(d.measures); d.parties = tab(d.parties); d.gallagher = tab(d.gallagher); d.by_constituency = tab(d.by_constituency); return d; }); }
+function hemiLayout(n, rows = 11) {
+  const radii = Array.from({length: rows}, (_, i) => 1 + i / (rows - 1)), rs = radii.reduce((a, b) => a + b, 0), counts = radii.map(r => Math.floor(n * r / rs));
+  let rem = n - counts.reduce((a, b) => a + b, 0); const order = radii.map((r, i) => i).sort((p, q) => radii[q] - radii[p]);
+  for (let k = 0; rem > 0; k++, rem--) counts[order[k % rows]]++;
+  const pts = []; counts.forEach((nc, ri) => { for (let j = 0; j < nc; j++) { const ang = nc === 1 ? Math.PI / 2 : Math.PI - j * Math.PI / (nc - 1); pts.push({x: radii[ri] * Math.cos(ang), y: radii[ri] * Math.sin(ang), ang, r: radii[ri]}); } });
+  return pts.sort((p, q) => q.ang - p.ang || p.r - q.r);
+}
+// whole seats summing to 460: the simulations' mean seats by the largest remainders (medians of independent parties need not add up)
+function wholeSeats(k) {
+  const rows = SCN.parties.filter(r => r.scenario === k && r.mean > 0), fl = rows.map(r => ({p: r.party, n: Math.floor(r.mean), f: r.mean - Math.floor(r.mean)}));
+  let rem = 460 - fl.reduce((a, b) => a + b.n, 0); fl.slice().sort((a, b) => b.f - a.f).forEach(x => { if (rem > 0) { x.n++; rem--; } });
+  const o = SCN.meta.hemicycle_order; return fl.filter(x => x.n > 0).sort((a, b) => o.indexOf(a.p) - o.indexOf(b.p));
+}
+const pcol = p => (SCN.palette && SCN.palette[p]) || "#7f7f7f";
+function hemiSvg(k) {
+  const blocks = wholeSeats(k), pts = hemiLayout(460); let i = 0, o = "";
+  blocks.forEach(b => { for (let j = 0; j < b.n; j++, i++) { const pt = pts[i]; o += `<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="0.046" fill="${pcol(b.p)}" data-tip="${esc(b.p)}: ${b.n} seats"/>`; } });
+  o += `<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" style="font-size:0.085px">231</text>`;
+  return `<svg viewBox="-2.2 -2.28 4.4 2.36" role="img" aria-label="Hemicycle: ${esc(SC_SHORT[k])}">${o}</svg>`;
+}
+const sgn = x => x > 0 ? "+" + x : x < 0 ? "−" + Math.abs(x) : "0";
+function viewSeats() {
+  $("#main").innerHTML = `<div class="loading">Loading…</div>`;
+  loadScn().then(d => {
+    const k = S.sc, m = d.meta, par = d.parties, byK = kk => par.filter(r => r.scenario === kk && r.median != null);
+    const names = [...new Set(par.filter(r => r.mean > 0.05).map(r => r.party))].sort((a, b) => par.find(r => r.scenario === "annex" && r.party === b).mean - par.find(r => r.scenario === "annex" && r.party === a).mean);
+    const ms = Object.fromEntries(d.measures.map(r => [r.scenario, r])), gal = Object.fromEntries(d.gallagher.map(r => [r.scenario, r.gallagher]));
+    const cell = (p, kk) => { const r = par.find(x => x.scenario === kk && x.party === p), a = par.find(x => x.scenario === "annex" && x.party === p); if (!r) return "<td></td>"; const dv = Math.round(r.mean - a.mean), dif = kk === "annex" || dv === 0 ? "" : ` <span style="color:var(--muted)">${sgn(dv)}</span>`; return `<td class="n" data-tip="80% range ${Math.round(r.lo)}–${Math.round(r.hi)}${r.p_majority > 0.005 ? "; majority in " + pct(r.p_majority, 0) + " of simulations" : ""}">${Math.round(r.median)}${dif}</td>`; };
+    const rowsT = names.map(p => `<tr><td><span class="sw sq" style="background:${pcol(p)};margin-right:6px"></span>${esc(p)}</td>${SC_KEYS.map(kk => cell(p, kk)).join("")}</tr>`).join("");
+    const cons = d.constituencies.slice().sort((a, b) => (b[k] - b.annex) - (a[k] - a.annex) || a.okreg - b.okreg);
+    const set = G.sets.sejm2001, by = Object.fromEntries(d.constituencies.map(r => [r.okreg, r])), lim = Math.max(1, ...d.constituencies.map(r => Math.abs(r[k] - r.annex)));
+    const fillOf = dv => dv === 0 ? "rgb(245,245,243)" : dv > 0 ? hex(lerp(MID, SLATE, Math.min(1, dv / lim))) : hex(lerp(MID, RED, Math.min(1, -dv / lim)));
+    let map = `<svg viewBox="0 0 ${G.meta.view[0]} ${G.meta.view[1]}" role="img" aria-label="Seats gained or lost by constituency">`;
+    set.okreg.forEach((o, i) => { const r = by[o]; if (!r) return; const dv = r[k] - r.annex; map += `<path class="region" d="${set.d[i]}" fill="${fillOf(dv)}" data-tip="<b>${esc(r.name)}</b><br>${r.annex} seats now; ${r[k]} here (${sgn(dv)})<br>${num(r.residents)} residents"/>`; });
+    map += "</svg>";
+    $("#main").innerHTML = `<p class="lead">The Sejm's 460 seats are shared out between the constituencies by the annex to the Electoral Code, not by today's population, and the two have drifted apart. This view asks what the latest poll projection would give each party if the seats between constituencies were (a) left as they are, (b) moved further from the population norm in keeping with the trend since 2005, (c) moved halfway to the norm, or (d) set exactly by the norm (art. 202, residents at 31 December ${m.residents_year}). Only the number of seats in each constituency changes; each constituency's vote shares are the Polling tracker's projection for ${esc(m.week)}.</p>
+     <div class="toolbar"><div class="seg" role="group" aria-label="Distribution of seats">${SC_KEYS.map(kk => `<button data-sc="${kk}" aria-pressed="${k === kk}">(${SC_LET[kk]}) ${SC_SHORT[kk]}</button>`).join("")}</div>
+       <button class="btn2" id="scpng" type="button">Download PNG of all four</button></div>
+     <div class="cols"><div class="chartbox"><h3>(${SC_LET[k]}) ${esc(SC_SHORT[k])}</h3>${hemiSvg(k)}<p class="help" style="margin-top:6px">${esc(m.scenarios[k])} Dots are seats, the simulations' average rounded to 460; the dashed line marks the 231 needed for a majority.</p>
+        <div class="legend">${wholeSeats(k).map(b => `<span><i class="sw sq" style="background:${pcol(b.p)}"></i>${esc(b.p)} ${b.n}</span>`).join("")}</div></div>
+      <div class="chartbox"><h3>Seats moved between constituencies</h3>${map}<div class="grad" style="background:linear-gradient(90deg,${hex(RED)},rgb(245,245,243),${hex(SLATE)})"></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>−${lim} seats</span><span>no change</span><span>+${lim}</span></div></div></div>
+     <div class="chartbox"><h3>Median seats by party, with the change in average seats from (a)</h3><div class="tbl"><table><tr><th>List</th>${SC_KEYS.map(kk => `<th class="n">(${SC_LET[kk]}) ${SC_SHORT[kk]}</th>`).join("")}</tr>${rowsT}
+       <tr><td>Seats moved between constituencies</td>${SC_KEYS.map(kk => `<td class="n">${ms[kk].seats_moved}</td>`).join("")}</tr>
+       <tr><td>Constituencies with a different number</td>${SC_KEYS.map(kk => `<td class="n">${ms[kk].constituencies_changed}</td>`).join("")}</tr>
+       <tr><td>Residents per seat, largest ÷ smallest</td>${SC_KEYS.map(kk => `<td class="n">${f2(ms[kk].max_min_ratio)}</td>`).join("")}</tr>
+       <tr><td>Seats against residents (Loosemore–Hanby, points)</td>${SC_KEYS.map(kk => `<td class="n">${(100 * ms[kk].mal_residents).toFixed(1)}</td>`).join("")}</tr>
+       <tr><td>Seats against votes (Gallagher, points)</td>${SC_KEYS.map(kk => `<td class="n">${f2(gal[kk])}</td>`).join("")}</tr></table></div>
+       <p class="help" style="margin-top:6px">${m.caveats.map(esc).join(" ")} ${m.draws} simulated parliaments.</p></div>
+     <div class="chartbox"><h3>Seats by constituency</h3><div class="tbl"><table><tr><th>Constituency</th><th class="n">Residents</th><th class="n">(a) As it is</th><th class="n">(b) Continuation</th><th class="n">(c) Moderate</th><th class="n">(d) Full</th></tr>
+       ${cons.map(r => `<tr><td>${esc(r.name)}</td><td class="n">${num(r.residents)}</td>${["annex", "extended", "halfway", "norm"].map(kk => `<td class="n"${kk === k ? ' style="font-weight:600"' : ""}>${r[kk]}${kk !== "annex" && r[kk] !== r.annex ? ` <span style="color:var(--muted)">${sgn(r[kk] - r.annex)}</span>` : ""}</td>`).join("")}</tr>`).join("")}</table></div></div>`;
+    document.querySelectorAll("[data-sc]").forEach(b => b.onclick = () => { S.sc = b.dataset.sc; render(); });
+    $("#scpng").onclick = () => { scenarioPng().catch(e => { $("#scpng").textContent = "Could not make the PNG: " + e.message; }); };
+  }).catch(e => { $("#main").innerHTML = `<p class="notice">Could not load the scenarios (${esc(e.message)}).</p>`; });
+}
+// one PNG with the four hemicycles, drawn on a canvas
+async function scenarioPng() {
+  const d = await loadScn(), m = d.meta, W = 1800, H = 1470, cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const g = cv.getContext("2d"), F = "Jost, 'Avenir Next', Helvetica, Arial, sans-serif"; try { await Promise.race([document.fonts.load("500 20px Jost"), new Promise(r => setTimeout(r, 1500))]); } catch (e) { }
+  g.fillStyle = "#fff"; g.fillRect(0, 0, W, H); g.fillStyle = "#141414"; g.textBaseline = "alphabetic";
+  g.font = `600 44px ${F}`; g.fillText("Sejm seats if constituencies' seats followed population", 60, 80);
+  g.font = `400 26px ${F}`; g.fillStyle = "#4B4B4B"; g.fillText(`Polling tracker's projection for the week of ${m.week}; only the number of seats in each constituency changes.`, 60, 122);
+  const pw = 840, ph = 560, ox = [60, 900], oy = [160, 770];
+  SC_KEYS.forEach((k, idx) => {
+    const x0 = ox[idx % 2], y0 = oy[Math.floor(idx / 2)], cx = x0 + pw / 2, R = 160, pts = hemiLayout(460), blocks = wholeSeats(k), baseY = y0 + 100 + 2.15 * R;
+    g.fillStyle = "#141414"; g.font = `600 30px ${F}`; g.textAlign = "left"; g.fillText(`(${SC_LET[k]}) ${SC_SHORT[k]}`, x0, y0 + 36);
+    g.font = `400 20px ${F}`; g.fillStyle = "#767676"; g.fillText(k === "annex" ? "Seats per constituency as in the Electoral Code's annex" : `${d.measures.find(r => r.scenario === k).seats_moved} seats moved between ${d.measures.find(r => r.scenario === k).constituencies_changed} constituencies`, x0, y0 + 66);
+    let i = 0; blocks.forEach(b => { g.fillStyle = pcol(b.p); for (let j = 0; j < b.n; j++, i++) { const p = pts[i]; g.beginPath(); g.arc(cx + p.x * R, baseY - p.y * R, 0.046 * R, 0, 2 * Math.PI); g.fill(); } });
+    g.strokeStyle = "#141414"; g.lineWidth = 1.5; g.setLineDash([5, 5]); g.beginPath(); g.moveTo(cx, baseY - 0.86 * R); g.lineTo(cx, baseY - 2.12 * R); g.stroke(); g.setLineDash([]);
+    g.fillStyle = "#4B4B4B"; g.font = `400 18px ${F}`; g.textAlign = "center"; g.fillText("231", cx, baseY - 2.16 * R);
+    // party counts under the arc, wrapped into rows
+    g.font = `500 22px ${F}`; let lx = x0, ly = baseY + 52; const rowsOf = blocks.slice().sort((a, b) => b.n - a.n);
+    rowsOf.forEach(b => { const t = `${b.p} ${b.n}`, w = g.measureText(t).width + 40; if (lx + w > x0 + pw) { lx = x0; ly += 32; } g.fillStyle = pcol(b.p); g.fillRect(lx, ly - 15, 15, 15); g.fillStyle = "#141414"; g.textAlign = "left"; g.fillText(t, lx + 22, ly); lx += w; });
+  });
+  g.textAlign = "left"; g.fillStyle = "#767676"; g.font = `400 19px ${F}`;
+  const foot = [`Distributions: (a) annex to the Electoral Code; (b) the gap between the annex and the norm of representation (residents, art. 202) extended at its 2005–${m.residents_year} trend to ${m.horizon}; (c) halfway to the norm; (d) the norm on residents at 31 December ${m.residents_year}.`,
+    `Seats are the average of ${m.draws} simulated parliaments rounded to 460; each constituency's vote shares, the 5% threshold and the regional swing are the same in all four. Source: Ben Stanley, benstanley.eu (Pooling the Poles, GUS BDL, PKW).`];
+  const wrap = t => { const out = []; let line = ""; t.split(" ").forEach(w => { if (g.measureText(line + " " + w).width > W - 120 && line) { out.push(line); line = w; } else line = line ? line + " " + w : w; }); out.push(line); return out; };
+  const fl = foot.flatMap(wrap); fl.forEach((t, i) => g.fillText(t, 60, H - 30 - (fl.length - 1 - i) * 27));
+  const blob = await new Promise(res => cv.toBlob(res, "image/png"));
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "sejm-seats-by-constituency-scenario.png"; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 
 Promise.all([fetchJSON("constituencies.json"), fetchJSON("geometry.json")]).then(([c, g]) => { C = c; G = g; C.constituencies = tab(C.constituencies); C.elections = tab(C.elections); C.list_results = tab(C.list_results); C.list_costs = tab(C.list_costs); C.projection.rows = tab(C.projection.rows); C.covariates.values.rows = C.covariates.values.rows;
