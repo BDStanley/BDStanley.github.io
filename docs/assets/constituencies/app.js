@@ -185,7 +185,7 @@ function viewMethod() {
 /* ---------- if seats followed population: the latest polls on four distributions of the 460 seats ---------- */
 let SCN = null;
 const SC_KEYS = ["annex", "extended", "halfway", "norm"], SC_LET = {annex: "a", extended: "b", halfway: "c", norm: "d"};
-const SC_SHORT = {annex: "As it is", extended: "Continuation of the trend", halfway: "Moderate alleviation", norm: "Full correction"};
+const SC_SHORT = {annex: "As it is", extended: "Continuation of the trend", halfway: "Partial correction", norm: "Full correction"};
 function loadScn() { return SCN ? Promise.resolve(SCN) : fetchJSON("scenarios.json").then(d => { SCN = d; d.constituencies = tab(d.constituencies); d.measures = tab(d.measures); d.parties = tab(d.parties); d.gallagher = tab(d.gallagher); d.by_constituency = tab(d.by_constituency); return d; }); }
 function hemiLayout(n, rows = 11) {
   const radii = Array.from({length: rows}, (_, i) => 1 + i / (rows - 1)), rs = radii.reduce((a, b) => a + b, 0), counts = radii.map(r => Math.floor(n * r / rs));
@@ -236,7 +236,7 @@ function viewSeats() {
        <tr><td>Seats against residents (Loosemore–Hanby, points)</td>${SC_KEYS.map(kk => `<td class="n">${(100 * ms[kk].mal_residents).toFixed(1)}</td>`).join("")}</tr>
        <tr><td>Seats against votes (Gallagher, points)</td>${SC_KEYS.map(kk => `<td class="n">${f2(gal[kk])}</td>`).join("")}</tr></table></div>
        <p class="help" style="margin-top:6px">${m.caveats.map(esc).join(" ")} ${m.draws} simulated parliaments.</p></div>
-     <div class="chartbox"><h3>Seats by constituency</h3><div class="tbl"><table><tr><th>Constituency</th><th class="n">Residents</th><th class="n">(a) As it is</th><th class="n">(b) Continuation</th><th class="n">(c) Moderate</th><th class="n">(d) Full</th></tr>
+     <div class="chartbox"><h3>Seats by constituency</h3><div class="tbl"><table><tr><th>Constituency</th><th class="n">Residents</th><th class="n">(a) As it is</th><th class="n">(b) Continuation</th><th class="n">(c) Partial</th><th class="n">(d) Full</th></tr>
        ${cons.map(r => `<tr><td>${esc(r.name)}</td><td class="n">${num(r.residents)}</td>${["annex", "extended", "halfway", "norm"].map(kk => `<td class="n"${kk === k ? ' style="font-weight:600"' : ""}>${r[kk]}${kk !== "annex" && r[kk] !== r.annex ? ` <span style="color:var(--muted)">${sgn(r[kk] - r.annex)}</span>` : ""}</td>`).join("")}</tr>`).join("")}</table></div></div>`;
     document.querySelectorAll("[data-sc]").forEach(b => b.onclick = () => { S.sc = b.dataset.sc; render(); });
     $("#scpng").onclick = () => { scenarioPng().catch(e => { $("#scpng").textContent = "Could not make the PNG: " + e.message; }); };
