@@ -187,7 +187,7 @@ function viewMethod() {
 let SCN = null;
 const SC_KEYS = ["annex", "extended", "halfway", "norm"], SC_LET = {annex: "a", extended: "b", halfway: "c", norm: "d"};
 const SC_SHORT = {annex: "As it is", extended: "Continuation of the trend", halfway: "Partial correction", norm: "Full correction"};
-function loadScn() { return SCN ? Promise.resolve(SCN) : fetchJSON("scenarios.json").then(d => { SCN = d; d.constituencies = tab(d.constituencies); d.measures = tab(d.measures); d.parties = tab(d.parties); d.gallagher = tab(d.gallagher); d.by_constituency = tab(d.by_constituency); return d; }); }
+function loadScn() { return SCN ? Promise.resolve(SCN) : fetchJSON("scenarios.json").then(d => { SCN = d; d.constituencies = tab(d.constituencies); d.measures = tab(d.measures); d.parties = tab(d.parties); d.gallagher = tab(d.gallagher); d.by_constituency = tab(d.by_constituency); d.additional_national = tab(d.additional_national); d.additional_constituency = tab(d.additional_constituency); return d; }); }
 function hemiLayout(n, rows = 11) {
   const radii = Array.from({length: rows}, (_, i) => 1 + i / (rows - 1)), rs = radii.reduce((a, b) => a + b, 0), counts = radii.map(r => Math.floor(n * r / rs));
   let rem = n - counts.reduce((a, b) => a + b, 0); const order = radii.map((r, i) => i).sort((p, q) => radii[q] - radii[p]);
@@ -195,11 +195,8 @@ function hemiLayout(n, rows = 11) {
   const pts = []; counts.forEach((nc, ri) => { for (let j = 0; j < nc; j++) { const ang = nc === 1 ? Math.PI / 2 : Math.PI - j * Math.PI / (nc - 1); pts.push({x: radii[ri] * Math.cos(ang), y: radii[ri] * Math.sin(ang), ang, r: radii[ri]}); } });
   return pts.sort((p, q) => q.ang - p.ang || p.r - q.r);
 }
-// whole seats summing to 460: the simulations' mean seats by the largest remainders (medians of independent parties need not add up)
-function wholeSeats(k) {
-  const rows = SCN.parties.filter(r => r.scenario === k && r.mean > 0), fl = rows.map(r => ({p: r.party, n: Math.floor(r.mean), f: r.mean - Math.floor(r.mean)}));
-  let rem = 460 - fl.reduce((a, b) => a + b.n, 0); fl.slice().sort((a, b) => b.f - a.f).forEach(x => { if (rem > 0) { x.n++; rem--; } });
-  const o = SCN.meta.hemicycle_order; return fl.filter(x => x.n > 0).sort((a, b) => o.indexOf(a.p) - o.indexOf(b.p));
+function wholeSeats(k) {   // one simulated parliament, the draw whose national seats lie closest to the medians: whole seats that sum to 460
+  const o = SCN.meta.hemicycle_order; return Object.entries(SCN.hemi[k]).map(([p, n]) => ({p, n})).sort((a, b) => o.indexOf(a.p) - o.indexOf(b.p));
 }
 const pcol = p => (SCN.palette && SCN.palette[p]) || "#7f7f7f";
 function hemiSvg(k) {
@@ -213,38 +210,44 @@ function viewSeats() {
   $("#main").innerHTML = `<div class="loading">Loading…</div>`;
   loadScn().then(d => {
     const k = S.sc, m = d.meta, par = d.parties, byK = kk => par.filter(r => r.scenario === kk && r.median != null);
-    const names = [...new Set(par.filter(r => r.mean > 0.05).map(r => r.party))].sort((a, b) => par.find(r => r.scenario === "annex" && r.party === b).mean - par.find(r => r.scenario === "annex" && r.party === a).mean);
+    const med = (kk, p) => (par.find(r => r.scenario === kk && r.party === p) || {median: 0}).median;
+    const names = [...new Set(par.filter(r => r.median > 0).map(r => r.party))].sort((a, b) => med("annex", b) - med("annex", a) || a.localeCompare(b));
     const ms = Object.fromEntries(d.measures.map(r => [r.scenario, r])), gal = Object.fromEntries(d.gallagher.map(r => [r.scenario, r.gallagher]));
-    const cell = (p, kk) => { const r = par.find(x => x.scenario === kk && x.party === p), a = par.find(x => x.scenario === "annex" && x.party === p); if (!r) return "<td></td>"; const dv = Math.round(r.mean - a.mean), dif = kk === "annex" || dv === 0 ? "" : ` <span style="color:var(--muted)">${sgn(dv)}</span>`; return `<td class="n" data-tip="80% range ${Math.round(r.lo)}–${Math.round(r.hi)}${r.p_majority > 0.005 ? "; majority in " + pct(r.p_majority, 0) + " of simulations" : ""}">${Math.round(r.median)}${dif}</td>`; };
+    const cell = (p, kk) => { const r = par.find(x => x.scenario === kk && x.party === p), a = par.find(x => x.scenario === "annex" && x.party === p); if (!r) return "<td></td>"; const dif = ""; return `<td class="n" data-tip="80% range ${Math.round(r.lo)}–${Math.round(r.hi)}${r.p_majority > 0.005 ? "; majority in " + pct(r.p_majority, 0) + " of simulations" : ""}">${Math.round(r.median)}${dif}</td>`; };
     const rowsT = names.map(p => `<tr><td><span class="sw sq" style="background:${pcol(p)};margin-right:6px"></span>${esc(p)}</td>${SC_KEYS.map(kk => cell(p, kk)).join("")}</tr>`).join("");
     const cons = d.constituencies.slice().sort((a, b) => (b[k] - b.annex) - (a[k] - a.annex) || a.okreg - b.okreg);
     const set = G.sets.sejm2001, by = Object.fromEntries(d.constituencies.map(r => [r.okreg, r])), pa = names.includes(S.pa) ? S.pa : "";
-    const pm = (kk, o) => { const r = d.by_constituency.find(x => x.scenario === kk && x.okreg === o && x.party === pa); return r ? r.mean : 0; };
-    const dOf = r => pa ? pm(k, r.okreg) - pm("annex", r.okreg) : r[k] - r.annex;
-    const lim = Math.max(pa ? 0.3 : 1, ...d.constituencies.map(r => Math.abs(dOf(r))));
-    const sgn1 = x => Math.abs(x) < 0.05 ? "0.0" : (x > 0 ? "+" : "−") + Math.abs(x).toFixed(1);
+    const gc = pa ? d.additional_constituency.filter(x => x.scenario === k && x.party === pa) : [];
+    const gp = (o, dir) => gc.filter(x => x.okreg === o && x.dir === dir).sort((u, v) => u.k - v.k).map(x => x.p);
+    const net = o => (gp(o, "gain")[0] || 0) - (gp(o, "lose")[0] || 0);
+    const dOf = r => pa ? net(r.okreg) : r[k] - r.annex;
+    const lim = pa ? 1 : Math.max(1, ...d.constituencies.map(r => Math.abs(r[k] - r.annex)));
+    const ordn = n => n + (["th", "st", "nd", "rd"][(n % 100 - 20) % 10] || ["th", "st", "nd", "rd"][n % 100] || "th");
+    const plist = (ps, what) => ps.map((p, j) => `${ordn(j + 1)} ${what}: ${pct(p, 0)}`).join("; ");
     const fillOf = dv => dv === 0 ? "rgb(245,245,243)" : dv > 0 ? hex(lerp(MID, SLATE, Math.min(1, dv / lim))) : hex(lerp(MID, RED, Math.min(1, -dv / lim)));
     let map = `<svg viewBox="0 0 ${G.meta.view[0]} ${G.meta.view[1]}" role="img" aria-label="Seats gained or lost by constituency">`;
-    set.okreg.forEach((o, i) => { const r = by[o]; if (!r) return; const dv = dOf(r); map += `<path class="region" d="${set.d[i]}" fill="${fillOf(dv)}" data-tip="<b>${esc(r.name)}</b><br>${pa ? `${esc(pa)}: ${pm("annex", r.okreg).toFixed(1)} seats on average as it is; ${pm(k, r.okreg).toFixed(1)} here (${sgn1(dv)})<br>` : ""}${r.annex} seats in the constituency now; ${r[k]} here (${sgn(r[k] - r.annex)})<br>${num(r.residents)} residents"/>`; });
+    set.okreg.forEach((o, i) => { const r = by[o]; if (!r) return; const dv = dOf(r); map += `<path class="region" d="${set.d[i]}" fill="${fillOf(dv)}" data-tip="<b>${esc(r.name)}</b><br>${pa ? `${esc(pa)}: ${gp(r.okreg, "gain").length ? "chance of additional seats, " + plist(gp(r.okreg, "gain"), "extra seat") : gp(r.okreg, "lose").length ? "chance of fewer seats, " + plist(gp(r.okreg, "lose"), "seat lost") : "same seats in every simulation"}<br>` : ""}${r.annex} seats in the constituency now; ${r[k]} here (${sgn(r[k] - r.annex)})<br>${num(r.residents)} residents"/>`; });
     map += "</svg>";
     const constTbl = `<div class="chartbox"><h3>Seats by constituency</h3><div class="tbl"><table><tr><th>Constituency</th><th class="n">Residents</th><th class="n">(a) As it is</th><th class="n">(b) Continuation</th><th class="n">(c) Partial</th><th class="n">(d) Full</th></tr>
        ${cons.map(r => `<tr><td>${esc(r.name)}</td><td class="n">${num(r.residents)}</td>${["annex", "extended", "halfway", "norm"].map(kk => `<td class="n"${kk === k ? ' style="font-weight:600"' : ""}>${r[kk]}${kk !== "annex" && r[kk] !== r.annex ? ` <span style="color:var(--muted)">${sgn(r[kk] - r.annex)}</span>` : ""}</td>`).join("")}</tr>`).join("")}</table></div></div>`;
-    const prow = pc => { const mean = kk => pm(kk, pc.okreg); return {pc, a: mean("annex"), x: mean("extended"), h: mean("halfway"), n: mean("norm")}; };
-    const prs = d.constituencies.map(prow).sort((u, v) => (v[{annex: "a", extended: "x", halfway: "h", norm: "n"}[k]] - v.a) - (u[{annex: "a", extended: "x", halfway: "h", norm: "n"}[k]] - u.a) || u.pc.okreg - v.pc.okreg);
-    const pk = {annex: "a", extended: "x", halfway: "h", norm: "n"}[k], pgain = prs.filter(r => r[pk] - r.a >= 0.05).slice(0, 4), plose = prs.slice().reverse().filter(r => r[pk] - r.a <= -0.05).slice(0, 4);
-    const partyTbl = pa ? `<div class="chartbox"><h3>${esc(pa)}: average seats by constituency</h3>${k === "annex" ? "" : `<p class="help" style="margin:0 0 6px">${pgain.length ? "Gains most in " + pgain.map(r => esc(r.pc.name) + " (" + sgn1(r[pk] - r.a) + ")").join(", ") + ". " : ""}${plose.length ? "Loses most in " + plose.map(r => esc(r.pc.name) + " (" + sgn1(r[pk] - r.a) + ")").join(", ") + "." : ""}${pgain.length || plose.length ? "" : "No constituency changes by as much as 0.05 seats."}</p>`}
-      <div class="tbl"><table><tr><th>Constituency</th><th class="n">Seats in the constituency, (a)</th><th class="n">${esc(pa)}, (a) As it is</th><th class="n">(b) Continuation</th><th class="n">(c) Partial</th><th class="n">(d) Full</th></tr>
-      ${prs.map(r => `<tr><td>${esc(r.pc.name)}</td><td class="n">${r.pc.annex}</td>${[["annex", "a"], ["extended", "x"], ["halfway", "h"], ["norm", "n"]].map(([kk, c]) => `<td class="n"${kk === k ? ' style="font-weight:600"' : ""}>${r[c].toFixed(1)}${kk !== "annex" && Math.abs(r[c] - r.a) >= 0.05 ? ` <span style="color:var(--muted)">${sgn1(r[c] - r.a)}</span>` : ""}</td>`).join("")}</tr>`).join("")}</table></div>
-      <p class="help" style="margin-top:6px">Average number of seats the list wins in the constituency over ${m.draws} simulated parliaments, so fractions mean it wins the seat in some simulations and not others.</p></div>` : "";
+    const nat = pa ? d.additional_national.filter(x => x.scenario === k && x.party === pa) : [], npv = dir => nat.filter(x => x.dir === dir).sort((u, v) => u.k - v.k).map(x => x.p);
+    const natSame = (nat.find(x => x.dir === "same") || {}).p;
+    const prs = pa ? d.constituencies.map(c => ({c, g: gp(c.okreg, "gain"), l: gp(c.okreg, "lose")})).filter(r => r.g.length || r.l.length).sort((u, v) => (v.g[0] || 0) - (u.g[0] || 0) || (v.l[0] || 0) - (u.l[0] || 0) || u.c.okreg - v.c.okreg) : [];
+    const cellP = ps => ps.length ? ps.map((p, j) => `<span style="white-space:nowrap">${ordn(j + 1)} ${pct(p, 0)}</span>`).join(", ") : '<span style="color:var(--muted)">none</span>';
+    const partyTbl = pa ? `<div class="chartbox"><h3>${esc(pa)}: chance of more or fewer seats than under the annex</h3>${k === "annex" ? `<p class="help">Under (a) nothing changes. Choose another distribution.</p>` : `
+      <p class="lead" style="margin:0 0 8px"><b>Nationally.</b> ${npv("gain").length ? `More seats than under the annex: ${npv("gain").map((p, j) => `at least ${j + 1}, ${pct(p, 0)}`).join("; ")}.` : "It never wins more seats than under the annex."} ${npv("lose").length ? `Fewer seats: ${npv("lose").map((p, j) => `at least ${j + 1}, ${pct(p, 0)}`).join("; ")}.` : "It never wins fewer."} The same number: ${natSame == null ? "0%" : pct(natSame, 0)}.</p>
+      ${prs.length ? `<div class="tbl"><table><tr><th>Constituency</th><th class="n">Seats, (a)</th><th class="n">Seats here</th><th>Chance of each additional seat</th><th>Chance of each seat lost</th></tr>
+      ${prs.map(r => `<tr><td>${esc(r.c.name)}</td><td class="n">${r.c.annex}</td><td class="n">${r.c[k]}</td><td>${cellP(r.g)}</td><td>${cellP(r.l)}</td></tr>`).join("")}</table></div>` : `<p class="help">No constituency has a different number of seats for ${esc(pa)} in any simulation.</p>`}
+      <p class="help" style="margin-top:6px">The chance of the 1st additional seat is the share of the ${m.draws} simulated parliaments in which the list wins at least one more seat in the constituency than it does under the annex with the same votes; the 2nd, at least two more, and so on. A constituency only gains seats if it is given more, and only loses them if it is given fewer. With ${m.draws} simulations, each chance is good to about three percentage points.</p>`}</div>` : "";
     $("#main").innerHTML = `<p class="lead">The Sejm's 460 seats are shared out between the constituencies by the annex to the Electoral Code, not by today's population, and the two have drifted apart. This view asks what the latest poll projection would give each party if the seats between constituencies were (a) left as they are, (b) moved further from the population norm in keeping with the trend since 2005, (c) moved halfway to the norm, or (d) set exactly by the norm (art. 202, residents at 31 December ${m.residents_year}). Only the number of seats in each constituency changes; each constituency's vote shares are the Polling tracker's projection for ${esc(m.week)}.</p>
      <div class="toolbar"><div class="seg" role="group" aria-label="Distribution of seats">${SC_KEYS.map(kk => `<button data-sc="${kk}" aria-pressed="${k === kk}">(${SC_LET[kk]}) ${SC_SHORT[kk]}</button>`).join("")}</div>
        <label class="ctl" for="pa">Show a party <select class="sel" id="pa"><option value="">All seats</option>${names.slice().sort((a, b) => a.localeCompare(b, "pl")).map(p => `<option value="${esc(p)}" ${p === pa ? "selected" : ""}>${esc(p)}</option>`).join("")}</select></label>
        <button class="btn2" id="scpng" type="button">Download PNG of all four</button></div>
-     <div class="cols"><div class="chartbox"><h3>(${SC_LET[k]}) ${esc(SC_SHORT[k])}</h3>${hemiSvg(k)}<p class="help" style="margin-top:6px">${esc(m.scenarios[k])} Dots are seats, the simulations' average rounded to 460; the dashed line marks the 231 needed for a majority.</p>
+     <div class="cols"><div class="chartbox"><h3>(${SC_LET[k]}) ${esc(SC_SHORT[k])}</h3>${hemiSvg(k)}<p class="help" style="margin-top:6px">${esc(m.scenarios[k])} Dots are seats in one typical simulated parliament (the one closest to the median seats); the dashed line marks the 231 needed for a majority.</p>
         <div class="legend">${wholeSeats(k).map(b => `<span><i class="sw sq" style="background:${pcol(b.p)}"></i>${esc(b.p)} ${b.n}</span>`).join("")}</div></div>
-      <div class="chartbox"><h3>${pa ? esc(pa) + ": average seats gained or lost, against (a)" : "Seats moved between constituencies"}</h3>${map}<div class="grad" style="background:linear-gradient(90deg,${hex(RED)},rgb(245,245,243),${hex(SLATE)})"></div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>−${pa ? lim.toFixed(1) : lim} seats</span><span>no change</span><span>+${pa ? lim.toFixed(1) : lim}</span></div></div></div>
-     <div class="chartbox"><h3>Median seats by party, with the change in average seats from (a)</h3><div class="tbl"><table><tr><th>List</th>${SC_KEYS.map(kk => `<th class="n">(${SC_LET[kk]}) ${SC_SHORT[kk]}</th>`).join("")}</tr>${rowsT}
+      <div class="chartbox"><h3>${pa ? esc(pa) + ": chance of gaining or losing seats, against (a)" : "Seats moved between constituencies"}</h3>${map}<div class="grad" style="background:linear-gradient(90deg,${hex(RED)},rgb(245,245,243),${hex(SLATE)})"></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)">${pa ? "<span>Likely to lose a seat</span><span>no change</span><span>Likely to gain a seat</span>" : `<span>−${lim} seats</span><span>no change</span><span>+${lim}</span>`}</div></div></div>
+     <div class="chartbox"><h3>Median seats by party, with 80% ranges on hover</h3><div class="tbl"><table><tr><th>List</th>${SC_KEYS.map(kk => `<th class="n">(${SC_LET[kk]}) ${SC_SHORT[kk]}</th>`).join("")}</tr>${rowsT}
        <tr><td>Seats moved between constituencies</td>${SC_KEYS.map(kk => `<td class="n">${ms[kk].seats_moved}</td>`).join("")}</tr>
        <tr><td>Constituencies with a different number</td>${SC_KEYS.map(kk => `<td class="n">${ms[kk].constituencies_changed}</td>`).join("")}</tr>
        <tr><td>Residents per seat, largest ÷ smallest</td>${SC_KEYS.map(kk => `<td class="n">${f2(ms[kk].max_min_ratio)}</td>`).join("")}</tr>
@@ -278,7 +281,7 @@ async function scenarioPng() {
   });
   g.textAlign = "left"; g.fillStyle = "#767676"; g.font = `400 19px ${F}`;
   const foot = [`Distributions: (a) annex to the Electoral Code; (b) the gap between the annex and the norm of representation (residents, art. 202) extended at its 2005–${m.residents_year} trend to ${m.horizon}; (c) halfway to the norm; (d) the norm on residents at 31 December ${m.residents_year}.`,
-    `Seats are the average of ${m.draws} simulated parliaments rounded to 460; each constituency's vote shares, the 5% threshold and the regional swing are the same in all four. Source: Ben Stanley, benstanley.eu (Pooling the Poles, GUS BDL, PKW).`];
+    `Seats are those of one typical simulated parliament (closest to the median seats) of ${m.draws}; each constituency's vote shares, the 5% threshold and the regional swing are the same in all four. Source: Ben Stanley, benstanley.eu (Pooling the Poles, GUS BDL, PKW).`];
   const wrap = t => { const out = []; let line = ""; t.split(" ").forEach(w => { if (g.measureText(line + " " + w).width > W - 120 && line) { out.push(line); line = w; } else line = line ? line + " " + w : w; }); out.push(line); return out; };
   const fl = foot.flatMap(wrap); fl.forEach((t, i) => g.fillText(t, 60, H - 30 - (fl.length - 1 - i) * 27));
   const blob = await new Promise(res => cv.toBlob(res, "image/png"));
