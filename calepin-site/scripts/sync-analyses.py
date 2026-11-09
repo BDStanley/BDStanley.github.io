@@ -193,6 +193,7 @@ LISTED_NAMES = [
         ("rebels-", {"term", "chunk", "mps"}),
         ("votes-", {"term", "chunk", "first_index", "votes"}),
         ("bills-", {"term", "bills"}),
+        ("bv-", {"term", "chunk", "mp_ids", "clubs", "rows"}),
     ]),
     ("Sejm analysis/Legislative activity/web/senate-legislative.json", "files", [
         ("senate-mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
@@ -201,6 +202,7 @@ LISTED_NAMES = [
         ("senate-rebels-", {"term", "chunk", "mps"}),
         ("senate-votes-", {"term", "chunk", "first_index", "votes"}),
         ("senate-bills-", {"term", "bills"}),
+        ("senate-bv-", {"term", "chunk", "mp_ids", "clubs", "rows"}),
     ]),
     ("Sejm analysis/Legislative activity/web/ep-legislative.json", "files", [
         ("ep-mps-", {"term", "n_mps", "rebels_files", "vote_chunk_first_index", "n_roll_calls", "mps"}),
@@ -209,6 +211,7 @@ LISTED_NAMES = [
         ("ep-rebels-", {"term", "chunk", "mps"}),
         ("ep-votes-", {"term", "chunk", "first_index", "votes"}),
         ("ep-bills-", {"term", "bills"}),
+        ("ep-bv-", {"term", "chunk", "mp_ids", "clubs", "rows"}),
     ]),
 ]
 

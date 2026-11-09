@@ -15,7 +15,7 @@ let VIEWS = [];
 const viewList = b => BODIES[b].views.map(v => [v, v === "clubs" ? (b === "ep" ? "Groups" : "Clubs") : v === "mps" ? (b === "sejm" ? "MPs" : b === "ep" ? "MEPs" : "Senators") : v === "spread" ? (b === "sejm" ? "All MPs" : b === "ep" ? "All MEPs" : "All senators") : v === "bills" ? (b === "sejm" ? "Bills" : "Items") : VIEWNAMES[v]]);
 const cache = {};
 const fetchJSON = f => cache[f] || (cache[f] = fetch(f).then(r => { if (!r.ok) throw new Error(f + " " + r.status); return r.json(); }));
-let L, S = {body: "sejm", view: "clubs", term: 10, mp: null, q: "", club: "", page: 0, ext: false, bq: "", btopic: "", binit: "", bout: "", bterm: "", bpage: 0, bunc: true}, PFX = "", N = BODIES.sejm;
+let L, S = {body: "sejm", view: "clubs", term: 10, mp: null, q: "", club: "", page: 0, ext: false, bq: "", btopic: "", binit: "", bout: "", bterm: "", bpage: 0, bunc: true, bsel: "", brc: null}, PFX = "", N = BODIES.sejm;
 const LB = {}, TDS = {sejm: {}, senate: {}, ep: {}};
 let TD = TDS.sejm;   // term -> mps json, of the current body
 const colOf = f => (L.family_colours[f]) || "#7f7f7f";
@@ -41,10 +41,11 @@ function readHash() {
   if (p.get("mp")) S.mp = +p.get("mp");
   if (p.get("q")) S.bq = p.get("q");
   if (p.get("topic")) S.btopic = p.get("topic");
+  S.bsel = p.get("bill") || ""; S.brc = p.get("rc") ? +p.get("rc") : null;
 }
 function writeHash() {
   const p = new URLSearchParams({view: S.view, t: S.term}); if (S.body !== "sejm") p.set("b", S.body); if (S.mp && (S.view === "mps")) p.set("mp", S.mp);
-  if (S.view === "bills") { if (S.bq) p.set("q", S.bq); if (S.btopic) p.set("topic", S.btopic); }
+  if (S.view === "bills") { if (S.bq) p.set("q", S.bq); if (S.btopic) p.set("topic", S.btopic); if (S.bsel) { p.set("bill", S.bsel); if (S.brc != null) p.set("rc", S.brc); } }
   history.replaceState(null, "", "#" + p.toString());
 }
 const tip = $("#tip");
@@ -61,8 +62,8 @@ function toolbar() {
    <div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
    <label class="ctl">${N.name} term <span class="seg small" role="group" aria-label="Term">${T.map(t => `<button data-t="${t.term}" aria-pressed="${S.term === t.term}" ${S.view === "legislation" || S.view === "bills" ? "disabled" : ""} title="${t.first_vote.slice(0, 4)}–${t.term_end ? t.term_end.slice(0, 4) : ""}">${t.label || t.term}</button>`).join("")}</span></label>`;
   $("#tb").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return;
-    if (b.dataset.b) { if (b.dataset.b !== S.body) { setBody(b.dataset.b).then(() => { S.term = Math.max(...L.terms.map(t => t.term)); if (!VIEWS.some(v => v[0] === S.view)) S.view = "clubs"; S.mp = null; S.club = ""; S.q = ""; S.page = 0; render(); }); } return; }
-    if (b.dataset.v) { S.view = b.dataset.v; } else { S.term = +b.dataset.t; S.mp = null; S.club = ""; S.q = ""; S.page = 0; }
+    if (b.dataset.b) { if (b.dataset.b !== S.body) { setBody(b.dataset.b).then(() => { S.term = Math.max(...L.terms.map(t => t.term)); if (!VIEWS.some(v => v[0] === S.view)) S.view = "clubs"; S.mp = null; S.club = ""; S.q = ""; S.page = 0; S.bsel = ""; render(); }); } return; }
+    if (b.dataset.v) { S.view = b.dataset.v; S.bsel = ""; } else { S.term = +b.dataset.t; S.mp = null; S.club = ""; S.q = ""; S.page = 0; }
     render(); };
 }
 async function render() {
@@ -261,13 +262,14 @@ async function loadBills() {
   const terms = L.terms.filter(t => t.bills).map(t => t.term), pf = PFX;
   const files = await Promise.all(terms.map(t => fetchJSON(`${pf}bills-${t}.json`)));
   const out = [];
-  files.forEach((f, i) => tab(f.bills).forEach(b => { b.term = terms[i]; const c = CAPS[b.cap];
+  files.forEach((f, i) => tab(f.bills).forEach((b, ix) => { b.term = terms[i]; b.ix = ix; const c = CAPS[b.cap];
     b.blob = fold(b.title + " " + (b.number || "") + " " + (c ? [c.en, c.pl, c.keywords_en, c.keywords_pl].join(" ") : "")); b.tfold = fold(b.title);
     if (b.is_bill === undefined || b.is_bill === 1) out.push(b); }));
   out.sort((a, b) => a.start < b.start ? 1 : a.start > b.start ? -1 : (b.number || 0) - (a.number || 0));
   return BILLS[S.body] = out;
 }
 async function viewBills() {
+  if (S.bsel) return viewBillDetail();
   const sejm = S.body === "sejm", all = await loadBills(), caps = Object.values(CAPS).filter(c => all.some(b => b.cap === c.code)), W = unitWord();
   const toks = fold(S.bq).split(/\s+/).filter(Boolean), last = Math.max(...L.terms.map(t => t.term));
   const hit = all.filter(b => (!S.btopic || String(b.cap) === S.btopic) && (!S.bterm || String(b.term) === S.bterm) && (!sejm || !S.binit || b.sponsor === S.binit) &&
@@ -293,7 +295,7 @@ async function viewBills() {
    <label class="switch"><input type="checkbox" id="bu" ${S.bunc ? "checked" : ""}> Include ${W} whose topic the two coders disagreed on (marked ?)</label>
    <p class="help" style="margin:8px 0"><b>${num(hit.length)}</b> ${W}${top && hit.length ? ": " + top : ""}${toks.length && hit.length ? `. ${num(nTitle)} have ${toks.length > 1 ? "all the words" : "the word"} in the title and come first; the rest are in a topic that matches.` : ""}</p>
    <div class="tbl"><table><thead><tr><th>Date</th><th>${sejm ? "Bill" : "Item"}</th><th>Topic</th>${sejm ? "<th>Initiator</th><th>Outcome</th>" : "<th>Roll calls</th>"}</tr></thead><tbody>${hit.slice(S.bpage * per, (S.bpage + 1) * per).map(b => { const c = CAPS[b.cap];
-     return `<tr><td style="white-space:nowrap">${esc(b.start)}</td><td>${esc(b.title)}<div class="help">Term ${esc((L.terms.find(t => t.term === b.term) || {}).label || b.term)}${sejm ? `, no. ${esc(b.number)}${b.document_type ? " · " + esc(b.document_type) : ""}` : ""}</div></td><td>${c ? `${esc(c.en)}${b.uncertain ? ' <span class="help" data-tip="The two coders disagreed; a third model decided.">?</span>' : ""}<div class="help">${esc(c.pl)}</div>` : '<span class="help">Not coded</span>'}</td>${sejm ? `<td style="white-space:nowrap">${esc(INIT[b.sponsor] || "")}</td><td style="white-space:nowrap">${b.passed === 1 ? "Passed" : b.term === last ? "Not passed yet" : "Not passed"}</td>` : `<td style="white-space:nowrap">${num(b.n_votes)}</td>`}</tr>`; }).join("") || `<tr><td colspan="${sejm ? 5 : 4}">No ${W} match.</td></tr>`}</tbody></table></div>
+     return `<tr><td style="white-space:nowrap">${esc(b.start)}</td><td><a href="#" class="bl" data-t="${b.term}" data-i="${b.ix}">${esc(b.title)}</a><div class="help">Term ${esc((L.terms.find(t => t.term === b.term) || {}).label || b.term)}${sejm ? `, no. ${esc(b.number)}${b.document_type ? " · " + esc(b.document_type) : ""}` : ""}</div></td><td>${c ? `${esc(c.en)}${b.uncertain ? ' <span class="help" data-tip="The two coders disagreed; a third model decided.">?</span>' : ""}<div class="help">${esc(c.pl)}</div>` : '<span class="help">Not coded</span>'}</td>${sejm ? `<td style="white-space:nowrap">${esc(INIT[b.sponsor] || "")}</td><td style="white-space:nowrap">${b.passed === 1 ? "Passed" : b.term === last ? "Not passed yet" : "Not passed"}</td>` : `<td style="white-space:nowrap">${num(b.n_votes)}</td>`}</tr>`; }).join("") || `<tr><td colspan="${sejm ? 5 : 4}">No ${W} match.</td></tr>`}</tbody></table></div>
    <div class="pg"><button class="btn2" id="bpp" ${S.bpage === 0 ? "disabled" : ""}>Newer</button><span>${S.bpage + 1} of ${pages}</span><button class="btn2" id="bpn" ${S.bpage >= pages - 1 ? "disabled" : ""}>Older</button></div>
    ${note(`${sejm ? "Titles are those the Sejm gives the process, in Polish. " : S.body === "senate" ? "Titles are the subjects of the Senate's votes, in Polish; the roll calls on an item include its amendments, motions and the vote on the whole. " : "Titles are those on the Parliament's voting lists, in English; the roll calls on an item include amendments to it. "}Topics are model-coded from the title alone; the only accuracy check made on the Sejm's bills is that a bill's topic fits the committee it was referred to (85% of bills the coders agreed on, against 12% by chance), and there is no hand-coded accuracy figure for any body. English names follow the Comparative Agendas Project; the Polish names and search words are this page's own wording. Items the coders disagreed on were decided by a third model and are uncertain.${sejm ? " Term 10 is still running, so its pending bills are not failures. Passed means the Sejm passed the bill." : ""}`)}`;
   let tm; const redo = () => { S.bpage = 0; writeHash(); viewBills().then(() => { const i = $("#bq"); if (document.activeElement !== i && S.focusq) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }); };
@@ -301,6 +303,56 @@ async function viewBills() {
   const on = (id, f) => { const el = $(id); if (el) el.onchange = e => { f(e.target); S.focusq = false; redo(); }; };
   on("#bt", t => S.btopic = t.value); on("#btm", t => S.bterm = t.value); on("#bi", t => S.binit = t.value); on("#bo", t => S.bout = t.value); on("#bu", t => S.bunc = t.checked);
   $("#bpp").onclick = () => { S.bpage--; viewBills(); }; $("#bpn").onclick = () => { S.bpage++; viewBills(); };
+  $("#main").onclick = e => { const a = e.target.closest("a.bl"); if (!a) return; e.preventDefault(); S.bsel = `${a.dataset.t}:${a.dataset.i}`; S.brc = null; writeHash(); window.scrollTo(0, 0); viewBillDetail(); };
+}
+const VOTENAME = ["ABSENT", "YES", "NO", "ABSTAIN"];
+const clubName = c => c === "niez." || c === "_" ? (S.body === "ep" ? "No group" : S.body === "senate" ? "No club" : "Unaffiliated") : cn(c);
+async function viewBillDetail() {
+  const sejm = S.body === "sejm", [t, ix] = S.bsel.split(":").map(Number), all = await loadBills(), b = all.find(x => x.term === t && x.ix === ix), back = () => { S.bsel = ""; S.brc = null; writeHash(); viewBills(); };
+  if (!b) { back(); return; }
+  const td = TD[t] = TD[t] || await fetchJSON(`${PFX}mps-${t}.json`), c = CAPS[b.cap], last = Math.max(...L.terms.map(x => x.term)), tl = (L.terms.find(x => x.term === t) || {}).label || t;
+  const idxs = b.votes ? String(b.votes).split(";").map(Number) : [], firsts = [].concat(td.vote_chunk_first_index);
+  const chunkOf = i => { let k = firsts.length - 1; while (firsts[k] > i) k--; return k; };
+  const vf = {}; await Promise.all([...new Set(idxs.map(chunkOf))].map(async k => vf[k] = await fetchJSON(`${PFX}votes-${t}-${k + 1}.json`)));
+  const rcs = idxs.map(i => { const r = vf[chunkOf(i)].votes.rows[i - firsts[chunkOf(i)]]; return {i, vid: r[0], date: r[1], label: r[2], type: r[3]}; });
+  const bvf = b.bvchunk ? await fetchJSON(`${PFX}bv-${t}-${b.bvchunk}.json`) : null, byIdx = {}; if (bvf) bvf.rows.forEach(r => byIdx[r[0]] = r[1]);
+  const tally = i => { const s = byIdx[i], n = [0, 0, 0, 0]; if (!s) return null; for (let k = 0; k < s.length; k += 2) { const v = s[k]; if (v !== ".") n[+v]++; } return n; };
+  if (S.brc == null || !rcs.some(r => r.i === S.brc)) S.brc = rcs.length ? (rcs.some(r => r.i === b.final_vote) ? b.final_vote : rcs[0].i) : null;
+  const mps = Object.fromEntries(td.mps.map(m => [m.mp_id, m])), fam = Object.fromEntries(L.clubs.filter(x => x.term === t).map(x => [x.club, x.family]));
+  const facts = sejm ? [["Number", `${esc(b.number)}${b.document_type ? " · " + esc(b.document_type) : ""}`], ["Initiator", esc(INIT[b.sponsor] || "")], ["Received", esc(b.start || "")], ["First reading", esc(b.first_reading || "")],
+      ["Passed the Sejm", esc(b.passed_sejm || (b.passed === 1 ? "" : t === last ? "Not yet" : "Did not pass"))], ["Signed by the President", esc(b.signed || "")], ["Veto", b.veto ? "Yes" : ""], ["Urgency", b.urgency && b.urgency !== "NORMAL" ? esc(String(b.urgency).toLowerCase()) : ""], ["ELI reference", esc(b.eli || "")]]
+    : [["First vote", esc(b.start)], ["Last vote", esc(b.end)], ["Roll calls", num(b.n_votes)]];
+  $("#main").innerHTML = `<p><button class="btn2" id="bb">← Back to the ${unitWord()}</button></p>
+   <h2 style="margin:6px 0">${esc(b.title)}</h2>
+   <div class="chips"><span class="chip">${sejm ? "Sejm" : N.name} term ${esc(tl)}</span>${c ? `<span class="chip">${esc(c.en)} / ${esc(c.pl)}${b.uncertain ? " (topic uncertain)" : ""}</span>` : ""}${sejm ? `<span class="chip ${b.passed === 1 ? "" : "flag"}">${b.passed === 1 ? "Passed" : t === last ? "Not passed yet" : "Not passed"}</span>` : ""}</div>
+   <dl class="facts" style="display:grid;grid-template-columns:max-content 1fr;gap:2px 16px;margin:8px 0;font-size:13.5px">${facts.filter(f => f[1]).map(f => `<dt class="help" style="margin:0">${f[0]}</dt><dd style="margin:0">${f[1]}</dd>`).join("")}</dl>
+   <h3>Roll calls (${rcs.length})</h3>
+   ${rcs.length ? `<div class="tbl"><table><thead><tr><th>Date</th><th>${sejm ? "Roll call" : "Vote"}</th><th>Type</th><th>Yes</th><th>No</th><th>Abstain</th><th>Absent</th></tr></thead><tbody>${rcs.map(r => { const n = tally(r.i);
+      return `<tr class="rc" data-i="${r.i}" tabindex="0" style="cursor:pointer" aria-selected="${r.i === S.brc}"><td style="white-space:nowrap">${esc(r.date)}</td><td>${esc(r.label)}${r.i === b.final_vote ? ' <span class="help">(vote on the whole)</span>' : ""}</td><td class="help" style="white-space:nowrap">${esc(TYPESHORT[r.type] || "")}</td>${n ? `<td>${n[1]}</td><td>${n[2]}</td><td>${n[3]}</td><td>${n[0]}</td>` : '<td colspan="4" class="help">n/a</td>'}</tr>`; }).join("")}</tbody></table></div>
+   <div id="who"></div>` : `<p class="notice">No roll call is linked to this ${sejm ? "bill" : "item"}${sejm ? ": it may not have reached a vote, or the API does not tie the vote to it" : ""}.</p>`}`;
+  $("#bb").onclick = back;
+  document.querySelectorAll("tr.rc").forEach(r => { r.style.background = +r.dataset.i === S.brc ? "var(--tint)" : ""; });
+  if (!rcs.length) return;
+  const who = () => {
+    const s = byIdx[S.brc], rc = rcs.find(r => r.i === S.brc); if (!s) { $("#who").innerHTML = ""; return; }
+    const rows = []; for (let k = 0, m = 0; k < s.length; k += 2, m++) { if (s[k] === ".") continue; const mp = mps[bvf.mp_ids[m]], cl = s[k + 1] === "_" ? "_" : bvf.clubs[(s[k + 1] <= "z" && s[k + 1] >= "a") ? s[k + 1].charCodeAt(0) - 97 : s[k + 1].charCodeAt(0) - 65 + 26]; rows.push({id: bvf.mp_ids[m], name: mp ? mp.name : "(unknown)", last: mp ? mp.last_name || mp.name : "", club: cl, v: +s[k]}); }
+    const clubsIn = [...new Set(rows.map(r => r.club))].sort((a, b) => clubName(a).localeCompare(clubName(b), "pl")), by = {}; rows.forEach(r => { const o = by[r.club] = by[r.club] || [0, 0, 0, 0]; o[r.v]++; });
+    const fc = S.bwc || "", fv = S.bwv || "", fq = fold(S.bwq || "");
+    const shown = rows.filter(r => (!fc || r.club === fc) && (fv === "" || String(r.v) === fv) && (!fq || fold(r.name).includes(fq))).sort((a, b) => clubName(a.club).localeCompare(clubName(b.club), "pl") || a.last.localeCompare(b.last, "pl"));
+    $("#who").innerHTML = `<h3>How ${N.mps} voted: ${esc(rc.label)} <span class="help">${esc(rc.date)}</span></h3>
+     <div class="tbl"><table><thead><tr><th>${S.body === "ep" ? "Group" : "Club"}</th><th>Yes</th><th>No</th><th>Abstain</th><th>Absent</th></tr></thead><tbody>${clubsIn.map(cl => { const o = by[cl]; return `<tr><td><i class="bar" style="display:inline-block;width:4px;height:12px;margin-right:6px;background:${colOf(fam[cl] || "other")}"></i>${esc(clubName(cl))}</td><td>${o[1]}</td><td>${o[2]}</td><td>${o[3]}</td><td>${o[0]}</td></tr>`; }).join("")}</tbody></table></div>
+     <div class="ctls" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0"><input type="search" id="wq" placeholder="Find a name" value="${esc(S.bwq || "")}" aria-label="Find a name" style="flex:1 1 200px">
+      <select class="sel" id="wc" aria-label="Club">${[["", "All " + (S.body === "ep" ? "groups" : "clubs")], ...clubsIn.map(c2 => [c2, clubName(c2)])].map(([v, l]) => `<option value="${esc(v)}" ${fc === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>
+      <select class="sel" id="wv" aria-label="Vote">${[["", "Any vote"], ["1", "Yes"], ["2", "No"], ["3", "Abstain"], ["0", "Absent"]].map(([v, l]) => `<option value="${v}" ${fv === v ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+     <p class="help">${num(shown.length)} of ${num(rows.length)} ${N.mps}. The club is the one the ${N.mp} belonged to that day.${S.body === "ep" ? " Only Polish MEPs are listed." : ""}</p>
+     <div class="tbl" style="max-height:520px;overflow:auto"><table><thead><tr><th>${N.mp.charAt(0).toUpperCase() + N.mp.slice(1)}</th><th>${S.body === "ep" ? "Group" : "Club"}</th><th>Vote</th></tr></thead><tbody>${shown.map(r => `<tr><td><a href="#${new URLSearchParams({view: "mps", t, mp: r.id, ...(S.body !== "sejm" ? {b: S.body} : {})})}">${esc(r.name)}</a></td><td>${esc(clubName(r.club))}</td><td>${r.v ? `<span class="vote ${VOTENAME[r.v]}">${VOTENAME[r.v]}</span>` : '<span class="help">absent</span>'}</td></tr>`).join("")}</tbody></table></div>
+     ${note("Absent means the " + N.mp + " was in office but did not vote (the Sejm's data do not separate absence from a vote not cast). Members who were not in office that day are not listed.")}`;
+    $("#wq").oninput = e => { S.bwq = e.target.value; clearTimeout(who.tm); who.tm = setTimeout(() => { who(); const i = $("#wq"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 150); };
+    $("#wc").onchange = e => { S.bwc = e.target.value; who(); }; $("#wv").onchange = e => { S.bwv = e.target.value; who(); };
+  };
+  who();
+  const pick = r => { S.brc = +r.dataset.i; writeHash(); document.querySelectorAll("tr.rc").forEach(x => { x.style.background = +x.dataset.i === S.brc ? "var(--tint)" : ""; }); who(); };
+  document.querySelectorAll("tr.rc").forEach(r => { r.onclick = () => pick(r); r.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(r); } }; });
 }
 
 /* ---------- Legislation ---------- */
