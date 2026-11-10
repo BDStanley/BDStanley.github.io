@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-11-01",
+    "updated": "2026-11-10",
     "n": 54
   },
   "attitudes": [
@@ -14,8 +14,8 @@
       "measure": "Average self-placement, from 0 (left) to 10 (right)",
       "start": "1990-06-01",
       "last_data": "2026-10-06",
-      "n_readings": 898,
-      "n_surveys": 578,
+      "n_readings": 900,
+      "n_surveys": 579,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -32,7 +32,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-11-10",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -513,8 +513,8 @@
       "measure": "Supporters of EU membership, % of those with a view",
       "start": "1990-11-01",
       "last_data": "2026-05-23",
-      "n_readings": 320,
-      "n_surveys": 288,
+      "n_readings": 325,
+      "n_surveys": 292,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -529,7 +529,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-11-10",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {

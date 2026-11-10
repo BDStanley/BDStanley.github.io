@@ -6,8 +6,8 @@
  },
  "totals": {
   "documents": 41,
-  "works": 31,
-  "organisations": 54,
+  "works": 33,
+  "organisations": 56,
   "countries": 18,
   "first_year": 2013,
   "cited_works": 12,
@@ -19,9 +19,9 @@
    "key": "think_tank",
    "name": "Think tanks and foundations",
    "colour": "#2a78d6",
-   "organisations": 39,
-   "records": 57,
-   "tip": "Think tanks and foundations: 39 organisations, behind 57 documents and works",
+   "organisations": 41,
+   "records": 59,
+   "tip": "Think tanks and foundations: 41 organisations, behind 59 documents and works",
    "w": 1.0
   },
   {
@@ -31,7 +31,7 @@
    "organisations": 12,
    "records": 12,
    "tip": "Government: 12 organisations, behind 12 documents and works",
-   "w": 0.3077
+   "w": 0.2927
   },
   {
    "key": "international",
@@ -40,7 +40,7 @@
    "organisations": 3,
    "records": 3,
    "tip": "International organisations: 3 organisations, behind 3 documents and works",
-   "w": 0.0769
+   "w": 0.0732
   }
  ],
  "organisations": [
@@ -357,6 +357,17 @@
    "tip": "Dahrendorf Forum (think tank, Germany): 1 policy document"
   },
   {
+   "name": "De Nederlandsche Bank",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Netherlands",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "De Nederlandsche Bank (think tank, Netherlands): 1 research work"
+  },
+  {
    "name": "Eurac Research",
    "type": "think_tank",
    "type_label": "think tank",
@@ -566,6 +577,17 @@
    "tip": "RAND Corporation (think tank, United States): 1 policy document"
   },
   {
+   "name": "Santa Fe Institute",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United States",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "Santa Fe Institute (think tank, United States): 1 research work"
+  },
+  {
    "name": "Staten-Generaal",
    "type": "government",
    "type_label": "government",
@@ -669,12 +691,12 @@
   {
    "code": "US",
    "name": "United States",
-   "records": 12,
-   "organisations": 10,
+   "records": 13,
+   "organisations": 11,
    "on_map": true,
    "colour": "#c13d30",
-   "tip": "United States: 12 documents and works, from 10 organisations",
-   "w": 0.5714
+   "tip": "United States: 13 documents and works, from 11 organisations",
+   "w": 0.619
   },
   {
    "code": "NO",
@@ -767,6 +789,16 @@
    "w": 0.0952
   },
   {
+   "code": "NL",
+   "name": "Netherlands",
+   "records": 2,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Netherlands: 2 documents and works, from 2 organisations",
+   "w": 0.0952
+  },
+  {
    "code": "ES",
    "name": "Spain",
    "records": 2,
@@ -814,16 +846,6 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Latvia: 1 document or work, from 1 organisation",
-   "w": 0.0476
-  },
-  {
-   "code": "NL",
-   "name": "Netherlands",
-   "records": 1,
-   "organisations": 1,
-   "on_map": true,
-   "colour": "#eda496",
-   "tip": "Netherlands: 1 document or work, from 1 organisation",
    "w": 0.0476
   },
   {
@@ -1051,16 +1073,16 @@
    {
     "year": 2021,
     "label": "2021",
-    "count": 11,
-    "h": 0.7333,
+    "count": 12,
+    "h": 0.8,
     "minor": true,
-    "tip": "2021: 11 documents and works (Think tanks and foundations 9, Government 2)",
+    "tip": "2021: 12 documents and works (Think tanks and foundations 10, Government 2)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 9,
+      "count": 10,
       "colour": "#2a78d6",
-      "tip": "2021, Think tanks and foundations: 9 documents and works"
+      "tip": "2021, Think tanks and foundations: 10 documents and works"
      },
      {
       "name": "Government",
@@ -1105,16 +1127,16 @@
    {
     "year": 2024,
     "label": "2024",
-    "count": 9,
-    "h": 0.6,
+    "count": 10,
+    "h": 0.6667,
     "minor": true,
-    "tip": "2024: 9 documents and works (Think tanks and foundations 5, Government 4)",
+    "tip": "2024: 10 documents and works (Think tanks and foundations 6, Government 4)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 5,
+      "count": 6,
       "colour": "#2a78d6",
-      "tip": "2024, Think tanks and foundations: 5 documents and works"
+      "tip": "2024, Think tanks and foundations: 6 documents and works"
      },
      {
       "name": "Government",
@@ -1191,8 +1213,8 @@
    "title": "The Thin Ideology of Populism",
    "year": 2008,
    "documents": 26,
-   "works": 13,
-   "summary": "26 policy documents and 13 research works",
+   "works": 15,
+   "summary": "26 policy documents and 15 research works",
    "items": [
     {
      "date": "2026",
@@ -1247,6 +1269,15 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "Centre for Economic Policy Research (think tank, United Kingdom); Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Connecting the Dots with Causal Attitude Network (CAN): A Psychological Network Approach to Populist Attitudes, Nativism, Conspiracy Mentality and Threat Appraisals",
+     "url": "https://doi.org/10.1080/15366367.2024.2363718",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Santa Fe Institute (think tank, United States)"
     },
     {
      "date": "2024",
@@ -1346,6 +1377,15 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "European Commission (government, EU institutions); Joint Research Centre (government, EU institutions)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "Populist and nativist attitudes: Does ingroup-outgroup thinking spill over across domains?",
+     "url": "https://doi.org/10.1177/1465116521992876",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "De Nederlandsche Bank (think tank, Netherlands)"
     },
     {
      "date": "2021",
@@ -2204,6 +2244,26 @@
    ]
   },
   {
+   "id": "openalex:W3129518049",
+   "source": "openalex",
+   "title": "Populist and nativist attitudes: Does ingroup-outgroup thinking spill over across domains?",
+   "url": "https://doi.org/10.1177/1465116521992876",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "De Nederlandsche Bank",
+     "type": "think_tank",
+     "country": "NL",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
    "id": "openalex:W3170811428",
    "source": "openalex",
    "title": "Populism and COVID-19: How Populist Governments (Mis)Handle the Pandemic",
@@ -2394,6 +2454,26 @@
    ],
    "cites": [
     "10.1016/j.electstud.2022.102552"
+   ]
+  },
+  {
+   "id": "openalex:W4401974587",
+   "source": "openalex",
+   "title": "Connecting the Dots with Causal Attitude Network (CAN): A Psychological Network Approach to Populist Attitudes, Nativism, Conspiracy Mentality and Threat Appraisals",
+   "url": "https://doi.org/10.1080/15366367.2024.2363718",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Santa Fe Institute",
+     "type": "think_tank",
+     "country": "US",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
    ]
   },
   {
