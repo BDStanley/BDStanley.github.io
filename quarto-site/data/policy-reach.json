@@ -6,11 +6,11 @@
  },
  "totals": {
   "documents": 41,
-  "works": 33,
-  "organisations": 56,
+  "works": 37,
+  "organisations": 58,
   "countries": 18,
   "first_year": 2013,
-  "cited_works": 12,
+  "cited_works": 13,
   "my_works": 48,
   "sage_listed": 52
  },
@@ -19,19 +19,19 @@
    "key": "think_tank",
    "name": "Think tanks and foundations",
    "colour": "#2a78d6",
-   "organisations": 41,
-   "records": 59,
-   "tip": "Think tanks and foundations: 41 organisations, behind 59 documents and works",
+   "organisations": 42,
+   "records": 61,
+   "tip": "Think tanks and foundations: 42 organisations, behind 61 documents and works",
    "w": 1.0
   },
   {
    "key": "government",
    "name": "Government",
    "colour": "#eb6834",
-   "organisations": 12,
-   "records": 12,
-   "tip": "Government: 12 organisations, behind 12 documents and works",
-   "w": 0.2927
+   "organisations": 13,
+   "records": 14,
+   "tip": "Government: 13 organisations, behind 14 documents and works",
+   "w": 0.3095
   },
   {
    "key": "international",
@@ -40,7 +40,7 @@
    "organisations": 3,
    "records": 3,
    "tip": "International organisations: 3 organisations, behind 3 documents and works",
-   "w": 0.0732
+   "w": 0.0714
   }
  ],
  "organisations": [
@@ -103,6 +103,30 @@
    "colour": "#2a78d6",
    "tip": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg): 3 research works",
    "w": 0.5
+  },
+  {
+   "name": "De Nederlandsche Bank",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Netherlands",
+   "documents": 0,
+   "works": 2,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "De Nederlandsche Bank (think tank, Netherlands): 2 research works",
+   "w": 0.3333
+  },
+  {
+   "name": "Finnish Institute for Health and Welfare",
+   "type": "government",
+   "type_label": "government",
+   "country": "Finland",
+   "documents": 0,
+   "works": 2,
+   "total": 2,
+   "colour": "#eb6834",
+   "tip": "Finnish Institute for Health and Welfare (government, Finland): 2 research works",
+   "w": 0.3333
   },
   {
    "name": "Hellenic Foundation for European and Foreign Policy",
@@ -209,8 +233,7 @@
    "works": 0,
    "total": 1,
    "colour": "#eb6834",
-   "tip": "Bank of Finland (government, Finland): 1 policy document",
-   "w": 0.1667
+   "tip": "Bank of Finland (government, Finland): 1 policy document"
   },
   {
    "name": "Barcelona Centre for International Affairs",
@@ -221,8 +244,7 @@
    "works": 1,
    "total": 1,
    "colour": "#eb6834",
-   "tip": "Barcelona Centre for International Affairs (government, Spain): 1 research work",
-   "w": 0.1667
+   "tip": "Barcelona Centre for International Affairs (government, Spain): 1 research work"
   },
   {
    "name": "Brookings Institution",
@@ -355,17 +377,6 @@
    "total": 1,
    "colour": "#2a78d6",
    "tip": "Dahrendorf Forum (think tank, Germany): 1 policy document"
-  },
-  {
-   "name": "De Nederlandsche Bank",
-   "type": "think_tank",
-   "type_label": "think tank",
-   "country": "Netherlands",
-   "documents": 0,
-   "works": 1,
-   "total": 1,
-   "colour": "#2a78d6",
-   "tip": "De Nederlandsche Bank (think tank, Netherlands): 1 research work"
   },
   {
    "name": "Eurac Research",
@@ -509,6 +520,17 @@
    "total": 1,
    "colour": "#2a78d6",
    "tip": "Istituto Affari Internazionali (think tank, Italy): 1 research work"
+  },
+  {
+   "name": "James Hutton Institute",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "United Kingdom",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "James Hutton Institute (think tank, United Kingdom): 1 research work"
   },
   {
    "name": "Joint Research Centre",
@@ -699,6 +721,16 @@
    "w": 0.619
   },
   {
+   "code": "GB",
+   "name": "United Kingdom",
+   "records": 7,
+   "organisations": 7,
+   "on_map": true,
+   "colour": "#d55d4b",
+   "tip": "United Kingdom: 7 documents and works, from 7 organisations",
+   "w": 0.3333
+  },
+  {
    "code": "NO",
    "name": "Norway",
    "records": 6,
@@ -706,16 +738,6 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "Norway: 6 documents and works, from 2 organisations",
-   "w": 0.2857
-  },
-  {
-   "code": "GB",
-   "name": "United Kingdom",
-   "records": 6,
-   "organisations": 6,
-   "on_map": true,
-   "colour": "#d55d4b",
-   "tip": "United Kingdom: 6 documents and works, from 6 organisations",
    "w": 0.2857
   },
   {
@@ -736,6 +758,16 @@
    "on_map": false,
    "colour": "#e38070",
    "tip": "EU institutions: 3 documents and works, from 3 organisations",
+   "w": 0.1429
+  },
+  {
+   "code": "FI",
+   "name": "Finland",
+   "records": 3,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Finland: 3 documents and works, from 2 organisations",
    "w": 0.1429
   },
   {
@@ -769,6 +801,16 @@
    "w": 0.1429
   },
   {
+   "code": "NL",
+   "name": "Netherlands",
+   "records": 3,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Netherlands: 3 documents and works, from 2 organisations",
+   "w": 0.1429
+  },
+  {
    "code": "BE",
    "name": "Belgium",
    "records": 2,
@@ -789,16 +831,6 @@
    "w": 0.0952
   },
   {
-   "code": "NL",
-   "name": "Netherlands",
-   "records": 2,
-   "organisations": 2,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Netherlands: 2 documents and works, from 2 organisations",
-   "w": 0.0952
-  },
-  {
    "code": "ES",
    "name": "Spain",
    "records": 2,
@@ -816,16 +848,6 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Brazil: 1 document or work, from 1 organisation",
-   "w": 0.0476
-  },
-  {
-   "code": "FI",
-   "name": "Finland",
-   "records": 1,
-   "organisations": 1,
-   "on_map": true,
-   "colour": "#eda496",
-   "tip": "Finland: 1 document or work, from 1 organisation",
    "w": 0.0476
   },
   {
@@ -991,16 +1013,16 @@
    {
     "year": 2017,
     "label": "2017",
-    "count": 2,
-    "h": 0.1333,
+    "count": 3,
+    "h": 0.2,
     "minor": true,
-    "tip": "2017: 2 documents and works (Think tanks and foundations 1, International organisations 1)",
+    "tip": "2017: 3 documents and works (Think tanks and foundations 2, International organisations 1)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 1,
+      "count": 2,
       "colour": "#2a78d6",
-      "tip": "2017, Think tanks and foundations: 1 document or work"
+      "tip": "2017, Think tanks and foundations: 2 documents and works"
      },
      {
       "name": "International organisations",
@@ -1073,16 +1095,16 @@
    {
     "year": 2021,
     "label": "2021",
-    "count": 12,
-    "h": 0.8,
+    "count": 13,
+    "h": 0.8667,
     "minor": true,
-    "tip": "2021: 12 documents and works (Think tanks and foundations 10, Government 2)",
+    "tip": "2021: 13 documents and works (Think tanks and foundations 11, Government 2)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 10,
+      "count": 11,
       "colour": "#2a78d6",
-      "tip": "2021, Think tanks and foundations: 10 documents and works"
+      "tip": "2021, Think tanks and foundations: 11 documents and works"
      },
      {
       "name": "Government",
@@ -1111,16 +1133,22 @@
    {
     "year": 2023,
     "label": "2023",
-    "count": 2,
-    "h": 0.1333,
+    "count": 4,
+    "h": 0.2667,
     "minor": true,
-    "tip": "2023: 2 documents and works (Think tanks and foundations 2)",
+    "tip": "2023: 4 documents and works (Think tanks and foundations 2, Government 2)",
     "segments": [
      {
       "name": "Think tanks and foundations",
       "count": 2,
       "colour": "#2a78d6",
       "tip": "2023, Think tanks and foundations: 2 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 2,
+      "colour": "#eb6834",
+      "tip": "2023, Government: 2 documents and works"
      }
     ]
    },
@@ -1213,8 +1241,8 @@
    "title": "The Thin Ideology of Populism",
    "year": 2008,
    "documents": 26,
-   "works": 15,
-   "summary": "26 policy documents and 15 research works",
+   "works": 16,
+   "summary": "26 policy documents and 16 research works",
    "items": [
     {
      "date": "2026",
@@ -1557,6 +1585,15 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "United Nations (international organisation, International organisations)"
+    },
+    {
+     "date": "2017",
+     "when": "2017",
+     "title": "Persuasive Populism? Estimating the Effect of Populist Messages on Political Cynicism",
+     "url": "https://doi.org/10.17645/pag.v5i4.1124",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "De Nederlandsche Bank (think tank, Netherlands)"
     },
     {
      "date": "2013-07-01",
@@ -1925,6 +1962,44 @@
    ]
   },
   {
+   "key": "10.1007/978-3-031-19246-3",
+   "idea": null,
+   "title": "External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation",
+   "year": 2023,
+   "documents": 0,
+   "works": 3,
+   "summary": "3 research works",
+   "items": [
+    {
+     "date": "2025",
+     "when": "2025",
+     "title": "Economic, Sociocultural and Political Transnationalism",
+     "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2023",
+     "when": "2023",
+     "title": "Missing links in migrant enfranchisement studies",
+     "url": "https://doi.org/10.1080/1369183x.2023.2182709",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+    },
+    {
+     "date": "2023",
+     "when": "2023",
+     "title": "Introduction: Non-residents’ participation in the homeland arena from a European perspective",
+     "url": "https://doi.org/10.1057/s41304-022-00405-6",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+    }
+   ]
+  },
+  {
    "key": "10.30950/jcer.v15i4.1122",
    "idea": null,
    "title": "Backsliding Away? The Quality of Democracy in Central and Eastern Europe",
@@ -2061,22 +2136,22 @@
    ]
   },
   {
-   "key": "10.1007/978-3-031-19246-3",
+   "key": "10.1007/978-3-319-96758-5",
    "idea": null,
-   "title": "External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation",
-   "year": 2023,
+   "title": "Populism Around the World",
+   "year": 2018,
    "documents": 0,
    "works": 1,
    "summary": "1 research work",
    "items": [
     {
-     "date": "2025",
-     "when": "2025",
-     "title": "Economic, Sociocultural and Political Transnationalism",
-     "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
-     "kind": "book chapter",
+     "date": "2021",
+     "when": "2021",
+     "title": "From Brexit to VOX: Populist Policy Narratives about Rurality in Europe and the Populist Challenges for the Rural‐Urban Divide*",
+     "url": "https://doi.org/10.1111/ruso.12410",
+     "kind": "article",
      "source": "openalex",
-     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+     "orgs": "James Hutton Institute (think tank, United Kingdom)"
     }
    ]
   }
@@ -2120,6 +2195,26 @@
    ],
    "cites": [
     "10.1080/13510347.2015.1058782"
+   ]
+  },
+  {
+   "id": "openalex:W2779172659",
+   "source": "openalex",
+   "title": "Persuasive Populism? Estimating the Effect of Populist Messages on Political Cynicism",
+   "url": "https://doi.org/10.17645/pag.v5i4.1124",
+   "date": "",
+   "year": 2017,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "De Nederlandsche Bank",
+     "type": "think_tank",
+     "country": "NL",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
    ]
   },
   {
@@ -2324,6 +2419,26 @@
    ]
   },
   {
+   "id": "openalex:W3200508842",
+   "source": "openalex",
+   "title": "From Brexit to VOX: Populist Policy Narratives about Rurality in Europe and the Populist Challenges for the Rural‐Urban Divide*",
+   "url": "https://doi.org/10.1111/ruso.12410",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "James Hutton Institute",
+     "type": "think_tank",
+     "country": "GB",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-319-96758-5"
+   ]
+  },
+  {
    "id": "openalex:W3208482434",
    "source": "openalex",
    "title": "The promise of the Maker Movement: policy expectations versus community criticisms",
@@ -2390,6 +2505,26 @@
    ]
   },
   {
+   "id": "openalex:W4317892029",
+   "source": "openalex",
+   "title": "Introduction: Non-residents’ participation in the homeland arena from a European perspective",
+   "url": "https://doi.org/10.1057/s41304-022-00405-6",
+   "date": "",
+   "year": 2023,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Finnish Institute for Health and Welfare",
+     "type": "government",
+     "country": "FI",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-031-19246-3"
+   ]
+  },
+  {
    "id": "openalex:W4323784263",
    "source": "openalex",
    "title": "Technology Assessment in Central and Eastern Europe - Status quo in 2022 and future prospects (ITA-manu:script 22-01)",
@@ -2413,6 +2548,26 @@
    ],
    "cites": [
     "10.1093/oxfordhb/9780198803560.013.6"
+   ]
+  },
+  {
+   "id": "openalex:W4361269276",
+   "source": "openalex",
+   "title": "Missing links in migrant enfranchisement studies",
+   "url": "https://doi.org/10.1080/1369183x.2023.2182709",
+   "date": "",
+   "year": 2023,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Finnish Institute for Health and Welfare",
+     "type": "government",
+     "country": "FI",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-031-19246-3"
    ]
   },
   {

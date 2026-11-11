@@ -2,7 +2,7 @@
   "_about": "Citation counts per publication, from OpenAlex, shown at the end of each entry on the Publications page. Written by scripts/update-citations.py; see that file.",
   "by_doi": {
     "10.1515/9781503643697": {
-      "citations": 12,
+      "citations": 13,
       "openalex": "W4416898503"
     },
     "10.1007/978-3-031-19246-3": {
@@ -66,7 +66,7 @@
       "openalex": "W2844791000"
     },
     "10.30950/jcer.v15i4.1122": {
-      "citations": 75,
+      "citations": 70,
       "openalex": "W4234624935"
     },
     "10.35757/sm.2019.72.2.01": {
@@ -94,7 +94,7 @@
       "openalex": "W1991913317"
     },
     "10.1080/13569310701822289": {
-      "citations": 1302,
+      "citations": 1294,
       "openalex": "W2057438835"
     },
     "10.1093/oxfordhb/9780192873149.013.0030": {
@@ -118,7 +118,7 @@
       "openalex": "W2958787932"
     },
     "10.1093/oxfordhb/9780198803560.013.6": {
-      "citations": 174,
+      "citations": 177,
       "openalex": "W2774435638"
     },
     "10.3920/978-90-8686-807-0_9": {

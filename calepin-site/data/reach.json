@@ -2,27 +2,27 @@
  "_about": "Data behind the Citation reach page, from OpenAlex. Written by scripts/update-reach.py; see that file for what is counted and how.",
  "as_of": "2026-11",
  "totals": {
-  "citations": 2563,
-  "citing_works": 2244,
-  "scholars": 2405,
+  "citations": 2564,
+  "citing_works": 2245,
+  "scholars": 2406,
   "countries": 77,
   "my_works": 48,
   "first_year": 2008,
   "self_citing_works": 18,
-  "works_without_country": 564,
-  "citations_without_topic": 115,
+  "works_without_country": 560,
+  "citations_without_topic": 112,
   "citations_before_first_year": 2,
   "citations_undated": 5,
-  "classified_citations": 2448
+  "classified_citations": 2452
  },
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2314,
+   "citations": 2318,
    "share": 94.5,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,314 citations (94.5% of classified citations)"
+   "tip": "Social Sciences: 2,318 citations (94.5% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
@@ -37,7 +37,7 @@
    "citations": 36,
    "share": 1.5,
    "colour": "#8b0000",
-   "w": 0.0156,
+   "w": 0.0155,
    "tip": "Business, Management and Accounting: 36 citations (1.5% of classified citations)"
   },
   {
@@ -171,11 +171,11 @@
   {
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
-   "citations": 1916,
+   "citations": 1921,
    "share": 78.3,
    "colour": "#2a78d6",
    "w": 1.0,
-   "tip": "Political Science and International Relations (Social Sciences): 1,916 citations"
+   "tip": "Political Science and International Relations (Social Sciences): 1,921 citations"
   },
   {
    "name": "Sociology and Political Science",
@@ -183,7 +183,7 @@
    "citations": 186,
    "share": 7.6,
    "colour": "#eb6834",
-   "w": 0.0971,
+   "w": 0.0968,
    "tip": "Sociology and Political Science (Social Sciences): 186 citations"
   },
   {
@@ -192,17 +192,17 @@
    "citations": 48,
    "share": 2.0,
    "colour": "#1baf7a",
-   "w": 0.0251,
+   "w": 0.025,
    "tip": "Law (Social Sciences): 48 citations"
   },
   {
    "name": "Communication",
    "field": "Social Sciences",
-   "citations": 35,
+   "citations": 34,
    "share": 1.4,
    "colour": "#eda100",
-   "w": 0.0183,
-   "tip": "Communication (Social Sciences): 35 citations"
+   "w": 0.0177,
+   "tip": "Communication (Social Sciences): 34 citations"
   },
   {
    "name": "Linguistics and Language",
@@ -210,7 +210,7 @@
    "citations": 31,
    "share": 1.3,
    "colour": "#e87ba4",
-   "w": 0.0162,
+   "w": 0.0161,
    "tip": "Linguistics and Language (Social Sciences): 31 citations"
   },
   {
@@ -309,7 +309,7 @@
    "citations": 7,
    "share": 0.3,
    "colour": "#a9a79f",
-   "w": 0.0037,
+   "w": 0.0036,
    "tip": "Cultural Studies (Social Sciences): 7 citations"
   },
   {
@@ -318,7 +318,7 @@
    "citations": 7,
    "share": 0.3,
    "colour": "#a9a79f",
-   "w": 0.0037,
+   "w": 0.0036,
    "tip": "General Social Sciences (Social Sciences): 7 citations"
   },
   {
@@ -839,10 +839,10 @@
    {
     "year": 2018,
     "label": "2018",
-    "citations": 101,
-    "h": 0.2525,
+    "citations": 103,
+    "h": 0.2575,
     "minor": true,
-    "tip": "2018: 101 citations (Political Science and International Relations 90, Sociology and Political Science 3, Law 1, Communication 3, Linguistics and Language 1, Other 2, Unclassified 1)",
+    "tip": "2018: 103 citations (Political Science and International Relations 90, Sociology and Political Science 4, Law 1, Communication 4, Linguistics and Language 1, Other 2, Unclassified 1)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -852,9 +852,9 @@
      },
      {
       "name": "Sociology and Political Science",
-      "citations": 3,
+      "citations": 4,
       "colour": "#eb6834",
-      "tip": "2018, Sociology and Political Science: 3 citations"
+      "tip": "2018, Sociology and Political Science: 4 citations"
      },
      {
       "name": "Law",
@@ -864,9 +864,9 @@
      },
      {
       "name": "Communication",
-      "citations": 3,
+      "citations": 4,
       "colour": "#eda100",
-      "tip": "2018, Communication: 3 citations"
+      "tip": "2018, Communication: 4 citations"
      },
      {
       "name": "Linguistics and Language",
@@ -995,16 +995,16 @@
    {
     "year": 2021,
     "label": "2021",
-    "citations": 243,
-    "h": 0.6075,
+    "citations": 244,
+    "h": 0.61,
     "minor": true,
-    "tip": "2021: 243 citations (Political Science and International Relations 194, Sociology and Political Science 14, Law 1, Communication 2, Linguistics and Language 1, Other 25, Unclassified 6)",
+    "tip": "2021: 244 citations (Political Science and International Relations 195, Sociology and Political Science 14, Law 1, Communication 2, Linguistics and Language 1, Other 25, Unclassified 6)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 194,
+      "citations": 195,
       "colour": "#2a78d6",
-      "tip": "2021, Political Science and International Relations: 194 citations"
+      "tip": "2021, Political Science and International Relations: 195 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1050,13 +1050,13 @@
     "citations": 250,
     "h": 0.625,
     "minor": true,
-    "tip": "2022: 250 citations (Political Science and International Relations 192, Sociology and Political Science 13, Law 7, Communication 4, Linguistics and Language 4, Other 27, Unclassified 3)",
+    "tip": "2022: 250 citations (Political Science and International Relations 193, Sociology and Political Science 13, Law 7, Communication 3, Linguistics and Language 4, Other 27, Unclassified 3)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 192,
+      "citations": 193,
       "colour": "#2a78d6",
-      "tip": "2022, Political Science and International Relations: 192 citations"
+      "tip": "2022, Political Science and International Relations: 193 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1072,9 +1072,9 @@
      },
      {
       "name": "Communication",
-      "citations": 4,
+      "citations": 3,
       "colour": "#eda100",
-      "tip": "2022, Communication: 4 citations"
+      "tip": "2022, Communication: 3 citations"
      },
      {
       "name": "Linguistics and Language",
@@ -1151,10 +1151,10 @@
    {
     "year": 2024,
     "label": "2024",
-    "citations": 369,
-    "h": 0.9225,
+    "citations": 368,
+    "h": 0.92,
     "minor": true,
-    "tip": "2024: 369 citations (Political Science and International Relations 269, Sociology and Political Science 45, Law 7, Communication 2, Linguistics and Language 1, Other 27, Unclassified 18)",
+    "tip": "2024: 368 citations (Political Science and International Relations 269, Sociology and Political Science 45, Law 7, Communication 1, Linguistics and Language 1, Other 27, Unclassified 18)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1176,9 +1176,9 @@
      },
      {
       "name": "Communication",
-      "citations": 2,
+      "citations": 1,
       "colour": "#eda100",
-      "tip": "2024, Communication: 2 citations"
+      "tip": "2024, Communication: 1 citation"
      },
      {
       "name": "Linguistics and Language",
@@ -1203,16 +1203,16 @@
    {
     "year": 2025,
     "label": "2025",
-    "citations": 316,
-    "h": 0.79,
+    "citations": 317,
+    "h": 0.7925,
     "minor": false,
-    "tip": "2025: 316 citations (Political Science and International Relations 225, Sociology and Political Science 30, Law 7, Communication 3, Linguistics and Language 1, Other 30, Unclassified 20)",
+    "tip": "2025: 317 citations (Political Science and International Relations 226, Sociology and Political Science 30, Law 7, Communication 3, Linguistics and Language 1, Other 30, Unclassified 20)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 225,
+      "citations": 226,
       "colour": "#2a78d6",
-      "tip": "2025, Political Science and International Relations: 225 citations"
+      "tip": "2025, Political Science and International Relations: 226 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1255,22 +1255,22 @@
    {
     "year": 2026,
     "label": "2026 (to November)",
-    "citations": 325,
-    "h": 0.8125,
+    "citations": 323,
+    "h": 0.8075,
     "minor": true,
-    "tip": "2026 (to November): 325 citations (Political Science and International Relations 235, Sociology and Political Science 30, Law 10, Communication 4, Linguistics and Language 2, Other 33, Unclassified 11)",
+    "tip": "2026 (to November): 323 citations (Political Science and International Relations 237, Sociology and Political Science 29, Law 10, Communication 4, Linguistics and Language 2, Other 33, Unclassified 8)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 235,
+      "citations": 237,
       "colour": "#2a78d6",
-      "tip": "2026, Political Science and International Relations: 235 citations"
+      "tip": "2026, Political Science and International Relations: 237 citations"
      },
      {
       "name": "Sociology and Political Science",
-      "citations": 30,
+      "citations": 29,
       "colour": "#eb6834",
-      "tip": "2026, Sociology and Political Science: 30 citations"
+      "tip": "2026, Sociology and Political Science: 29 citations"
      },
      {
       "name": "Law",
@@ -1298,9 +1298,9 @@
      },
      {
       "name": "Unclassified",
-      "citations": 11,
+      "citations": 8,
       "colour": "#d3d1c9",
-      "tip": "2026, Unclassified: 11 citations"
+      "tip": "2026, Unclassified: 8 citations"
      }
     ]
    }
@@ -1319,11 +1319,11 @@
   {
    "code": "GB",
    "name": "United Kingdom",
-   "scholars": 252,
-   "works": 266,
+   "scholars": 253,
+   "works": 267,
    "colour": "#8b0000",
-   "tip": "United Kingdom: 252 citing scholars, in 266 citing works",
-   "w": 0.9882
+   "tip": "United Kingdom: 253 citing scholars, in 267 citing works",
+   "w": 0.9922
   },
   {
    "code": "DE",
@@ -1337,11 +1337,11 @@
   {
    "code": "PL",
    "name": "Poland",
-   "scholars": 169,
-   "works": 161,
+   "scholars": 170,
+   "works": 162,
    "colour": "#8b0000",
-   "tip": "Poland: 169 citing scholars, in 161 citing works",
-   "w": 0.6627
+   "tip": "Poland: 170 citing scholars, in 162 citing works",
+   "w": 0.6667
   },
   {
    "code": "IT",
@@ -1364,11 +1364,11 @@
   {
    "code": "CZ",
    "name": "Czechia",
-   "scholars": 86,
-   "works": 76,
+   "scholars": 87,
+   "works": 77,
    "colour": "#a72219",
-   "tip": "Czechia: 86 citing scholars, in 76 citing works",
-   "w": 0.3373
+   "tip": "Czechia: 87 citing scholars, in 77 citing works",
+   "w": 0.3412
   },
   {
    "code": "ES",
@@ -1382,11 +1382,11 @@
   {
    "code": "TR",
    "name": "Turkey",
-   "scholars": 61,
-   "works": 57,
+   "scholars": 63,
+   "works": 58,
    "colour": "#a72219",
-   "tip": "Turkey: 61 citing scholars, in 57 citing works",
-   "w": 0.2392
+   "tip": "Turkey: 63 citing scholars, in 58 citing works",
+   "w": 0.2471
   },
   {
    "code": "AT",
@@ -1409,11 +1409,20 @@
   {
    "code": "FR",
    "name": "France",
-   "scholars": 46,
-   "works": 72,
+   "scholars": 48,
+   "works": 73,
    "colour": "#c13d30",
-   "tip": "France: 46 citing scholars, in 72 citing works",
-   "w": 0.1804
+   "tip": "France: 48 citing scholars, in 73 citing works",
+   "w": 0.1882
+  },
+  {
+   "code": "SE",
+   "name": "Sweden",
+   "scholars": 48,
+   "works": 46,
+   "colour": "#c13d30",
+   "tip": "Sweden: 48 citing scholars, in 46 citing works",
+   "w": 0.1882
   },
   {
    "code": "CH",
@@ -1423,15 +1432,6 @@
    "colour": "#c13d30",
    "tip": "Switzerland: 46 citing scholars, in 44 citing works",
    "w": 0.1804
-  },
-  {
-   "code": "SE",
-   "name": "Sweden",
-   "scholars": 45,
-   "works": 45,
-   "colour": "#c13d30",
-   "tip": "Sweden: 45 citing scholars, in 45 citing works",
-   "w": 0.1765
   },
   {
    "code": "BE",
@@ -1589,10 +1589,10 @@
   {
    "code": "RU",
    "name": "Russia",
-   "scholars": 14,
-   "works": 14,
+   "scholars": 13,
+   "works": 13,
    "colour": "#d55d4b",
-   "tip": "Russia: 14 citing scholars, in 14 citing works"
+   "tip": "Russia: 13 citing scholars, in 13 citing works"
   },
   {
    "code": "KR",
