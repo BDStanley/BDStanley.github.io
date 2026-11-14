@@ -4,7 +4,7 @@
  "totals": {
   "citations": 2565,
   "citing_works": 2246,
-  "scholars": 2408,
+  "scholars": 2410,
   "countries": 77,
   "my_works": 48,
   "first_year": 2008,
@@ -18,18 +18,18 @@
  "fields": [
   {
    "name": "Social Sciences",
-   "citations": 2319,
-   "share": 94.5,
+   "citations": 2320,
+   "share": 94.6,
    "colour": "#8b0000",
    "w": 1.0,
-   "tip": "Social Sciences: 2,319 citations (94.5% of classified citations)"
+   "tip": "Social Sciences: 2,320 citations (94.6% of classified citations)"
   },
   {
    "name": "Arts and Humanities",
    "citations": 53,
    "share": 2.2,
    "colour": "#8b0000",
-   "w": 0.0229,
+   "w": 0.0228,
    "tip": "Arts and Humanities: 53 citations (2.2% of classified citations)"
   },
   {
@@ -50,11 +50,11 @@
   },
   {
    "name": "Psychology",
-   "citations": 12,
-   "share": 0.5,
+   "citations": 11,
+   "share": 0.4,
    "colour": "#8b0000",
-   "w": 0.0052,
-   "tip": "Psychology: 12 citations (0.5% of classified citations)"
+   "w": 0.0047,
+   "tip": "Psychology: 11 citations (0.4% of classified citations)"
   },
   {
    "name": "Medicine",
@@ -98,7 +98,7 @@
   }
  ],
  "other_subfields": [
-  "Demography",
+  "Linguistics and Language",
   "Gender Studies",
   "Economics and Econometrics",
   "Language and Linguistics",
@@ -111,9 +111,9 @@
   "Visual Arts and Performing Arts",
   "General Social Sciences",
   "Accounting",
-  "Clinical Psychology",
   "Development",
   "Literature and Literary Theory",
+  "Clinical Psychology",
   "Geography, Planning and Development",
   "Industrial relations",
   "Management of Technology and Innovation",
@@ -155,7 +155,7 @@
    "colour": "#eda100"
   },
   {
-   "name": "Linguistics and Language",
+   "name": "Demography",
    "colour": "#e87ba4"
   },
   {
@@ -171,11 +171,11 @@
   {
    "name": "Political Science and International Relations",
    "field": "Social Sciences",
-   "citations": 1922,
-   "share": 78.4,
+   "citations": 1920,
+   "share": 78.3,
    "colour": "#2a78d6",
    "w": 1.0,
-   "tip": "Political Science and International Relations (Social Sciences): 1,922 citations"
+   "tip": "Political Science and International Relations (Social Sciences): 1,920 citations"
   },
   {
    "name": "Sociology and Political Science",
@@ -183,7 +183,7 @@
    "citations": 185,
    "share": 7.5,
    "colour": "#eb6834",
-   "w": 0.0963,
+   "w": 0.0964,
    "tip": "Sociology and Political Science (Social Sciences): 185 citations"
   },
   {
@@ -205,22 +205,22 @@
    "tip": "Communication (Social Sciences): 34 citations"
   },
   {
-   "name": "Linguistics and Language",
+   "name": "Demography",
    "field": "Social Sciences",
    "citations": 31,
    "share": 1.3,
    "colour": "#e87ba4",
    "w": 0.0161,
-   "tip": "Linguistics and Language (Social Sciences): 31 citations"
+   "tip": "Demography (Social Sciences): 31 citations"
   },
   {
-   "name": "Demography",
+   "name": "Linguistics and Language",
    "field": "Social Sciences",
-   "citations": 28,
-   "share": 1.1,
+   "citations": 31,
+   "share": 1.3,
    "colour": "#a9a79f",
-   "w": 0.0146,
-   "tip": "Demography (Social Sciences): 28 citations"
+   "w": 0.0161,
+   "tip": "Linguistics and Language (Social Sciences): 31 citations"
   },
   {
    "name": "Gender Studies",
@@ -331,15 +331,6 @@
    "tip": "Accounting (Business, Management and Accounting): 6 citations"
   },
   {
-   "name": "Clinical Psychology",
-   "field": "Psychology",
-   "citations": 6,
-   "share": 0.2,
-   "colour": "#a9a79f",
-   "w": 0.0031,
-   "tip": "Clinical Psychology (Psychology): 6 citations"
-  },
-  {
    "name": "Development",
    "field": "Social Sciences",
    "citations": 6,
@@ -356,6 +347,15 @@
    "colour": "#a9a79f",
    "w": 0.0031,
    "tip": "Literature and Literary Theory (Arts and Humanities): 6 citations"
+  },
+  {
+   "name": "Clinical Psychology",
+   "field": "Psychology",
+   "citations": 5,
+   "share": 0.2,
+   "colour": "#a9a79f",
+   "w": 0.0026,
+   "tip": "Clinical Psychology (Psychology): 5 citations"
   },
   {
    "name": "Geography, Planning and Development",
@@ -656,7 +656,7 @@
     "citations": 9,
     "h": 0.0225,
     "minor": true,
-    "tip": "2012: 9 citations (Political Science and International Relations 7, Sociology and Political Science 1, Linguistics and Language 1)",
+    "tip": "2012: 9 citations (Political Science and International Relations 7, Sociology and Political Science 1, Other 1)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -671,10 +671,10 @@
       "tip": "2012, Sociology and Political Science: 1 citation"
      },
      {
-      "name": "Linguistics and Language",
+      "name": "Other",
       "citations": 1,
-      "colour": "#e87ba4",
-      "tip": "2012, Linguistics and Language: 1 citation"
+      "colour": "#a9a79f",
+      "tip": "2012, Other: 1 citation"
      }
     ]
    },
@@ -842,7 +842,7 @@
     "citations": 103,
     "h": 0.2575,
     "minor": true,
-    "tip": "2018: 103 citations (Political Science and International Relations 90, Sociology and Political Science 4, Law 1, Communication 4, Linguistics and Language 1, Other 2, Unclassified 1)",
+    "tip": "2018: 103 citations (Political Science and International Relations 90, Sociology and Political Science 4, Law 1, Communication 4, Other 3, Unclassified 1)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -869,16 +869,10 @@
       "tip": "2018, Communication: 4 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 1,
-      "colour": "#e87ba4",
-      "tip": "2018, Linguistics and Language: 1 citation"
-     },
-     {
       "name": "Other",
-      "citations": 2,
+      "citations": 3,
       "colour": "#a9a79f",
-      "tip": "2018, Other: 2 citations"
+      "tip": "2018, Other: 3 citations"
      },
      {
       "name": "Unclassified",
@@ -894,7 +888,7 @@
     "citations": 258,
     "h": 0.645,
     "minor": true,
-    "tip": "2019: 258 citations (Political Science and International Relations 190, Sociology and Political Science 9, Law 6, Communication 5, Linguistics and Language 1, Other 21, Unclassified 26)",
+    "tip": "2019: 258 citations (Political Science and International Relations 190, Sociology and Political Science 9, Law 6, Communication 5, Other 22, Unclassified 26)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -921,16 +915,10 @@
       "tip": "2019, Communication: 5 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 1,
-      "colour": "#e87ba4",
-      "tip": "2019, Linguistics and Language: 1 citation"
-     },
-     {
       "name": "Other",
-      "citations": 21,
+      "citations": 22,
       "colour": "#a9a79f",
-      "tip": "2019, Other: 21 citations"
+      "tip": "2019, Other: 22 citations"
      },
      {
       "name": "Unclassified",
@@ -946,7 +934,7 @@
     "citations": 218,
     "h": 0.545,
     "minor": false,
-    "tip": "2020: 218 citations (Political Science and International Relations 151, Sociology and Political Science 10, Law 2, Communication 4, Linguistics and Language 17, Other 28, Unclassified 6)",
+    "tip": "2020: 218 citations (Political Science and International Relations 151, Sociology and Political Science 10, Law 2, Communication 4, Other 45, Unclassified 6)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -973,16 +961,10 @@
       "tip": "2020, Communication: 4 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 17,
-      "colour": "#e87ba4",
-      "tip": "2020, Linguistics and Language: 17 citations"
-     },
-     {
       "name": "Other",
-      "citations": 28,
+      "citations": 45,
       "colour": "#a9a79f",
-      "tip": "2020, Other: 28 citations"
+      "tip": "2020, Other: 45 citations"
      },
      {
       "name": "Unclassified",
@@ -998,7 +980,7 @@
     "citations": 244,
     "h": 0.61,
     "minor": true,
-    "tip": "2021: 244 citations (Political Science and International Relations 195, Sociology and Political Science 14, Law 1, Communication 2, Linguistics and Language 1, Other 25, Unclassified 6)",
+    "tip": "2021: 244 citations (Political Science and International Relations 195, Sociology and Political Science 14, Law 1, Communication 2, Demography 2, Other 24, Unclassified 6)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1025,16 +1007,16 @@
       "tip": "2021, Communication: 2 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 1,
+      "name": "Demography",
+      "citations": 2,
       "colour": "#e87ba4",
-      "tip": "2021, Linguistics and Language: 1 citation"
+      "tip": "2021, Demography: 2 citations"
      },
      {
       "name": "Other",
-      "citations": 25,
+      "citations": 24,
       "colour": "#a9a79f",
-      "tip": "2021, Other: 25 citations"
+      "tip": "2021, Other: 24 citations"
      },
      {
       "name": "Unclassified",
@@ -1050,13 +1032,13 @@
     "citations": 250,
     "h": 0.625,
     "minor": true,
-    "tip": "2022: 250 citations (Political Science and International Relations 193, Sociology and Political Science 13, Law 7, Communication 3, Linguistics and Language 4, Other 27, Unclassified 3)",
+    "tip": "2022: 250 citations (Political Science and International Relations 190, Sociology and Political Science 13, Law 7, Communication 3, Demography 7, Other 27, Unclassified 3)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 193,
+      "citations": 190,
       "colour": "#2a78d6",
-      "tip": "2022, Political Science and International Relations: 193 citations"
+      "tip": "2022, Political Science and International Relations: 190 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1077,10 +1059,10 @@
       "tip": "2022, Communication: 3 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 4,
+      "name": "Demography",
+      "citations": 7,
       "colour": "#e87ba4",
-      "tip": "2022, Linguistics and Language: 4 citations"
+      "tip": "2022, Demography: 7 citations"
      },
      {
       "name": "Other",
@@ -1102,13 +1084,13 @@
     "citations": 305,
     "h": 0.7625,
     "minor": true,
-    "tip": "2023: 305 citations (Political Science and International Relations 215, Sociology and Political Science 23, Law 5, Communication 5, Linguistics and Language 2, Other 31, Unclassified 24)",
+    "tip": "2023: 305 citations (Political Science and International Relations 216, Sociology and Political Science 23, Law 5, Communication 5, Demography 6, Other 26, Unclassified 24)",
     "segments": [
      {
       "name": "Political Science and International Relations",
-      "citations": 215,
+      "citations": 216,
       "colour": "#2a78d6",
-      "tip": "2023, Political Science and International Relations: 215 citations"
+      "tip": "2023, Political Science and International Relations: 216 citations"
      },
      {
       "name": "Sociology and Political Science",
@@ -1129,16 +1111,16 @@
       "tip": "2023, Communication: 5 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 2,
+      "name": "Demography",
+      "citations": 6,
       "colour": "#e87ba4",
-      "tip": "2023, Linguistics and Language: 2 citations"
+      "tip": "2023, Demography: 6 citations"
      },
      {
       "name": "Other",
-      "citations": 31,
+      "citations": 26,
       "colour": "#a9a79f",
-      "tip": "2023, Other: 31 citations"
+      "tip": "2023, Other: 26 citations"
      },
      {
       "name": "Unclassified",
@@ -1154,7 +1136,7 @@
     "citations": 368,
     "h": 0.92,
     "minor": true,
-    "tip": "2024: 368 citations (Political Science and International Relations 271, Sociology and Political Science 43, Law 7, Communication 1, Linguistics and Language 1, Other 27, Unclassified 18)",
+    "tip": "2024: 368 citations (Political Science and International Relations 271, Sociology and Political Science 43, Law 7, Communication 1, Demography 4, Other 24, Unclassified 18)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1181,16 +1163,16 @@
       "tip": "2024, Communication: 1 citation"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 1,
+      "name": "Demography",
+      "citations": 4,
       "colour": "#e87ba4",
-      "tip": "2024, Linguistics and Language: 1 citation"
+      "tip": "2024, Demography: 4 citations"
      },
      {
       "name": "Other",
-      "citations": 27,
+      "citations": 24,
       "colour": "#a9a79f",
-      "tip": "2024, Other: 27 citations"
+      "tip": "2024, Other: 24 citations"
      },
      {
       "name": "Unclassified",
@@ -1206,7 +1188,7 @@
     "citations": 317,
     "h": 0.7925,
     "minor": false,
-    "tip": "2025: 317 citations (Political Science and International Relations 224, Sociology and Political Science 31, Law 7, Communication 3, Linguistics and Language 1, Other 31, Unclassified 20)",
+    "tip": "2025: 317 citations (Political Science and International Relations 224, Sociology and Political Science 31, Law 7, Communication 3, Demography 7, Other 25, Unclassified 20)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1233,16 +1215,16 @@
       "tip": "2025, Communication: 3 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 1,
+      "name": "Demography",
+      "citations": 7,
       "colour": "#e87ba4",
-      "tip": "2025, Linguistics and Language: 1 citation"
+      "tip": "2025, Demography: 7 citations"
      },
      {
       "name": "Other",
-      "citations": 31,
+      "citations": 25,
       "colour": "#a9a79f",
-      "tip": "2025, Other: 31 citations"
+      "tip": "2025, Other: 25 citations"
      },
      {
       "name": "Unclassified",
@@ -1258,7 +1240,7 @@
     "citations": 324,
     "h": 0.81,
     "minor": true,
-    "tip": "2026 (to November): 324 citations (Political Science and International Relations 238, Sociology and Political Science 29, Law 10, Communication 4, Linguistics and Language 2, Other 33, Unclassified 8)",
+    "tip": "2026 (to November): 324 citations (Political Science and International Relations 238, Sociology and Political Science 29, Law 10, Communication 4, Demography 5, Other 30, Unclassified 8)",
     "segments": [
      {
       "name": "Political Science and International Relations",
@@ -1285,16 +1267,16 @@
       "tip": "2026, Communication: 4 citations"
      },
      {
-      "name": "Linguistics and Language",
-      "citations": 2,
+      "name": "Demography",
+      "citations": 5,
       "colour": "#e87ba4",
-      "tip": "2026, Linguistics and Language: 2 citations"
+      "tip": "2026, Demography: 5 citations"
      },
      {
       "name": "Other",
-      "citations": 33,
+      "citations": 30,
       "colour": "#a9a79f",
-      "tip": "2026, Other: 33 citations"
+      "tip": "2026, Other: 30 citations"
      },
      {
       "name": "Unclassified",
