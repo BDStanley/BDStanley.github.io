@@ -7,7 +7,6 @@
 #   3. commit everything with a Claude-written message and push to GitHub
 #      (-> GitHub Pages -> benstanley.eu); the message is just the timestamp
 #      if Claude is unavailable
-#   4. mirror the project to the iCloud backup folder
 #
 # This replaces the old Quarto workflow. There is NO quarto::quarto_render() here
 # any more — that step is what made the previous script slow (it re-ran the old
@@ -167,13 +166,4 @@ if (changed) {
   cat("\n✓ Build is unchanged — nothing to commit.\n")
 }
 
-# --- 5. mirror to the iCloud backup folder (non-fatal) ----------------------
-icloud <- "/Users/benstanley/Library/Mobile Documents/com~apple~CloudDocs/Website/"
-run(sprintf(
-  paste(
-    "/opt/homebrew/bin/rsync -av --delete --iconv=utf-8-mac,utf-8",
-    "--exclude='.git' --exclude='.quarto' --exclude='.calepin'",
-    "--exclude='_site' %s/ %s"
-  ),
-  shQuote(project_root), shQuote(icloud)
-), fatal = FALSE)
+# No iCloud mirror: removed 16 November 2026 at Ben's request (it caused more trouble than it was worth). GitHub is the off-machine copy.

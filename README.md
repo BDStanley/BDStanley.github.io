@@ -294,9 +294,8 @@ Run `Rscript commit.R` from anywhere in the repo, or source it in Positron. It:
 2. runs `calepin-site/build.sh`, rebuilding the CV PDF and the whole site into `docs/`;
 3. stages everything and, if anything has changed, has Claude (Sonnet) check this README against everything changed since the last successful check, and update it if needed. If Claude is unavailable, the check is skipped and catches up on a later run;
 4. commits with the message `Update <timestamp>: <summary>`, where Claude Haiku writes the summary and a few bullets from the staged changes (if that fails, the message is just the timestamp), and pushes; the site is live a minute or two later. Commits whose README check succeeded end with a `README-reviewed: yes` line. If nothing has changed, it skips the commit;
-5. mirrors the folder to `iCloud Drive/Website/` with `rsync --delete`, excluding `.git`, `.quarto`, `.calepin` and `_site`.
 
-The iCloud copy is a one-way backup: edits made there are overwritten on the next run. `commit.R` does not build `quarto-site/`.
+`commit.R` does not build `quarto-site/`. It no longer mirrors to iCloud (removed on 16 November 2026); GitHub is the off-machine copy.
 
 ## The Quarto backup
 
@@ -307,7 +306,7 @@ The iCloud copy is a one-way backup: edits made there are overwritten on the nex
 1. Clone the repo: `git clone https://github.com/BDStanley/BDStanley.github.io.git`. The download is about 800 MB, almost all of it history. For the Teaching pages, put the Teaching repository beside it in a folder named `Teaching`; for the party genealogy, the Polling tracker, the Party system indicators, Party ideology, Political attitudes and Election results, the Polish political analyses repository in a folder named `Polish political analyses`.
 2. Install Typst (`brew install typst`), Calepin (see `calepin-site/README.md` → Prerequisites), Python 3 and the Jost font.
 3. For the Scopus citation count, add the Elsevier API key to the Keychain (see [Citation counts](#citation-counts)); without it the build skips Scopus.
-4. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`) and Homebrew's `rsync`, which it expects at `/opt/homebrew/bin/rsync`. It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found. The iCloud path in step 5 is hard-coded.
+4. For `commit.R`, install R (the script installs the `here` package itself), the `claude` command-line tool (on the `PATH` or at `~/.npm-global/bin/claude`). It adds `/opt/homebrew/bin` and `~/.cargo/bin` to the `PATH`, so Typst and Calepin installed there are found.
 
 ## Working with Claude Code
 
