@@ -9,7 +9,7 @@ settings:
   spacing-entry: 0.1em
   spacing-element: 3pt
   spacing-line: 5pt
-  color-hyperlink: rgb(96, 96, 96)
+  color-hyperlink: rgb(139, 0, 0) # house dark red #8B0000
   page:
     paper: "a4"
     numbering: "1 / 1"

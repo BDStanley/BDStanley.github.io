@@ -121,10 +121,47 @@
   doc
 }
 
+
+// ---- House style (as on benstanley.eu and in the apps; set November 2026) ----
+// The name and section headings light and dark red, each section heading over
+// a grey hairline; ink text, a grey timeline rule, grey page numbers; links
+// dark red (color-hyperlink in cv.yml). Replaces academicv's semibold black
+// headings and full-width black rules without forking the package.
+#let house-red = rgb("#8B0000")
+#let house-ink = rgb("#141414")
+#let house-grey = rgb("#767676")
+#let house-rule = rgb("#D5D5D5")
+
+#let house-showrules(doc) = {
+  set text(fill: house-ink)
+  set grid.vline(stroke: 0.6pt + house-rule)
+  // Section headings: light dark red over a grey hairline.
+  show heading.where(level: 2): it => block(width: 100%, breakable: false)[
+    #v(settings.spacing-section)
+    #set align(left)
+    #text(font: settings.font-heading, size: 1.45em, weight: "light", fill: house-red, it.body)
+    #v(-0.55em) #line(length: 100%, stroke: 0.6pt + house-rule)
+  ]
+  // The name: large, light, dark red.
+  show heading.where(level: 1): it => block(width: 100%)[
+    #text(font: settings.font-heading, size: 2.6em, weight: "light", fill: house-red, it.body)
+    #v(2pt)
+  ]
+  doc
+}
+
+// Page numbers in grey (the margins and paper stay as set in cv.yml).
+#let house-page(doc) = {
+  set page(footer: context align(center, text(size: 8pt, fill: house-grey,
+    counter(page).display("1 / 1", both: true))))
+  doc
+}
+
 #let cvinit(doc) = {
   doc = setrules(settings, doc)
-  doc = showrules(settings, doc)
+  doc = house-showrules(doc)
   doc = customrules(doc)
+  doc = house-page(doc)
   doc
 }
 

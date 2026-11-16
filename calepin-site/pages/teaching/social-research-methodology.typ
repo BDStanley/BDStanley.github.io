@@ -15,6 +15,8 @@
   { link("https://bdstanley.netlify.app/social-research-methodology-2-slides-fynvz", "Research goals and research questions") },
   { link("https://bdstanley.netlify.app/social-research-methodology-3-slides-dgfsy", "Hypotheses and research design") },
   { link("https://bdstanley.netlify.app/social-research-methodology-4-slides-dhwyg", "Research ethics") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-5-slides-7e3pe", "Conducting a literature review") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-6-slides-77ut2", "Secondary data analysis") },
 )
 
 #heading(level: 2)[#"Handouts"]
@@ -24,4 +26,6 @@
   { link("https://bdstanley.netlify.app/social-research-methodology-2-handout-ycq7u", "Research goals and research questions") },
   { link("https://bdstanley.netlify.app/social-research-methodology-3-handout-u8873", "Hypotheses and research design") },
   { link("https://bdstanley.netlify.app/social-research-methodology-4-handout-tkjyf", "Research ethics") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-5-handout-yheep", "Conducting a literature review") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-6-handout-z3xdc", "Secondary data analysis") },
 )

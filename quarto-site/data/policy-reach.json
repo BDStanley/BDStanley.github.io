@@ -6,8 +6,8 @@
  },
  "totals": {
   "documents": 41,
-  "works": 37,
-  "organisations": 58,
+  "works": 38,
+  "organisations": 59,
   "countries": 18,
   "first_year": 2013,
   "cited_works": 13,
@@ -28,10 +28,10 @@
    "key": "government",
    "name": "Government",
    "colour": "#eb6834",
-   "organisations": 13,
-   "records": 14,
-   "tip": "Government: 13 organisations, behind 14 documents and works",
-   "w": 0.3095
+   "organisations": 14,
+   "records": 15,
+   "tip": "Government: 14 organisations, behind 15 documents and works",
+   "w": 0.3333
   },
   {
    "key": "international",
@@ -533,6 +533,17 @@
    "tip": "James Hutton Institute (think tank, United Kingdom): 1 research work"
   },
   {
+   "name": "Johann Heinrich von Thünen-Institut",
+   "type": "government",
+   "type_label": "government",
+   "country": "Germany",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "Johann Heinrich von Thünen-Institut (government, Germany): 1 research work"
+  },
+  {
    "name": "Joint Research Centre",
    "type": "government",
    "type_label": "government",
@@ -703,11 +714,11 @@
   {
    "code": "DE",
    "name": "Germany",
-   "records": 21,
-   "organisations": 11,
+   "records": 22,
+   "organisations": 12,
    "on_map": true,
    "colour": "#a72219",
-   "tip": "Germany: 21 documents and works, from 11 organisations",
+   "tip": "Germany: 22 documents and works, from 12 organisations",
    "w": 1.0
   },
   {
@@ -718,7 +729,7 @@
    "on_map": true,
    "colour": "#c13d30",
    "tip": "United States: 13 documents and works, from 11 organisations",
-   "w": 0.619
+   "w": 0.5909
   },
   {
    "code": "GB",
@@ -728,7 +739,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "United Kingdom: 7 documents and works, from 7 organisations",
-   "w": 0.3333
+   "w": 0.3182
   },
   {
    "code": "NO",
@@ -738,7 +749,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "Norway: 6 documents and works, from 2 organisations",
-   "w": 0.2857
+   "w": 0.2727
   },
   {
    "code": "BG",
@@ -748,7 +759,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Bulgaria: 3 documents and works, from 3 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "EU",
@@ -758,7 +769,7 @@
    "on_map": false,
    "colour": "#e38070",
    "tip": "EU institutions: 3 documents and works, from 3 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "FI",
@@ -768,7 +779,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Finland: 3 documents and works, from 2 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "IGO",
@@ -778,7 +789,7 @@
    "on_map": false,
    "colour": "#e38070",
    "tip": "International organisations: 3 documents and works, from 3 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "IT",
@@ -788,7 +799,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Italy: 3 documents and works, from 3 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "LU",
@@ -798,7 +809,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Luxembourg: 3 documents and works, from 1 organisation",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "NL",
@@ -808,7 +819,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Netherlands: 3 documents and works, from 2 organisations",
-   "w": 0.1429
+   "w": 0.1364
   },
   {
    "code": "BE",
@@ -818,7 +829,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Belgium: 2 documents and works, from 1 organisation",
-   "w": 0.0952
+   "w": 0.0909
   },
   {
    "code": "GR",
@@ -828,7 +839,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Greece: 2 documents and works, from 1 organisation",
-   "w": 0.0952
+   "w": 0.0909
   },
   {
    "code": "ES",
@@ -838,7 +849,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Spain: 2 documents and works, from 2 organisations",
-   "w": 0.0952
+   "w": 0.0909
   },
   {
    "code": "BR",
@@ -848,7 +859,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Brazil: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   },
   {
    "code": "FR",
@@ -858,7 +869,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "France: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   },
   {
    "code": "LV",
@@ -868,7 +879,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Latvia: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   },
   {
    "code": "RU",
@@ -878,7 +889,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Russia: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   },
   {
    "code": "SI",
@@ -888,7 +899,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Slovenia: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   },
   {
    "code": "SE",
@@ -898,7 +909,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Sweden: 1 document or work, from 1 organisation",
-   "w": 0.0476
+   "w": 0.0455
   }
  ],
  "bins": [
@@ -1199,16 +1210,22 @@
    {
     "year": 2026,
     "label": "2026 (to November)",
-    "count": 7,
-    "h": 0.4667,
+    "count": 8,
+    "h": 0.5333,
     "minor": true,
-    "tip": "2026 (to November): 7 documents and works (Think tanks and foundations 6, International organisations 1)",
+    "tip": "2026 (to November): 8 documents and works (Think tanks and foundations 6, Government 1, International organisations 1)",
     "segments": [
      {
       "name": "Think tanks and foundations",
       "count": 6,
       "colour": "#2a78d6",
       "tip": "2026, Think tanks and foundations: 6 documents and works"
+     },
+     {
+      "name": "Government",
+      "count": 1,
+      "colour": "#eb6834",
+      "tip": "2026, Government: 1 document or work"
      },
      {
       "name": "International organisations",
@@ -1698,8 +1715,8 @@
    "title": "Populism in Central and Eastern Europe",
    "year": 2017,
    "documents": 6,
-   "works": 7,
-   "summary": "6 policy documents and 7 research works",
+   "works": 8,
+   "summary": "6 policy documents and 8 research works",
    "items": [
     {
      "date": "2026",
@@ -1727,6 +1744,15 @@
      "kind": "book chapter",
      "source": "openalex",
      "orgs": "Global Policy Institute (think tank, United States)"
+    },
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Does regional context affect populist voting? A comparative multilevel analysis from Czechia and eastern Germany",
+     "url": "https://doi.org/10.1016/j.rspp.2026.100322",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Johann Heinrich von Thünen-Institut (government, Germany)"
     },
     {
      "date": "2025-05-20",
@@ -2876,6 +2902,26 @@
    ],
    "cites": [
     "10.1017/s1537592721001924"
+   ]
+  },
+  {
+   "id": "openalex:W7163163694",
+   "source": "openalex",
+   "title": "Does regional context affect populist voting? A comparative multilevel analysis from Czechia and eastern Germany",
+   "url": "https://doi.org/10.1016/j.rspp.2026.100322",
+   "date": "",
+   "year": 2026,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Johann Heinrich von Thünen-Institut",
+     "type": "government",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1093/oxfordhb/9780198803560.013.6"
    ]
   },
   {
