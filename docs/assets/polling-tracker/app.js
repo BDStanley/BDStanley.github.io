@@ -519,6 +519,16 @@ function partyRow(p, inJoint) {
     <span class="psub" id="sub-${slug(p)}"></span>
   </div>`;
 }
+// A joint list's total, before voter response: moving it scales the list's parties in proportion
+function listRow(j) {
+  const t = listTotal(j);
+  return `<div class="prow jlist" id="jl-${j}" title="Moving the list's total scales its parties in proportion">
+    <span class="pname">List total</span>
+    <input type="range" min="0" max="100" step="0.1" value="${t}" data-j="${j}" aria-label="Joint list's total vote share">
+    <input type="number" min="0" max="100" step="0.1" value="${t.toFixed(1)}" data-j="${j}" aria-label="Joint list's total vote share, %">
+    <span></span>
+  </div>`;
+}
 function respBlock() {
   const rp = JP ? respParams() : { conv: 0, shift: 0, split: 0, abst: 0, splitsOn: [false, false, false, false] };
   const row = (id, label, min, max, step, val) => `<div class="advrow"><label for="a_${id}" class="advl"><span>${label}</span><b id="o_${id}"></b></label><input type="range" class="wide" id="a_${id}" min="${min}" max="${max}" step="${step}" value="${val}"></div>`;
@@ -582,6 +592,7 @@ function renderPanelLayout() {
   S.joint.forEach((m, j) => {
     const mem = sortParties(m), name = mem.map(short).join("-");
     rows += `<div class="jgroup" id="jg-${j}"><div class="jhead"><span class="dot" id="jdot-${j}"></span><span class="grow">${esc(name)}</span><span class="label" style="color:var(--muted)">Joint list</span></div>
+      ${listRow(j)}
       ${mem.map(p => partyRow(p, true)).join("")}
       <div class="jtotal" id="jt-${j}"></div></div>`;
   });
@@ -601,7 +612,7 @@ function renderPanelLayout() {
   </div>
   <div class="card">
     <span class="label">Joint lists</span>
-    <p class="help" style="margin:0">Parties standing as one list face an 8% threshold instead of 5%. A government of two or more lists is possible only if no party on one list is excluded from a party on another; the pairs excluded inside a joint list are not checked.</p>
+    <p class="help" style="margin:0">Parties standing as one list face an 8% threshold instead of 5%. A government of two or more lists is possible only if no party on one list is excluded from a party on another; the pairs excluded inside a joint list are not checked. On a joint list, the list's total scales its parties in proportion, and moving one party resizes the others so that the list keeps its total.</p>
     <div class="chips" id="jpills">${S.joint.map((m, j) => `<span class="jpill">${esc(sortParties(m).map(short).join(" + "))}<button type="button" data-rm="${j}" aria-label="Remove this joint list">×</button></span>`).join("")}</div>
     ${S.joint.length >= 4 ? `<p class="help" style="margin:0">At most four joint lists.</p>` : avail.length < 2 ? "" : `
     <div class="picker">
@@ -658,6 +669,7 @@ function updatePanel() {
     const k = cur.ents.findIndex(e => e.name === name); if (k < 0) return;
     const e = cur.ents[k], r = cur.rows[k];
     $("jdot-" + j).style.background = e.colour;
+    const lr = $("jl-" + j); if (lr && !lr.contains(document.activeElement)) syncList(j);
     const below = e.vote < 100 * R.thresholdJoint;
     const s23 = sum(e.members.map(p => R.seats2023[p] || 0));
     $("jt-" + j).innerHTML = `<span>${pct(e.vote)}${respOn() && Math.abs(e.vote - e.rawVote) > 0.05 ? ` <span class="muted">(${pct(e.rawVote)} before voter response)</span>` : ""}${below ? ` <span class="neg">below 8%</span>` : ""}${r.pThr != null && r.pThr < 0.995 ? ` <span class="muted">· clears 8%: ${prob(r.pThr)}</span>` : ""}</span>
@@ -1645,15 +1657,64 @@ function setWeek(i) {
   S.picker.forEach(p => { if (!exists(p, WEEKS[S.w].date)) S.picker.delete(p); });
   update();
 }
+// ---- joint lists: a list's total and its parties' shares move together
+const jointIndex = p => S.joint.findIndex(m => m.includes(p));
+const listTotal = j => sum(S.joint[j].map(p => S.shares[p] || 0));
+const tenth = x => Math.round(x * 10) / 10;
+// Split t (%) among parties in proportion to weights w (equally if all are zero), in tenths, so that the parts add up to t exactly
+function apportion(t, w) {
+  const tenths = Math.max(0, Math.round(t * 10)), W = sum(w);
+  const raw = w.map(x => W > 0 ? tenths * x / W : tenths / w.length), fl = raw.map(Math.floor);
+  raw.map((x, i) => [x - fl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, tenths - sum(fl)).forEach(([, i]) => { fl[i]++; });
+  return fl.map(x => x / 10);
+}
+// The proportions a drag started from, kept while it lasts (the shares are still the ones it set), so that pushing one party to the
+// whole list and back, or the list to zero and back, restores the others' proportions
+let JDRAG = null;
+function dragWeights(key, ps) {
+  const cur = ps.map(p => S.shares[p] || 0);
+  return JDRAG && JDRAG.key === key && JDRAG.set.length === cur.length && JDRAG.set.every((x, i) => Math.abs(x - cur[i]) < 1e-9) ? JDRAG.w : cur;
+}
+const keepDrag = (key, ps, w) => { JDRAG = { key, w, set: ps.map(p => S.shares[p] || 0) }; };
+function syncShare(p, from) {
+  const row = $("row-" + slug(p)); if (!row) return;
+  if (from !== "range") row.querySelector("input[type=range]").value = S.shares[p];
+  if (from !== "number") row.querySelector("input[type=number]").value = S.shares[p].toFixed(p === "MN" ? 2 : 1);
+}
+function syncList(j, from) {
+  const row = $("jl-" + j); if (!row || !S.joint[j]) return;
+  const t = listTotal(j);
+  if (from !== "range") row.querySelector("input[type=range]").value = t;
+  if (from !== "number") row.querySelector("input[type=number]").value = t.toFixed(1);
+}
 function setShare(p, v, from) {
   if (!isFinite(v)) return;
-  S.shares[p] = clamp(v, 0, 100);
-  S.shares.Other = 100 - sum(SP.map(q => S.shares[q]));
-  const row = $("row-" + slug(p));
-  if (row) {
-    if (from !== "range") row.querySelector("input[type=range]").value = S.shares[p];
-    if (from !== "number") row.querySelector("input[type=number]").value = S.shares[p].toFixed(p === "MN" ? 2 : 1);
+  const j = jointIndex(p);
+  if (j >= 0 && S.joint[j].length > 1) {
+    // On a joint list the list keeps its total: the list's other parties take up the difference in proportion to their shares
+    const others = S.joint[j].filter(q => q !== p), t = tenth(listTotal(j)), key = "p" + j + "|" + p;
+    const own = tenth(clamp(v, 0, t)), w = dragWeights(key, others);
+    S.shares[p] = own;
+    apportion(t - own, w).forEach((x, i) => { S.shares[others[i]] = x; });
+    keepDrag(key, others, w);
+    others.forEach(q => syncShare(q));
+    syncShare(p, Math.abs(own - v) > 1e-9 ? null : from);
+  } else {
+    S.shares[p] = clamp(v, 0, 100);
+    syncShare(p, from);
   }
+  S.shares.Other = 100 - sum(SP.map(q => S.shares[q]));
+  updateSoon();
+}
+// Moving a joint list's total scales its parties in proportion
+function setListShare(j, v, from) {
+  if (!isFinite(v) || !S.joint[j]) return;
+  const mem = S.joint[j], key = "l" + j, w = dragWeights(key, mem), t = tenth(clamp(v, 0, 100));
+  apportion(t, w).forEach((x, i) => { S.shares[mem[i]] = x; });
+  keepDrag(key, mem, w);
+  mem.forEach(q => syncShare(q));
+  syncList(j, Math.abs(t - v) > 1e-9 ? null : from);
+  S.shares.Other = 100 - sum(SP.map(q => S.shares[q]));
   updateSoon();
 }
 function bind() {
@@ -1763,6 +1824,7 @@ function bind() {
       else if (k === "split") S.adv.split = +t.value / 100; else if (k.startsWith("sp")) S.adv.splitsOn[+k.slice(2)] = t.checked;
       updateRespUI(); updateSoon(); return;
     }
+    if (t.dataset.j != null && (t.type === "range" || t.type === "number")) return setListShare(+t.dataset.j, parseFloat(t.value), t.type);
     if (t.dataset.p && (t.type === "range" || t.type === "number")) setShare(t.dataset.p, parseFloat(t.value), t.type);
   });
   panel.addEventListener("click", e => {
