@@ -176,8 +176,12 @@ function makeEnts(joint) {
 }
 // ---- voters' response to joint lists (joint_penalty.json, written by Voting behaviour/analysis/79b_joint_penalty_export.R) ----
 // For each party on a joint list: the voters who are reluctant about any partner on it (pair reluctance, drawn on the logit scale in the
-// simulation) and who defect (rp.conv of them) leave. A share rp.abst of the defectors abstains; the rest vote for the parties off the list that
-// they rate highest (weight: the square of the mean rating). Pairs that split recently carry at least rp.split reluctance when ticked.
+// simulation) and who defect (rp.conv of them) leave. Each defector's alternative is weighed over every other party by how likely their
+// electorate is ever to vote for it (weight: like squared); an alternative on the list being left means abstaining, and a share rp.abst of
+// the rest abstains anyway (since 17 November 2026: before, every defector who voted went to a party off the list, which in a contest of two
+// blocs sent centre-left defectors to the far right). Pairs that split recently carry at least rp.split reluctance when ticked.
+// Families (JP.families): parties sharing one set of ratings (R+ takes PiS's). Voters of a third party on a list holding two or more members of
+// a family are reluctant about the family once: their reluctance about its first member on the list, times the family's union ratio for them.
 const lgt = p => Math.log(p / (1 - p)), expt = x => 1 / (1 + Math.exp(-x)), clampP = x => Math.min(0.995, Math.max(0.005, x));
 const RESP_NAMES = { none: "None", low: "Low", medium: "Medium", high: "High" };
 function prepJP(d) {
@@ -194,6 +198,17 @@ function pairMu(a, b, rp) {
   JP.splits.forEach((sp, i) => { if (rp.splitsOn[i] && ((sp[0] === a && sp[1] === b) || (sp[0] === b && sp[1] === a))) mu = Math.max(mu, lgt(clampP(rp.split))); });
   return mu;
 }
+// Partner b's weight in a's reluctance on list m: 1 normally; the union ratio for a family's first member on the list and 0 for its other members
+function familyWeights(a, m) {
+  const out = new Map();
+  (JP.families || []).forEach(f => {
+    if (f.members.includes(a)) return;
+    const on = f.members.filter(x => m.includes(x) && JPAIR[a][x]);
+    if (on.length < 2) return;
+    on.forEach((x, i) => out.set(x, i === 0 ? (f.union[a] != null ? f.union[a] : f.unionDefault) : 0));
+  });
+  return out;
+}
 const newFlow = () => P.map(() => ({ ab: 0, to: new Float64Array(SP.length) }));
 function stdNormal(seed) {
   const r = mulberry32(seed); let spare = null;
@@ -208,14 +223,21 @@ function applyResponse(sh, joint, rp, rnd, flow, w) {
   for (const m of joint) for (const a of m) {
     const ia = PIDX[a]; if (!JPAIR[a] || !(sh[ia] > 0)) continue;
     let keep = 1;
-    for (const b of m) if (b !== a && JPAIR[a][b]) keep *= 1 - expt(pairMu(a, b, rp) + JPAIR[a][b].sd * (rp.shift + (rnd ? rnd() : 0)));
+    const fw = familyWeights(a, m);
+    for (const b of m) if (b !== a && JPAIR[a][b]) {
+      const f = fw.has(b) ? fw.get(b) : 1; if (!f) continue;
+      keep *= 1 - Math.min(0.995, f * expt(pairMu(a, b, rp) + JPAIR[a][b].sd * (rp.shift + (rnd ? rnd() : 0))));
+    }
     const lost = sh[ia] * (1 - keep) * rp.conv; if (!(lost > 0)) continue;
     loss[ia] += lost;
-    const wt = P.map(b => (m.includes(b) || !av.has(b) || !JPAIR[a][b]) ? 0 : JPAIR[a][b].like ** 2), tot = sum(wt);
-    let ab = tot ? rp.abst : 1;
-    if (rnd && ab > 0 && ab < 1) ab = expt(lgt(Math.min(0.98, Math.max(0.02, ab))) + 0.4 * rnd());
+    // Alternatives are weighed over every other party; the weight of the partners on the list being left goes to abstention
+    const wAll = P.map(b => (b === a || !av.has(b) || !JPAIR[a][b]) ? 0 : JPAIR[a][b].like ** 2), totAll = sum(wAll);
+    const wt = P.map((b, j) => m.includes(b) ? 0 : wAll[j]), tot = sum(wt);
+    let ab0 = tot ? rp.abst : 1;
+    if (rnd && ab0 > 0 && ab0 < 1) ab0 = expt(lgt(Math.min(0.98, Math.max(0.02, ab0))) + 0.4 * rnd());
+    const ab = tot ? ab0 + (1 - ab0) * (1 - tot / totAll) : 1;
     if (flow) flow[ia].ab += lost * ab;
-    P.forEach((b, j) => { if (!wt[j]) return; const g = lost * (1 - ab) * wt[j] / tot; gain[PIDX[b]] += g; if (flow) flow[ia].to[PIDX[b]] += g; });
+    P.forEach((b, j) => { if (!wt[j]) return; const g = lost * (1 - ab0) * wt[j] / totAll; gain[PIDX[b]] += g; if (flow) flow[ia].to[PIDX[b]] += g; });
   }
   for (let i = 0; i < SP.length; i++) sh[i] += gain[i] - loss[i];
 }
@@ -500,7 +522,8 @@ function partyRow(p, inJoint) {
 function respBlock() {
   const rp = JP ? respParams() : { conv: 0, shift: 0, split: 0, abst: 0, splitsOn: [false, false, false, false] };
   const row = (id, label, min, max, step, val) => `<div class="advrow"><label for="a_${id}" class="advl"><span>${label}</span><b id="o_${id}"></b></label><input type="range" class="wide" id="a_${id}" min="${min}" max="${max}" step="${step}" value="${val}"></div>`;
-  const method = JP ? `<p class="help" style="margin:6px 0 0">Reluctance is the share of a party's voters who rate a partner 0 to 2 out of 10 (PGSW 2023), pulled towards a model of ideological distance and of which side of the PiS divide the partner is on. Of such voters, ${Math.round(100 * JP.meta.calibration.pooled)}% named a party they rated that low as one they would never vote for in 2005 and 2007 (${Math.round(100 * JP.meta.calibration.party_q25)}% to ${Math.round(100 * JP.meta.calibration.party_q75)}% across parties: the Low and High settings). R+ and KKP were not rated and take the figures of PiS and Konfederacja. The abstention share and the penalties for recent splits are judgement.</p>` : "";
+  const cal = JP && JP.meta.calibration, convMed = cal && (cal.conv_median != null ? cal.conv_median : cal.pooled);
+  const method = JP ? `<p class="help" style="margin:6px 0 0">Reluctance is the share of a party's voters who would rate a partner 0 to 2 out of 10, ${JP.meta.quarter ? `in ${esc(JP.meta.quarter)}, ` : ""}from a model that combines the Polish National Election Studies of 2023 and 2025, the European Election Study of 2024, CBOS and SWPS University's surveys of 2023 to 2026, pulled towards ideological distance and the PiS divide. Of reluctant voters, ${Math.round(100 * convMed)}% defect (${Math.round(100 * (cal.conv_q10 != null ? cal.conv_q10 : cal.party_q25))}% and ${Math.round(100 * (cal.conv_q90 != null ? cal.conv_q90 : cal.party_q75))}%: the Low and High settings), a rate calibrated on CBOS's questions about joint opposition lists in 2023. Each defector's alternative is chosen among all other parties by how likely their electorate is ever to vote for each (European Election Study 2024); a defector whose alternative is on the list they are leaving stays at home, and a share of the rest abstain anyway. R+ has no ratings of its own and takes PiS's, except between PiS and R+ voters, which comes from CBOS's question on desired coalition partners (September and October 2026); other voters count PiS and R+ on one list as one partner. The abstention share and the penalties for recent splits are judgement.</p>` : "";
   return `<div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
       <span class="label">Voter response</span>
       <div class="seg small" id="resp" role="group" aria-label="How strongly voters react to joint lists">${["none", "low", "medium", "high"].map(k => `<button type="button" data-resp="${k}">${RESP_NAMES[k]}</button>`).join("")}<button type="button" data-resp="custom" hidden>Custom</button></div>
@@ -509,7 +532,7 @@ function respBlock() {
       ${JP ? `<details id="adv"${S.advOpen ? " open" : ""}><summary class="help" style="cursor:pointer">Advanced settings</summary>
         ${row("conv", "Reluctant voters who defect", 0, 100, 5, Math.round(100 * rp.conv))}
         ${row("shift", "Reluctance against the estimate (SDs)", -2, 2, 0.25, rp.shift)}
-        ${row("abst", "Defectors who abstain", 0, 100, 5, Math.round(100 * rp.abst))}
+        ${row("abst", "Defectors with a party off the list who abstain anyway", 0, 100, 5, Math.round(100 * rp.abst))}
         ${row("split", "Reluctance between recently split parties", 0, 40, 1, Math.round(100 * rp.split))}
         <div class="chips" style="margin-top:4px">${JP.splits.map((sp, i) => `<label class="chip"><input type="checkbox" id="a_sp${i}"${rp.splitsOn[i] ? " checked" : ""}> ${esc(short(sp[0]))} / ${esc(short(sp[1]))}</label>`).join("")}</div>
         ${method}</details>` : ""}
@@ -525,7 +548,7 @@ function updateRespUI() {
   else if (!joint) note.textContent = "Applies to joint lists: build one to use it.";
   else if (custom) note.textContent = "Advanced settings are changed from Low, Medium and High.";
   else if (S.resp === "none") note.textContent = "Voters do not react: a joint list simply adds its members' votes.";
-  else { const rp = respParams(); note.textContent = `Of a party's voters who rate a partner on the list 0 to 2 out of 10, ${Math.round(100 * rp.conv)}% defect: some abstain, the rest vote for the other parties they rate highest. Recently split partners carry a ${Math.round(100 * rp.split)}% reluctance.`; }
+  else { const rp = respParams(); note.textContent = `Of a party's voters who rate a partner on the list 0 to 2 out of 10, ${Math.round(100 * rp.conv)}% defect: those whose likeliest alternative is on the same list stay at home, and of the rest ${Math.round(100 * rp.abst)}% abstain anyway.${rp.splitsOn.some(Boolean) ? ` Ticked recently split partners carry at least ${Math.round(100 * rp.split)}% reluctance.` : ""}`; }
   if (!JP) return;
   const rp = respParams(), set = (id, v, t) => { const el = $("a_" + id), o = $("o_" + id); if (el && document.activeElement !== el) el.value = v; if (o) o.textContent = t; };
   set("conv", Math.round(100 * rp.conv), Math.round(100 * rp.conv) + "%"); set("shift", rp.shift, (rp.shift > 0 ? "+" : "") + rp.shift.toFixed(2));
