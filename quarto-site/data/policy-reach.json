@@ -6,8 +6,8 @@
  },
  "totals": {
   "documents": 41,
-  "works": 38,
-  "organisations": 59,
+  "works": 40,
+  "organisations": 60,
   "countries": 18,
   "first_year": 2013,
   "cited_works": 13,
@@ -28,10 +28,10 @@
    "key": "government",
    "name": "Government",
    "colour": "#eb6834",
-   "organisations": 14,
-   "records": 15,
-   "tip": "Government: 14 organisations, behind 15 documents and works",
-   "w": 0.3333
+   "organisations": 15,
+   "records": 17,
+   "tip": "Government: 15 organisations, behind 17 documents and works",
+   "w": 0.3571
   },
   {
    "key": "international",
@@ -93,6 +93,18 @@
    "w": 0.5
   },
   {
+   "name": "Finnish Institute for Health and Welfare",
+   "type": "government",
+   "type_label": "government",
+   "country": "Finland",
+   "documents": 0,
+   "works": 3,
+   "total": 3,
+   "colour": "#eb6834",
+   "tip": "Finnish Institute for Health and Welfare (government, Finland): 3 research works",
+   "w": 0.5
+  },
+  {
    "name": "Luxembourg Institute of Socio-Economic Research",
    "type": "think_tank",
    "type_label": "think tank",
@@ -114,18 +126,6 @@
    "total": 2,
    "colour": "#2a78d6",
    "tip": "De Nederlandsche Bank (think tank, Netherlands): 2 research works",
-   "w": 0.3333
-  },
-  {
-   "name": "Finnish Institute for Health and Welfare",
-   "type": "government",
-   "type_label": "government",
-   "country": "Finland",
-   "documents": 0,
-   "works": 2,
-   "total": 2,
-   "colour": "#eb6834",
-   "tip": "Finnish Institute for Health and Welfare (government, Finland): 2 research works",
    "w": 0.3333
   },
   {
@@ -399,6 +399,17 @@
    "total": 1,
    "colour": "#eb6834",
    "tip": "European Commission (government, EU institutions): 1 research work"
+  },
+  {
+   "name": "European Union",
+   "type": "government",
+   "type_label": "government",
+   "country": "EU institutions",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#eb6834",
+   "tip": "European Union (government, EU institutions): 1 research work"
   },
   {
    "name": "Federal Institute for Population Research",
@@ -752,6 +763,26 @@
    "w": 0.2727
   },
   {
+   "code": "EU",
+   "name": "EU institutions",
+   "records": 4,
+   "organisations": 4,
+   "on_map": false,
+   "colour": "#e38070",
+   "tip": "EU institutions: 4 documents and works, from 4 organisations",
+   "w": 0.1818
+  },
+  {
+   "code": "FI",
+   "name": "Finland",
+   "records": 4,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Finland: 4 documents and works, from 2 organisations",
+   "w": 0.1818
+  },
+  {
    "code": "BG",
    "name": "Bulgaria",
    "records": 3,
@@ -759,26 +790,6 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Bulgaria: 3 documents and works, from 3 organisations",
-   "w": 0.1364
-  },
-  {
-   "code": "EU",
-   "name": "EU institutions",
-   "records": 3,
-   "organisations": 3,
-   "on_map": false,
-   "colour": "#e38070",
-   "tip": "EU institutions: 3 documents and works, from 3 organisations",
-   "w": 0.1364
-  },
-  {
-   "code": "FI",
-   "name": "Finland",
-   "records": 3,
-   "organisations": 2,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Finland: 3 documents and works, from 2 organisations",
    "w": 0.1364
   },
   {
@@ -1144,10 +1155,10 @@
    {
     "year": 2023,
     "label": "2023",
-    "count": 4,
-    "h": 0.2667,
+    "count": 5,
+    "h": 0.3333,
     "minor": true,
-    "tip": "2023: 4 documents and works (Think tanks and foundations 2, Government 2)",
+    "tip": "2023: 5 documents and works (Think tanks and foundations 2, Government 3)",
     "segments": [
      {
       "name": "Think tanks and foundations",
@@ -1157,19 +1168,19 @@
      },
      {
       "name": "Government",
-      "count": 2,
+      "count": 3,
       "colour": "#eb6834",
-      "tip": "2023, Government: 2 documents and works"
+      "tip": "2023, Government: 3 documents and works"
      }
     ]
    },
    {
     "year": 2024,
     "label": "2024",
-    "count": 10,
-    "h": 0.6667,
+    "count": 11,
+    "h": 0.7333,
     "minor": true,
-    "tip": "2024: 10 documents and works (Think tanks and foundations 6, Government 4)",
+    "tip": "2024: 11 documents and works (Think tanks and foundations 6, Government 5)",
     "segments": [
      {
       "name": "Think tanks and foundations",
@@ -1179,9 +1190,9 @@
      },
      {
       "name": "Government",
-      "count": 4,
+      "count": 5,
       "colour": "#eb6834",
-      "tip": "2024, Government: 4 documents and works"
+      "tip": "2024, Government: 5 documents and works"
      }
     ]
    },
@@ -1917,9 +1928,18 @@
    "title": "Conceptualizing and Measuring Support for Democracy: A New Approach",
    "year": 2025,
    "documents": 2,
-   "works": 1,
-   "summary": "2 policy documents and 1 research work",
+   "works": 2,
+   "summary": "2 policy documents and 2 research works",
    "items": [
+    {
+     "date": "2026",
+     "when": "2026",
+     "title": "Sacrificing Liberal or Electoral Democracy? Evidence from a Conjoint Experiment in Five European Countries",
+     "url": "https://doi.org/10.2139/ssrn.6049214",
+     "kind": "preprint",
+     "source": "openalex",
+     "orgs": "Friedrich-Ebert-Stiftung e.V. (think tank, Germany)"
+    },
     {
      "date": "2025-11-26",
      "when": "26 November 2025",
@@ -1946,6 +1966,53 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    }
+   ]
+  },
+  {
+   "key": "10.1007/978-3-031-19246-3",
+   "idea": null,
+   "title": "External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation",
+   "year": 2023,
+   "documents": 0,
+   "works": 4,
+   "summary": "4 research works",
+   "items": [
+    {
+     "date": "2025",
+     "when": "2025",
+     "title": "Economic, Sociocultural and Political Transnationalism",
+     "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
+     "kind": "book chapter",
+     "source": "openalex",
+     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "Does sending ballots via post reduce costs? Negligible effect of postal voting on turnout among Finnish electorate living abroad",
+     "url": "https://doi.org/10.1016/j.electstud.2024.102776",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+    },
+    {
+     "date": "2023",
+     "when": "2023",
+     "title": "Missing links in migrant enfranchisement studies",
+     "url": "https://doi.org/10.1080/1369183x.2023.2182709",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+    },
+    {
+     "date": "2023",
+     "when": "2023",
+     "title": "Introduction: Non-residents’ participation in the homeland arena from a European perspective",
+     "url": "https://doi.org/10.1057/s41304-022-00405-6",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
     }
    ]
   },
@@ -1988,40 +2055,40 @@
    ]
   },
   {
-   "key": "10.1007/978-3-031-19246-3",
+   "key": "10.1007/978-3-319-96758-5_5",
    "idea": null,
-   "title": "External Voting: The Patterns and Drivers of Central European Migrants' Homeland Electoral Participation",
-   "year": 2023,
+   "title": "Populism in Poland",
+   "year": 2019,
    "documents": 0,
    "works": 3,
    "summary": "3 research works",
    "items": [
     {
-     "date": "2025",
-     "when": "2025",
-     "title": "Economic, Sociocultural and Political Transnationalism",
-     "url": "https://doi.org/10.1007/978-3-031-91554-3_3",
-     "kind": "book chapter",
+     "date": "2024",
+     "when": "2024",
+     "title": "Civil society and populism in Europe: outbreak or cure?",
+     "url": "https://doi.org/10.1080/14782804.2024.2341032",
+     "kind": "article",
      "source": "openalex",
-     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+     "orgs": "Centro Alti Studi per la Difesa (CASD) (government, Italy)"
     },
     {
      "date": "2023",
      "when": "2023",
-     "title": "Missing links in migrant enfranchisement studies",
-     "url": "https://doi.org/10.1080/1369183x.2023.2182709",
-     "kind": "article",
+     "title": "Re-Making Social Europe After the Great Recession: Actors, Networks, and Social Fields",
+     "url": "https://doi.org/10.53846/goediss-9821",
+     "kind": "thesis",
      "source": "openalex",
-     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+     "orgs": "European Union (government, EU institutions)"
     },
     {
-     "date": "2023",
-     "when": "2023",
-     "title": "Introduction: Non-residents’ participation in the homeland arena from a European perspective",
-     "url": "https://doi.org/10.1057/s41304-022-00405-6",
-     "kind": "article",
+     "date": "2020",
+     "when": "2020",
+     "title": "Right‐Wing Populism in Rural Europe. Introduction to the Special Issue",
+     "url": "https://doi.org/10.1111/soru.12306",
+     "kind": "editorial",
      "source": "openalex",
-     "orgs": "Finnish Institute for Health and Welfare (government, Finland)"
+     "orgs": "Swedish Institute of International Affairs (think tank, Sweden)"
     }
    ]
   },
@@ -2080,35 +2147,6 @@
      "kind": "preprint",
      "source": "openalex",
      "orgs": "Government of the United States of America (government, United States)"
-    }
-   ]
-  },
-  {
-   "key": "10.1007/978-3-319-96758-5_5",
-   "idea": null,
-   "title": "Populism in Poland",
-   "year": 2019,
-   "documents": 0,
-   "works": 2,
-   "summary": "2 research works",
-   "items": [
-    {
-     "date": "2024",
-     "when": "2024",
-     "title": "Civil society and populism in Europe: outbreak or cure?",
-     "url": "https://doi.org/10.1080/14782804.2024.2341032",
-     "kind": "article",
-     "source": "openalex",
-     "orgs": "Centro Alti Studi per la Difesa (CASD) (government, Italy)"
-    },
-    {
-     "date": "2020",
-     "when": "2020",
-     "title": "Right‐Wing Populism in Rural Europe. Introduction to the Special Issue",
-     "url": "https://doi.org/10.1111/soru.12306",
-     "kind": "editorial",
-     "source": "openalex",
-     "orgs": "Swedish Institute of International Affairs (think tank, Sweden)"
     }
    ]
   },
@@ -2597,6 +2635,26 @@
    ]
   },
   {
+   "id": "openalex:W4366518162",
+   "source": "openalex",
+   "title": "Re-Making Social Europe After the Great Recession: Actors, Networks, and Social Fields",
+   "url": "https://doi.org/10.53846/goediss-9821",
+   "date": "",
+   "year": 2023,
+   "kind": "thesis",
+   "orgs": [
+    {
+     "name": "European Union",
+     "type": "government",
+     "country": "EU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-319-96758-5_5"
+   ]
+  },
+  {
    "id": "openalex:W4394607011",
    "source": "openalex",
    "title": "Civil society and populism in Europe: outbreak or cure?",
@@ -2615,6 +2673,26 @@
    "cites": [
     "10.1007/978-3-319-96758-5_5",
     "10.1177/0888325418783056"
+   ]
+  },
+  {
+   "id": "openalex:W4394629591",
+   "source": "openalex",
+   "title": "Does sending ballots via post reduce costs? Negligible effect of postal voting on turnout among Finnish electorate living abroad",
+   "url": "https://doi.org/10.1016/j.electstud.2024.102776",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Finnish Institute for Health and Welfare",
+     "type": "government",
+     "country": "FI",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1007/978-3-031-19246-3"
    ]
   },
   {
@@ -2821,7 +2899,8 @@
     }
    ],
    "cites": [
-    "10.1080/21599165.2020.1787161"
+    "10.1080/21599165.2020.1787161",
+    "10.1177/00104140241259458"
    ]
   },
   {

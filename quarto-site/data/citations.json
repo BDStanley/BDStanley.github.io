@@ -2,7 +2,7 @@
   "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes them on every build (Scopus needs its API key in the Keychain); see that file.",
   "scopus": {
     "as_of": "2026-11",
-    "citations": 1695,
+    "citations": 1696,
     "h_index": 13
   },
   "google_scholar": {
@@ -18,7 +18,7 @@
   },
   "openalex": {
     "as_of": "2026-11",
-    "citations": 3197,
+    "citations": 3193,
     "h_index": 18,
     "i10_index": 22
   }
