@@ -21,7 +21,7 @@
 ]
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/polling-tracker.html"))[Polling tracker]
-#html.elem("div", attrs: (class: "course-desc"))[Poll-of-polls and seat projections for the Sejm.]
+#html.elem("div", attrs: (class: "course-desc"))[Poll-of-polls for the Sejm: seat projections, the constituencies since 1991 and scenarios.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
@@ -40,15 +40,6 @@
 #html.elem("div", attrs: (class: "course-body"))[
 #html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/voting-behaviour.html"))[Voting behaviour]
 #html.elem("div", attrs: (class: "course-desc"))[Who votes for whom, and who stays at home.]
-]
-]
-#html.elem("div", attrs: (class: "course-row"))[
-#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/constituencies.html", tabindex: "-1", "aria-hidden": "true"))[
-#html.elem("img", attrs: (src: "../assets/analyses/constituencies.png", alt: "", width: "480", height: "300", loading: "lazy"))
-]
-#html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/constituencies.html"))[Constituencies]
-#html.elem("div", attrs: (class: "course-desc"))[What a vote is worth in each Sejm constituency, 1991–2023.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[

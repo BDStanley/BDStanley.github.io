@@ -835,6 +835,60 @@ details.method p:has(+ ul) {
 details.method li {
   margin-bottom: 0.3rem;
 }
+/* A table inside a method note (the Polling tracker's Scenarios page: the 2023 exit-poll targets), and a note's own
+   collapsed sub-section */
+details.method details > summary {
+  cursor: pointer;
+  font-size: 0.86rem;
+  color: #8b0000;
+  margin: 0.6rem 0 0.3rem;
+}
+table.method-table {
+  border-collapse: collapse;
+  font-size: 0.76rem;
+  color: #4b4b4b;
+  margin: 0.4rem 0 0.8rem;
+}
+table.method-table th,
+table.method-table td {
+  padding: 0.2rem 0.6rem 0.2rem 0;
+  border-bottom: 1px solid #ececec;
+  text-align: left;
+  white-space: nowrap;
+}
+table.method-table th {
+  font-weight: 500;
+  color: #767676;
+}
+
+/* ---- The Polling tracker's section row (pages/polish-political-analyses/polling-tracker*.typ) ------------- */
+/* One tracker at four addresses: plain links, underlined in dark red on the page's own section. The app adds the
+   week and the scenario to their addresses (data-s). */
+nav.tracker-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.2rem 1.7rem;
+  border-bottom: 1px solid #d5d5d5;
+  margin: 0.3rem 0 0.7rem;
+}
+nav.tracker-nav a {
+  display: inline-block;
+  padding: 0.45rem 0 0.5rem;
+  font-size: 0.95rem;
+  color: #4b4b4b !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+nav.tracker-nav a:hover {
+  color: #8b0000 !important;
+}
+nav.tracker-nav a.on {
+  color: #8b0000 !important;
+  border-bottom-color: #8b0000;
+  font-weight: 500;
+}
 
 /* ---- Citation reach page (pages/citation-reach.typ) ----------------------- */
 /* Charts built as plain HTML and inline SVG from data/reach.json, which holds

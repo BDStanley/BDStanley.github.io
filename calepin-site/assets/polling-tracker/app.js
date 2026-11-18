@@ -93,23 +93,18 @@ function VD() {
     : { trend: D.trend, polls: D.polls, pollsters: D.pollsters, parties: P, events: R.launches,
         house: D.house, blocs: R.houseEffectBlocs, results: [], past: false };
 }
-// Political events of the current term, shown with the party launches and splits from the model data
-const POLITICAL_EVENTS = [
-  ["2023-12-13", "Tusk government sworn in"],
-  ["2024-04-07", "Local elections"],
-  ["2024-06-09", "European Parliament election"],
-  ["2024-09-14", "Floods in south-west Poland"],
-  ["2024-11-22", "Trzaskowski wins the KO primary"],
-  ["2025-05-18", "Presidential election, first round"],
-  ["2025-06-01", "Nawrocki wins the presidential run-off"],
-  ["2025-06-11", "Tusk government wins a confidence vote"],
-  ["2025-08-06", "Nawrocki sworn in as president"],
-  ["2025-09-10", "Russian drones enter Polish airspace"],
-];
+// Political events of the current term, shown with the party launches and splits from the model data. They are kept, each with
+// its source, in Election 2027/blog/events.csv (the Election 2027 updates cite the same list) and come here as events.json
+// ({date, event, url}), which scripts/sync-analyses.py copies in; without it the chart shows the launches and splits only.
+let POLITICAL_EVENTS = [];
+fetch("events.json").then(r => (r.ok ? r.json() : [])).then(d => {
+  POLITICAL_EVENTS = (Array.isArray(d) ? d : d.events || []).filter(e => e.date && e.event).map(e => [e.date, e.event, e.url || ""]);
+  if (typeof S !== "undefined" && S.events && S.view === "trends" && D) renderTrends();
+}).catch(() => {});
 // Events of the view on show, in date order, numbered through the whole list so a number never changes with the period
 function trendEvents() {
   const V = VD(), all = V.events.map(e => ({ date: e.date, event: e.event }));
-  if (!V.past) POLITICAL_EVENTS.forEach(([d, t]) => all.push({ date: Date.parse(d) / 864e5, event: t }));
+  if (!V.past) POLITICAL_EVENTS.forEach(([d, t, u]) => all.push({ date: Date.parse(d) / 864e5, event: t, url: u }));
   all.sort((p, q) => p.date - q.date); all.forEach((e, i) => { e.n = i + 1; });
   const dates = V.trend.dates, last = dates[dates.length - 1], span = S.period === "all" ? null : +S.period * 30.44;
   const a = span ? Math.max(dates[0], last - span) : dates[0];
@@ -151,10 +146,34 @@ const forbiddenIn = parties => exclIn(parties).map(pairText);
 // True if a default exclusion has been switched to Include (the published combinations then are not enough)
 const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])));
 
+// ---- sections -------------------------------------------------------------------------------
+// The tracker is one app at four addresses (Election 2027/PLAN.md, decision 18): each page of the site embeds this file
+// with ?s=<section>, which fixes the views it offers. Links between the pages carry the week and the scenario.
+const SECTION = (() => { try { const s = new URLSearchParams(location.search).get("s"); return ["polls", "seats", "geography", "scenarios"].includes(s) ? s : "polls"; } catch (e) { return "polls"; } })();
+const SECTIONS = {
+  polls: [["trends", "Trends"], ["groups", "By group"], ["pollsters", "Pollsters"]],
+  seats: [["seats", "Sejm"], ["everyseat", "Every seat"]],
+  geography: [["map", "Map"], ["worth", "What a vote is worth"], ["population", "If seats followed population"]],
+  scenarios: [["lists", "Parties and lists"], ["levers", "Groups"], ["whovotes", "Who votes"]]
+};
+const VIEWS = SECTIONS[SECTION].map(v => v[0]);
+const VIEW_EL = { trends: "v-trends", groups: "v-groups", pollsters: "v-pollsters", seats: "v-seats", lists: "v-seats", levers: "v-seats",
+  everyseat: "v-everyseat", whovotes: "v-whovotes", map: "v-geomap", worth: "v-worth", population: "v-population" };
+const HEMI_VIEWS = ["seats", "lists", "levers"];
+// The site's page for each section, from this file (assets/polling-tracker/index.html)
+const SECTION_PAGE = { polls: "polling-tracker.html", seats: "polling-tracker/seats.html", geography: "polling-tracker/geography.html", scenarios: "polling-tracker/scenarios.html" };
+const sectionUrl = s => new URL("../../pages/polish-political-analyses/" + SECTION_PAGE[s], location.href).href;
+// The keys a link to another section carries: the week and the scenario
+const SCEN_KEYS = ["w", "v", "j", "r", "ra", "xi", "xx", "g", "gb", "gh"];
+
 // ---- state ----------------------------------------------------------------------------------
-const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
+// levers: changes by group on the Scenarios page's Groups view ({group, measure, change, from}); base: their starting
+// point ("groups" or "polls"); hand: parties whose share was set by hand, which the levers leave where they were set
+const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: VIEWS[0], period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
   hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
-  gDim: "age", gList: "KO", gPts: false };
+  gDim: "age", gList: "KO", gPts: false,
+  levers: [], base: "groups", hold: false, hand: new Set(), wiMode: "all", wiMetric: "vote", wiGroup: {},
+  esC: "", esL: "", esCat: "all", esSort: "const" };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -164,6 +183,8 @@ function defaults(w) {
   return s;
 }
 function edited() { const d = defaults(S.w); return SP.some(p => Math.abs(S.shares[p] - d[p]) > 0.051); }
+// The shares a scenario starts from before any hand edit: the week's estimates, or what the group levers make of them
+function baseShares() { return S.levers.length && LEVRES ? leverShares(LEVRES) : defaults(S.w); }
 const respOn = () => !!JP && S.joint.length > 0 && S.resp !== "none";
 function modelView() { return !edited() && S.joint.length === 0; }
 const weekParties = w => P.filter(p => exists(p, WEEKS[w].date));
@@ -796,7 +817,7 @@ function renderTrends() {
     const ex = x(l.date), cx = Math.max(ex, lastCx + 17); lastCx = cx; evx.push({ cx, e: l });
     o.push(`<line x1="${ex}" x2="${ex}" y1="${m.t - 20}" y2="${H - m.b}" stroke="#C9C9C9" stroke-dasharray="2 3"/><circle cx="${cx}" cy="10" r="8" fill="#fff" stroke="#B5B5B5"/><text x="${cx}" y="13.5" text-anchor="middle" font-size="10" font-weight="500" fill="#4B4B4B">${l.n}</text>`);
   });
-  $("trendevents").innerHTML = evs.map(l => `<span class="muted">${l.n}. ${esc(evWhen(l.date))} · ${esc(l.event)}</span>`).join("");
+  $("trendevents").innerHTML = evs.map(l => `<span class="muted">${l.n}. ${esc(evWhen(l.date))} · ${l.url ? `<a href="${esc(l.url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-decoration-color:var(--faint)">${esc(l.event)}</a>` : esc(l.event)}</span>`).join("");
   // bands
   parties.forEach(p => {
     const s = T.series[p]; let top = [], bot = [];
@@ -1461,12 +1482,15 @@ function renderChips() {
   $("periods").innerHTML = PERIODS.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${S.period === k}">${l}</button>`).join("");
   [...$("views").children].forEach(b => {
     b.setAttribute("aria-pressed", S.view === b.dataset.v); b.setAttribute("aria-selected", S.view === b.dataset.v);
-    b.hidden = !!TERM && (b.dataset.v === "seats" || b.dataset.v === "groups");
+    b.hidden = !!TERM && b.dataset.v === "groups";
   });
-  ["trends", "seats", "groups", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
-  $("panel").hidden = !TERM && S.view !== "seats";
+  [...new Set(Object.values(VIEW_EL))].forEach(id => { $(id).hidden = id !== VIEW_EL[S.view]; });
+  $("panel").hidden = !TERM && !(SECTION === "scenarios" && S.view === "lists");
   $("panel2").hidden = !!TERM || S.view !== "pollsters";
   $("panel3").hidden = !!TERM || S.view !== "groups";
+  $("panel4").hidden = !!TERM || S.view !== "seats";
+  $("panel5").hidden = !!TERM || S.view !== "levers";
+  if (SECTION !== "polls") $("termwrap").hidden = true;
   $("pts").checked = S.points;
   $("ptswrap").hidden = S.view !== "trends";
   $("evwrap").hidden = S.view !== "trends";
@@ -1506,11 +1530,34 @@ function renderHousePanel() {
 
 // ---- rendering ------------------------------------------------------------------------------
 function renderView() {
-  if (TERM && (S.view === "seats" || S.view === "groups")) { S.view = "trends"; renderChips(); }
+  if (TERM && S.view === "groups") { S.view = "trends"; renderChips(); }
+  renderBanner();
   if (S.view === "trends") renderTrends();
-  else if (S.view === "seats") { renderHemi(); renderHemiBlocks(); renderMap(); renderConstCard(); }
+  else if (HEMI_VIEWS.includes(S.view)) { renderHemi(); renderHemiBlocks(); if (S.view === "seats") renderSeatsPanel(); if (S.view === "levers") renderLevers(); }
+  else if (S.view === "everyseat") renderEverySeat();
+  else if (S.view === "whovotes") renderWhoVotes();
+  else if (S.view === "map") { if (window.Geography) Geography.render("map"); else { renderMap(); renderConstCard(); } }
+  else if (S.view === "worth" || S.view === "population") { if (window.Geography) Geography.render(S.view); else $(VIEW_EL[S.view]).innerHTML = `<p class="help">Loading…</p>`; }
   else if (S.view === "groups") renderGroups();
   else renderHouse();
+}
+// What the scenario on screen is, in words: for the banner, the export subtitles and the Every seat CSV
+function scenText() {
+  const bits = [], d = defaults(S.w);
+  if (S.levers.length) bits.push((S.base === "polls" ? "polls now, uniform swing" : "polls now, groups as polled") + "; " + S.levers.map(leverText).join("; "));
+  const hand = SP.filter(p => (S.levers.length ? S.hand.has(p) : Math.abs((S.shares[p] || 0) - d[p]) > 0.051));
+  if (hand.length) bits.push(hand.map(p => `${p} ${(S.shares[p] || 0).toFixed(1)}% (model ${d[p].toFixed(1)}%)`).join(", "));
+  if (S.joint.length) bits.push("joint lists: " + S.joint.map(m => sortParties(m).map(short).join(" + ")).join("; ") + (respOn() ? `, voter response ${S.adv ? "custom" : RESP_NAMES[S.resp].toLowerCase()}` : ", no voter response"));
+  return bits.join("; ");
+}
+// On Seats and Geography a scenario arriving in the link is shown with a banner and a way back to the model; on
+// Scenarios the banner says what the scenario is
+function renderBanner() {
+  const b = $("scenbanner");
+  if (TERM || SECTION === "polls" || !CUR || CUR.mode === "model" || S.view === "whovotes") { b.hidden = true; return; }
+  const edit = SECTION === "scenarios" ? "" : ` · <a href="${esc(sectionUrl("scenarios") + "#" + carryString())}" target="_top">Change it in Scenarios</a> · <button type="button" class="linkbtn" id="tomodel">Back to the model</button>`;
+  b.innerHTML = `<b>Hypothetical scenario</b> for the week of ${dlong(CUR.wk.date)}: ${esc(scenText())}.${edit}`;
+  b.hidden = false;
 }
 const sharesValid = () => 100 - sum(SP.map(p => S.shares[p] || 0)) >= -0.05;
 // While the named shares exceed 100%, the last valid numbers stay on screen, faded.
@@ -1535,7 +1582,7 @@ function stateString() {
     return q.toString();
   }
   if (S.w !== WEEKS.length - 1) q.set("w", iso(WEEKS[S.w].date));
-  const d = defaults(S.w), ed = SP.filter(p => Math.abs(S.shares[p] - d[p]) > 0.051);
+  const bs = baseShares(), ed = SP.filter(p => S.hand.has(p) && Math.abs(S.shares[p] - bs[p]) > 0.051);
   if (ed.length) q.set("v", ed.map(p => p + ":" + S.shares[p]).join(","));
   const dk = defaultExcl(), xi = [...dk].filter(k => !S.excl.has(k)), xx = [...S.excl].filter(k => !dk.has(k));
   if (xi.length) q.set("xi", xi.join(";"));
@@ -1543,26 +1590,69 @@ function stateString() {
   if (S.joint.length) q.set("j", S.joint.map(m => m.join(",")).join(";"));
   if (S.joint.length && S.adv) q.set("ra", [S.adv.conv, S.adv.shift, S.adv.abst, S.adv.split, S.adv.splitsOn.map(x => +x).join("")].join(","));
   else if (S.joint.length && S.resp !== "medium") q.set("r", S.resp);
+  if (S.levers.length) { q.set("g", S.levers.map(leverKey).join(";")); if (S.base !== "groups") q.set("gb", S.base); if (S.hold) q.set("gh", "1"); }
   if (S.houses.size) q.set("h", [...S.houses].join(";"));
   if (S.parties.size) q.set("pp", [...S.parties].join(";"));
-  if (S.view !== "trends") q.set("view", S.view);
+  if (S.view !== VIEWS[0]) q.set("view", S.view);
   if (S.view === "groups") { q.set("gd", S.gDim); q.set("gl", S.gList); if (S.gPts) q.set("gp", "1"); }
+  if (S.view === "everyseat") { if (S.esC) q.set("ec", S.esC); if (S.esL) q.set("el", S.esL); if (S.esCat !== "all") q.set("ek", S.esCat); if (S.esSort !== "const") q.set("eo", S.esSort); }
+  if (S.view === "whovotes") { if (S.wiMode !== "all") q.set("wm", S.wiMode); if (S.wiMetric !== "vote") q.set("wv", S.wiMetric); }
+  if (SECTION === "geography" && window.Geography && Geography.writeState) Geography.writeState(q);
   if (S.period !== "all") q.set("p", S.period);
   if (!S.points) q.set("dp", "0");
   return q.toString();
 }
+// The week and the scenario, for links to another section
+function carryString() {
+  const q = new URLSearchParams(stateString()), out = new URLSearchParams();
+  SCEN_KEYS.forEach(k => { if (q.has(k)) out.set(k, q.get(k)); });
+  return out.toString();
+}
+// The section links on the host page (a[data-s], in each page's .typ) carry the week and the scenario, except to Polls
+function syncNav() {
+  let doc = null; try { if (hashTarget() !== window) doc = window.top.document; } catch (e) { doc = null; }
+  if (!doc) return;
+  const carry = carryString();
+  doc.querySelectorAll("a[data-s]").forEach(a => {
+    const s = a.getAttribute("data-s"); if (!SECTION_PAGE[s]) return;
+    const base = a.getAttribute("href").split("#")[0];
+    a.setAttribute("href", base + (s !== "polls" && carry ? "#" + carry : ""));
+  });
+}
 const saveHash = debounce(() => {
   const t = hashTarget(), s = stateString();
   try { t.history.replaceState(null, "", t.location.pathname + t.location.search + (s ? "#" + s : "")); } catch (e) { /* ignore */ }
+  syncNav();
 }, 250);
+// Before the tracker had four addresses, its seat views and scenarios were all on one page: a link that names them is
+// sent on to the page that now holds them (Seats, or Scenarios for an edited scenario). Returns false when it does.
+function forwardOld(q) {
+  if (SECTION !== "polls" || q.get("t")) return true;
+  const scen = ["v", "j", "r", "ra", "xi", "xx", "g"].some(k => q.has(k)), view = q.get("view");
+  const to = view === "seats" ? (scen ? "scenarios" : "seats") : scen ? "scenarios" : null;
+  if (!to) return true;
+  q.delete("view");
+  try { hashTarget().location.replace(sectionUrl(to) + (q.toString() ? "#" + q : "")); return false; } catch (e) { return true; }
+}
 function restoreHash() {
   let h = "";
   try { h = hashTarget().location.hash.slice(1); } catch (e) { h = location.hash.slice(1); }
   const q = new URLSearchParams(h);
+  if (!forwardOld(q)) return false;
   S.w = WEEKS.length - 1;
   if (q.get("w")) { const d = fromIso(q.get("w")), i = WEEKS.findIndex(w => w.date === d); if (i >= 0) S.w = i; }
   S.shares = defaults(S.w);
-  if (q.get("v")) q.get("v").split(",").forEach(kv => { const i = kv.lastIndexOf(":"), p = kv.slice(0, i), v = parseFloat(kv.slice(i + 1)); if (p in PIDX && isFinite(v)) S.shares[p] = clamp(v, 0, 100); });
+  if (q.get("v")) q.get("v").split(",").forEach(kv => { const i = kv.lastIndexOf(":"), p = kv.slice(0, i), v = parseFloat(kv.slice(i + 1)); if (p in PIDX && isFinite(v)) { S.shares[p] = clamp(v, 0, 100); S.hand.add(p); } });
+  if (q.get("g")) S.levers = q.get("g").split(";").map(parseLever).filter(Boolean);
+  if (q.get("gb") === "polls") S.base = "polls";
+  S.hold = q.get("gh") === "1";
+  if (q.get("ec")) S.esC = q.get("ec");
+  if (q.get("el")) S.esL = q.get("el");
+  if (["open", "play", "toss-up"].includes(q.get("ek"))) S.esCat = q.get("ek");
+  if (q.get("eo") === "doubt") S.esSort = "doubt";
+  if (q.get("wm") === "only") S.wiMode = "only";
+  if (q.get("wv") === "seats") S.wiMetric = "seats";
+  if (SECTION === "geography" && window.Geography && Geography.readState) Geography.readState(q);
   S.shares.Other = 100 - sum(SP.map(p => S.shares[p]));
   if (q.get("j")) q.get("j").split(";").forEach(g => { const m = g.split(",").filter(p => P.includes(p)); if (m.length >= 2 && !m.some(p => S.joint.flat().includes(p)) && S.joint.length < 4) S.joint.push(m); });
   const okPair = k => { const p = pairOf(k); return p.length === 2 && p[0] !== p[1] && p.every(x => P.includes(x)); };
@@ -1572,18 +1662,19 @@ function restoreHash() {
   if (q.get("ra")) { const a = q.get("ra").split(","), n = a.slice(0, 4).map(Number), mk = (a[4] || "").padEnd(4, "0");
     if (n.every(isFinite)) S.adv = { conv: clamp(n[0], 0, 1), shift: clamp(n[1], -2, 2), abst: clamp(n[2], 0, 1), split: clamp(n[3], 0, 0.4), splitsOn: [0, 1, 2, 3].map(i => mk[i] === "1") }; }
   const list = k => q.get(k) ? q.get(k).split(";") : [];
-  if (q.get("t")) PENDING = { term: q.get("t"), houses: list("h"), parties: list("pp") };
+  if (q.get("t") && SECTION === "polls") PENDING = { term: q.get("t"), houses: list("h"), parties: list("pp") };
   else {
     list("h").forEach(o => { if (D.pollsters.includes(o)) S.houses.add(o); });
     list("pp").forEach(p => { if (P.includes(p)) S.parties.add(p); });
   }
-  if (["trends", "seats", "groups", "pollsters"].includes(q.get("view"))) S.view = q.get("view");
+  if (VIEWS.includes(q.get("view"))) S.view = q.get("view");
   // checked against groups.json when it loads
   if (q.get("gd")) S.gDim = q.get("gd");
   if (q.get("gl")) S.gList = q.get("gl");
   S.gPts = q.get("gp") === "1";
   if (PERIODS.some(p => p[0] === q.get("p"))) S.period = q.get("p");
   S.points = q.get("dp") !== "0";
+  return true;
 }
 function shareUrl() {
   const t = hashTarget(), s = stateString();
@@ -1666,8 +1757,10 @@ async function png(only) {
   const grp = only === "groups";
   if (grp && !GD) return;
   const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", house: "House effects", combo: "Polish party polling: trends and projections",
-    groups: grp ? `${gList(S.gList).label} by ${(G_DIMS[S.gDim] || "group").toLowerCase()}` : "" };
-  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", house: "pollsters", combo: "trends-and-projections", groups: grp ? `by-${S.gDim}-${slug(S.gList)}` : "" }[only];
+    groups: grp ? `${gList(S.gList).label} by ${(G_DIMS[S.gDim] || "group").toLowerCase()}` : "",
+    geo: only === "geo" && window.Geography ? Geography.exportTitle() : "" };
+  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", house: "pollsters", combo: "trends-and-projections", groups: grp ? `by-${S.gDim}-${slug(S.gList)}` : "",
+    geo: only === "geo" && window.Geography ? Geography.exportName() : "" }[only];
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
   await ChartExport.fonts();
   // in the combined image the hemicycle is drawn small and the trends fill the width
@@ -1698,11 +1791,12 @@ async function png(only) {
   // the subtitle names the pollsters whose polls the estimates rest on, whether or not the polls are drawn; two lines at most
   const base = past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
     : combo ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}; seat projection for ${dlong(CUR.wk.date)}`
-    : S.view === "seats" ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
+    : (only === "hemi" || only === "map") ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
   // a hypothetical scenario is not the model's estimate: no pollsters are named, and the image says it is hypothetical
   const hypo = !past && CUR.mode !== "model" && (only === "hemi" || only === "map" || only === "trend" || combo);
   const sub = grp ? `Share among decided voters, ${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[GD.months.length - 1], true)}, with 80% intervals; dashed line: all voters. From Opinia24's and CBOS Flash's tables by group, pinned to this tracker's national trend as fitted on ${dlong(fromIso(GD.meta.fitted))}. Splinters are counted with their 2023 list.${S.gPts ? " Points: the polls' readings (circles CBOS, squares Opinia24)." : ""}`
-    : hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
+    : only === "geo" ? Geography.exportSub()
+    : hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario for the week of ${dlong(CUR.wk.date)}: ${scenText()}. These are not poll estimates; seats are projected from these shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
   const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
@@ -1862,8 +1956,11 @@ async function png(only) {
 
 // ---- events ---------------------------------------------------------------------------------
 function setWeek(i) {
-  S.w = clamp(i, 0, WEEKS.length - 1); S.shares = defaults(S.w); S.focusGov = null; S.pinGov = null;
+  S.w = clamp(i, 0, WEEKS.length - 1); S.shares = defaults(S.w); S.hand.clear(); S.focusGov = null; S.pinGov = null;
   S.picker.forEach(p => { if (!exists(p, WEEKS[S.w].date)) S.picker.delete(p); });
+  // changes by group start from the week the cells are pinned to: elsewhere they are set aside
+  if (S.levers.length && cellsState === "ready" && cellsWeek() !== S.w) { S.levers = []; LEVRES = null; toast("Changes by group start from the week of " + dlong(fromIso(CELLS.tracker.week)) + ", so they were set aside"); }
+  applyLevers();
   update();
 }
 // ---- joint lists: a list's total and its parties' shares move together
@@ -1903,13 +2000,13 @@ function setShare(p, v, from) {
     // On a joint list the list keeps its total: the list's other parties take up the difference in proportion to their shares
     const others = S.joint[j].filter(q => q !== p), t = tenth(listTotal(j)), key = "p" + j + "|" + p;
     const own = tenth(clamp(v, 0, t)), w = dragWeights(key, others);
-    S.shares[p] = own;
+    S.shares[p] = own; S.hand.add(p); others.forEach(q => S.hand.add(q));
     apportion(t - own, w).forEach((x, i) => { S.shares[others[i]] = x; });
     keepDrag(key, others, w);
     others.forEach(q => syncShare(q));
     syncShare(p, Math.abs(own - v) > 1e-9 ? null : from);
   } else {
-    S.shares[p] = clamp(v, 0, 100);
+    S.shares[p] = clamp(v, 0, 100); S.hand.add(p);
     syncShare(p, from);
   }
   S.shares.Other = 100 - sum(SP.map(q => S.shares[q]));
@@ -1919,7 +2016,7 @@ function setShare(p, v, from) {
 function setListShare(j, v, from) {
   if (!isFinite(v) || !S.joint[j]) return;
   const mem = S.joint[j], key = "l" + j, w = dragWeights(key, mem), t = tenth(clamp(v, 0, 100));
-  apportion(t, w).forEach((x, i) => { S.shares[mem[i]] = x; });
+  apportion(t, w).forEach((x, i) => { S.shares[mem[i]] = x; S.hand.add(mem[i]); });
   keepDrag(key, mem, w);
   mem.forEach(q => syncShare(q));
   syncList(j, Math.abs(t - v) > 1e-9 ? null : from);
@@ -1964,7 +2061,7 @@ function bind() {
     if (TERM || mx < TR.m.l || mx > TR.W - TR.m.r || my < TR.m.t || my > TR.H - TR.m.b) return;
     const wi = nearestWeek(TR.a + (mx - TR.m.l) / (TR.W - TR.m.l - TR.m.r) * (TR.b - TR.a));
     setWeek(wi); saveHash();
-    toast(`Seats and majorities now show ${dlong(WEEKS[wi].date)}`);
+    toast(`Seats, Geography and Scenarios now open at the week of ${dlong(WEEKS[wi].date)}`);
   });
   $("trendlegend").addEventListener("mouseover", e => { const s = e.target.closest("[data-p]"); const p = s ? s.dataset.p : null; if (p !== S.hoverParty) { S.hoverParty = p; renderTrends(); } });
   $("trendlegend").addEventListener("mouseleave", () => { S.hoverParty = null; renderTrends(); });
@@ -2025,8 +2122,8 @@ function bind() {
     placeTip(tip, $("mapbox"), ev, `<b>${esc(c.name)}</b> <span class="muted">${c.magnitude} seats</span>` + rows.map(r => `<div class="r"><span><span class="dot" style="background:${r.e.colour}"></span>${esc(r.e.name)}</span><span>${r.s}</span></div>`).join(""));
   });
   $("map").addEventListener("mouseleave", () => { $("maptip").hidden = true; });
-  $("map").addEventListener("click", ev => { const g = ev.target.closest("g[data-c]"); if (!g) return; const ok = C[+g.dataset.c].okreg; S.constSel = S.constSel === ok ? null : ok; renderMap(); renderConstCard(); });
-  $("constcard").addEventListener("click", e => { if (e.target.id === "constclose") { S.constSel = null; renderMap(); renderConstCard(); } });
+  $("map").addEventListener("click", ev => { const g = ev.target.closest("g[data-c]"); if (!g) return; const ok = C[+g.dataset.c].okreg; S.constSel = S.constSel === ok ? null : ok; renderView(); saveHash(); });
+  $("constcard").addEventListener("click", e => { if (e.target.id === "constclose") { S.constSel = null; renderView(); saveHash(); } });
   // pollsters
   $("house").addEventListener("click", e => { const t = e.target.closest("[data-org]"); if (!t) return; const o = t.dataset.org; if (e.shiftKey) { S.houses.has(o) ? S.houses.delete(o) : S.houses.add(o); } else if (S.houses.size === 1 && S.houses.has(o)) S.houses.clear(); else { S.houses.clear(); S.houses.add(o); } renderChips(); renderHouse(); saveHash(); toast(S.houses.has(o) ? `${o} highlighted on the trend chart` : `${o} no longer highlighted`); });
   // panel (delegated: its contents are rebuilt)
@@ -2047,7 +2144,7 @@ function bind() {
     const t = e.target;
     if (t.id === "wprev") return setWeek(S.w - 1);
     if (t.id === "wnext") return setWeek(S.w + 1);
-    if (t.id === "reset") { S.shares = defaults(S.w); S.joint = []; S.resp = "medium"; S.adv = null; S.pinGov = null; S.focusGov = null; return update(); }
+    if (t.id === "reset") return backToModel();
     const rb = t.closest("#resp button[data-resp]");
     if (rb) { if (rb.dataset.resp !== "custom" && !rb.disabled) { S.resp = rb.dataset.resp; S.adv = null; update(); } return; }
     if (t.id === "jadd") { if (S.picker.size >= 2) { S.joint.push(sortParties([...S.picker])); S.picker.clear(); S.pinGov = null; update(); } return; }
@@ -2055,7 +2152,7 @@ function bind() {
     const pick = t.closest("#jpick button[data-p]");
     if (pick) { const p = pick.dataset.p; S.picker.has(p) ? S.picker.delete(p) : S.picker.add(p); pick.setAttribute("aria-pressed", S.picker.has(p)); updatePanel(); return; }
         const gr = t.closest(".grow-row");
-    if (gr) { S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderGov(); if (S.view !== "seats") { S.view = "seats"; renderChips(); } renderView(); saveHash(); return; }
+    if (gr) { S.pinGov = S.pinGov === gr.dataset.key ? null : gr.dataset.key; renderGov(); renderView(); saveHash(); return; }
     if (t.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); return; }
   });
   panel.addEventListener("toggle", e => { if (e.target.id === "adv") S.advOpen = e.target.open; }, true);
@@ -2066,12 +2163,359 @@ function bind() {
     let dirty = false;
     if (key !== S.focusGov) { S.focusGov = key; dirty = true; }
     if (p !== S.hoverParty) { S.hoverParty = p; dirty = true; }
-    if (dirty && S.view === "seats") { renderHemi(); renderMap(); }
+    if (dirty && HEMI_VIEWS.includes(S.view)) renderHemi();
     if (dirty && S.view === "trends" && !gr) renderTrends();
     if (dirty) { [...document.querySelectorAll(".grow-row")].forEach(g => g.classList.toggle("on", g.dataset.key === (S.pinGov || S.focusGov))); }
   });
-  panel.addEventListener("mouseleave", () => { S.focusGov = null; S.hoverParty = null; if (S.view === "seats") { renderHemi(); renderMap(); } else if (S.view === "trends") renderTrends(); renderGov(); });
+  panel.addEventListener("mouseleave", () => { S.focusGov = null; S.hoverParty = null; if (HEMI_VIEWS.includes(S.view)) renderHemi(); else if (S.view === "trends") renderTrends(); renderGov(); });
   window.addEventListener("resize", debounce(renderView, 150));
+}
+
+// ---- changes by group (Scenarios: Groups) and Who votes ---------------------------------------
+// cells.json (Election 2027/analysis/90_export.R) holds the 2023 electorate as 280 cells of age, sex, education and place of
+// residence, each with a chance of voting and a vote, raked to PKW's result and Ipsos's exit poll, and the polls-by-group
+// starting point for one week. engine.js (Election 2027/web/prototype/engine.js, copied here by sync-analyses.py) rakes the
+// cells to each change. The national shares that come out become the scenario's shares; everything after them (the week's
+// draws, joint lists and the voters' response, seats) is the tracker's own, as for any scenario.
+let CELLS = null, cellsState = "idle", LEVRES = null;
+const GDIMS = ["age", "sex", "education", "residence"], GDIM_NAME = { age: "Age", sex: "Sex", education: "Education", residence: "Residence" };
+const ENGINE = () => window.E27Engine || null;
+function loadCells() {
+  if (cellsState === "ready" || cellsState === "missing") return Promise.resolve();
+  if (cellsState === "loading") return loadCells.p;
+  cellsState = "loading";
+  return (loadCells.p = fetch("cells.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { CELLS = d; cellsState = ENGINE() ? "ready" : "missing"; })
+    .catch(() => { cellsState = "missing"; }));
+}
+// The week the cells' starting point is pinned to: its index in WEEKS, or -1
+const cellsWeek = () => (CELLS ? WEEKS.findIndex(w => iso(w.date) === CELLS.tracker.week) : -1);
+// A change by group in the link: age, sex, education, residence as a0.s1 (or "all"), then what changes, by how many points, and from whom
+const leverKey = lv => [GDIMS.filter(d => lv.group[d] != null).map(d => d[0] + lv.group[d]).join(".") || "all", lv.measure, lv.change, lv.from || ""].join("~");
+function parseLever(s) {
+  const [g, measure, change, from] = s.split("~"), ch = parseFloat(change);
+  if (!measure || !isFinite(ch)) return null;
+  const group = {};
+  if (g && g !== "all") g.split(".").forEach(t => { const d = GDIMS.find(x => x[0] === t[0]), i = parseInt(t.slice(1), 10); if (d && i >= 0) group[d] = i; });
+  return { group, measure, change: clamp(ch, -40, 40), from: from || null };
+}
+// A group in words: "Men aged 18-29, higher education, in a village"
+function groupLabel(g) {
+  const L = d => (g[d] == null ? null : CELLS ? CELLS.dims[d].labels[g[d]] : GDIM_NAME[d] + " " + (g[d] + 1));
+  const sex = L("sex"), age = L("age"), edu = L("education"), res = L("residence");
+  if (!sex && !age && !edu && !res) return "Everyone";
+  let s = (sex || (age ? "People" : "")) + (age ? " aged " + age : "");
+  if (edu) s += (s ? ", " : "") + (s ? edu.toLowerCase() : edu) + " education";
+  if (res) s += (s ? ", in a " + res.toLowerCase() : res);
+  return s;
+}
+const leverText = lv => `${groupLabel(lv.group)}: ${lv.measure === "turnout" ? "turnout" : lv.measure} ${signed(lv.change, 1)} points${lv.from ? " from " + lv.from : ""}`;
+const LEVER_EXAMPLES = [
+  ["Young voters stay at home", [{ group: { age: 0 }, measure: "turnout", change: -10, from: null }]],
+  ["Young men move to KKP", [{ group: { age: 0, sex: 0 }, measure: "KKP", change: 8, from: "KO" }]],
+  ["Graduates turn out more", [{ group: { education: 3 }, measure: "turnout", change: 4, from: null }]],
+  ["Over-60s cool on PiS", [{ group: { age: 4 }, measure: "PiS", change: -5, from: null }]]
+];
+// The engine's national shares as the tracker's: per cent, MN at its usual figure, Other the remainder
+function leverShares(res) {
+  const s = defaults(S.w), sh = res.national.shares;
+  SP.forEach(p => { if (p !== "MN" && sh[p] != null) s[p] = Math.round(10000 * sh[p]) / 100; });
+  s.Other = Math.round((100 - sum(SP.map(p => s[p]))) * 100) / 100;
+  return s;
+}
+function leverRun() {
+  const E = ENGINE(); if (!E || !CELLS) return null;
+  return E.scenario(CELLS, { base: S.base === "polls" ? "polls" : "groups", levers: S.levers, hold: S.hold });
+}
+// The scenario's shares are what the changes by group make of the starting point, except for the parties set by hand
+function applyLevers() {
+  if (!S.levers.length) {
+    LEVRES = null;
+    const d = defaults(S.w); SP.forEach(p => { if (!S.hand.has(p)) S.shares[p] = d[p]; });
+    S.shares.Other = 100 - sum(SP.map(p => S.shares[p])); return;
+  }
+  if (cellsState !== "ready" || cellsWeek() !== S.w) return;
+  LEVRES = leverRun(); if (!LEVRES) return;
+  const b = leverShares(LEVRES);
+  SP.forEach(p => { if (!S.hand.has(p)) S.shares[p] = b[p]; });
+  S.shares.Other = 100 - sum(SP.map(p => S.shares[p]));
+}
+const leversChanged = () => { applyLevers(); update(); };
+function renderLevers() {
+  const box = $("panel5");
+  if (cellsState !== "ready") {
+    box.innerHTML = `<div class="card"><span class="label">Changes by group</span><p class="help" style="margin:0">${cellsState === "missing" ? "The data for changes by group could not be loaded." : "Loading the data for changes by group…"}</p></div>`;
+    if (cellsState !== "missing") loadCells().then(() => { if (S.view === "levers") leversChanged(); });
+    return;
+  }
+  const cw = cellsWeek();
+  if (cw !== S.w) {
+    box.innerHTML = `<div class="card"><span class="label">Changes by group</span><p class="help" style="margin:0">Changes by group start from the electorate as it stood in the week of ${esc(dlong(fromIso(CELLS.tracker.week)))}, when its groups were last fitted to the polls.${cw >= 0 ? "" : " That week is not in the tracker's data yet."}</p>${cw >= 0 ? `<div><button type="button" class="btn1" id="lvweek">Go to that week</button></div>` : ""}</div>`;
+    return;
+  }
+  const E = ENGINE(), res = LEVRES || leverRun(), parties = CELLS.parties.map(p => p.id).filter(p => p !== "Other");
+  const opt = (v, t, on) => `<option value="${esc(String(v))}"${on ? " selected" : ""}>${esc(t)}</option>`;
+  const tot = res ? E.summarise(res.base).size : 1;
+  const cards = S.levers.map((lv, j) => {
+    const sels = GDIMS.map(d => `<select data-lv="${j}" data-f="${d}" aria-label="${GDIM_NAME[d]}">${opt("", GDIM_NAME[d] + ": all", lv.group[d] == null)}${CELLS.dims[d].labels.map((l, i) => opt(i, l, lv.group[d] === i)).join("")}</select>`).join("");
+    const what = `<select data-lv="${j}" data-f="measure" aria-label="What changes">${opt("turnout", "Turnout", lv.measure === "turnout")}${parties.map(p => opt(p, p, lv.measure === p)).join("")}</select>`;
+    const num = `<input type="number" step="0.5" min="-40" max="40" value="${lv.change}" data-lv="${j}" data-f="change" aria-label="Change in percentage points"><span class="help">points</span>`;
+    const from = lv.measure === "turnout" ? "" : `<div class="row"><select data-lv="${j}" data-f="from" aria-label="Taken from">${opt("", "from all the others, in proportion", !lv.from)}${parties.filter(p => p !== lv.measure).map(p => opt(p, "from " + p, lv.from === p)).join("")}</select></div>`;
+    let now = "";
+    if (res) {
+      const idx = E.members(res.cells, lv.group), a = E.summarise(res.base, idx), b = E.summarise(res.cells, idx), val = s => (lv.measure === "turnout" ? s.turnout : s.shares[lv.measure]);
+      now = `<div class="now">${esc(groupLabel(lv.group))} (${pct(100 * a.size / tot)} of the electorate): ${lv.measure === "turnout" ? "turnout" : esc(lv.measure) + " among its voters"} <b>${pct(100 * val(a))}</b> → <b>${pct(100 * val(b))}</b></div>`;
+    }
+    return `<div class="lever"><button type="button" class="x" data-rmlv="${j}" aria-label="Remove this change">×</button><div class="g">${sels}</div><div class="row">${what}${num}</div>${from}${now}</div>`;
+  }).join("");
+  const warn = res && res.info.err > 1e-4 ? `<p class="notice">These changes cannot all hold at once (they pull the same voters in opposite directions); the result is the closest compromise.</p>` : "";
+  const hand = SP.filter(p => S.hand.has(p));
+  box.innerHTML = `<div class="card">
+    <div class="phead"><h2>${dlong(WEEKS[S.w].date)}</h2></div>
+    <span class="label">Starting point</span>
+    <div class="basepick">
+      <label><input type="radio" name="lvbase" value="groups"${S.base !== "polls" ? " checked" : ""}${CELLS.groupTrends ? "" : " disabled"}> <span><b>Polls now, groups as polled</b><br><span class="help">This week's estimates, each group moved as Opinia24's and CBOS's tables show it has moved since December 2023, and its turnout as its stated intention to vote has moved (national turnout kept at 2023's).</span></span></label>
+      <label><input type="radio" name="lvbase" value="polls"${S.base === "polls" ? " checked" : ""}> <span><b>Polls now, uniform swing</b><br><span class="help">This week's estimates with every group moved alike since the 2023 election, at 2023 turnout.</span></span></label>
+    </div>
+  </div>
+  <div class="card">
+    <span class="label">Changes by group</span>
+    ${S.levers.length ? cards : `<p class="help" style="margin:0">No changes yet. Add one, or start from an example.</p>`}
+    ${warn}
+    <div><button type="button" class="btn2" id="lvadd">Add a change</button>${S.levers.length ? ` <button type="button" class="linkbtn" id="lvclear" style="margin-left:8px">Remove all</button>` : ""}</div>
+    <span class="help">Examples</span>
+    <div class="chips">${LEVER_EXAMPLES.map(([l], i) => `<button type="button" class="chip" data-ex="${i}">${esc(l)}</button>`).join("")}</div>
+    <label class="switch"><input type="checkbox" id="lvhold"${S.hold ? " checked" : ""}> Hold the national result</label>
+    ${hand.length ? `<p class="help" style="margin:0">Set by hand under Parties and lists, and left where they were set: ${esc(hand.join(", "))}.</p>` : ""}
+    <p class="help" style="margin:0">A change sets turnout, or one party's share of the voters, in a group or an intersection of groups (men aged 18–29 in towns, say). The cells are raked until every change is met, and the national result follows from the groups' sizes; with "Hold the national result" the groups move against each other and the national shares stay at the starting point. Seats then come from the tracker's simulation, as for any scenario. The regional profiles do not follow the groups yet, so a change among the young moves every constituency alike.</p>
+  </div>
+  <div class="card soft"><span class="label">Share</span><div class="actions"><button type="button" class="btn2" id="copylink">Copy link to this view</button></div></div>`;
+}
+// Who votes: everyone in a group votes, or only the group does, from the Groups starting point
+const WICACHE = new Map();
+function pointSeats(shares) {
+  const sh = new Float64Array(SP.length); SP.forEach((p, i) => { sh[i] = p === "MN" ? R.mnNational2023 / 100 : (shares[p] || 0); });
+  const ents = makeEnts([]), nat = new Int16Array(ents.length); allocate(sh, ents, null, 0, nat, null);
+  const out = {}; ents.forEach((e, k) => { out[e.name] = nat[k]; }); return out;
+}
+function wiRun(group) {
+  const key = [S.base, S.wiMode, JSON.stringify(group)].join("|");
+  if (WICACHE.has(key)) return WICACHE.get(key);
+  const E = ENGINE(), any = Object.keys(group).length > 0, base = S.base === "polls" ? "polls" : "groups";
+  const levers = S.wiMode === "all" ? [{ group, measure: "turnout", to: 0.999 }] : any ? [{ group, invert: true, measure: "turnout", to: 0.001 }] : [];
+  const res = E.scenario(CELLS, { base, levers }), out = { national: res.national, seats: pointSeats(res.national.shares) };
+  WICACHE.set(key, out); return out;
+}
+function renderWhoVotes() {
+  const ctl = $("wictl");
+  if (cellsState !== "ready") {
+    ctl.innerHTML = ""; $("witable").innerHTML = ""; $("wifoot").textContent = "";
+    $("winote").textContent = cellsState === "missing" ? "The data for Who votes could not be loaded." : "Loading…";
+    if (cellsState !== "missing") loadCells().then(() => { if (S.view === "whovotes") renderWhoVotes(); });
+    return;
+  }
+  const seg = (id, opts, cur) => `<div class="seg small" id="${id}" role="group">${opts.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${k === cur}">${l}</button>`).join("")}</div>`;
+  const sel = d => `<select data-wg="${d}" aria-label="${GDIM_NAME[d]}"><option value="">${GDIM_NAME[d]}: all</option>${CELLS.dims[d].labels.map((l, i) => `<option value="${i}"${S.wiGroup[d] === i ? " selected" : ""}>${esc(l)}</option>`).join("")}</select>`;
+  ctl.innerHTML = seg("wimode", [["all", "Everyone in the group votes"], ["only", "Only the group votes"]], S.wiMode) +
+    seg("wimetric", [["vote", "Vote share"], ["seats", "Seats"]], S.wiMetric) +
+    `<span class="fsel" style="flex-direction:row;align-items:center;gap:6px">Your own group: ${GDIMS.map(sel).join("")}</span>`;
+  const base = S.base === "polls" ? "polls" : "groups", wk = dlong(fromIso(CELLS.tracker.week));
+  $("winote").textContent = (S.wiMode === "all" ? "Turnout in the group is raised to 100%; everyone else votes as in the starting point. " : "Everyone outside the group stays at home; the group votes at its starting-point turnout. ") +
+    `The starting point is ${base === "polls" ? "the polls of the week of " + wk + " with every group moved alike since 2023" : "the polls of the week of " + wk + " with each group as the pollsters' tables have moved it"} (chosen on the Groups view).`;
+  const E = ENGINE(), ref = E.scenario(CELLS, { base, levers: [] }), refSeats = pointSeats(ref.national.shares), seatsOn = S.wiMetric === "seats";
+  const cols = CELLS.parties.map(p => p.id).filter(p => p !== "Other"), all = E.summarise(ref.cells).size;
+  const GOV = ["KO", "Lewica", "Razem", "Polska 2050", "PSL"], RIGHT = ["PiS", "R+", "Konfederacja", "KKP"], bloc = (s, ids) => sum(ids.map(id => s[id] || 0));
+  const val = (N, seats, p) => (seatsOn ? seats[p] || 0 : 100 * N.shares[p]);
+  const fmt = x => (seatsOn ? String(x) : x.toFixed(1));
+  const dlt = (x, y) => (seatsOn ? signed(x - y) : signed(x - y, 1));
+  const row = (label, N, seats, ref0, size) => {
+    const g = bloc(seats, GOV), r = bloc(seats, RIGHT);
+    return `<tr${ref0 ? ' class="ref"' : ""}><td>${esc(label)}</td><td>${size != null ? pct(100 * size) : ""}</td><td>${pct(100 * N.turnout)}</td><td class="${g >= R.seatsMajority ? "yes" : ""}">${g}</td><td class="${r >= R.seatsMajority ? "yes" : ""}">${r}</td>` +
+      cols.map(p => `<td>${fmt(val(N, seats, p))}${ref0 ? "" : `<span class="chg">${dlt(val(N, seats, p), val(ref.national, refSeats, p))}</span>`}</td>`).join("") + "</tr>";
+  };
+  const groups = [["Everyone", {}], ["Men", { sex: 0 }], ["Women", { sex: 1 }]]
+    .concat(CELLS.dims.age.labels.map((l, i) => ["Aged " + l, { age: i }]))
+    .concat(CELLS.dims.education.labels.map((l, i) => [l, { education: i }]))
+    .concat(CELLS.dims.residence.labels.map((l, i) => [l, { residence: i }]));
+  const custom = Object.keys(S.wiGroup).length ? [["Your group: " + groupLabel(S.wiGroup), S.wiGroup]] : [];
+  let t = `<tr><th>Group</th><th>Share of electorate</th><th>Turnout</th><th>Governing parties' seats</th><th>Right's seats</th>${cols.map(p => `<th><span class="dot" style="background:${col(p)};margin-right:4px"></span>${esc(short(p))}</th>`).join("")}</tr>`;
+  t += row("Starting point", ref.national, refSeats, true, null);
+  custom.concat(S.wiMode === "all" ? groups : groups.slice(1)).forEach(([lab, g]) => {
+    const size = E.summarise(ref.cells, E.members(ref.cells, g)).size / all, r = wiRun(g);
+    t += row(lab === "Everyone" ? "Everyone (full turnout)" : lab, r.national, r.seats, false, size);
+  });
+  $("witable").innerHTML = t;
+  $("wifoot").textContent = `Dark red: a bloc with ${R.seatsMajority} seats or more (governing parties: ${GOV.join(", ")}; right: ${RIGHT.join(", ")}), from a single allocation by the tracker's rules, without joint lists. The figures under each number are the change from the starting point, in ${seatsOn ? "seats" : "percentage points"}. The extra voters are assumed to vote like the voters already in their cell (same age, sex, education and place of residence); marginal voters often differ, so read this as an upper bound on what composition alone can do.`;
+}
+
+// ---- every seat (Seats: Every seat) ---------------------------------------------------------------
+// A constituency's seats are its m most probable list-seats, a list's k-th seat being won in the share of simulations in which it
+// wins at least k there. When the projected list loses a seat in a simulation, the seat goes to the list that wins a seat beyond its
+// projection there (the least secure lost seat matched to the likeliest contender), so each seat's chances add up to 100%.
+// Ported from Election 2027's engine.js (seatByConstituency), which Election 2027's test_engine.js checks against the tracker.
+const ESCACHE = new WeakMap();
+const CATLAB = { certain: "Certain", probable: "Probable", possible: "Possible", "toss-up": "Toss-up" };
+function seatByConstituency(sim) {
+  if (ESCACHE.has(sim)) return ESCACHE.get(sim);
+  const { n, ents, cons } = sim, E = ents.length;
+  const out = C.map((c, ci) => {
+    const mag = c.magnitude, lists = [], all = [];
+    ents.forEach((e, k) => {
+      const cnt = new Int32Array(mag + 1);
+      for (let d = 0; d < n; d++) cnt[Math.min(cons[d * NC * E + ci * E + k], mag)]++;
+      const p = []; let ge = 0;
+      for (let j = mag; j >= 1; j--) { ge += cnt[j]; p[j - 1] = ge / n; }
+      while (p.length && p[p.length - 1] === 0) p.pop();
+      if (!p.length) return;
+      lists.push({ id: e.name, k, p });
+      p.forEach((pp, j) => all.push({ id: e.name, k, j: j + 1, p: pp }));
+    });
+    const tot = {}; lists.forEach(l => { tot[l.id] = sum(l.p); });
+    all.sort((a, b) => b.p - a.p || tot[b.id] - tot[a.id] || a.k - b.k || a.j - b.j);
+    const projected = all.slice(0, mag), contenders = all.slice(mag);
+    projected.forEach((s, i) => { s.rank = i + 1; s.cat = seatCat(s.p); s.tally = {}; });
+    const proj = {}; lists.forEach(l => { proj[l.k] = projected.filter(s => s.k === l.k).length; });
+    const crank = {}; contenders.forEach((x, i) => { crank[x.k + ":" + x.j] = i; });
+    for (let d = 0; d < n; d++) {
+      const lost = [], gained = [];
+      for (let i = mag - 1; i >= 0; i--) { const s = projected[i]; if (cons[d * NC * E + ci * E + s.k] < s.j) lost.push(s); }
+      if (!lost.length) continue;
+      lists.forEach(l => { const s = cons[d * NC * E + ci * E + l.k]; for (let j = proj[l.k] + 1; j <= s; j++) gained.push({ id: l.id, r: crank[l.k + ":" + j] }); });
+      gained.sort((a, b) => a.r - b.r);
+      lost.forEach((s, i) => { const g = gained[i]; if (g) s.tally[g.id] = (s.tally[g.id] || 0) + 1; });
+    }
+    projected.forEach(s => {
+      s.take = [{ id: s.id, p: s.p }].concat(Object.keys(s.tally).map(id => ({ id, p: s.tally[id] / n }))).sort((a, b) => b.p - a.p);
+      s.next = s.take.find(x => x.id !== s.id) || null;
+      delete s.tally;
+    });
+    return { ci, okreg: c.okreg, name: c.name, magnitude: mag, projected };
+  });
+  ESCACHE.set(sim, out); return out;
+}
+const entColour = id => { const e = CUR && CUR.ents.find(x => x.name === id); return e ? e.colour : col(id); };
+// A link to a constituency on the Geography page, keeping the week and the scenario
+const geoLink = okreg => { const q = new URLSearchParams(carryString()); q.set("c", okreg); return sectionUrl("geography") + "#" + q; };
+function renderEverySeat() {
+  const sim = hemiSim(), f = $("esfilters");
+  if (!sim) {
+    f.innerHTML = ""; $("estable").innerHTML = ""; $("esnote").textContent = "";
+    $("essum").textContent = drawsState === "missing" ? "The seat simulations could not be loaded, so the seats cannot be listed." : "Loading the seat simulations…";
+    loadDraws(); return;
+  }
+  const sb = seatByConstituency(sim), all = sb.flatMap(k => k.projected.map(s => ({ k, s }))), listIds = [...new Set(all.map(r => r.s.id))];
+  if (S.esL && !listIds.includes(S.esL)) S.esL = "";
+  const sel = (id, label, opts, val) => `<label class="fsel">${label}<select id="${id}">${opts.map(([v, t]) => `<option value="${esc(v)}"${String(v) === String(val) ? " selected" : ""}>${esc(t)}</option>`).join("")}</select></label>`;
+  f.innerHTML = sel("es-c", "Constituency", [["", "All constituencies"]].concat(sb.map(k => [String(k.okreg), `${k.okreg}. ${k.name}`])), S.esC) +
+    sel("es-l", "List", [["", "All lists"]].concat(listIds.map(id => [id, id])), S.esL) +
+    sel("es-k", "Certainty", [["all", "Every seat"], ["open", "Not certain"], ["play", "Possible or toss-up"], ["toss-up", "Toss-ups only"]], S.esCat) +
+    sel("es-o", "Order", [["const", "By constituency"], ["doubt", "Least certain first"]], S.esSort) +
+    `<span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" id="escsv">CSV of all ${all.length} seats</button></span>`;
+  const outside = s => !!s.next && s.next.id === S.esL && s.next.p >= SEAT_OUTSIDE;
+  let rows = all.filter(r => (!S.esC || String(r.k.okreg) === S.esC) && (!S.esL || r.s.id === S.esL || outside(r.s)) &&
+    (S.esCat === "all" || (S.esCat === "open" ? r.s.cat !== "certain" : S.esCat === "play" ? (r.s.cat === "possible" || r.s.cat === "toss-up") : r.s.cat === "toss-up")));
+  if (S.esSort === "doubt") rows = rows.slice().sort((a, b) => a.s.p - b.s.p);
+  const own = S.esL ? rows.filter(r => r.s.id === S.esL) : rows, other = rows.length - own.length;
+  const count = L => { const c = { certain: 0, probable: 0, possible: 0, "toss-up": 0 }; L.forEach(r => { c[r.s.cat]++; }); return c; };
+  const n = count(own), t = count(all), when = `${CUR.mode === "model" ? "Model estimates" : "Hypothetical scenario"} for the week of ${dlong(CUR.wk.date)}.`;
+  $("essum").innerHTML = S.esL
+    ? `<b>${esc(S.esL)}</b> is projected to win ${own.length} of the seats shown: ${n.certain} certain, ${n.probable} probable, ${n.possible} possible, ${n["toss-up"]} toss-up.${other ? ` ${other} more ${other === 1 ? "is an outside possibility" : "are outside possibilities"}: projected for another list, with ${esc(S.esL)} the next most likely to take ${other === 1 ? "it" : "them"} (${pc0(SEAT_OUTSIDE)}% or more).` : ""} ${when}`
+    : `Of the ${all.length} seats, <b>${t.certain}</b> are certain, <b>${t.probable}</b> probable, <b>${t.possible}</b> possible and <b>${t["toss-up"]}</b> toss-ups.${rows.length !== all.length ? ` Shown: ${rows.length}.` : ""} ${when}`;
+  $("estable").innerHTML = `<tr><th>Constituency</th><th>Seat</th><th>Projected list</th><th class="n">Chance</th><th>Certainty</th><th>Next most likely</th></tr>` +
+    rows.map(({ k, s }) => `<tr${S.esL && s.id !== S.esL ? ' class="muted"' : ""}><td><a href="${esc(geoLink(k.okreg))}" target="_top">${k.okreg}. ${esc(k.name)}</a></td><td>${s.rank} of ${k.magnitude}</td><td><span class="dot" style="background:${entColour(s.id)};margin-right:6px"></span>${esc(s.id)}${s.j > 1 ? ` <span class="muted">(its ${ord(s.j)} seat here)</span>` : ""}</td><td class="n"><b>${prob(s.p)}</b></td><td><span class="catchip ${s.cat}">${CATLAB[s.cat]}</span></td><td>${s.next ? `<span class="dot" style="background:${entColour(s.next.id)};margin-right:6px"></span>${esc(s.next.id)} <span class="muted">${prob(s.next.p)}</span>` : `<span class="muted">–</span>`}</td></tr>`).join("") +
+    (rows.length ? "" : `<tr><td colspan="6" class="muted">No seats match these filters.</td></tr>`);
+  $("esnote").innerHTML = `${SEAT_CAT_NOTE()} A constituency's seats are its most probable list-seats: a list's k-th seat there is won in the share of simulations in which it wins at least k seats. When the projected list loses a seat in a simulation, the seat goes to the list that wins a seat beyond its projection there, so each seat's chances add up to 100% across the lists that could hold it (every list's chance is in the CSV). With a list chosen, its outside possibilities are listed too, greyed: seats projected for another list where the chosen list is the next most likely to take them, with a chance of ${pc0(SEAT_OUTSIDE)}% or more. Totals by constituency can differ by a seat or two from the medians on the Sejm view. Click a constituency to open it in Geography.`;
+}
+function everySeatCsv() {
+  const sim = hemiSim(); if (!sim) return;
+  const sb = seatByConstituency(sim), ids = sim.ents.map(e => e.name), scen = CUR.mode === "model" ? "model estimates" : "hypothetical scenario: " + scenText();
+  const rows = [["week", "figures", "okreg", "constituency", "magnitude", "seat_rank", "projected_list", "list_seat_number", "chance", "certainty", ...ids.map(id => "chance_" + id)]];
+  sb.forEach(k => k.projected.forEach(s => { const pm = Object.fromEntries(s.take.map(t => [t.id, t.p])); rows.push([iso(CUR.wk.date), scen, k.okreg, k.name, k.magnitude, s.rank, s.id, s.j, +s.p.toFixed(3), s.cat, ...ids.map(id => (pm[id] != null ? +pm[id].toFixed(3) : 0))]); }));
+  const q = v => (typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+  download(`polling-tracker-every-seat-${iso(CUR.wk.date)}${CUR.mode === "model" ? "" : "-scenario"}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+}
+
+// ---- the Seats page's side panel: the week's figures, read only --------------------------------
+function renderSeatsPanel() {
+  const cur = CUR; if (!cur || TERM) return;
+  const wk = cur.wk, model = cur.mode === "model";
+  const list = cur.ents.map((e, k) => ({ e, k, r: cur.rows[k] })).filter(x => !x.e.mnOnly || x.r.seats > 0).filter(x => x.r.seats > 0 || x.e.vote >= 0.5)
+    .sort((a, b) => b.r.seats - a.r.seats || b.e.vote - a.e.vote);
+  const name = e => (e.joint ? e.members.map(short).join(" + ") : e.name);
+  const rows = list.map(({ e, r }) => {
+    const i = PIDX[e.name], vr = model && !e.joint && i != null && wk.voteLo[i] != null ? `${wk.voteLo[i].toFixed(1)}–${wk.voteHi[i].toFixed(1)}` : "";
+    return `<tr><td><span class="dot" style="background:${e.colour};margin-right:6px"></span>${esc(name(e))}</td><td style="color:var(--accent);font-weight:500">${e.vote.toFixed(1)}</td><td class="muted">${vr}</td><td><b>${r.seats}</b></td><td class="muted">${r.lo != null ? r.lo + "–" + r.hi : ""}</td></tr>`;
+  }).join("");
+  const doubt = cur.ents.map((e, k) => ({ e, r: cur.rows[k], t: cur.tot[k] })).filter(x => x.r.pThr != null && SiteUI.inDoubt(x.t, x.e.joint ? R.thresholdJoint : R.thresholdParty, x.r.pThr));
+  const carry = carryString(), q = carry ? "#" + carry : "";
+  $("panel4").innerHTML = `<div class="card">
+    <div class="phead">
+      <div class="stepper"><button type="button" id="wprev" aria-label="Previous week" ${S.w === 0 ? "disabled" : ""}>‹</button><button type="button" id="wnext" aria-label="Next week" ${S.w === WEEKS.length - 1 ? "disabled" : ""}>›</button></div>
+      <h2>${dlong(wk.date)}</h2>
+    </div>
+    <div><span class="badge${model ? "" : " edited"}">${model ? "Model estimates" : "Hypothetical scenario"}</span></div>
+    <span class="label">Vote shares and seats</span>
+    <table class="t"><tr><th>${S.joint.length ? "List" : "Party"}</th><th>Vote %</th><th>80%</th><th>Seats</th><th>80%</th></tr>${rows}</table>
+    <p class="help" style="margin:0">${model ? "The model's estimates: medians of its simulated parliaments, with 80% ranges." : cur.mode === "sim" ? "The scenario's shares applied to each of the week's simulated draws: medians with 80% ranges." : "A single allocation of the scenario's shares, without uncertainty."}</p>
+  </div>
+  ${doubt.length ? `<div class="card"><span class="label">Thresholds in doubt</span>
+    <table class="t"><tr><th>${S.joint.length ? "List" : "Party"}</th><th>Vote %</th><th>Chance of clearing</th></tr>${doubt.map(x => `<tr><td>${esc(name(x.e))}</td><td>${(100 * x.t).toFixed(1)}</td><td>${prob(x.r.pThr)} <span class="muted">of ${x.e.joint ? "8%" : "5%"}</span></td></tr>`).join("")}</table>
+    <p class="help" style="margin:0">Only lists within 3 points of their threshold, or with a chance between 2% and 98% of clearing it, are listed.</p></div>` : ""}
+  <div class="card soft"><span class="label">More</span>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+      <a href="${esc(sectionUrl("scenarios") + q)}" target="_top">${model ? "Change these figures" : "Change this scenario"} in Scenarios →</a>
+      <button type="button" class="linkbtn" id="toevery" style="text-align:left;font-size:13px">Every seat, with each list's chance →</button>
+      <a href="${esc(sectionUrl("geography") + q)}" target="_top">Where the seats fall, constituency by constituency →</a>
+    </div>
+    <div class="actions" style="margin-top:6px"><button type="button" class="btn2" id="copylink">Copy link to this view</button></div>
+  </div>`;
+}
+const copyLink = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };
+function backToModel() { S.shares = defaults(S.w); S.joint = []; S.levers = []; S.hand.clear(); LEVRES = null; S.resp = "medium"; S.adv = null; S.pinGov = null; S.focusGov = null; update(); }
+function bindSections() {
+  $("scenbanner").addEventListener("click", e => { if (e.target.id === "tomodel") backToModel(); });
+  $("panel4").addEventListener("click", e => {
+    const t = e.target;
+    if (t.id === "wprev") return setWeek(S.w - 1);
+    if (t.id === "wnext") return setWeek(S.w + 1);
+    if (t.id === "toevery") { S.view = "everyseat"; renderChips(); renderView(); saveHash(); return; }
+    if (t.id === "copylink") copyLink();
+  });
+  $("esfilters").addEventListener("change", e => {
+    const t = e.target, k = { "es-c": "esC", "es-l": "esL", "es-k": "esCat", "es-o": "esSort" }[t.id];
+    if (k) { S[k] = t.value; renderEverySeat(); saveHash(); }
+  });
+  $("esfilters").addEventListener("click", e => { if (e.target.id === "escsv") everySeatCsv(); });
+  const p5 = $("panel5");
+  p5.addEventListener("change", e => {
+    const t = e.target;
+    if (t.name === "lvbase") { S.base = t.value; return leversChanged(); }
+    if (t.id === "lvhold") { S.hold = t.checked; return leversChanged(); }
+    if (t.dataset.lv == null) return;
+    const lv = S.levers[+t.dataset.lv], f = t.dataset.f; if (!lv) return;
+    if (GDIMS.includes(f)) { if (t.value === "") delete lv.group[f]; else lv.group[f] = +t.value; }
+    else if (f === "measure") { lv.measure = t.value; if (lv.from === lv.measure || lv.measure === "turnout") lv.from = null; }
+    else if (f === "from") lv.from = t.value || null;
+    else if (f === "change") { const v = parseFloat(t.value); if (!isFinite(v)) { t.value = lv.change; return; } lv.change = clamp(v, -40, 40); }
+    leversChanged();
+  });
+  p5.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.dataset && e.target.dataset.f === "change") { e.preventDefault(); e.target.blur(); } });
+  p5.addEventListener("click", e => {
+    const t = e.target;
+    if (t.id === "lvweek") return setWeek(cellsWeek());
+    if (t.id === "lvadd") { S.levers.push({ group: {}, measure: "turnout", change: 0, from: null }); return leversChanged(); }
+    if (t.id === "lvclear") { S.levers = []; return leversChanged(); }
+    if (t.dataset.rmlv != null) { S.levers.splice(+t.dataset.rmlv, 1); return leversChanged(); }
+    const ex = t.closest("button[data-ex]");
+    if (ex) { S.levers = LEVER_EXAMPLES[+ex.dataset.ex][1].map(lv => ({ group: Object.assign({}, lv.group), measure: lv.measure, change: lv.change, from: lv.from })); return leversChanged(); }
+    if (t.id === "copylink") copyLink();
+  });
+  $("wictl").addEventListener("click", e => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    if (b.parentElement.id === "wimode") S.wiMode = b.dataset.k; else if (b.parentElement.id === "wimetric") S.wiMetric = b.dataset.k; else return;
+    renderWhoVotes(); saveHash();
+  });
+  $("wictl").addEventListener("change", e => { const d = e.target.dataset.wg; if (!d) return; if (e.target.value === "") delete S.wiGroup[d]; else S.wiGroup[d] = +e.target.value; renderWhoVotes(); });
 }
 
 // ---- past terms -----------------------------------------------------------------------------
@@ -2100,7 +2544,7 @@ function setTerm(id) {
       PENDING.parties.forEach(p => { if (d.parties.includes(p)) S.parties.add(p); });
     }
     PENDING = null; S.hoverParty = null; $("term").value = id;
-    if (S.view === "seats" || S.view === "groups") S.view = "trends";
+    if (S.view === "groups") S.view = "trends";
     header(); renderChips(); update();
   };
   if (TCACHE.has(id)) return show(TCACHE.get(id));
@@ -2149,8 +2593,9 @@ function loadDraws() {
   drawsState = "loading";
   fetch("draws.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
     DRAWS = d; drawsState = "ready";
-    if (!modelView()) update();
-  }).catch(() => { drawsState = "missing"; if (!modelView()) update(); else updatePanel(); });
+    // the seat views need the simulations even in the model view (certainty, every seat, constituency ranges)
+    if (!modelView() || SECTION !== "polls") update();
+  }).catch(() => { drawsState = "missing"; if (!modelView() || SECTION !== "polls") update(); else updatePanel(); });
 }
 function header() {
   if (TERM) {
@@ -2164,11 +2609,16 @@ function header() {
 Promise.all([fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
   fetch("joint_penalty.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).catch(() => null)]).then(([d, jp]) => {
   if (jp) prepJP(jp);
-  D = d; prep(); restoreHash(); header(); renderChips(); bind();
-  loadTerms();
+  D = d; prep();
+  if (restoreHash() === false) return;   // an old link sent on to the page that now holds its view
+  $("views").innerHTML = SECTIONS[SECTION].map(([k, l]) => `<button type="button" role="tab" data-v="${k}">${esc(l)}</button>`).join("");
+  header(); renderChips(); bind(); bindSections();
+  if (SECTION === "polls") loadTerms();
   // set on the SVGs themselves so PNG exports keep the typeface
   ["trend", "hemi", "map", "house", "groups"].forEach(id => $(id).setAttribute("font-family", "Jost, 'Avenir Next', -apple-system, sans-serif"));
-  if (!modelView()) loadDraws();
+  if (!modelView() || SECTION !== "polls") loadDraws();
+  // a link with changes by group needs the cells before its shares are known
+  if (S.levers.length || ["levers", "whovotes"].includes(S.view)) loadCells().then(() => { applyLevers(); update(); });
   update();
   setTimeout(loadDraws, 1500);
 }).catch(err => { $("asof").textContent = "Could not load the polling data."; console.error(err); });

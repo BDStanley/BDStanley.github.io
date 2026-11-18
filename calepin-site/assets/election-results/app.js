@@ -452,7 +452,7 @@ function pollsFacts() {
     <div style="font-size:13px">The estimate for the week of ${dlong(f.date)}</div>
     <p class="note">Not an election: Pooling the Poles, my Bayesian average of ${n0(pl.n)} polls by ${pl.pollsters} pollsters since January 2025 (the latest fieldwork ${dlong(pl.last)}). Seats are the model's medians from simulated elections, with 80% ranges.</p>
     <dl class="facts"><dt>Seats</dt><dd>460 in 41 constituencies, by D'Hondt</dd><dt>Thresholds</dt><dd>5% for parties, 8% for coalitions; the German minority exempt</dd></dl>
-    <p class="note"><a href="${PAGES}polling-tracker.html" target="_top">The trends, scenarios and coalitions on the Polling tracker →</a></p>`;
+    <p class="note"><a href="${PAGES}polling-tracker.html" target="_top">The trends on the Polling tracker →</a> · <a href="${PAGES}polling-tracker/seats.html" target="_top">seats and possible governments →</a> · <a href="${PAGES}polling-tracker/scenarios.html" target="_top">scenarios →</a></p>`;
 }
 function renderFacts() {
   if (isPolls()) return pollsFacts();
