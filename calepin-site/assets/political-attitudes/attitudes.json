@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated": "2026-11-01",
+    "updated": "2026-11-18",
     "n": 54
   },
   "attitudes": [
@@ -1098,9 +1098,9 @@
       "question": "Are things in Poland going in the right direction?",
       "measure": "Average view of the country's direction, from 0 (wrong direction) to 10 (right direction)",
       "start": "1990-03-01",
-      "last_data": "2026-10-06",
-      "n_readings": 529,
-      "n_surveys": 524,
+      "last_data": "2026-11-03",
+      "n_readings": 545,
+      "n_surveys": 540,
       "sources": [
         "CBOS",
         "Central and Eastern Eurobarometer",
@@ -1111,7 +1111,7 @@
         "Polish National Election Study (PGSW)",
         "Polish Panel Survey (POLPAN)"
       ],
-      "updated": "2026-10-25",
+      "updated": "2026-11-18",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1146,9 +1146,9 @@
       "question": "Do Poles expect the economy to improve?",
       "measure": "Average expectation for the Polish economy in the coming year, from 0 (much worse) to 10 (much better)",
       "start": "1990-01-01",
-      "last_data": "2026-10-06",
-      "n_readings": 500,
-      "n_surveys": 498,
+      "last_data": "2026-11-03",
+      "n_readings": 516,
+      "n_surveys": 514,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1160,7 +1160,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-26",
+      "updated": "2026-11-18",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
@@ -1321,9 +1321,9 @@
       "question": "How do Poles rate their household's material situation?",
       "measure": "Average rating of one's household's material situation, from 0 (very bad) to 10 (very good)",
       "start": "1990-01-01",
-      "last_data": "2026-10-06",
-      "n_readings": 563,
-      "n_surveys": 521,
+      "last_data": "2026-11-03",
+      "n_readings": 579,
+      "n_surveys": 537,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1338,7 +1338,7 @@
         "SWPS online panels",
         "World Values Survey"
       ],
-      "updated": "2026-10-26",
+      "updated": "2026-11-18",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {

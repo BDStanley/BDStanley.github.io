@@ -25,12 +25,14 @@ on.exit(setwd(old_wd))
 
 # --- make sure the build tools are on PATH ---------------------------------
 # R's system() uses a minimal PATH, so add Homebrew (typst) and Cargo (calepin).
-Sys.setenv(PATH = paste(
-  "/opt/homebrew/bin",
-  file.path(Sys.getenv("HOME"), ".cargo", "bin"),
-  Sys.getenv("PATH"),
-  sep = ":"
-))
+Sys.setenv(
+  PATH = paste(
+    "/opt/homebrew/bin",
+    file.path(Sys.getenv("HOME"), ".cargo", "bin"),
+    Sys.getenv("PATH"),
+    sep = ":"
+  )
+)
 
 # helper: run a shell command, stop with a clear message if it fails
 run <- function(cmd, fatal = TRUE) {
@@ -44,7 +46,9 @@ run <- function(cmd, fatal = TRUE) {
 
 # --- Claude helpers (for the README check and the commit message) -----------
 claude <- Sys.which("claude")
-if (!nzchar(claude)) claude <- path.expand("~/.npm-global/bin/claude")
+if (!nzchar(claude)) {
+  claude <- path.expand("~/.npm-global/bin/claude")
+}
 # A nested `claude -p` refuses to start if this runs inside a Claude Code session
 Sys.unsetenv("CLAUDECODE")
 
@@ -53,12 +57,25 @@ ask_claude <- function(prompt, input, model = "haiku", timeout = 120) {
   out <- tryCatch(
     suppressWarnings(system2(
       claude,
-      c("-p", "--model", model, "--tools", '""', "--no-session-persistence", shQuote(prompt)),
-      input = input, stdout = TRUE, stderr = FALSE, timeout = timeout
+      c(
+        "-p",
+        "--model",
+        model,
+        "--tools",
+        '""',
+        "--no-session-persistence",
+        shQuote(prompt)
+      ),
+      input = input,
+      stdout = TRUE,
+      stderr = FALSE,
+      timeout = timeout
     )),
     error = function(e) character()
   )
-  if (!is.null(attr(out, "status"))) return(character())
+  if (!is.null(attr(out, "status"))) {
+    return(character())
+  }
   out[cumsum(nzchar(trimws(out))) > 0]
 }
 
@@ -66,10 +83,13 @@ ask_claude <- function(prompt, input, model = "haiku", timeout = 120) {
 # bulky assets appear in the stat only, not the patch
 staged_diff <- function(base = "") {
   stat <- system(paste("git diff --cached --stat=160", base), intern = TRUE)
-  if (length(stat) > 300) stat <- c(head(stat, 300), "...", tail(stat, 1))
+  if (length(stat) > 300) {
+    stat <- c(head(stat, 300), "...", tail(stat, 1))
+  }
   patch <- system(
     paste(
-      "git diff --cached --no-color", base,
+      "git diff --cached --no-color",
+      base,
       "-- . ':(exclude)docs/*' ':(exclude)*.pdf' ':(exclude)*.html' ':(exclude)*.js' ':(exclude)*.css' ':(exclude)*.json' ':(exclude)*.svg' ':(exclude)*.png' ':(exclude)*.jpg'"
     ),
     intern = TRUE
@@ -97,8 +117,21 @@ if (changed && file.exists("README.md")) {
     "git log -1 --format=%H --grep='^README-reviewed: yes$' 2>/dev/null",
     intern = TRUE
   ))
-  if (length(base) == 0) base <- suppressWarnings(system("git log -1 --diff-filter=A --format=%H -- README.md 2>/dev/null", intern = TRUE))
-  if (length(base) == 0) base <- if (system("git rev-parse -q --verify HEAD", ignore.stdout = TRUE) == 0) "HEAD" else system("git hash-object -t tree /dev/null", intern = TRUE)
+  if (length(base) == 0) {
+    base <- suppressWarnings(system(
+      "git log -1 --diff-filter=A --format=%H -- README.md 2>/dev/null",
+      intern = TRUE
+    ))
+  }
+  if (length(base) == 0) {
+    base <- if (
+      system("git rev-parse -q --verify HEAD", ignore.stdout = TRUE) == 0
+    ) {
+      "HEAD"
+    } else {
+      system("git hash-object -t tree /dev/null", intern = TRUE)
+    }
+  }
 
   readme <- readLines("README.md", warn = FALSE)
   readme_prompt <- paste(
@@ -117,11 +150,17 @@ if (changed && file.exists("README.md")) {
   ai <- ask_claude(
     readme_prompt,
     c(
-      "=== README.md ===", readme, "",
-      "=== Files in the repository ===", system("git -c core.quotePath=false ls-files", intern = TRUE), "",
-      "=== Changes since the README was last checked ===", staged_diff(base)
+      "=== README.md ===",
+      readme,
+      "",
+      "=== Files in the repository ===",
+      system("git -c core.quotePath=false ls-files", intern = TRUE),
+      "",
+      "=== Changes since the README was last checked ===",
+      staged_diff(base)
     ),
-    model = "sonnet", timeout = 300
+    model = "sonnet",
+    timeout = 300
   )
   if (length(ai) > 0 && startsWith(trimws(ai[1]), "NO_CHANGE")) {
     readme_reviewed <- TRUE
@@ -133,7 +172,9 @@ if (changed && file.exists("README.md")) {
     readme_reviewed <- TRUE
     cat("✓ README.md updated\n")
   } else {
-    cat("README.md check skipped (Claude unavailable or reply unusable); will retry on the next commit\n")
+    cat(
+      "README.md check skipped (Claude unavailable or reply unusable); will retry on the next commit\n"
+    )
   }
 }
 
@@ -154,16 +195,21 @@ if (changed) {
     "Output only the message: no preamble, no code fences."
   )
   ai <- ask_claude(msg_prompt, staged_diff())
-  if (length(ai) > 0) msg <- c(paste0(msg, ": ", trimws(ai[1])), ai[-1])
-  if (readme_reviewed) msg <- c(msg, "", "README-reviewed: yes")
+  if (length(ai) > 0) {
+    msg <- c(paste0(msg, ": ", trimws(ai[1])), ai[-1])
+  }
+  if (readme_reviewed) {
+    msg <- c(msg, "", "README-reviewed: yes")
+  }
 
   msg_file <- tempfile(fileext = ".txt")
   writeLines(msg, msg_file)
   run(paste("git commit -F", shQuote(msg_file)))
   run("git push")
-  cat(sprintf("\n✓ Deployed: %s  (live in ~1–2 min at https://benstanley.eu)\n", msg[1]))
+  cat(sprintf(
+    "\n✓ Deployed: %s  (live in ~1–2 min at https://benstanley.eu)\n",
+    msg[1]
+  ))
 } else {
   cat("\n✓ Build is unchanged — nothing to commit.\n")
 }
-
-# No iCloud mirror: removed 16 November 2026 at Ben's request (it caused more trouble than it was worth). GitHub is the off-machine copy.

@@ -1320,7 +1320,8 @@ const gRamp = n => [...Array(n).keys()].map(i => { const a = [27, 127, 121], b =
   return "#" + a.map((v, j) => Math.round(v + t * (b[j] - v)).toString(16).padStart(2, "0")).join(""); });
 const gMonthDay = m => Math.round(Date.UTC(+m.slice(0, 4), +m.slice(5, 7) - 1, 15) / 864e5);
 const gMonthName = (m, long) => (long ? MONTHS : MON)[+m.slice(5, 7) - 1] + " " + m.slice(0, 4);
-const gList = id => GD.lists.find(l => l.id === id);
+const gList = id => id === "turnout" ? { id: "turnout", label: "Turnout", colour: "#4B4B4B" } : GD.lists.find(l => l.id === id);
+const gIsT = () => S.gList === "turnout" && !!GD.turnout;
 const gSigned = v => Math.abs(v) < 0.05 ? "0.0" : signed(v, 1);
 const gSure = c => c.lo > 0 || c.hi < 0;
 function loadGroups() {
@@ -1329,7 +1330,7 @@ function loadGroups() {
   fetch("groups.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
     GD = d; groupsState = "ready";
     if (!(S.gDim in GD.dims)) S.gDim = Object.keys(GD.dims)[0];
-    if (!GD.lists.some(l => l.id === S.gList && l.id !== "Other")) S.gList = GD.lists[0].id;
+    if (!(S.gList === "turnout" && GD.turnout) && !GD.lists.some(l => l.id === S.gList && l.id !== "Other")) S.gList = GD.lists[0].id;
     if (S.view === "groups") renderGroups();
   }).catch(() => { groupsState = "missing"; if (S.view === "groups") renderGroups(); });
 }
@@ -1343,16 +1344,21 @@ function renderGroups() {
     return;
   }
   status.hidden = true; body.hidden = false;
-  const dim = GD.dims[S.gDim], li = GD.lists.findIndex(l => l.id === S.gList), L = GD.lists[li];
-  const tr = dim.trend[S.gList], nat = GD.national[S.gList], M = GD.months.length, cols = gRamp(dim.levels.length);
+  // "Turnout" is stated turnout intention by group (GD.turnout), drawn like a list
+  const isT = gIsT(), tdim = isT ? GD.turnout.dims[S.gDim] : null;
+  const dim = GD.dims[S.gDim], li = GD.lists.findIndex(l => l.id === S.gList), L = gList(S.gList);
+  const tr = isT ? tdim.trend : dim.trend[S.gList], nat = isT ? GD.turnout.national : GD.national[S.gList];
+  const chg = gi => isT ? tdim.change[gi] : dim.change[gi][S.gList], vi = isT ? 4 : 4 + li;
+  const M = GD.months.length, cols = gRamp(dim.levels.length);
   const short = G_SHORT[S.gDim] || dim.labels;
   $("gdim").innerHTML = Object.keys(GD.dims).map(k => `<button type="button" data-k="${k}" aria-pressed="${S.gDim === k}">${esc(G_DIMS[k] || GD.dims[k].label)}</button>`).join("");
-  $("glist").innerHTML = GD.lists.filter(l => l.id !== "Other").map(l => `<button type="button" data-k="${esc(l.id)}" aria-pressed="${S.gList === l.id}">${esc(l.label)}</button>`).join("");
+  $("glist").innerHTML = GD.lists.filter(l => l.id !== "Other").map(l => `<button type="button" data-k="${esc(l.id)}" aria-pressed="${S.gList === l.id}">${esc(l.label)}</button>`).join("") +
+    (GD.turnout ? `<button type="button" data-k="turnout" aria-pressed="${isT}">Turnout</button>` : "");
   $("gpts").checked = S.gPts;
   // chart
   const box = $("groupbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 480));
   const mday = GD.months.map(gMonthDay);
-  const rd = S.gPts ? dim.readings : [];
+  const rd = S.gPts ? (isT ? tdim.readings : dim.readings) : [];
   const endChars = Math.max("All voters".length, ...short.map(s => s.length)) + 7;
   const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: 16, b: 34 };
   const a = Math.min(mday[0], ...rd.map(r => r[1])), b = Math.max(mday[M - 1], ...rd.map(r => r[1]));
@@ -1360,11 +1366,14 @@ function renderGroups() {
   let ymax = 0;
   tr.forEach(g => g.hi.forEach(v => { ymax = Math.max(ymax, v); }));
   nat.forEach(v => { ymax = Math.max(ymax, v); });
-  rd.forEach(r => { ymax = Math.max(ymax, r[4 + li]); });
-  ymax = Math.ceil((ymax + 1) / 5) * 5;
-  const y = v => m.t + (1 - v / ymax) * (H - m.t - m.b);
-  const o = [], ystep = ymax > 40 ? 10 : 5;
-  for (let v = 0; v <= ymax; v += ystep) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="#EEE"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${v}%</text>`);
+  rd.forEach(r => { ymax = Math.max(ymax, r[vi]); });
+  ymax = Math.min(100, Math.ceil((ymax + 1) / 5) * 5);
+  // turnout intentions sit high: the axis starts near the lowest value instead of at 0
+  let ymin = 0;
+  if (isT) { let lo = 100; tr.forEach(g => g.lo.forEach(v => { lo = Math.min(lo, v); })); rd.forEach(r => { lo = Math.min(lo, r[vi]); }); ymin = Math.max(0, Math.floor((lo - 2) / 10) * 10); }
+  const y = v => m.t + (1 - (v - ymin) / (ymax - ymin)) * (H - m.t - m.b);
+  const o = [], ystep = ymax - ymin > 40 ? 10 : 5;
+  for (let v = ymin; v <= ymax; v += ystep) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="#EEE"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${v}%</text>`);
   let prevY = null;
   monthTicks(a, b, W - m.l - m.r).forEach(d => {
     const [lab, yr] = tickLabel(d, prevY); prevY = dateOf(d).getUTCFullYear();
@@ -1377,7 +1386,7 @@ function renderGroups() {
   });
   // the polls' own readings: circles CBOS, squares Opinia24
   const dots = rd.map(r => {
-    const cx = x(r[1]), cy = y(r[4 + li]), c = cols[r[2]];
+    const cx = x(r[1]), cy = y(r[vi]), c = cols[r[2]];
     return r[0] === 0 ? `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="2.4" fill="${c}" fill-opacity="0.4"/>`
       : `<rect x="${(cx - 2.2).toFixed(1)}" y="${(cy - 2.2).toFixed(1)}" width="4.4" height="4.4" fill="${c}" fill-opacity="0.4"/>`;
   });
@@ -1387,7 +1396,7 @@ function renderGroups() {
   // end labels (house style): the dot in the group's colour, the name in ink, the figure in house red
   const lx = x(mday[M - 1]);
   const labs = tr.map((g, gi) => ({ y: y(g.s[M - 1]), label: short[gi], value: g.s[M - 1].toFixed(1) + "%", colour: cols[gi] }));
-  labs.push({ y: y(nat[M - 1]), label: "All voters", value: nat[M - 1].toFixed(1) + "%", colour: "#141414" });
+  labs.push({ y: y(nat[M - 1]), label: isT ? "Everyone" : "All voters", value: nat[M - 1].toFixed(1) + "%", colour: "#141414" });
   o.push(SiteUI.endLabels(labs, lx + 8, { size: 11.5, top: m.t, bottom: H - m.b })
     .replace(/<tspan fill="[^"]*">([^<]*)<\/tspan><\/text>/g, `<tspan fill="${SiteUI.RED}" font-weight="500">$1</tspan></text>`));
   o.push(`<g id="grouphover" class="hov"></g><rect class="hit" x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" style="cursor:crosshair"/>`);
@@ -1398,29 +1407,33 @@ function renderGroups() {
   GR = { W, H, m, a, b, x, y, mday, cols, rd, li };
   // note
   const dg = dim.diagnostics || {};
-  $("groupnote").textContent = `From the pollsters' tables by group: Opinia24 (monthly, telephone and online) and CBOS Flash (about twice a month, telephone and online)${dg.polls ? `, ${dg.polls} polls with this breakdown` : ""}. Decided voters only; today's splinters are counted with the list they stood on in 2023. ` +
+  $("groupnote").textContent = isT
+    ? `Stated turnout intention: the share of each group who say they would definitely or probably vote (don't know counted as not), from Opinia24's and CBOS Flash's tables by group${tdim.diagnostics && tdim.diagnostics.polls ? `, ${tdim.diagnostics.polls} polls` : ""}. ` +
+      `People overstate their turnout, so the level is well above real turnout (74.4% in 2023); what the polls show reliably is how the groups have moved against each other. ` +
+      `Each group's gap follows a monthly random walk, each pollster's lean on each group is estimated, and the line is the average of the two houses; it is not pinned to any national figure. Bands are 80% intervals; the dashed line is everyone.` +
+      (S.gPts ? ` Points are the polls' own readings: circles CBOS, squares Opinia24.` : "")
+    : `From the pollsters' tables by group: Opinia24 (monthly, telephone and online) and CBOS Flash (about twice a month, telephone and online)${dg.polls ? `, ${dg.polls} polls with this breakdown` : ""}. Decided voters only; today's splinters are counted with the list they stood on in 2023. ` +
     `Each group's gap from the national share follows a monthly random walk; each pollster's lean on each group is estimated, and the line is the average of the two. ` +
     `The lines are pinned to this tracker's national trend as it stood when the model was last fitted (${dlong(fromIso(GD.meta.fitted))}, months to ${gMonthName(GD.months[M - 1], true)}), so the groups average to it. ` +
     `Bands are 80% intervals; the dashed line is all voters.` +
     (S.gPts ? ` Points are the polls' own readings: circles CBOS, squares Opinia24${S.gDim === "age" && !dim.readings.some(r => r[0] === 0) ? " (CBOS's age bands differ from these and are not drawn)" : ""}.` : "");
   // every list, every group
   const lists = GD.lists.filter(l => l.id !== "Other"), fm = gMonthName(GD.months[0], true);
-  $("groupall").innerHTML = `<tr><th>${esc(G_DIMS[S.gDim] || dim.label)}</th>${lists.map(l => `<th><span class="dot" style="background:${l.colour}"></span>${esc(l.label)}</th>`).join("")}</tr>` +
-    dim.labels.map((lab, gi) => `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(lab)}</td>${lists.map(l => {
-      const c = dim.change[gi][l.id];
-      return `<td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}<span class="iv">${gSigned(c.lo)} to ${gSigned(c.hi)}</span></td>`;
-    }).join("")}</tr>`).join("");
-  $("groupallnote").textContent = `The change in each group's gap from all voters' share since ${fm}, in percentage points, with the 80% interval under each figure; grey where the interval includes zero. A group that moved with the country shows 0.`;
+  const tcell = c => `<td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}<span class="iv">${gSigned(c.lo)} to ${gSigned(c.hi)}</span></td>`;
+  $("groupall").innerHTML = `<tr><th>${esc(G_DIMS[S.gDim] || dim.label)}</th>${lists.map(l => `<th><span class="dot" style="background:${l.colour}"></span>${esc(l.label)}</th>`).join("")}${GD.turnout ? "<th>Turnout</th>" : ""}</tr>` +
+    dim.labels.map((lab, gi) => `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(lab)}</td>${lists.map(l => tcell(dim.change[gi][l.id])).join("")}${GD.turnout ? tcell(GD.turnout.dims[S.gDim].change[gi]) : ""}</tr>`).join("");
+  $("groupallnote").textContent = `The change in each group's gap from all voters' share since ${fm}, in percentage points, with the 80% interval under each figure; grey where the interval includes zero. A group that moved with the country shows 0.` +
+    (GD.turnout ? ` Turnout: the change in the group's gap from everyone's stated intention to vote.` : "");
   // side panel: the list on show
   const lm = gMonthName(GD.months[M - 1]), f0 = gMonthName(GD.months[0]);
-  const rows = tr.map((g, gi) => { const c = dim.change[gi][S.gList];
+  const rows = tr.map((g, gi) => { const c = chg(gi);
     return `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(dim.labels[gi])}</td><td>${g.s[0].toFixed(1)}%</td><td>${g.s[M - 1].toFixed(1)}%</td><td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}</td></tr>`; }).join("");
   $("panel3").innerHTML = `
   <div class="card">
     <span class="label">By ${esc((G_DIMS[S.gDim] || dim.label).toLowerCase())}</span>
     <h2 style="margin:0;font-size:20px;font-weight:400"><span class="dot" style="background:${L.colour};margin-right:8px;vertical-align:1px"></span>${esc(L.label)}</h2>
     <table class="t"><tr><th>Group</th><th>${f0}</th><th>${lm}</th><th>Against all</th></tr>${rows}
-      <tr><td>All voters</td><td>${nat[0].toFixed(1)}%</td><td>${nat[M - 1].toFixed(1)}%</td><td></td></tr></table>
+      <tr><td>${isT ? "Everyone" : "All voters"}</td><td>${nat[0].toFixed(1)}%</td><td>${nat[M - 1].toFixed(1)}%</td><td></td></tr></table>
     <p class="help" style="margin:0">Against all: the change in the group's gap from all voters' share since ${fm}, in points; grey where the 80% interval includes zero.</p>
   </div>
   <div class="card soft">
@@ -1433,11 +1446,11 @@ function groupHover(ev) {
   const svg = $("groups"), r = svg.getBoundingClientRect(), k = GR.W / r.width;
   const mx = (ev.clientX - r.left) * k, d = GR.a + (mx - GR.m.l) / (GR.W - GR.m.l - GR.m.r) * (GR.b - GR.a);
   let i = 0, bd = Infinity; GR.mday.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bd) { bd = dd; i = j; } });
-  const dim = GD.dims[S.gDim], tr = dim.trend[S.gList], nat = GD.national[S.gList];
+  const isT = gIsT(), dim = GD.dims[S.gDim], tr = isT ? GD.turnout.dims[S.gDim].trend : dim.trend[S.gList], nat = isT ? GD.turnout.national : GD.national[S.gList];
   $("grouphover").innerHTML = `<line x1="${GR.x(GR.mday[i])}" x2="${GR.x(GR.mday[i])}" y1="${GR.m.t}" y2="${GR.H - GR.m.b}" stroke="#141414" stroke-opacity=".35"/>`;
   const html = `<b>${esc(gList(S.gList).label)} · ${gMonthName(GD.months[i], true)}</b>` +
     tr.map((g, gi) => `<div class="r"><span><span class="dot" style="background:${GR.cols[gi]}"></span>${esc(dim.labels[gi])}</span><span>${g.s[i].toFixed(1)}% <span class="muted" style="display:inline">(${g.lo[i].toFixed(1)}–${g.hi[i].toFixed(1)})</span></span></div>`).join("") +
-    `<div class="r" style="border-top:1px solid var(--rule);margin-top:3px;padding-top:3px"><span>All voters</span><span>${nat[i].toFixed(1)}%</span></div>`;
+    `<div class="r" style="border-top:1px solid var(--rule);margin-top:3px;padding-top:3px"><span>${isT ? "Everyone" : "All voters"}</span><span>${nat[i].toFixed(1)}%</span></div>`;
   placeTip($("grouptip"), $("groupbox"), ev, html);
 }
 
