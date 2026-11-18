@@ -41,10 +41,61 @@
     return ["Jost", italic ? "italic" : "normal"];
   }
 
+  // svg2pdf places a run that follows another (an inline <tspan>, as in the end labels) and
+  // centres or right-aligns text by measuring it in the browser under the font-family that
+  // fixFonts() gives it ("Jost Medium" and so on). No web font has that name, so the browser
+  // measures a fallback font instead, and by how much that is off depends on the browser:
+  // runs drift into each other ("Konfederacja13.8%") and anchored labels shift. So before the
+  // family is renamed, pin each run at the position the browser gave it in the real Jost and
+  // make it start-anchored, and draw ● bullets (Jost has no such glyph) as circles.
+  const SVGNS = "http://www.w3.org/2000/svg";
+  function pinRuns(svg) {
+    svg.querySelectorAll("text").forEach(t => {
+      if (t.getNumberOfChars() === 0 || t.querySelector("textPath, tspan tspan")) return;
+      if (!t.querySelector("tspan")) {
+        // plain text: only an anchored one needs pinning, and only if it has a single x
+        if (getComputedStyle(t).textAnchor === "start" || /[\s,]/.test((t.getAttribute("x") || "").trim())) return;
+        t.setAttribute("x", t.getStartPositionOfChar(0).x.toFixed(2)); t.removeAttribute("dx");
+        t.setAttribute("text-anchor", "start"); t.style.textAnchor = "start";
+        return;
+      }
+      // every run becomes a tspan, so each can be given a position
+      [...t.childNodes].forEach(n => {
+        if (n.nodeType === 3) { const s = document.createElementNS(SVGNS, "tspan"); s.textContent = n.textContent; t.replaceChild(s, n); }
+      });
+      // measure everything before changing anything. A run's leading space survives the
+      // browser's whitespace collapsing only if the run before it did not end in one; the run
+      // is pinned at its first visible character and its text trimmed to match.
+      let prevSpace = true;
+      const runs = [...t.children].filter(s => s.tagName === "tspan").map(s => {
+        const raw = s.textContent, nc = s.getNumberOfChars(), blank = !raw.trim();
+        const k = nc && /^\s/.test(raw) && !prevSpace ? Math.min(1, nc - 1) : 0;
+        prevSpace = blank ? prevSpace || raw.length > 0 : /\s$/.test(raw);
+        return { s, nc: blank ? 0 : nc, p: nc ? s.getStartPositionOfChar(k) : null, w: nc ? s.getComputedTextLength() : 0, fill: getComputedStyle(s).fill, size: parseFloat(getComputedStyle(s).fontSize) };
+      });
+      runs.forEach(({ s, nc, p, w, fill, size }) => {
+        if (!nc) { s.remove(); return; }
+        s.textContent = s.textContent.trim().replace(/\s+/g, " ");
+        if (s.textContent.trim() === "●") {
+          const c = document.createElementNS(SVGNS, "circle");
+          c.setAttribute("cx", (p.x + w / 2).toFixed(2)); c.setAttribute("cy", (p.y - size * 0.33).toFixed(2));
+          c.setAttribute("r", (size * 0.3).toFixed(2)); c.setAttribute("fill", fill);
+          const op = getComputedStyle(t).fillOpacity; if (op && op !== "1") c.setAttribute("fill-opacity", op);
+          t.parentNode.insertBefore(c, t); s.remove(); return;
+        }
+        s.removeAttribute("dx"); s.removeAttribute("dy");
+        s.setAttribute("x", p.x.toFixed(2)); s.setAttribute("y", p.y.toFixed(2));
+      });
+      // the runs now carry absolute positions, so the anchor must not shift them again
+      t.setAttribute("text-anchor", "start"); t.style.textAnchor = "start";
+    });
+  }
+
   // Resolve every text node's weight against the attached SVG, then name the matching
   // Jost family on it, because svg2pdf looks fonts up by family and bold only.
   function fixFonts(svg) {
     svg.querySelectorAll("style").forEach(n => n.remove());
+    pinRuns(svg);
     const nodes = [...svg.querySelectorAll("text, tspan")].map(n => { const cs = getComputedStyle(n); return [n, parseInt(cs.fontWeight, 10) || 400, cs.fontStyle === "italic"]; });
     nodes.forEach(([n, w, it]) => { const [fam, st] = face(w, it); n.style.fontFamily = fam; n.style.fontWeight = st === "bold" ? "700" : "400"; n.style.fontStyle = st === "italic" ? "italic" : "normal"; });
   }
