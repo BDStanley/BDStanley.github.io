@@ -837,7 +837,7 @@ function renderTrends() {
   repel(labs, 13, m.t, H - m.b);
   labs.forEach(l => {
     const ly0 = y(l.v);
-    // House style (SiteUI.endLabels): a dot in the party's colour, the name in ink, the figure in house red;
+    // House style (SiteUI.endLabels): a dot in the party's colour, the name in ink, the figure in the party's colour;
     // the labels are already pushed apart above, so endLabels draws each where repel() put it
     const txt = SiteUI.endLabels([{ y: l.y, label: W < 600 ? short(l.p) : l.p, value: l.v.toFixed(1) + "%", colour: col(l.p) }], x(last) + 13, { size: 11.5 });
     o.push(`<line x1="${x(last) + 3}" x2="${x(last) + 10}" y1="${ly0}" y2="${l.y}" stroke="#CCC"/>` + txt.replace("<text ", `<text font-weight="500" fill-opacity="${fade(l.p) ? 0.3 : 1}" `));

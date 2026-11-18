@@ -2,7 +2,8 @@
 // Load it before a page's own app.js:  <script src="../site-ui.js"></script>
 //
 //   SiteUI.endLabels(items, x, opts)   SVG text for line-end labels: dot in the series colour, the name in ink and the
-//                                      number in house red, pushed apart so they never overlap
+//                                      number in the series colour (house red if it has none), pushed apart so they
+//                                      never overlap
 //   SiteUI.inDoubt(share, cut, p)      whether a threshold is in play for a party: a share within 3 points of it, or a
 //                                      chance of clearing it between 2% and 98%
 //   SiteUI.inkOn(fill)                 white or ink, whichever reads on a fill colour
@@ -33,7 +34,7 @@ const SiteUI = (() => {
     }
     return lab.map((l) => `<text x="${x}" y="${(l.yy + size * 0.35).toFixed(1)}" font-size="${size}" fill="${INK}">` +
       (opts.dot === false ? "" : `<tspan fill="${l.colour || INK}">●</tspan> `) +
-      `${esc(l.label)}${l.value != null && l.value !== "" ? ` <tspan fill="${RED}">${esc(l.value)}</tspan>` : ""}</text>`).join("");
+      `${esc(l.label)}${l.value != null && l.value !== "" ? ` <tspan fill="${l.colour || RED}">${esc(l.value)}</tspan>` : ""}</text>`).join("");
   }
 
   const NEAR = 0.03, P_LO = 0.02, P_HI = 0.98;
