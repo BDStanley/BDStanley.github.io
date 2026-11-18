@@ -153,7 +153,8 @@ const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])))
 
 // ---- state ----------------------------------------------------------------------------------
 const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: "trends", period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
-  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false };
+  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
+  gDim: "age", gList: "KO", gPts: false };
 
 function defaults(w) {
   const wk = WEEKS[w], s = {};
@@ -1306,6 +1307,140 @@ function renderHouse() {
   svg.innerHTML = o.join("");
 }
 
+// ---- by group -------------------------------------------------------------------------------
+// The pollsters' group tables (Opinia24, CBOS Flash), pooled by Polls' group model into groups.json, which is
+// fetched the first time the view opens. Lists are the 2023 lists with today's splinters counted in them.
+let GD = null, groupsState = "idle", GR = null;
+const G_DIMS = { sex: "Sex", age: "Age", education: "Education", town: "Town size" };
+// short names for the end labels; the tables use the file's own labels
+const G_SHORT = { sex: ["Men", "Women"], age: ["18–29", "30–39", "40–49", "50–59", "60+"],
+  education: ["Primary", "Vocational", "Secondary", "Higher"], town: ["Village", "Town <20k", "Town 20–100k", "City 100–500k", "City 500k+"] };
+// groups are not parties: an ordered ramp from teal to plum
+const gRamp = n => [...Array(n).keys()].map(i => { const a = [27, 127, 121], b = [123, 63, 140], t = n === 1 ? 0 : i / (n - 1);
+  return "#" + a.map((v, j) => Math.round(v + t * (b[j] - v)).toString(16).padStart(2, "0")).join(""); });
+const gMonthDay = m => Math.round(Date.UTC(+m.slice(0, 4), +m.slice(5, 7) - 1, 15) / 864e5);
+const gMonthName = (m, long) => (long ? MONTHS : MON)[+m.slice(5, 7) - 1] + " " + m.slice(0, 4);
+const gList = id => GD.lists.find(l => l.id === id);
+const gSigned = v => Math.abs(v) < 0.05 ? "0.0" : signed(v, 1);
+const gSure = c => c.lo > 0 || c.hi < 0;
+function loadGroups() {
+  if (groupsState !== "idle") return;
+  groupsState = "loading";
+  fetch("groups.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+    GD = d; groupsState = "ready";
+    if (!(S.gDim in GD.dims)) S.gDim = Object.keys(GD.dims)[0];
+    if (!GD.lists.some(l => l.id === S.gList && l.id !== "Other")) S.gList = GD.lists[0].id;
+    if (S.view === "groups") renderGroups();
+  }).catch(() => { groupsState = "missing"; if (S.view === "groups") renderGroups(); });
+}
+function renderGroups() {
+  const status = $("groupstatus"), body = $("groupbody");
+  if (groupsState !== "ready") {
+    if (groupsState === "idle") loadGroups();
+    status.hidden = false; body.hidden = true; $("panel3").innerHTML = "";
+    status.textContent = groupsState === "missing" ? "The estimates by group could not be loaded." : "Loading the estimates by group…";
+    $("gdim").innerHTML = ""; $("glist").innerHTML = "";
+    return;
+  }
+  status.hidden = true; body.hidden = false;
+  const dim = GD.dims[S.gDim], li = GD.lists.findIndex(l => l.id === S.gList), L = GD.lists[li];
+  const tr = dim.trend[S.gList], nat = GD.national[S.gList], M = GD.months.length, cols = gRamp(dim.levels.length);
+  const short = G_SHORT[S.gDim] || dim.labels;
+  $("gdim").innerHTML = Object.keys(GD.dims).map(k => `<button type="button" data-k="${k}" aria-pressed="${S.gDim === k}">${esc(G_DIMS[k] || GD.dims[k].label)}</button>`).join("");
+  $("glist").innerHTML = GD.lists.filter(l => l.id !== "Other").map(l => `<button type="button" data-k="${esc(l.id)}" aria-pressed="${S.gList === l.id}">${esc(l.label)}</button>`).join("");
+  $("gpts").checked = S.gPts;
+  // chart
+  const box = $("groupbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 480));
+  const mday = GD.months.map(gMonthDay);
+  const rd = S.gPts ? dim.readings : [];
+  const endChars = Math.max("All voters".length, ...short.map(s => s.length)) + 7;
+  const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: 16, b: 34 };
+  const a = Math.min(mday[0], ...rd.map(r => r[1])), b = Math.max(mday[M - 1], ...rd.map(r => r[1]));
+  const x = d => m.l + (d - a) / (b - a) * (W - m.l - m.r);
+  let ymax = 0;
+  tr.forEach(g => g.hi.forEach(v => { ymax = Math.max(ymax, v); }));
+  nat.forEach(v => { ymax = Math.max(ymax, v); });
+  rd.forEach(r => { ymax = Math.max(ymax, r[4 + li]); });
+  ymax = Math.ceil((ymax + 1) / 5) * 5;
+  const y = v => m.t + (1 - v / ymax) * (H - m.t - m.b);
+  const o = [], ystep = ymax > 40 ? 10 : 5;
+  for (let v = 0; v <= ymax; v += ystep) o.push(`<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="#EEE"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#767676">${v}%</text>`);
+  let prevY = null;
+  monthTicks(a, b, W - m.l - m.r).forEach(d => {
+    const [lab, yr] = tickLabel(d, prevY); prevY = dateOf(d).getUTCFullYear();
+    o.push(`<line x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${H - m.b}" stroke="#ECECEC"/><text x="${x(d)}" y="${H - m.b + 14}" text-anchor="middle" font-size="11" fill="#767676">${lab}</text>${yr ? `<text x="${x(d)}" y="${H - m.b + 27}" text-anchor="middle" font-size="11" fill="#767676">${yr}</text>` : ""}`);
+  });
+  const pt = (i, v) => `${x(mday[i]).toFixed(1)},${y(v).toFixed(1)}`;
+  tr.forEach((g, gi) => {
+    const ix = [...Array(M).keys()];
+    o.push(`<path d="M${ix.map(i => pt(i, g.hi[i])).join("L")}L${ix.reverse().map(i => pt(i, g.lo[i])).join("L")}Z" fill="${cols[gi]}" fill-opacity="0.13" stroke="none"/>`);
+  });
+  // the polls' own readings: circles CBOS, squares Opinia24
+  const dots = rd.map(r => {
+    const cx = x(r[1]), cy = y(r[4 + li]), c = cols[r[2]];
+    return r[0] === 0 ? `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="2.4" fill="${c}" fill-opacity="0.4"/>`
+      : `<rect x="${(cx - 2.2).toFixed(1)}" y="${(cy - 2.2).toFixed(1)}" width="4.4" height="4.4" fill="${c}" fill-opacity="0.4"/>`;
+  });
+  o.push(`<g>${dots.join("")}</g>`);
+  tr.forEach((g, gi) => o.push(`<path d="M${g.s.map((v, i) => pt(i, v)).join("L")}" fill="none" stroke="${cols[gi]}" stroke-width="1.8"/>`));
+  o.push(`<path d="M${nat.map((v, i) => pt(i, v)).join("L")}" fill="none" stroke="#141414" stroke-width="1.4" stroke-dasharray="4 3"/>`);
+  // end labels (house style): the dot in the group's colour, the name in ink, the figure in house red
+  const lx = x(mday[M - 1]);
+  const labs = tr.map((g, gi) => ({ y: y(g.s[M - 1]), label: short[gi], value: g.s[M - 1].toFixed(1) + "%", colour: cols[gi] }));
+  labs.push({ y: y(nat[M - 1]), label: "All voters", value: nat[M - 1].toFixed(1) + "%", colour: "#141414" });
+  o.push(SiteUI.endLabels(labs, lx + 8, { size: 11.5, top: m.t, bottom: H - m.b })
+    .replace(/<tspan fill="[^"]*">([^<]*)<\/tspan><\/text>/g, `<tspan fill="${SiteUI.RED}" font-weight="500">$1</tspan></text>`));
+  o.push(`<g id="grouphover" class="hov"></g><rect class="hit" x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" style="cursor:crosshair"/>`);
+  const svg = $("groups");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.setAttribute("aria-label", `${L.label} by ${(G_DIMS[S.gDim] || dim.label).toLowerCase()}, ${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[M - 1], true)}`);
+  svg.innerHTML = o.join("");
+  GR = { W, H, m, a, b, x, y, mday, cols, rd, li };
+  // note
+  const dg = dim.diagnostics || {};
+  $("groupnote").textContent = `From the pollsters' tables by group: Opinia24 (monthly, telephone and online) and CBOS Flash (about twice a month, telephone and online)${dg.polls ? `, ${dg.polls} polls with this breakdown` : ""}. Decided voters only; today's splinters are counted with the list they stood on in 2023. ` +
+    `Each group's gap from the national share follows a monthly random walk; each pollster's lean on each group is estimated, and the line is the average of the two. ` +
+    `The lines are pinned to this tracker's national trend as it stood when the model was last fitted (${dlong(fromIso(GD.meta.fitted))}, months to ${gMonthName(GD.months[M - 1], true)}), so the groups average to it. ` +
+    `Bands are 80% intervals; the dashed line is all voters.` +
+    (S.gPts ? ` Points are the polls' own readings: circles CBOS, squares Opinia24${S.gDim === "age" && !dim.readings.some(r => r[0] === 0) ? " (CBOS's age bands differ from these and are not drawn)" : ""}.` : "");
+  // every list, every group
+  const lists = GD.lists.filter(l => l.id !== "Other"), fm = gMonthName(GD.months[0], true);
+  $("groupall").innerHTML = `<tr><th>${esc(G_DIMS[S.gDim] || dim.label)}</th>${lists.map(l => `<th><span class="dot" style="background:${l.colour}"></span>${esc(l.label)}</th>`).join("")}</tr>` +
+    dim.labels.map((lab, gi) => `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(lab)}</td>${lists.map(l => {
+      const c = dim.change[gi][l.id];
+      return `<td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}<span class="iv">${gSigned(c.lo)} to ${gSigned(c.hi)}</span></td>`;
+    }).join("")}</tr>`).join("");
+  $("groupallnote").textContent = `The change in each group's gap from all voters' share since ${fm}, in percentage points, with the 80% interval under each figure; grey where the interval includes zero. A group that moved with the country shows 0.`;
+  // side panel: the list on show
+  const lm = gMonthName(GD.months[M - 1]), f0 = gMonthName(GD.months[0]);
+  const rows = tr.map((g, gi) => { const c = dim.change[gi][S.gList];
+    return `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(dim.labels[gi])}</td><td>${g.s[0].toFixed(1)}%</td><td>${g.s[M - 1].toFixed(1)}%</td><td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}</td></tr>`; }).join("");
+  $("panel3").innerHTML = `
+  <div class="card">
+    <span class="label">By ${esc((G_DIMS[S.gDim] || dim.label).toLowerCase())}</span>
+    <h2 style="margin:0;font-size:20px;font-weight:400"><span class="dot" style="background:${L.colour};margin-right:8px;vertical-align:1px"></span>${esc(L.label)}</h2>
+    <table class="t"><tr><th>Group</th><th>${f0}</th><th>${lm}</th><th>Against all</th></tr>${rows}
+      <tr><td>All voters</td><td>${nat[0].toFixed(1)}%</td><td>${nat[M - 1].toFixed(1)}%</td><td></td></tr></table>
+    <p class="help" style="margin:0">Against all: the change in the group's gap from all voters' share since ${fm}, in points; grey where the 80% interval includes zero.</p>
+  </div>
+  <div class="card soft">
+    <span class="label">Share</span>
+    <div class="actions"><button type="button" class="btn2" id="copylink">Copy link to this view</button></div>
+  </div>`;
+}
+function groupHover(ev) {
+  if (!GR || !GD) return;
+  const svg = $("groups"), r = svg.getBoundingClientRect(), k = GR.W / r.width;
+  const mx = (ev.clientX - r.left) * k, d = GR.a + (mx - GR.m.l) / (GR.W - GR.m.l - GR.m.r) * (GR.b - GR.a);
+  let i = 0, bd = Infinity; GR.mday.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bd) { bd = dd; i = j; } });
+  const dim = GD.dims[S.gDim], tr = dim.trend[S.gList], nat = GD.national[S.gList];
+  $("grouphover").innerHTML = `<line x1="${GR.x(GR.mday[i])}" x2="${GR.x(GR.mday[i])}" y1="${GR.m.t}" y2="${GR.H - GR.m.b}" stroke="#141414" stroke-opacity=".35"/>`;
+  const html = `<b>${esc(gList(S.gList).label)} · ${gMonthName(GD.months[i], true)}</b>` +
+    tr.map((g, gi) => `<div class="r"><span><span class="dot" style="background:${GR.cols[gi]}"></span>${esc(dim.labels[gi])}</span><span>${g.s[i].toFixed(1)}% <span class="muted" style="display:inline">(${g.lo[i].toFixed(1)}–${g.hi[i].toFixed(1)})</span></span></div>`).join("") +
+    `<div class="r" style="border-top:1px solid var(--rule);margin-top:3px;padding-top:3px"><span>All voters</span><span>${nat[i].toFixed(1)}%</span></div>`;
+  placeTip($("grouptip"), $("groupbox"), ev, html);
+}
+
 // ---- static controls ------------------------------------------------------------------------
 function renderChips() {
   $("pchips").innerHTML = VD().pollsters.map(o => `<button type="button" class="chip" data-org="${esc(o)}" aria-pressed="${S.houses.has(o)}">${esc(o)}</button>`).join("") +
@@ -1313,11 +1448,12 @@ function renderChips() {
   $("periods").innerHTML = PERIODS.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${S.period === k}">${l}</button>`).join("");
   [...$("views").children].forEach(b => {
     b.setAttribute("aria-pressed", S.view === b.dataset.v); b.setAttribute("aria-selected", S.view === b.dataset.v);
-    b.hidden = !!TERM && b.dataset.v === "seats";
+    b.hidden = !!TERM && (b.dataset.v === "seats" || b.dataset.v === "groups");
   });
-  ["trends", "seats", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
+  ["trends", "seats", "groups", "pollsters"].forEach(v => { $("v-" + v).hidden = S.view !== v; });
   $("panel").hidden = !TERM && S.view !== "seats";
   $("panel2").hidden = !!TERM || S.view !== "pollsters";
+  $("panel3").hidden = !!TERM || S.view !== "groups";
   $("pts").checked = S.points;
   $("ptswrap").hidden = S.view !== "trends";
   $("evwrap").hidden = S.view !== "trends";
@@ -1357,9 +1493,10 @@ function renderHousePanel() {
 
 // ---- rendering ------------------------------------------------------------------------------
 function renderView() {
-  if (TERM && S.view === "seats") { S.view = "trends"; renderChips(); }
+  if (TERM && (S.view === "seats" || S.view === "groups")) { S.view = "trends"; renderChips(); }
   if (S.view === "trends") renderTrends();
   else if (S.view === "seats") { renderHemi(); renderHemiBlocks(); renderMap(); renderConstCard(); }
+  else if (S.view === "groups") renderGroups();
   else renderHouse();
 }
 const sharesValid = () => 100 - sum(SP.map(p => S.shares[p] || 0)) >= -0.05;
@@ -1396,6 +1533,7 @@ function stateString() {
   if (S.houses.size) q.set("h", [...S.houses].join(";"));
   if (S.parties.size) q.set("pp", [...S.parties].join(";"));
   if (S.view !== "trends") q.set("view", S.view);
+  if (S.view === "groups") { q.set("gd", S.gDim); q.set("gl", S.gList); if (S.gPts) q.set("gp", "1"); }
   if (S.period !== "all") q.set("p", S.period);
   if (!S.points) q.set("dp", "0");
   return q.toString();
@@ -1426,7 +1564,11 @@ function restoreHash() {
     list("h").forEach(o => { if (D.pollsters.includes(o)) S.houses.add(o); });
     list("pp").forEach(p => { if (P.includes(p)) S.parties.add(p); });
   }
-  if (["trends", "seats", "pollsters"].includes(q.get("view"))) S.view = q.get("view");
+  if (["trends", "seats", "groups", "pollsters"].includes(q.get("view"))) S.view = q.get("view");
+  // checked against groups.json when it loads
+  if (q.get("gd")) S.gDim = q.get("gd");
+  if (q.get("gl")) S.gList = q.get("gl");
+  S.gPts = q.get("gp") === "1";
   if (PERIODS.some(p => p[0] === q.get("p"))) S.period = q.get("p");
   S.points = q.get("dp") !== "0";
 }
@@ -1508,8 +1650,11 @@ async function png(only) {
   const seatsView = $("v-seats"), seatsWasHidden = seatsView.hidden;
   if (combo) { seatsView.hidden = false; renderHemi(); }
   const past = TERM ? `Sejm term ${TERM.term.label}` : null;
-  const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", house: "House effects", combo: "Polish party polling: trends and projections" };
-  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", house: "pollsters", combo: "trends-and-projections" }[only];
+  const grp = only === "groups";
+  if (grp && !GD) return;
+  const titles = { trend: "Voting intention", hemi: "Seat projection", map: "Seats by constituency", house: "House effects", combo: "Polish party polling: trends and projections",
+    groups: grp ? `${gList(S.gList).label} by ${(G_DIMS[S.gDim] || "group").toLowerCase()}` : "" };
+  const fname = { trend: "trends", hemi: "hemicycle", map: "constituencies", house: "pollsters", combo: "trends-and-projections", groups: grp ? `by-${S.gDim}-${slug(S.gList)}` : "" }[only];
   // ChartExport (../chart-export.js) keeps the labels in Jost in the image.
   await ChartExport.fonts();
   // in the combined image the hemicycle is drawn small and the trends fill the width
@@ -1543,7 +1688,8 @@ async function png(only) {
     : S.view === "seats" ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
   // a hypothetical scenario is not the model's estimate: no pollsters are named, and the image says it is hypothetical
   const hypo = !past && CUR.mode !== "model" && (only === "hemi" || only === "map" || only === "trend" || combo);
-  const sub = hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
+  const sub = grp ? `Share among decided voters, ${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[GD.months.length - 1], true)}, with 80% intervals; dashed line: all voters. From Opinia24's and CBOS Flash's tables by group, pinned to this tracker's national trend as fitted on ${dlong(fromIso(GD.meta.fitted))}. Splinters are counted with their 2023 list.${S.gPts ? " Points: the polls' readings (circles CBOS, squares Opinia24)." : ""}`
+    : hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario: vote shares set by the user, not poll estimates. Seats are projected from those shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
   const wrap = size => { mc.font = `${size}px Jost, sans-serif`; const out = []; let cur = ""; sub.split(" ").forEach(wd => { const t = cur ? cur + " " + wd : wd; if (mc.measureText(t).width > W - 2 * pad && cur) { out.push(cur); cur = wd; } else cur = t; }); out.push(cur); return out; };
   let sfs = 13, lines = wrap(sfs);
   while (lines.length > 2 && sfs > 10) { sfs -= 0.5; lines = wrap(sfs); }
@@ -1696,7 +1842,7 @@ async function png(only) {
     drawEvents(yy);
   }
   g.fillStyle = "#767676"; ChartExport.drawCite(g, PAGE, pad, H - 12, W - 2 * pad);
-  const fileBase = `polling-tracker-${fname}${hypo ? "-hypothetical-scenario" : `-${past ? TERM.term.id : iso(CUR.wk.date)}`}`;
+  const fileBase = `polling-tracker-${fname}${hypo ? "-hypothetical-scenario" : `-${grp ? GD.months[GD.months.length - 1] : past ? TERM.term.id : iso(CUR.wk.date)}`}`;
   if (pdf) download(fileBase + ".pdf", await g.finish());
   else cv.toBlob(b => download(fileBase + ".png", b), "image/png");
 }
@@ -1815,6 +1961,13 @@ function bind() {
     else { const b = e.target.closest("button[data-p]"); if (!b) return; const p = b.dataset.p; S.parties.has(p) ? S.parties.delete(p) : S.parties.add(p); }
     renderTrends(); saveHash();
   });
+  // by group
+  $("gdim").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; S.gDim = b.dataset.k; renderGroups(); saveHash(); });
+  $("glist").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; S.gList = b.dataset.k; renderGroups(); saveHash(); });
+  $("gpts").addEventListener("change", e => { S.gPts = e.target.checked; renderGroups(); saveHash(); });
+  $("groups").addEventListener("mousemove", groupHover);
+  $("groups").addEventListener("mouseleave", () => { $("grouptip").hidden = true; const g = $("grouphover"); if (g) g.innerHTML = ""; });
+  $("panel3").addEventListener("click", e => { if (e.target.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); } });
   // seats
   $("hemi").addEventListener("mousemove", hemiHover);
   $("hemicertbtn").addEventListener("click", () => { S.hemiCert = !S.hemiCert; renderHemi(); });
@@ -1934,7 +2087,7 @@ function setTerm(id) {
       PENDING.parties.forEach(p => { if (d.parties.includes(p)) S.parties.add(p); });
     }
     PENDING = null; S.hoverParty = null; $("term").value = id;
-    if (S.view === "seats") S.view = "trends";
+    if (S.view === "seats" || S.view === "groups") S.view = "trends";
     header(); renderChips(); update();
   };
   if (TCACHE.has(id)) return show(TCACHE.get(id));
@@ -2001,7 +2154,7 @@ Promise.all([fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status
   D = d; prep(); restoreHash(); header(); renderChips(); bind();
   loadTerms();
   // set on the SVGs themselves so PNG exports keep the typeface
-  ["trend", "hemi", "map", "house"].forEach(id => $(id).setAttribute("font-family", "Jost, 'Avenir Next', -apple-system, sans-serif"));
+  ["trend", "hemi", "map", "house", "groups"].forEach(id => $(id).setAttribute("font-family", "Jost, 'Avenir Next', -apple-system, sans-serif"));
   if (!modelView()) loadDraws();
   update();
   setTimeout(loadDraws, 1500);

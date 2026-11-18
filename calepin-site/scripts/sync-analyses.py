@@ -12,6 +12,8 @@ page; this script copies it beside the page's chart under assets/:
     Polls/web/polls.json                          -> assets/polling-tracker/polls.json
     Polls/web/draws.json                          -> assets/polling-tracker/draws.json
         (written by Polls/current term/R/export_web.R, which PTP.R runs)
+    Polls/web/groups.json                         -> assets/polling-tracker/groups.json
+        (the By group view; written by Polls' export_web.R from current term/R/group_trends.R)
     Polls/web/terms.json                          -> assets/polling-tracker/terms.json
     Polls/web/term-<term>.json                    -> assets/polling-tracker/term-<term>.json
         (the past Sejm terms, written by Polls/R/terms/30_export.R; terms.json lists
@@ -105,6 +107,8 @@ FILES = [
      {"nDraws", "categories", "weeks"}),
     ("Polls/web/terms.json", "assets/polling-tracker/terms.json",
      {"version", "terms"}),
+    ("Polls/web/groups.json", "assets/polling-tracker/groups.json",
+     {"meta", "months", "lists", "national", "dims"}),
     ("Voting behaviour/web/joint_penalty.json", "assets/polling-tracker/joint_penalty.json",
      {"meta", "parties", "pairs", "levels", "abstain", "splits", "splitsOn"}),
     ("Party system analysis/web/party_system.json", "assets/party-system-indicators/party_system.json",

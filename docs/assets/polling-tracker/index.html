@@ -153,6 +153,11 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
 }
 /* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
 
+/* By group: grey where the 80% interval includes zero; the interval under each figure */
+table.t td.unsure{color:var(--muted)}
+table.t .iv{display:block;font-size:10.5px;color:var(--muted);white-space:nowrap}
+table.gall td,table.gall th{white-space:nowrap}
+table.gall th .dot{width:8px;height:8px;margin-right:4px}
 .backlink{flex:none;text-align:right;font-size:11.5px;line-height:1}
 .backlink a{color:var(--muted);text-decoration:none}
 .backlink a+a{margin-left:0}
@@ -167,6 +172,7 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
     <div class="seg" id="views" role="tablist" aria-label="View">
       <button type="button" role="tab" data-v="trends">Trends</button>
       <button type="button" role="tab" data-v="seats">Seats and majorities</button>
+      <button type="button" role="tab" data-v="groups">By group</button>
       <button type="button" role="tab" data-v="pollsters">Pollsters</button>
     </div>
     <label class="switch" id="ptswrap"><input type="checkbox" id="pts" checked> Individual polls</label>
@@ -209,6 +215,24 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
           </div>
         </div>
       </section>
+      <section class="view" id="v-groups" aria-label="Voting intention by group" hidden>
+        <div class="toolbar">
+          <div class="seg small" id="gdim" role="group" aria-label="Grouping"></div>
+          <div class="seg small" id="glist" role="group" aria-label="List"></div>
+          <label class="switch"><input type="checkbox" id="gpts"> Show polls</label>
+          <span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" data-png="groups">PNG</button></span>
+        </div>
+        <p class="help" id="groupstatus" hidden></p>
+        <div id="groupbody">
+          <div class="chartbox" id="groupbox"><svg id="groups" role="img" aria-label="Voting intention by group"></svg><div class="tip" id="grouptip" hidden></div></div>
+          <p class="help" id="groupnote" style="margin-top:8px"></p>
+          <div class="card soft" style="margin-top:12px">
+            <span class="label">How each group has moved against all voters</span>
+            <div style="overflow-x:auto"><table class="t gall" id="groupall"></table></div>
+            <p class="help" id="groupallnote"></p>
+          </div>
+        </div>
+      </section>
       <section class="view" id="v-pollsters" aria-label="Pollsters" hidden>
         <p class="help" id="househelp">How far each polling house leans against the average house, in percentage points, with 80% intervals. A positive lean means the house shows the party higher than the others do. Click a house to highlight its polls on the trend chart.</p>
         <div class="toolbar" style="justify-content:flex-end"><button type="button" class="btn2 sm" data-png="house">PNG</button></div>
@@ -217,6 +241,7 @@ input[type=range].wide{width:100%;accent-color:var(--accent)}
     </div>
     <aside class="panel" id="panel" aria-label="Scenario"></aside>
     <aside class="panel" id="panel2" aria-label="Details" hidden></aside>
+    <aside class="panel" id="panel3" aria-label="The list by group" hidden></aside>
   </div>
   <div class="backlink" id="backlink"><a href="https://benstanley.eu/pages/polish-political-analyses.html" target="_top">Polish political analyses</a> · <a href="https://benstanley.eu/pages/polish-political-analyses/polling-tracker.html" target="_top">Ben Stanley · benstanley.eu</a></div>
 </div>
