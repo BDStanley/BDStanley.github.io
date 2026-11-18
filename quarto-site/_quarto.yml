@@ -33,7 +33,7 @@ project:
 
 website:
   title: "Ben Stanley"
-  description: "Associate Professor at the Centre for the Study of Democracy, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
+  description: "Associate Professor in the Faculty of Social Sciences, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
   page-navigation: false
   # No search box, as on the Calepin site (its pagefind search is switched off).
   search: false

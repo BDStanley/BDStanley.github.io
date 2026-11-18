@@ -89,14 +89,14 @@ sections:
     title: Employment
     show: true
     entries:
-      - institution: Centre for the Study of Democracy, SWPS University
+      - institution: Faculty of Social Sciences, SWPS University
         location: Warsaw, Poland
         title: Associate Professor
         start-date: 2018
         end-date: Present
         description: |
           Research and teaching on political science, populism, democratic backsliding, and electoral behaviour in Central and Eastern Europe. Principal investigator on multiple research grants.
-      - institution: Centre for the Study of Democracy, SWPS University
+      - institution: Faculty of Social Sciences, SWPS University
         location: Warsaw, Poland
         title: Assistant Professor
         start-date: 2015
@@ -791,6 +791,10 @@ sections:
     title: Honours & awards
     show: true
     entries:
+      - institution: Stanford University and Elsevier
+        title: World's top 2% most-cited scientists (single-year citation impact)
+        start-date: 2024
+        end-date: 2026
       - institution: SWPS University
         title: Rector's Award for Scientific Achievements 2024/2025
         start-date: 2025

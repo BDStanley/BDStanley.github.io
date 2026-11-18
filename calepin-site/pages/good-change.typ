@@ -68,8 +68,8 @@
 
       *Stanley Bill* is Professor of Polish Studies, University of Cambridge. He is
       the Chair of the Cambridge Committee for Russian and East European Studies
-      (CamCREES). *Ben Stanley* is Associate Professor at the Centre for the Study
-      of Democracy, SWPS University of Social Sciences and Humanities.
+      (CamCREES). *Ben Stanley* is Associate Professor in the Faculty of Social
+      Sciences, SWPS University of Social Sciences and Humanities.
     ]
   ]
 

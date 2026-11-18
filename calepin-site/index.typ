@@ -13,8 +13,8 @@
     ))
   ]
   #html.elem("div", attrs: (class: "hero-bio"))[
-    I am Associate Professor of Social Science at the Centre for the Study of
-    Democracy, SWPS University, Warsaw. A political scientist and sociologist, I
+    I am Associate Professor of Social Science in the Faculty of Social
+    Sciences, SWPS University, Warsaw. A political scientist and sociologist, I
     study populism, illiberalism, democratic backsliding and electoral behaviour
     in Central and Eastern Europe, especially Poland.
 

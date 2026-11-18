@@ -1,5 +1,17 @@
 {
-  "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes them on every build (Scopus needs its API key in the Keychain); see that file.",
+  "_about": "Citation counts for the Publications page. scripts/update-citations.py refreshes them on every build (Scopus needs its API key in the Keychain); see that file. stanford_elsevier is the exception: it is entered by hand once a year, from the Stanford-Elsevier dataset's single-year table, and the script leaves it alone (see the README's Citation counts section).",
+  "stanford_elsevier": {
+    "edition": 2026,
+    "editions_listed": [
+      2024,
+      2025,
+      2026
+    ],
+    "subfield": "Political Science & Public Administration",
+    "subfield_rank": 816,
+    "subfield_authors": 27183,
+    "doi": "10.17632/btchxktzyw.9"
+  },
   "scopus": {
     "as_of": "2026-11",
     "citations": 1696,

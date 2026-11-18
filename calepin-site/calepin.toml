@@ -8,7 +8,7 @@
 # =============================================================================
 
 title       = "Ben Stanley"
-description  = "Associate Professor at the Centre for the Study of Democracy, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
+description  = "Associate Professor in the Faculty of Social Sciences, SWPS University. Research on populism, illiberalism and authoritarianism in Central and Eastern Europe."
 base_url     = "https://benstanley.eu"
 # White "BS" on the navbar red, made by scripts/make-favicon.py. Absolute, as
 # Calepin writes it into every page's <head> as it stands. The PNG versions for

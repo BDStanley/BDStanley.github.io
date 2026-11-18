@@ -57,6 +57,8 @@ cites <- jsonlite::read_json(file.path(.root, "data", "citations.json"))
 scopus <- cites$scopus
 gs <- cites$google_scholar
 oa <- cites$openalex
+# Entered by hand once a year (see the Calepin page); named by edition, not month
+se <- cites$stanford_elsevier
 pr <- jsonlite::read_json(file.path(.root, "data", "policy-reach.json"))
 policy <- c(list(as_of = max(unlist(pr$as_of))), pr$totals)
 md <- jsonlite::read_json(file.path(.root, "data", "media-reach.json"))
@@ -66,6 +68,10 @@ latest <- max(scopus$as_of, gs$as_of, oa$as_of, policy$as_of, media$as_of)
 month <- function(ym) paste(month.name[as.integer(substr(ym, 6, 7))], substr(ym, 1, 4))
 when <- function(s) if (s$as_of != latest) paste0(" (", month(s$as_of), ")") else ""
 num <- function(n) format(n, big.mark = ",")
+ordinal <- function(n) paste0(num(n), if (n %% 100 %in% 11:13) "th" else
+  c("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")[n %% 10 + 1])
+and_list <- function(x) if (length(x) < 2) x else
+  paste(paste(x[-length(x)], collapse = ", "), "and", x[length(x)])
 cat(
   sprintf("_Updated: %s_\n\n", month(latest)),
   sprintf("- [Scopus](https://www.scopus.com/authid/detail.uri?authorId=23493968300)%s: %s (h-index = %s)\n",
@@ -74,6 +80,11 @@ cat(
           when(gs), num(gs$citations), gs$h_index, gs$i10_index),
   sprintf("- [OpenAlex](https://openalex.org/authors/A5015716464)%s: %s (h-index = %s, i10-index = %s; [reach by country and discipline](citation-reach.qmd))\n",
           when(oa), num(oa$citations), oa$h_index, oa$i10_index),
+  sprintf(paste0("- [Stanford–Elsevier top 2%% list](https://doi.org/%s) (single-year citation impact, from Scopus): ",
+                 "listed in %s; in the %s edition, %s of %s authors in %s ",
+                 "([profile](https://topcitedscientists.com/scientist/728337/))\n"),
+          se$doi, and_list(unlist(se$editions_listed)), se$edition, ordinal(se$subfield_rank),
+          num(se$subfield_authors), se$subfield),
   sprintf(paste0("- Think tanks and other policy organisations%s: %s policy documents and %s research works, ",
                  "from %s organisations in %s countries ([Sage Policy Profiles](https://policyprofiles.sagepub.com/profile/21087/ben-stanley) ",
                  "and [OpenAlex](https://openalex.org/authors/A5015716464); [reach by organisation and country](policy-reach.qmd))\n"),

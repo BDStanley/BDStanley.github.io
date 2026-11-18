@@ -14,7 +14,7 @@ image: assets/images/profile.jpg
 :::
 
 ::: hero-bio
-I am Associate Professor of Social Science at the Centre for the Study of Democracy, SWPS University, Warsaw. A political scientist and sociologist, I study populism, illiberalism, democratic backsliding and electoral behaviour in Central and Eastern Europe, especially Poland.
+I am Associate Professor of Social Science in the Faculty of Social Sciences, SWPS University, Warsaw. A political scientist and sociologist, I study populism, illiberalism, democratic backsliding and electoral behaviour in Central and Eastern Europe, especially Poland.
 
 My most recent book, [*Good Change: The Rise and Fall of Poland's Illiberal Revolution*](pages/good-change.qmd) (Stanford University Press, 2025), written with Stanley Bill, explains how the Law and Justice government won and lost power, and what its eight years reveal about the illiberal challenge to liberal democracy. I am also a co-author of *External Voting* (Palgrave Macmillan, 2023), on the electoral participation of Central European emigrants. My articles have appeared in *Comparative Political Studies*, *Perspectives on Politics*, the *Journal of Democracy*, *Party Politics* and *East European Politics*, and my 2008 article "The Thin Ideology of Populism" is widely cited.
 

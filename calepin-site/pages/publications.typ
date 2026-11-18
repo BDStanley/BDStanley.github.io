@@ -17,10 +17,14 @@
 // Citation reach page (pages/citation-reach.typ), the Policy line to the Policy
 // reach page (pages/policy-reach.typ) and the Media line to the Media reach
 // page (pages/media-reach.typ); none of them is in the navigation bar.
+// The Stanford–Elsevier line reads stanford_elsevier in data/citations.json,
+// entered by hand once a year from the dataset's single-year table; it names
+// its edition instead of a month, so it plays no part in "Updated".
 #let cites = json("/data/citations.json")
 #let scopus = cites.scopus
 #let gs = cites.google_scholar
 #let oa = cites.openalex
+#let se = cites.stanford_elsevier
 #let pr = json("/data/policy-reach.json")
 #let policy = (as_of: pr.as_of.values().sorted().last(), ..pr.totals)
 #let md = json("/data/media-reach.json")
@@ -38,12 +42,20 @@
   }
   out
 }
+// 816 -> "816th", 1 -> "1st", 12 -> "12th"
+#let ordinal(n) = {
+  let suffix = if calc.rem(n, 100) in (11, 12, 13) { "th" } else {
+    ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th").at(calc.rem(n, 10))
+  }
+  num(n) + suffix
+}
 
 _Updated: #month(latest)_
 
 - #link("https://www.scopus.com/authid/detail.uri?authorId=23493968300")[Scopus]#when(scopus): #num(scopus.citations) (h-index = #scopus.h_index)
 - #link("https://scholar.google.com/citations?user=8AO7H9gAAAAJ&hl=en")[Google Scholar]#when(gs): #num(gs.citations) (h-index = #gs.h_index, i10-index = #gs.i10_index)
 - #link("https://openalex.org/authors/A5015716464")[OpenAlex]#when(oa): #num(oa.citations) (h-index = #oa.h_index, i10-index = #oa.i10_index\; #link("citation-reach.html")[reach by country and discipline])
+- #link("https://doi.org/" + se.doi)[Stanford–Elsevier top 2% list] (single-year citation impact, from Scopus): listed in #se.editions_listed.map(str).join(", ", last: " and ")\; in the #se.edition edition, #ordinal(se.subfield_rank) of #num(se.subfield_authors) authors in #se.subfield (#link("https://topcitedscientists.com/scientist/728337/")[profile])
 - Think tanks and other policy organisations#when(policy): #num(policy.documents) policy documents and #num(policy.works) research works, from #num(policy.organisations) organisations in #num(policy.countries) countries (#link("https://policyprofiles.sagepub.com/profile/21087/ben-stanley")[Sage Policy Profiles] and #link("https://openalex.org/authors/A5015716464")[OpenAlex]\; #link("policy-reach.html")[reach by organisation and country])
 - News media#when(media): #num(media.articles) articles quoting, interviewing or citing me, in #num(media.outlets) outlets in #num(media.countries) countries and #num(media.languages) languages (Google News and Google Alerts\; #link("media-reach.html")[reach by outlet and country])
 
