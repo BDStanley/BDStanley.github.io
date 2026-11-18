@@ -1350,9 +1350,9 @@
       "question": "Do Poles expect their household's situation to improve?",
       "measure": "Average expectation for one's household's material situation in the coming year, from 0 (much worse) to 10 (much better)",
       "start": "1990-11-01",
-      "last_data": "2026-10-06",
-      "n_readings": 746,
-      "n_surveys": 467,
+      "last_data": "2026-11-03",
+      "n_readings": 762,
+      "n_surveys": 483,
       "sources": [
         "Candidate Countries Eurobarometer",
         "CBOS",
@@ -1363,7 +1363,7 @@
         "Pew Global Attitudes",
         "Polish National Election Study (PGSW)"
       ],
-      "updated": "2026-10-26",
+      "updated": "2026-11-18",
       "breakdowns": ["party", "age", "sex", "age_sex", "educ", "residence"]
     },
     {
