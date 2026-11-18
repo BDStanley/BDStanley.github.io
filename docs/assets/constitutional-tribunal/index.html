@@ -8,46 +8,60 @@
      rulings-pending.json and activity.json beside this file, written by "Constitutional Tribunal/analysis/90_export.R" and
      "91_export_rulings.R" in the Polish political analyses repo and copied in by scripts/sync-analyses.py. Logic in app.js; no libraries. -->
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
 <style>
-:root{--bg:#FFFFFF;--ink:#141414;--soft:#4B4B4B;--muted:#767676;--faint:#D5D5D5;--rule:#ECECEC;--chip:#F3F3F1;--accent:#8B0000;--tint:#F6EBEB;--warn:#8A5A00}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink)}
-body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45}
+/* shared rules this page never had, cancelled so it keeps its own look */
+.view{display:unset;flex-direction:unset;gap:unset}
+.legend span{display:unset;align-items:unset;gap:unset}
+.two{display:unset;grid-template-columns:unset;gap:unset}
+.label{font-size:unset;font-weight:unset;letter-spacing:unset;text-transform:unset;color:unset}
+.asof{font-size:unset;color:unset;line-height:unset}
+.tip b{font-weight:unset}
+.tip .r{display:unset;align-items:unset;gap:unset;justify-content:unset}
+table.t{border-collapse:unset;width:unset;font-size:unset}
+.view[hidden]{display:unset}
+table.t th{font-weight:unset;color:unset;text-align:unset;padding:unset;border-bottom:unset;font-size:unset}
+table.t td{padding:unset;text-align:unset;border-bottom:unset}
+.chip:hover{border-color:unset}
+.tip .r span:last-child{white-space:unset}
+table.t th:first-child,table.t td:first-child{text-align:unset}
+
+:root{--bg:#FFFFFF;--ink:#141414;--soft:#4B4B4B;--muted:#767676;--faint:#D5D5D5;--rule:#ECECEC;--chip:#F3F3F1;--accent:#8B0000;--tint:#F6EBEB;--warn:#8A5A00;--accent-hover:unset}
+
+body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45;font-weight:unset}
 button,select{font-family:inherit;font-size:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.app{display:flex;flex-direction:column;gap:12px;padding:12px 16px;max-width:1100px;margin:0 auto}
+
+a:hover{text-decoration:underline;color:unset}
+.app{display:flex;flex-direction:column;gap:12px;padding:12px 16px;max-width:1100px;margin:0 auto;height:unset}
 [hidden]{display:none!important}
-.muted{color:var(--muted)}.help{font-size:12.5px;color:var(--muted);margin:0}
-.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
-.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--chip);border-radius:999px}
+.help{font-size:12.5px;color:var(--muted);margin:0;line-height:unset}
+
 .seg button{border:0;border-radius:999px;padding:0 14px;height:32px;font-size:13.5px;font-weight:500;cursor:pointer;background:transparent;color:var(--soft)}
-.seg button[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
-.ctl{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--soft)}
+
 select{height:30px;border:1px solid var(--faint);border-radius:8px;padding:0 6px;background:#fff;color:var(--ink);font-size:13px}
 .chartbox{position:relative;border:1px solid var(--rule);border-radius:14px;padding:8px 6px 4px;overflow-x:auto}
-.chartbox svg{display:block;width:100%;height:auto;font-family:Jost,sans-serif}
-.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.12);max-width:300px;z-index:5}
+.chartbox svg{display:block;width:100%;height:auto;font-family:Jost,sans-serif;overflow:unset;user-select:unset}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.12);max-width:300px;z-index:5;line-height:unset;min-width:unset}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--soft)}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.card{border:1px solid var(--faint);border-radius:14px;padding:12px 16px}
+.card{border:1px solid var(--faint);border-radius:14px;padding:12px 16px;display:unset;flex-direction:unset;gap:unset}
 .card h3{margin:0 0 6px;font-size:16px}
 .kv{display:grid;grid-template-columns:150px 1fr;gap:3px 12px;font-size:13.5px;margin:0}
 .kv dt{color:var(--muted)}.kv dd{margin:0}
-.notice{font-size:13px;color:var(--warn);margin:0;padding:8px 12px;border-radius:10px;background:#FBF4E6}
+.notice{font-size:13px;color:var(--warn);margin:0;padding:8px 12px;border-radius:10px;background:#FBF4E6;line-height:unset}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
 th{font-weight:600;color:var(--soft);position:sticky;top:0;background:#fff}
 .num{text-align:right}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--faint);border-radius:999px;padding:3px 11px;font-size:12.5px;background:#fff;cursor:pointer;color:var(--soft)}
+
+.chip{border:1px solid var(--faint);border-radius:999px;padding:3px 11px;font-size:12.5px;background:#fff;cursor:pointer;color:var(--soft);display:unset;align-items:unset;gap:unset;height:unset}
 .chip[aria-pressed="true"]{background:var(--tint);border-color:var(--accent);color:var(--accent)}
 .ev{border-left:3px solid var(--faint);padding:2px 0 2px 12px;margin:0 0 12px}
 .ev .d{font-size:12.5px;color:var(--muted)}
 .ev .t{font-weight:600}
 .badge{display:inline-block;font-size:11px;border-radius:6px;padding:0 6px;margin-left:6px;background:var(--chip);color:var(--soft)}
 .badge.warn{background:#FBF4E6;color:var(--warn)}
-.charttitle{font-size:13px;font-weight:500;margin:2px 8px 4px}
+
 .tablewrap{overflow-x:auto;max-height:560px;border:1px solid var(--rule);border-radius:14px}
 </style>
 </head>
@@ -121,6 +135,7 @@ th{font-weight:600;color:var(--soft);position:sticky;top:0;background:#fff}
     <div id="events"></div>
   </section>
 </div>
+<script src="../site-ui.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

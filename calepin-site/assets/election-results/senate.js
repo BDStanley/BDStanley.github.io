@@ -347,6 +347,7 @@ function csvSenate() {
 function selectDistrict(okreg, scroll) {
   SS.sel = okreg; SS.person = null; senateMap(); senateCard(); senateTable(); saveHash();
   if (scroll) $("sdcard").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  else { const r = $("sdisttable").querySelector(`tr[data-d="${okreg}"]`); if (r) SiteUI.snapRow(r); }   // chosen on the map: bring its row into view in the table's box
 }
 function bindSenate() {
   const seg = (id, key) => $(id).addEventListener("click", e => {

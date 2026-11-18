@@ -72,7 +72,7 @@ function viewMap() {
   const by = Object.fromEntries(rows.map(r => [r.okreg, r]));
   $("#main").innerHTML = `<p class="lead">What a vote is worth depends on where it is cast. Seats follow residents, at least seven to a constituency, so a registered elector, or a vote cast, counts for more in some constituencies than others. Choose a measure and a constituency.</p>
    <div class="toolbar"><label class="ctl" for="ms">Colour by <select class="sel" id="ms">${ms.map(k => `<option value="${k}" ${k === m ? "selected" : ""}>${MEASURES[k].label}</option>`).join("")}</select></label>
-   <div class="seg small" role="group" aria-label="Map type"><button data-mode="geo" aria-pressed="${S.mode === "geo"}">Map</button><button data-mode="circles" aria-pressed="${S.mode === "circles"}">Circles by electors</button></div></div>
+   <div class="seg small" role="group" aria-label="Map type"><button data-mode="geo" aria-pressed="${S.mode === "geo"}">Map</button><button data-mode="circles" aria-pressed="${S.mode === "circles"}">Cartogram</button></div></div>
    <div class="mapwrap"><div class="chartbox"><div id="mp"></div><div class="grad" style="background:linear-gradient(90deg,${sc.lc},${sc.mid ? "rgb(245,245,243)," : ""}${sc.hc})"></div>
      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>${def.fmt ? def.fmt(sc.lo) : f2(sc.lo)}</span>${sc.mid ? "<span>1 (average)</span>" : ""}<span>${def.fmt ? def.fmt(sc.hi) : f2(sc.hi)}</span></div>
      <p class="help" style="margin-top:8px">${esc(def.help)}${setOf(S.year) !== "sejm2001" ? " This election used the " + set.label.replace("Sejm constituencies", "Sejm constituencies of") .replace("of,", "of") + "." : ""}</p></div>

@@ -17,43 +17,50 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
 <style>
-:root{
-  --bg:#FFFFFF; --ink:#141414; --soft:#4B4B4B; --muted:#767676; --faint:#D5D5D5; --rule:#ECECEC;
-  --chip:#F3F3F1; --accent:#8B0000; --accent-hover:#495057; --tint:#F6EBEB;
-  --sejm:#8B0000; --senate:#a15c00; --pres:#495057; --ep:#00796b; --ref:#9c2d74;
-}
-*{box-sizing:border-box}
+/* shared rules this page never had, cancelled so it keeps its own look */
+.app{height:unset;display:unset;flex-direction:unset;gap:unset;padding:unset}
+.switch{display:unset;align-items:unset;gap:unset;font-size:unset;cursor:unset;user-select:unset}
+.switch input{appearance:unset;width:unset;height:unset;border-radius:unset;background:unset;position:unset;cursor:unset;margin:unset;transition:unset}
+.switch input::after{content:unset;position:unset;top:unset;left:unset;width:unset;height:unset;border-radius:unset;background:unset;transition:unset}
+.switch input:checked{background:unset}
+.switch input:checked::after{left:unset}
+.view{display:unset;flex-direction:unset;gap:unset}
+.help{font-size:unset;color:unset;line-height:unset;margin:unset}
+.two{display:unset;grid-template-columns:unset;gap:unset}
+.view[hidden]{display:unset}
+table.t th{font-weight:unset;color:unset;text-align:unset;padding:unset;border-bottom:unset;font-size:unset}
+table.t td{padding:unset;text-align:unset;border-bottom:unset}
+.tip .r span:last-child{white-space:unset}
+table.t th:first-child,table.t td:first-child{text-align:unset}
+
+:root{--bg:#FFFFFF;--ink:#141414;--soft:#4B4B4B;--muted:#767676;--faint:#D5D5D5;--rule:#ECECEC;--chip:#F3F3F1;--accent:#8B0000;--accent-hover:#495057;--tint:#F6EBEB;--sejm:#8B0000;--senate:#a15c00;--pres:#495057;--ep:#00796b;--ref:#9c2d74;--warn:unset}
+
 [hidden]{display:none !important}
-html,body{margin:0;background:var(--bg);color:var(--ink)}
-body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-weight:400;
-  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45}
-button,input,select{font-family:inherit;font-size:inherit}
-a{color:var(--accent);text-decoration:none}
-a:hover{color:var(--accent-hover)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+body{font-family:Jost,"Avenir Next",-apple-system,"Helvetica Neue",sans-serif;font-weight:400;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45}
+
 .wrap{max-width:1240px;margin:0 auto;padding:0 16px 40px}
-.label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
-.muted{color:var(--muted)}
+
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:12px 0 8px}
 .asof{font-size:12.5px;color:var(--muted);line-height:1.45;max-width:760px}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .btn2{height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--faint);background:#fff;color:var(--ink);font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
-.btn2.sm{height:28px;padding:0 12px;font-size:12px}
-.btn2:hover{border-color:var(--accent);color:var(--accent)}
+
 .linkbtn{border:0;background:transparent;padding:0;color:var(--accent);cursor:pointer;font-size:12.5px;font-weight:500}
-.linkbtn:hover{color:var(--accent-hover)}
+
 /* ---- sticky election strip ---- */
 .strip{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   border-bottom:1px solid var(--rule);margin:0 -16px;padding:8px 16px;display:flex;flex-direction:column;gap:6px}
 .striprow{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;min-width:0}
-.seg{display:inline-flex;gap:2px;padding:3px;background:var(--chip);border-radius:999px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.seg{display:inline-flex;gap:2px;padding:3px;background:var(--chip);border-radius:999px;max-width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:unset}
 .seg::-webkit-scrollbar{display:none}
 .seg button{border:0;border-radius:999px;padding:0 13px;height:32px;font-size:13.5px;font-weight:500;cursor:pointer;background:transparent;color:var(--soft);white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:6px}
-.seg button[aria-pressed="true"]{background:#fff;color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
 .seg button:hover:not([aria-pressed="true"]){color:var(--ink)}
 .seg button:disabled{opacity:.4;cursor:not-allowed}
-.seg.small button{height:28px;font-size:12.5px;padding:0 10px}
+
 .seg.timeline{flex:1 1 auto;min-width:0}
 .tdot{width:8px;height:8px;border-radius:50%;flex:none;display:inline-block}
 .tdot.sejm{background:var(--sejm)} .tdot.senate{background:var(--senate)} .tdot.presidential{background:var(--pres)} .tdot.ep{background:var(--ep)} .tdot.referendum{background:var(--ref)}
@@ -82,7 +89,7 @@ a:hover{color:var(--accent-hover)}
 .stack{display:flex;flex-direction:column;gap:14px;min-width:0}
 .chartbox{position:relative;border:1px solid var(--rule);border-radius:14px;padding:8px 6px 4px;min-width:0}
 .chartbox.plain{border:0;padding:0}
-.chartbox svg{display:block;width:100%;height:auto;overflow:visible}
+.chartbox svg{display:block;width:100%;height:auto;overflow:visible;font-family:unset;user-select:unset}
 .charttitle{font-size:13px;font-weight:500;margin:2px 8px 2px}
 .chartnote{font-size:12px;color:var(--muted);margin:2px 8px 6px;line-height:1.4}
 .card{border:1px solid var(--faint);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
@@ -94,13 +101,10 @@ a:hover{color:var(--accent-hover)}
 .badge{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:999px;background:var(--tint);color:var(--accent);vertical-align:2px;margin-left:6px}
 .empty{padding:28px 10px;text-align:center;color:var(--muted);font-size:13px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--soft)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+
 .sw{width:12px;height:12px;border-radius:3px;flex:none;display:inline-block}
-.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;
-  font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:5;min-width:170px;max-width:310px}
-.tip b{font-weight:600}
-.tip .r{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--faint);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:5;min-width:170px;max-width:310px}
+
 .tip .r > span:first-child{display:flex;align-items:center;gap:6px;min-width:0}
 .tip .r > span:last-child{white-space:nowrap}
 .tip .sub{color:var(--muted);font-size:11.5px}
@@ -169,8 +173,7 @@ ul.sugg li span{color:var(--muted);font-size:11.5px;display:block}
 .proftable table.t td,.proftable table.t th{padding:4px 6px;font-size:12px}
 table.t td.j{color:#8B0000}
 #zonetable table.t{max-width:520px}
-.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
-.toast.on{opacity:1}
+
 .loading{padding:40px 0;color:var(--muted);font-size:15px}
 .bigno{font-size:34px;font-weight:300;color:var(--accent);line-height:1}
 ul.src{margin:0;padding-left:16px;font-size:12px;color:var(--soft)}
@@ -185,7 +188,7 @@ ul.src li{margin:1px 0}
   dl.facts{grid-template-columns:minmax(90px,max-content) minmax(0,1fr)}
 }
 /* Chart labels in thin Jost, as across the site; an explicit font-weight (emphasis) keeps its weight. */
-svg text:not([font-weight]){font-weight:300}
+
 </style>
 </head>
 <body>
@@ -250,7 +253,7 @@ svg text:not([font-weight]){font-weight:300}
       <div><span class="label">Districts</span><h2 id="h-sdist">Every district</h2></div>
       <input id="sdq" type="search" placeholder="District, candidate" autocomplete="off" aria-label="Find a district or candidate" style="height:32px;padding:0 12px;border:1px solid var(--faint);border-radius:999px;min-width:200px">
     </div>
-    <div class="scroll"><table class="t" id="sdisttable"></table></div>
+    <div class="scroll" style="max-height:560px;overflow:auto"><table class="t" id="sdisttable"></table></div>
   </section>
 
   <section class="sec" id="senatemove" aria-labelledby="h-smove" hidden>
@@ -377,6 +380,7 @@ svg text:not([font-weight]){font-weight:300}
   </section>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<script src="../site-ui.js"></script>
 <script src="../chart-export.js"></script>
 <script src="../cartogram.js"></script>
 <script src="app.js"></script>

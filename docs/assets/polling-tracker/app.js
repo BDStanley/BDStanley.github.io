@@ -658,7 +658,8 @@ function updatePanel() {
       const sub = $("sub-" + slug(p));
       const bits = [];
       if (model && p !== "MN") { const i = PIDX[p]; if (wk.voteLo[i] != null) bits.push(`80% range ${wk.voteLo[i].toFixed(1)}–${wk.voteHi[i].toFixed(1)}%`); }
-      if (r.pThr != null && r.pThr < 0.995) bits.push(`chance of clearing 5%: ${prob(r.pThr)}`);
+      // the chance is shown only where the threshold is in doubt (the site's rule, SiteUI.inDoubt)
+      if (r.pThr != null && SiteUI.inDoubt(cur.tot[k], R.thresholdParty, r.pThr)) bits.push(`chance of clearing 5%: ${prob(r.pThr)}`);
       else if (r.pThr == null && !e.mnOnly && cur.tot[k] * 100 < 5 && S.shares[p] > 0) bits.push("below the 5% threshold");
       sub.textContent = bits.join(" · ");
       sub.hidden = !bits.length;
@@ -672,7 +673,7 @@ function updatePanel() {
     const lr = $("jl-" + j); if (lr && !lr.contains(document.activeElement)) syncList(j);
     const below = e.vote < 100 * R.thresholdJoint;
     const s23 = sum(e.members.map(p => R.seats2023[p] || 0));
-    $("jt-" + j).innerHTML = `<span>${pct(e.vote)}${respOn() && Math.abs(e.vote - e.rawVote) > 0.05 ? ` <span class="muted">(${pct(e.rawVote)} before voter response)</span>` : ""}${below ? ` <span class="neg">below 8%</span>` : ""}${r.pThr != null && r.pThr < 0.995 ? ` <span class="muted">· clears 8%: ${prob(r.pThr)}</span>` : ""}</span>
+    $("jt-" + j).innerHTML = `<span>${pct(e.vote)}${respOn() && Math.abs(e.vote - e.rawVote) > 0.05 ? ` <span class="muted">(${pct(e.rawVote)} before voter response)</span>` : ""}${below ? ` <span class="neg">below 8%</span>` : ""}${r.pThr != null && SiteUI.inDoubt(e.vote / 100, R.thresholdJoint, r.pThr) ? ` <span class="muted">· clears 8%: ${prob(r.pThr)}</span>` : ""}</span>
       <span class="pseats"><span class="n">${r.seats}</span>${r.lo != null ? ` <span class="muted" style="font-size:11.5px">${r.lo}–${r.hi}</span>` : ""} <span class="${cls(r.seats - s23)}" style="font-size:11.5px">${signed(r.seats - s23)}</span></span>`;
   });
   SP.forEach(p => { const row = $("row-" + slug(p)); if (row) row.classList.toggle("hl", S.hoverParty === p); });
@@ -756,7 +757,7 @@ function renderTrends() {
   const box = $("trendbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 520));
   const V = VD(), T = V.trend, dates = T.dates, last = dates[dates.length - 1];
   // Room on the right for the longest end label ("Solidarność / AWS 35.4%")
-  const endChars = Math.max(0, ...V.parties.filter(p => T.series[p].med[dates.length - 1] != null).map(p => (W < 600 ? short(p) : p).length + 6));
+  const endChars = Math.max(0, ...V.parties.filter(p => T.series[p].med[dates.length - 1] != null).map(p => (W < 600 ? short(p) : p).length + 8));
   const m = { l: 34, r: Math.max(W < 520 ? 92 : 118, 16 + 6.6 * endChars), t: S.events ? 38 : 22, b: 34 };
   const span = S.period === "all" ? null : +S.period * 30.44;
   const a = span ? Math.max(dates[0], last - span) : dates[0], b = last;
@@ -836,7 +837,10 @@ function renderTrends() {
   repel(labs, 13, m.t, H - m.b);
   labs.forEach(l => {
     const ly0 = y(l.v);
-    o.push(`<line x1="${x(last) + 3}" x2="${x(last) + 10}" y1="${ly0}" y2="${l.y}" stroke="#CCC"/><text x="${x(last) + 13}" y="${l.y + 4}" font-size="11.5" fill="${col(l.p)}" font-weight="500" fill-opacity="${fade(l.p) ? 0.3 : 1}">${esc(W < 600 ? short(l.p) : l.p)} ${l.v.toFixed(1)}%</text>`);
+    // House style (SiteUI.endLabels): a dot in the party's colour, the name in ink, the figure in house red;
+    // the labels are already pushed apart above, so endLabels draws each where repel() put it
+    const txt = SiteUI.endLabels([{ y: l.y, label: W < 600 ? short(l.p) : l.p, value: l.v.toFixed(1) + "%", colour: col(l.p) }], x(last) + 13, { size: 11.5 });
+    o.push(`<line x1="${x(last) + 3}" x2="${x(last) + 10}" y1="${ly0}" y2="${l.y}" stroke="#CCC"/>` + txt.replace("<text ", `<text font-weight="500" fill-opacity="${fade(l.p) ? 0.3 : 1}" `));
   });
   o.push(`<g id="trendhover"></g><rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" id="trendhit" style="cursor:crosshair"/>`);
   const svg = $("trend");
@@ -912,12 +916,18 @@ function hemiLayout(n, rows = 11) {
 }
 // ---- the seats in the hemicycle, one dot for each seat in one constituency ---------------------
 // A list's k-th seat in a constituency is won in the share of simulated parliaments in which the list wins
-// at least k seats there. A list's dots are its most probable seats, as many as it is projected to win.
+// at least k seats there. The dots are dealt out by seatAssign(): no constituency holds more dots than it has seats
+// and no list more than its projected total, so each dot is a seat the list is projected to hold.
 const SEAT_CERTAIN = 0.975;   // won in at least this share of the simulations: certain
-const SEAT_PROBABLE = 0.5;    // from here to SEAT_CERTAIN: probable; below it, a toss-up
-const seatCat = p => (p >= SEAT_CERTAIN ? "certain" : p >= SEAT_PROBABLE ? "probable" : "toss-up");
+const SEAT_PROBABLE = 0.66;   // from here to SEAT_CERTAIN: probable
+const SEAT_POSSIBLE = 0.5;    // from here to SEAT_PROBABLE: possible (in play, but the list is more likely than not to take it); below it, a toss-up
+// A dot is a seat the list is projected to hold, so its category is always the chance of that list, never of a contender
+const seatCat = p => (p >= SEAT_CERTAIN ? "certain" : p >= SEAT_PROBABLE ? "probable" : p >= SEAT_POSSIBLE ? "possible" : "toss-up");
+const pc1 = v => (v * 100).toFixed(1).replace(/\.0$/, ""), pc0 = v => String(Math.round(v * 100));
+const SEAT_CAT_NOTE = () => `Certain: won in ${pc1(SEAT_CERTAIN)}% or more of the simulations. Probable: ${pc0(SEAT_PROBABLE)}% to ${pc1(SEAT_CERTAIN)}%. Possible: ${pc0(SEAT_POSSIBLE)}% to ${pc0(SEAT_PROBABLE)}%, the seat is in play but the list is more likely than not to take it. Toss-up: under ${pc0(SEAT_POSSIBLE)}%.`;
 const ord = n => { const v = n % 100; return n + (["th", "st", "nd", "rd"][(v - 20) % 10] || ["th", "st", "nd", "rd"][v] || "th"); };
-const SEATPROB = new WeakMap();
+const SEATPROB = new WeakMap(), SEATASSIGN = new WeakMap();
+const SEAT_OUTSIDE = 0.33;    // "outside possibility": a seat projected for another list, where this list is the next most likely to take it with at least this chance
 function hemiSim() {
   const cur = CUR;
   let sim = cur.sim;
@@ -945,6 +955,42 @@ function seatTable(sim) {
   SEATPROB.set(sim, tab);
   return tab;
 }
+// Deal each constituency's seats to the lists, most probable first: a list's j-th seat in a constituency goes to it
+// only if the constituency still has a seat and the list has not reached its projected total. A seat a list could win
+// but another list is more likely to hold is not its dot; outside possibilities (below) are counted apart
+// (also[k][ci]). Only if a list is still short of its total (medians need not add up exactly) are
+// its next seats placed beyond a constituency's magnitude.
+function seatAssign(sim, names, totals) {
+  const key = names.join("|") + "#" + totals.join(","), hit = SEATASSIGN.get(sim);
+  if (hit && hit.key === key) return hit.res;
+  const tab = seatTable(sim), cand = [];
+  names.forEach((nm, k) => (tab[nm] || []).forEach(st => cand.push({ k, ci: st.ci, j: st.j, p: st.p, used: false })));
+  cand.sort((a, b) => b.p - a.p || a.ci - b.ci || a.j - b.j || a.k - b.k);
+  const filled = new Int32Array(NC), taken = names.map(() => new Int32Array(NC)), got = names.map(() => []);
+  const pass = cap => {
+    for (let changed = true; changed;) {
+      changed = false;
+      for (const st of cand) {
+        if (st.used || got[st.k].length >= totals[st.k] || st.j !== taken[st.k][st.ci] + 1) continue;
+        if (cap && filled[st.ci] >= C[st.ci].magnitude) continue;
+        st.used = true; taken[st.k][st.ci]++; filled[st.ci]++; got[st.k].push(st); changed = true;
+      }
+    }
+  };
+  pass(true); pass(false);
+  const also = names.map(() => new Int32Array(NC));
+  // Outside possibilities, as on the Election 2027 page: in each constituency the least secure projected seats are
+  // matched, in order, to the likeliest seats beyond the projection; a list counts one where it is that next most
+  // likely list, with a chance of SEAT_OUTSIDE or more
+  for (let ci = 0; ci < NC; ci++) {
+    const held = cand.filter(st => st.used && st.ci === ci).sort((a, b) => a.p - b.p);
+    const next = cand.filter(st => !st.used && st.ci === ci).sort((a, b) => b.p - a.p);
+    next.forEach((st, i) => { if (i < held.length && st.p >= SEAT_OUTSIDE && held[i].k !== st.k) also[st.k][ci]++; });
+  }
+  const res = { got: got.map(L => L.map(({ ci, j, p }) => ({ ci, j, p }))), also };
+  SEATASSIGN.set(sim, { key, res });
+  return res;
+}
 let HEMI = null;
 function renderHemi() {
   const cur = CUR, ents = cur.ents;
@@ -967,9 +1013,10 @@ function renderHemi() {
   // Each list's most probable seats, dealt to its blocks; within a block the most certain are at the end of
   // the arc away from the centre of the chamber, so the toss-ups sit where the blocks meet
   const sim = hemiSim(), tab = sim ? seatTable(sim) : null, info = new Array(total).fill(null), byEnt = new Map();
+  const asg = sim ? seatAssign(sim, ents.map(e => e.name), ents.map((e, k) => cur.seats[k])) : null;
   { let at = 0; blocks.forEach(bk => { bk.at = at; at += bk.n; if (!byEnt.has(bk.k)) byEnt.set(bk.k, []); byEnt.get(bk.k).push(bk); }); }
   if (tab) byEnt.forEach((bks, k) => {
-    const L = tab[ents[k].name] || []; let take = 0;
+    const L = asg.got[k]; let take = 0;
     bks.forEach(bk => {
       const chunk = L.slice(take, take + bk.n); take += bk.n;
       const m = pts[bk.at + (bk.n >> 1)], left = m.x < 0;
@@ -989,6 +1036,7 @@ function renderHemi() {
       const pt = pts[i], st = info[i], cat = cert && st ? seatCat(st.p) : "certain";
       let fill = col(bk.p), fo = dim ? 0.18 : 1, stroke = "";
       if (cat === "probable") { fo = dim ? 0.1 : 0.5; }
+      else if (cat === "possible") { fo = dim ? 0.05 : 0.2; stroke = ` stroke="${col(bk.p)}" stroke-opacity="${dim ? 0.3 : 1}" stroke-width="0.01"`; }
       else if (cat === "toss-up") { fill = "#fff"; fo = dim ? 0.3 : 1; stroke = ` stroke="${col(bk.p)}" stroke-width="0.014"`; }
       o.push(`<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${fill}" fill-opacity="${fo}"${stroke} data-k="${bk.k}" data-i="${i}"/>`);
     }
@@ -999,27 +1047,28 @@ function renderHemi() {
   const svg = $("hemi");
   svg.setAttribute("viewBox", "-2.2 -2.28 4.4 2.36");
   svg.innerHTML = o.join("");
-  HEMI = { total, outer, labels, info, sim, cert: null };
+  HEMI = { total, outer, labels, info, sim, cert: null, asg };
   const cbtn = $("hemicertbtn");
   cbtn.disabled = !tab; cbtn.setAttribute("aria-pressed", String(cert));
   cbtn.title = tab ? "Shade each seat by how likely it is to be won" : "Needs the seat simulation, which loads with the scenario data";
   if (cert) {
     const entSeats = {};
     const crows = [...byEnt.keys()].map(k => {
-      const e = ents[k], L = info.filter((st, ii) => st && blocks.some(bk => bk.k === k && ii >= bk.at && ii < bk.at + bk.n)), c = { certain: 0, probable: 0, "toss-up": 0 };
+      const e = ents[k], L = info.filter((st, ii) => st && blocks.some(bk => bk.k === k && ii >= bk.at && ii < bk.at + bk.n)), c = { certain: 0, probable: 0, possible: 0, "toss-up": 0 };
       L.forEach(st => { c[seatCat(st.p)]++; });
       entSeats[k] = L;
-      return { k, name: e.name, colour: e.colour, seats: cur.seats[k], certain: c.certain, probable: c.probable, toss: c["toss-up"] };
+      return { k, name: e.name, colour: e.colour, seats: cur.seats[k], certain: c.certain, probable: c.probable, possible: c.possible, toss: c["toss-up"] };
     });
     HEMI.cert = { rows: crows };
     HEMI.entSeats = entSeats;
-    const rows = crows.map(r => `<tr class="clickrow" data-k="${r.k}" tabindex="0" role="button" title="Seats of ${esc(r.name)} by constituency"><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.toss}</td></tr>`).join("");
+    const rows = crows.map(r => `<tr class="clickrow" data-k="${r.k}" tabindex="0" role="button" title="Seats of ${esc(r.name)} by constituency"><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.possible}</td><td>${r.toss}</td></tr>`).join("");
     $("hemicert").innerHTML = `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;margin:6px 0 2px">
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more)</span>
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)</span>
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)</span></div>
-      <table class="t"><tr><th>List</th><th>Seats</th><th>Certain</th><th>Probable</th><th>Toss-up</th></tr>${rows}</table>
-      <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. The chance is the share of simulated parliaments in which the list wins at least that many seats there (certain, 97.5% or more; probable, 50% to 97.5%). Within each list the most certain seats are at the outer end of its arc. Click a list for its seats in each constituency.</p>`;
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${pc1(SEAT_CERTAIN)}% or more)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${pc0(SEAT_PROBABLE)}–${pc1(SEAT_CERTAIN)}%)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.7" fill="#555" fill-opacity=".2" stroke="#555" stroke-width=".9"/></svg> Possible (${pc0(SEAT_POSSIBLE)}–${pc0(SEAT_PROBABLE)}%)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${pc0(SEAT_POSSIBLE)}%)</span></div>
+      <table class="t"><tr><th>List</th><th>Seats</th><th>Certain</th><th>Probable</th><th>Possible</th><th>Toss-up</th></tr>${rows}</table>
+      <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency, dealt to the list projected to hold it: each constituency's seats go to the lists most likely to win them, as many as it has, and each list gets as many dots as its projected total. A seat a list could win but another list is more likely to hold is not counted for it. The chance is the share of simulated parliaments in which the list wins at least that many seats there. ${SEAT_CAT_NOTE()} Within each list the most certain seats are at the outer end of its arc. Click a list for its seats in each constituency, and its outside possibilities.</p>`;
   } else $("hemicert").innerHTML = "";
   const lab = $("hemilabel");
   lab.innerHTML = cur.mwc
@@ -1030,15 +1079,16 @@ function renderHemi() {
 let MODAL_FROM = null;
 function openSeatModal(k) {
   const cur = CUR, e = cur.ents[k], L = (HEMI.entSeats && HEMI.entSeats[k]) || [];
-  const per = C.map(() => ({ certain: 0, probable: 0, toss: 0 }));
-  L.forEach(st => { const c = per[st.ci], cat = seatCat(st.p); if (cat === "certain") c.certain++; else if (cat === "probable") c.probable++; else c.toss++; });
+  const per = C.map(() => ({ certain: 0, probable: 0, possible: 0, toss: 0 }));
+  L.forEach(st => { const c = per[st.ci], cat = seatCat(st.p); if (cat === "certain") c.certain++; else if (cat === "probable") c.probable++; else if (cat === "possible") c.possible++; else c.toss++; });
   const cell = v => v ? v : `<span class="muted">0</span>`;
-  const tot = per.reduce((a, c) => ({ certain: a.certain + c.certain, probable: a.probable + c.probable, toss: a.toss + c.toss }), { certain: 0, probable: 0, toss: 0 });
-  const rows = C.map((c, ci) => { const x = per[ci], n = x.certain + x.probable + x.toss; return `<tr><td>${c.okreg}. ${esc(c.name)}</td><td>${c.magnitude}</td><td>${n ? `<b>${n}</b>` : `<span class="muted">0</span>`}</td><td>${cell(x.certain)}</td><td>${cell(x.probable)}</td><td>${cell(x.toss)}</td></tr>`; }).join("");
+  const also = HEMI.asg ? HEMI.asg.also[k] : null, alsoTot = also ? sum(Array.from(also)) : 0;
+  const tot = per.reduce((a, c) => ({ certain: a.certain + c.certain, probable: a.probable + c.probable, possible: a.possible + c.possible, toss: a.toss + c.toss }), { certain: 0, probable: 0, possible: 0, toss: 0 });
+  const rows = C.map((c, ci) => { const x = per[ci], n = x.certain + x.probable + x.possible + x.toss; return `<tr><td>${c.okreg}. ${esc(c.name)}</td><td>${c.magnitude}</td><td>${n ? `<b>${n}</b>` : `<span class="muted">0</span>`}</td><td>${cell(x.certain)}</td><td>${cell(x.probable)}</td><td>${cell(x.possible)}</td><td>${cell(x.toss)}</td>${also ? `<td>${cell(also[ci])}</td>` : ""}</tr>`; }).join("");
   $("seatmodaltitle").innerHTML = `<span class="dot" style="background:${e.colour};margin-right:6px"></span>${esc(e.name)}: ${cur.seats[k]} seats by constituency`;
-  $("seatmodalbody").innerHTML = `<p class="help" style="margin:0 0 6px">The seats shown as dots for this list, by how likely each is. Certain: won in at least ${(SEAT_CERTAIN * 100).toFixed(1)}% of simulations; probable: ${Math.round(SEAT_PROBABLE * 100)}% to ${(SEAT_CERTAIN * 100).toFixed(1)}%; toss-up: under ${Math.round(SEAT_PROBABLE * 100)}%. ${cur.mode === "model" ? "Model estimates" : "Scenario"} for ${dstr(cur.wk.date)}.</p>
-    <table class="t hist"><tr><th>Constituency</th><th>District magnitude</th><th>Seats won</th><th>Certain</th><th>Probable</th><th>Toss-up</th></tr>${rows}
-    <tr style="font-weight:600"><td>All 41</td><td>${sum(C.map(c => c.magnitude))}</td><td>${tot.certain + tot.probable + tot.toss}</td><td>${tot.certain}</td><td>${tot.probable}</td><td>${tot.toss}</td></tr></table>`;
+  $("seatmodalbody").innerHTML = `<p class="help" style="margin:0 0 6px">The seats shown as dots for this list, by how likely each is: the seats it is projected to hold. ${SEAT_CAT_NOTE()}${also ? ` Outside possibility: a seat projected for another list, where this list is the next most likely to take it, with a chance of ${pc0(SEAT_OUTSIDE)}% or more; these are not counted in its seats.` : ""} ${cur.mode === "model" ? "Model estimates" : "Scenario"} for ${dstr(cur.wk.date)}.</p>
+    <table class="t hist"><tr><th>Constituency</th><th style="white-space:normal;line-height:1.15">District magnitude</th><th>Seats won</th><th>Certain</th><th>Probable</th><th>Possible</th><th>Toss-up</th>${also ? `<th style="white-space:normal;line-height:1.15">Outside possibility</th>` : ""}</tr>${rows}
+    <tr style="font-weight:600"><td>All 41</td><td>${sum(C.map(c => c.magnitude))}</td><td>${tot.certain + tot.probable + tot.possible + tot.toss}</td><td>${tot.certain}</td><td>${tot.probable}</td><td>${tot.possible}</td><td>${tot.toss}</td>${also ? `<td>${alsoTot}</td>` : ""}</tr></table>`;
   MODAL_FROM = document.activeElement;
   $("seatmodal").hidden = false; $("seatmodalclose").focus();
 }
@@ -1510,28 +1560,28 @@ async function png(only) {
   const POS = "#2E7D32", NEG = "#A31515";
   if (only === "hemi" && HEMI && HEMI.cert) {
     const cert = HEMI.cert;
-    const certNote = `Each dot is one seat in one constituency: a list's most probable seats, as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
+    const certNote = `Each dot is one seat in one constituency, dealt to the list projected to hold it: each constituency's seats go to the lists most likely to win them, and each list gets as many as its projected total. A seat's chance is the share of the simulated parliaments in which the list wins at least that many seats in the constituency, for example its 3rd seat in a district with a magnitude of 8 (eight seats). ${SEAT_CAT_NOTE()} Seats of one list in one constituency are interchangeable: the model has no candidates. Within each list the most certain seats are at the outer end of its arc; the toss-ups sit where the lists meet. ${CUR.mode === "model" ? "Model estimates" : "Scenario"} for ${dlong(CUR.wk.date)}, from ${HEMI.sim ? HEMI.sim.n : 250} simulations.`;
     const certLines = wrapTo(certNote, "10.5px " + F, SW - 2 * pad);
     secs.push({ h: 26 + (cert.rows.length + 1) * 17 + 10 + certLines.length * 14 + 18, draw: y0 => {
-      const key = [["certain", `Certain (${(SEAT_CERTAIN * 100).toFixed(1)}% or more of simulations)`], ["probable", `Probable (${Math.round(SEAT_PROBABLE * 100)}–${(SEAT_CERTAIN * 100).toFixed(1)}%)`], ["toss-up", `Toss-up (under ${Math.round(SEAT_PROBABLE * 100)}%)`]];
+      const key = [["certain", `Certain (${pc1(SEAT_CERTAIN)}% or more)`], ["probable", `Probable (${pc0(SEAT_PROBABLE)}–${pc1(SEAT_CERTAIN)}%)`], ["possible", `Possible (${pc0(SEAT_POSSIBLE)}–${pc0(SEAT_PROBABLE)}%)`], ["toss-up", `Toss-up (under ${pc0(SEAT_POSSIBLE)}%)`]];
       g.font = "11px " + F; g.textAlign = "left";
       let lx = pad;
       key.forEach(([c, t]) => {
         g.beginPath(); g.arc(lx + 6, y0 + 6, 5, 0, 2 * Math.PI);
         if (c === "toss-up") { g.fillStyle = "#fff"; g.fill(); g.strokeStyle = "#555"; g.lineWidth = 1.2; g.stroke(); }
-        else { g.globalAlpha = c === "probable" ? 0.5 : 1; g.fillStyle = "#555"; g.fill(); g.globalAlpha = 1; }
+        else { g.globalAlpha = c === "probable" ? 0.5 : c === "possible" ? 0.2 : 1; g.fillStyle = "#555"; g.fill(); g.globalAlpha = 1; if (c === "possible") { g.strokeStyle = "#555"; g.lineWidth = 0.9; g.stroke(); } }
         g.fillStyle = "#4B4B4B"; g.fillText(t, lx + 16, y0 + 10); lx += 16 + g.measureText(t).width + 20;
       });
       y0 += 26;
-      const nx = [pad + 200, pad + 262, pad + 332, pad + 402];
+      const nx = [pad + 200, pad + 262, pad + 332, pad + 402, pad + 472];
       g.fillStyle = "#767676"; g.font = "500 11px " + F; g.fillText("List", pad + 16, y0 + 10);
-      g.textAlign = "right"; ["Seats", "Certain", "Probable", "Toss-up"].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
-      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 410, y0 + 15); g.stroke();
+      g.textAlign = "right"; ["Seats", "Certain", "Probable", "Possible", "Toss-up"].forEach((t, j) => g.fillText(t, nx[j], y0 + 10));
+      g.strokeStyle = "#DDD"; g.lineWidth = 1; g.beginPath(); g.moveTo(pad, y0 + 15); g.lineTo(pad + 480, y0 + 15); g.stroke();
       cert.rows.forEach((r, ri) => {
         const ry = y0 + 17 + (ri + 1) * 17 - 5;
         g.textAlign = "left"; g.fillStyle = r.colour; g.beginPath(); g.arc(pad + 5, ry - 4, 4, 0, 2 * Math.PI); g.fill();
         g.fillStyle = "#141414"; g.font = "11px " + F; g.fillText(r.name, pad + 16, ry);
-        g.textAlign = "right"; [r.seats, r.certain, r.probable, r.toss].forEach((v, j) => g.fillText(String(v), nx[j], ry));
+        g.textAlign = "right"; [r.seats, r.certain, r.probable, r.possible, r.toss].forEach((v, j) => g.fillText(String(v), nx[j], ry));
       });
       g.textAlign = "left";
       const ty = y0 + 17 + (cert.rows.length + 1) * 17 + 10;

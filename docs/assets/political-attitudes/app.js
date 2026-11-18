@@ -272,7 +272,8 @@ function draw() {
     if (over > 0) right.forEach(l => { l.y -= over; });
     right.forEach(l => {
       const t = el("text", { x: X(monthYear(i1)) + 6, y: l.y + 4, "font-size": 12, fill: l.s.colour, "font-weight": 500 }, svg);
-      t.textContent = l.s.national ? val(l.s.median[l.i]) : `${l.s.name} ${val(l.s.median[l.i])}`;
+      if (!l.s.national) t.textContent = `${l.s.name} `;
+      el("tspan", { fill: "#8B0000" }, t).textContent = val(l.s.median[l.i]);
     });
     early.forEach(l => {
       const t = el("text", { x: X(monthYear(l.i)) + 5, y: l.y + 4, "font-size": 11.5, fill: l.s.colour, "font-weight": 500, "paint-order": "stroke", stroke: "#fff", "stroke-width": 3 }, svg);
