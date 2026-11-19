@@ -189,7 +189,7 @@ async function mpBlock(y) {
   const j = await fetchJSON("mps.json"); MP = MP || tab(j.mps);
   const box = qs("#gmpl"); if (!box) return;
   const ms = MP.filter(x => x.year === y && x.okreg === S.constSel), t = CC.elections.findIndex(e => e.year === y) + 1;
-  box.innerHTML = `<h3 style="margin-top:12px">Members elected here, ${y} (${ms.length}, replacements included)</h3><p class="help">${ms.map(x => `<span style="color:${colOf(x.family)}">&#9632;</span> <a href="${PAGES}legislative-activity.html#view=mps&t=${t}&mp=${x.mp_id}" target="_top" style="color:inherit">${h(x.name)}</a> <span style="color:var(--muted)">${h(x.club || "")}</span>`).join("<br>")}</p><p class="help">Each name opens the member's record in <a href="${PAGES}legislative-activity.html#view=mps&t=${t}" target="_top">Legislative activity</a>.</p>`;
+  box.innerHTML = `<h3 style="margin-top:12px">Members elected here, ${y} (${ms.length}, replacements included)</h3><p class="help">${ms.map(x => `<span style="color:${colOf(x.family)}">&#9632;</span> <a href="${PAGES}legislative-activity.html#view=mps&t=${t}&mp=${x.mp_id}" target="_top" style="color:inherit">${h(x.name)}</a> <span style="color:${colOf(x.family)}">${h(x.club || "")}</span>`).join("<br>")}</p><p class="help">Each name opens the member's record in <a href="${PAGES}legislative-activity.html#view=mps&t=${t}" target="_top">Legislative activity</a>.</p>`;
 }
 function foot(sel) {
   const y = yearOf(), el = CC.elections.find(e => e.year === y), nl = CC.national_lists.filter(x => x.year === y);
