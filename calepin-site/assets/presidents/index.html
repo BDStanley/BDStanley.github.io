@@ -60,6 +60,9 @@ table.cmp tr.grp td{font-weight:600;color:var(--accent);background:#fafafa;font-
 .quote{font-size:12px;color:var(--muted);font-style:italic}
 .credit{border-top:1px solid var(--rule);padding-top:10px;font-size:12px;color:var(--muted);line-height:1.5}.credit p{margin:0 0 4px;max-width:120ch}
 h2.sec{font-size:15px;font-weight:600;margin:8px 0 0}
+details.vnote{border:1px solid var(--rule);border-radius:12px;padding:8px 12px;font-size:12.5px;line-height:1.5;color:var(--soft)}
+details.vnote summary{cursor:pointer;color:var(--accent);font-weight:500}
+details.vnote p{margin:6px 0 0;max-width:120ch}
 @media (max-width:700px){.app{padding:10px 16px}input.q{width:100%}}
 </style>
 </head>
@@ -109,6 +112,7 @@ h2.sec{font-size:15px;font-weight:600;margin:8px 0 0}
       <input class="q" id="leg-q" type="search" placeholder="Search titles" aria-label="Search titles">
     </div>
     <p class="help" id="leg-help"></p>
+    <details class="vnote" id="leg-note"></details>
     <div class="legend" id="leg-legend"></div>
     <div class="chartbox"><svg id="leg-chart" role="img" aria-label="Per year"></svg><div class="tip" id="tip-leg" hidden></div></div>
     <div class="stats" id="leg-stats"></div>
