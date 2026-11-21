@@ -247,7 +247,7 @@ table.gall th .dot{width:8px;height:8px;margin-right:4px}
       </section>
       <section class="view" id="v-seats" aria-label="Seat projection" hidden>
         <div class="card soft" style="gap:4px">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px"><span class="label">Sejm</span><span class="btnrow" style="flex-wrap:wrap"><button type="button" class="btn2 sm" id="hemicertbtn" aria-pressed="false">Certainty</button><button type="button" class="btn2 sm" id="hemi2023btn" aria-pressed="false">Since 2023</button><button type="button" class="btn2 sm" id="hemicoalbtn" aria-pressed="false">Coalitions</button><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px"><span class="label">Sejm</span><span class="btnrow" style="flex-wrap:wrap"><button type="button" class="btn2 sm" id="hemi2023btn" aria-pressed="false">Since 2023</button><button type="button" class="btn2 sm" id="hemicoalbtn" aria-pressed="false">Coalitions</button><button type="button" class="btn2 sm" data-png="hemi">PNG</button><button type="button" class="btn2 sm" data-csv="seats">CSV</button></span></div>
           <div class="chartbox" id="hemibox" style="border:0;padding:0;max-width:760px;margin:0 auto;width:100%"><svg id="hemi" role="img" aria-label="Seats in the Sejm"></svg><div class="tip" id="hemitip" hidden></div></div>
           <div id="hemilabel" class="status"></div>
           <div id="hemicert"></div>
@@ -264,13 +264,18 @@ table.gall th .dot{width:8px;height:8px;margin-right:4px}
       <section class="view" id="v-sliders" aria-label="Forecast sliders" hidden>
         <p class="status" id="flsum" style="color:var(--ink);font-size:13.5px"></p>
         <div id="flctl"></div>
-        <div class="esscroll"><table class="t" id="flres"></table></div>
+        <div id="flpre" style="margin:10px 0 4px"></div>
         <p id="flmaj" style="font-size:13.5px"></p>
         <p class="help" id="flnote"></p>
       </section>
       <section class="view" id="v-senate" aria-label="Senate forecast" hidden>
         <div class="toolbar" id="snctl" style="align-items:flex-end;flex-wrap:wrap;gap:8px"></div>
         <p class="status" id="snsum" style="color:var(--ink);font-size:13.5px"></p>
+        <div class="card soft" style="gap:4px;margin:0 0 10px">
+          <span class="label">Senate</span>
+          <div class="chartbox" style="border:0;padding:0;max-width:640px;margin:0 auto;width:100%"><svg id="snhemi" role="img" aria-label="Seats in the Senate"></svg></div>
+          <div id="snhemikey"></div>
+        </div>
         <div class="esscroll"><table class="t" id="snseats"></table></div>
         <div id="sncoal" style="margin:10px 0"></div>
         <div class="toolbar" id="snfilt" style="align-items:flex-end"></div>

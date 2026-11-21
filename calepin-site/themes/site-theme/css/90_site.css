@@ -889,13 +889,6 @@ nav.tracker-nav a.on {
   border-bottom-color: #8b0000;
   font-weight: 500;
 }
-/* The Forecast is set apart from the polling pages (Polls/current term/docs/forecast_plan.md, decision 1): at the right
-   end of the row, behind a rule. */
-nav.tracker-nav a[data-s="forecast"] {
-  margin-left: auto;
-  padding-left: 1.1rem;
-  border-left: 1px solid #d5d5d5;
-}
 
 /* ---- Citation reach page (pages/citation-reach.typ) ----------------------- */
 /* Charts built as plain HTML and inline SVG from data/reach.json, which holds

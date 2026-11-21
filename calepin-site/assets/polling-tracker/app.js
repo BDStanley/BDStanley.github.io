@@ -183,7 +183,7 @@ const SCEN_KEYS = ["w", "v", "j", "r", "ra", "xi", "xx", "g", "gb", "gh"];
 // levers: changes by group on the Scenarios page's Groups view ({group, measure, change, from}); base: their starting
 // point ("groups" or "polls"); hand: parties whose share was set by hand, which the levers leave where they were set
 const S = { fh: "election", fl: [], sp: {}, sinc: true, scoal: new Set(), snSort: "okreg", w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: VIEWS[0], period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
-  hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
+  hoverParty: null, pollSel: null, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
   gDim: "age", gList: "KO", gPts: false,
   levers: [], base: "groups", hold: false, hand: new Set(), wiMode: "all", wiMetric: "vote", wiGroup: {},
   esC: "", esL: "", esCat: "all", esSort: "const" };
@@ -1071,6 +1071,20 @@ function seatAssign(sim, names, totals) {
   SEATASSIGN.set(sim, { key, res });
   return res;
 }
+// The key to the certainty shading, shared by the Sejm and Senate hemicycles
+const certKeyHtml = () => `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;margin:6px 0 2px">
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${pc1(SEAT_CERTAIN)}% or more)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${pc0(SEAT_PROBABLE)}–${pc1(SEAT_CERTAIN)}%)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.7" fill="#555" fill-opacity=".2" stroke="#555" stroke-width=".9"/></svg> Possible (${pc0(SEAT_POSSIBLE)}–${pc0(SEAT_PROBABLE)}%)</span>
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${pc0(SEAT_POSSIBLE)}%)</span></div>`;
+// One dot in a certainty-shaded hemicycle (cat from seatCat; dim for a list out of focus)
+function certDot(pt, rad, colour, cat, dim, attrs = "", inner = "") {
+  let fill = colour, fo = dim ? 0.18 : 1, stroke = "";
+  if (cat === "probable") { fo = dim ? 0.1 : 0.5; }
+  else if (cat === "possible") { fo = dim ? 0.05 : 0.2; stroke = ` stroke="${colour}" stroke-opacity="${dim ? 0.3 : 1}" stroke-width="${(rad * 0.22).toFixed(3)}"`; }
+  else if (cat === "toss-up") { fill = "#fff"; fo = dim ? 0.3 : 1; stroke = ` stroke="${colour}" stroke-width="${(rad * 0.3).toFixed(3)}"`; }
+  return `<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${fill}" fill-opacity="${fo}"${stroke}${attrs}>${inner}</circle>`;
+}
 let HEMI = null;
 function renderHemi() {
   const cur = CUR, ents = cur.ents;
@@ -1103,7 +1117,7 @@ function renderHemi() {
       chunk.forEach((st, j) => { info[bk.at + (left ? j : bk.n - 1 - j)] = st; });
     });
   });
-  const cert = !!(S.hemiCert && tab);
+  const cert = !!tab;   // certainty is always shown when the simulations are there
   const outer = Math.max(...pts.map(p => Math.hypot(p.x, p.y))), labels = [];
   { let at = 0; blocks.forEach(bk => { const m = pts[at + (bk.n >> 1)]; labels.push({ p: bk.p, n: bk.n, a: Math.atan2(m.y, m.x) }); at += bk.n; }); }
   const rad = Math.min(0.046, 0.046 * Math.sqrt(460 / Math.max(total, 1)));
@@ -1114,11 +1128,7 @@ function renderHemi() {
     const dim = (explicit && !inFocus(bk.ent)) || (hp && !bk.ent.members.includes(hp) && bk.ent.name !== hp);
     for (let j = 0; j < bk.n; j++, i++) {
       const pt = pts[i], st = info[i], cat = cert && st ? seatCat(st.p) : "certain";
-      let fill = col(bk.p), fo = dim ? 0.18 : 1, stroke = "";
-      if (cat === "probable") { fo = dim ? 0.1 : 0.5; }
-      else if (cat === "possible") { fo = dim ? 0.05 : 0.2; stroke = ` stroke="${col(bk.p)}" stroke-opacity="${dim ? 0.3 : 1}" stroke-width="0.01"`; }
-      else if (cat === "toss-up") { fill = "#fff"; fo = dim ? 0.3 : 1; stroke = ` stroke="${col(bk.p)}" stroke-width="0.014"`; }
-      o.push(`<circle cx="${pt.x.toFixed(3)}" cy="${(-pt.y).toFixed(3)}" r="${rad.toFixed(3)}" fill="${fill}" fill-opacity="${fo}"${stroke} data-k="${bk.k}" data-i="${i}"/>`);
+      o.push(certDot(pt, rad, col(bk.p), cat, dim, ` data-k="${bk.k}" data-i="${i}"`));
     }
   });
   o.push(`<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" font-size="0.085" fill="#4B4B4B">231</text>`);
@@ -1128,9 +1138,6 @@ function renderHemi() {
   svg.setAttribute("viewBox", "-2.2 -2.28 4.4 2.36");
   svg.innerHTML = o.join("");
   HEMI = { total, outer, labels, info, sim, cert: null, asg };
-  const cbtn = $("hemicertbtn");
-  cbtn.disabled = !tab; cbtn.setAttribute("aria-pressed", String(cert));
-  cbtn.title = tab ? "Shade each seat by how likely it is to be won" : "Needs the seat simulation, which loads with the scenario data";
   if (cert) {
     const entSeats = {};
     const crows = [...byEnt.keys()].map(k => {
@@ -1142,11 +1149,7 @@ function renderHemi() {
     HEMI.cert = { rows: crows };
     HEMI.entSeats = entSeats;
     const rows = crows.map(r => `<tr class="clickrow" data-k="${r.k}" tabindex="0" role="button" title="Seats of ${esc(r.name)} by constituency"><td><span class="dot" style="background:${r.colour};margin-right:6px"></span>${esc(r.name)}</td><td>${r.seats}</td><td>${r.certain}</td><td>${r.probable}</td><td>${r.possible}</td><td>${r.toss}</td></tr>`).join("");
-    $("hemicert").innerHTML = `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;margin:6px 0 2px">
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555"/></svg> Certain (${pc1(SEAT_CERTAIN)}% or more)</span>
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#555" fill-opacity=".5"/></svg> Probable (${pc0(SEAT_PROBABLE)}–${pc1(SEAT_CERTAIN)}%)</span>
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.7" fill="#555" fill-opacity=".2" stroke="#555" stroke-width=".9"/></svg> Possible (${pc0(SEAT_POSSIBLE)}–${pc0(SEAT_PROBABLE)}%)</span>
-      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.6" fill="#fff" stroke="#555" stroke-width="1.2"/></svg> Toss-up (under ${pc0(SEAT_POSSIBLE)}%)</span></div>
+    $("hemicert").innerHTML = `${certKeyHtml()}
       <table class="t"><tr><th>List</th><th>Seats</th><th>Certain</th><th>Probable</th><th>Possible</th><th>Toss-up</th></tr>${rows}</table>
       <p class="help" style="margin:4px 0 0">Each dot is one seat in one constituency, dealt to the list projected to hold it: each constituency's seats go to the lists most likely to win them, as many as it has, and each list gets as many dots as its projected total. A seat a list could win but another list is more likely to hold is not counted for it. The chance is the share of simulated parliaments in which the list wins at least that many seats there. ${SEAT_CAT_NOTE()} Within each list the most certain seats are at the outer end of its arc. Click a list for its seats in each constituency, and its outside possibilities.</p>`;
   } else $("hemicert").innerHTML = "";
@@ -2170,7 +2173,6 @@ function bind() {
   $("panel3").addEventListener("click", e => { if (e.target.id === "copylink") { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); } });
   // seats
   $("hemi").addEventListener("mousemove", hemiHover);
-  $("hemicertbtn").addEventListener("click", () => { S.hemiCert = !S.hemiCert; renderHemi(); });
   $("hemicert").addEventListener("click", e => { const tr = e.target.closest("tr[data-k]"); if (tr) openSeatModal(+tr.dataset.k); });
   $("hemicert").addEventListener("keydown", e => { const tr = e.target.closest("tr[data-k]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSeatModal(+tr.dataset.k); } });
   $("seatmodalclose").addEventListener("click", closeSeatModal);
@@ -2501,6 +2503,32 @@ function flText(x) {
   const pts = Math.abs(x.c) === 1 ? "point" : "points";
   return x.m === "turnout" ? `turnout ${signed(x.c)} ${pts} among ${flGroupText(x.g)}` : `${flGroupText(x.g)} ${Math.abs(x.c)} ${pts} ${x.c > 0 ? (x.m === "econ" ? "to the right economically" : "more conservative") : (x.m === "econ" ? "to the left economically" : "more progressive")}`;
 }
+const flBlank = () => ({ g: { age: null, sex: null, education: null, residence: null }, m: "soc", c: 0 });
+// Example scenarios for the Sliders view (group indices are cells.json's dims: age 0 = 18-29, 4 = 60 and over; sex 0 = men,
+// 1 = women; education 3 = higher; residence 0 = village)
+const flEx = (m, c, g = {}) => ({ m, c, g: { ...flBlank().g, ...g } });
+const FL_PRESETS = [
+  { label: "Young voters turn out", fl: [flEx("turnout", 10, { age: 0 })] },
+  { label: "Older voters stay at home", fl: [flEx("turnout", -5, { age: 4 })] },
+  { label: "Women mobilise", fl: [flEx("turnout", 5, { sex: 1 })] },
+  { label: "Low turnout in villages", fl: [flEx("turnout", -5, { residence: 0 })] },
+  { label: "Young men move right", fl: [flEx("soc", 1, { age: 0, sex: 0 }), flEx("econ", 1, { age: 0, sex: 0 })] },
+  { label: "Graduates more progressive", fl: [flEx("soc", -1, { education: 3 })] },
+  { label: "Country turns conservative", fl: [flEx("soc", 0.5)] },
+  { label: "Swing to the economic left", fl: [flEx("econ", -1)] }
+];
+// The Senate's chance of a majority without the sliders (same groups and incumbency), for the Sliders view
+let SN0 = null;
+function snBase() {
+  const key = JSON.stringify([snGroups(), S.sinc]);
+  if (SN0 && SN0.key === key) return SN0.res;
+  const keep = { fl: S.fl, w: FCW, k: FCW_KEY, sim: FC_SIM, sn: SN };
+  S.fl = []; FCW = null; SN = null;
+  const res = snRun();
+  S.fl = keep.fl; FCW = keep.w; FCW_KEY = keep.k; FC_SIM = keep.sim; SN = keep.sn;
+  SN0 = { key, res };
+  return res;
+}
 function fcBaseSim() {   // the forecast without sliders, for the before-and-after table
   if (FC_SIM0) return FC_SIM0;
   const keep = { fl: S.fl, w: FCW, k: FCW_KEY, sim: FC_SIM };
@@ -2512,27 +2540,36 @@ function fcBaseSim() {   // the forecast without sliders, for the before-and-aft
 function renderSliders() {
   const sum = $("flsum");
   if (S.fh !== "election") { S.fh = "election"; loadForecast(); }   // the sliders move the election-day forecast (decision 6)
-  if (!FC || fcState !== "ready" || !FC.attitudes) { ["flctl", "flres", "flmaj", "flnote"].forEach(id => { $(id).innerHTML = ""; }); sum.textContent = fcState === "missing" ? "The forecast could not be loaded." : "Loading the forecast…"; loadForecast(); return; }
+  if (!FC || fcState !== "ready" || !FC.attitudes) { ["flctl", "flpre", "flmaj", "flnote"].forEach(id => { $(id).innerHTML = ""; }); sum.textContent = fcState === "missing" ? "The forecast could not be loaded." : "Loading the forecast…"; loadForecast(); return; }
   if (cellsState !== "ready") { sum.textContent = cellsState === "missing" ? "The electorate cells could not be loaded, so the sliders are not available." : "Loading the electorate cells…"; if (cellsState === "idle") loadCells().then(() => { FCW = null; update(); }); return; }
   sum.innerHTML = `What follows for the election on ${dlong(fromIso(FC.electionDate))} if groups of voters turn out more or less, or move to the left or right, economically or on social and cultural questions. Positions are on 0–10 scales from the 2023 Polish National Election Study.`;
   const opt = (k, v) => `<option value=""${v == null ? " selected" : ""}>${k === "age" ? "All ages" : k === "sex" ? "Both sexes" : k === "education" ? "All education" : "Everywhere"}</option>` + CELLS.dims[k].labels.map((l, i) => `<option value="${i}"${v === i ? " selected" : ""}>${esc(l)}</option>`).join("");
+  if (!S.fl.length) S.fl.push(flBlank());   // the picker is always shown, ready for a first change
+  const one = S.fl.length === 1;
   $("flctl").innerHTML = S.fl.map((x, i) => { const m = FL_M[x.m];
     return `<div class="card soft" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:8px 12px;align-items:flex-end;margin:0 0 8px">${FL_DIMS.map(k => `<label class="fsel">${k[0].toUpperCase() + k.slice(1)}<select data-fl="${i}" data-k="${k}">${opt(k, x.g[k])}</select></label>`).join("")}
       <label class="fsel">What changes<select data-fl="${i}" data-k="m">${Object.entries(FL_M).map(([v, d]) => `<option value="${v}"${x.m === v ? " selected" : ""}>${d[0]}</option>`).join("")}</select></label>
       <label class="fsel" style="min-width:220px">By <b>${x.c > 0 ? "+" : ""}${x.c}</b> ${esc(m[1])}<input type="range" data-fl="${i}" data-k="c" min="${m[2]}" max="${m[3]}" step="${m[4]}" value="${x.c}"></label>
-      <button type="button" class="btn2 sm" data-rmfl="${i}">Remove</button></div>`; }).join("") +
-    `<div class="btnrow"><button type="button" class="btn2" id="fladd">Add a change</button>${S.fl.length ? ` <button type="button" class="btn2" id="flclear">Clear all</button>` : ""}</div>`;
+      ${one ? "" : `<button type="button" class="btn2 sm" data-rmfl="${i}">Remove</button>`}</div>`; }).join("") +
+    `<div class="btnrow"><button type="button" class="btn2" id="fladd">Add another change</button>${S.fl.some(x => x.c) || !one ? ` <button type="button" class="btn2" id="flclear">Clear all</button>` : ""}</div>`;
+  $("flpre").innerHTML = `<span class="label">Or start from an example</span><div class="btnrow" style="flex-wrap:wrap;margin-top:6px">` +
+    FL_PRESETS.map((p, i) => `<button type="button" class="btn2 sm" data-flpre="${i}" title="${esc(p.fl.map(flText).join("; "))}">${esc(p.label)}</button>`).join("") + `</div>`;
   const s0 = fcBaseSim(); fcDraws(); compute();
   const s1 = CUR.sim, w0 = s0.draws, w1 = fcDraws();
-  if (!s1) { $("flres").innerHTML = ""; return; }
-  const seatQ = (sim, k) => { const v = []; for (let d = 0; d < sim.n; d++) v.push(sim.nat[d * sim.ents.length + k]); v.sort((a, b) => a - b); return [Math.round(median(v)), Math.round(quant(v, 0.1)), Math.round(quant(v, 0.9))]; };
-  const rows = s1.ents.map((e, k) => ({ e, k, i: PIDX[e.name], a: seatQ(s0, k), b: seatQ(s1, k) })).filter(r => r.a[2] > 0 || r.b[2] > 0 || (r.i != null && w1.med[r.i] > 0.01)).sort((x, y) => y.b[0] - x.b[0]);
-  $("flres").innerHTML = `<tr><th>Party</th><th class="n">Vote now</th><th class="n">With the sliders</th><th class="n">Seats now</th><th class="n">With the sliders</th></tr>` +
-    rows.map(r => `<tr><td><span class="dot" style="background:${col(r.e.name)};margin-right:6px"></span>${esc(r.e.name)}</td><td class="n muted">${r.i != null ? (100 * w0.med[r.i]).toFixed(1) : ""}</td><td class="n"><b>${r.i != null ? (100 * w1.med[r.i]).toFixed(1) : ""}</b>${r.i != null ? ` <span class="${cls(w1.med[r.i] - w0.med[r.i])}">${signed(100 * (w1.med[r.i] - w0.med[r.i]), 1)}</span>` : ""}</td><td class="n muted">${r.a[0]} <span style="font-size:11px">(${r.a[1]}–${r.a[2]})</span></td><td class="n"><b>${r.b[0]}</b> <span class="muted" style="font-size:11px">(${r.b[1]}–${r.b[2]})</span></td></tr>`).join("");
+  if (!s1) { $("flmaj").innerHTML = ""; return; }
   const pr = (sim, ps) => { const ks = sim.ents.map((e, k) => (ps.includes(e.name) ? k : -1)).filter(k => k >= 0); let c = 0; for (let d = 0; d < sim.n; d++) { let t = 0; ks.forEach(k => { t += sim.nat[d * sim.ents.length + k]; }); if (t >= R.seatsMajority) c++; } return c / sim.n; };
   const gov = ["KO", "Polska 2050", "PSL", "Lewica", "Razem"], right = ["PiS", "R+", "Konfederacja", "KKP"];
-  $("flmaj").innerHTML = `Chance of ${R.seatsMajority} seats in the Sejm: KO, Polska 2050, PSL, Lewica and Razem <b>${prob(pr(s1, gov))}</b> <span class="muted">(${prob(pr(s0, gov))} without the sliders)</span>; PiS, R+, Konfederacja and KKP <b>${prob(pr(s1, right))}</b> <span class="muted">(${prob(pr(s0, right))})</span>. The Sejm, Every seat and Senate views show the forecast with the sliders.`;
+  $("flmaj").innerHTML = `Chance of ${R.seatsMajority} seats in the Sejm: KO, Polska 2050, PSL, Lewica and Razem <b>${prob(pr(s1, gov))}</b> <span class="muted">(${prob(pr(s0, gov))} without the sliders)</span>; PiS, R+, Konfederacja and KKP <b>${prob(pr(s1, right))}</b> <span class="muted">(${prob(pr(s0, right))})</span>.${flSenateText()} The Sejm and Senate tabs show the forecast with the sliders.`;
   $("flnote").innerHTML = `How it works: the 2023 Polish National Election Study gives each voter's economic position (0 = state-led, 10 = market-liberal) and socio-cultural position (0 = progressive, 10 = conservative), averaged over the questions asked that year. A model of the 2023 vote, not voting included, on those positions and on age, sex, education and place of residence says how each group's vote would differ if its positions differed; moving a group's positions by the amount set applies that difference to the group's 2023 vote, and the change in each party's national share is carried over to the forecast. Today's parties that split from a 2023 list (R+, KKP, Razem, PSL and Polska 2050) move with that list. The ranges include the model's own uncertainty. This is what follows if voters with those positions voted as such voters did in 2023, not a measured effect of opinion on the vote, and the positions are comparable within 2023 only. A check against the 2025 Polish National Election Study (vote intention, with the questions both surveys asked) found the economic effects unchanged, but a conservative shift worth less to PiS than in 2023 (about two thirds as much) and more to Konfederacja and KKP: as conservative voters have spread across the right, the slider probably overstates PiS's gains and understates theirs.`;
+}
+// The Senate's majorities with and without the sliders, for the Sliders view: the groups most likely to win one
+function flSenateText() {
+  if (!FC || !FC.senate || !window.E27Engine || !E27Engine.senateSimulate) return "";
+  const r1 = snRun(), r0 = snBase(); if (!r1 || !r0) return "";
+  const maj = FC.senate.majority, pm = (r, k) => { let c = 0; for (let d = 0; d < r.n; d++) if (r.seats[d * r.G + k] >= maj) c++; return c / r.n; };
+  const rows = r1.groups.map((g, k) => ({ g, a: pm(r0, k), b: pm(r1, k) })).filter(x => x.g[0] !== "Independent" && Math.max(x.a, x.b) >= 0.01).sort((x, y) => y.b - x.b).slice(0, 2);
+  if (!rows.length) return ` Chance of ${maj} seats in the Senate: no party's candidates win a majority in 1% or more of the simulations.`;
+  return ` Chance of ${maj} seats in the Senate: ` + rows.map(x => `${esc(snLabel(x.g))} candidates <b>${prob(x.b)}</b> <span class="muted">(${prob(x.a)})</span>`).join("; ") + ".";
 }
 // ---- the Forecast page's Senate view (Polls/current term/docs/forecast_plan.md, section 3) -----------------------
 // Every party stands alone unless put in a pact (decision 4); one generic independent stands everywhere. The
@@ -2597,8 +2634,35 @@ function renderSenate() {
   const gl = k => groups[k][0] === "Independent" ? "Independent" : snLabel(groups[k]);
   $("sntable").innerHTML = `<tr><th>District</th><th>Favourite</th><th class="n">Chance</th><th>Next most likely</th><th>Won in 2023 by</th></tr>` +
     list.map(r => `<tr><td>${r.dd.okreg}. ${esc(r.dd.name)}</td><td><span class="dot" style="background:${snColour(groups[r.f])};margin-right:6px"></span>${esc(gl(r.f))}</td><td class="n"><b>${prob(r.pf)}</b></td><td>${r.ps > 0 ? `<span class="dot" style="background:${snColour(groups[r.s])};margin-right:6px"></span>${esc(gl(r.s))} <span class="muted">${prob(r.ps)}</span>` : `<span class="muted">–</span>`}</td><td class="muted">${esc(r.dd.winner || "")}${r.dd.inc ? ` (${esc(incLab[r.dd.inc] || short(r.dd.inc))})` : ""}</td></tr>`).join("");
+  renderSenateHemi(groups, list);
   const co = FC.senate.coef;
   $("snnote").innerHTML = `How it works: from the Senate elections of 2011–2023, a candidate's vote rises with the Sejm vote of the parties behind them (an elasticity of ${co.x.toFixed(2)}: Senate candidates draw votes across party lines), and sitting senators run about ${Math.round(100 * (Math.exp(co.incumbent) - 1))}% ahead. A pact's single candidate gets about what the pact parties' Sejm votes together predict. Each party's Sejm vote in a district is the forecast's election-day vote in its Sejm constituency, spread over the constituency's Senate districts as its party line's vote was in 2023. Each candidate also gets a random personal vote, and every candidate of one camp a shared one, sized so that past elections' seat totals fall within the ranges as often as they should. Strong local independents, who win a few seats at every election, cannot be foreseen and are underrepresented. Checked by predicting each of the four elections from the other three: 87–89 of 100 winners right in 2011, 2019 and 2023, 71 in 2015.`;
+}
+// The Senate hemicycle: one dot per district, given to its favourite and shaded by the favourite's chance (the
+// same categories as the Sejm's seats); groups run left to right in the Sejm hemicycle's order, independents last, and
+// within a group the most certain districts are at the outer end of its arc
+function renderSenateHemi(groups, list) {
+  const hord = g => g[0] === "Independent" ? 1e3 : Math.min(...g.map(p => { const i = R.hemicycleOrder.indexOf(p); return i < 0 ? 999 : i; }));
+  const by = new Map(); list.forEach(r => { if (!by.has(r.f)) by.set(r.f, []); by.get(r.f).push(r); });
+  const blocks = [...by.keys()].sort((a, b) => hord(groups[a]) - hord(groups[b])).map(k => ({ k, L: by.get(k).sort((x, y) => y.pf - x.pf) }));
+  const total = list.length, pts = hemiLayout(total, 5), rad = 0.1, maj = FC.senate.majority, o = [];
+  let at = 0;
+  blocks.forEach(bk => {
+    const n = bk.L.length, m = pts[at + (n >> 1)], left = m.x < 0, colour = snColour(groups[bk.k]);
+    const name = groups[bk.k][0] === "Independent" ? "Independent" : snLabel(groups[bk.k]);
+    bk.L.forEach((r, j) => {
+      const pt = pts[at + (left ? j : n - 1 - j)];
+      o.push(certDot(pt, rad, colour, seatCat(r.pf), false, "", `<title>${esc(`${r.dd.okreg}. ${r.dd.name}: ${name}, ${prob(r.pf)}`)}</title>`));
+    });
+    at += n;
+  });
+  const lead = blocks.map(bk => ({ g: groups[bk.k], n: bk.L.length })).sort((a, b) => b.n - a.n)[0];
+  o.push(`<line x1="0" x2="0" y1="-0.86" y2="-2.12" stroke="#141414" stroke-width="0.012" stroke-dasharray="0.04 0.04"/><text x="0" y="-2.16" text-anchor="middle" font-size="0.085" fill="#4B4B4B">${maj}</text>`);
+  if (lead) o.push(`<text x="0" y="-0.36" text-anchor="middle" font-size="0.13" font-weight="500" fill="#141414">${esc(lead.g[0] === "Independent" ? "Independents" : snLabel(lead.g))}</text><text x="0" y="-0.14" text-anchor="middle" font-size="0.2" font-weight="300" fill="#141414">favourite in ${lead.n}</text>`);
+  const svg = $("snhemi");
+  svg.setAttribute("viewBox", "-2.2 -2.28 4.4 2.36");
+  svg.innerHTML = o.join("");
+  $("snhemikey").innerHTML = certKeyHtml() + `<p class="help" style="margin:4px 0 0">Each dot is one of the 100 districts, given to the candidates most likely to win it and shaded by that chance. The favourites' count can differ from the median seats in the table below, which counts every simulated election.</p>`;
 }
 function renderEverySeat() {
   const sim = hemiSim(), f = $("esfilters");
@@ -2754,6 +2818,7 @@ function bindSections() {
     if (k === "m") { x.m = t.value; x.c = 0; } else if (k === "c") x.c = parseFloat(t.value); else x.g[k] = t.value === "" ? null : +t.value;
     update();
   });
+  $("flpre").addEventListener("click", e => { const t = e.target.closest("[data-flpre]"); if (t) { S.fl = FL_PRESETS[+t.dataset.flpre].fl.map(x => ({ m: x.m, c: x.c, g: { ...x.g } })); update(); } });
   $("flctl").addEventListener("click", e => {
     const t = e.target;
     if (t.id === "fladd") { S.fl.push({ g: { age: null, sex: null, education: null, residence: null }, m: "soc", c: 0 }); update(); }
