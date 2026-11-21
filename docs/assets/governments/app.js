@@ -27,7 +27,8 @@ const trunc = (s, n) => s && s.length > n ? s.slice(0, n - 1) + "…" : s;
 function init(d) {
   D = d; D.posts.forEach(p => { p.s = day(p.start); p.e = day(p.end); const arr = x => Array.isArray(x) ? x : (x == null ? [] : [x]); p.segments = arr(p.segments); p.cabinets = arr(p.cabinets); p.reappointedOn = arr(p.reappointedOn); });
   S.cab = D.cabinets[D.cabinets.length - 1].id;
-  const h = new URLSearchParams(location.hash.replace(/^#/, "")); if (h.get("c") && D.cabinets.some(c => c.id === h.get("c"))) S.cab = h.get("c"); if (["cabinet", "ministries", "people", "coalitions", "stats"].includes(h.get("v"))) S.v = h.get("v"); if (h.get("m")) S.lin = h.get("m"); if (h.get("q")) S.person = h.get("q");
+  // The frame's hash, or else the embedding page's (same origin), so links from other pages land here
+  const h = new URLSearchParams((() => { let x = location.hash; try { if (!x.slice(1) && window.top !== window && window.top.location.host === location.host) x = window.top.location.hash; } catch (e) { /* cross-origin */ } return x.replace(/^#/, ""); })()); if (h.get("c") && D.cabinets.some(c => c.id === h.get("c"))) S.cab = h.get("c"); if (["cabinet", "ministries", "people", "coalitions", "stats"].includes(h.get("v"))) S.v = h.get("v"); if (h.get("m")) S.lin = h.get("m"); if (h.get("q")) S.person = h.get("q");
   $("asof").innerHTML = `${esc(D.meta.coverage)}. ${D.meta.validation.confirmed.toLocaleString("en-GB")} of ${D.meta.validation.events.toLocaleString("en-GB")} appointments and departures are confirmed against Monitor Polski, the official gazette.`;
   const step = k => { const i = D.cabinets.findIndex(c => c.id === S.cab) + k; if (i >= 0 && i < D.cabinets.length) { S.cab = D.cabinets[i].id; S.post = null; render(); } };
   $("cabprev").addEventListener("click", () => step(-1)); $("cabnext").addEventListener("click", () => step(1));

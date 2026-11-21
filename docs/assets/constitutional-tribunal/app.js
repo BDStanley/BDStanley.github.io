@@ -29,7 +29,16 @@
     for (const v of ["comp", "elect", "rul", "act", "disp"]) $("#v-" + v).hidden = (v !== b.dataset.v);
   }));
 
-  { const h = location.hash.replace("#", ""); const b = h && document.querySelector(`#views button[data-v="${h}"]`); if (b) b.click(); }   // #elect or #disp opens that view
+  // #elect or #disp opens that view; #rul&app=President also sets the applicant filter. The hash is read from the
+  // frame, or else from the page that embeds it (same origin), so links from other pages land here.
+  const HASH = (() => {
+    let h = location.hash.slice(1);
+    try { if (!h && window.top !== window && window.top.location.host === location.host) h = window.top.location.hash.slice(1); } catch (e) { /* cross-origin */ }
+    const parts = h.split("&"), out = { v: parts[0] || "" };
+    parts.slice(1).forEach(kv => { const [k, v] = kv.split("="); if (k) out[k] = decodeURIComponent(v || ""); });
+    return out;
+  })();
+  { const b = HASH.v && document.querySelector(`#views button[data-v="${HASH.v}"]`); if (b) b.click(); }
   // ---- composition ----
   const COL = Object.assign({}, C.meta.club_colours);
   const OTHER = { "Presidium of the Sejm": "#6B7280", unknown: "#C9C9C4", none: "#9CA3AF" };
@@ -189,7 +198,7 @@
     fill("#r-series", [["", "all"], ...Object.keys(idx.meta.series).map(k => [k, k + " · " + idx.meta.series[k]])], "");
     fill("#r-out", [["", "all"], ...idx.meta.outcomes.map(o => [o, OUTCOME_LAB[o]])], "");
     const apps = [...new Set(all.map(c => c.a))].sort();
-    fill("#r-app", [["", "all"], ...apps.map(a => [a, a])], "");
+    fill("#r-app", [["", "all"], ...apps.map(a => [a, a])], HASH.app && apps.includes(HASH.app) ? HASH.app : "");
     const js = Object.keys(idx.judges).sort((a, b) => idx.judges[a].localeCompare(idx.judges[b], "pl"));
     fill("#r-judge", [["", "anyone"], ...js.map(j => [j, idx.judges[j]])], "");
     let shown = 200;

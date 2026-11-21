@@ -33,9 +33,11 @@ async function setBody(b) {
   LB[b] = LB[b] || await fetchJSON(BODIES[b].index);
   S.body = b; L = LB[b]; N = BODIES[b]; PFX = N.prefix; TD = TDS[b]; VIEWS = viewList(b);
 }
-const hashBody = () => new URLSearchParams(location.hash.slice(1)).get("b") || "sejm";
+// The frame's hash, or else the embedding page's (same origin), so links from other pages land here
+const hashStr = () => { let x = location.hash.slice(1); try { if (!x && window.top !== window && window.top.location.host === location.host) x = window.top.location.hash.slice(1); } catch (e) { /* cross-origin */ } return x; };
+const hashBody = () => new URLSearchParams(hashStr()).get("b") || "sejm";
 function readHash() {
-  const p = new URLSearchParams(location.hash.slice(1));
+  const p = new URLSearchParams(hashStr());
   if (p.get("view") && VIEWS.some(v => v[0] === p.get("view"))) S.view = p.get("view");
   if (p.get("t") && L.terms.some(t => t.term === +p.get("t"))) S.term = +p.get("t");
   if (p.get("mp")) S.mp = +p.get("mp");
@@ -308,7 +310,9 @@ async function viewBills() {
 const VOTENAME = ["ABSENT", "YES", "NO", "ABSTAIN"];
 const clubName = c => c === "niez." || c === "_" ? (S.body === "ep" ? "No group" : S.body === "senate" ? "No club" : "Unaffiliated") : cn(c);
 async function viewBillDetail() {
-  const sejm = S.body === "sejm", [t, ix] = S.bsel.split(":").map(Number), all = await loadBills(), b = all.find(x => x.term === t && x.ix === ix), back = () => { S.bsel = ""; S.brc = null; writeHash(); viewBills(); };
+  // bill=<term>:<row> from this page, or <term>:n<process number> from other pages (stable across rebuilds)
+  const [ts, ixs] = S.bsel.split(":"), t = +ts, byNum = /^n/.test(ixs || ""), ix = byNum ? null : +ixs;
+  const sejm = S.body === "sejm", all = await loadBills(), b = all.find(x => x.term === t && (byNum ? String(x.number) === ixs.slice(1) : x.ix === ix)), back = () => { S.bsel = ""; S.brc = null; writeHash(); viewBills(); };
   if (!b) { back(); return; }
   const td = TD[t] = TD[t] || await fetchJSON(`${PFX}mps-${t}.json`), c = CAPS[b.cap], last = Math.max(...L.terms.map(x => x.term)), tl = (L.terms.find(x => x.term === t) || {}).label || t;
   const idxs = b.votes ? String(b.votes).split(";").map(Number) : [], firsts = [].concat(td.vote_chunk_first_index);
