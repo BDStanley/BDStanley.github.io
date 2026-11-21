@@ -4,7 +4,7 @@
   description: "A Bayesian poll-of-polls for elections to the Polish Sejm: voting intention since 2023, by group and by pollster, with every Sejm term since 1991",
 )) <website-metadata>
 
-// The tracker is one app at four addresses (Election 2027/PLAN.md, decision 18 in the Polish political analyses repo):
+// The tracker is one app at four addresses (decision 18 of Polls/current term/docs/election_2027_plan.md in the Polish political analyses repo):
 // this page (Polls) and polling-tracker/seats.typ, geography.typ and scenarios.typ each embed
 // assets/polling-tracker/index.html with ?s=<section>, which fixes the views it offers. The section row (nav.tracker-nav,
 // styled in 90_site.css) is plain links; the app adds the week and the scenario to them (data-s). Its data, polls.json and
@@ -24,6 +24,7 @@ A Bayesian poll-of-polls for elections to the Polish Sejm: voting intention sinc
   #html.elem("a", attrs: (href: "polling-tracker/seats.html", "data-s": "seats"))[Seats]
   #html.elem("a", attrs: (href: "polling-tracker/geography.html", "data-s": "geography"))[Geography]
   #html.elem("a", attrs: (href: "polling-tracker/scenarios.html", "data-s": "scenarios"))[Scenarios]
+  #html.elem("a", attrs: (href: "polling-tracker/forecast.html", "data-s": "forecast"))[Forecast]
 ]
 
 #html.elem("details", attrs: (class: "method"))[

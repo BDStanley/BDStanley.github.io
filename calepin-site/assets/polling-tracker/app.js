@@ -53,6 +53,14 @@ const OKABE = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#D55E00", "#56B4E9"]
 // ---- data -----------------------------------------------------------------------------------
 let D, R, P, SP, NP, NC, C, VV, MAG, COEFI, PIDX, LAUNCH, WEEKS;
 let DRAWS = null, drawsState = "idle", SWING = null;
+// The Forecast page (Polls/current term/docs/forecast_plan.md, section 2.1): election-day draws from forecast.json, the
+// latest week's poll draws widened by how far past polls were from the result at the same distance. S.fh is "election"
+// (those draws) or "now" (the week's own figures, as on Seats).
+let FC = null, fcState = "idle", FCW = null, FCSWING = null, FCW0 = null, FCW_KEY = null, FC_SIM0 = null;
+// The sliders' changes by group (section 2.3), as a key for the caches
+const flKey = () => JSON.stringify(S.fl.filter(x => x.c));
+const FORECAST = (() => { try { return new URLSearchParams(location.search).get("s") === "forecast"; } catch (e) { return false; } })();
+const fcOn = () => FORECAST && S.fh === "election";
 let JP = null, JPAIR = {};
 let TERMS = null, TERM = null;  // terms.json, and the past term on show (null: the current one)
 const TCACHE = new Map();
@@ -94,7 +102,7 @@ function VD() {
         house: D.house, blocs: R.houseEffectBlocs, results: [], past: false };
 }
 // Political events of the current term, shown with the party launches and splits from the model data. They are kept, each with
-// its source, in Election 2027/blog/events.csv (the Election 2027 updates cite the same list) and come here as events.json
+// its source, in Polls/current term/data-raw/events.csv (Polish political analyses repo) and come here as events.json
 // ({date, event, url}), which scripts/sync-analyses.py copies in; without it the chart shows the launches and splits only.
 let POLITICAL_EVENTS = [];
 fetch("events.json").then(r => (r.ok ? r.json() : [])).then(d => {
@@ -147,21 +155,26 @@ const forbiddenIn = parties => exclIn(parties).map(pairText);
 const relaxed = () => R.forbidden.some(fp => !S.excl.has(pairKey(fp[0], fp[1])));
 
 // ---- sections -------------------------------------------------------------------------------
-// The tracker is one app at four addresses (Election 2027/PLAN.md, decision 18): each page of the site embeds this file
+// The tracker is one app at four addresses (decision 18 of Polls/current term/docs/election_2027_plan.md): each page of the site embeds this file
 // with ?s=<section>, which fixes the views it offers. Links between the pages carry the week and the scenario.
-const SECTION = (() => { try { const s = new URLSearchParams(location.search).get("s"); return ["polls", "seats", "geography", "scenarios"].includes(s) ? s : "polls"; } catch (e) { return "polls"; } })();
+const SECTION = (() => { try { const s = new URLSearchParams(location.search).get("s"); return ["polls", "seats", "geography", "scenarios", "forecast"].includes(s) ? s : "polls"; } catch (e) { return "polls"; } })();
 const SECTIONS = {
   polls: [["trends", "Trends"], ["groups", "By group"], ["pollsters", "Pollsters"]],
   seats: [["seats", "Sejm"], ["everyseat", "Every seat"]],
   geography: [["map", "Map"], ["worth", "What a vote is worth"], ["population", "If seats followed population"]],
-  scenarios: [["lists", "Parties and lists"], ["levers", "Groups"], ["whovotes", "Who votes"]]
+  scenarios: [["lists", "Parties and lists"], ["levers", "Groups"], ["whovotes", "Who votes"]],
+  // Polls/current term/docs/forecast_plan.md: kept apart from the polling pages (decisions 1 and 5)
+  forecast: [["seats", "Sejm"], ["senate", "Senate"], ["sliders", "Sliders"]]
 };
-const VIEWS = SECTIONS[SECTION].map(v => v[0]);
+// Views reached from inside another view, without a tab of their own: on the Forecast, Every seat is part of Sejm
+// (decision 14 of Polls/current term/docs/forecast_plan.md)
+const SUBVIEWS = { forecast: { everyseat: "seats" } };
+const VIEWS = SECTIONS[SECTION].map(v => v[0]).concat(Object.keys(SUBVIEWS[SECTION] || {}));
 const VIEW_EL = { trends: "v-trends", groups: "v-groups", pollsters: "v-pollsters", seats: "v-seats", lists: "v-seats", levers: "v-seats",
-  everyseat: "v-everyseat", whovotes: "v-whovotes", map: "v-geomap", worth: "v-worth", population: "v-population" };
+  everyseat: "v-everyseat", senate: "v-senate", sliders: "v-sliders", whovotes: "v-whovotes", map: "v-geomap", worth: "v-worth", population: "v-population" };
 const HEMI_VIEWS = ["seats", "lists", "levers"];
 // The site's page for each section, from this file (assets/polling-tracker/index.html)
-const SECTION_PAGE = { polls: "polling-tracker.html", seats: "polling-tracker/seats.html", geography: "polling-tracker/geography.html", scenarios: "polling-tracker/scenarios.html" };
+const SECTION_PAGE = { polls: "polling-tracker.html", seats: "polling-tracker/seats.html", geography: "polling-tracker/geography.html", scenarios: "polling-tracker/scenarios.html", forecast: "polling-tracker/forecast.html" };
 const sectionUrl = s => new URL("../../pages/polish-political-analyses/" + SECTION_PAGE[s], location.href).href;
 // The keys a link to another section carries: the week and the scenario
 const SCEN_KEYS = ["w", "v", "j", "r", "ra", "xi", "xx", "g", "gb", "gh"];
@@ -169,7 +182,7 @@ const SCEN_KEYS = ["w", "v", "j", "r", "ra", "xi", "xx", "g", "gb", "gh"];
 // ---- state ----------------------------------------------------------------------------------
 // levers: changes by group on the Scenarios page's Groups view ({group, measure, change, from}); base: their starting
 // point ("groups" or "polls"); hand: parties whose share was set by hand, which the levers leave where they were set
-const S = { w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: VIEWS[0], period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
+const S = { fh: "election", fl: [], sp: {}, sinc: true, scoal: new Set(), snSort: "okreg", w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: VIEWS[0], period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
   hoverParty: null, pollSel: null, hemiCert: false, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
   gDim: "age", gList: "KO", gPts: false,
   levers: [], base: "groups", hold: false, hand: new Set(), wiMode: "all", wiMetric: "vote", wiGroup: {},
@@ -320,7 +333,38 @@ function makeSwing(n) {
   }
   return a;
 }
+function fcRaw() {
+  if (FCW0) return FCW0;
+  const K = FC.categories.length, n = FC.nDraws, arr = new Float32Array(FC.draws.length);
+  for (let i = 0; i < arr.length; i++) arr[i] = FC.draws[i] / 10000;
+  return (FCW0 = { n, K, arr, map: FC.categories.map(c => c in PIDX ? PIDX[c] : -1) });
+}
+// The election-day draws, moved by the sliders: each draw's shares times its factors (one of the model's coefficient
+// draws in turn; a party takes its 2023 list's factor), renormalised. Without sliders, the draws as exported.
+function fcDraws() {
+  const key = flKey();
+  if (FCW && FCW_KEY === key) return FCW;
+  const raw = fcRaw(), { n, K, map } = raw;
+  let arr = raw.arr;
+  const fl = S.fl.filter(x => x.c);
+  if (fl.length && CELLS && FC.attitudes && window.E27Engine && E27Engine.attitudeFactors) {
+    const f = E27Engine.attitudeFactors(FC.attitudes, CELLS, fl), L = f.lists.length, nD = f.factor.length / L;
+    const parent = {}; (CELLS.parties || []).forEach(p => { parent[p.id] = p.parent; });
+    const li = FC.categories.map(c => f.lists.indexOf(parent[c] || c));
+    arr = new Float32Array(raw.arr.length);
+    for (let d = 0; d < n; d++) {
+      let t = 0; const j = d % nD;
+      for (let k = 0; k < K; k++) { const v = raw.arr[d * K + k] * (li[k] >= 0 ? f.factor[j * L + li[k]] : 1); arr[d * K + k] = v; t += v; }
+      for (let k = 0; k < K; k++) arr[d * K + k] /= t;
+    }
+  }
+  const med = new Float64Array(SP.length), lo = new Float64Array(SP.length), hi = new Float64Array(SP.length);
+  map.forEach((i, k) => { if (i < 0) return; const v = []; for (let d = 0; d < n; d++) v.push(arr[d * K + k]); v.sort((a, b) => a - b); med[i] = median(v); lo[i] = quant(v, 0.1); hi[i] = quant(v, 0.9); });
+  FCW = { n, K, arr, map, med, lo, hi }; FCW_KEY = key; FC_SIM = null;
+  return FCW;
+}
 function weekDraws(w) {
+  if (fcOn() && FC && w === WEEKS.length - 1) return fcDraws();
   if (WD.has(w)) return WD.get(w);
   const raw = DRAWS.weeks[String(WEEKS[w].date)];
   if (!raw) return null;
@@ -339,7 +383,10 @@ function weekDraws(w) {
 function simulate(w, scen) {
   const wd = weekDraws(w);
   if (!wd) return null;
-  if (!SWING || SWING.length < wd.n * NC * NP) SWING = makeSwing(wd.n);
+  // On the Forecast, election day's constituency patterns (engine.js forecastSwing, from forecast.json's profiles)
+  let sw;
+  if (fcOn() && FC && FC.profiles && window.E27Engine && E27Engine.forecastSwing) sw = FCSWING || (FCSWING = E27Engine.forecastSwing(FC.profiles, P, C, COEFI, wd.n, 780046));
+  else { if (!SWING || SWING.length < wd.n * NC * NP) SWING = makeSwing(wd.n); sw = SWING; }
   const ents = makeEnts(scen ? scen.joint : []), E = ents.length, n = wd.n;
   const nat = new Int16Array(n * E), cons = new Int16Array(n * NC * E), tots = new Float32Array(n * E);
   const factor = new Float64Array(SP.length), fixed = new Float64Array(SP.length);
@@ -356,7 +403,7 @@ function simulate(w, scen) {
     if (scen) for (let i = 0; i < SP.length; i++) if (i !== iMN) sh[i] = factor[i] > 0 || fixed[i] === 0 ? sh[i] * factor[i] : fixed[i];
     sh[iMN] = (scen ? scen.shares.MN : R.mnNational2023) / 100;
     if (rnd && scen.joint.length) applyResponse(sh, scen.joint, scen.resp, rnd, flow, w);
-    const tot = allocate(sh, ents, SWING, d, nat, cons, d * E, d * NC * E);
+    const tot = allocate(sh, ents, sw, d, nat, cons, d * E, d * NC * E);
     for (let k = 0; k < E; k++) tots[d * E + k] = tot[k];
   }
   if (flow) flow.forEach(f => { f.ab /= n; for (let i = 0; i < f.to.length; i++) f.to[i] /= n; });
@@ -459,7 +506,7 @@ function plaus(o, ents, ms) {
 const byPlaus = (a, b) => a.pl.gaps - b.pl.gaps || a.size - b.size || a.pl.span - b.pl.span || b.p - a.p || b.s - a.s;
 
 // ---- the current view's numbers -------------------------------------------------------------
-let CUR = null;
+let CUR = null, FC_SIM = null;
 function compute() {
   const wk = WEEKS[S.w], model = modelView();
   const ents = makeEnts(S.joint), E = ents.length;
@@ -472,7 +519,18 @@ function compute() {
   const single = { nat: new Int16Array(E), cons: new Int16Array(NC * E) };
   const tot = allocate(sh, ents, null, 0, single.nat, single.cons);
   let mode, rows, gov, allGov, sim = null;
-  if (model) {
+  if (fcOn() && fcState === "ready") fcDraws();   // brings the draws, and so FC_SIM, up to the sliders
+  if (fcOn() && fcState === "ready" && (sim = FC_SIM || (FC_SIM = simulate(S.w, null)))) {
+    mode = "forecast";
+    rows = summarise(sim);
+    allGov = govFromSim(sim, []);
+    gov = pruneGov(allGov, true);
+  } else if (fcOn()) {
+    mode = "single";
+    rows = ents.map((e, k) => ({ seats: single.nat[k], lo: null, hi: null, pThr: null }));
+    allGov = govDet(ents, S.joint, Array.from(single.nat));
+    gov = pruneGov(allGov, false);
+  } else if (model) {
     mode = "model";
     rows = ents.map((e, k) => {
       const i = PIDX[e.name], s = wk.seats[i];
@@ -1001,7 +1059,7 @@ function seatAssign(sim, names, totals) {
   };
   pass(true); pass(false);
   const also = names.map(() => new Int32Array(NC));
-  // Outside possibilities, as on the Election 2027 page: in each constituency the least secure projected seats are
+  // Outside possibilities: in each constituency the least secure projected seats are
   // matched, in order, to the likeliest seats beyond the projection; a list counts one where it is that next most
   // likely list, with a chance of SEAT_OUTSIDE or more
   for (let ci = 0; ci < NC; ci++) {
@@ -1213,7 +1271,7 @@ function render2023() {
     `<tr><td>${esc(l.list)} <span class="muted" style="font-size:11.5px">${l.parties.length > 1 ? "now " + l.parties.map(short).join(" + ") : ""}</span></td><td>${l.vote.toFixed(1)}%</td><td>${now.toFixed(1)}%</td><td class="${cls(now - l.vote)}">${signed(now - l.vote, 1)}</td><td>${l.seats}</td><td>${seats}</td><td class="${cls(seats - l.seats)}">${signed(seats - l.seats)}</td></tr>`).join("");
   box.innerHTML = `<span class="label" style="display:block;margin:10px 0 4px">Change since the 2023 election</span>
     <table class="t"><tr><th>2023 list</th><th>Vote 2023</th><th>Now</th><th></th><th>Seats 2023</th><th>Now</th><th></th></tr>${rows}</table>
-    <p class="help" style="margin:4px 0 0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${cur.mode === "model" ? `the model's estimate for ${dstr(cur.wk.date)}` : "the hypothetical scenario"}.</p>`;
+    <p class="help" style="margin:4px 0 0">Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${cur.mode === "model" ? `the model's estimate for ${dstr(cur.wk.date)}` : cur.mode === "forecast" ? `the forecast for ${dstr(fromIso(FC.electionDate))}: vote shares are the expected ones (this week's estimates), seats the forecast's medians` : "the hypothetical scenario"}.</p>`;
 }
 // Parties on the lists of an option (a joint list stands for its members)
 const partiesOf = o => o.members.flatMap(nm => { const e = CUR.ents.find(x => x.name === nm); return e ? e.members : [nm]; });
@@ -1481,7 +1539,8 @@ function renderChips() {
     (S.houses.size ? `<button type="button" class="linkbtn" id="houseclear">Show all houses</button>` : "");
   $("periods").innerHTML = PERIODS.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${S.period === k}">${l}</button>`).join("");
   [...$("views").children].forEach(b => {
-    b.setAttribute("aria-pressed", S.view === b.dataset.v); b.setAttribute("aria-selected", S.view === b.dataset.v);
+    const on = S.view === b.dataset.v || (SUBVIEWS[SECTION] || {})[S.view] === b.dataset.v;
+    b.setAttribute("aria-pressed", on); b.setAttribute("aria-selected", on);
     b.hidden = !!TERM && b.dataset.v === "groups";
   });
   [...new Set(Object.values(VIEW_EL))].forEach(id => { $(id).hidden = id !== VIEW_EL[S.view]; });
@@ -1535,6 +1594,8 @@ function renderView() {
   if (S.view === "trends") renderTrends();
   else if (HEMI_VIEWS.includes(S.view)) { renderHemi(); renderHemiBlocks(); if (S.view === "seats") renderSeatsPanel(); if (S.view === "levers") renderLevers(); }
   else if (S.view === "everyseat") renderEverySeat();
+  else if (S.view === "senate") renderSenate();
+  else if (S.view === "sliders") renderSliders();
   else if (S.view === "whovotes") renderWhoVotes();
   else if (S.view === "map") { if (window.Geography) Geography.render("map"); else { renderMap(); renderConstCard(); } }
   else if (S.view === "worth" || S.view === "population") { if (window.Geography) Geography.render(S.view); else $(VIEW_EL[S.view]).innerHTML = `<p class="help">Loading…</p>`; }
@@ -1554,6 +1615,12 @@ function scenText() {
 // Scenarios the banner says what the scenario is
 function renderBanner() {
   const b = $("scenbanner");
+  if (FORECAST) {
+    const fl = S.fl.filter(x => x.c);
+    if (!fl.length || S.view === "sliders" || (!fcOn() && S.view !== "senate")) { b.hidden = true; return; }
+    b.innerHTML = `<b>With the sliders</b>: ${esc(fl.map(flText).join("; "))}. <button type="button" class="linkbtn" id="toslide">Change them</button> · <button type="button" class="linkbtn" id="flclear2">Clear them</button>`;
+    b.hidden = false; return;
+  }
   if (TERM || SECTION === "polls" || !CUR || CUR.mode === "model" || S.view === "whovotes") { b.hidden = true; return; }
   const edit = SECTION === "scenarios" ? "" : ` · <a href="${esc(sectionUrl("scenarios") + "#" + carryString())}" target="_top">Change it in Scenarios</a> · <button type="button" class="linkbtn" id="tomodel">Back to the model</button>`;
   b.innerHTML = `<b>Hypothetical scenario</b> for the week of ${dlong(CUR.wk.date)}: ${esc(scenText())}.${edit}`;
@@ -1567,6 +1634,7 @@ function update() {
   updatePanel(); renderView(); saveHash();
 }
 const updateSoon = debounce(update, 60);
+const flSoon = debounce(update, 250);
 
 // ---- share links ----------------------------------------------------------------------------
 function hashTarget() { try { if (window.top !== window && window.top.location.host === location.host) return window.top; } catch (e) { /* cross-origin */ } return window; }
@@ -1580,6 +1648,15 @@ function stateString() {
     if (S.period !== "all") q.set("p", S.period);
     if (!S.points) q.set("dp", "0");
     return q.toString();
+  }
+  if (FORECAST && S.fh === "now") q.set("fh", "now");
+  if (FORECAST) { const fl = S.fl.filter(x => x.c); if (fl.length) q.set("fl", fl.map(x => [x.m, x.c, ...FL_DIMS.map(k => x.g[k] == null ? "" : x.g[k])].join(".")).join(";")); }
+  if (FORECAST && S.view === "senate") {
+    const sp = Object.entries(S.sp).filter(([, v]) => v).map(([p, v]) => p + ":" + v).join(";");
+    if (sp) q.set("sp", sp);
+    if (!S.sinc) q.set("si", "0");
+    if (S.scoal.size) q.set("sc", [...S.scoal].join(";"));
+    if (S.snSort === "doubt") q.set("so", "doubt");
   }
   if (S.w !== WEEKS.length - 1) q.set("w", iso(WEEKS[S.w].date));
   const bs = baseShares(), ed = SP.filter(p => S.hand.has(p) && Math.abs(S.shares[p] - bs[p]) > 0.051);
@@ -1674,6 +1751,18 @@ function restoreHash() {
   S.gPts = q.get("gp") === "1";
   if (PERIODS.some(p => p[0] === q.get("p"))) S.period = q.get("p");
   S.points = q.get("dp") !== "0";
+  // The forecast is of the model alone, for the latest week: a scenario or a week in the link is not carried here
+  if (FORECAST) {
+    S.fh = q.get("fh") === "now" ? "now" : "election";
+    if (q.get("fl")) q.get("fl").split(";").forEach(t => { const [m, c, ...g] = t.split("."), v = parseFloat(c);
+      if (["turnout", "econ", "soc"].includes(m) && isFinite(v)) S.fl.push({ m, c: v, g: Object.fromEntries(FL_DIMS.map((k, i) => [k, g[i] === "" || g[i] == null ? null : +g[i]])) }); });
+    if (q.get("sp")) q.get("sp").split(";").forEach(kv => { const [p, v] = kv.split(":"); if (p in PIDX && ["A", "B", "C"].includes(v)) S.sp[p] = v; });
+    S.sinc = q.get("si") !== "0";
+    if (q.get("sc")) q.get("sc").split(";").forEach(k => S.scoal.add(k));
+    if (q.get("so") === "doubt") S.snSort = "doubt";
+    S.w = WEEKS.length - 1; S.shares = defaults(S.w); S.shares.Other = 100 - sum(SP.map(p => S.shares[p]));
+    S.joint = []; S.levers = []; S.hand.clear();
+  }
   return true;
 }
 function shareUrl() {
@@ -1791,9 +1880,9 @@ async function png(only) {
   // the subtitle names the pollsters whose polls the estimates rest on, whether or not the polls are drawn; two lines at most
   const base = past ? `Shares of the parties named, anchored on the elections of ${dlong(TERM.term.start)} and ${dlong(TERM.term.end)}`
     : combo ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}; seat projection for ${dlong(CUR.wk.date)}`
-    : (only === "hemi" || only === "map") ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
+    : (only === "hemi" || only === "map") ? (CUR.mode === "model" ? `${dlong(CUR.wk.date)} · model estimates` : CUR.mode === "forecast" ? fcSubtitle() : "Hypothetical scenario") : `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}`;
   // a hypothetical scenario is not the model's estimate: no pollsters are named, and the image says it is hypothetical
-  const hypo = !past && CUR.mode !== "model" && (only === "hemi" || only === "map" || only === "trend" || combo);
+  const hypo = !past && CUR.mode !== "model" && CUR.mode !== "forecast" && (only === "hemi" || only === "map" || only === "trend" || combo);
   const sub = grp ? `Share among decided voters, ${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[GD.months.length - 1], true)}, with 80% intervals; dashed line: all voters. From Opinia24's and CBOS Flash's tables by group, pinned to this tracker's national trend as fitted on ${dlong(fromIso(GD.meta.fitted))}. Splinters are counted with their 2023 list.${S.gPts ? " Points: the polls' readings (circles CBOS, squares Opinia24)." : ""}`
     : only === "geo" ? Geography.exportSub()
     : hypo && only === "trend" ? `Estimates to ${dlong(WEEKS[WEEKS.length - 1].date)}. The lines are the model's estimates from published polls. This image was made with a hypothetical scenario set in the tracker, whose vote shares are not poll estimates.` : hypo ? `Hypothetical scenario for the week of ${dlong(CUR.wk.date)}: ${scenText()}. These are not poll estimates; seats are projected from these shares.${combo ? " The trend lines are the model's estimates from published polls." : ""}` : `${base}. Based on polls by ${VD().pollsters.join(", ")}.`, mc = document.createElement("canvas").getContext("2d");
@@ -1843,7 +1932,7 @@ async function png(only) {
     } });
   }
   if ((combo || only === "hemi" && S.hemi2023) && !TERM) {
-    const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${CUR.mode === "model" ? `the model's estimate for ${dlong(CUR.wk.date)}` : "the hypothetical scenario"}.`;
+    const rows23 = since2023(), note23 = `Today's parties summed into the lists they stood on in October 2023 (PKW results). "Now" is ${CUR.mode === "model" ? `the model's estimate for ${dlong(CUR.wk.date)}` : CUR.mode === "forecast" ? `the forecast for ${dlong(fromIso(FC.electionDate))}: vote shares are the expected ones, seats the forecast's medians` : "the hypothetical scenario"}.`;
     const lines23 = wrapTo(note23, "10.5px " + F, SW - 2 * pad);
     secs.push({ h: 28 + (rows23.length + 1) * 17 + 10 + lines23.length * 14 + 14, draw: y0 => {
       g.textAlign = "left"; g.fillStyle = "#141414"; g.font = "500 12px " + F; g.fillText("Change since the 2023 election", pad, y0 + 12);
@@ -1956,6 +2045,7 @@ async function png(only) {
 
 // ---- events ---------------------------------------------------------------------------------
 function setWeek(i) {
+  if (FORECAST) return;   // the forecast is always from the latest week
   S.w = clamp(i, 0, WEEKS.length - 1); S.shares = defaults(S.w); S.hand.clear(); S.focusGov = null; S.pinGov = null;
   S.picker.forEach(p => { if (!exists(p, WEEKS[S.w].date)) S.picker.delete(p); });
   // changes by group start from the week the cells are pinned to: elsewhere they are set aside
@@ -2172,9 +2262,9 @@ function bind() {
 }
 
 // ---- changes by group (Scenarios: Groups) and Who votes ---------------------------------------
-// cells.json (Election 2027/analysis/90_export.R) holds the 2023 electorate as 280 cells of age, sex, education and place of
+// cells.json (Polls/current term/R/export_cells.R, from Voting behaviour's stages 81-82) holds the 2023 electorate as 280 cells of age, sex, education and place of
 // residence, each with a chance of voting and a vote, raked to PKW's result and Ipsos's exit poll, and the polls-by-group
-// starting point for one week. engine.js (Election 2027/web/prototype/engine.js, copied here by sync-analyses.py) rakes the
+// starting point for one week. engine.js (Polls/web/engine.js, copied here by sync-analyses.py) rakes the
 // cells to each change. The national shares that come out become the scenario's shares; everything after them (the week's
 // draws, joint lists and the voters' response, seats) is the tracker's own, as for any scenario.
 let CELLS = null, cellsState = "idle", LEVRES = null;
@@ -2352,7 +2442,7 @@ function renderWhoVotes() {
 // A constituency's seats are its m most probable list-seats, a list's k-th seat being won in the share of simulations in which it
 // wins at least k there. When the projected list loses a seat in a simulation, the seat goes to the list that wins a seat beyond its
 // projection there (the least secure lost seat matched to the likeliest contender), so each seat's chances add up to 100%.
-// Ported from Election 2027's engine.js (seatByConstituency), which Election 2027's test_engine.js checks against the tracker.
+// Ported from Polls/web/engine.js (seatByConstituency), which Polls/current term/js/test_engine.js checks against the tracker.
 const ESCACHE = new WeakMap();
 const CATLAB = { certain: "Certain", probable: "Probable", possible: "Possible", "toss-up": "Toss-up" };
 function seatByConstituency(sim) {
@@ -2396,6 +2486,120 @@ function seatByConstituency(sim) {
 const entColour = id => { const e = CUR && CUR.ents.find(x => x.name === id); return e ? e.colour : col(id); };
 // A link to a constituency on the Geography page, keeping the week and the scenario
 const geoLink = okreg => { const q = new URLSearchParams(carryString()); q.set("c", okreg); return sectionUrl("geography") + "#" + q; };
+// ---- the Forecast page's Sliders view (Polls/current term/docs/forecast_plan.md, section 2.3) ----------------------
+// Changes by group in turnout, economic or socio-cultural position, applied to the election-day draws (engine.js
+// attitudeFactors on Voting behaviour's 2023 model); the Sejm, Every seat and Senate views follow them.
+const FL_DIMS = ["age", "sex", "education", "residence"];
+const FL_M = { turnout: ["Turnout", "points", -20, 20, 1], econ: ["Economic position", "points to the right (market-liberal)", -3, 3, 0.5], soc: ["Socio-cultural position", "points more conservative", -3, 3, 0.5] };
+function flGroupText(g) {
+  if (!CELLS) return "";
+  const bits = FL_DIMS.filter(k => g[k] != null).map(k => CELLS.dims[k].labels[g[k]].toLowerCase());
+  return bits.length ? bits.join(", ") : "everyone";
+}
+function flText(x) {
+  const m = FL_M[x.m];
+  const pts = Math.abs(x.c) === 1 ? "point" : "points";
+  return x.m === "turnout" ? `turnout ${signed(x.c)} ${pts} among ${flGroupText(x.g)}` : `${flGroupText(x.g)} ${Math.abs(x.c)} ${pts} ${x.c > 0 ? (x.m === "econ" ? "to the right economically" : "more conservative") : (x.m === "econ" ? "to the left economically" : "more progressive")}`;
+}
+function fcBaseSim() {   // the forecast without sliders, for the before-and-after table
+  if (FC_SIM0) return FC_SIM0;
+  const keep = { fl: S.fl, w: FCW, k: FCW_KEY, sim: FC_SIM };
+  S.fl = []; FCW = null; FC_SIM0 = simulate(S.w, null); const w0 = FCW;
+  S.fl = keep.fl; FCW = keep.w; FCW_KEY = keep.k; FC_SIM = keep.sim;
+  FC_SIM0.draws = w0;
+  return FC_SIM0;
+}
+function renderSliders() {
+  const sum = $("flsum");
+  if (S.fh !== "election") { S.fh = "election"; loadForecast(); }   // the sliders move the election-day forecast (decision 6)
+  if (!FC || fcState !== "ready" || !FC.attitudes) { ["flctl", "flres", "flmaj", "flnote"].forEach(id => { $(id).innerHTML = ""; }); sum.textContent = fcState === "missing" ? "The forecast could not be loaded." : "Loading the forecast…"; loadForecast(); return; }
+  if (cellsState !== "ready") { sum.textContent = cellsState === "missing" ? "The electorate cells could not be loaded, so the sliders are not available." : "Loading the electorate cells…"; if (cellsState === "idle") loadCells().then(() => { FCW = null; update(); }); return; }
+  sum.innerHTML = `What follows for the election on ${dlong(fromIso(FC.electionDate))} if groups of voters turn out more or less, or move to the left or right, economically or on social and cultural questions. Positions are on 0–10 scales from the 2023 Polish National Election Study.`;
+  const opt = (k, v) => `<option value=""${v == null ? " selected" : ""}>${k === "age" ? "All ages" : k === "sex" ? "Both sexes" : k === "education" ? "All education" : "Everywhere"}</option>` + CELLS.dims[k].labels.map((l, i) => `<option value="${i}"${v === i ? " selected" : ""}>${esc(l)}</option>`).join("");
+  $("flctl").innerHTML = S.fl.map((x, i) => { const m = FL_M[x.m];
+    return `<div class="card soft" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:8px 12px;align-items:flex-end;margin:0 0 8px">${FL_DIMS.map(k => `<label class="fsel">${k[0].toUpperCase() + k.slice(1)}<select data-fl="${i}" data-k="${k}">${opt(k, x.g[k])}</select></label>`).join("")}
+      <label class="fsel">What changes<select data-fl="${i}" data-k="m">${Object.entries(FL_M).map(([v, d]) => `<option value="${v}"${x.m === v ? " selected" : ""}>${d[0]}</option>`).join("")}</select></label>
+      <label class="fsel" style="min-width:220px">By <b>${x.c > 0 ? "+" : ""}${x.c}</b> ${esc(m[1])}<input type="range" data-fl="${i}" data-k="c" min="${m[2]}" max="${m[3]}" step="${m[4]}" value="${x.c}"></label>
+      <button type="button" class="btn2 sm" data-rmfl="${i}">Remove</button></div>`; }).join("") +
+    `<div class="btnrow"><button type="button" class="btn2" id="fladd">Add a change</button>${S.fl.length ? ` <button type="button" class="btn2" id="flclear">Clear all</button>` : ""}</div>`;
+  const s0 = fcBaseSim(); fcDraws(); compute();
+  const s1 = CUR.sim, w0 = s0.draws, w1 = fcDraws();
+  if (!s1) { $("flres").innerHTML = ""; return; }
+  const seatQ = (sim, k) => { const v = []; for (let d = 0; d < sim.n; d++) v.push(sim.nat[d * sim.ents.length + k]); v.sort((a, b) => a - b); return [Math.round(median(v)), Math.round(quant(v, 0.1)), Math.round(quant(v, 0.9))]; };
+  const rows = s1.ents.map((e, k) => ({ e, k, i: PIDX[e.name], a: seatQ(s0, k), b: seatQ(s1, k) })).filter(r => r.a[2] > 0 || r.b[2] > 0 || (r.i != null && w1.med[r.i] > 0.01)).sort((x, y) => y.b[0] - x.b[0]);
+  $("flres").innerHTML = `<tr><th>Party</th><th class="n">Vote now</th><th class="n">With the sliders</th><th class="n">Seats now</th><th class="n">With the sliders</th></tr>` +
+    rows.map(r => `<tr><td><span class="dot" style="background:${col(r.e.name)};margin-right:6px"></span>${esc(r.e.name)}</td><td class="n muted">${r.i != null ? (100 * w0.med[r.i]).toFixed(1) : ""}</td><td class="n"><b>${r.i != null ? (100 * w1.med[r.i]).toFixed(1) : ""}</b>${r.i != null ? ` <span class="${cls(w1.med[r.i] - w0.med[r.i])}">${signed(100 * (w1.med[r.i] - w0.med[r.i]), 1)}</span>` : ""}</td><td class="n muted">${r.a[0]} <span style="font-size:11px">(${r.a[1]}–${r.a[2]})</span></td><td class="n"><b>${r.b[0]}</b> <span class="muted" style="font-size:11px">(${r.b[1]}–${r.b[2]})</span></td></tr>`).join("");
+  const pr = (sim, ps) => { const ks = sim.ents.map((e, k) => (ps.includes(e.name) ? k : -1)).filter(k => k >= 0); let c = 0; for (let d = 0; d < sim.n; d++) { let t = 0; ks.forEach(k => { t += sim.nat[d * sim.ents.length + k]; }); if (t >= R.seatsMajority) c++; } return c / sim.n; };
+  const gov = ["KO", "Polska 2050", "PSL", "Lewica", "Razem"], right = ["PiS", "R+", "Konfederacja", "KKP"];
+  $("flmaj").innerHTML = `Chance of ${R.seatsMajority} seats in the Sejm: KO, Polska 2050, PSL, Lewica and Razem <b>${prob(pr(s1, gov))}</b> <span class="muted">(${prob(pr(s0, gov))} without the sliders)</span>; PiS, R+, Konfederacja and KKP <b>${prob(pr(s1, right))}</b> <span class="muted">(${prob(pr(s0, right))})</span>. The Sejm, Every seat and Senate views show the forecast with the sliders.`;
+  $("flnote").innerHTML = `How it works: the 2023 Polish National Election Study gives each voter's economic position (0 = state-led, 10 = market-liberal) and socio-cultural position (0 = progressive, 10 = conservative), averaged over the questions asked that year. A model of the 2023 vote, not voting included, on those positions and on age, sex, education and place of residence says how each group's vote would differ if its positions differed; moving a group's positions by the amount set applies that difference to the group's 2023 vote, and the change in each party's national share is carried over to the forecast. Today's parties that split from a 2023 list (R+, KKP, Razem, PSL and Polska 2050) move with that list. The ranges include the model's own uncertainty. This is what follows if voters with those positions voted as such voters did in 2023, not a measured effect of opinion on the vote, and the positions are comparable within 2023 only. A check against the 2025 Polish National Election Study (vote intention, with the questions both surveys asked) found the economic effects unchanged, but a conservative shift worth less to PiS than in 2023 (about two thirds as much) and more to Konfederacja and KKP: as conservative voters have spread across the right, the slider probably overstates PiS's gains and understates theirs.`;
+}
+// ---- the Forecast page's Senate view (Polls/current term/docs/forecast_plan.md, section 3) -----------------------
+// Every party stands alone unless put in a pact (decision 4); one generic independent stands everywhere. The
+// simulation is engine.js senateSimulate() on forecast.json's election-day draws and constituency patterns.
+let SN = null;   // { key, res }
+const snParties = () => P.filter(p => FC && FC.senate && p in FC.senate.lineage);
+function snGroups() {
+  const ps = snParties(), pacts = { A: [], B: [], C: [] };
+  ps.forEach(p => { if (S.sp[p]) pacts[S.sp[p]].push(p); });
+  const groups = ["A", "B", "C"].map(k => pacts[k]).filter(g => g.length);
+  ps.filter(p => !S.sp[p]).forEach(p => groups.push([p]));
+  return groups;
+}
+const snLabel = g => g.map(short).join(" + ");
+const snKey = g => [...g].sort().join("+");
+function snColour(g) { if (g[0] === "Independent") return "#9a9a9a"; const fw = fcDraws(); return col(g.reduce((a, b) => (fw.med[PIDX[b]] > fw.med[PIDX[a]] ? b : a))); }
+function snRun() {
+  const groups = snGroups(), key = JSON.stringify([groups, S.sinc, flKey()]);
+  if (SN && SN.key === key) return SN.res;
+  const E = window.E27Engine; if (!E || !E.senateSimulate) return null;
+  if (!FCSWING) FCSWING = E.forecastSwing(FC.profiles, P, C, COEFI, FC.nDraws, 780046);
+  const fw = fcDraws(), K = fw.K, kOf = {}; FC.categories.forEach((c, k) => { kOf[c] = k; });
+  const nat = (d, p) => fw.arr[d * K + kOf[p]];
+  const cons = (d, c, p) => { const i = PIDX[p]; return COEFI[i][c] * FCSWING[(d * NC + c) * NP + i]; };
+  const res = E.senateSimulate(FC.senate, groups, nat, cons, FC.nDraws, { incumbency: S.sinc });
+  SN = { key, res };
+  return res;
+}
+function renderSenate() {
+  const sum = $("snsum");
+  if (!FC || fcState !== "ready" || !FC.senate) {
+    ["snctl", "snseats", "sncoal", "snfilt", "sntable", "snnote"].forEach(id => { $(id).innerHTML = ""; });
+    sum.textContent = fcState === "missing" ? "The forecast could not be loaded." : fcState === "stale" ? "The forecast file is from another week than the polls; it will be right after the next run." : "Loading the forecast…";
+    loadForecast(); return;
+  }
+  const ps = snParties();
+  $("snctl").innerHTML = ps.map(p => `<label class="fsel">${esc(short(p))}<select data-sp="${esc(p)}">${[["", "Stands alone"], ["A", "Pact A"], ["B", "Pact B"], ["C", "Pact C"]].map(([v, t]) => `<option value="${v}"${(S.sp[p] || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>`).join("") +
+    `<label style="display:inline-flex;align-items:center;gap:6px;font-size:13px;margin-left:8px"><input type="checkbox" id="sninc"${S.sinc ? " checked" : ""}> Sitting senators' parties get the incumbency effect</label>`;
+  const res = snRun(); if (!res) { sum.textContent = "The Senate simulation is not available."; return; }
+  const { groups, seats, n, G, wins } = res, maj = FC.senate.majority;
+  const dist = k => { const v = []; for (let d = 0; d < n; d++) v.push(seats[d * G + k]); v.sort((a, b) => a - b); return v; };
+  const rows = groups.map((g, k) => { const v = dist(k); let m = 0; v.forEach(x => { if (x >= maj) m++; }); return { g, k, key: snKey(g), med: Math.round(median(v)), lo: Math.round(quant(v, 0.1)), hi: Math.round(quant(v, 0.9)), p: m / n }; })
+    .filter(r => r.hi > 0 || r.med > 0).sort((a, b) => b.med - a.med || b.hi - a.hi);
+  const pacts = groups.filter(g => g.length > 1);
+  sum.innerHTML = `Forecast for the Senate election on ${dlong(fromIso(FC.electionDate))}${FC.provisional ? " (provisional date)" : ""}: ${FC.nDraws.toLocaleString("en-GB")} simulated elections in 100 single-member districts, ${pacts.length ? "with " + pacts.map(snLabel).join("; ") + " fielding one candidate each" : "every party standing alone"}. A majority is ${maj} seats.`;
+  $("snseats").innerHTML = `<tr><th>Candidates of</th><th class="n">Seats</th><th class="n">80%</th><th class="n">Chance of ${maj}+</th></tr>` +
+    rows.map(r => `<tr><td><span class="dot" style="background:${snColour(r.g)};margin-right:6px"></span>${esc(r.g[0] === "Independent" ? "Independents" : snLabel(r.g))}</td><td class="n"><b>${r.med}</b></td><td class="n muted">${r.lo}–${r.hi}</td><td class="n">${prob(r.p)}</td></tr>`).join("");
+  // combined majorities: tick groups
+  [...S.scoal].forEach(k => { if (!rows.some(r => r.key === k)) S.scoal.delete(k); });
+  const sel = rows.filter(r => S.scoal.has(r.key));
+  let pm = 0; const tot = [];
+  for (let d = 0; d < n; d++) { let t = 0; sel.forEach(r => { t += seats[d * G + r.k]; }); tot.push(t); if (t >= maj) pm++; }
+  tot.sort((a, b) => a - b);
+  $("sncoal").innerHTML = `<span class="label">Together</span><div style="display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin:4px 0">` +
+    rows.filter(r => r.g[0] !== "Independent").map(r => `<label style="display:inline-flex;align-items:center;gap:5px"><input type="checkbox" data-sc="${esc(r.key)}"${S.scoal.has(r.key) ? " checked" : ""}>${esc(snLabel(r.g))}</label>`).join("") + `</div>` +
+    (sel.length ? `<p style="margin:2px 0;font-size:13.5px">${esc(sel.map(r => snLabel(r.g)).join(", "))}: <b>${Math.round(median(tot))}</b> seats (80%: ${Math.round(quant(tot, 0.1))}–${Math.round(quant(tot, 0.9))}), a chance of <b>${prob(pm / n)}</b> of ${maj} or more.</p>` : `<p class="help" style="margin:2px 0">Tick the candidates' parties to see their chance of a majority together.</p>`);
+  $("snfilt").innerHTML = `<label class="fsel">Order<select id="sn-o"><option value="okreg"${S.snSort === "okreg" ? " selected" : ""}>By district</option><option value="doubt"${S.snSort === "doubt" ? " selected" : ""}>Least certain first</option></select></label>`;
+  const D = FC.senate.districts;
+  let list = D.map((dd, i) => { const order = [...wins[i].keys()].sort((a, b) => wins[i][b] - wins[i][a]); return { dd, f: order[0], pf: wins[i][order[0]], s: order[1], ps: wins[i][order[1]] }; });
+  if (S.snSort === "doubt") list = list.slice().sort((a, b) => a.pf - b.pf);
+  const incLab = { pact: "a pact independent", none: "an independent" };
+  const gl = k => groups[k][0] === "Independent" ? "Independent" : snLabel(groups[k]);
+  $("sntable").innerHTML = `<tr><th>District</th><th>Favourite</th><th class="n">Chance</th><th>Next most likely</th><th>Won in 2023 by</th></tr>` +
+    list.map(r => `<tr><td>${r.dd.okreg}. ${esc(r.dd.name)}</td><td><span class="dot" style="background:${snColour(groups[r.f])};margin-right:6px"></span>${esc(gl(r.f))}</td><td class="n"><b>${prob(r.pf)}</b></td><td>${r.ps > 0 ? `<span class="dot" style="background:${snColour(groups[r.s])};margin-right:6px"></span>${esc(gl(r.s))} <span class="muted">${prob(r.ps)}</span>` : `<span class="muted">–</span>`}</td><td class="muted">${esc(r.dd.winner || "")}${r.dd.inc ? ` (${esc(incLab[r.dd.inc] || short(r.dd.inc))})` : ""}</td></tr>`).join("");
+  const co = FC.senate.coef;
+  $("snnote").innerHTML = `How it works: from the Senate elections of 2011–2023, a candidate's vote rises with the Sejm vote of the parties behind them (an elasticity of ${co.x.toFixed(2)}: Senate candidates draw votes across party lines), and sitting senators run about ${Math.round(100 * (Math.exp(co.incumbent) - 1))}% ahead. A pact's single candidate gets about what the pact parties' Sejm votes together predict. Each party's Sejm vote in a district is the forecast's election-day vote in its Sejm constituency, spread over the constituency's Senate districts as its party line's vote was in 2023. Each candidate also gets a random personal vote, and every candidate of one camp a shared one, sized so that past elections' seat totals fall within the ranges as often as they should. Strong local independents, who win a few seats at every election, cannot be foreseen and are underrepresented. Checked by predicting each of the four elections from the other three: 87–89 of 100 winners right in 2011, 2019 and 2023, 71 in 2015.`;
+}
 function renderEverySeat() {
   const sim = hemiSim(), f = $("esfilters");
   if (!sim) {
@@ -2410,14 +2614,14 @@ function renderEverySeat() {
     sel("es-l", "List", [["", "All lists"]].concat(listIds.map(id => [id, id])), S.esL) +
     sel("es-k", "Certainty", [["all", "Every seat"], ["open", "Not certain"], ["play", "Possible or toss-up"], ["toss-up", "Toss-ups only"]], S.esCat) +
     sel("es-o", "Order", [["const", "By constituency"], ["doubt", "Least certain first"]], S.esSort) +
-    `<span class="btnrow" style="margin-left:auto"><button type="button" class="btn2 sm" id="escsv">CSV of all ${all.length} seats</button></span>`;
+    `<span class="btnrow" style="margin-left:auto">${FORECAST ? `<button type="button" class="btn2 sm" id="toseats">← The Sejm</button> ` : ""}<button type="button" class="btn2 sm" id="escsv">CSV of all ${all.length} seats</button></span>`;
   const outside = s => !!s.next && s.next.id === S.esL && s.next.p >= SEAT_OUTSIDE;
   let rows = all.filter(r => (!S.esC || String(r.k.okreg) === S.esC) && (!S.esL || r.s.id === S.esL || outside(r.s)) &&
     (S.esCat === "all" || (S.esCat === "open" ? r.s.cat !== "certain" : S.esCat === "play" ? (r.s.cat === "possible" || r.s.cat === "toss-up") : r.s.cat === "toss-up")));
   if (S.esSort === "doubt") rows = rows.slice().sort((a, b) => a.s.p - b.s.p);
   const own = S.esL ? rows.filter(r => r.s.id === S.esL) : rows, other = rows.length - own.length;
   const count = L => { const c = { certain: 0, probable: 0, possible: 0, "toss-up": 0 }; L.forEach(r => { c[r.s.cat]++; }); return c; };
-  const n = count(own), t = count(all), when = `${CUR.mode === "model" ? "Model estimates" : "Hypothetical scenario"} for the week of ${dlong(CUR.wk.date)}.`;
+  const n = count(own), t = count(all), when = CUR.mode === "forecast" ? fcSubtitle() + "." : `${CUR.mode === "model" ? "Model estimates" : "Hypothetical scenario"} for the week of ${dlong(CUR.wk.date)}.`;
   $("essum").innerHTML = S.esL
     ? `<b>${esc(S.esL)}</b> is projected to win ${own.length} of the seats shown: ${n.certain} certain, ${n.probable} probable, ${n.possible} possible, ${n["toss-up"]} toss-up.${other ? ` ${other} more ${other === 1 ? "is an outside possibility" : "are outside possibilities"}: projected for another list, with ${esc(S.esL)} the next most likely to take ${other === 1 ? "it" : "them"} (${pc0(SEAT_OUTSIDE)}% or more).` : ""} ${when}`
     : `Of the ${all.length} seats, <b>${t.certain}</b> are certain, <b>${t.probable}</b> probable, <b>${t.possible}</b> possible and <b>${t["toss-up"]}</b> toss-ups.${rows.length !== all.length ? ` Shown: ${rows.length}.` : ""} ${when}`;
@@ -2428,16 +2632,64 @@ function renderEverySeat() {
 }
 function everySeatCsv() {
   const sim = hemiSim(); if (!sim) return;
-  const sb = seatByConstituency(sim), ids = sim.ents.map(e => e.name), scen = CUR.mode === "model" ? "model estimates" : "hypothetical scenario: " + scenText();
+  const sb = seatByConstituency(sim), ids = sim.ents.map(e => e.name), scen = CUR.mode === "model" ? "model estimates" : CUR.mode === "forecast" ? "forecast: " + fcSubtitle() : "hypothetical scenario: " + scenText();
   const rows = [["week", "figures", "okreg", "constituency", "magnitude", "seat_rank", "projected_list", "list_seat_number", "chance", "certainty", ...ids.map(id => "chance_" + id)]];
   sb.forEach(k => k.projected.forEach(s => { const pm = Object.fromEntries(s.take.map(t => [t.id, t.p])); rows.push([iso(CUR.wk.date), scen, k.okreg, k.name, k.magnitude, s.rank, s.id, s.j, +s.p.toFixed(3), s.cat, ...ids.map(id => (pm[id] != null ? +pm[id].toFixed(3) : 0))]); }));
   const q = v => (typeof v === "string" && /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
-  download(`polling-tracker-every-seat-${iso(CUR.wk.date)}${CUR.mode === "model" ? "" : "-scenario"}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
+  download(`polling-tracker-every-seat-${iso(CUR.wk.date)}${CUR.mode === "model" ? "" : CUR.mode === "forecast" ? "-forecast-" + FC.electionDate : "-scenario"}.csv`, new Blob([ChartExport.csvCite(PAGE) + rows.map(r => r.map(q).join(",")).join("\n") + "\n"], { type: "text/csv" }));
 }
 
 // ---- the Seats page's side panel: the week's figures, read only --------------------------------
+const fcSubtitle = () => FC ? `Forecast for election day, ${dlong(fromIso(FC.electionDate))}${FC.provisional ? " (provisional date)" : ""}, from the polls to ${dlong(fromIso(FC.asOf))}` : "Forecast";
+function loadForecast() {
+  if (fcState !== "idle") return;
+  fcState = "loading";
+  fetch("forecast.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+    FC = d; fcState = iso(WEEKS[WEEKS.length - 1].date) === d.asOf ? "ready" : "stale";
+    if (fcState === "stale") console.warn("forecast.json is for " + d.asOf + ", polls.json for " + iso(WEEKS[WEEKS.length - 1].date));
+    update();
+  }).catch(() => { fcState = "missing"; update(); });
+}
+// The Forecast page's side panel: the switch between election day and this week, then the figures
+function renderForecastPanel() {
+  const cur = CUR, el = cur.mode === "forecast", now = S.fh === "now";
+  const sw = `<div class="seg" id="fhseg" role="group" aria-label="Forecast horizon"><button type="button" data-fh="election" aria-pressed="${!now}">On election day</button><button type="button" data-fh="now" aria-pressed="${now}">If held this week</button></div>`;
+  const wait = !now && !el ? `<p class="help">${fcState === "missing" ? "The forecast could not be loaded." : fcState === "stale" ? "The forecast file is from another week than the polls; it will be right after the next run." : "Loading the forecast…"}</p>` : "";
+  const fw = el ? fcDraws() : null, wk = cur.wk;
+  const list = cur.ents.map((e, k) => ({ e, k, r: cur.rows[k] })).filter(x => !x.e.mnOnly || x.r.seats > 0).filter(x => x.r.seats > 0 || x.e.vote >= 0.5)
+    .sort((a, b) => b.r.seats - a.r.seats || b.e.vote - a.e.vote);
+  const rows = list.map(({ e, r }) => {
+    const i = PIDX[e.name];
+    const v = el && i != null ? 100 * fw.med[i] : e.vote;
+    const vr = el && i != null ? `${(100 * fw.lo[i]).toFixed(1)}–${(100 * fw.hi[i]).toFixed(1)}` : !el && i != null && wk.voteLo[i] != null ? `${wk.voteLo[i].toFixed(1)}–${wk.voteHi[i].toFixed(1)}` : "";
+    return `<tr><td><span class="dot" style="background:${e.colour};margin-right:6px"></span>${esc(e.name)}</td><td style="color:var(--accent);font-weight:500">${v.toFixed(1)}</td><td class="muted">${vr}</td><td><b>${r.seats}</b></td><td class="muted">${r.lo != null ? r.lo + "–" + r.hi : ""}</td></tr>`;
+  }).join("");
+  const doubt = cur.ents.map((e, k) => ({ e, r: cur.rows[k], t: el && PIDX[e.name] != null ? fw.med[PIDX[e.name]] : cur.tot[k] })).filter(x => x.r.pThr != null && SiteUI.inDoubt(x.t, R.thresholdParty, x.r.pThr));
+  const days = FC ? FC.daysToElection : null;
+  $("panel4").innerHTML = `<div class="card">
+    ${sw}
+    <h2 style="margin:4px 0 0">${el || (!now && FC) ? dlong(fromIso(FC.electionDate)) : dlong(wk.date)}</h2>
+    <div><span class="badge${el ? " edited" : ""}">${el ? "Forecast" : now ? "If held this week" : "Forecast"}</span></div>
+    ${wait}
+    <span class="label">Vote shares and seats</span>
+    <table class="t"><tr><th>Party</th><th>Vote %</th><th>80%</th><th>Seats</th><th>80%</th></tr>${rows}</table>
+    <p class="help" style="margin:0">${el ? `Medians of ${FC.nDraws.toLocaleString("en-GB")} simulated elections, with 80% ranges. ${days} days before ${FC.provisional ? "the provisional election date (the President sets it by 15 August 2027; 24 October is the middle of the legal window)" : "the election"}, the polls of this week can still be far from the result: the ranges are as wide as the polls' misses at this distance since 1993.` : now ? "The model's estimates for this week, as on the Seats page: medians of its simulated parliaments, with 80% ranges." : ""}</p>
+  </div>
+  ${doubt.length ? `<div class="card"><span class="label">Thresholds in doubt</span>
+    <table class="t"><tr><th>Party</th><th>Vote %</th><th>Chance of clearing</th></tr>${doubt.map(x => `<tr><td>${esc(x.e.name)}</td><td>${(100 * x.t).toFixed(1)}</td><td>${prob(x.r.pThr)} <span class="muted">of 5%</span></td></tr>`).join("")}</table>
+    <p class="help" style="margin:0">Only parties within 3 points of the threshold, or with a chance between 2% and 98% of clearing it, are listed.</p></div>` : ""}
+  <div class="card soft"><span class="label">More</span>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+      <button type="button" class="linkbtn" id="toevery" style="text-align:left;font-size:13px">Every seat, with each list's chance →</button>
+      <a href="${esc(sectionUrl("seats"))}" target="_top">This week's figures on Seats →</a>
+      <a href="${esc(sectionUrl("scenarios"))}" target="_top">Build a scenario in Scenarios →</a>
+    </div>
+    <div class="actions" style="margin-top:6px"><button type="button" class="btn2" id="copylink">Copy link to this view</button></div>
+  </div>`;
+}
 function renderSeatsPanel() {
   const cur = CUR; if (!cur || TERM) return;
+  if (FORECAST) return renderForecastPanel();
   const wk = cur.wk, model = cur.mode === "model";
   const list = cur.ents.map((e, k) => ({ e, k, r: cur.rows[k] })).filter(x => !x.e.mnOnly || x.r.seats > 0).filter(x => x.r.seats > 0 || x.e.vote >= 0.5)
     .sort((a, b) => b.r.seats - a.r.seats || b.e.vote - a.e.vote);
@@ -2473,19 +2725,49 @@ function renderSeatsPanel() {
 const copyLink = () => { const u = shareUrl(); (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => toast("Link copied"), () => window.prompt("Copy this link:", u)); };
 function backToModel() { S.shares = defaults(S.w); S.joint = []; S.levers = []; S.hand.clear(); LEVRES = null; S.resp = "medium"; S.adv = null; S.pinGov = null; S.focusGov = null; update(); }
 function bindSections() {
-  $("scenbanner").addEventListener("click", e => { if (e.target.id === "tomodel") backToModel(); });
+  $("scenbanner").addEventListener("click", e => {
+    if (e.target.id === "tomodel") backToModel();
+    if (e.target.id === "toslide") { S.view = "sliders"; renderChips(); update(); }
+    if (e.target.id === "flclear2") { S.fl = []; update(); }
+  });
   $("panel4").addEventListener("click", e => {
     const t = e.target;
     if (t.id === "wprev") return setWeek(S.w - 1);
     if (t.id === "wnext") return setWeek(S.w + 1);
     if (t.id === "toevery") { S.view = "everyseat"; renderChips(); renderView(); saveHash(); return; }
+    const fh = t.closest("button[data-fh]");
+    if (fh && fh.dataset.fh !== S.fh) { S.fh = fh.dataset.fh; if (fcOn()) loadForecast(); else loadDraws(); update(); return; }
     if (t.id === "copylink") copyLink();
   });
   $("esfilters").addEventListener("change", e => {
     const t = e.target, k = { "es-c": "esC", "es-l": "esL", "es-k": "esCat", "es-o": "esSort" }[t.id];
     if (k) { S[k] = t.value; renderEverySeat(); saveHash(); }
   });
-  $("esfilters").addEventListener("click", e => { if (e.target.id === "escsv") everySeatCsv(); });
+  $("esfilters").addEventListener("click", e => { if (e.target.id === "escsv") everySeatCsv(); if (e.target.id === "toseats") { S.view = "seats"; renderChips(); update(); } });
+  $("flctl").addEventListener("input", e => {
+    const t = e.target, i = t.dataset.fl; if (i == null || t.dataset.k !== "c") return;
+    S.fl[+i].c = parseFloat(t.value); flSoon();
+  });
+  $("flctl").addEventListener("change", e => {
+    const t = e.target, i = t.dataset.fl; if (i == null) return;
+    const x = S.fl[+i], k = t.dataset.k;
+    if (k === "m") { x.m = t.value; x.c = 0; } else if (k === "c") x.c = parseFloat(t.value); else x.g[k] = t.value === "" ? null : +t.value;
+    update();
+  });
+  $("flctl").addEventListener("click", e => {
+    const t = e.target;
+    if (t.id === "fladd") { S.fl.push({ g: { age: null, sex: null, education: null, residence: null }, m: "soc", c: 0 }); update(); }
+    else if (t.id === "flclear") { S.fl = []; update(); }
+    else if (t.dataset.rmfl != null) { S.fl.splice(+t.dataset.rmfl, 1); update(); }
+  });
+  $("snctl").addEventListener("change", e => {
+    const t = e.target;
+    if (t.dataset.sp) { if (t.value) S.sp[t.dataset.sp] = t.value; else delete S.sp[t.dataset.sp]; }
+    else if (t.id === "sninc") S.sinc = t.checked; else return;
+    renderSenate(); saveHash();
+  });
+  $("sncoal").addEventListener("change", e => { const k = e.target.dataset.sc; if (k == null) return; if (e.target.checked) S.scoal.add(k); else S.scoal.delete(k); renderSenate(); saveHash(); });
+  $("snfilt").addEventListener("change", e => { if (e.target.id === "sn-o") { S.snSort = e.target.value; renderSenate(); saveHash(); } });
   const p5 = $("panel5");
   p5.addEventListener("change", e => {
     const t = e.target;
@@ -2616,6 +2898,8 @@ Promise.all([fetch("polls.json").then(r => { if (!r.ok) throw new Error(r.status
   if (SECTION === "polls") loadTerms();
   // set on the SVGs themselves so PNG exports keep the typeface
   ["trend", "hemi", "map", "house", "groups"].forEach(id => $(id).setAttribute("font-family", "Jost, 'Avenir Next', -apple-system, sans-serif"));
+  if (FORECAST && fcOn()) loadForecast();
+  if (FORECAST && (S.fl.length || S.view === "sliders")) loadCells().then(() => { FCW = null; update(); });
   if (!modelView() || SECTION !== "polls") loadDraws();
   // a link with changes by group needs the cells before its shares are known
   if (S.levers.length || ["levers", "whovotes"].includes(S.view)) loadCells().then(() => { applyLevers(); update(); });

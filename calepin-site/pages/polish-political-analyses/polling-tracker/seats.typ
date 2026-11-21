@@ -18,6 +18,7 @@ What the polls would mean for the Sejm if an election were held this week: each 
   #html.elem("a", attrs: (href: "seats.html", "data-s": "seats", class: "on", "aria-current": "page"))[Seats]
   #html.elem("a", attrs: (href: "geography.html", "data-s": "geography"))[Geography]
   #html.elem("a", attrs: (href: "scenarios.html", "data-s": "scenarios"))[Scenarios]
+  #html.elem("a", attrs: (href: "forecast.html", "data-s": "forecast"))[Forecast]
 ]
 
 #html.elem("details", attrs: (class: "method"))[

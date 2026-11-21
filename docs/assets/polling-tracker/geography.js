@@ -1,4 +1,4 @@
-/* geography.js: the Polling tracker's Geography address (Election 2027/PLAN.md, decision 18). It took over the Constituencies page
+/* geography.js: the Polling tracker's Geography address (decision 18 of Polls/current term/docs/election_2027_plan.md). It took over the Constituencies page
  * (removed on 18 November 2026): what a vote is worth in each Sejm constituency, 1991-2023, a profile of each constituency, and
  * what the polls would give each party if the seats followed population. For the current term the Map view also shows where the
  * tracker's projected seats fall and how many are in doubt.

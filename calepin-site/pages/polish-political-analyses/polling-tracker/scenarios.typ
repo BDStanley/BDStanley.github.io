@@ -5,7 +5,7 @@
 )) <website-metadata>
 
 // The Scenarios address of the Polling tracker (see ../polling-tracker.typ): the app with ?s=scenarios. Views: Parties and lists
-// (shares, joint lists and the voters' response), Groups (changes by group, raked on Election 2027's cells, cells.json) and
+// (shares, joint lists and the voters' response), Groups (changes by group, raked on Voting behaviour's 2023 electorate cells, cells.json) and
 // Who votes. The 2023 targets table below is read from assets/polling-tracker/cells.json at build time.
 
 #let cells = json("/assets/polling-tracker/cells.json")
@@ -31,6 +31,7 @@ What follows if support or turnout shifts: change any party's share, put parties
   #html.elem("a", attrs: (href: "seats.html", "data-s": "seats"))[Seats]
   #html.elem("a", attrs: (href: "geography.html", "data-s": "geography"))[Geography]
   #html.elem("a", attrs: (href: "scenarios.html", "data-s": "scenarios", class: "on", "aria-current": "page"))[Scenarios]
+  #html.elem("a", attrs: (href: "forecast.html", "data-s": "forecast"))[Forecast]
 ]
 
 #html.elem("details", attrs: (class: "method"))[

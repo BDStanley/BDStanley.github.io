@@ -21,6 +21,7 @@ Where the seats would fall if an election were held this week, constituency by c
   #html.elem("a", attrs: (href: "seats.html", "data-s": "seats"))[Seats]
   #html.elem("a", attrs: (href: "geography.html", "data-s": "geography", class: "on", "aria-current": "page"))[Geography]
   #html.elem("a", attrs: (href: "scenarios.html", "data-s": "scenarios"))[Scenarios]
+  #html.elem("a", attrs: (href: "forecast.html", "data-s": "forecast"))[Forecast]
 ]
 
 #html.elem("details", attrs: (class: "method"))[

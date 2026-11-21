@@ -4,7 +4,7 @@
   description: "The Constituencies page is now the Geography page of the Polling tracker",
 )) <website-metadata>
 
-// The Constituencies page was removed on 18 November 2026 (Ben's decision; Election 2027/PLAN.md, decision 18, in the Polish
+// The Constituencies page was removed on 18 November 2026 (Ben's decision; decision 18 of Polls/current term/docs/election_2027_plan.md, in the Polish
 // political analyses repo): everything it did is now the Polling tracker's Geography address, polling-tracker/geography.typ.
 // This page stays, out of the analyses index, so that old links land there. The script carries the old address's view, election,
 // constituency and scenario across (#view=map|worth|seats|method, #y=, #c=, #sc=, #pa=); without scripts the meta refresh goes to

@@ -261,6 +261,22 @@ table.gall th .dot{width:8px;height:8px;margin-right:4px}
         <div class="esscroll"><table class="t estable" id="estable"></table></div>
         <p class="help" id="esnote"></p>
       </section>
+      <section class="view" id="v-sliders" aria-label="Forecast sliders" hidden>
+        <p class="status" id="flsum" style="color:var(--ink);font-size:13.5px"></p>
+        <div id="flctl"></div>
+        <div class="esscroll"><table class="t" id="flres"></table></div>
+        <p id="flmaj" style="font-size:13.5px"></p>
+        <p class="help" id="flnote"></p>
+      </section>
+      <section class="view" id="v-senate" aria-label="Senate forecast" hidden>
+        <div class="toolbar" id="snctl" style="align-items:flex-end;flex-wrap:wrap;gap:8px"></div>
+        <p class="status" id="snsum" style="color:var(--ink);font-size:13.5px"></p>
+        <div class="esscroll"><table class="t" id="snseats"></table></div>
+        <div id="sncoal" style="margin:10px 0"></div>
+        <div class="toolbar" id="snfilt" style="align-items:flex-end"></div>
+        <div class="esscroll"><table class="t estable" id="sntable"></table></div>
+        <p class="help" id="snnote"></p>
+      </section>
       <section class="view" id="v-whovotes" aria-label="Who votes" hidden>
         <div class="toolbar" id="wictl"></div>
         <p class="help" id="winote"></p>

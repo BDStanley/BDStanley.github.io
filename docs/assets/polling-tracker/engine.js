@@ -1,5 +1,6 @@
-/* engine.js: the swing explorer's arithmetic, shared by the page and the Node tests (test_engine.js).
-   The raking is the same algorithm as analysis/00_setup.R: a turnout constraint shifts logit(v) by one constant in
+/* engine.js: the arithmetic behind the Polling tracker's Groups and Who votes views (the Website's sync copies it to
+   assets/polling-tracker/engine.js), checked by current term/js/test_engine.js. The raking is the same algorithm as
+   Voting behaviour/analysis/electorate_cells_setup.R: a turnout constraint shifts logit(v) by one constant in
    the cells it covers; a vote constraint shifts the log-odds of one party against the rest among voters, the others
    keeping their relative sizes; constraints are cycled until all are met. Seats follow the Polling tracker's rules. */
 (function (root, factory) {
@@ -280,6 +281,149 @@
   }
   const SWING_SEED = 780045;
   let SIMP = null;
+  /* The Forecast page's constituency patterns (Polls/current term/docs/forecast_plan.md, section 2.2;
+     current term/R/constituency_profiles.R). For each draw and party: a stretch b ~ N(beta, tau) common to every
+     constituency, a shock per voivodeship and one per constituency, z = exp(b * log(base) + v + u), renormalised over
+     2023 valid votes so the national share is unchanged. Returned as factors on the tracker's own coefficients (COEFI),
+     in the layout of makeSwing(), so allocate() is unchanged. prof = { voiv: [code per constituency, in C's order],
+     parties: { party: { beta, tau, sigmaVoiv, sigmaConst, base: [coef per constituency] } } }. */
+  function forecastSwing(prof, P, C, COEFI, n, seed) {
+    const NP = P.length, NC = C.length, out = new Float32Array(n * NC * NP).fill(1);
+    const r = mulberry32(seed), VV = C.map((c) => c.validvotes), tot = VV.reduce((a, b) => a + b, 0);
+    let spare = null;
+    const nrm = () => { if (spare != null) { const s = spare; spare = null; return s; }
+      let u = 0, v = 0; while (u === 0) u = r(); v = r();
+      const m = Math.sqrt(-2 * Math.log(u)); spare = m * Math.sin(2 * Math.PI * v); return m * Math.cos(2 * Math.PI * v); };
+    const vcodes = [...new Set(prof.voiv)], vix = prof.voiv.map((v) => vcodes.indexOf(v));
+    const lb = {}, z = new Float64Array(NC), vs = new Float64Array(vcodes.length);
+    P.forEach((p) => { const q = prof.parties[p]; if (q) lb[p] = q.base.map(Math.log); });
+    for (let d = 0; d < n; d++) for (let i = 0; i < NP; i++) {
+      const q = prof.parties[P[i]]; if (!q) continue;
+      const b = q.beta + q.tau * nrm();
+      for (let k = 0; k < vs.length; k++) vs[k] = q.sigmaVoiv * nrm();
+      let w = 0;
+      for (let c = 0; c < NC; c++) { z[c] = Math.exp(b * lb[P[i]][c] + vs[vix[c]] + q.sigmaConst * nrm()); w += VV[c] / tot * z[c]; }
+      for (let c = 0; c < NC; c++) out[(d * NC + c) * NP + i] = COEFI[i][c] > 0 ? z[c] / w / COEFI[i][c] : 1;
+    }
+    return out;
+  }
+  /* The Senate on election day (Polls/current term/docs/forecast_plan.md, section 3; current term/R/senate_model.R).
+     sen: forecast.json's senate block. groups: the candidates the user's choices put up in every district, each an
+     array of tracker parties (a pact is several); every party not in a pact stands alone, and one generic independent
+     stands everywhere. nat(d, p): party p's national share in draw d; cons(d, c, p): its constituency coefficient.
+     In each draw and district a candidate's base is the sum over its parties of nat x cons x the district's 2023
+     pattern for the party's lineage; its utility is x * log(base + floor) + its party or pact effect + incumbency +
+     candidate noise + a shock common to its camp in that draw; the highest utility wins. Returns the groups, each
+     district's wins per group and every draw's seats per group. */
+  function senateSimulate(sen, groups, nat, cons, n, opts) {
+    opts = opts || {};
+    const r = mulberry32(opts.seed || 2027102), co = sen.coef, D = sen.districts, G = groups.length + 1; // last: independent
+    let spare = null;
+    const nrm = () => { if (spare != null) { const s = spare; spare = null; return s; }
+      let u = 0, v = 0; while (u === 0) u = r(); v = r();
+      const m = Math.sqrt(-2 * Math.log(u)); spare = m * Math.sin(2 * Math.PI * v); return m * Math.cos(2 * Math.PI * v); };
+    const lin = (p) => sen.lineage[p];
+    const effect = groups.map((g) => g.length > 1 ? co.pact : (co[lin(g[0])] || 0));
+    effect.push(co.Independent);
+    const camp = groups.map((g) => g.some((p) => lin(p) === "KO") ? 0 : g.some((p) => p === "PiS") ? 1 : 2);
+    camp.push(3);
+    // the 2023 winner's party gives the incumbency effect to the group that holds it; a pact independent to the group
+    // with the most pact parties (KO first)
+    const PACT = ["KO", "Lewica", "PSL", "Polska 2050"];
+    const incOf = D.map((dd) => {
+      if (opts.incumbency === false || dd.inc === "none") return -1;
+      if (dd.inc === "pact") {
+        let best = -1, bn = 0;
+        groups.forEach((g, k) => { const m = g.filter((p) => PACT.includes(p)).length + (g.includes("KO") ? 0.5 : 0); if (m > bn) { bn = m; best = k; } });
+        return best;
+      }
+      return groups.findIndex((g) => g.includes(dd.inc));
+    });
+    const wins = D.map(() => new Float64Array(G)), seats = new Int16Array(n * G), u = new Float64Array(G), cs = new Float64Array(4);
+    for (let d = 0; d < n; d++) {
+      for (let k = 0; k < 4; k++) cs[k] = sen.campSd * nrm();
+      for (let i = 0; i < D.length; i++) {
+        const dd = D[i];
+        let best = 0;
+        for (let k = 0; k < G; k++) {
+          let b = 0;
+          if (k < groups.length) for (const p of groups[k]) b += nat(d, p) * cons(d, dd.c, p) * (dd.ratio[lin(p)] || 1);
+          u[k] = co.x * Math.log(b + sen.floor) + effect[k] + (incOf[i] === k ? co.incumbent : 0) + sen.sigma * nrm() + cs[camp[k]];
+          if (u[k] > u[best]) best = k;
+        }
+        wins[i][best] += 1; seats[d * G + best] += 1;
+      }
+    }
+    wins.forEach((w) => { for (let k = 0; k < G; k++) w[k] /= n; });
+    return { groups: groups.concat([["Independent"]]), wins, seats, n, G };
+  }
+  /* The Forecast sliders (Polls/current term/docs/forecast_plan.md, section 2.3; Voting behaviour 83_attitude_vote.R).
+     att: forecast.json's attitudes block (the 2023 multinomial model's terms, coefficient draws, and each cell's
+     economic and socio-cultural positions as weighted points). cd: cells.json (the cells' weights, turnout and 2023
+     vote). levers: [{ g: { age, sex, education, residence } (levels as indices; a missing key is every level),
+     m: "turnout" | "econ" | "soc", c: change (turnout in percentage points of the group's electorate, positions in
+     points on 0-10) }]. For every coefficient draw and every cell a lever touches, the model's probabilities at the
+     shifted positions over those at the cell's own give a ratio for not voting and each 2023 list, applied to the
+     cell's 2023 figures; a turnout change then moves the cell's turnout by c points, the lists keeping their shares.
+     Returns { lists, factor: draws x lists (each list's national share among voters, over the unchanged one),
+     turnout: draws (national turnout, changed), turnout0 }. */
+  function attitudeFactors(att, cd, levers, opts) {
+    opts = opts || {};
+    const C = cd.cells, NC = C.a.length, lists = Object.keys(C.q), L = lists.length;
+    const outIdx = lists.map((l) => att.outcomes.indexOf(l)), nvIdx = att.outcomes.indexOf("No vote");
+    const toRes = cd.dims.res7.toResidence, T = att.terms.length, K = att.outcomes.length;
+    const level = (i) => ({ age: C.a[i], sex: C.s[i], education: C.e[i], residence: toRes[C.r7[i]] });
+    const inGroup = (lv, g) => Object.keys(g).every((k) => g[k] == null || g[k] === lv[k]);
+    const touched = [], shift = [];
+    for (let i = 0; i < NC; i++) {
+      const lv = level(i), sh = { econ: 0, soc: 0, turnout: 0 }; let any = false;
+      levers.forEach((x) => { if (x.c && inGroup(lv, x.g || {})) { sh[x.m] += x.c; any = true; } });
+      if (any) { touched.push(i); shift.push(sh); }
+    }
+    // the design row of a cell at given positions, by the model's term names
+    const base = (i) => att.terms.map((t) => {
+      if (t === "(Intercept)") return 1;
+      const m = t.match(/^factor\((a|s|e|r7)\)(\d+)$/);
+      if (m) return (C[m[1]][i] + 1) === +m[2] ? 1 : 0;
+      return 0;
+    });
+    const iE = att.terms.indexOf("econ"), iS = att.terms.indexOf("soc");
+    const nD = opts.draws || att.draws.length, eta = new Float64Array(K);
+    const probs = (B, x, e, s, out) => { // B: (K-1) x T coefficient rows (row-major); reference outcome first
+      let mx = 0; eta[0] = 0;
+      for (let k = 1; k < K; k++) { let v = 0; for (let t = 0; t < T; t++) v += B[(k - 1) * T + t] * (t === iE ? e : t === iS ? s : x[t]); eta[k] = v; if (v > mx) mx = v; }
+      let z = 0; for (let k = 0; k < K; k++) { out[k] = Math.exp(eta[k] - mx); z += out[k]; }
+      for (let k = 0; k < K; k++) out[k] /= z;
+    };
+    const p0 = new Float64Array(K), p1 = new Float64Array(K), a0 = new Float64Array(K), a1 = new Float64Array(K);
+    const shareOf = (v, q) => { const t = new Float64Array(L); let tot = 0; for (let i = 0; i < NC; i++) { tot += C.w[i]; for (let l = 0; l < L; l++) t[l] += C.w[i] * v[i] * q[l][i]; } return { t, tot }; };
+    const q0 = lists.map((l) => C.q[l]), v0 = C.v;
+    const s0 = shareOf(v0, q0), voters0 = s0.t.reduce((x, y) => x + y, 0);
+    const factor = new Float64Array(nD * L), turnout = new Float64Array(nD);
+    const X = touched.map(base), clamp = (x) => Math.max(0, Math.min(10, x));
+    for (let j = 0; j < nD; j++) {
+      const B = att.draws[j % att.draws.length];
+      const t = Float64Array.from(s0.t);
+      touched.forEach((i, n) => {
+        const sh = shift[n], pts = att.cells[i].p;
+        a0.fill(0); a1.fill(0);
+        if (sh.econ || sh.soc) for (const [e, s, w] of pts) {
+          probs(B, X[n], e, s, p0); probs(B, X[n], clamp(e + sh.econ), clamp(s + sh.soc), p1);
+          for (let k = 0; k < K; k++) { a0[k] += w * p0[k]; a1[k] += w * p1[k]; }
+        }
+        // the cell's 2023 figures, moved by the ratios
+        let nv = 1 - v0[i], ps = q0.map((q) => v0[i] * q[i]);
+        if (sh.econ || sh.soc) { nv *= a1[nvIdx] / a0[nvIdx]; ps = ps.map((x, l) => x * a1[outIdx[l]] / a0[outIdx[l]]); }
+        let vt = ps.reduce((x, y) => x + y, 0); const tot = vt + nv; vt /= tot; ps = ps.map((x) => x / tot);
+        if (sh.turnout) { const vn = Math.max(0.001, Math.min(0.999, vt + sh.turnout / 100)); ps = ps.map((x) => x * vn / vt); vt = vn; }
+        for (let l = 0; l < L; l++) t[l] += C.w[i] * (ps[l] - v0[i] * q0[l][i]);
+      });
+      const voters = t.reduce((x, y) => x + y, 0);
+      for (let l = 0; l < L; l++) factor[j * L + l] = (t[l] / voters) / (s0.t[l] / voters0);
+      turnout[j] = voters / s0.tot;
+    }
+    return { lists, factor, turnout, turnout0: voters0 / s0.tot, touched: touched.length };
+  }
   function simPrep(D) {
     if (SIMP && SIMP.D === D) return SIMP;
     const T = D.tracker, R = T.rules, P = R.parties, SP = R.seatParties, C = T.constituencies;
@@ -304,7 +448,9 @@
     for (let d = 0; d < n; d++) for (let c = 0; c < NC; c++) for (let i = 0; i < NP; i++) {
       swing[(d * NC + c) * NP + i] = Math.exp(-sd[i] * sd[i] / 2 + sd[i] * nrm());
     }
-    SIMP = { D, R, P, SP, C, NP, NC, PIDX, COEFI, VV: C.map((c) => c.validvotes), MAG: C.map((c) => c.magnitude), n, K, arr, map, med, swing };
+    // A forecast's data carry its own constituency patterns, which replace the swing above
+    const sw = T.profiles ? forecastSwing(T.profiles, P, C, COEFI, n, SWING_SEED + 1) : swing;
+    SIMP = { D, R, P, SP, C, NP, NC, PIDX, COEFI, VV: C.map((c) => c.validvotes), MAG: C.map((c) => c.magnitude), n, K, arr, map, med, swing: sw };
     return SIMP;
   }
   function simDhondt(votes, n, out) { // the tracker's dhondt(): lists with no votes never win
@@ -459,5 +605,5 @@
   }
 
   return { whatIf, baseCells, cloneCells, members, rake, summarise, scenario, allocate, lists2027, seatRanges, dhondt,
-    simulate, simSeats, simClear, simProb, seatByConstituency, seatCat, quant, SEAT_CERTAIN, SEAT_PROBABLE, SEAT_POSSIBLE };
+    simulate, simSeats, simClear, simProb, forecastSwing, senateSimulate, attitudeFactors, seatByConstituency, seatCat, quant, SEAT_CERTAIN, SEAT_PROBABLE, SEAT_POSSIBLE };
 });
