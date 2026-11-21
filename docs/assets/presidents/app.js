@@ -411,7 +411,7 @@
   $("#leg-q").addEventListener("input", e => { S.lq = e.target.value; RENDER.leg(); });
   document.querySelectorAll("#leg-kind button").forEach(b => b.addEventListener("click", () => { S.k = b.dataset.k; S.lo = ""; RENDER.leg(); writeHash(); }));
   const fold = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l");
-  const laLink = r => r.term >= 5 ? page("legislative-activity", `view=bills&t=${r.term}&bill=${r.term}:n${r.number}`, "Bill") : "";
+  const laLink = r => r.term >= 5 ? page("sejm", `view=bills&t=${r.term}&bill=${r.term}:n${r.number}`, "Bill") : "";
   const actLink = r => r.eli ? ext(`https://api.sejm.gov.pl/eli/acts/${r.eli}/text.pdf`, "Act") : "";
   RENDER.leg = () => {
     syncControls();
@@ -424,6 +424,11 @@
     $("#leg-help").innerHTML = isV
       ? `Every law the president sent back to the Sejm since October 1997, found in the Sejm's records. The Sejm can override a veto by three fifths of the votes; a veto it never takes up kills the law at the end of the term. Before October 1997 only published totals exist (below).`
       : `Every bill the president submitted to the Sejm since October 1997. Bills of a term the Sejm did not finish lapse when the term ends. Before October 1997 only published totals exist (below).`;
+    $("#leg-note").hidden = !isV;
+    if (isV && !$("#leg-note").innerHTML) $("#leg-note").innerHTML = `<summary>How vetoes are counted, and why totals differ</summary>
+      <p>A veto is the president's refusal to sign a law and his request that the Sejm consider it again. It leaves traces in several places, and they do not always agree. The Sejm's record of each bill should show the president's motion, but for many vetoes since 2015 it does not, and it sometimes leaves out a signature or a referral to the Constitutional Tribunal as well. The Chancellery keeps its own register of the president's decisions, but its website cannot be read automatically, and earlier presidents' lists survive only as totals.</p>
+      <p>This page therefore counts a law as vetoed if the Sejm's records show any of four things: a veto stage, or the Sejm's debate on the president's motion; the president's veto message, printed as a Sejm document; a vote on passing the law again; or, failing all of these, a law sent to the president that was neither signed, published nor sent to the Constitutional Tribunal within 21 days, the only course the Constitution then leaves him. Each law counts once, even where bills debated together share its record; a veto of a later version of the same law counts again. A veto is dated by the veto stage, else the veto message, else the day the law reached the president, and the count runs to ${fmtD(SEJM_END)}, the last day of the Sejm's records used here.</p>
+      <p>Counts taken from the Chancellery's register (the figures on Polish Wikipedia, and trackers such as PolskieWeto.pl) can differ by a few for the sitting president. They run to a different date; the Sejm's records can lag behind a signature or a referral to the Tribunal, so for a few weeks a recent law can look vetoed here when it was not; and the records miss some vetoes altogether (four of Andrzej Duda's before August 2024). Where the Chancellery's totals are known, the table below sets them beside this page's count: they agree exactly for Lech Kaczyński (18), Bronisław Komorowski (4) and Aleksander Kwaśniewski's second term (24). The Sejm's records begin in October 1997, so for 1989–97 only the published totals are shown.</p>`;
     $("#leg-legend").innerHTML = legendHtml(Object.fromEntries(Object.entries(colours).map(([k, c]) => [names[k], c])));
     const agg = {};
     rows.forEach(r => { const yr = yearOf(r[dateK]); const k = yr + "|" + r.outcome; agg[k] = (agg[k] || 0) + 1; });

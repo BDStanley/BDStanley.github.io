@@ -1,5 +1,8 @@
-/* Legislative activity: clubs, MPs, positions, questions and legislation in the Sejm, terms 3-10.
-   Data: legislative.json (clubs, series, topics) plus per-term files loaded on demand. No libraries. */
+/* Legislative activity: clubs, members, positions and votes in one body, the Sejm (terms 3-10, with questions and legislation),
+   the Senate (terms VIII-XI) or the European Parliament (terms 6-10). Each body has its own page, which embeds this app with
+   ?b=sejm|senate|ep (pages/polish-political-analyses/sejm.typ, senate.typ, european-parliament.typ); opened on its own, the app
+   takes the body from the hash's b= (Sejm by default). Data: legislative.json, senate-legislative.json or ep-legislative.json
+   (clubs, series, topics) plus per-term files loaded on demand. No libraries. */
 (function () {
 "use strict";
 const $ = s => document.querySelector(s);
@@ -18,6 +21,9 @@ const fetchJSON = f => cache[f] || (cache[f] = fetch(f).then(r => { if (!r.ok) t
 let L, S = {body: "sejm", view: "clubs", term: 10, mp: null, q: "", club: "", page: 0, ext: false, bq: "", btopic: "", binit: "", bout: "", bterm: "", bpage: 0, bunc: true, bsel: "", brc: null}, PFX = "", N = BODIES.sejm;
 const LB = {}, TDS = {sejm: {}, senate: {}, ep: {}};
 let TD = TDS.sejm;   // term -> mps json, of the current body
+// The body is fixed by the embedding page's ?b=; only when the app is opened without it does the hash's b= choose
+const QBODY = (() => { try { const b = new URLSearchParams(location.search).get("b"); return BODIES[b] ? b : null; } catch (e) { return null; } })();
+const TITLES = {sejm: "Sejm: clubs, MPs, positions, questions and legislation", senate: "Senate: clubs, senators, positions and items", ep: "European Parliament: groups, Polish MEPs, positions and items"};
 const colOf = f => (L.family_colours[f]) || "#7f7f7f";
 const up = s => s ? String(s).charAt(0).toUpperCase() + String(s).slice(1) : s;
 const PARTY = {aws: "AWS", aws_party: "AWS (party)", centrum: "Centrum", centrum_dla_polski: "Centrum dla Polski", inicjatywa_polska: "Inicjatywa Polska", ko_coalition: "KO coalition", ko_party: "KO (party)", koalicja_polska: "Koalicja Polska", konfederacja: "Konfederacja", kukiz15: "Kukiz'15", lewica_committee: "Lewica committee", lid: "LiD", nowa_lewica: "Nowa Lewica", nowoczesna: "Nowoczesna", pc: "PC", pd: "PD", pis: "PiS", pld: "PLD", po: "PO", polska2050: "Polska 2050", polska_plus: "Polska Plus", polska_razem: "Polska Razem", polska_xxi: "Polska XXI", pps: "PPS", psl: "PSL", razem: "Razem", rop: "ROP", ruch_ludzi_pracy: "Ruch Ludzi Pracy", ruch_narodowy: "Ruch Narodowy", sd: "SD", sld: "SLD", sld_coalition: "SLD coalition", solidarna_polska: "Solidarna Polska", stronnictwo_gospodarcze: "Stronnictwo Gospodarcze", suwerenna_polska: "Suwerenna Polska", td: "Trzecia Droga", unia_centrum: "Unia Centrum", up: "UP", wolni_republikanie: "Wolni Republikanie", zp: "Zjednoczona Prawica"};
@@ -32,10 +38,11 @@ async function setBody(b) {
   if (!BODIES[b]) b = "sejm";
   LB[b] = LB[b] || await fetchJSON(BODIES[b].index);
   S.body = b; L = LB[b]; N = BODIES[b]; PFX = N.prefix; TD = TDS[b]; VIEWS = viewList(b);
+  document.title = TITLES[b];
 }
 // The frame's hash, or else the embedding page's (same origin), so links from other pages land here
 const hashStr = () => { let x = location.hash.slice(1); try { if (!x && window.top !== window && window.top.location.host === location.host) x = window.top.location.hash.slice(1); } catch (e) { /* cross-origin */ } return x; };
-const hashBody = () => new URLSearchParams(hashStr()).get("b") || "sejm";
+const hashBody = () => QBODY || new URLSearchParams(hashStr()).get("b") || "sejm";
 function readHash() {
   const p = new URLSearchParams(hashStr());
   if (p.get("view") && VIEWS.some(v => v[0] === p.get("view"))) S.view = p.get("view");
@@ -46,7 +53,7 @@ function readHash() {
   S.bsel = p.get("bill") || ""; S.brc = p.get("rc") ? +p.get("rc") : null;
 }
 function writeHash() {
-  const p = new URLSearchParams({view: S.view, t: S.term}); if (S.body !== "sejm") p.set("b", S.body); if (S.mp && (S.view === "mps")) p.set("mp", S.mp);
+  const p = new URLSearchParams({view: S.view, t: S.term}); if (!QBODY && S.body !== "sejm") p.set("b", S.body); if (S.mp && (S.view === "mps")) p.set("mp", S.mp);
   if (S.view === "bills") { if (S.bq) p.set("q", S.bq); if (S.btopic) p.set("topic", S.btopic); if (S.bsel) { p.set("bill", S.bsel); if (S.brc != null) p.set("rc", S.brc); } }
   history.replaceState(null, "", "#" + p.toString());
 }
@@ -60,11 +67,9 @@ document.addEventListener("mousemove", e => {
 
 function toolbar() {
   const T = L.terms;
-  $("#tb").innerHTML = `<label class="ctl">Body <span class="seg small" role="group" aria-label="Body">${Object.keys(BODIES).map(b => `<button data-b="${b}" aria-pressed="${S.body === b}">${BODIES[b].name}</button>`).join("")}</span></label>
-   <div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
+  $("#tb").innerHTML = `<div class="seg" role="group" aria-label="View">${VIEWS.map(v => `<button data-v="${v[0]}" aria-pressed="${S.view === v[0]}">${v[1]}</button>`).join("")}</div>
    <label class="ctl">${N.name} term <span class="seg small" role="group" aria-label="Term">${T.map(t => `<button data-t="${t.term}" aria-pressed="${S.term === t.term}" ${S.view === "legislation" || S.view === "bills" ? "disabled" : ""} title="${t.first_vote.slice(0, 4)}–${t.term_end ? t.term_end.slice(0, 4) : ""}">${t.label || t.term}</button>`).join("")}</span></label>`;
   $("#tb").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return;
-    if (b.dataset.b) { if (b.dataset.b !== S.body) { setBody(b.dataset.b).then(() => { S.term = Math.max(...L.terms.map(t => t.term)); if (!VIEWS.some(v => v[0] === S.view)) S.view = "clubs"; S.mp = null; S.club = ""; S.q = ""; S.page = 0; S.bsel = ""; render(); }); } return; }
     if (b.dataset.v) { S.view = b.dataset.v; S.bsel = ""; } else { S.term = +b.dataset.t; S.mp = null; S.club = ""; S.q = ""; S.page = 0; }
     render(); };
 }
@@ -349,7 +354,7 @@ async function viewBillDetail() {
       <select class="sel" id="wc" aria-label="Club">${[["", "All " + (S.body === "ep" ? "groups" : "clubs")], ...clubsIn.map(c2 => [c2, clubName(c2)])].map(([v, l]) => `<option value="${esc(v)}" ${fc === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>
       <select class="sel" id="wv" aria-label="Vote">${[["", "Any vote"], ["1", "Yes"], ["2", "No"], ["3", "Abstain"], ["0", "Absent"]].map(([v, l]) => `<option value="${v}" ${fv === v ? "selected" : ""}>${l}</option>`).join("")}</select></div>
      <p class="help">${num(shown.length)} of ${num(rows.length)} ${N.mps}. The club is the one the ${N.mp} belonged to that day.${S.body === "ep" ? " Only Polish MEPs are listed." : ""}</p>
-     <div class="tbl" style="max-height:520px;overflow:auto"><table><thead><tr><th>${N.mp.charAt(0).toUpperCase() + N.mp.slice(1)}</th><th>${S.body === "ep" ? "Group" : "Club"}</th><th>Vote</th></tr></thead><tbody>${shown.map(r => `<tr><td><a href="#${new URLSearchParams({view: "mps", t, mp: r.id, ...(S.body !== "sejm" ? {b: S.body} : {})})}">${esc(r.name)}</a></td><td>${esc(clubName(r.club))}</td><td>${r.v ? `<span class="vote ${VOTENAME[r.v]}">${VOTENAME[r.v]}</span>` : '<span class="help">absent</span>'}</td></tr>`).join("")}</tbody></table></div>
+     <div class="tbl" style="max-height:520px;overflow:auto"><table><thead><tr><th>${N.mp.charAt(0).toUpperCase() + N.mp.slice(1)}</th><th>${S.body === "ep" ? "Group" : "Club"}</th><th>Vote</th></tr></thead><tbody>${shown.map(r => `<tr><td><a href="#${new URLSearchParams({view: "mps", t, mp: r.id, ...(!QBODY && S.body !== "sejm" ? {b: S.body} : {})})}">${esc(r.name)}</a></td><td>${esc(clubName(r.club))}</td><td>${r.v ? `<span class="vote ${VOTENAME[r.v]}">${VOTENAME[r.v]}</span>` : '<span class="help">absent</span>'}</td></tr>`).join("")}</tbody></table></div>
      ${note("Absent means the " + N.mp + " was in office but did not vote (the Sejm's data do not separate absence from a vote not cast). Members who were not in office that day are not listed.")}`;
     $("#wq").oninput = e => { S.bwq = e.target.value; clearTimeout(who.tm); who.tm = setTimeout(() => { who(); const i = $("#wq"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 150); };
     $("#wc").onchange = e => { S.bwc = e.target.value; who(); }; $("#wv").onchange = e => { S.bwv = e.target.value; who(); };
@@ -383,7 +388,7 @@ async function viewLegislation() {
   $("#sd").innerHTML = s2 + "</svg>";
 }
 
-setBody(hashBody()).then(() => { readHash(); if (!L.terms.some(t => t.term === S.term)) S.term = Math.max(...L.terms.map(t => t.term)); render(); })
+setBody(hashBody()).then(() => { S.term = Math.max(...L.terms.map(t => t.term)); readHash(); render(); })
   .catch(e => { $("#main").innerHTML = `<p class="notice">Could not load the data (${esc(e.message)}).</p>`; });
 window.addEventListener("hashchange", () => { if (L) { const b = hashBody(); (b !== S.body ? setBody(b) : Promise.resolve()).then(() => { readHash(); render(); }); } });
 })();
