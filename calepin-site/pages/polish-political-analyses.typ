@@ -43,12 +43,30 @@
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
-#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/legislative-activity.html", tabindex: "-1", "aria-hidden": "true"))[
-#html.elem("img", attrs: (src: "../assets/analyses/legislative-activity.png", alt: "", width: "480", height: "300", loading: "lazy"))
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/sejm.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/sejm.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
 #html.elem("div", attrs: (class: "course-body"))[
-#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/legislative-activity.html"))[Legislative activity]
-#html.elem("div", attrs: (class: "course-desc"))[How the Sejm, the Senate and the European Parliament vote: clubs, groups and every member's record, 1997–2026.]
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/sejm.html"))[Sejm]
+#html.elem("div", attrs: (class: "course-desc"))[How the Sejm votes: clubs, every MP's record, questions and the laws passed, 1997–2026.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/senate.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/senate.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/senate.html"))[Senate]
+#html.elem("div", attrs: (class: "course-desc"))[How the Senate votes: clubs and every senator's record, 2011–2026.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/european-parliament.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/european-parliament.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/european-parliament.html"))[European Parliament]
+#html.elem("div", attrs: (class: "course-desc"))[How Polish MEPs vote: groups and every member's record, 2004–2026.]
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[

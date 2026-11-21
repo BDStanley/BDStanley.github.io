@@ -8,7 +8,7 @@
 // Constituencies page (removed on Ben's decision of 18 November 2026; constituencies.typ now redirects here). Its data are the
 // tracker's and the Constituencies project's (assets/constituencies/*.json, written by Constituencies/analysis/90_export.R and
 // copied in by scripts/sync-analyses.py). Views: Map, What a vote is worth, If seats followed population. It links to Election
-// results (#e=, #u=c<n>) and to Legislative activity (#view=mps).
+// results (#e=, #u=c<n>) and to the Sejm page (sejm.typ, #view=mps).
 
 #html.elem("p", attrs: (class: "teaching-back"))[#link("../../polish-political-analyses.html", "← Back")]
 
@@ -38,7 +38,7 @@ Sources:
 
 - Polish National Electoral Commission (PKW): results by constituency and list, 1991–2023, and the Electoral Code (Dz.U.2026.1261, art. 201–203).
 - Statistics Poland (GUS), Local Data Bank: population on 31 December.
-- My #link("../election-results.html")[Election results] (constituency geometry and results) and #link("../legislative-activity.html")[Legislative activity] (MPs).
+- My #link("../election-results.html")[Election results] (constituency geometry and results) and the #link("../sejm.html")[Sejm] (MPs).
 
 Ben Stanley, 2026. _Polling tracker_, *Polish Political Analyses*, benstanley.eu.
 ]

@@ -81,7 +81,10 @@ page; this script copies it beside the page's chart under assets/:
     Sejm analysis/Legislative activity/web/{mps,profile,roles,rebels,votes}-<term>[-<chunk>].json
                                                   -> assets/legislative-activity/<same name>
         (written by "Sejm analysis/Legislative activity/R/la90_export_web.R", which run_all.R runs;
-        legislative.json's `files` lists the per-term files, and each one it lists is copied too)
+        legislative.json's `files` lists the per-term files, and each one it lists is copied too;
+        senate-legislative.json and ep-legislative.json and the senate- and ep- files they list come the
+        same way from la40_senate.R and la45_ep.R. One app reads them all, embedded by three pages since
+        21 November 2026: sejm.typ, senate.typ and european-parliament.typ)
 
 Election 2027 (the blog; PLAN.md decision 18 in that project). Its posts are written in
 "Election 2027/blog/posts/" and published by "Election 2027/blog/publish.R", which writes

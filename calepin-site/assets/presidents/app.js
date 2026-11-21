@@ -411,7 +411,7 @@
   $("#leg-q").addEventListener("input", e => { S.lq = e.target.value; RENDER.leg(); });
   document.querySelectorAll("#leg-kind button").forEach(b => b.addEventListener("click", () => { S.k = b.dataset.k; S.lo = ""; RENDER.leg(); writeHash(); }));
   const fold = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l");
-  const laLink = r => r.term >= 5 ? page("legislative-activity", `view=bills&t=${r.term}&bill=${r.term}:n${r.number}`, "Bill") : "";
+  const laLink = r => r.term >= 5 ? page("sejm", `view=bills&t=${r.term}&bill=${r.term}:n${r.number}`, "Bill") : "";
   const actLink = r => r.eli ? ext(`https://api.sejm.gov.pl/eli/acts/${r.eli}/text.pdf`, "Act") : "";
   RENDER.leg = () => {
     syncControls();
