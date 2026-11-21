@@ -17,7 +17,7 @@
 
 #heading(level: 1)[Quality of democracy]
 
-How democratic has Poland been since the end of communism, by the measures political scientists use, and how does it compare with the rest of the European Union? This page follows Polish democracy from 1990 to 2025 in the ratings of the Varieties of Democracy (V-Dem) project: its elections, courts and checks on power, media, civil society, deliberation and polarisation, set against Central and Eastern Europe and Western Europe and against the elections, governments and events of the period. Compare Poland with up to five countries, rank it among them on any measure, or follow polarisation through V-Dem's ratings and the Sejm's own votes.
+How democratic has Poland been since the end of communism, by the measures political scientists use, and how does it compare with the rest of the European Union? This page follows Polish democracy from 1990 to 2025 in the ratings of the Varieties of Democracy (V-Dem) project: its elections, courts and checks on power, media, civil society, deliberation and polarisation, set against Central and Eastern Europe and Western Europe and against the elections, governments and events of the period. Compare Poland with up to five countries, rank it among them on any measure, or follow polarisation through V-Dem's ratings and the Sejm's own votes. For the presidents of the period and how they used their powers, see #link("presidents.html")[Presidents].
 
 #html.elem("details", attrs: (class: "method"))[
 #html.elem("summary")[How this works]

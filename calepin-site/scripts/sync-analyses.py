@@ -65,6 +65,9 @@ page; this script copies it beside the page's chart under assets/:
         (written by "Constitutional Tribunal/analysis/90_export.R" and "91_export_rulings.R";
         rulings.json's `years` lists the yearly files, and each one it lists is copied too)
 
+    Presidents/web/presidents.json                -> assets/presidents/presidents.json
+        (written by "Presidents/analysis/90_export.R", which run_all.R runs)
+
     Voting behaviour/web/voting.json              -> assets/voting-behaviour/voting.json
     Voting behaviour/web/polarisation.json        -> assets/voting-behaviour/polarisation.json
     Voting behaviour/web/calc-<year>.json         -> assets/voting-behaviour/calc-<year>.json
@@ -171,6 +174,9 @@ FILES = [
      {"year", "cases"}),
     ("Constitutional Tribunal/web/rulings.json", "assets/constitutional-tribunal/rulings.json",
      {"meta", "judges", "years"}),
+    ("Presidents/web/presidents.json", "assets/presidents/presidents.json",
+     {"meta", "presidents", "governments", "heads", "vetoes", "early", "bills", "tribunal", "gazette", "key_acts",
+      "prime_ministers", "nbp", "pardons", "secondary", "compare", "by_relation", "validation"}),
     ("Voting behaviour/web/voting.json", "assets/voting-behaviour/voting.json",
      {"meta", "files", "elections", "categories", "vs_official", "groupings", "groups", "composition", "effects"}),
     ("Voting behaviour/web/polarisation.json", "assets/voting-behaviour/polarisation.json",

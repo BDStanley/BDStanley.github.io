@@ -97,6 +97,15 @@
 ]
 ]
 #html.elem("div", attrs: (class: "course-row"))[
+#html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/presidents.html", tabindex: "-1", "aria-hidden": "true"))[
+#html.elem("img", attrs: (src: "../assets/analyses/presidents.png", alt: "", width: "480", height: "300", loading: "lazy"))
+]
+#html.elem("div", attrs: (class: "course-body"))[
+#html.elem("a", attrs: (class: "course-name", href: "polish-political-analyses/presidents.html"))[Presidents]
+#html.elem("div", attrs: (class: "course-desc"))[Every president since 1989: vetoes, bills, the Tribunal, appointments and pardons, compared.]
+]
+]
+#html.elem("div", attrs: (class: "course-row"))[
 #html.elem("a", attrs: (class: "analysis-thumb", href: "polish-political-analyses/constitutional-tribunal.html", tabindex: "-1", "aria-hidden": "true"))[
 #html.elem("img", attrs: (src: "../assets/analyses/constitutional-tribunal.png", alt: "", width: "480", height: "300", loading: "lazy"))
 ]
