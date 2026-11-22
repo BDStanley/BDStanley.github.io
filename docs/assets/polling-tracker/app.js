@@ -58,7 +58,7 @@ let DRAWS = null, drawsState = "idle", SWING = null;
 // (those draws) or "now" (the week's own figures, as on Seats).
 let FC = null, fcState = "idle", FCW = null, FCSWING = null, FCW0 = null, FCW_KEY = null, FC_SIM0 = null;
 // The sliders' changes by group (section 2.3), as a key for the caches
-const flKey = () => JSON.stringify(S.fl.filter(x => x.c));
+const flKey = () => JSON.stringify([S.flb, S.fl.filter(x => x.c)]);
 const FORECAST = (() => { try { return new URLSearchParams(location.search).get("s") === "forecast"; } catch (e) { return false; } })();
 const fcOn = () => FORECAST && S.fh === "election";
 let JP = null, JPAIR = {};
@@ -184,7 +184,7 @@ const SCEN_KEYS = ["w", "v", "j", "r", "ra", "xi", "xx", "g", "gb", "gh"];
 // point ("groups" or "polls"); hand: parties whose share was set by hand, which the levers leave where they were set
 const S = { fh: "election", fl: [], sp: {}, sinc: true, scoal: new Set(), snSort: "okreg", w: 0, shares: {}, joint: [], resp: "medium", adv: null, advOpen: false, view: VIEWS[0], period: "all", houses: new Set(), parties: new Set(), points: true, dateLine: false, events: false, fmt: "png",
   hoverParty: null, pollSel: null, hemi2023: false, hemiCoal: true, excl: new Set(), coalMsg: null, focusGov: null, pinGov: null, constSel: 19, picker: new Set(), showAllGov: false,
-  gDim: "age", gList: "KO", gPts: false,
+  gDim: "age", gList: "KO", gPts: false, flb: "now",
   levers: [], base: "groups", hold: false, hand: new Set(), wiMode: "all", wiMetric: "vote", wiGroup: {},
   esC: "", esL: "", esCat: "all", esSort: "const" };
 
@@ -348,13 +348,20 @@ function fcDraws() {
   let arr = raw.arr;
   const fl = S.fl.filter(x => x.c);
   if (fl.length && CELLS && FC.attitudes && window.E27Engine && E27Engine.attitudeFactors) {
-    const f = E27Engine.attitudeFactors(FC.attitudes, CELLS, fl), L = f.lists.length, nD = f.factor.length / L;
+    // each 2023 list's change in points (engine.js attitudeFactors, on the electorate chosen on the Sliders view), added
+    // to every election-day draw and shared among today's parties in the list by their shares in that draw
+    const f = E27Engine.attitudeFactors(FC.attitudes, flCells(), fl), L = f.lists.length, nD = f.factor.length / L;
     const parent = {}; (CELLS.parties || []).forEach(p => { parent[p.id] = p.parent; });
-    const li = FC.categories.map(c => f.lists.indexOf(parent[c] || c));
+    const li = FC.categories.map(c => f.lists.indexOf(parent[c] || c)), tl = new Float64Array(L);
     arr = new Float32Array(raw.arr.length);
     for (let d = 0; d < n; d++) {
-      let t = 0; const j = d % nD;
-      for (let k = 0; k < K; k++) { const v = raw.arr[d * K + k] * (li[k] >= 0 ? f.factor[j * L + li[k]] : 1); arr[d * K + k] = v; t += v; }
+      let t = 0; const j = d % nD; tl.fill(0);
+      for (let k = 0; k < K; k++) if (li[k] >= 0) tl[li[k]] += raw.arr[d * K + k];
+      for (let k = 0; k < K; k++) {
+        const r = raw.arr[d * K + k], l = li[k];
+        const v = Math.max(1e-6, r + (l >= 0 && tl[l] > 0 ? f.delta[j * L + l] * r / tl[l] : 0));
+        arr[d * K + k] = v; t += v;
+      }
       for (let k = 0; k < K; k++) arr[d * K + k] /= t;
     }
   }
@@ -1429,7 +1436,7 @@ function renderGroups() {
   // "Turnout" is stated turnout intention by group (GD.turnout), drawn like a list
   const isT = gIsT(), tdim = isT ? GD.turnout.dims[S.gDim] : null;
   const dim = GD.dims[S.gDim], li = GD.lists.findIndex(l => l.id === S.gList), L = gList(S.gList);
-  const tr = isT ? tdim.trend : dim.trend[S.gList], nat = isT ? GD.turnout.national : GD.national[S.gList];
+  const tr = isT ? tdim.trend : dim.trend[S.gList], nat = isT ? (tdim.national || GD.turnout.national) : GD.national[S.gList];
   const chg = gi => isT ? tdim.change[gi] : dim.change[gi][S.gList], vi = isT ? 4 : 4 + li;
   const M = GD.months.length, cols = gRamp(dim.levels.length);
   const short = G_SHORT[S.gDim] || dim.labels;
@@ -1437,6 +1444,13 @@ function renderGroups() {
   $("glist").innerHTML = GD.lists.filter(l => l.id !== "Other").map(l => `<button type="button" data-k="${esc(l.id)}" aria-pressed="${S.gList === l.id}">${esc(l.label)}</button>`).join("") +
     (GD.turnout ? `<button type="button" data-k="turnout" aria-pressed="${isT}">Turnout</button>` : "");
   $("gpts").checked = S.gPts;
+  // each group's size: its share of 2023 voters (the weights that pin the groups to the national trend), or for
+  // turnout its share of adults (older groups.json files have no adults2023: voters are shown)
+  const byAdults = isT && !!dim.adults2023, wv = byAdults ? dim.adults2023 : dim.voters2023;
+  const wpc = gi => (wv ? Math.round(100 * wv[gi]) + "%" : "–");
+  $("gsize").hidden = !wv;
+  if (wv) $("gsize").innerHTML = `<span class="gl">${byAdults ? "Share of adults" : "Share of 2023 voters"}</span><div class="bar">` +
+    wv.map((w, gi) => `<div class="sg" style="flex:${w} 0 0;background:${cols[gi]}" title="${esc(dim.labels[gi])}: ${wpc(gi)} of ${byAdults ? "adults" : "2023 voters"}">${esc(short[gi])} · ${wpc(gi)}</div>`).join("") + `</div>`;
   // chart
   const box = $("groupbox"), W = Math.max(320, box.clientWidth - 12), H = Math.round(clamp(W * 0.5, 300, 480));
   const mday = GD.months.map(gMonthDay);
@@ -1487,12 +1501,13 @@ function renderGroups() {
   svg.setAttribute("aria-label", `${L.label} by ${(G_DIMS[S.gDim] || dim.label).toLowerCase()}, ${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[M - 1], true)}`);
   svg.innerHTML = o.join("");
   GR = { W, H, m, a, b, x, y, mday, cols, rd, li };
+  renderGroupWorth(dim, tr, nat, chg, cols, short, L, isT, byAdults, M);
   // note
   const dg = dim.diagnostics || {};
   $("groupnote").textContent = isT
     ? `Stated turnout intention: the share of each group who say they would definitely or probably vote (don't know counted as not), from Opinia24's and CBOS Flash's tables by group${tdim.diagnostics && tdim.diagnostics.polls ? `, ${tdim.diagnostics.polls} polls` : ""}. ` +
       `People overstate their turnout, so the level is well above real turnout (74.4% in 2023); what the polls show reliably is how the groups have moved against each other. ` +
-      `Each group's gap follows a monthly random walk, each pollster's lean on each group is estimated, and the line is the average of the two houses; it is not pinned to any national figure. Bands are 80% intervals; the dashed line is everyone.` +
+      `Each group's gap follows a monthly random walk, each pollster's lean on each group is estimated, and the line is the average of the two houses; it is not pinned to any national figure. Bands are 80% intervals; the dashed line is everyone, the groups weighted by their shares of adults.` +
       (S.gPts ? ` Points are the polls' own readings: circles CBOS, squares Opinia24.` : "")
     : `From the pollsters' tables by group: Opinia24 (monthly, telephone and online) and CBOS Flash (about twice a month, telephone and online)${dg.polls ? `, ${dg.polls} polls with this breakdown` : ""}. Decided voters only; today's splinters are counted with the list they stood on in 2023. ` +
     `Each group's gap from the national share follows a monthly random walk; each pollster's lean on each group is estimated, and the line is the average of the two. ` +
@@ -1509,26 +1524,100 @@ function renderGroups() {
   // side panel: the list on show
   const lm = gMonthName(GD.months[M - 1]), f0 = gMonthName(GD.months[0]);
   const rows = tr.map((g, gi) => { const c = chg(gi);
-    return `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(dim.labels[gi])}</td><td>${g.s[0].toFixed(1)}%</td><td>${g.s[M - 1].toFixed(1)}%</td><td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}</td></tr>`; }).join("");
+    return `<tr><td><span class="dot" style="background:${cols[gi]};margin-right:6px"></span>${esc(dim.labels[gi])}</td><td class="muted">${wpc(gi)}</td><td>${g.s[0].toFixed(1)}%</td><td>${g.s[M - 1].toFixed(1)}%</td><td${gSure(c) ? "" : ` class="unsure"`}>${gSigned(c.gap)}</td></tr>`; }).join("");
   $("panel3").innerHTML = `
   <div class="card">
     <span class="label">By ${esc((G_DIMS[S.gDim] || dim.label).toLowerCase())}</span>
     <h2 style="margin:0;font-size:20px;font-weight:400"><span class="dot" style="background:${L.colour};margin-right:8px;vertical-align:1px"></span>${esc(L.label)}</h2>
-    <table class="t"><tr><th>Group</th><th>${f0}</th><th>${lm}</th><th>Against all</th></tr>${rows}
-      <tr><td>${isT ? "Everyone" : "All voters"}</td><td>${nat[0].toFixed(1)}%</td><td>${nat[M - 1].toFixed(1)}%</td><td></td></tr></table>
-    <p class="help" style="margin:0">Against all: the change in the group's gap from all voters' share since ${fm}, in points; grey where the 80% interval includes zero.</p>
+    <table class="t"><tr><th>Group</th><th>${byAdults ? "Of adults" : "Of voters"}</th><th>${f0}</th><th>${lm}</th><th>Against all</th></tr>${rows}
+      <tr><td>${isT ? "Everyone" : "All voters"}</td><td class="muted">100%</td><td>${nat[0].toFixed(1)}%</td><td>${nat[M - 1].toFixed(1)}%</td><td></td></tr></table>
+    <p class="help" style="margin:0">${byAdults ? "Of adults: the group's share of everyone entitled to vote" : "Of voters: the group's share of those who voted in 2023"}. Against all: the change in the group's gap from all voters' share since ${fm}, in points; grey where the 80% interval includes zero.</p>
   </div>
   <div class="card soft">
     <span class="label">Share</span>
     <div class="actions"><button type="button" class="btn2" id="copylink">Copy link to this view</button></div>
   </div>`;
 }
+// What each group's change is worth nationally: the change among the group (pale) and that change times the group's
+// share of 2023 voters, or for turnout of adults (dark). The party lines are pinned to the national trend with those
+// weights, so the dark bars add up to the national change; turnout's "everyone" is the adult-weighted average.
+// Party lines: the group's change is the national change (fixed by the pinning) plus its gap's, so the gap's interval
+// is the group's. Turnout is not pinned: the interval leaves out the uncertainty in everyone's change, which moves
+// every group alike.
+function renderGroupWorth(dim, tr, nat, chg, cols, short, L, isT, byAdults, M) {
+  const card = $("gworthcard"), wv = byAdults ? dim.adults2023 : dim.voters2023;
+  card.hidden = !wv || (isT && !byAdults);
+  if (card.hidden) return;
+  const n = tr.length, unit = isT ? "adults" : "voters";
+  const ds = tr.map(g => g.s[M - 1] - g.s[0]);
+  const dn = isT ? ds.reduce((t, d, gi) => t + wv[gi] * d, 0) : nat[M - 1] - nat[0];
+  const lo = tr.map((g, gi) => ds[gi] - chg(gi).gap + chg(gi).lo), hi = tr.map((g, gi) => ds[gi] - chg(gi).gap + chg(gi).hi);
+  const ct = ds.map((d, gi) => wv[gi] * d);
+  const box = card.querySelector(".gworth"), W = Math.max(300, box.clientWidth);
+  const narrow = W < 560, lw = narrow ? 92 : 150, cw = narrow ? 66 : 96, top = 26, rh = 42, gap = 12;
+  const H = top + (n + 1) * rh + gap + 24;
+  const x0 = lw + 8, x1 = W - 2 * cw - 14;
+  let dom = Math.max(...ds.map(Math.abs), ...lo.map(Math.abs), ...hi.map(Math.abs), Math.abs(dn), 1);
+  const step = dom > 24 ? 10 : dom > 8 ? 5 : dom > 3 ? 2 : 1;
+  dom = Math.ceil(dom / step) * step;
+  const x = v => x0 + (v + dom) / (2 * dom) * (x1 - x0);
+  const o = [], yB = top + n * rh + gap + rh;
+  for (let v = -dom; v <= dom + 1e-9; v += step) {
+    o.push(`<line x1="${x(v)}" x2="${x(v)}" y1="${top - 4}" y2="${yB}" stroke="${v === 0 ? "#141414" : "#ECECEC"}" stroke-opacity="${v === 0 ? 0.5 : 1}"/>`);
+    if (!narrow || v === 0 || Math.abs(v) === dom) o.push(`<text x="${x(v)}" y="${yB + 15}" text-anchor="middle" font-size="11" fill="#767676">${v === 0 ? "0" : signed(v, 0)}</text>`);
+  }
+  const c1 = W - cw - 8, c2 = W - 8;
+  o.push(`<text x="${c1}" y="12" text-anchor="end" font-size="11.5" fill="#767676">In the group</text>`);
+  o.push(`<text x="${c2}" y="12" text-anchor="end" font-size="11.5" fill="#767676">Nationally</text>`);
+  if (!narrow) o.push(`<text x="${(x0 + x1) / 2}" y="12" text-anchor="middle" font-size="11.5" fill="#767676">Change since ${gMonthName(GD.months[0], true)}, points</text>`);
+  const num = (cx, cy, v, l, h, strong) => {
+    const fill = (l > 0 || h < 0) ? (strong ? SiteUI.RED : "#141414") : "#767676";
+    return `<text x="${cx}" y="${cy - 1}" text-anchor="end" font-size="13" fill="${fill}"${strong ? ' font-weight="500"' : ""}>${gSigned(v)}</text>` +
+      `<text x="${cx}" y="${cy + 12}" text-anchor="end" font-size="10.5" fill="#767676">${gSigned(l)} to ${gSigned(h)}</text>`;
+  };
+  const bar = (a, b, cy, h, fill, op) => { const p = Math.min(x(a), x(b)), q = Math.max(x(a), x(b));
+    return `<rect x="${p.toFixed(1)}" y="${cy - h / 2}" width="${Math.max(1, q - p).toFixed(1)}" height="${h}" rx="1.5" fill="${fill}"${op != null ? ` fill-opacity="${op}"` : ""}/>`; };
+  tr.forEach((g, gi) => {
+    const yc = top + gi * rh + rh / 2;
+    o.push(`<text x="0" y="${yc - 2}" font-size="12.5" fill="#141414">${esc(narrow ? short[gi] : dim.labels[gi])}</text>`);
+    o.push(`<text x="0" y="${yc + 12}" font-size="10.5" fill="#767676">${Math.round(100 * wv[gi])}% of ${unit}${isT && !narrow ? ` · ${Math.round(100 * dim.voters2023[gi])}% of voters` : ""}</text>`);
+    o.push(bar(0, ds[gi], yc, 20, cols[gi], 0.22));
+    o.push(`<path d="M${x(lo[gi])},${yc - 4}V${yc + 4}M${x(lo[gi])},${yc}H${x(hi[gi])}M${x(hi[gi])},${yc - 4}V${yc + 4}" fill="none" stroke="${cols[gi]}" stroke-opacity="0.75" stroke-width="1.1"/>`);
+    o.push(bar(0, ct[gi], yc, 9, cols[gi]));
+    o.push(num(c1, yc, ds[gi], lo[gi], hi[gi], false));
+    o.push(num(c2, yc, ct[gi], wv[gi] * lo[gi], wv[gi] * hi[gi], true));
+  });
+  const yr = top + n * rh + gap / 2, yt = top + n * rh + gap + rh / 2;
+  o.push(`<line x1="0" x2="${W}" y1="${yr}" y2="${yr}" stroke="#D5D5D5"/>`);
+  o.push(`<text x="0" y="${yt - 2}" font-size="12.5" fill="#141414" font-weight="500">${isT ? "Everyone" : "All voters"}</text>`);
+  o.push(`<text x="0" y="${yt + 12}" font-size="10.5" fill="#767676">the dark bars added up</text>`);
+  o.push(bar(0, dn, yt, 9, "#141414"));
+  o.push(`<text x="${c2}" y="${yt + 4}" text-anchor="end" font-size="13" fill="${SiteUI.RED}" font-weight="500">${gSigned(dn)}</text>`);
+  const svg = $("gworth");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = o.join("");
+  const swatch = (c, op) => `<span class="gkey" style="background:${c};opacity:${op}"></span>`;
+  const span = `${gMonthName(GD.months[0], true)} to ${gMonthName(GD.months[M - 1], true)}`;
+  const need = wv.map((w, gi) => `${(1 / w).toFixed(1)}${gi === 0 ? " points" : ""} (${esc(dim.labels[gi])})`), needs = `${need.slice(0, -1).join(", ")} or ${need[need.length - 1]}`;
+  if (isT) {
+    $("gworthhead").innerHTML = `Stated turnout intention, ${span}. ${swatch(cols[0], 0.3)}Pale bars: the change in the share of the group who say they would vote. ` +
+      `${swatch(cols[0], 1)}Dark bars: what that change adds to everyone's, the change times the group's share of adults. Lines and small figures are 80% intervals; grey where the interval includes zero.`;
+    $("gworthnote").innerHTML = `To move national turnout by one point on its own, a group's turnout would have to move by ${needs}. ` +
+      `Group sizes are their shares of everyone entitled to vote, with their shares of 2023 voters beside them, from the 2023 Polish National Election Study weighted to the official result. ` +
+      `The intervals leave out the uncertainty in everyone's change, which moves every group alike. A group that turns out more also becomes a larger share of the voters, but what that does to the parties depends on how differently it votes: the Forecast's Sliders work it out.`;
+  } else {
+    $("gworthhead").innerHTML = `${esc(L.label)}, ${span}. ${swatch(cols[0], 0.3)}Pale bars: the change among the group's voters. ` +
+      `${swatch(cols[0], 1)}Dark bars: what that change adds to ${esc(L.label)}'s national share, the change times the group's share of voters. Lines and small figures are 80% intervals; grey where the interval includes zero.`;
+    $("gworthnote").innerHTML = `To move a party's national share by one point on its own, a group would have to move by ${needs}. ` +
+      `Group sizes are their shares of those who voted in 2023, from the 2023 Polish National Election Study weighted to the official result; the model pins the groups to the national trend with the same weights, which is why the dark bars add up to the national change.`;
+  }
+}
 function groupHover(ev) {
   if (!GR || !GD) return;
   const svg = $("groups"), r = svg.getBoundingClientRect(), k = GR.W / r.width;
   const mx = (ev.clientX - r.left) * k, d = GR.a + (mx - GR.m.l) / (GR.W - GR.m.l - GR.m.r) * (GR.b - GR.a);
   let i = 0, bd = Infinity; GR.mday.forEach((t, j) => { const dd = Math.abs(t - d); if (dd < bd) { bd = dd; i = j; } });
-  const isT = gIsT(), dim = GD.dims[S.gDim], tr = isT ? GD.turnout.dims[S.gDim].trend : dim.trend[S.gList], nat = isT ? GD.turnout.national : GD.national[S.gList];
+  const isT = gIsT(), dim = GD.dims[S.gDim], tdim = isT ? GD.turnout.dims[S.gDim] : null, tr = isT ? tdim.trend : dim.trend[S.gList], nat = isT ? (tdim.national || GD.turnout.national) : GD.national[S.gList];
   $("grouphover").innerHTML = `<line x1="${GR.x(GR.mday[i])}" x2="${GR.x(GR.mday[i])}" y1="${GR.m.t}" y2="${GR.H - GR.m.b}" stroke="#141414" stroke-opacity=".35"/>`;
   const html = `<b>${esc(gList(S.gList).label)} · ${gMonthName(GD.months[i], true)}</b>` +
     tr.map((g, gi) => `<div class="r"><span><span class="dot" style="background:${GR.cols[gi]}"></span>${esc(dim.labels[gi])}</span><span>${g.s[i].toFixed(1)}% <span class="muted" style="display:inline">(${g.lo[i].toFixed(1)}–${g.hi[i].toFixed(1)})</span></span></div>`).join("") +
@@ -1653,7 +1742,7 @@ function stateString() {
     return q.toString();
   }
   if (FORECAST && S.fh === "now") q.set("fh", "now");
-  if (FORECAST) { const fl = S.fl.filter(x => x.c); if (fl.length) q.set("fl", fl.map(x => [x.m, x.c, ...FL_DIMS.map(k => x.g[k] == null ? "" : x.g[k])].join(".")).join(";")); }
+  if (FORECAST) { const fl = S.fl.filter(x => x.c); if (fl.length) q.set("fl", fl.map(x => [x.m, x.c, ...FL_DIMS.map(k => x.g[k] == null ? "" : x.g[k])].join(".")).join(";")); if (S.flb === "2023") q.set("fb", "2023"); }
   if (FORECAST && S.view === "senate") {
     const sp = Object.entries(S.sp).filter(([, v]) => v).map(([p, v]) => p + ":" + v).join(";");
     if (sp) q.set("sp", sp);
@@ -1759,6 +1848,7 @@ function restoreHash() {
     S.fh = q.get("fh") === "now" ? "now" : "election";
     if (q.get("fl")) q.get("fl").split(";").forEach(t => { const [m, c, ...g] = t.split("."), v = parseFloat(c);
       if (["turnout", "econ", "soc"].includes(m) && isFinite(v)) S.fl.push({ m, c: v, g: Object.fromEntries(FL_DIMS.map((k, i) => [k, g[i] === "" || g[i] == null ? null : +g[i]])) }); });
+    S.flb = q.get("fb") === "2023" ? "2023" : "now";
     if (q.get("sp")) q.get("sp").split(";").forEach(kv => { const [p, v] = kv.split(":"); if (p in PIDX && ["A", "B", "C"].includes(v)) S.sp[p] = v; });
     S.sinc = q.get("si") !== "0";
     if (q.get("sc")) q.get("sc").split(";").forEach(k => S.scoal.add(k));
@@ -2550,7 +2640,7 @@ function renderSliders() {
     return `<div class="card soft" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:8px 12px;align-items:flex-end;margin:0 0 8px">${FL_DIMS.map(k => `<label class="fsel">${k[0].toUpperCase() + k.slice(1)}<select data-fl="${i}" data-k="${k}">${opt(k, x.g[k])}</select></label>`).join("")}
       <label class="fsel">What changes<select data-fl="${i}" data-k="m">${Object.entries(FL_M).map(([v, d]) => `<option value="${v}"${x.m === v ? " selected" : ""}>${d[0]}</option>`).join("")}</select></label>
       <label class="fsel" style="min-width:220px">By <b>${x.c > 0 ? "+" : ""}${x.c}</b> ${esc(m[1])}<input type="range" data-fl="${i}" data-k="c" min="${m[2]}" max="${m[3]}" step="${m[4]}" value="${x.c}"></label>
-      ${one ? "" : `<button type="button" class="btn2 sm" data-rmfl="${i}">Remove</button>`}</div>`; }).join("") +
+      ${one ? "" : `<button type="button" class="btn2 sm" data-rmfl="${i}">Remove</button>`}<span class="help" style="margin-left:auto;align-self:center">${flSizeText(x.g)}</span></div>`; }).join("") +
     `<div class="btnrow"><button type="button" class="btn2" id="fladd">Add another change</button>${S.fl.some(x => x.c) || !one ? ` <button type="button" class="btn2" id="flclear">Clear all</button>` : ""}</div>`;
   $("flpre").innerHTML = `<span class="label">Or start from an example</span><div class="btnrow" style="flex-wrap:wrap;margin-top:6px">` +
     FL_PRESETS.map((p, i) => `<button type="button" class="btn2 sm" data-flpre="${i}" title="${esc(p.fl.map(flText).join("; "))}">${esc(p.label)}</button>`).join("") + `</div>`;
@@ -2559,8 +2649,101 @@ function renderSliders() {
   if (!s1) { $("flmaj").innerHTML = ""; return; }
   const pr = (sim, ps) => { const ks = sim.ents.map((e, k) => (ps.includes(e.name) ? k : -1)).filter(k => k >= 0); let c = 0; for (let d = 0; d < sim.n; d++) { let t = 0; ks.forEach(k => { t += sim.nat[d * sim.ents.length + k]; }); if (t >= R.seatsMajority) c++; } return c / sim.n; };
   const gov = ["KO", "Polska 2050", "PSL", "Lewica", "Razem"], right = ["PiS", "R+", "Konfederacja", "KKP"];
-  $("flmaj").innerHTML = `Chance of ${R.seatsMajority} seats in the Sejm: KO, Polska 2050, PSL, Lewica and Razem <b>${prob(pr(s1, gov))}</b> <span class="muted">(${prob(pr(s0, gov))} without the sliders)</span>; PiS, R+, Konfederacja and KKP <b>${prob(pr(s1, right))}</b> <span class="muted">(${prob(pr(s0, right))})</span>.${flSenateText()} The Sejm and Senate tabs show the forecast with the sliders.`;
-  $("flnote").innerHTML = `How it works: the 2023 Polish National Election Study gives each voter's economic position (0 = state-led, 10 = market-liberal) and socio-cultural position (0 = progressive, 10 = conservative), averaged over the questions asked that year. A model of the 2023 vote, not voting included, on those positions and on age, sex, education and place of residence says how each group's vote would differ if its positions differed; moving a group's positions by the amount set applies that difference to the group's 2023 vote, and the change in each party's national share is carried over to the forecast. Today's parties that split from a 2023 list (R+, KKP, Razem, PSL and Polska 2050) move with that list. The ranges include the model's own uncertainty. This is what follows if voters with those positions voted as such voters did in 2023, not a measured effect of opinion on the vote, and the positions are comparable within 2023 only. A check against the 2025 Polish National Election Study (vote intention, with the questions both surveys asked) found the economic effects unchanged, but a conservative shift worth less to PiS than in 2023 (about two thirds as much) and more to Konfederacja and KKP: as conservative voters have spread across the right, the slider probably overstates PiS's gains and understates theirs.`;
+  renderFlWorth();
+  $("flmaj").innerHTML = `Chance of ${R.seatsMajority} seats in the Sejm: KO, Polska 2050, PSL, Lewica and Razem <b>${prob(pr(s1, gov))}</b> <span class="muted">(${prob(pr(s0, gov))} without the sliders)</span>; PiS, R+, Konfederacja and KKP <b>${prob(pr(s1, right))}</b> <span class="muted">(${prob(pr(s0, right))})</span>.${flSenateText()} The Sejm and Senate tabs show the forecast with the sliders${S.fl.some(x => x.c) ? `, worked out on ${S.flb === "2023" ? "the electorate as it voted at the 2023 election" : "the electorate as the polls stand now"}` : ""}.`;
+  $("flnote").innerHTML = `How it works: the 2023 Polish National Election Study gives each voter's economic position (0 = state-led, 10 = market-liberal) and socio-cultural position (0 = progressive, 10 = conservative), averaged over the questions asked that year. A model of the 2023 vote, not voting included, on those positions and on age, sex, education and place of residence says how each group's vote would differ if its positions differed. A change is worked out either on the electorate as the polls stand now (the 2023 electorate moved to the latest estimates, each group as Opinia24's and CBOS's tables by group show it has moved) or on the electorate as it voted at the 2023 election, as chosen above: moving a group's positions applies the model's difference to the group's vote, a change in turnout adds or removes voters who vote as the group's voters do, and the change in each party's national share, in points, is added to every simulated election. Today's parties that split from a 2023 list (R+, KKP, Razem, PSL and Polska 2050) move with that list. The ranges include the model's own uncertainty. This is what follows if voters with those positions voted as such voters did in 2023, not a measured effect of opinion on the vote, and the positions are comparable within 2023 only. A check against the 2025 Polish National Election Study (vote intention, with the questions both surveys asked) found the economic effects unchanged, but a conservative shift worth less to PiS than in 2023 (about two thirds as much) and more to Konfederacja and KKP: as conservative voters have spread across the right, the slider probably overstates PiS's gains and understates theirs.`;
+}
+// ---- What the sliders' change is worth (engine.js attitudeSplit) ----
+// The changes are worked out on the electorate as the polls stand now (engine.js cellsAsPolled: the cells pinned to
+// their week with each group as polled) or as it voted at the 2023 election (cells.json's own cells): S.flb.
+let FL_NOW = null;
+function flCellsNow() {
+  if (!FL_NOW || FL_NOW.src !== CELLS) FL_NOW = { src: CELLS, cd: E27Engine.cellsAsPolled(CELLS) };
+  return FL_NOW.cd;
+}
+const flCells = () => (S.flb === "2023" ? CELLS : flCellsNow());
+const flNow = () => S.flb !== "2023";
+function flSizeText(g) {   // the group's share of adults and of voters, on the chosen electorate
+  const C = flCells().cells, toRes = CELLS.dims.res7.toResidence; let a = 0, v = 0, A = 0, V = 0;
+  for (let i = 0; i < C.w.length; i++) {
+    const lv = { age: C.a[i], sex: C.s[i], education: C.e[i], residence: toRes[C.r7[i]] };
+    const inG = FL_DIMS.every(k => g[k] == null || g[k] === lv[k]);
+    A += C.w[i]; V += C.w[i] * C.v[i]; if (inG) { a += C.w[i]; v += C.w[i] * C.v[i]; }
+  }
+  return `${(100 * a / A).toFixed(1)}% of adults · ${(100 * v / V).toFixed(1)}% of ${flNow() ? "voters now" : "2023 voters"}`;
+}
+const FL_LABEL = { PiS: "PiS + R+", KO: "KO", TD: "Polska 2050 + PSL", Lewica: "Lewica + Razem", Konfederacja: "Konfederacja + KKP" };
+const FL_SHORT = { PiS: "PiS+R+", KO: "KO", TD: "P2050+PSL", Lewica: "Lewica+Razem", Konfederacja: "Konf.+KKP" };
+function renderFlWorth() {
+  const card = $("flworth"), fl = S.fl.filter(x => x.c);
+  const sp = fl.length ? E27Engine.attitudeSplit(E27Engine.attitudeFactors(FC.attitudes, flCells(), fl)) : null;
+  card.hidden = !sp;
+  if (!sp) return;
+  const now = flNow(), L = sp.lists.length, nD = sp.n;
+  $("flbseg").innerHTML = `<span class="help" style="margin-right:8px">Group patterns</span><div class="seg small" role="group" aria-label="Which electorate the changes are worked out on" style="vertical-align:middle">` +
+    [["now", "As polled now"], ["2023", "At the 2023 election"]].map(([k, l]) => `<button type="button" data-flb="${k}" aria-pressed="${S.flb === k}">${l}</button>`).join("") + `</div>`;
+  const lcol = id => { const x = (CELLS.lists2023 || []).find(y => y.id === id); return x ? x.colour : "#7F7F7F"; };
+  const summ = (arr, l) => { const v = []; for (let j = 0; j < nD; j++) v.push(100 * (l == null ? arr[j] : arr[j * L + l])); v.sort((a, b) => a - b); return { m: median(v), lo: quant(v, 0.1), hi: quant(v, 0.9) }; };
+  const T = { g: summ(sp.turnoutGroup), n: summ(sp.turnoutAll) }, W1 = summ(sp.w1);
+  const rows = sp.lists.map((id, l) => ({ id, l })).filter(r => r.id !== "Other")
+    .map(r => ({ ...r, inG: summ(sp.inGroup, r.l), comp: summ(sp.fromTurnout, r.l), vote: summ(sp.fromVote, r.l), tot: summ(sp.total, r.l), lean: 100 * sp.lean[r.l] }));
+  const box = card.querySelector(".gworth"), W = Math.max(300, box.clientWidth), narrow = W < 700, tiny = W < 560;
+  const uncertain = rows.some(r => r.tot.hi - r.tot.lo > 0.005) || T.g.hi - T.g.lo > 0.005, showIv = uncertain && !tiny;
+  // chart: the turnout row, then one row per 2023 list
+  const lw = tiny ? 96 : narrow ? 100 : 160, cw = tiny ? Math.floor((W - 96) / 4) : narrow ? 58 : 100, top = 26, rh = tiny ? 36 : 42, gap = 12, n = rows.length;
+  const H = top + rh + gap + n * rh + (tiny ? 4 : 26), x0 = lw + 8, x1 = W - 4 * cw - 14;
+  let dom = Math.max(Math.abs(T.g.m), ...rows.flatMap(r => [Math.abs(r.inG.m), Math.abs(r.comp.m), Math.abs(r.comp.m + r.vote.m)]), 0.5);
+  const step = dom > 12 ? 5 : dom > 6 ? 2 : dom > 2 ? 1 : 0.5;
+  dom = Math.ceil(dom / step) * step;
+  const x = v => x0 + (v + dom) / (2 * dom) * (x1 - x0);
+  const o = [`<defs>${rows.map(r => `<pattern id="flh-${r.id}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="4" fill="${lcol(r.id)}" fill-opacity="0.3"/><line x1="0" y1="0" x2="0" y2="4" stroke="${lcol(r.id)}" stroke-width="2.2"/></pattern>`).join("")}</defs>`];
+  const yB = H - 22;
+  if (!tiny) for (let v = -dom; v <= dom + 1e-9; v += step) {
+    const z = Math.abs(v) < 1e-9;
+    o.push(`<line x1="${x(v)}" x2="${x(v)}" y1="${top - 4}" y2="${yB}" stroke="${z ? "#141414" : "#ECECEC"}" stroke-opacity="${z ? 0.5 : 1}"/>`);
+    if (!narrow || Math.abs(Math.round(v / step)) % 2 === 0) o.push(`<text x="${x(v)}" y="${yB + 15}" text-anchor="middle" font-size="11" fill="#767676">${z ? "0" : signed(v, step < 1 ? 1 : 0)}</text>`);
+  }
+  const cx = k => W - (3 - k) * cw - 8;
+  (narrow ? ["Group", "Turnout", "Vote", "Nationally"] : ["In the group", "From turnout", "From its vote", "Nationally"])
+    .forEach((h, k) => o.push(`<text x="${cx(k)}" y="12" text-anchor="end" font-size="11.5" fill="#767676">${h}</text>`));
+  if (!narrow) o.push(`<text x="${(x0 + x1) / 2}" y="12" text-anchor="middle" font-size="11.5" fill="#767676">Change, points</text>`);
+  const num = (k, cy, s, strong) => {
+    const sure = !uncertain || s.lo > 0 || s.hi < 0, fill = Math.abs(s.m) < 0.05 ? "#767676" : sure ? (strong ? SiteUI.RED : "#141414") : "#767676";
+    return `<text x="${cx(k)}" y="${cy + (showIv ? -1 : 4)}" text-anchor="end" font-size="13" fill="${fill}"${strong ? ' font-weight="500"' : ""}>${gSigned(s.m)}</text>` +
+      (showIv ? `<text x="${cx(k)}" y="${cy + 12}" text-anchor="end" font-size="10.5" fill="#767676">${gSigned(s.lo)} to ${gSigned(s.hi)}</text>` : "");
+  };
+  const bar = (a, b, cy, h, fill, op) => { if (tiny) return ""; const p = Math.min(x(a), x(b)), q = Math.max(x(a), x(b));
+    return `<rect x="${p.toFixed(1)}" y="${cy - h / 2}" width="${Math.max(1, q - p).toFixed(1)}" height="${h}" rx="1.5" fill="${fill}"${op != null ? ` fill-opacity="${op}"` : ""}/>`; };
+  let yc = top + rh / 2;
+  o.push(`<text x="0" y="${yc - 2}" font-size="12.5" fill="#141414" font-weight="500">Turnout</text><text x="0" y="${yc + 12}" font-size="10.5" fill="#767676">${narrow ? "group, everyone" : "in the group, and everyone"}</text>`);
+  o.push(bar(0, T.g.m, yc, 20, "#4B4B4B", 0.2), bar(0, T.n.m, yc, 9, "#4B4B4B"));
+  o.push(num(0, yc, T.g, false), num(3, yc, T.n, true));
+  o.push(`<line x1="0" x2="${W}" y1="${top + rh + gap / 2}" y2="${top + rh + gap / 2}" stroke="#D5D5D5"/>`);
+  rows.forEach((r, i) => {
+    yc = top + rh + gap + i * rh + rh / 2;
+    const c = lcol(r.id);
+    o.push(`<circle cx="5" cy="${yc - 6}" r="4" fill="${c}"/><text x="14" y="${yc - 2}" font-size="12.5" fill="#141414">${esc((narrow ? FL_SHORT : FL_LABEL)[r.id] || r.id)}</text>`);
+    o.push(`<text x="14" y="${yc + 12}" font-size="10.5" fill="#767676">${narrow ? "" : "group "}${gSigned(r.lean)}${narrow ? " vs rest" : " against the rest"}</text>`);
+    o.push(bar(0, r.inG.m, yc, 20, c, 0.2), bar(0, r.comp.m, yc, 9, `url(#flh-${r.id})`));
+    if (Math.abs(r.vote.m) > 1e-6) o.push(bar(r.comp.m, r.comp.m + r.vote.m, yc, 9, c));
+    o.push(num(0, yc, r.inG, false), num(1, yc, r.comp, false), num(2, yc, r.vote, false), num(3, yc, r.tot, true));
+  });
+  const svg = $("flworthsvg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H);
+  svg.innerHTML = o.join("");
+  // text
+  const same = fl.every(y => JSON.stringify(y.g) === JSON.stringify(fl[0].g)), gl = same ? flGroupText(fl[0].g) : "the groups changed";
+  const w0 = 100 * sp.w0, key = (st, t) => `<span class="gkey" style="${st}"></span>${t}`;
+  const leanTxt = [...rows].sort((a, b) => Math.abs(b.lean) - Math.abs(a.lean)).slice(0, 3).map(r => `${esc(FL_LABEL[r.id] || r.id)} ${gSigned(r.lean)}`).join(", ");
+  $("flworthhead").innerHTML = `<b style="color:var(--ink);font-weight:500">${esc(gl.charAt(0).toUpperCase() + gl.slice(1))}</b>: ${(100 * sp.adults).toFixed(1)}% of adults and ${w0.toFixed(1)}% of voters ${now ? "as the polls stand now" : "at the 2023 election"}, ` +
+    `${Math.abs(W1.m - w0) < 0.05 ? "unchanged by these changes" : `${W1.m.toFixed(1)}% with these changes`}. A party gains from the group voting in greater numbers only as far as the group backs it more than everyone else does (${now ? "now" : "at the 2023 election"}, in points: ${leanTxt}).<br>` +
+    (tiny ? `Group: the change in the group's turnout, or in the party's share of its voters. Turnout: what the party gains or loses because more or fewer of the group vote. Vote: what it gains or loses because the group's voters divide differently between the parties. Together they make the national change.`
+      : `${key("background:#bbb;opacity:.6", "Pale bars")}: the change in the group's turnout, or in the party's share of the group's voters. ${key("background:repeating-linear-gradient(45deg,#555 0 2px,#ccc 2px 4px)", "Striped")}: what the party gains or loses because more or fewer of the group vote. ${key("background:#555", "Solid")}: what it gains or loses because the group's voters divide differently between the parties. Together they make the national change.`);
+  $("flworthnote").innerHTML = `From turnout: the change in the group's share of the voters times the difference between the party's share among the group and among everyone else. From its vote: the change in the party's share among the group's voters times the group's new share of the voters. The two add up exactly to the change in the party's national share, which the forecast adds to every simulated election. ` +
+    (now ? `These figures start from the electorate as the polls stood in the week of ${esc(dlong(fromIso(CELLS.tracker.week)))}: the 2023 electorate moved to that week's estimates, each group as the pollsters' tables show it has moved, with turnout moved by the changes in stated intention to vote between groups.`
+      : `These figures start from the electorate as it voted at the 2023 election (the 2023 Polish National Election Study weighted to the official result and Ipsos's exit poll), so they say what the change would have done then, against the 2023 result.`) +
+    ` Today's splinters are counted with the list they stood on in 2023, and Other is left out.` +
+    (uncertain ? ` ${tiny ? "On a wider screen, bars show the changes and small" : "Small"} figures give 80% intervals over the vote model's uncertainty; the forecast's own uncertainty is not included.` : ` A change in turnout alone involves no model uncertainty: the group's new voters vote as its voters already do.`);
 }
 // The Senate's majorities with and without the sliders, for the Sliders view: the groups most likely to win one
 function flSenateText() {
@@ -2819,6 +3002,7 @@ function bindSections() {
     update();
   });
   $("flpre").addEventListener("click", e => { const t = e.target.closest("[data-flpre]"); if (t) { S.fl = FL_PRESETS[+t.dataset.flpre].fl.map(x => ({ m: x.m, c: x.c, g: { ...x.g } })); update(); } });
+  $("flworth").addEventListener("click", e => { const b = e.target.closest("[data-flb]"); if (b && b.dataset.flb !== S.flb) { S.flb = b.dataset.flb; update(); saveHash(); } });
   $("flctl").addEventListener("click", e => {
     const t = e.target;
     if (t.id === "fladd") { S.fl.push({ g: { age: null, sex: null, education: null, residence: null }, m: "soc", c: 0 }); update(); }

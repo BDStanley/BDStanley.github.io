@@ -158,6 +158,15 @@ table.t td.unsure{color:var(--muted)}
 table.t .iv{display:block;font-size:10.5px;color:var(--muted);white-space:nowrap}
 table.gall td,table.gall th{white-space:nowrap}
 table.gall th .dot{width:8px;height:8px;margin-right:4px}
+/* By group: each group's size, and what its change is worth nationally (also the Forecast's sliders) */
+.gsize{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.gsize .gl{font-size:12px;color:var(--muted);white-space:nowrap}
+.gsize .bar{display:flex;flex:1;min-width:0;height:22px;border-radius:6px;overflow:hidden}
+.gsize .sg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;white-space:nowrap;overflow:hidden;border-right:1px solid #fff}
+.gsize .sg:last-child{border-right:0}
+.gworth svg{display:block;width:100%;height:auto;font-family:Jost,"Avenir Next",sans-serif}
+.gkey{display:inline-block;width:18px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:4px}
+.gworth[hidden],#gworthcard[hidden],#flworth[hidden]{display:none}
 /* Sections (decision 18): the scenario banner on Seats and Geography, Every seat, Who votes, the group levers */
 .banner{font-size:13px;line-height:1.45;padding:8px 12px;border-radius:10px;background:var(--tint);color:var(--ink)}
 .banner[hidden]{display:none}
@@ -266,6 +275,12 @@ table.gall th .dot{width:8px;height:8px;margin-right:4px}
         <div id="flctl"></div>
         <div id="flpre" style="margin:10px 0 4px"></div>
         <p id="flmaj" style="font-size:13.5px"></p>
+        <div class="card" id="flworth" style="margin:4px 0 12px" hidden>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px"><span class="label">What the change is worth</span><div id="flbseg"></div></div>
+          <p class="help" id="flworthhead"></p>
+          <div class="gworth"><svg id="flworthsvg" role="img" aria-label="Where the change in each party's share comes from"></svg></div>
+          <p class="help" id="flworthnote"></p>
+        </div>
         <p class="help" id="flnote"></p>
       </section>
       <section class="view" id="v-senate" aria-label="Senate forecast" hidden>
@@ -317,8 +332,15 @@ table.gall th .dot{width:8px;height:8px;margin-right:4px}
         </div>
         <p class="help" id="groupstatus" hidden></p>
         <div id="groupbody">
+          <div class="gsize" id="gsize"></div>
           <div class="chartbox" id="groupbox"><svg id="groups" role="img" aria-label="Voting intention by group"></svg><div class="tip" id="grouptip" hidden></div></div>
           <p class="help" id="groupnote" style="margin-top:8px"></p>
+          <div class="card" id="gworthcard" style="margin-top:12px">
+            <span class="label">What each group's change is worth nationally</span>
+            <p class="help" id="gworthhead"></p>
+            <div class="gworth"><svg id="gworth" role="img" aria-label="Each group's change and what it adds nationally"></svg></div>
+            <p class="help" id="gworthnote"></p>
+          </div>
           <div class="card soft" style="margin-top:12px">
             <span class="label">How each group has moved against all voters</span>
             <div style="overflow-x:auto"><table class="t gall" id="groupall"></table></div>
