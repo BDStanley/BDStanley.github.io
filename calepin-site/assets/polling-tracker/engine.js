@@ -364,9 +364,12 @@
      m: "turnout" | "econ" | "soc", c: change (turnout in percentage points of the group's electorate, positions in
      points on 0-10) }]. For every coefficient draw and every cell a lever touches, the model's probabilities at the
      shifted positions over those at the cell's own give a ratio for not voting and each 2023 list, applied to the
-     cell's 2023 figures; a turnout change then moves the cell's turnout by c points, the lists keeping their shares.
+     cell's figures (cd's: the 2023 cells, or cellsAsPolled()'s electorate as polled now); a turnout change then moves
+     the cell's turnout by c points, the lists keeping their shares.
      Returns { lists, factor: draws x lists (each list's national share among voters, over the unchanged one),
-     turnout: draws (national turnout, changed), turnout0 }. */
+     delta: draws x lists (the change in each list's national share), turnout: draws (national turnout, changed),
+     turnout0, touched, group: the touched cells together (adults, voters and each list's votes before, and after for
+     each draw, with the whole electorate's before), which attitudeSplit() reads }. */
   function attitudeFactors(att, cd, levers, opts) {
     opts = opts || {};
     const C = cd.cells, NC = C.a.length, lists = Object.keys(C.q), L = lists.length;
@@ -399,7 +402,10 @@
     const shareOf = (v, q) => { const t = new Float64Array(L); let tot = 0; for (let i = 0; i < NC; i++) { tot += C.w[i]; for (let l = 0; l < L; l++) t[l] += C.w[i] * v[i] * q[l][i]; } return { t, tot }; };
     const q0 = lists.map((l) => C.q[l]), v0 = C.v;
     const s0 = shareOf(v0, q0), voters0 = s0.t.reduce((x, y) => x + y, 0);
-    const factor = new Float64Array(nD * L), turnout = new Float64Array(nD);
+    const factor = new Float64Array(nD * L), turnout = new Float64Array(nD), delta = new Float64Array(nD * L);
+    let gA = 0, gv0 = 0; const g0 = new Float64Array(L), gv1 = new Float64Array(nD), g1 = new Float64Array(nD * L);
+    // voters counted as the sum of the lists' votes, as for everyone (cells.json rounds each cell's shares)
+    touched.forEach((i) => { gA += C.w[i]; for (let l = 0; l < L; l++) { g0[l] += C.w[i] * v0[i] * q0[l][i]; gv0 += C.w[i] * v0[i] * q0[l][i]; } });
     const X = touched.map(base), clamp = (x) => Math.max(0, Math.min(10, x));
     for (let j = 0; j < nD; j++) {
       const B = att.draws[j % att.draws.length];
@@ -416,13 +422,51 @@
         if (sh.econ || sh.soc) { nv *= a1[nvIdx] / a0[nvIdx]; ps = ps.map((x, l) => x * a1[outIdx[l]] / a0[outIdx[l]]); }
         let vt = ps.reduce((x, y) => x + y, 0); const tot = vt + nv; vt /= tot; ps = ps.map((x) => x / tot);
         if (sh.turnout) { const vn = Math.max(0.001, Math.min(0.999, vt + sh.turnout / 100)); ps = ps.map((x) => x * vn / vt); vt = vn; }
-        for (let l = 0; l < L; l++) t[l] += C.w[i] * (ps[l] - v0[i] * q0[l][i]);
+        for (let l = 0; l < L; l++) { t[l] += C.w[i] * (ps[l] - v0[i] * q0[l][i]); g1[j * L + l] += C.w[i] * ps[l]; }
+        gv1[j] += C.w[i] * vt;
       });
       const voters = t.reduce((x, y) => x + y, 0);
-      for (let l = 0; l < L; l++) factor[j * L + l] = (t[l] / voters) / (s0.t[l] / voters0);
+      for (let l = 0; l < L; l++) { factor[j * L + l] = (t[l] / voters) / (s0.t[l] / voters0); delta[j * L + l] = t[l] / voters - s0.t[l] / voters0; }
       turnout[j] = voters / s0.tot;
     }
-    return { lists, factor, turnout, turnout0: voters0 / s0.tot, touched: touched.length };
+    return { lists, factor, delta, turnout, turnout0: voters0 / s0.tot, touched: touched.length,
+      group: { adults: gA, adultsTot: s0.tot, voters0: gv0, votes0: g0, voters1: gv1, votes1: g1, allVoters0: voters0, allVotes0: s0.t } };
+  }
+  /* attitudeFactors()' changed group, split for the Sliders' "What the change is worth": for each draw, the change in
+     turnout in the group and overall, the group's share of the voters after (w1; w0 before), and each list's national
+     change split exactly into fromTurnout, the change in the group's share of the voters times how much more the group
+     backs the list than everyone else (lean), and fromVote, the change in the list's share among the group's voters
+     (inGroup) times the group's new share of the voters. Shares, not points; draws x lists, as delta. Null when the
+     changes touch no cell. */
+  function attitudeSplit(f) {
+    const G = f.group, L = f.lists.length, nD = f.factor.length / L;
+    if (!G || !(G.voters0 > 0)) return null;
+    const VR = G.allVoters0 - G.voters0, w0 = G.voters0 / G.allVoters0;
+    const sG0 = new Float64Array(L), lean = new Float64Array(L);
+    for (let l = 0; l < L; l++) { sG0[l] = G.votes0[l] / G.voters0; lean[l] = VR > 0 ? sG0[l] - (G.allVotes0[l] - G.votes0[l]) / VR : 0; }
+    const out = { lists: f.lists, n: nD, adults: G.adults / G.adultsTot, w0, lean, w1: new Float64Array(nD),
+      turnoutGroup: new Float64Array(nD), turnoutAll: new Float64Array(nD), inGroup: new Float64Array(nD * L),
+      fromTurnout: new Float64Array(nD * L), fromVote: new Float64Array(nD * L), total: new Float64Array(nD * L) };
+    for (let j = 0; j < nD; j++) {
+      const V1 = G.voters1[j], w1 = V1 / (V1 + VR);
+      out.w1[j] = w1; out.turnoutGroup[j] = (V1 - G.voters0) / G.adults; out.turnoutAll[j] = (V1 - G.voters0) / G.adultsTot;
+      for (let l = 0; l < L; l++) {
+        const k = j * L + l, d = G.votes1[k] / V1 - sG0[l];
+        out.inGroup[k] = d; out.fromTurnout[k] = (w1 - w0) * lean[l]; out.fromVote[k] = w1 * d;
+        out.total[k] = out.fromTurnout[k] + out.fromVote[k];
+      }
+    }
+    return out;
+  }
+  /* The electorate as polled now, shaped like cells.json for attitudeFactors(): the 2023 cells raked to the tracker's
+     week with each group moved as the pollsters' tables show (scenario()'s "groups" starting point, or "polls" without
+     the group model), each cell's vote summed back to the 2023 lists, today's splinters with the list they stood on. */
+  function cellsAsPolled(D) {
+    const b = scenario(D, { base: D.groupTrends ? "groups" : "polls", levers: [] }).base;
+    const parent = {}; D.parties.forEach((p) => { parent[p.id] = p.parent; });
+    const q = {}; Object.keys(D.cells.q).forEach((l) => { q[l] = new Array(b.n).fill(0); });
+    b.parties.forEach((p, k) => { const l = parent[p] || p; if (q[l]) for (let i = 0; i < b.n; i++) q[l][i] += b.q[i][k]; });
+    return Object.assign({}, D, { cells: Object.assign({}, D.cells, { v: Array.from(b.v), q }) });
   }
   function simPrep(D) {
     if (SIMP && SIMP.D === D) return SIMP;
@@ -605,5 +649,5 @@
   }
 
   return { whatIf, baseCells, cloneCells, members, rake, summarise, scenario, allocate, lists2027, seatRanges, dhondt,
-    simulate, simSeats, simClear, simProb, forecastSwing, senateSimulate, attitudeFactors, seatByConstituency, seatCat, quant, SEAT_CERTAIN, SEAT_PROBABLE, SEAT_POSSIBLE };
+    simulate, simSeats, simClear, simProb, forecastSwing, senateSimulate, attitudeFactors, attitudeSplit, cellsAsPolled, seatByConstituency, seatCat, quant, SEAT_CERTAIN, SEAT_PROBABLE, SEAT_POSSIBLE };
 });
