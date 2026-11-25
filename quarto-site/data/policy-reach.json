@@ -6,9 +6,9 @@
  },
  "totals": {
   "documents": 41,
-  "works": 42,
+  "works": 41,
   "organisations": 61,
-  "countries": 18,
+  "countries": 19,
   "first_year": 2013,
   "cited_works": 13,
   "my_works": 48,
@@ -20,8 +20,8 @@
    "name": "Think tanks and foundations",
    "colour": "#2a78d6",
    "organisations": 43,
-   "records": 63,
-   "tip": "Think tanks and foundations: 43 organisations, behind 63 documents and works",
+   "records": 62,
+   "tip": "Think tanks and foundations: 43 organisations, behind 62 documents and works",
    "w": 1.0
   },
   {
@@ -57,18 +57,6 @@
    "w": 1.0
   },
   {
-   "name": "Peace Research Institute Oslo",
-   "type": "think_tank",
-   "type_label": "think tank",
-   "country": "Norway",
-   "documents": 1,
-   "works": 4,
-   "total": 5,
-   "colour": "#2a78d6",
-   "tip": "Peace Research Institute Oslo (think tank, Norway): 1 policy document and 4 research works",
-   "w": 0.8333
-  },
-  {
    "name": "Ifo Institute",
    "type": "think_tank",
    "type_label": "think tank",
@@ -78,6 +66,18 @@
    "total": 4,
    "colour": "#2a78d6",
    "tip": "Ifo Institute (think tank, Germany): 4 policy documents",
+   "w": 0.6667
+  },
+  {
+   "name": "Peace Research Institute Oslo",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Norway",
+   "documents": 1,
+   "works": 3,
+   "total": 4,
+   "colour": "#2a78d6",
+   "tip": "Peace Research Institute Oslo (think tank, Norway): 1 policy document and 3 research works",
    "w": 0.6667
   },
   {
@@ -311,17 +311,6 @@
    "total": 1,
    "colour": "#2a78d6",
    "tip": "Centre for Economic Policy Research (think tank, United Kingdom): 1 research work"
-  },
-  {
-   "name": "Centre for Liberal Strategies",
-   "type": "think_tank",
-   "type_label": "think tank",
-   "country": "Bulgaria",
-   "documents": 0,
-   "works": 1,
-   "total": 1,
-   "colour": "#2a78d6",
-   "tip": "Centre for Liberal Strategies (think tank, Bulgaria): 1 research work"
   },
   {
    "name": "Centro Alti Studi per la Difesa (CASD)",
@@ -729,6 +718,17 @@
    "total": 1,
    "colour": "#1baf7a",
    "tip": "United Nations Economic Commission for Latin America and the Caribbean (international organisation, International organisations): 1 research work"
+  },
+  {
+   "name": "United States Studies Centre",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Australia",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "United States Studies Centre (think tank, Australia): 1 research work"
   }
  ],
  "top_organisations": 15,
@@ -766,22 +766,12 @@
   {
    "code": "NO",
    "name": "Norway",
-   "records": 6,
+   "records": 5,
    "organisations": 2,
    "on_map": true,
    "colour": "#d55d4b",
-   "tip": "Norway: 6 documents and works, from 2 organisations",
-   "w": 0.2609
-  },
-  {
-   "code": "BG",
-   "name": "Bulgaria",
-   "records": 4,
-   "organisations": 3,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Bulgaria: 4 documents and works, from 3 organisations",
-   "w": 0.1739
+   "tip": "Norway: 5 documents and works, from 2 organisations",
+   "w": 0.2174
   },
   {
    "code": "EU",
@@ -802,6 +792,16 @@
    "colour": "#e38070",
    "tip": "Finland: 4 documents and works, from 2 organisations",
    "w": 0.1739
+  },
+  {
+   "code": "BG",
+   "name": "Bulgaria",
+   "records": 3,
+   "organisations": 2,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Bulgaria: 3 documents and works, from 2 organisations",
+   "w": 0.1304
   },
   {
    "code": "IGO",
@@ -872,6 +872,16 @@
    "colour": "#e38070",
    "tip": "Spain: 2 documents and works, from 2 organisations",
    "w": 0.087
+  },
+  {
+   "code": "AU",
+   "name": "Australia",
+   "records": 1,
+   "organisations": 1,
+   "on_map": true,
+   "colour": "#eda496",
+   "tip": "Australia: 1 document or work, from 1 organisation",
+   "w": 0.0435
   },
   {
    "code": "BR",
@@ -1112,16 +1122,16 @@
    {
     "year": 2020,
     "label": "2020",
-    "count": 9,
-    "h": 0.6,
+    "count": 8,
+    "h": 0.5333,
     "minor": false,
-    "tip": "2020: 9 documents and works (Think tanks and foundations 9)",
+    "tip": "2020: 8 documents and works (Think tanks and foundations 8)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 9,
+      "count": 8,
       "colour": "#2a78d6",
-      "tip": "2020, Think tanks and foundations: 9 documents and works"
+      "tip": "2020, Think tanks and foundations: 8 documents and works"
      }
     ]
    },
@@ -1280,8 +1290,8 @@
    "title": "The Thin Ideology of Populism",
    "year": 2008,
    "documents": 26,
-   "works": 17,
-   "summary": "26 policy documents and 17 research works",
+   "works": 16,
+   "summary": "26 policy documents and 16 research works",
    "items": [
     {
      "date": "2026",
@@ -1448,6 +1458,15 @@
     {
      "date": "2021",
      "when": "2021",
+     "title": "Populists or nativist authoritarians? A cross-national analysis of the radical right",
+     "url": "https://doi.org/10.1080/10361146.2021.1956431",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "United States Studies Centre (think tank, Australia)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
      "title": "Populist and nativist attitudes: Does ingroup-outgroup thinking spill over across domains?",
      "url": "https://doi.org/10.1177/1465116521992876",
      "kind": "article",
@@ -1462,15 +1481,6 @@
      "kind": "book chapter",
      "source": "openalex",
      "orgs": "Information Technology and Innovation Foundation (think tank, United States)"
-    },
-    {
-     "date": "2021",
-     "when": "2021",
-     "title": "Populism and COVID-19: How Populist Governments (Mis)Handle the Pandemic",
-     "url": "https://doi.org/10.1561/113.00000043",
-     "kind": "article",
-     "source": "openalex",
-     "orgs": "Peace Research Institute Oslo (think tank, Norway)"
     },
     {
      "date": "2021",
@@ -1543,15 +1553,6 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg)"
-    },
-    {
-     "date": "2020",
-     "when": "2020",
-     "title": "The Political Economy of Populism: An Introduction",
-     "url": "https://doi.org/10.4324/9780429355691",
-     "kind": "book",
-     "source": "openalex",
-     "orgs": "Centre for Liberal Strategies (think tank, Bulgaria)"
     },
     {
      "date": "2019-10-29",
@@ -1892,8 +1893,8 @@
    "title": "Populism, Nationalism, or National Populism? An Analysis of Slovak Voting Behaviour at the 2010 Parliamentary Election",
    "year": 2011,
    "documents": 5,
-   "works": 1,
-   "summary": "5 policy documents and 1 research work",
+   "works": 2,
+   "summary": "5 policy documents and 2 research works",
    "items": [
     {
      "date": "2024-12-18",
@@ -1912,6 +1913,15 @@
      "kind": "working paper",
      "source": "sage",
      "orgs": "Ifo Institute (think tank, Germany)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "Populists or nativist authoritarians? A cross-national analysis of the radical right",
+     "url": "https://doi.org/10.1080/10361146.2021.1956431",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "United States Studies Centre (think tank, Australia)"
     },
     {
      "date": "2020-10-26",
@@ -2391,26 +2401,6 @@
    ]
   },
   {
-   "id": "openalex:W3034490491",
-   "source": "openalex",
-   "title": "The Political Economy of Populism: An Introduction",
-   "url": "https://doi.org/10.4324/9780429355691",
-   "date": "",
-   "year": 2020,
-   "kind": "book",
-   "orgs": [
-    {
-     "name": "Centre for Liberal Strategies",
-     "type": "think_tank",
-     "country": "BG",
-     "from": "openalex"
-    }
-   ],
-   "cites": [
-    "10.1080/13569310701822289"
-   ]
-  },
-  {
    "id": "openalex:W3043802848",
    "source": "openalex",
    "title": "The league of leagues: Meta-populism and the ‘chain of equivalence’ in a cross-border Alpine area",
@@ -2444,26 +2434,6 @@
      "name": "De Nederlandsche Bank",
      "type": "think_tank",
      "country": "NL",
-     "from": "openalex"
-    }
-   ],
-   "cites": [
-    "10.1080/13569310701822289"
-   ]
-  },
-  {
-   "id": "openalex:W3170811428",
-   "source": "openalex",
-   "title": "Populism and COVID-19: How Populist Governments (Mis)Handle the Pandemic",
-   "url": "https://doi.org/10.1561/113.00000043",
-   "date": "",
-   "year": 2021,
-   "kind": "article",
-   "orgs": [
-    {
-     "name": "Peace Research Institute Oslo",
-     "type": "think_tank",
-     "country": "NO",
      "from": "openalex"
     }
    ],
@@ -2508,6 +2478,27 @@
     }
    ],
    "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
+   "id": "openalex:W3176258966",
+   "source": "openalex",
+   "title": "Populists or nativist authoritarians? A cross-national analysis of the radical right",
+   "url": "https://doi.org/10.1080/10361146.2021.1956431",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "United States Studies Centre",
+     "type": "think_tank",
+     "country": "AU",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1016/j.postcomstud.2011.10.005",
     "10.1080/13569310701822289"
    ]
   },
