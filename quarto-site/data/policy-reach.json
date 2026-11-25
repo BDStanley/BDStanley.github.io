@@ -6,8 +6,8 @@
  },
  "totals": {
   "documents": 41,
-  "works": 40,
-  "organisations": 60,
+  "works": 42,
+  "organisations": 61,
   "countries": 18,
   "first_year": 2013,
   "cited_works": 13,
@@ -19,9 +19,9 @@
    "key": "think_tank",
    "name": "Think tanks and foundations",
    "colour": "#2a78d6",
-   "organisations": 42,
-   "records": 61,
-   "tip": "Think tanks and foundations: 42 organisations, behind 61 documents and works",
+   "organisations": 43,
+   "records": 63,
+   "tip": "Think tanks and foundations: 43 organisations, behind 63 documents and works",
    "w": 1.0
   },
   {
@@ -31,7 +31,7 @@
    "organisations": 15,
    "records": 17,
    "tip": "Government: 15 organisations, behind 17 documents and works",
-   "w": 0.3571
+   "w": 0.3488
   },
   {
    "key": "international",
@@ -40,7 +40,7 @@
    "organisations": 3,
    "records": 3,
    "tip": "International organisations: 3 organisations, behind 3 documents and works",
-   "w": 0.0714
+   "w": 0.0698
   }
  ],
  "organisations": [
@@ -115,6 +115,18 @@
    "colour": "#2a78d6",
    "tip": "Luxembourg Institute of Socio-Economic Research (think tank, Luxembourg): 3 research works",
    "w": 0.5
+  },
+  {
+   "name": "Center for the Study of Democracy",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Bulgaria",
+   "documents": 0,
+   "works": 2,
+   "total": 2,
+   "colour": "#2a78d6",
+   "tip": "Center for the Study of Democracy (think tank, Bulgaria): 2 research works",
+   "w": 0.3333
   },
   {
    "name": "De Nederlandsche Bank",
@@ -221,8 +233,7 @@
    "works": 1,
    "total": 1,
    "colour": "#2a78d6",
-   "tip": "Baltic Studies Centre (think tank, Latvia): 1 research work",
-   "w": 0.1667
+   "tip": "Baltic Studies Centre (think tank, Latvia): 1 research work"
   },
   {
    "name": "Bank of Finland",
@@ -258,6 +269,17 @@
    "tip": "Brookings Institution (think tank, United States): 1 policy document"
   },
   {
+   "name": "CESifo",
+   "type": "think_tank",
+   "type_label": "think tank",
+   "country": "Germany",
+   "documents": 0,
+   "works": 1,
+   "total": 1,
+   "colour": "#2a78d6",
+   "tip": "CESifo (think tank, Germany): 1 research work"
+  },
+  {
    "name": "Center for a New American Security",
    "type": "think_tank",
    "type_label": "think tank",
@@ -267,17 +289,6 @@
    "total": 1,
    "colour": "#2a78d6",
    "tip": "Center for a New American Security (think tank, United States): 1 policy document"
-  },
-  {
-   "name": "Center for the Study of Democracy",
-   "type": "think_tank",
-   "type_label": "think tank",
-   "country": "Bulgaria",
-   "documents": 0,
-   "works": 1,
-   "total": 1,
-   "colour": "#2a78d6",
-   "tip": "Center for the Study of Democracy (think tank, Bulgaria): 1 research work"
   },
   {
    "name": "Centre d'Etudes Prospectives et d'Informations Internationales",
@@ -725,11 +736,11 @@
   {
    "code": "DE",
    "name": "Germany",
-   "records": 22,
-   "organisations": 12,
+   "records": 23,
+   "organisations": 13,
    "on_map": true,
    "colour": "#a72219",
-   "tip": "Germany: 22 documents and works, from 12 organisations",
+   "tip": "Germany: 23 documents and works, from 13 organisations",
    "w": 1.0
   },
   {
@@ -740,7 +751,7 @@
    "on_map": true,
    "colour": "#c13d30",
    "tip": "United States: 13 documents and works, from 11 organisations",
-   "w": 0.5909
+   "w": 0.5652
   },
   {
    "code": "GB",
@@ -750,7 +761,7 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "United Kingdom: 7 documents and works, from 7 organisations",
-   "w": 0.3182
+   "w": 0.3043
   },
   {
    "code": "NO",
@@ -760,7 +771,17 @@
    "on_map": true,
    "colour": "#d55d4b",
    "tip": "Norway: 6 documents and works, from 2 organisations",
-   "w": 0.2727
+   "w": 0.2609
+  },
+  {
+   "code": "BG",
+   "name": "Bulgaria",
+   "records": 4,
+   "organisations": 3,
+   "on_map": true,
+   "colour": "#e38070",
+   "tip": "Bulgaria: 4 documents and works, from 3 organisations",
+   "w": 0.1739
   },
   {
    "code": "EU",
@@ -770,7 +791,7 @@
    "on_map": false,
    "colour": "#e38070",
    "tip": "EU institutions: 4 documents and works, from 4 organisations",
-   "w": 0.1818
+   "w": 0.1739
   },
   {
    "code": "FI",
@@ -780,17 +801,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Finland: 4 documents and works, from 2 organisations",
-   "w": 0.1818
-  },
-  {
-   "code": "BG",
-   "name": "Bulgaria",
-   "records": 3,
-   "organisations": 3,
-   "on_map": true,
-   "colour": "#e38070",
-   "tip": "Bulgaria: 3 documents and works, from 3 organisations",
-   "w": 0.1364
+   "w": 0.1739
   },
   {
    "code": "IGO",
@@ -800,7 +811,7 @@
    "on_map": false,
    "colour": "#e38070",
    "tip": "International organisations: 3 documents and works, from 3 organisations",
-   "w": 0.1364
+   "w": 0.1304
   },
   {
    "code": "IT",
@@ -810,7 +821,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Italy: 3 documents and works, from 3 organisations",
-   "w": 0.1364
+   "w": 0.1304
   },
   {
    "code": "LU",
@@ -820,7 +831,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Luxembourg: 3 documents and works, from 1 organisation",
-   "w": 0.1364
+   "w": 0.1304
   },
   {
    "code": "NL",
@@ -830,7 +841,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Netherlands: 3 documents and works, from 2 organisations",
-   "w": 0.1364
+   "w": 0.1304
   },
   {
    "code": "BE",
@@ -840,7 +851,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Belgium: 2 documents and works, from 1 organisation",
-   "w": 0.0909
+   "w": 0.087
   },
   {
    "code": "GR",
@@ -850,7 +861,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Greece: 2 documents and works, from 1 organisation",
-   "w": 0.0909
+   "w": 0.087
   },
   {
    "code": "ES",
@@ -860,7 +871,7 @@
    "on_map": true,
    "colour": "#e38070",
    "tip": "Spain: 2 documents and works, from 2 organisations",
-   "w": 0.0909
+   "w": 0.087
   },
   {
    "code": "BR",
@@ -870,7 +881,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Brazil: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   },
   {
    "code": "FR",
@@ -880,7 +891,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "France: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   },
   {
    "code": "LV",
@@ -890,7 +901,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Latvia: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   },
   {
    "code": "RU",
@@ -900,7 +911,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Russia: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   },
   {
    "code": "SI",
@@ -910,7 +921,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Slovenia: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   },
   {
    "code": "SE",
@@ -920,7 +931,7 @@
    "on_map": true,
    "colour": "#eda496",
    "tip": "Sweden: 1 document or work, from 1 organisation",
-   "w": 0.0455
+   "w": 0.0435
   }
  ],
  "bins": [
@@ -1117,16 +1128,16 @@
    {
     "year": 2021,
     "label": "2021",
-    "count": 13,
-    "h": 0.8667,
+    "count": 14,
+    "h": 0.9333,
     "minor": true,
-    "tip": "2021: 13 documents and works (Think tanks and foundations 11, Government 2)",
+    "tip": "2021: 14 documents and works (Think tanks and foundations 12, Government 2)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 11,
+      "count": 12,
       "colour": "#2a78d6",
-      "tip": "2021, Think tanks and foundations: 11 documents and works"
+      "tip": "2021, Think tanks and foundations: 12 documents and works"
      },
      {
       "name": "Government",
@@ -1177,16 +1188,16 @@
    {
     "year": 2024,
     "label": "2024",
-    "count": 11,
-    "h": 0.7333,
+    "count": 12,
+    "h": 0.8,
     "minor": true,
-    "tip": "2024: 11 documents and works (Think tanks and foundations 6, Government 5)",
+    "tip": "2024: 12 documents and works (Think tanks and foundations 7, Government 5)",
     "segments": [
      {
       "name": "Think tanks and foundations",
-      "count": 6,
+      "count": 7,
       "colour": "#2a78d6",
-      "tip": "2024, Think tanks and foundations: 6 documents and works"
+      "tip": "2024, Think tanks and foundations: 7 documents and works"
      },
      {
       "name": "Government",
@@ -1269,8 +1280,8 @@
    "title": "The Thin Ideology of Populism",
    "year": 2008,
    "documents": 26,
-   "works": 16,
-   "summary": "26 policy documents and 16 research works",
+   "works": 17,
+   "summary": "26 policy documents and 17 research works",
    "items": [
     {
      "date": "2026",
@@ -1460,6 +1471,15 @@
      "kind": "article",
      "source": "openalex",
      "orgs": "Peace Research Institute Oslo (think tank, Norway)"
+    },
+    {
+     "date": "2021",
+     "when": "2021",
+     "title": "L’étude du populisme et du nationalisme sous le prisme de la théorie du discours : distinctions et articulations",
+     "url": "https://openalex.org/W3174039136",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "Center for the Study of Democracy (think tank, Bulgaria)"
     },
     {
      "date": "2020-10-26",
@@ -1658,8 +1678,8 @@
    "title": "Forging, Bending, and Breaking: Enacting the 'Illiberal Playbook' in Hungary and Poland",
    "year": 2022,
    "documents": 3,
-   "works": 2,
-   "summary": "3 policy documents and 2 research works",
+   "works": 3,
+   "summary": "3 policy documents and 3 research works",
    "items": [
     {
      "date": "2026",
@@ -1705,6 +1725,15 @@
      "kind": "",
      "source": "sage",
      "orgs": "Publications Office of the European Union (government, EU institutions)"
+    },
+    {
+     "date": "2024",
+     "when": "2024",
+     "title": "How do citizens define and value the rule of law? A conjoint experiment in Germany and Poland",
+     "url": "https://doi.org/10.1080/13501763.2024.2326189",
+     "kind": "article",
+     "source": "openalex",
+     "orgs": "CESifo (think tank, Germany)"
     }
    ]
   },
@@ -2463,6 +2492,26 @@
    ]
   },
   {
+   "id": "openalex:W3174039136",
+   "source": "openalex",
+   "title": "L’étude du populisme et du nationalisme sous le prisme de la théorie du discours : distinctions et articulations",
+   "url": "https://openalex.org/W3174039136",
+   "date": "",
+   "year": 2021,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "Center for the Study of Democracy",
+     "type": "think_tank",
+     "country": "BG",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1080/13569310701822289"
+   ]
+  },
+  {
    "id": "openalex:W3196352134",
    "source": "openalex",
    "title": "Transitions, populism, and democratic decline: evidence from Hungary and the Czech Republic",
@@ -2652,6 +2701,26 @@
    ],
    "cites": [
     "10.1007/978-3-319-96758-5_5"
+   ]
+  },
+  {
+   "id": "openalex:W4392591308",
+   "source": "openalex",
+   "title": "How do citizens define and value the rule of law? A conjoint experiment in Germany and Poland",
+   "url": "https://doi.org/10.1080/13501763.2024.2326189",
+   "date": "",
+   "year": 2024,
+   "kind": "article",
+   "orgs": [
+    {
+     "name": "CESifo",
+     "type": "think_tank",
+     "country": "DE",
+     "from": "openalex"
+    }
+   ],
+   "cites": [
+    "10.1017/s1537592721001924"
    ]
   },
   {

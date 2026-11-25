@@ -17,6 +17,8 @@
   { link("https://bdstanley.netlify.app/social-research-methodology-4-slides-dhwyg", "Research ethics") },
   { link("https://bdstanley.netlify.app/social-research-methodology-5-slides-7e3pe", "Conducting a literature review") },
   { link("https://bdstanley.netlify.app/social-research-methodology-6-slides-77ut2", "Secondary data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-7-slides-ehzrz", "Qualitative approaches to social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-8-slides-7kuj4", "Quantitative approaches and measurement") },
 )
 
 #heading(level: 2)[#"Handouts"]
@@ -28,4 +30,6 @@
   { link("https://bdstanley.netlify.app/social-research-methodology-4-handout-tkjyf", "Research ethics") },
   { link("https://bdstanley.netlify.app/social-research-methodology-5-handout-yheep", "Conducting a literature review") },
   { link("https://bdstanley.netlify.app/social-research-methodology-6-handout-z3xdc", "Secondary data analysis") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-7-handout-zu4f4", "Qualitative approaches to social research") },
+  { link("https://bdstanley.netlify.app/social-research-methodology-8-handout-s7pfx", "Quantitative approaches and measurement") },
 )

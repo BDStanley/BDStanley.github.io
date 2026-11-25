@@ -15,6 +15,7 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-slides-apqmg", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-slides-d8s5t", "Niedemokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-slides-dgqqm", "Konstytucja i system polityczny w Polsce. Wartość praworządności.") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-slides-jgt3q", "Państwo prawa. Instytucje, procedury, ochrona praw i wolności") },
 )
 
 #heading(level: 2)[#"Materiały"]
@@ -24,6 +25,7 @@
   { link("https://bdstanley.netlify.app/systemy-polityczne-2-handout-d8xuv", "Demokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-3-handout-bpmew", "Niedemokratyczne systemy polityczne") },
   { link("https://bdstanley.netlify.app/systemy-polityczne-4-handout-z8w98", "Konstytucja i system polityczny w Polsce. Wartość praworządności") },
+  { link("https://bdstanley.netlify.app/systemy-polityczne-5-handout-83634", "Państwo prawa: instytucje, procedury, ochrona praw i wolności") },
 )
 
 #heading(level: 2)[#"Ćwiczenia"]
